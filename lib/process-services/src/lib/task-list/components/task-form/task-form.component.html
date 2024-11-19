@@ -29,8 +29,7 @@
         [hasCompletePermission]="isCompleteButtonVisible()"
         [hideCancelButton]="showCancelButton"
         (complete)="onCompleteTask()"
-        (showAttachForm)="onShowAttachForm()">
-    </adf-task-standalone>
+        (showAttachForm)="onShowAttachForm()" />
       <ng-template #emptyFormMessage>
         <mat-card appearance="outlined" class="adf-task-form-container">
             <mat-card-header>
@@ -49,14 +48,12 @@
                 <adf-empty-content *ngIf="isCompletedTask(); else emptyFormTemplate"
                     [icon]="'description'"
                     [title]="getCompletedTaskTranslatedMessage() | async"
-                    [subtitle]="'ADF_TASK_FORM.COMPLETED_TASK.SUBTITLE'">
-                </adf-empty-content>
+                    [subtitle]="'ADF_TASK_FORM.COMPLETED_TASK.SUBTITLE'" />
                 <ng-template #emptyFormTemplate>
                     <adf-empty-content
                         [icon]="'description'"
                         [title]="'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE'"
-                        [subtitle]="'ADF_TASK_FORM.EMPTY_FORM.SUBTITLE'">
-                    </adf-empty-content>
+                        [subtitle]="'ADF_TASK_FORM.EMPTY_FORM.SUBTITLE'" />
                 </ng-template>
             </mat-card-content>
             <mat-card-actions align="end">
@@ -102,6 +99,6 @@
 </ng-container>
 <ng-template #loadingTemplate>
     <div class="adf-task-form-spinner-container">
-        <mat-spinner></mat-spinner>
+        <mat-spinner />
     </div>
 </ng-template>

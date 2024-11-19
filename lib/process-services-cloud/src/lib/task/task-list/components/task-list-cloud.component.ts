@@ -197,6 +197,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
+    private fetchProcessesTrigger$ = new Subject<void>();
+
     constructor(
         @Inject(TASK_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
@@ -207,20 +209,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         private viewModelCreator: VariableMapperService
     ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
-    }
 
-    ngOnDestroy() {
-        this.onDestroyTaskList$.next(true);
-        this.onDestroyTaskList$.complete();
-    }
-
-    reload() {
-        this.isReloadingSubject$.next(true);
-
-        this.isColumnSchemaCreated$
+        combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
                 filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
-                take(1),
                 switchMap(() => {
                     if (this.searchMethod === 'POST') {
                         const requestNode = this.createTaskListRequestNode();
@@ -255,6 +247,16 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             });
     }
 
+    ngOnDestroy() {
+        this.onDestroyTaskList$.next(true);
+        this.onDestroyTaskList$.complete();
+    }
+
+    reload() {
+        this.isReloadingSubject$.next(true);
+        this.fetchProcessesTrigger$.next();
+    }
+
     private createTaskListRequestNode(): TaskListRequestModel {
         const requestNode: TaskListRequestModel = {
             appName: this.appName,
@@ -278,7 +280,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             dueDateTo: this.dueDateTo,
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
-            variableKeys: this.getRequestNodeVariables()
+            processVariableKeys: this.getRequestNodeVariables()
         };
 
         return new TaskListRequestModel(requestNode);

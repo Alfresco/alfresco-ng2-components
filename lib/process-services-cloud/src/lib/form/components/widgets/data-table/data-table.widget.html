@@ -9,14 +9,14 @@
     </div>
 
     <ng-container *ngIf="!previewState; else previewTemplate">
-        <adf-datatable data-automation-id="adf-data-table-widget" [data]="dataSource"></adf-datatable>
+        <adf-datatable data-automation-id="adf-data-table-widget" [data]="dataSource" />
 
         <error-widget *ngIf="dataTableLoadFailed"
             class="adf-data-table-widget-failed-message"
-            required="{{ 'FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate }}"></error-widget>
+            required="{{ 'FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate }}" />
     </ng-container>
 
     <ng-template #previewTemplate>
-        <adf-datatable data-automation-id="adf-data-table-widget-preview"></adf-datatable>
+        <adf-datatable data-automation-id="adf-data-table-widget-preview" />
     </ng-template>
 </div>

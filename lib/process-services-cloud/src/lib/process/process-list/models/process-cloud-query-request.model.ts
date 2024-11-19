@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
+import { Pagination } from '@alfresco/js-api';
 import { ProcessListCloudSortingModel } from './process-list-sorting.model';
+import { ProcessFilterCloudModel } from '../../process-filters/models/process-filter-cloud.model';
 
 export class ProcessQueryCloudRequestModel {
    appName: string;
@@ -75,4 +77,81 @@ export class ProcessQueryCloudRequestModel {
            this.variableKeys = obj.variableKeys;
        }
    }
+}
+
+export interface ProcessListRequestProcessVariableFilter {
+    processDefinitionKey?: string;
+    name?: string;
+    type?: string;
+    value?: string;
+    operator?: string;
+}
+
+export class ProcessListRequestModel {
+    appName: string;
+    pagination?: Pagination;
+    sorting?: ProcessListCloudSortingModel[];
+
+    name?: string[];
+    initiator?: string[];
+    appVersion?: string[];
+    status?: string[];
+    lastModifiedFrom?: string;
+    lasModifiedTo?: string;
+    startFrom?: string;
+    startTo?: string;
+    completedFrom?: string;
+    completedTo?: string;
+    suspendedFrom?: string;
+    suspendedTo?: string;
+
+    processVariableFilters?: ProcessListRequestProcessVariableFilter[];
+    processVariableKeys?: string[];
+
+    constructor(obj: Partial<ProcessListRequestModel>) {
+        if (!obj.appName) {
+            throw new Error('appName not configured');
+        }
+
+        this.appName = obj.appName;
+        this.pagination = obj.pagination;
+        this.sorting = obj.sorting;
+
+        this.name = obj.name;
+        this.initiator = obj.initiator;
+        this.appVersion = obj.appVersion;
+        this.status = obj.status;
+        this.lastModifiedFrom = obj.lastModifiedFrom;
+        this.lasModifiedTo = obj.lasModifiedTo;
+        this.startFrom = obj.startFrom;
+        this.startTo = obj.startTo;
+        this.completedFrom = obj.completedFrom;
+        this.completedTo = obj.completedTo;
+        this.suspendedFrom = obj.suspendedFrom;
+        this.suspendedTo = obj.suspendedTo;
+        this.processVariableKeys = obj.processVariableKeys;
+    }
+}
+
+export class ProcessFilterCloudAdapter extends ProcessListRequestModel {
+    constructor(filter: ProcessFilterCloudModel) {
+        super({
+            appName: filter.appName,
+            pagination: { maxItems: 25, skipCount: 0 },
+            sorting: [{ orderBy: filter.sort, direction: filter.order }],
+
+            name: filter.processDefinitionNames,
+            initiator: filter.initiators,
+            appVersion: filter.appVersions,
+            status: filter.statuses,
+            lastModifiedFrom: filter.lastModifiedFrom?.toISOString(),
+            lasModifiedTo: filter.lastModifiedTo?.toISOString(),
+            startFrom: filter.startFrom,
+            startTo: filter.startTo,
+            completedFrom: filter.completedFrom,
+            completedTo: filter.completedTo,
+            suspendedFrom: filter.suspendedFrom,
+            suspendedTo: filter.suspendedTo
+        });
+    }
 }

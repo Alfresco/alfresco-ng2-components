@@ -6,8 +6,7 @@
             <adf-cloud-app-details
                 *ngFor="let app of appsList"
                 [applicationInstance]="app"
-                (selectedApp)="onSelectApp($event)">
-            </adf-cloud-app-details>
+                (selectedApp)="onSelectApp($event)" />
         </div>
 
         <ng-template #appList>
@@ -29,21 +28,19 @@
 
         <ng-template #defaultEmptyTemplate>
             <adf-empty-content icon="apps" [title]="'ADF_CLOUD_TASK_LIST.APPS.NO_APPS.TITLE' | translate"
-                [subtitle]="'ADF_CLOUD_TASK_LIST.APPS.NO_APPS.SUBTITLE' | translate">
-            </adf-empty-content>
+                [subtitle]="'ADF_CLOUD_TASK_LIST.APPS.NO_APPS.SUBTITLE' | translate" />
         </ng-template>
     </div>
 </ng-template>
 <ng-template #loadingOrError>
     <div *ngIf="loadingError$ | async; else loading" class="adf-app-list-error">
         <adf-empty-content icon="error_outline" [title]="'ADF_CLOUD_TASK_LIST.APPS.ERROR.TITLE' | translate"
-            [subtitle]="'ADF_CLOUD_TASK_LIST.APPS.ERROR.SUBTITLE' | translate">
-        </adf-empty-content>
+            [subtitle]="'ADF_CLOUD_TASK_LIST.APPS.ERROR.SUBTITLE' | translate" />
     </div>
     <ng-template #loading>
     <ng-container>
         <div class="adf-app-list-spinner">
-            <mat-spinner class="adf-app-list-cloud--spinner"></mat-spinner>
+            <mat-spinner class="adf-app-list-cloud--spinner" />
         </div>
     </ng-container>
 </ng-template>

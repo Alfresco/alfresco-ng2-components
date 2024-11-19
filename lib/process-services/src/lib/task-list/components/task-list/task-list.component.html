@@ -20,8 +20,7 @@
     <adf-loading-content-template>
         <ng-template>
             <!--Add your custom loading template here-->
-            <mat-progress-spinner *ngIf="!customLoadingContent" class="adf-task-list-loading-margin" color="primary" mode="indeterminate">
-            </mat-progress-spinner>
+            <mat-progress-spinner *ngIf="!customLoadingContent" class="adf-task-list-loading-margin" color="primary" mode="indeterminate" />
             <ng-content select="adf-custom-loading-content-template"></ng-content>
         </ng-template>
     </adf-loading-content-template>
@@ -32,8 +31,7 @@
                 icon="assignment"
                 [title]="'ADF_TASK_LIST.LIST.MESSAGES.TITLE' | translate"
                 [subtitle]="'ADF_TASK_LIST.LIST.MESSAGES.SUBTITLE' | translate"
-            >
-            </adf-empty-content>
+            />
             <ng-content select="adf-custom-empty-content-template"></ng-content>
         </ng-template>
     </adf-no-content-template>

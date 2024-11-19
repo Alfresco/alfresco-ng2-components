@@ -26,8 +26,7 @@
         [preSelectGroups]="candidateGroups"
         [mode]="taskFilterProperty.selectionMode"
         [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
-        (changedGroups)="onChangedGroups($event)">
-    </adf-cloud-group>
+        (changedGroups)="onChangedGroups($event)" />
 
     <adf-cloud-people *ngIf="isAssignedToType()"
         class="adf-group-cloud-filter"
@@ -35,6 +34,5 @@
         [preSelectUsers]="assignedUsers"
         [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
         [appName]="appName"
-        (changedUsers)="onChangedAssignedUsers($event)">
-    </adf-cloud-people>
+        (changedUsers)="onChangedAssignedUsers($event)" />
 </div>

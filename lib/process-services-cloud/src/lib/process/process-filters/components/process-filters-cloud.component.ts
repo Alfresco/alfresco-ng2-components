@@ -23,6 +23,8 @@ import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
+import { PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import { ProcessFilterCloudAdapter } from '../../process-list/models/process-cloud-query-request.model';
 
 @Component({
     selector: 'adf-cloud-process-filters',
@@ -77,6 +79,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly processListCloudService = inject(ProcessListCloudService);
+    private readonly searchMethod = inject<'GET' | 'POST'>(PROCESS_SEARCH_API_METHOD_TOKEN, { optional: true });
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
@@ -268,11 +271,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      *  Get current value for filter and check if value has changed
+     *
      * @param filter filter
      */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {
-        this.processListCloudService
-            .getProcessCounter(filter.appName, filter.status)
+        this.fetchProcessFilterCounter(filter)
             .pipe(
                 tap((filterCounter) => {
                     this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
@@ -310,5 +313,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
             this.updatedFiltersSet.delete(filterKey);
         });
+    }
+
+    private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {
+        return this.searchMethod === 'POST'
+        ? this.processListCloudService.getProcessListCounter(new ProcessFilterCloudAdapter(filter))
+        : this.processListCloudService.getProcessCounter(filter.appName, filter.status)
     }
 }

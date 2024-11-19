@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
+import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
@@ -56,6 +56,7 @@ export class ProcessListCloudService extends BaseCloudService {
     /**
      * Finds a process using an object with optional query properties.
      *
+     * @deprecated From Activiti 8.7.0 forward, use ProcessListCloudService.fetchProcessList instead.
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Process information
@@ -65,6 +66,74 @@ export class ProcessListCloudService extends BaseCloudService {
         const defaultQueryUrl = 'query/v1/process-instances';
 
         return this.getProcess(callback, defaultQueryUrl, requestNode, queryUrl);
+    }
+
+    /**
+     * Available from Activiti version 8.7.0 onwards.
+     * Retrieves a list of processes using an object with optional query properties.
+     *
+     * @param requestNode Query object
+     * @param queryUrl Query url
+     * @returns List of processes
+     */
+    fetchProcessList(requestNode: ProcessListRequestModel, queryUrl?: string): Observable<any> {
+        if (!requestNode?.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+
+        queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/process-instances/search`;
+
+        const queryParams = {
+            maxItems: requestNode.pagination?.maxItems || 25,
+            skipCount: requestNode.pagination?.skipCount || 0,
+            sort: this.buildSortingParam(requestNode.sorting || [])
+        };
+
+        const queryData = this.buildQueryData(requestNode);
+        return this.post<any, any>(queryUrl, queryData, queryParams).pipe(
+            map((response: any) => {
+                const entries = response.list?.entries;
+                if (entries) {
+                    response.list.entries = entries.map((entryData) => entryData.entry);
+                }
+                return response;
+            })
+        );
+    }
+
+    protected buildQueryData(requestNode: ProcessListRequestModel) {
+        const queryData: any = {
+            name: requestNode.name,
+            initiator: requestNode.initiator,
+            appVersion: requestNode.appVersion,
+            status: requestNode.status,
+            lastModifiedFrom: requestNode.lastModifiedFrom,
+            lasModifiedTo: requestNode.lasModifiedTo,
+            startFrom: requestNode.startFrom,
+            startTo: requestNode.startTo,
+            completedFrom: requestNode.completedFrom,
+            completedTo: requestNode.completedTo,
+            suspendedFrom: requestNode.suspendedFrom,
+            suspendedTo: requestNode.suspendedTo,
+            processVariableKeys: requestNode.processVariableKeys
+        };
+
+        Object.keys(queryData).forEach((key) => {
+            const value = queryData[key];
+            const isValueEmpty = !value;
+            const isValueArrayWithEmptyValue = Array.isArray(value) && (value.length === 0 || value[0] === null);
+            if (isValueEmpty || isValueArrayWithEmptyValue) {
+                delete queryData[key];
+            }
+        });
+        return queryData;
+    }
+
+    getProcessListCounter(requestNode: ProcessListRequestModel): Observable<number> {
+        if (!requestNode.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+        return this.fetchProcessList(requestNode).pipe(map((processes) => processes.list.pagination.totalItems));
     }
 
     /**

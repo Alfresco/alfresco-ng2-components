@@ -20,7 +20,7 @@
                 <data-columns>
                     <data-column class="adf-datatable-cell--image adf-authority-icon-column" key="$thumbunail" [sortable]="false">
                         <ng-template let-context>
-                            <adf-user-icon-column [context]="context"></adf-user-icon-column>
+                            <adf-user-icon-column [context]="context" />
                         </ng-template>
                     </data-column>
 
@@ -28,7 +28,7 @@
                                  [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:selectedMembers.length}"
                                  key="id">
                         <ng-template let-context>
-                            <adf-user-name-column [context]="context"></adf-user-name-column>
+                            <adf-user-name-column [context]="context" />
                         </ng-template>
                     </data-column>
 
@@ -40,8 +40,7 @@
                                                   [value]="entry.data.getValue(entry.row, entry.col)"
                                                   [roles]="data.roles"
                                                   id="adf-select-role-permission"
-                                                  (roleChanged)="onMemberUpdate($event, entry.row.obj)">
-                            </adf-user-role-column>
+                                                  (roleChanged)="onMemberUpdate($event, entry.row.obj)" />
                         </ng-template>
 
                         <adf-data-column-header>
@@ -50,8 +49,7 @@
                                                        placeholder="PERMISSION_MANAGER.COLUMN.BULK-ROLE"
                                                        [roles]="data.roles"
                                                        id="adf-bulk-select-role-permission"
-                                                       (roleChanged)="onBulkUpdate($event)">
-                                </adf-user-role-column>
+                                                       (roleChanged)="onBulkUpdate($event)" />
                             </ng-template>
                         </adf-data-column-header>
                     </data-column>
@@ -92,7 +90,7 @@
 
 <ng-container *ngIf="isSearchActive">
     <mat-dialog-content class="adf-add-permission-dialog-content">
-        <adf-add-permission-panel class="adf-search-container" (select)="onSelect($event)"></adf-add-permission-panel>
+        <adf-add-permission-panel class="adf-search-container" (select)="onSelect($event)" />
     </mat-dialog-content>
 
     <mat-dialog-actions class="adf-add-permission-dialog-actions">

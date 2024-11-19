@@ -11,6 +11,6 @@
         </mat-select>
     </mat-form-field>
     <ng-container *ngIf="!isReadOnlyField && dropdownControl.touched">
-        <error-widget [error]="field.validationSummary"></error-widget>
+        <error-widget [error]="field.validationSummary" />
     </ng-container>
 </div>

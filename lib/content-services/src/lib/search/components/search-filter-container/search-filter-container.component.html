@@ -18,8 +18,7 @@
             matBadge="filter"
             matBadgeColor="warn"
             [matBadgeHidden]="!isActive()"
-        >
-        </adf-icon>
+        />
     </button>
 
     <mat-menu #filter="matMenu" class="adf-filter-menu adf-search-filter-menu" (closed)="onClosed()">
@@ -33,8 +32,7 @@
                     [settings]="category?.component?.settings"
                     [value]="initialValue"
                     [useHeaderQueryBuilder]="true"
-                >
-                </adf-search-widget-container>
+                />
             </div>
             <mat-dialog-actions class="adf-filter-actions">
                 <button

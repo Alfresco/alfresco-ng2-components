@@ -37,14 +37,8 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
 @Component({
     template: ` <adf-cloud-task-list #taskListCloud>
         <data-columns>
-            <data-column
-                id="name"
-                key="name"
-                title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"
-                class="adf-full-width adf-name-column"
-                [order]="3"
-            ></data-column>
-            <data-column id="created" key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
+            <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3" />
+            <data-column id="created" key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden" />
             <data-column
                 id="startedBy"
                 key="startedBy"
@@ -79,8 +73,8 @@ class EmptyTemplateComponent {}
 @Component({
     template: ` <adf-cloud-task-list>
         <data-columns>
-            <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
-            <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
+            <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID" />
+            <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" />
         </data-columns>
     </adf-cloud-task-list>`
 })
@@ -157,7 +151,6 @@ describe('TaskListCloudComponent', () => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-            fixture.detectChanges();
             component.ngOnChanges({ appName });
             fixture.detectChanges();
 
@@ -220,7 +213,6 @@ describe('TaskListCloudComponent', () => {
             });
 
             component.reload();
-            fixture.detectChanges();
         });
 
         it('should call endpoint when a column visibility gets changed', () => {
@@ -250,16 +242,19 @@ describe('TaskListCloudComponent', () => {
                 component.status = 'mock-status';
                 component.lastModifiedFrom = 'mock-lastmodified-date';
                 component.owner = 'mock-owner-name';
+
                 const priorityChange = new SimpleChange(undefined, 1, true);
                 const statusChange = new SimpleChange(undefined, 'mock-status', true);
                 const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
                 const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
+
                 component.ngOnChanges({
                     priority: priorityChange,
                     status: statusChange,
                     lastModifiedFrom: lastModifiedFromChange,
                     owner: ownerChange
                 });
+
                 fixture.detectChanges();
                 expect(component.isListEmpty()).toBeFalsy();
                 expect(getTaskByRequestSpy).toHaveBeenCalled();
@@ -363,7 +358,6 @@ describe('TaskListCloudComponent', () => {
             });
 
             component.reload();
-            fixture.detectChanges();
         });
 
         it('should call endpoint when a column visibility gets changed', () => {

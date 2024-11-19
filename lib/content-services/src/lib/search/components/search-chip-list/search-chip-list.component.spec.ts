@@ -29,7 +29,7 @@ import { SearchChipListComponent } from './search-chip-list.component';
     selector: 'adf-test-component',
     standalone: true,
     imports: [SearchChipListComponent],
-    template: ` <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="allowClear"> </adf-search-chip-list> `
+    template: ` <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="allowClear" /> `
 })
 class TestComponent {
     allowClear = true;

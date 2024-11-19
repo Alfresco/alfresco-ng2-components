@@ -6,7 +6,7 @@
                 <div class="adf-viewer-render__loading-screen">
                     <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
                     <div>
-                        <mat-spinner class="adf-viewer-render__loading-screen__spinner"></mat-spinner>
+                        <mat-spinner class="adf-viewer-render__loading-screen__spinner" />
                     </div>
                 </div>
             </ng-container>
@@ -25,8 +25,7 @@
                                        [url]="urlFile"
                                        [extension]="externalViewer.fileExtension"
                                        [nodeId]="nodeId"
-                                       [attr.data-automation-id]="externalViewer.component">
-                </adf-preview-extension>
+                                       [attr.data-automation-id]="externalViewer.component" />
             </ng-container>
 
             <ng-container *ngSwitchCase="'pdf'">
@@ -37,8 +36,7 @@
                                 [fileName]="internalFileName"
                                 [cacheType]="cacheTypeForContent"
                                 (close)="onClose()"
-                                (error)="onUnsupportedFile()">
-                </adf-pdf-viewer>
+                                (error)="onUnsupportedFile()" />
             </ng-container>
 
             <ng-container *ngSwitchCase="'image'">
@@ -50,7 +48,7 @@
                                 (error)="onUnsupportedFile()"
                                 (submit)="onSubmitFile($event)"
                                 (isSaving)="isSaving.emit($event)"
-                ></adf-img-viewer>
+                />
             </ng-container>
 
             <ng-container *ngSwitchCase="'media'">
@@ -60,14 +58,12 @@
                                   [mimeType]="mimeType"
                                   [blobFile]="blobFile"
                                   [fileName]="internalFileName"
-                                  (error)="onUnsupportedFile()">
-                </adf-media-player>
+                                  (error)="onUnsupportedFile()" />
             </ng-container>
 
             <ng-container *ngSwitchCase="'text'">
                 <adf-txt-viewer [urlFile]="urlFile"
-                                [blobFile]="blobFile">
-                </adf-txt-viewer>
+                                [blobFile]="blobFile" />
             </ng-container>
 
             <ng-container *ngSwitchCase="'custom'">
@@ -77,8 +73,7 @@
                                            [url]="urlFile"
                                            [extension]="extension"
                                            [nodeId]="nodeId"
-                                           [attr.data-automation-id]="ext.component">
-                    </adf-preview-extension>
+                                           [attr.data-automation-id]="ext.component" />
                 </ng-container>
 
                 <ng-container *ngFor="let extensionTemplate of extensionTemplates">
@@ -91,7 +86,7 @@
             </ng-container>
 
             <ng-container *ngSwitchDefault>
-                <adf-viewer-unknown-format></adf-viewer-unknown-format>
+                <adf-viewer-unknown-format />
             </ng-container>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <mat-card class="adf-permission-card" id="adf-permission-manager-card">
     <div *ngIf="(permissionList.data$ | async) === null && permissionList.loading$ | async" class="adf-permission-loader">
-        <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'"></mat-progress-spinner>
+        <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" />
     </div>
 
     <ng-container *ngIf="permissionList.error$ | async">
@@ -22,14 +22,14 @@
                     </h3>
 
                     <mat-slide-toggle
+                        *ngIf="updatePermissionsAllowed"
                         class="adf-inherit-toggle"
                         title="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate }}"
                         color="primary"
                         aria-label="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate}}"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"
-                        (change)="permissionList.toggleInherited($event)">
-                    </mat-slide-toggle>
+                        (change)="permissionList.toggleInherited($event)" />
                 </span>
 
                 <span class="adf-inherit-subtitle" title="total">
@@ -60,8 +60,7 @@
                     [permissions]="model.inheritedPermissions"
                     [showLocation]="true"
                     [selectionMode]="'none'"
-                    [roles]="model.roles">
-                </adf-permission-container>
+                    [roles]="model.roles" />
             </div>
         </ng-template>
 
@@ -71,23 +70,25 @@
 
                 <div class="adf-toolbar--spacer"></div>
 
-                <button
-                    mat-icon-button
-                    title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
-                    (click)="openAddPermissionDialog()"
-                    class="adf-add-permission-button"
-                    data-automation-id="adf-add-permission-button">
-                    <mat-icon>person_add_outline</mat-icon>
-                </button>
+                <ng-container *ngIf="updatePermissionsAllowed">
+                    <button
+                        mat-icon-button
+                        title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
+                        (click)="openAddPermissionDialog()"
+                        class="adf-add-permission-button"
+                        data-automation-id="adf-add-permission-button">
+                        <mat-icon>person_add_outline</mat-icon>
+                    </button>
 
-                <button
-                    mat-icon-button
-                    title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
-                    [disabled]="!selectedPermissions?.length"
-                    (click)="deleteSelection()"
-                    data-automation-id="adf-delete-selected-permission">
-                    <mat-icon class="adf-delete-selected-permission-icon">delete_outline</mat-icon>
-                </button>
+                    <button
+                        mat-icon-button
+                        title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
+                        [disabled]="!selectedPermissions?.length"
+                        (click)="deleteSelection()"
+                        data-automation-id="adf-delete-selected-permission">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </ng-container>
             </section>
 
             <adf-permission-container
@@ -100,8 +101,8 @@
                 (updateAll)="updateAllPermission($event)"
                 (row-select)="onSelect($any($event).detail.selection)"
                 (row-unselect)="onSelect($any($event).detail.selection)"
-                [roles]="model.roles">
-            </adf-permission-container>
+                [roles]="model.roles"
+                [isReadOnly]="!updatePermissionsAllowed"/>
 
         </mat-card-content>
     </ng-container>

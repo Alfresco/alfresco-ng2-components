@@ -651,8 +651,8 @@ describe('TaskListComponent', () => {
     imports: [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
     template: ` <adf-tasklist #taskList>
         <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
-            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3" />
+            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden" />
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{ entry.row?.obj?.startedBy | fullName }}</div>
@@ -742,8 +742,8 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" />
+            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden" />
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{ entry.row?.obj?.startedBy | fullName }}</div>

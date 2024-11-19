@@ -3,6 +3,6 @@
              [labelClass]='selectedIndex === i ? "adf-search-tab-label-active" : ""'
              [bodyClass]='selectedIndex === i ? "adf-search-tab-content-active" : ""'
              label="{{tabContent.name | translate}}">
-        <ng-container *ngTemplateOutlet="tabContent.templateRef"></ng-container>
+        <ng-container *ngTemplateOutlet="tabContent.templateRef" />
     </mat-tab>
 </mat-tab-group>

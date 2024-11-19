@@ -2,7 +2,7 @@
 Title: Card View Update service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2022-11-25
+Last reviewed: 2024-10-29
 ---
 
 # [Card View Update service](../../../lib/core/src/lib/card-view/services/card-view-update.service.ts "Defined in card-view-update.service.ts")
@@ -137,6 +137,19 @@ Example
    this.cardViewUpdateService.updateElement(cardViewBaseItemModel)
 ```
 
+## Autocomplete Input Value
+
+The `autocompleteInputValue$` property is a Subject that emits the current value of the autocomplete input field. This can be used to track changes in the input field and respond accordingly.
+
+### Example
+
+You can subscribe to `autocompleteInputValue$` to get the current value of the autocomplete input field and update the options accordingly.
+
+```ts
+    this.cardViewUpdateService.autocompleteInputValue$.subscribe(value => {
+        this.options$ = this.getOptions(value);
+    });
+```
 ## See also
 
 -   [Card view component](../components/card-view.component.md)

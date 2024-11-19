@@ -21,7 +21,7 @@
              [id]="'field-' + currentRootElement?.id + '-container'"
              class="adf-container-widget"
              [hidden]="!currentRootElement?.isVisible">
-            <adf-header-widget [element]="currentRootElement"></adf-header-widget>
+            <adf-header-widget [element]="currentRootElement" />
             <div *ngIf="currentRootElement?.form?.enableFixedSpace; else fixingTemplate">
                 <div class="adf-grid-list"
                      [ngStyle]="{ 'grid-template-columns': 'repeat(' + getNumberOfColumns(currentRootElement) + ', 1fr)' }"
@@ -29,7 +29,7 @@
                     <div class="adf-grid-list-item"
                          *ngFor="let field of getContainerFields(currentRootElement)"
                          [ngStyle]="{ 'grid-area': 'auto / auto / span ' + (field?.rowspan || 1) + ' / span ' + (field?.colspan || 1) }">
-                        <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
+                        <adf-form-field *ngIf="field" [field]="field" />
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                          *ngFor="let column of currentRootElement?.columns"
                          [style.width.%]="getColumnWith(currentRootElement)">
                         <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
-                            <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
+                            <adf-form-field *ngIf="field" [field]="field" />
                         </div>
                     </div>
                 </section>
@@ -48,12 +48,12 @@
 
             <ng-template #columnViewItem let-column="column">
                 <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
-                    <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
+                    <adf-form-field *ngIf="field" [field]="field" />
                 </div>
             </ng-template>
         </div>
         <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
-            <adf-form-field [field]="currentRootElement"></adf-form-field>
+            <adf-form-field [field]="currentRootElement" />
         </div>
     </div>
 </ng-template>

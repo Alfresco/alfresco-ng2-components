@@ -59,7 +59,6 @@ describe('SavedSearchesService', () => {
         service = TestBed.inject(SavedSearchesService);
         authService = TestBed.inject(AuthenticationService);
         spyOn(service.nodesApi, 'getNode').and.callFake(() => Promise.resolve({ entry: { id: testNodeId } } as NodeEntry));
-        spyOn(service.searchApi, 'search').and.callFake(() => Promise.resolve({ list: { entries: [] } }));
         spyOn(service.nodesApi, 'createNode').and.callFake(() => Promise.resolve({ entry: { id: 'new-node-id' } }));
         spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
         getNodeContentSpy = spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
@@ -69,7 +68,7 @@ describe('SavedSearchesService', () => {
         localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
     });
 
-    it('should retrieve saved searches from the saved-searches.json file', (done) => {
+    it('should retrieve saved searches from the config.json file', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
         service.innit();
@@ -84,15 +83,16 @@ describe('SavedSearchesService', () => {
         });
     });
 
-    it('should create saved-searches.json file if it does not exist', (done) => {
+    it('should create config.json file if it does not exist', (done) => {
+        const error: Error = { name: 'test', message: '{ "error": { "statusCode": 404 } }' };
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
+        service.nodesApi.getNode = jasmine.createSpy().and.returnValue(Promise.reject(error));
         getNodeContentSpy.and.callFake(() => Promise.resolve(new Blob([''])));
         service.innit();
 
         service.getSavedSearches().subscribe((searches) => {
-            expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-');
-            expect(service.searchApi.search).toHaveBeenCalled();
-            expect(service.nodesApi.createNode).toHaveBeenCalledWith(testNodeId, jasmine.objectContaining({ name: 'saved-searches.json' }));
+            expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-', { relativePath: 'config.json' });
+            expect(service.nodesApi.createNode).toHaveBeenCalledWith('-my-', jasmine.objectContaining({ name: 'config.json' }));
             expect(searches.length).toBe(0);
             done();
         });

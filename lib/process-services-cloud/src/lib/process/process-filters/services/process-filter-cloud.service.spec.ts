@@ -86,16 +86,19 @@ describe('ProcessFilterCloudService', () => {
             expect(res[0].id).toBe('1');
             expect(res[0].name).toBe('MOCK_PROCESS_NAME_1');
             expect(res[0].status).toBe('MOCK_ALL');
+            expect(res[0].statuses).toContain('MOCK_ALL');
 
             expect(res[1].appName).toBe('mock-appName');
             expect(res[1].id).toBe('2');
             expect(res[1].name).toBe('MOCK_PROCESS_NAME_2');
             expect(res[1].status).toBe('MOCK-RUNNING');
+            expect(res[1].statuses).toContain('MOCK-RUNNING');
 
             expect(res[2].appName).toBe('mock-appName');
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('MOCK_PROCESS_NAME_3');
             expect(res[2].status).toBe('MOCK-COMPLETED');
+            expect(res[2].statuses).toContain('MOCK-COMPLETED');
 
             expect(createPreferenceSpy).toHaveBeenCalled();
             done();
@@ -112,16 +115,19 @@ describe('ProcessFilterCloudService', () => {
             expect(res[0].id).toBe('1');
             expect(res[0].name).toBe('MOCK_PROCESS_NAME_1');
             expect(res[0].status).toBe('MOCK_ALL');
+            expect(res[0].statuses).toContain('MOCK_ALL');
 
             expect(res[1].appName).toBe('mock-appName');
             expect(res[1].id).toBe('2');
             expect(res[1].name).toBe('MOCK_PROCESS_NAME_2');
             expect(res[1].status).toBe('MOCK-RUNNING');
+            expect(res[1].statuses).toContain('MOCK-RUNNING');
 
             expect(res[2].appName).toBe('mock-appName');
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('MOCK_PROCESS_NAME_3');
             expect(res[2].status).toBe('MOCK-COMPLETED');
+            expect(res[2].statuses).toContain('MOCK-COMPLETED');
 
             expect(getPreferencesSpy).toHaveBeenCalled();
             done();
@@ -140,16 +146,19 @@ describe('ProcessFilterCloudService', () => {
             expect(res[0].id).toBe('1');
             expect(res[0].name).toBe('MOCK_PROCESS_NAME_1');
             expect(res[0].status).toBe('MOCK_ALL');
+            expect(res[0].statuses).toContain('MOCK_ALL');
 
             expect(res[1].appName).toBe('mock-appName');
             expect(res[1].id).toBe('2');
             expect(res[1].name).toBe('MOCK_PROCESS_NAME_2');
             expect(res[1].status).toBe('MOCK-RUNNING');
+            expect(res[1].statuses).toContain('MOCK-RUNNING');
 
             expect(res[2].appName).toBe('mock-appName');
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('MOCK_PROCESS_NAME_3');
             expect(res[2].status).toBe('MOCK-COMPLETED');
+            expect(res[2].statuses).toContain('MOCK-COMPLETED');
 
             expect(getPreferencesSpy).toHaveBeenCalled();
             expect(createPreferenceSpy).toHaveBeenCalled();

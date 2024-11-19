@@ -34,13 +34,13 @@
             (uploadNewFileVersion)="onUploadNewFileVersion($event)"
             (contentModelFileHandler)="contentModelFormFileHandler($event)"
             (removeAttachFile)="onRemoveAttachFile($event)"
-        ></adf-cloud-file-properties-table>
+        />
         <div *ngIf="!hasFile && field.readOnly" id="{{'adf-attach-empty-list-'+field.id}}">
             {{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}
         </div>
 
     </div>
 
-    <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget [error]="field.validationSummary" />
+    <error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
 </div>

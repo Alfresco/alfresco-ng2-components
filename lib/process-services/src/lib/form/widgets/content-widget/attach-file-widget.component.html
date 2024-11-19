@@ -36,14 +36,14 @@
                     (click)="openSelectDialogFromFileSource()"
                 >
                     <mat-icon>
-                        <adf-alfresco-icon></adf-alfresco-icon>
+                        <adf-alfresco-icon />
                     </mat-icon>
                     {{ field.params?.fileSource?.name }}
                 </button>
                 <div *ngIf="!isDefinedSourceFolder()">
                     <button mat-menu-item *ngFor="let repo of repositoryList" id="attach-{{ repo?.name }}" (click)="openSelectDialog(repo)">
                         <mat-icon>
-                            <adf-alfresco-icon></adf-alfresco-icon>
+                            <adf-alfresco-icon />
                         </mat-icon>
                         {{ repo.name }}
                     </button>
@@ -114,5 +114,5 @@
     </mat-list>
 </div>
 
-<error-widget [error]="field.validationSummary"></error-widget>
-<error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+<error-widget [error]="field.validationSummary" />
+<error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />

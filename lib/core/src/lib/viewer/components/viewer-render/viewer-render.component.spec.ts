@@ -33,8 +33,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     standalone: true,
     imports: [ViewerExtensionDirective, ViewerRenderComponent],
     template: `
-        <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1></adf-viewer-render>
-        <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
+        <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1 />
+        <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2 />
         <ng-template #viewerExtension>
             <adf-viewer-extension [supportedExtensions]="['json']">
                 <ng-template>

@@ -25,8 +25,8 @@
             <br />
 
             <mat-form-field *ngIf="form.value?.isTimeLock">
-                <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
-                <mat-datetimepicker #datetimePicker type="datetime" [openOnFocus]="true" [timeInterval]="1"></mat-datetimepicker>
+                <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix />
+                <mat-datetimepicker #datetimePicker type="datetime" [openOnFocus]="true" [timeInterval]="1" />
                 <input matInput [formControlName]="'time'" [matDatetimepicker]="datetimePicker" required autocomplete="false">
             </mat-form-field>
         </div>

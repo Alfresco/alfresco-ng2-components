@@ -99,8 +99,6 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
     }
 
     protected buildQueryData(requestNode: TaskListRequestModel) {
-        const variableKeys = requestNode.variableKeys?.length > 0 ? requestNode.variableKeys.join(',') : undefined;
-
         const queryData: any = {
             status: requestNode.status,
             processDefinitionName: requestNode.processDefinitionName,
@@ -114,7 +112,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
             createdTo: requestNode.createdTo,
             dueDateFrom: requestNode.dueDateFrom,
             dueDateTo: requestNode.dueDateTo,
-            variableKeys
+            processVariableKeys: requestNode.processVariableKeys
         };
 
         Object.keys(queryData).forEach((key) => {

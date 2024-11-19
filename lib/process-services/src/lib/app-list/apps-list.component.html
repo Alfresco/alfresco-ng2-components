@@ -35,7 +35,7 @@
 
 <ng-container *ngIf="isLoading(); else empty">
     <div class="adf-app-list-spinner">
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        <mat-progress-spinner mode="indeterminate" />
     </div>
 </ng-container>
 
@@ -50,8 +50,7 @@
             <adf-empty-content
                 icon="apps"
                 [title]="'ADF_TASK_LIST.APPS.TITLE' | translate"
-                [subtitle]="'ADF_TASK_LIST.APPS.SUBTITLE' | translate">
-            </adf-empty-content>
+                [subtitle]="'ADF_TASK_LIST.APPS.SUBTITLE' | translate" />
         </ng-template>
     </div>
 </ng-template>

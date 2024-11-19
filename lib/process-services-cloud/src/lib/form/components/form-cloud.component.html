@@ -21,7 +21,7 @@
                     </span>
                 </div>
 
-                <adf-toolbar-divider *ngIf="displayConfiguration?.options?.displayCloseButton"></adf-toolbar-divider>
+                <adf-toolbar-divider *ngIf="displayConfiguration?.options?.displayCloseButton" />
                     <button
                             *ngIf="displayConfiguration?.options?.displayCloseButton"
                             class="adf-cloud-form-close-button"
@@ -75,8 +75,7 @@
                     <adf-form-renderer
                         [formDefinition]="form"
                         [readOnly]="readOnly"
-                    >
-                    </adf-form-renderer>
+                    />
                 </mat-card-content>
                 <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
                     <ng-content select="adf-cloud-form-custom-outcomes"></ng-content>

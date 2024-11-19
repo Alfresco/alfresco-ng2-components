@@ -23,8 +23,7 @@
                 *ngIf="!customLoadingContent"
                 class="adf-process-list-loading-margin"
                 color="primary"
-                mode="indeterminate">
-            </mat-progress-spinner>
+                mode="indeterminate" />
             <ng-content select="adf-custom-loading-content-template"></ng-content>
         </ng-template>
     </adf-loading-content-template>
@@ -33,8 +32,7 @@
                 <adf-empty-content *ngIf="!customEmptyContent"
                     icon="assessment"
                     [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate"
-                    [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
-                </adf-empty-content>
+                    [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate" />
             <ng-content select="adf-custom-empty-content-template"></ng-content>
         </ng-template>
     </adf-no-content-template>

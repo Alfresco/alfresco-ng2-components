@@ -3,7 +3,7 @@
     <ol>
       <ng-container *ngFor="let breadcrumbTemplate of selectedBreadcrumbs; last as last">
         <li adf-breadcrumb-focus class="adf-breadcrumb__item-wrapper">
-          <ng-container *ngTemplateOutlet="breadcrumbTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="breadcrumbTemplate" />
           <div *ngIf="!last" class="adf-breadcrumb__chevron" [class.adf-breadcrumb__chevron-before--compact]="compact" ></div>
         </li>
 

@@ -25,14 +25,17 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { CardViewUpdateService, NoopTranslateModule } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewSelectItemComponent>;
     let component: CardViewSelectItemComponent;
     let appConfig: AppConfigService;
+    let cardViewUpdateService: CardViewUpdateService;
     const mockData = [
         { key: 'one', label: 'One' },
         { key: 'two', label: 'Two' },
@@ -65,6 +68,7 @@ describe('CardViewSelectItemComponent', () => {
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.inject(AppConfigService);
+        cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         component.property = new CardViewSelectItemModel(mockDefaultProps);
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
@@ -91,7 +95,7 @@ describe('CardViewSelectItemComponent', () => {
                 editable: false
             });
 
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             const readOnly = fixture.debugElement.query(By.css('[data-automation-class="read-only-value"]'));
@@ -108,7 +112,7 @@ describe('CardViewSelectItemComponent', () => {
             });
             component.editable = true;
             component.displayNoneOption = true;
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             expect(component.value).toEqual('two');
@@ -131,7 +135,7 @@ describe('CardViewSelectItemComponent', () => {
             });
             component.editable = true;
             component.displayNoneOption = true;
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             expect(component.value).toEqual(2);
@@ -155,7 +159,7 @@ describe('CardViewSelectItemComponent', () => {
             });
             component.editable = true;
             component.displayNoneOption = true;
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             expect(component.isEditable).toBe(true);
@@ -168,7 +172,7 @@ describe('CardViewSelectItemComponent', () => {
         });
 
         it('should render select box if editable property is TRUE', async () => {
-            component.ngOnChanges();
+            component.ngOnChanges({});
             component.editable = true;
             fixture.detectChanges();
 
@@ -176,7 +180,7 @@ describe('CardViewSelectItemComponent', () => {
         });
 
         it('should not have label twice', async () => {
-            component.ngOnChanges();
+            component.ngOnChanges({});
             component.editable = true;
             fixture.detectChanges();
 
@@ -197,7 +201,7 @@ describe('CardViewSelectItemComponent', () => {
             });
             component.editable = true;
             component.displayNoneOption = false;
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             const select = await loader.getHarness(MatSelectHarness);
@@ -225,7 +229,7 @@ describe('CardViewSelectItemComponent', () => {
             });
             component.editable = true;
             component.displayNoneOption = false;
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             const select = await loader.getHarness(MatSelectHarness);
@@ -245,7 +249,7 @@ describe('CardViewSelectItemComponent', () => {
             });
             component.editable = true;
             component.displayNoneOption = false;
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.detectChanges();
 
             const select = await loader.getHarness(MatSelectHarness);
@@ -253,6 +257,96 @@ describe('CardViewSelectItemComponent', () => {
 
             const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input'));
             expect(filterInput).not.toBe(null);
+        });
+    });
+
+    describe('Autocomplete based', () => {
+        beforeEach(() => {
+            component.property = new CardViewSelectItemModel({
+                label: 'Test Label',
+                value: 'initial value',
+                key: 'test-key',
+                default: 'Placeholder',
+                editable: true,
+                autocompleteBased: true,
+                options$: of([
+                    { key: '1', label: 'Option 1' },
+                    { key: '2', label: 'Option 2' }
+                ])
+            });
+        });
+
+        it('should set templateType to autocompleteBased', () => {
+            component.property.autocompleteBased = true;
+            fixture.detectChanges();
+            expect(component.templateType).toBe('autocompleteBased');
+        });
+
+        it('should set initial value to autocompleteControl', () => {
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            expect(component.autocompleteControl.value).toBe('initial value');
+        });
+
+        it('should emit autocompleteInputValue$ with new value on autocompleteControl change', async () => {
+            const autocompleteValueSpy = spyOn(cardViewUpdateService.autocompleteInputValue$, 'next');
+            component.editedValue = '';
+            component.editable = true;
+            component.ngOnChanges({ property: { firstChange: true } } as any);
+            fixture.detectChanges();
+
+            component.autocompleteControl.setValue('new value');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(autocompleteValueSpy).toHaveBeenCalledWith('new value');
+        });
+
+        it('should update value correctly on option selected', () => {
+            cardViewUpdateService.update = jasmine.createSpy('update');
+            const event: MatAutocompleteSelectedEvent = {
+                option: {
+                    value: '1'
+                }
+            } as MatAutocompleteSelectedEvent;
+
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            component.onOptionSelected(event);
+            fixture.detectChanges();
+
+            expect(component.autocompleteControl.value).toBe('Option 1');
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(jasmine.objectContaining(component.property), '1');
+        });
+
+        it('should disable the autocomplete control', () => {
+            component.editable = false;
+            component.ngOnChanges({ editable: { currentValue: false, previousValue: true, firstChange: false, isFirstChange: () => false } });
+            fixture.detectChanges();
+            expect(component.autocompleteControl.disabled).toBeTrue();
+        });
+
+        it('should enable the autocomplete control', () => {
+            component.editable = true;
+            component.ngOnChanges({ editable: { currentValue: true, previousValue: false, firstChange: false, isFirstChange: () => false } });
+            fixture.detectChanges();
+            expect(component.autocompleteControl.enabled).toBeTrue();
+        });
+
+        it('should populate options for autocomplete', async () => {
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            const autocomplete = await loader.getHarness(MatAutocompleteHarness);
+            await autocomplete.enterText('Op');
+            fixture.detectChanges();
+
+            const options = await autocomplete.getOptions();
+            expect(options.length).toBe(2);
+            expect(await options[0].getText()).toContain('Option 1');
+            expect(await options[1].getText()).toContain('Option 2');
         });
     });
 });

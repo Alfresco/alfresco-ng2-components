@@ -13,12 +13,11 @@
                 </div>
 
                 <ng-container *ngIf="thumbnailsTemplate">
-                    <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
+                    <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext" />
                 </ng-container>
                 <adf-pdf-thumbnails *ngIf="!thumbnailsTemplate && !isPanelDisabled"
                                     (close)="toggleThumbnails()"
-                                    [pdfViewer]="pdfViewer">
-                </adf-pdf-thumbnails>
+                                    [pdfViewer]="pdfViewer" />
             </div>
         </div>
     </ng-container>
@@ -34,7 +33,7 @@
                  aria-expanded="true">
                 <div id="loader-container" class="adf-loader-container">
                     <div class="adf-loader-item">
-                        <mat-progress-bar class="adf-loader-item-progress-bar" mode="indeterminate"></mat-progress-bar>
+                        <mat-progress-bar class="adf-loader-item-progress-bar" mode="indeterminate" />
                     </div>
                 </div>
             </div>
@@ -54,7 +53,7 @@
                     (click)="toggleThumbnails()">
                 <mat-icon>dashboard</mat-icon>
             </button>
-            <adf-toolbar-divider></adf-toolbar-divider>
+            <adf-toolbar-divider />
         </ng-container>
 
         <button id="viewer-previous-page-button"

@@ -15,8 +15,8 @@
                 <mat-cell *matCellDef="let item">{{item.value}}</mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="['name', 'value']"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: ['name', 'value'];"></mat-row>
+            <mat-header-row *matHeaderRowDef="['name', 'value']" />
+            <mat-row *matRowDef="let row; columns: ['name', 'value'];" />
         </mat-table>
     </div>
 

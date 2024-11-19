@@ -4,7 +4,7 @@
 
     <ng-content *ngIf="!title" info-drawer-title select="[info-drawer-title]"></ng-content>
     <ng-content info-drawer-buttons select="[info-drawer-buttons]"></ng-content>
-    <ng-container info-drawer-content *ngIf="showTabLayout(); then tabLayout else singleLayout"></ng-container>
+    <ng-container info-drawer-content *ngIf="showTabLayout(); then tabLayout else singleLayout" />
 
     <ng-template #tabLayout>
         <mat-tab-group [(selectedIndex)]="selectedIndex" class="adf-info-drawer-tabs" (selectedTabChange)="onTabChange($event)" [animationDuration]="0">
@@ -22,7 +22,7 @@
                     <span *ngIf="contentBlock.label">{{ contentBlock.label | translate }}</span>
                 </ng-template>
 
-                <ng-container *ngTemplateOutlet="contentBlock.content"></ng-container>
+                <ng-container *ngTemplateOutlet="contentBlock.content" />
             </mat-tab>
         </mat-tab-group>
     </ng-template>

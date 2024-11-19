@@ -138,7 +138,6 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     }
 
     onSuccess(event: any) {
-        this.disabled = false;
         this.success.emit(event);
     }
 

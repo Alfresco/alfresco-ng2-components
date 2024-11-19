@@ -919,6 +919,34 @@ describe('DataTable', () => {
         }
     });
 
+    it('should update only selectable rows on "select all" click', () => {
+        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const rows = data.getRows();
+
+        rows[0].isSelectable = false;
+
+        dataTable.data = data;
+        dataTable.multiselect = true;
+        dataTable.ngAfterContentInit();
+
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
+        expect(dataTable.isSelectAllChecked).toBe(true);
+        for (let i = 0; i < rows.length; i++) {
+            if (i === 0) {
+                expect(rows[i].isSelected).toBe(false);
+                continue;
+            }
+
+            expect(rows[i].isSelected).toBe(true);
+        }
+
+        dataTable.onSelectAllClick({ checked: false } as MatCheckboxChange);
+        expect(dataTable.isSelectAllChecked).toBe(false);
+        for (let i = 0; i < rows.length; i++) {
+            expect(rows[i].isSelected).toBe(false);
+        }
+    });
+
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
         dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });

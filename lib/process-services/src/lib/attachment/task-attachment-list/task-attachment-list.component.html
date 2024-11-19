@@ -18,15 +18,14 @@
             </adf-no-content-template>
 
             <data-columns>
-                <data-column key="icon" type="image" [sr-title]="'ADF_TASK_LIST.PROPERTIES.THUMBNAIL'" [sortable]="false"></data-column>
-                <data-column key="name" type="text" title="ADF_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-ellipsis-cell" [sortable]="true"></data-column>
-                <data-column key="created" type="date" format="shortDate" title="ADF_TASK_LIST.PROPERTIES.CREATED"></data-column>
+                <data-column key="icon" type="image" [sr-title]="'ADF_TASK_LIST.PROPERTIES.THUMBNAIL'" [sortable]="false" />
+                <data-column key="name" type="text" title="ADF_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-ellipsis-cell" [sortable]="true" />
+                <data-column key="created" type="date" format="shortDate" title="ADF_TASK_LIST.PROPERTIES.CREATED" />
             </data-columns>
             <adf-loading-content-template>
                 <ng-template>
                 <!--Add your custom loading template here-->
-                    <mat-progress-spinner class="adf-attachment-list-loading-margin" [color]="'primary'" [mode]="'indeterminate'">
-                    </mat-progress-spinner>
+                    <mat-progress-spinner class="adf-attachment-list-loading-margin" [color]="'primary'" [mode]="'indeterminate'" />
                 </ng-template>
             </adf-loading-content-template>
 </adf-datatable>

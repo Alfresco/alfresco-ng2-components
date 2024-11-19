@@ -11,7 +11,7 @@
             [disabled]="!column.editable"
             (focusout)="onDateChanged($any($event).target.value)"
             (dateChange)="onDateChanged($event)">
-        <mat-datepicker-toggle  *ngIf="column.editable" matSuffix [for]="datePicker" class="adf-date-editor-button" ></mat-datepicker-toggle>
+        <mat-datepicker-toggle  *ngIf="column.editable" matSuffix [for]="datePicker" class="adf-date-editor-button" />
     </mat-form-field>
-    <mat-datepicker #datePicker [touchUi]="true"></mat-datepicker>
+    <mat-datepicker #datePicker [touchUi]="true" />
 </div>

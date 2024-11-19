@@ -7,7 +7,7 @@
             [controllerName]="'metric'"
             (fieldChanged)="onMetricChanges(field)"
             [showDefaultOption]="false"
-        ></analytics-dropdown-widget>
+        />
     </form>
     <adf-diagram
         *ngIf="currentMetric"
@@ -15,6 +15,6 @@
         [metricPercentages]="currentMetric"
         [metricColor]="currentMetricColors"
         [metricType]="metricType"
-    ></adf-diagram>
+    />
 </div>
 <div *ngIf="!hasMetric()">No metric found</div>

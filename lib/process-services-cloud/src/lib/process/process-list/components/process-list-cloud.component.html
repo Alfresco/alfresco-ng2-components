@@ -29,8 +29,7 @@
                     *ngIf="!customLoadingContent"
                     class="adf-cloud-process-list-loading-margin"
                     [color]="'primary'"
-                    [mode]="'indeterminate'">
-                </mat-progress-spinner>
+                    [mode]="'indeterminate'" />
                 <ng-content select="adf-custom-loading-content-template"></ng-content>
             </ng-template>
         </adf-loading-content-template>
@@ -39,8 +38,7 @@
                 <adf-empty-content *ngIf="!emptyCustomContent"
                     icon="assessment"
                     [title]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.TITLE' | translate"
-                    [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate">
-                </adf-empty-content>
+                    [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate" />
                 <ng-content select="adf-custom-empty-content-template"></ng-content>
             </ng-template>
         </adf-no-content-template>
@@ -50,8 +48,7 @@
                 <adf-datatable-column-selector
                     [columns]="columns"
                     [mainMenuTrigger]="mainMenuTrigger"
-                    (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
-                </adf-datatable-column-selector>
+                    (submitColumnsVisibility)="onColumnsVisibilityChange($event)" />
             </ng-template>
         </adf-main-menu-datatable-template>
 </adf-datatable>

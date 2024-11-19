@@ -21,12 +21,12 @@
           }
         ],
         "no-shadow": "warn",
-        "quote-props": "warn",
+        "quote-props": "off",
         "object-shorthand": "warn",
         "prefer-const": "warn",
         "arrow-body-style": "warn",
         "@angular-eslint/no-output-native": "off",
-        "space-before-function-paren": "warn",
+        "space-before-function-paren": "off",
         "@angular-eslint/component-selector": [
           "error",
           {

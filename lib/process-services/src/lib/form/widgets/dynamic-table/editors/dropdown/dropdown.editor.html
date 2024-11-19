@@ -9,7 +9,7 @@
             [required]="column.required"
             [disabled]="!column.editable"
             (selectionChange)="onValueChanged(row, column, $event)">
-            <mat-option></mat-option>
+            <mat-option />
             <mat-option *ngFor="let opt of options" [value]="opt.name" [id]="opt.id">{{opt.name}}</mat-option>
         </mat-select>
     </mat-form-field>
