@@ -89,6 +89,7 @@
         --adf-error-color: $adf-error-color,
         --adf-secondary-button-background: $adf-secondary-button-background,
         --adf-secondary-modal-text-color: $adf-secondary-modal-text-color,
+        --adf-disabled-button-background: $adf-disabled-button-background,
 
         --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
     );

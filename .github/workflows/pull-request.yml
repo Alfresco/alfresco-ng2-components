@@ -84,10 +84,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@231ca442a35bf41dbda3c9960d74e8d703c208f4 # v8.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@a0837df06d10de2cae8a99319e8e101a6cbe9083 # v8.4.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@231ca442a35bf41dbda3c9960d74e8d703c208f4 # v8.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@a0837df06d10de2cae8a99319e8e101a6cbe9083 # v8.4.0
 
       - name: ci:force flag parser
         shell: bash
@@ -278,7 +278,7 @@ jobs:
         uses: ./.github/actions/slack-group-area
         with:
           affected: ${{ steps.e2e-result.outputs.result }}
-      - uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0 # v1.27.0
+      - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
         name: Nofify QA failure
         if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
         env:
