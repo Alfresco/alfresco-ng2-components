@@ -83,7 +83,7 @@ export interface ProcessListRequestProcessVariableFilter {
     processDefinitionKey?: string;
     name?: string;
     type?: string;
-    value?: string;
+    value?: string | number;
     operator?: string;
 }
 
@@ -130,6 +130,7 @@ export class ProcessListRequestModel {
         this.suspendedFrom = obj.suspendedFrom;
         this.suspendedTo = obj.suspendedTo;
         this.processVariableKeys = obj.processVariableKeys;
+        this.processVariableFilters = obj.processVariableFilters;
     }
 }
 
@@ -148,6 +149,7 @@ export class ProcessFilterCloudAdapter extends ProcessListRequestModel {
             initiator: filter.initiators,
             appVersion: filter.appVersions,
             status: filter.statuses,
+            processVariableFilters: filter.processVariableFilters,
             lastModifiedFrom: filter.lastModifiedFrom?.toISOString(),
             lasModifiedTo: filter.lastModifiedTo?.toISOString(),
             startFrom: filter.startFrom,

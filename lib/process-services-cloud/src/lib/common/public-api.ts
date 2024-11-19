@@ -16,3 +16,4 @@
  */
 
 export * from './interface/index';
+export * from './date-range-filter/date-range-filter.service';
