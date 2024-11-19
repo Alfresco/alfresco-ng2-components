@@ -87,9 +87,9 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
 
     private updateFormControlState(): void {
         this.datetimeInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
-        if (this.field?.readOnly || this.readOnly) {
-            this.datetimeInputControl.disable({ emitEvent: false });
-        }
+        this.field?.readOnly || this.readOnly
+            ? this.datetimeInputControl.disable({ emitEvent: false })
+            : this.datetimeInputControl.enable({ emitEvent: false });
 
         this.datetimeInputControl.updateValueAndValidity({ emitEvent: false });
     }
