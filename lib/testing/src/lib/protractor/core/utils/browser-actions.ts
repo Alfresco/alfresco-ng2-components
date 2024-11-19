@@ -24,7 +24,6 @@ import * as fs from 'fs';
 import { ApiUtil } from '../../../shared/api/api.util';
 
 export class BrowserActions {
-
     static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
         Logger.info(`Click until element is not present: ${elementToClick.locator().toString()}`);
         const predicate = (isVisible: boolean) => isVisible;
@@ -58,8 +57,8 @@ export class BrowserActions {
     static async clickScript(elementToClick: ElementFinder): Promise<void> {
         Logger.info(`Click script ${elementToClick.locator().toString()}`);
 
-        await browser.executeScript(`arguments[0].scrollIntoView();`, elementToClick);
-        await browser.executeScript(`arguments[0].click();`, elementToClick);
+        await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').scrollIntoView()`);
+        await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').click()`);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
@@ -102,7 +101,8 @@ export class BrowserActions {
         if (present) {
             let text = await elementFinder.getText();
 
-            if (text === '') { // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
+            if (text === '') {
+                // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
                 Logger.info(`Use backup get text script`);
 
                 text = await this.getTextScript(elementFinder);
