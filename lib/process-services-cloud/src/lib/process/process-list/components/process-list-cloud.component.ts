@@ -49,7 +49,7 @@ import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import {
     PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
@@ -299,12 +299,11 @@ export class ProcessListCloudComponent
             totalItems: 0
         });
 
-        this.isLoading = true;
-
         combineLatest([
             this.isColumnSchemaCreated$,
             this.fetchProcessesTrigger$
         ]).pipe(
+            tap(() => this.isLoading = true),
             filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
             switchMap(() => {
                 if (this.searchMethod === 'POST') {
