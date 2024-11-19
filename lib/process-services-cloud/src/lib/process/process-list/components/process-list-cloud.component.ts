@@ -303,7 +303,6 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                 return isColumnSchemaCreated;
             }),
             switchMap(() => {
-                console.count('load');
                 if (this.searchMethod === 'POST') {
                     const requestNode = this.createProcessListRequestNode();
                     this.processListRequestNode = requestNode;
