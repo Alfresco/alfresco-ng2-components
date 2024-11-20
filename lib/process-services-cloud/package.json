@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-process-services-cloud",
   "description": "Alfresco ADF process services cloud",
-  "version": "7.0.0-alpha.6",
+  "version": "7.0.0-alpha.7-0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
