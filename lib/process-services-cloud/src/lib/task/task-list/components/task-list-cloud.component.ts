@@ -334,6 +334,14 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     }
 
     private getTaskListRequestSorting(): TaskListRequestSortingModel {
+        if (!this.sorting?.length) {
+            return new TaskListRequestSortingModel({
+                orderBy: this.defaultSorting.key,
+                direction: this.defaultSorting.direction,
+                isFieldProcessVariable: false
+            });
+        }
+
         const orderBy = this.sorting[0]?.orderBy;
         const direction = this.sorting[0]?.direction;
         const orderByColumn = this.columnList?.columns.find((column) => column.key === orderBy);

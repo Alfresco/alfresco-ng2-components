@@ -547,6 +547,14 @@ export class ProcessListCloudComponent
     }
 
     private getProcessListRequestSorting(): ProcessListRequestSortingModel {
+        if (!this.sorting?.length) {
+            return new ProcessListRequestSortingModel({
+                orderBy: this.defaultSorting.key,
+                direction: this.defaultSorting.direction,
+                isFieldProcessVariable: false
+            });
+        }
+
         const orderBy = this.sorting[0]?.orderBy;
         const direction = this.sorting[0]?.direction;
         const orderByColumn = this.columnList?.columns.find((column) => column.key === orderBy);
