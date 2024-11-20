@@ -20,11 +20,7 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import {
-    TASK_LIST_CLOUD_TOKEN,
-    TASK_LIST_PREFERENCES_SERVICE_TOKEN,
-    TASK_SEARCH_API_METHOD_TOKEN
-} from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
@@ -266,6 +262,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             onlyStandalone: this.standalone,
             name: this.names,
             processDefinitionName: this.processDefinitionNames,
+            processInstanceId: this.processInstanceId,
             priority: this.priorities,
             status: this.statuses,
             completedBy: this.completedByUsers,

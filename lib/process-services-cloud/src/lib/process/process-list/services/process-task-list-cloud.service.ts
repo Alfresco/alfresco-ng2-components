@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
-import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
+import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 
@@ -53,6 +53,30 @@ export class ProcessTaskListCloudService extends BaseCloudService {
         } else {
             return throwError('Appname not configured');
         }
+    }
+
+    /**
+     * Retrieves a list of tasks using an object with optional query properties.
+     *
+     * @param requestNode Query object
+     * @param queryUrl Query url
+     * @returns List of tasks
+     */
+    fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
+        return this.getTaskByRequest(
+            new TaskQueryCloudRequestModel({
+                appName: requestNode.appName,
+                processInstanceId: requestNode.processInstanceId
+            }),
+            queryUrl
+        );
+    }
+
+    getTaskListCounter(requestNode: TaskListRequestModel): Observable<number> {
+        if (!requestNode.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+        return this.fetchTaskList(requestNode).pipe(map((tasks) => tasks.list.pagination.totalItems));
     }
 
     protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
