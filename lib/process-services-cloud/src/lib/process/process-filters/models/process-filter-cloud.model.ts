@@ -20,16 +20,7 @@
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
-
-export type ProcessFilterOperators = 'eq' | 'like' | 'gt' | 'gte' | 'lt' | 'lte';
-
-export interface ProcessVariableFilterModel {
-    processDefinitionKey: string;
-    name: string;
-    type: string;
-    value: string | number;
-    operator: ProcessFilterOperators;
- }
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 export class ProcessFilterCloudModel {
     id: string;

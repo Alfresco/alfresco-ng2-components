@@ -18,6 +18,7 @@
 import { Pagination } from '@alfresco/js-api';
 import { TaskListCloudSortingModel, TaskListRequestSortingModel } from './task-list-sorting.model';
 import { TaskFilterCloudModel } from '../task/task-filters/models/filter-cloud.model';
+import { ProcessVariableFilterModel } from './process-variable-filter.model';
 
 export class TaskQueryCloudRequestModel {
     appName: string;
@@ -93,13 +94,6 @@ export class TaskQueryCloudRequestModel {
     }
 }
 
-export interface TaskListRequestTaskVariableFilter {
-    name?: string;
-    type?: string;
-    value?: string;
-    operator?: string;
-}
-
 export class TaskListRequestModel {
     appName: string;
     pagination?: Pagination;
@@ -128,8 +122,8 @@ export class TaskListRequestModel {
     candidateUserId?: string[];
     candidateGroupId?: string[];
 
-    taskVariableFilters?: TaskListRequestTaskVariableFilter[];
     processVariableKeys?: string[];
+    processVariableFilters?: ProcessVariableFilterModel[];
 
     constructor(obj: Partial<TaskListRequestModel>) {
         if (!obj.appName) {
@@ -162,7 +156,7 @@ export class TaskListRequestModel {
         this.completedTo = obj.completedTo;
         this.candidateUserId = obj.candidateUserId;
         this.candidateGroupId = obj.candidateGroupId;
-        this.taskVariableFilters = obj.taskVariableFilters;
+        this.processVariableFilters = obj.processVariableFilters ?? [];
         this.processVariableKeys = obj.processVariableKeys;
     }
 }
