@@ -157,7 +157,7 @@ export class BrowserVisibility {
     private static textToBePresentInElementValue(elementFinder: ElementFinder, text: string) {
         const hasText = async () =>
             browser
-                .executeScript(`return document.querySelector('${elementFinder}').value`, elementFinder)
+                .executeScript(`return document.querySelector('${elementFinder.locator().value}').value`)
                 .then((actualText: string) => actualText.indexOf(text) > -1, falseIfMissing);
         return protractor.ExpectedConditions.and(protractor.ExpectedConditions.presenceOf(elementFinder), hasText);
     }

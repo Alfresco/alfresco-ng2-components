@@ -65,7 +65,10 @@ export class BrowserActions {
     }
 
     private static async clickScriptByText(elementToClick: ElementFinder): Promise<void> {
-        const locatorMatch = elementToClick.match(new RegExp(/ContainingText\("(.+?)",."(.+?)"/));
+        const locatorMatch = elementToClick
+            .locator()
+            .toString()
+            .match(new RegExp(/ContainingText\("(.+?)",."(.+?)"/));
         const locatorClass = locatorMatch[1];
         const locatorText = locatorMatch[2];
         await browser.executeScript(`function filterElementsByText(selector, text) {
@@ -104,7 +107,9 @@ export class BrowserActions {
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
-        const attributeValue: string = await browser.executeScript(`return document.querySelector('${elementFinder}').getAttribute('${attribute}')`);
+        const attributeValue: string = await browser.executeScript(
+            `return document.querySelector('${elementFinder.locator().value}').getAttribute('${attribute}')`
+        );
         return attributeValue || '';
     }
 
@@ -136,7 +141,7 @@ export class BrowserActions {
 
         const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
-            return browser.executeScript(`return document.querySelector('${elementFinder}').value`);
+            return browser.executeScript(`return document.querySelector('${elementFinder.locator().value}').value`);
         } else {
             Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
@@ -158,7 +163,7 @@ export class BrowserActions {
         await elementFinder.click();
         await elementFinder.sendKeys(protractor.Key.END);
 
-        const value: string = await browser.executeScript(`return document.querySelector('${elementFinder}').value`, elementFinder);
+        const value: string = await browser.executeScript(`return document.querySelector('${elementFinder.locator().value}').value`);
         if (value) {
             for (let i = value.length; i >= 0; i--) {
                 await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
@@ -226,6 +231,6 @@ export class BrowserActions {
 
     // Don't make it pub,ic use getText
     private static async getTextScript(elementFinder: ElementFinder): Promise<string> {
-        return browser.executeScript(`return document.querySelector('${elementFinder}').textContent`);
+        return browser.executeScript(`return document.querySelector('${elementFinder.locator().value}').textContent`);
     }
 }
