@@ -1,0 +1,35 @@
+---
+Title: Changelog for alfresco-ng2-components v7.0.0-alpha.5
+---
+
+# Changelog
+
+- [b575d16e61](git@github.com:Alfresco/alfresco-ng2-components/commit/b575d16e61) AAE-28529 Fix process list loading (#10407)
+- [3078387325](git@github.com:Alfresco/alfresco-ng2-components/commit/3078387325) [ACS-8959] Introduce new `takeUntilDestroyed` operator where possible (#10388)
+- [3f6b60760f](git@github.com:Alfresco/alfresco-ng2-components/commit/3f6b60760f) AAE-28286 Clean redundant log (#10406)
+- [cbb5f14473](git@github.com:Alfresco/alfresco-ng2-components/commit/cbb5f14473) [ACS-8994] the upload new version button is not disabled when clicked and the uploading starts (#10391)
+- [3adccc132e](git@github.com:Alfresco/alfresco-ng2-components/commit/3adccc132e) [ACS-8991] Saved searches potential file conflict fix (#10393)
+- [472671bd50](git@github.com:Alfresco/alfresco-ng2-components/commit/472671bd50) [ACS-8921][ACA] Data Table / The input field in &#34;Filter by Name&#34; dialog is enormous in comparison with the UI design (#10375)
+- [412295306c](git@github.com:Alfresco/alfresco-ng2-components/commit/412295306c) [ACS-8955] [ACA] Data Table / Column Pills Drag button is not centered horizontally (#10384)
+- [0063d83044](git@github.com:Alfresco/alfresco-ng2-components/commit/0063d83044) AAE-28333 Fix search process variabels payload for new API (#10387)
+- [9520b2a4e5](git@github.com:Alfresco/alfresco-ng2-components/commit/9520b2a4e5) [MNT-24698] Concatenate aspect name to the title when there are duplicated aspect titles (#10374)
+- [3111008044](git@github.com:Alfresco/alfresco-ng2-components/commit/3111008044) AAE-28286 Show process variables columns in datatable fix (#10383)
+- [278a5ee143](git@github.com:Alfresco/alfresco-ng2-components/commit/278a5ee143) [ACS-8919] [ACA] Search / Advanced Search Facets / The borders of search facets thickens very slowly when clicked (#10376)
+- [c48022daf4](git@github.com:Alfresco/alfresco-ng2-components/commit/c48022daf4) [MNT-24689] the add user or group icon is displayed within the folder permissions for a user with the collaborator role (#10373)
+- [35c8093706](git@github.com:Alfresco/alfresco-ng2-components/commit/35c8093706) [MNT-24614] Fixed APS basic auth login issue with ADF (#10364)
+- [3ec3e732c0](git@github.com:Alfresco/alfresco-ng2-components/commit/3ec3e732c0) [ACS-8634] Change saved searches config file name (#10370)
+- [3aabb9420d](git@github.com:Alfresco/alfresco-ng2-components/commit/3aabb9420d) AAE-27309 Update class (#10372)
+- [d06c829dac](git@github.com:Alfresco/alfresco-ng2-components/commit/d06c829dac) [ACS-8916] [ACA] The calendar button in advanced search filters is placed too low in the date dialog (#10369)
+- [db22c6aac9](git@github.com:Alfresco/alfresco-ng2-components/commit/db22c6aac9) AAE-27309 Add selectable property to datatable row (#10368)
+- [258f01803c](git@github.com:Alfresco/alfresco-ng2-components/commit/258f01803c) [MNT-24496] ADW Integration with APS Improvements - Re-assign Tasks (#10350)
+- [558ff71878](git@github.com:Alfresco/alfresco-ng2-components/commit/558ff71878) Revert mistakenly deleted file (#10367)
+- [3bcaeef682](git@github.com:Alfresco/alfresco-ng2-components/commit/3bcaeef682) AAE-27327 New process search API (#10365)
+- [f07636e297](git@github.com:Alfresco/alfresco-ng2-components/commit/f07636e297) [ACS-8956] Introduce new ESLint rule for self-closing tags (#10354)
+- [f4cd4dc40a](git@github.com:Alfresco/alfresco-ng2-components/commit/f4cd4dc40a) [ACS-8634] Additional fixes (#10351)
+- [c93823a16b](git@github.com:Alfresco/alfresco-ng2-components/commit/c93823a16b) AAE-25417 Update status to Deployed (#10353)
+- [a8dd5fc5d7](git@github.com:Alfresco/alfresco-ng2-components/commit/a8dd5fc5d7) AAE-25417 Align app status to follow state machine (#10348)
+- [de7ca76225](git@github.com:Alfresco/alfresco-ng2-components/commit/de7ca76225) AAE-27234 Skip nx check for build command to fix Invalid Cache Directory for Task js-api:build (#10349)
+- [a7911338c3](git@github.com:Alfresco/alfresco-ng2-components/commit/a7911338c3) [ACS-8634] &#34;Manage Searches&#34; - a full page list of saved searches (#10307)
+- [ba52074bb5](git@github.com:Alfresco/alfresco-ng2-components/commit/ba52074bb5) [MNT-24682] Kerberos: do not add authorization header (#10320)
+- [ea71e4cdd1](git@github.com:Alfresco/alfresco-ng2-components/commit/ea71e4cdd1) AAE-26475 Move error process to simpleapp (#10321)
+- [872dae6f2d](git@github.com:Alfresco/alfresco-ng2-components/commit/872dae6f2d) Post-release version bump (#10336)
