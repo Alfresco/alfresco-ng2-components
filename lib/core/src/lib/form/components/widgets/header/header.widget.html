@@ -14,11 +14,11 @@
     >
         <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
         <span
-            (click)="onExpanderClicked(element)"
+            [id]="'container-header-label-' + element?.id"
             role="button"
             tabindex="0"
             (keyup.enter)="onExpanderClicked(element)"
-            [id]="'container-header-label-' + element?.id"
+            (click)="onExpanderClicked(element)"
         >
             {{ element.name | translate }}
         </span>
