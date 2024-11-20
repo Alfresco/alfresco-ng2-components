@@ -66,7 +66,7 @@ describe('HeaderWidgetComponent', () => {
     });
 
     it('should NOT render header widget template when type is different then group', () => {
-        spyOnProperty(component.element, 'isGroup').and.returnValue(false);
+        spyOnProperty(component.element, 'isTypeFieldGroup').and.returnValue(false);
 
         fixture.detectChanges();
 

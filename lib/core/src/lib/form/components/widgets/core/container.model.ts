@@ -46,19 +46,19 @@ export class ContainerModel extends FormWidgetModel {
         return this.field.isVisible;
     }
 
-    get isGroup(): boolean {
+    get isTypeFieldGroup(): boolean {
         return this.type === FormFieldTypes.GROUP;
     }
 
     get isCollapsible(): boolean {
-        return this.isGroup && (this.field.params?.allowCollapse ?? false);
+        return this.isTypeFieldGroup && (this.field.params?.allowCollapse ?? false);
     }
 
     get isCollapsedByDefault(): boolean {
-        return this.isGroup && (this.field.params?.collapseByDefault ?? false);
+        return this.isTypeFieldGroup && (this.field.params?.collapseByDefault ?? false);
     }
 
     get hideHeader(): boolean {
-        return this.isGroup && (this.field.params?.hideHeader ?? false);
+        return this.isTypeFieldGroup && (this.field.params?.hideHeader ?? false);
     }
 }

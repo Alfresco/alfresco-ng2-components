@@ -47,52 +47,124 @@ describe('ContainerModel', () => {
         expect(container.colspan).toBe(1);
     });
 
-    it('should return correct visibility', () => {
-        const container = new ContainerModel(field);
-        expect(container.isVisible).toBe(true);
+    describe('isVisible getter', () => {
+        it('should return true when field is visible', () => {
+            const container = new ContainerModel(field);
 
-        field.isVisible = false;
-        expect(container.isVisible).toBe(false);
+            expect(container.isVisible).toBe(true);
+        });
+
+        it('should return false when field is NOT visible', () => {
+            field.isVisible = false;
+            const container = new ContainerModel(field);
+
+            expect(container.isVisible).toBe(false);
+        });
     });
 
-    it('should return correct group status', () => {
-        let container = new ContainerModel(field);
-        expect(container.isGroup).toBe(true);
+    describe('isTypeFieldGroup getter', () => {
+        it('should return true when field is a group', () => {
+            const container = new ContainerModel(field);
 
-        container = new ContainerModel(new FormFieldModel(null, { type: FormFieldTypes.CONTAINER }));
-        expect(container.isGroup).toBe(false);
+            expect(container.isTypeFieldGroup).toBe(true);
+        });
+
+        it('should return false when field is NOT a group', () => {
+            const container = new ContainerModel(new FormFieldModel(null, { type: FormFieldTypes.CONTAINER }));
+
+            expect(container.isTypeFieldGroup).toBe(false);
+        });
     });
 
-    it('should return correct collapsible status', () => {
-        const container = new ContainerModel(field);
-        expect(container.isCollapsible).toBe(false);
+    describe('isCollapsible getter', () => {
+        it('should return false when field is NOT a group', () => {
+            const container = new ContainerModel(new FormFieldModel(null, { type: FormFieldTypes.CONTAINER }));
 
-        field.params.allowCollapse = true;
-        expect(container.isCollapsible).toBe(true);
+            expect(container.isTypeFieldGroup).toBe(false);
+            expect(container.isCollapsible).toBe(false);
+        });
 
-        field.params.allowCollapse = undefined;
-        expect(container.isCollapsible).toBe(false);
+        it('should return false when field is group and allowCollapse is false', () => {
+            const container = new ContainerModel(field);
+
+            expect(container.isTypeFieldGroup).toBe(true);
+            expect(container.isCollapsible).toBe(false);
+        });
+
+        it('should return true when field is a group and allowCollapse is true', () => {
+            field.params.allowCollapse = true;
+            const container = new ContainerModel(field);
+
+            expect(container.isTypeFieldGroup).toBe(true);
+            expect(container.isCollapsible).toBe(true);
+        });
+
+        it('should return false when field is a group and allowCollapse is NOT set', () => {
+            field.params.allowCollapse = undefined;
+            const container = new ContainerModel(field);
+
+            expect(container.isTypeFieldGroup).toBe(true);
+            expect(container.isCollapsible).toBe(false);
+        });
     });
 
-    it('should return correct collapsed by default status', () => {
-        const container = new ContainerModel(field);
-        expect(container.isCollapsedByDefault).toBe(false);
+    describe('isCollapsedByDefault getter', () => {
+        it('should return false when field is NOT a group', () => {
+            const container = new ContainerModel(new FormFieldModel(null, { type: FormFieldTypes.CONTAINER }));
 
-        field.params.collapseByDefault = true;
-        expect(container.isCollapsedByDefault).toBe(true);
+            expect(container.isTypeFieldGroup).toBe(false);
+            expect(container.isCollapsedByDefault).toBe(false);
+        });
 
-        field.params.collapseByDefault = undefined;
-        expect(container.isCollapsedByDefault).toBe(false);
+        it('should return false when field is group and collapseByDefault is false', () => {
+            const container = new ContainerModel(field);
+
+            expect(container.isTypeFieldGroup).toBe(true);
+            expect(container.isCollapsedByDefault).toBe(false);
+        });
+
+        it('should return true when field is a group and collapseByDefault is true', () => {
+            field.params.collapseByDefault = true;
+            const container = new ContainerModel(field);
+
+            expect(container.isTypeFieldGroup).toBe(true);
+            expect(container.isCollapsedByDefault).toBe(true);
+        });
+
+        it('should return false when field is a group and collapseByDefault is NOT set', () => {
+            field.params.collapseByDefault = undefined;
+            const container = new ContainerModel(field);
+
+            expect(container.isTypeFieldGroup).toBe(true);
+            expect(container.isCollapsedByDefault).toBe(false);
+        });
     });
 
-    it('should return correct hide header status', () => {
-        const container = new ContainerModel(field);
-        expect(container.hideHeader).toBe(false);
+    describe('hideHeader getter', () => {
+        it('should return false when field is NOT a group', () => {
+            const container = new ContainerModel(new FormFieldModel(null, { type: FormFieldTypes.CONTAINER }));
 
-        field.params.hideHeader = true;
-        expect(container.hideHeader).toBe(true);
+            expect(container.hideHeader).toBe(false);
+        });
 
-        field.params.hideHeader = undefined;
-        expect(container.hideHeader).toBe(false);
+        it('should return false when field is a group and hideHeader is false', () => {
+            const container = new ContainerModel(field);
+
+            expect(container.hideHeader).toBe(false);
+        });
+
+        it('should return true when field is a group and hideHeader is true', () => {
+            field.params.hideHeader = true;
+            const container = new ContainerModel(field);
+
+            expect(container.hideHeader).toBe(true);
+        });
+
+        it('should return false when field is a group and hideHeader is NOT set', () => {
+            field.params.hideHeader = undefined;
+            const container = new ContainerModel(field);
+
+            expect(container.hideHeader).toBe(false);
+        });
     });
 });
