@@ -56,10 +56,24 @@ export class BrowserActions {
 
     static async clickScript(elementToClick: ElementFinder): Promise<void> {
         Logger.info(`Click script ${elementToClick.locator().toString()}`);
-        if (elementToClick.locator().value) {
-            await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').scrollIntoView()`);
+
+        if (elementToClick.locator().toString().includes('ContainingText')) {
+            await this.clickScriptByText(elementToClick);
+        } else {
             await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').click()`);
         }
+    }
+
+    private static async clickScriptByText(elementToClick: ElementFinder): Promise<void> {
+        const locatorMatch = elementToClick.match(new RegExp(/ContainingText\("(.+?)",."(.+?)"/));
+        const locatorClass = locatorMatch[1];
+        const locatorText = locatorMatch[2];
+        await browser.executeScript(`function filterElementsByText(selector, text) {
+            const elements = document.querySelectorAll(selector);
+            return Array.from(elements).filter(element => element.textContent.includes(text));
+        }
+        const filteredElements = filterElementsByText('${locatorClass}', '${locatorText}');
+        filteredElements[0].click()`);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
