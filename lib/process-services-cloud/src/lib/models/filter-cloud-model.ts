@@ -114,6 +114,7 @@ export class TaskListRequestModel {
     status?: string[];
     completedBy?: string[];
     assignee?: string[];
+    processInstanceId?: string;
     createdFrom?: string;
     createdTo?: string;
     lastModifiedFrom?: string;
@@ -148,6 +149,7 @@ export class TaskListRequestModel {
         this.status = obj.status;
         this.completedBy = obj.completedBy;
         this.assignee = obj.assignee;
+        this.processInstanceId = obj.processInstanceId;
         this.createdFrom = obj.createdFrom;
         this.createdTo = obj.createdTo;
         this.lastModifiedFrom = obj.lastModifiedFrom;
