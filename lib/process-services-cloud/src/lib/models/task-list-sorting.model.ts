@@ -26,3 +26,29 @@ export class TaskListCloudSortingModel {
         }
     }
 }
+
+export class TaskListRequestSortingModel extends TaskListCloudSortingModel {
+    orderBy: string;
+    direction: string;
+
+    isFieldProcessVariable: boolean;
+    processVariableData?: {
+        processDefinitionKeys: string[];
+        type: string;
+    }
+
+    constructor(obj: TaskListRequestSortingModel) {
+        super(obj);
+        if (obj.isFieldProcessVariable) {
+            this.isFieldProcessVariable = true;
+            this.processVariableData = obj.processVariableData;
+            if (!this.processVariableData.processDefinitionKeys?.length ||
+                !this.processVariableData.type
+            ) {
+                throw new Error('missing required property when sorting by process variable');
+            }
+        } else {
+            this.isFieldProcessVariable = false;
+        }
+    }
+}
