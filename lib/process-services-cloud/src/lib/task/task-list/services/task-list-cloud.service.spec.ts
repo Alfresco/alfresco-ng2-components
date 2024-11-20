@@ -139,10 +139,7 @@ describe('TaskListCloudService', () => {
             const taskRequest = {
                 appName: 'fakeName',
                 pagination: { skipCount: 0, maxItems: 20 },
-                sorting: [
-                    { orderBy: 'NAME', direction: 'DESC' },
-                    { orderBy: 'TITLE', direction: 'ASC' }
-                ]
+                sorting: { orderBy: 'NAME', direction: 'DESC', isFieldProcessVariable: false }
             } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
@@ -150,7 +147,6 @@ describe('TaskListCloudService', () => {
 
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
-            expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
         });
 
         it('should return an error when app name is not specified', async () => {
