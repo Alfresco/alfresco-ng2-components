@@ -56,9 +56,10 @@ export class BrowserActions {
 
     static async clickScript(elementToClick: ElementFinder): Promise<void> {
         Logger.info(`Click script ${elementToClick.locator().toString()}`);
-
-        await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').scrollIntoView()`);
-        await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').click()`);
+        if (elementToClick.locator().value) {
+            await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').scrollIntoView()`);
+            await browser.executeScript(`document.querySelector('${elementToClick.locator().value}').click()`);
+        }
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
