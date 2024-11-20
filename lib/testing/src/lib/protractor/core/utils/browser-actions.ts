@@ -104,7 +104,7 @@ export class BrowserActions {
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
-        const attributeValue: string = await browser.executeScript(`return arguments[0].getAttribute(arguments[1])`, elementFinder, attribute);
+        const attributeValue: string = await browser.executeScript(`return document.querySelector('${elementFinder}').getAttribute('${attribute}')`);
         return attributeValue || '';
     }
 
@@ -136,7 +136,7 @@ export class BrowserActions {
 
         const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
-            return browser.executeScript(`return arguments[0].value`, elementFinder);
+            return browser.executeScript(`return document.querySelector('${elementFinder}').value`);
         } else {
             Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
@@ -158,7 +158,7 @@ export class BrowserActions {
         await elementFinder.click();
         await elementFinder.sendKeys(protractor.Key.END);
 
-        const value: string = await browser.executeScript(`return arguments[0].value`, elementFinder);
+        const value: string = await browser.executeScript(`return document.querySelector('${elementFinder}').value`, elementFinder);
         if (value) {
             for (let i = value.length; i >= 0; i--) {
                 await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
@@ -226,6 +226,6 @@ export class BrowserActions {
 
     // Don't make it pub,ic use getText
     private static async getTextScript(elementFinder: ElementFinder): Promise<string> {
-        return browser.executeScript(`return arguments[0].textContent`, elementFinder);
+        return browser.executeScript(`return document.querySelector('${elementFinder}').textContent`);
     }
 }

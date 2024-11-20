@@ -21,7 +21,6 @@ import { BrowserActions } from '../utils/browser-actions';
 import { materialLocators } from './public-api';
 
 export class HeaderPage {
-
     checkBox = element(by.cssContainingText(materialLocators.Checkbox.label.class, 'Show menu button'));
     headerColor = $('option[value="primary"]');
     titleInput = $('input[name="title"]');
@@ -31,7 +30,9 @@ export class HeaderPage {
     logoTooltipInput = $('input[placeholder="Tooltip text"]');
     positionStart = $$(`${materialLocators.Radio.button.root}[value="start"]`).first();
     positionEnd = $$(`${materialLocators.Radio.button.root}[value="end"]`).first();
-    sideBarPositionRight = $(`${materialLocators.Sidenav.root}${materialLocators.Drawer.class}${materialLocators.Sidenav.root}${materialLocators.Drawer.end}`);
+    sideBarPositionRight = $(
+        `${materialLocators.Sidenav.root}${materialLocators.Drawer.class}${materialLocators.Sidenav.root}${materialLocators.Drawer.end}`
+    );
     sideBarPositionLeft = $(`${materialLocators.Sidenav.root}${materialLocators.Drawer.class}${materialLocators.Sidenav.root}`);
 
     async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
@@ -117,7 +118,7 @@ export class HeaderPage {
     }
 
     async sideBarPositionEnd(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
+        await browser.executeScript(`document.querySelector('${this.positionEnd}').scrollIntoView()`);
         await BrowserActions.click(this.positionEnd);
     }
 
@@ -128,5 +129,4 @@ export class HeaderPage {
     async checkSidebarPositionEnd(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
-
 }
