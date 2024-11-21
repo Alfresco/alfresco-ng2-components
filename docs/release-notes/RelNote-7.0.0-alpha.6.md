@@ -1,5 +1,5 @@
 ---
-Title: Changelog for alfresco-ng2-components v7.0.0-alpha.5
+Title: Changelog for alfresco-ng2-components v7.0.0-alpha.6
 ---
 
 # Changelog
