@@ -19,8 +19,8 @@ import { element, by, ElementFinder, Key } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 import { materialLocators } from '../public-api';
 export class CardTextItemPage {
-
     rootElement: ElementFinder;
+    label: string;
     textField = '[data-automation-id*="card-textitem-value"]';
     saveButton = 'button[data-automation-id*="card-textitem-update"]';
     clearButton = 'button[data-automation-id*="card-textitem-reset"]';
@@ -31,11 +31,15 @@ export class CardTextItemPage {
     readOnlyField = '.adf-property-read-only';
 
     constructor(label: string = 'assignee') {
-        this.rootElement = element(by.xpath(`//${materialLocators.Label.root}[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`));
+        this.rootElement = element(
+            by.xpath(
+                `//${materialLocators.Label.root}[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`
+            )
+        );
     }
 
     async getFieldValue(): Promise<string> {
-        const fieldElement = this.rootElement.$(this.field);
+        const fieldElement = element(by.css(`[data-automation-id="card-textitem-value-${this.label}"]`));
         return BrowserActions.getInputValue(fieldElement);
     }
 

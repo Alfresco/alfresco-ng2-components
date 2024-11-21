@@ -337,11 +337,7 @@ export class DataTableComponentPage {
 
     getRow(columnName: string, columnValue: string): ElementFinder {
         return this.rootElement
-            .all(
-                by.xpath(
-                    `//div[starts-with(@title, '${columnName}')]//div[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`
-                )
-            )
+            .all(by.css(`adf-datatable-row:has(.adf-datatable-cell[title='${columnName}']):has(.adf-datatable-cell-value[title='${columnValue}'])`))
             .first();
     }
 
