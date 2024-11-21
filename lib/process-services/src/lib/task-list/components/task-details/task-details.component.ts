@@ -29,10 +29,10 @@ import {
 } from '@alfresco/adf-core';
 import {
     Component,
+    DestroyRef,
     EventEmitter,
     Input,
     OnChanges,
-    OnDestroy,
     OnInit,
     Output,
     SimpleChanges,
@@ -41,9 +41,9 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Observable, Observer, of, Subject } from 'rxjs';
+import { Observable, Observer, of } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
-import { catchError, share, takeUntil } from 'rxjs/operators';
+import { catchError, share } from 'rxjs/operators';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
@@ -56,6 +56,7 @@ import { TaskCommentsComponent, TaskCommentsService } from '../../../task-commen
 import { ChecklistComponent } from '../checklist/checklist.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-details',
@@ -86,7 +87,7 @@ import { MatCardModule } from '@angular/material/card';
     styleUrls: ['./task-details.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
+export class TaskDetailsComponent implements OnInit, OnChanges {
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
 
@@ -207,13 +208,13 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     data: any;
 
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
-    private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        private taskListService: TaskListService,
-        private peopleProcessService: PeopleProcessService,
-        private cardViewUpdateService: CardViewUpdateService,
-        private dialog: MatDialog
+        private readonly taskListService: TaskListService,
+        private readonly peopleProcessService: PeopleProcessService,
+        private readonly cardViewUpdateService: CardViewUpdateService,
+        private readonly dialog: MatDialog,
+        private readonly destroyRef: DestroyRef
     ) {}
 
     ngOnInit() {
@@ -223,14 +224,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
             this.loadDetails(this.taskId);
         }
 
-        this.cardViewUpdateService.itemUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(this.updateTaskDetails.bind(this));
+        this.cardViewUpdateService.itemUpdated$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.updateTaskDetails.bind(this));
 
-        this.cardViewUpdateService.itemClicked$.pipe(takeUntil(this.onDestroy$)).subscribe(this.clickTaskDetails.bind(this));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+        this.cardViewUpdateService.itemClicked$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.clickTaskDetails.bind(this));
     }
 
     ngOnChanges(changes: SimpleChanges): void {

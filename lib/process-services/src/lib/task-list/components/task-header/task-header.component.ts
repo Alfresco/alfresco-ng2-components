@@ -90,9 +90,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     dateLocale: string;
 
     private currentUserId: number;
-    private readonly destroyRef = inject(DestroyRef);
     private readonly usersSubject$ = new BehaviorSubject<CardViewSelectItemOption<number>[]>([]);
     users$ = this.usersSubject$.asObservable();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private peopleProcessService: PeopleProcessService,

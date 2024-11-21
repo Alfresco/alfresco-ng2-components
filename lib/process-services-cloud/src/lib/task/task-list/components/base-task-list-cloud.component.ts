@@ -15,38 +15,51 @@
  * limitations under the License.
  */
 
-import { OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit, OnDestroy, OnInit, Directive } from '@angular/core';
+import {
+    AfterContentInit,
+    ContentChild,
+    DestroyRef,
+    Directive,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
 import {
     AppConfigService,
-    UserPreferencesService,
-    DataTableSchema,
-    UserPreferenceValues,
-    PaginatedComponent,
-    PaginationModel,
-    DataRowEvent,
     CustomEmptyContentTemplateDirective,
     DataCellEvent,
-    DataRowActionEvent,
-    DataRow,
     DataColumn,
-    ObjectDataTableAdapter
+    DataRow,
+    DataRowActionEvent,
+    DataRowEvent,
+    DataTableSchema,
+    ObjectDataTableAdapter,
+    PaginatedComponent,
+    PaginationModel,
+    UserPreferencesService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
-    implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit
 // eslint-disable-next-line @typescript-eslint/brace-style
-{
+    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -135,13 +148,13 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
 
-    private defaultSorting = { key: 'startDate', direction: 'desc' };
+    protected defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
-
-    private onDestroy$ = new Subject<boolean>();
 
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
+
+    protected readonly destroyRef = inject(DestroyRef);
 
     constructor(
         appConfigService: AppConfigService,
@@ -165,7 +178,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     ngOnInit() {
         this.userPreferences
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((pageSize) => (this.size = pageSize));
     }
 
@@ -177,11 +190,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
             this.retrieveTasksPreferences();
         }
         this.reload();
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     private retrieveTasksPreferences(): void {

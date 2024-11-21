@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskFilterProperties, TaskFilterAction, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
+import { ServiceTaskFilterCloudModel, TaskFilterAction, TaskFilterProperties } from '../../models/filter-cloud.model';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
@@ -64,7 +64,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
     protected addFilter(filterToAdd: ServiceTaskFilterCloudModel): Observable<any> {
         return this.serviceTaskFilterCloudService
             .addFilter(filterToAdd)
-            .pipe(takeUntil(this.onDestroy$));
+            .pipe(takeUntilDestroyed(this.destroyRef));
     }
 
     isDisabledForDefaultFilters(action: TaskFilterAction): boolean {

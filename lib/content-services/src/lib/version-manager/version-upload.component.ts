@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Node, Version } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
 import { FileUploadErrorEvent, FileUploadEvent } from '../common/events/file.event';
@@ -30,6 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadVersionButtonComponent } from '../upload';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-version-upload',
@@ -49,12 +48,11 @@ import { UploadVersionButtonComponent } from '../upload';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-version-upload' }
 })
-export class VersionUploadComponent implements OnInit, OnDestroy {
+export class VersionUploadComponent implements OnInit {
     semanticVersion: string = 'minor';
     comment: string;
     uploadVersion: boolean = false;
     disabled: boolean = false;
-    onDestroy$ = new Subject<void>();
     majorVersion = '2.0';
     minorVersion = '1.1';
 
@@ -107,10 +105,12 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     @Output()
     uploadStarted = new EventEmitter<FileUploadEvent>();
 
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private contentService: ContentService, private uploadService: UploadService) {}
 
     ngOnInit() {
-        this.uploadService.fileUploadStarting.pipe(takeUntil(this.onDestroy$)).subscribe((event: FileUploadEvent) => {
+        this.uploadService.fileUploadStarting.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event: FileUploadEvent) => {
             this.disabled = true;
             this.uploadStarted.emit(event);
         });
@@ -138,18 +138,12 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     }
 
     onSuccess(event: any) {
-        this.disabled = false;
         this.success.emit(event);
     }
 
     onError(event: FileUploadErrorEvent) {
         this.disabled = false;
         this.error.emit(event);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(undefined);
-        this.onDestroy$.complete();
     }
 
     getNextMinorVersion(version: string): string {

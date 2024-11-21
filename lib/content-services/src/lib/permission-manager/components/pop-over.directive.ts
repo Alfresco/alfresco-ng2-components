@@ -15,12 +15,23 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    DestroyRef,
+    Directive,
+    ElementRef,
+    HostListener,
+    inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewContainerRef
+} from '@angular/core';
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-pop-over]',
@@ -38,10 +49,10 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     @Input() autofocusedElementSelector: string;
 
     private _open = false;
-    private destroy$ = new Subject();
     private overlayRef!: OverlayRef;
-
     private focusTrap: ConfigurableFocusTrap;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private element: ElementRef,
@@ -62,8 +73,6 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         this.element.nativeElement.removeEventListener('keydown', this.preventDefaultForEnter);
         this.detachOverlay();
-        this.destroy$.next(undefined);
-        this.destroy$.complete();
     }
 
     private createOverlay(): void {
@@ -87,7 +96,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
 
         this.overlayRef
             .backdropClick()
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
                 this.detachOverlay();
             });

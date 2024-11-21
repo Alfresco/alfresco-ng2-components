@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { FormFieldModel } from './form-field.model';
 import { FormWidgetModel } from './form-widget.model';
@@ -23,7 +23,6 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 
 export class ContainerModel extends FormWidgetModel {
-
     field: FormFieldModel;
 
     readonly columns: ContainerColumnModel[] = [];
@@ -31,43 +30,35 @@ export class ContainerModel extends FormWidgetModel {
     readonly rowspan: number = 1;
     readonly colspan: number = 1;
 
-    get isVisible(): boolean {
-        return this.field.isVisible;
-    }
-
     constructor(field: FormFieldModel) {
         super(field.form, field.json);
 
         if (field) {
             this.field = field;
             this.columns = field.columns || [];
-            this.isExpanded = !this.isCollapsedByDefault();
+            this.isExpanded = !this.isCollapsedByDefault;
             this.colspan = field.colspan;
             this.rowspan = field.rowspan;
         }
     }
 
-    isGroup(): boolean {
+    get isVisible(): boolean {
+        return this.field.isVisible;
+    }
+
+    get isTypeFieldGroup(): boolean {
         return this.type === FormFieldTypes.GROUP;
     }
 
-    isCollapsible(): boolean {
-        let allowCollapse = false;
-
-        if (this.isGroup() && this.field.params['allowCollapse']) {
-            allowCollapse = this.field.params['allowCollapse'];
-        }
-
-        return allowCollapse;
+    get isCollapsible(): boolean {
+        return this.isTypeFieldGroup && (this.field.params?.allowCollapse ?? false);
     }
 
-    isCollapsedByDefault(): boolean {
-        let collapseByDefault = false;
+    get isCollapsedByDefault(): boolean {
+        return this.isTypeFieldGroup && (this.field.params?.collapseByDefault ?? false);
+    }
 
-        if (this.isCollapsible() && this.field.params['collapseByDefault']) {
-            collapseByDefault = this.field.params['collapseByDefault'];
-        }
-
-        return collapseByDefault;
+    get hideHeader(): boolean {
+        return this.isTypeFieldGroup && (this.field.params?.hideHeader ?? false);
     }
 }

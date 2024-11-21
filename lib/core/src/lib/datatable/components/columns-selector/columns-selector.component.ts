@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 import { DataColumn } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslationService } from '../../../translation';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-datatable-column-selector',
@@ -37,7 +37,7 @@ import { TranslationService } from '../../../translation';
     styleUrls: ['./columns-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ColumnsSelectorComponent implements OnInit, OnDestroy {
+export class ColumnsSelectorComponent implements OnInit {
     private translationService = inject(TranslationService);
 
     @Input()
@@ -55,21 +55,22 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     @Output()
     submitColumnsVisibility = new EventEmitter<DataColumn[]>();
 
-    onDestroy$ = new Subject();
     columnItems: DataColumn[] = [];
     searchInputControl = new UntypedFormControl('');
     searchQuery = '';
+    
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        this.mainMenuTrigger.menuOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.mainMenuTrigger.menuOpened.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.updateColumnItems();
         });
 
-        this.mainMenuTrigger.menuClosed.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.mainMenuTrigger.menuClosed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.searchInputControl.setValue('');
         });
 
-        this.searchInputControl.valueChanges.pipe(debounceTime(300), takeUntil(this.onDestroy$)).subscribe((searchQuery) => {
+        this.searchInputControl.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef)).subscribe((searchQuery) => {
             this.searchQuery = searchQuery;
             this.updateColumnItems();
         });
@@ -81,12 +82,6 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         columns = this.sortColumns(columns);
         this.columnItems = columns;
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     closeMenu(): void {
         this.mainMenuTrigger.closeMenu();
     }

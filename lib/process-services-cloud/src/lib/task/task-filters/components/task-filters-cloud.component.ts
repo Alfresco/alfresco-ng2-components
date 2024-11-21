@@ -15,18 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    inject,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
+import { FilterParamsModel, TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
-import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { TaskListCloudService } from '../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
 import { TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-task-filters',
@@ -88,7 +98,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     getFilters(appName: string): void {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
-        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
+        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (res) => {
                 this.resetFilter();
                 this.filters = res || [];
@@ -267,7 +277,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      *
      */
     getFilterKeysAfterExternalRefreshing(): void {
-        this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
+        this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterKey: string) => {
             this.updatedCountersSet.delete(filterKey);
         });
     }

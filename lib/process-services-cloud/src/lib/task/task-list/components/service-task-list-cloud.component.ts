@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subject, combineLatest, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
-import { map, takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
@@ -33,11 +34,9 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent implements OnDestroy {
+export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     queryParams: { [key: string]: any } = {};
-
-    private onDestroyServiceTaskList$ = new Subject<boolean>();
 
     private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
     isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
@@ -54,11 +53,6 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    ngOnDestroy() {
-        this.onDestroyServiceTaskList$.next(true);
-        this.onDestroyServiceTaskList$.complete();
-    }
-
     reload() {
         this.isReloadingSubject$.next(true);
 
@@ -66,7 +60,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
 
         if (this.requestNode.appName || this.requestNode.appName === '') {
             combineLatest([this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode), this.isColumnSchemaCreated$])
-                .pipe(takeUntil(this.onDestroyServiceTaskList$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe(
                     ([tasks]) => {
                         this.rows = tasks.list.entries;

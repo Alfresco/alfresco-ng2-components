@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Subject, Observable, Observer, merge } from 'rxjs';
-import { BoundingRectangle, ResizeEvent, IResizeMouseEvent, ICoordinateX } from './types';
-import { map, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/operators';
-import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter, Input } from '@angular/core';
+import { merge, Observable, Observer, Subject } from 'rxjs';
+import { BoundingRectangle, ICoordinateX, IResizeMouseEvent, ResizeEvent } from './types';
+import { filter, map, mergeMap, pairwise, share, take, takeUntil } from 'rxjs/operators';
+import { DestroyRef, Directive, ElementRef, EventEmitter, inject, Input, NgZone, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-resizable]',
@@ -64,7 +65,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     private unsubscribeMouseMove?: () => void;
     private unsubscribeMouseUp?: () => void;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {
         this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
@@ -133,7 +134,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
             .pipe(
                 map(({ resize = false }) => resize),
                 filter((resize) => resize),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 const startingRect: BoundingRectangle = this.getElementRect(this.element);
@@ -151,7 +152,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
                 }
             });
 
-        mouseup$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        mouseup$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             if (this.currentRect) {
                 this.renderer.setStyle(document.body, 'cursor', '');
                 if (this.resizeEnd.observers.length > 0) {
@@ -172,7 +173,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.unsubscribeMouseDown?.();
         this.unsubscribeMouseMove?.();
         this.unsubscribeMouseUp?.();
-        this.destroy$.next();
     }
 
     private getNewBoundingRectangle({ top, bottom, left, right }: BoundingRectangle, clientX: number): BoundingRectangle {

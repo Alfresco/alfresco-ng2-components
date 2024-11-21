@@ -17,7 +17,19 @@
 
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgIf } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,11 +37,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { UserPreferencesService } from '../common';
 import { searchAnimation } from './animations';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
 import { SearchTriggerDirective } from './search-trigger.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-text-input',
@@ -162,7 +175,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     };
 
     private dir = 'ltr';
-    private onDestroy$ = new Subject<boolean>();
     private toggleSearch = new Subject<any>();
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
@@ -170,8 +182,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     toggle$ = this.toggleSearch.asObservable();
 
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private userPreferencesService: UserPreferencesService) {
-        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe(() => {
+        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {
@@ -189,7 +203,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.userPreferencesService
             .select('textOrientation')
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((direction: Direction) => {
                 this.dir = direction;
                 this.subscriptAnimationState = this.getDefaultState(this.dir);
@@ -246,7 +260,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                 filter(
                     ($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')
                 ),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             );
 
             this.focusSubscription = focusEvents.subscribe((event: FocusEvent) => {
@@ -260,7 +274,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     private setValueChangeHandler() {
-        this.valueChange.pipe(debounceTime(this.debounceTime), takeUntil(this.onDestroy$)).subscribe((value: string) => {
+        this.valueChange.pipe(debounceTime(this.debounceTime), takeUntilDestroyed(this.destroyRef)).subscribe((value: string) => {
             this.searchChange.emit(value);
         });
     }
@@ -315,9 +329,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
             this.focusSubscription = null;
             this.focusListener = null;
         }
-
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     canShowClearSearch(): boolean {

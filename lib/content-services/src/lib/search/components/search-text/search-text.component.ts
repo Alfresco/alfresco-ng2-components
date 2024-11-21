@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-text',
@@ -38,7 +39,7 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-text' }
 })
-export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchTextComponent implements SearchWidget, OnInit {
     /** The content of the text box. */
     @Input()
     value = '';
@@ -51,7 +52,7 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
     enableChangeUpdate = true;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private readonly destroy$ = new Subject<void>();
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -77,7 +78,7 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
             .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -89,12 +90,6 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
                 this.context.filterLoaded.next();
             });
     }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
     clear() {
         this.isActive = false;
         this.value = '';

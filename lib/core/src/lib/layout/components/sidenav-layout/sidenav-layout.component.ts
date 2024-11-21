@@ -16,29 +16,31 @@
  */
 
 import {
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ContentChild,
-    Input,
-    Output,
-    OnInit,
-    AfterViewInit,
-    ViewChild,
-    OnDestroy,
-    TemplateRef,
+    DestroyRef,
     EventEmitter,
-    ViewEncapsulation,
-    ChangeDetectorRef
+    inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Direction } from '@angular/cdk/bidi';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { LayoutContainerComponent } from '../layout-container/layout-container.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-sidenav-layout',
@@ -99,7 +101,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         isMenuMinimized: () => this.isMenuMinimized
     };
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private readonly mediaMatcher: MediaMatcher,
@@ -120,7 +122,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
         this.userPreferencesService
             .select('textOrientation')
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((direction: Direction) => {
                 this.dir = direction;
             });
@@ -132,8 +134,6 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     ngOnDestroy(): void {
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     toggleMenu() {

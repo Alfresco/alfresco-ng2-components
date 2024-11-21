@@ -199,7 +199,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Push Source Files to Crowdin
-        uses: crowdin/github-action@95d6e895e871c3c7acf0cfb962f296baa41e63c6 # v2.2.0
+        uses: crowdin/github-action@2d540f18b0a416b1fbf2ee5be35841bd380fc1da # v2.3.0
         with:
           upload_sources: true
           upload_sources_args: --delete-obsolete
@@ -213,7 +213,7 @@ jobs:
       needs: [release-storybook, release-npm, npm-check-bundle]
       steps:
 
-        - uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0 # v1.27.0
+        - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
           name: Nofify FE eng-guild-front-end workflow failed
           if: ${{ contains(toJson(needs.*.result), 'failure') }}
           env:

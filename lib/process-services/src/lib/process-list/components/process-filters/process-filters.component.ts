@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
 import { ProcessFilterService } from '../../services/process-filter.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { CommonModule, Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -36,7 +36,7 @@ import { IconComponent } from '@alfresco/adf-core';
     styleUrls: ['./process-filters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
+export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
@@ -78,9 +78,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     active = false;
     isProcessRoute: boolean;
     isProcessActive: boolean;
-    private onDestroy$ = new Subject<boolean>();
 
     private iconsMDL: IconModel;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private processFilterService: ProcessFilterService,
@@ -94,7 +95,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         this.router.events
             .pipe(
                 filter((event) => event instanceof NavigationStart),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((navigationStart: NavigationStart) => {
                 const activeRoute = navigationStart.url;
@@ -247,10 +248,5 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

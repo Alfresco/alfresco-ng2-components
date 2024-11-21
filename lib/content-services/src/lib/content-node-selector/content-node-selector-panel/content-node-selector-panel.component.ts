@@ -15,32 +15,56 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import {
+    CustomEmptyContentTemplateDirective,
+    DataColumnComponent,
+    DataColumnListComponent,
+    DataSorting,
     HighlightDirective,
-    UserPreferencesService,
-    UserPreferenceValues,
     InfinitePaginationComponent,
     PaginatedComponent,
-    DataSorting,
     ShowHeaderMode,
-    ToolbarTitleComponent,
     ToolbarComponent,
-    DataColumnListComponent,
-    DataColumnComponent,
-    CustomEmptyContentTemplateDirective
+    ToolbarTitleComponent,
+    UserPreferencesService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
-import { NodesApiService, UploadService, FileUploadCompleteEvent, FileUploadDeleteEvent, SitesService } from '../../common';
+import {
+    FileUploadCompleteEvent,
+    FileUploadDeleteEvent,
+    NodesApiService,
+    SitesService,
+    UploadService
+} from '../../common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, SearchRequest, RequestScope } from '@alfresco/js-api';
+import {
+    Node,
+    NodeEntry,
+    NodePaging,
+    Pagination,
+    RequestScope,
+    SearchRequest,
+    SiteEntry,
+    SitePaging
+} from '@alfresco/js-api';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
 import { RowFilter } from '../../document-list/data/row-filter.model';
 import { ImageResolver } from '../../document-list/data/image-resolver.model';
 import { CustomResourcesService } from '../../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../../document-list/data/share-data-row.model';
 import { NodeEntryEvent } from '../../document-list/components/node.event';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -55,6 +79,7 @@ import { NameLocationCellComponent } from '../name-location-cell/name-location-c
 import { DropdownBreadcrumbComponent } from '../../breadcrumb/dropdown-breadcrumb.component';
 import { SearchQueryBuilderService } from '../../search/services/search-query-builder.service';
 import { SearchPanelComponent } from '../../search/components/search-panel/search-panel.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -92,7 +117,7 @@ export const defaultValidation = () => true;
     host: { class: 'adf-content-node-selector-panel' },
     providers: [SearchQueryBuilderService]
 })
-export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
+export class ContentNodeSelectorPanelComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
@@ -303,7 +328,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     searchPanelExpanded: boolean = false;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private customResourcesService: CustomResourcesService,
@@ -333,13 +358,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch), takeUntil(this.onDestroy$)).subscribe((searchValue: string) => {
+        this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch), takeUntilDestroyed(this.destroyRef)).subscribe((searchValue: string) => {
             this.searchTerm = searchValue;
             this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
             this.queryBuilderService.update();
         });
 
-        this.queryBuilderService.updated.pipe(takeUntil(this.onDestroy$)).subscribe((searchRequest) => {
+        this.queryBuilderService.updated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((searchRequest) => {
             if (searchRequest) {
                 this.hasValidQuery = true;
                 this.prepareDialogForNewSearch(searchRequest);
@@ -351,7 +376,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.queryBuilderService.executed.pipe(takeUntil(this.onDestroy$)).subscribe((results: NodePaging) => {
+        this.queryBuilderService.executed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((results: NodePaging) => {
             if (this.hasValidQuery) {
                 this.showSearchResults(results);
             }
@@ -359,7 +384,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((pagSize) => (this.pageSize = pagSize));
 
         this.target = this.documentList;
@@ -380,14 +405,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.resetPagination();
         this.setSearchScopeToNodes();
 
-        this.documentList.$folderNode.pipe(takeUntil(this.onDestroy$)).subscribe((currentNode: Node) => {
+        this.documentList.$folderNode.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((currentNode: Node) => {
             this.currentFolder.emit(currentNode);
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     toggleSearchPanel() {
@@ -400,7 +420,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private onFileUploadEvent() {
         this.uploadService.fileUploadComplete
-            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
+            .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
             .subscribe((fileUploadEvent: FileUploadCompleteEvent) => {
                 this.currentUploadBatch.push(fileUploadEvent.data);
                 if (!this.uploadService.isUploading()) {
@@ -412,7 +432,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     private onFileUploadDeletedEvent() {
-        this.uploadService.fileUploadDeleted.pipe(takeUntil(this.onDestroy$)).subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
+        this.uploadService.fileUploadDeleted.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
             this.documentList.unselectRowFromNodeId(deletedFileEvent.file.data.entry.id);
             this.documentList.reloadWithoutResettingSelection();
         });

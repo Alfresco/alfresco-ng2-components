@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, Inject, OnDestroy, Optional } from '@angular/core';
+import { Component, Inject, Input, Optional, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
@@ -23,14 +23,16 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
-import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../models/task-cloud.model';
 import { PaginatedEntries } from '@alfresco/js-api';
 import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
 import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TaskListRequestSortingModel } from '../../../models/task-list-sorting.model';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -40,7 +42,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> implements OnDestroy {
+export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
      * "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group
@@ -187,8 +189,6 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     completedByUsers: string[] = [];
 
-    private onDestroyTaskList$ = new Subject<boolean>();
-
     rows: TaskInstanceCloudListViewModel[] = [];
     dataAdapter: TasksListDatatableAdapter | undefined;
 
@@ -212,6 +212,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
         combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
+                tap(() => this.isReloadingSubject$.next(true)),
                 filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
                 switchMap(() => {
                     if (this.searchMethod === 'POST') {
@@ -223,7 +224,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                         return this.taskListCloudService.getTaskByRequest(requestNode);
                     }
                 }),
-                takeUntil(this.onDestroyTaskList$)
+                takeUntilDestroyed()
             )
             .subscribe({
                 next: (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
@@ -241,15 +242,11 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                     this.pagination.next(tasks.list.pagination);
                 },
                 error: (error) => {
+                    console.error(error);
                     this.error.emit(error);
                     this.isReloadingSubject$.next(false);
                 }
             });
-    }
-
-    ngOnDestroy() {
-        this.onDestroyTaskList$.next(true);
-        this.onDestroyTaskList$.complete();
     }
 
     reload() {
@@ -264,10 +261,11 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                 maxItems: this.size,
                 skipCount: this.skipCount
             },
-            sorting: this.sorting,
+            sorting: this.getTaskListRequestSorting(),
             onlyStandalone: this.standalone,
             name: this.names,
             processDefinitionName: this.processDefinitionNames,
+            processInstanceId: this.processInstanceId,
             priority: this.priorities,
             status: this.statuses,
             completedBy: this.completedByUsers,
@@ -333,5 +331,38 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             .reduce((allRequestKeys, requestKeys) => [...requestKeys, ...allRequestKeys], []);
 
         return displayedVariableColumns.length ? displayedVariableColumns : undefined;
+    }
+
+    private getTaskListRequestSorting(): TaskListRequestSortingModel {
+        if (!this.sorting?.length) {
+            return new TaskListRequestSortingModel({
+                orderBy: this.defaultSorting.key,
+                direction: this.defaultSorting.direction,
+                isFieldProcessVariable: false
+            });
+        }
+
+        const orderBy = this.sorting[0]?.orderBy;
+        const direction = this.sorting[0]?.direction;
+        const orderByColumn = this.columnList?.columns.find((column) => column.key === orderBy);
+        const isFieldProcessVariable = orderByColumn?.customData?.columnType === 'process-variable-column';
+
+        if (isFieldProcessVariable) {
+            const processDefinitionKeys = orderByColumn.customData.variableDefinitionsPayload.map(
+                (variableDefinition) => variableDefinition.split('/')[0]
+            );
+            const variableName = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[1];
+            return new TaskListRequestSortingModel({
+                orderBy: variableName,
+                direction,
+                isFieldProcessVariable: true,
+                processVariableData: {
+                    processDefinitionKeys,
+                    type: orderByColumn.customData.variableType
+                }
+            });
+        } else {
+            return new TaskListRequestSortingModel({orderBy, direction, isFieldProcessVariable: false});
+        }
     }
 }

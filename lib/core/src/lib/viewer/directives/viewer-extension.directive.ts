@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ContentChild, Directive, Input, TemplateRef, OnDestroy } from '@angular/core';
+import { AfterContentInit, ContentChild, DestroyRef, Directive, inject, Input, TemplateRef } from '@angular/core';
 import { ViewerRenderComponent } from '../components/viewer-render/viewer-render.component';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: 'adf-viewer-extension',
     standalone: true
 })
-export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
+export class ViewerExtensionDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
@@ -39,7 +38,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     templateModel: any;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private viewerComponent: ViewerRenderComponent) {}
 
@@ -48,14 +47,9 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
         this.viewerComponent.extensionsSupportedByTemplates.push(...this.supportedExtensions);
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 
-        this.viewerComponent.extensionChange.pipe(takeUntil(this.onDestroy$)).subscribe((fileExtension) => {
+        this.viewerComponent.extensionChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((fileExtension) => {
             this.templateModel.isVisible = this.isVisible(fileExtension);
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     /**

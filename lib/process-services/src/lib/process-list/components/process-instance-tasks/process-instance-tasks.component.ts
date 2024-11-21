@@ -16,12 +16,12 @@
  */
 
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { TaskDetailsEvent } from '../../../task-list';
 import { ProcessService } from '../../services/process.service';
-import { share, takeUntil } from 'rxjs/operators';
+import { share } from 'rxjs/operators';
 import { ProcessInstanceRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,6 +29,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { StartFormComponent } from '../../../form';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-process-instance-tasks',
@@ -37,7 +38,7 @@ import { StartFormComponent } from '../../../form';
     templateUrl: './process-instance-tasks.component.html',
     styleUrls: ['./process-instance-tasks.component.css']
 })
-export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
+export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     /** The ID of the process instance to display tasks for. */
     @Input()
     processInstanceDetails: ProcessInstanceRepresentation;
@@ -72,7 +73,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
 
     private taskObserver: Observer<TaskRepresentation>;
     private completedTaskObserver: Observer<TaskRepresentation>;
-    private onDestroy$ = new Subject<boolean>();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private processService: ProcessService, private dialog: MatDialog) {
         this.task$ = new Observable<TaskRepresentation>((observer) => (this.taskObserver = observer)).pipe(share());
@@ -80,14 +82,9 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     }
 
     ngOnInit() {
-        this.task$.pipe(takeUntil(this.onDestroy$)).subscribe((task) => this.activeTasks.push(task));
+        this.task$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((task) => this.activeTasks.push(task));
 
-        this.completedTask$.pipe(takeUntil(this.onDestroy$)).subscribe((task) => this.completedTasks.push(task));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+        this.completedTask$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((task) => this.completedTasks.push(task));
     }
 
     ngOnChanges(changes: SimpleChanges) {
