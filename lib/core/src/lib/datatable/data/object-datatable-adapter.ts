@@ -23,11 +23,14 @@ import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
 import { Subject } from 'rxjs';
 
+export type SortingMode = 'client' | 'server';
+
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
     private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
+    private readonly _sortingMode: SortingMode;
 
     selectedRow: DataRow;
     rowsChanged: Subject<Array<DataRow>>;
@@ -54,9 +57,10 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return schema;
     }
 
-    constructor(data: any[] = [], schema: DataColumn[] = []) {
+    constructor(data: any[] = [], schema: DataColumn[] = [], sortingMode: SortingMode = 'client') {
         this._rows = [];
         this._columns = [];
+        this._sortingMode = sortingMode?.toString().toLowerCase() === 'server' ? 'server' : 'client';
 
         if (data && data.length > 0) {
             this._rows = data.map((item) => new ObjectDataRow(item));
@@ -118,6 +122,10 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 
     setSorting(sorting: DataSorting): void {
         this._sorting = sorting;
+
+        if (this._sortingMode === 'server') {
+            return;
+        }
 
         if (sorting?.key) {
             this._rows.sort((a: DataRow, b: DataRow) => {

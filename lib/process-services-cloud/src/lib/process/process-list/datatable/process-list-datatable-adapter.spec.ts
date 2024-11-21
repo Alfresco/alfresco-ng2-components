@@ -50,4 +50,9 @@ describe('ProcessListDatatableAdapter', () => {
 
         expect(adapter.getColumnType(row, column)).toBe('number');
     });
+
+    it('should initialize constructor with server sortingMode', () => {
+        const adapter = new ProcessListDatatableAdapter([], []);
+        expect(adapter['_sortingMode']).toBe('server');
+    });
 });
