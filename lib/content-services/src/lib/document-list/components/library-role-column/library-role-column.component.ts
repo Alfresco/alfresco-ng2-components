@@ -15,14 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, ChangeDetectionStrategy, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { SiteEntry, Site } from '@alfresco/js-api';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DestroyRef,
+    inject,
+    Input,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
-import { takeUntil } from 'rxjs/operators';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-role-column',
@@ -37,20 +45,20 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-library-role-column adf-datatable-content-cell' }
 })
-export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
+export class LibraryRoleColumnComponent implements OnInit {
     @Input()
     context: any;
 
     displayText$ = new BehaviorSubject<string>('');
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+        this.nodesApiService.nodeUpdated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
             const row: ShareDataRow = this.context.row;
             if (row) {
                 const { entry } = row.node;
@@ -85,10 +93,5 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
                     break;
             }
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

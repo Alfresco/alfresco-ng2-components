@@ -22,10 +22,12 @@ import {
     AfterViewInit,
     Component,
     ContentChild,
+    DestroyRef,
     DoCheck,
     ElementRef,
     EventEmitter,
     HostListener,
+    inject,
     Input,
     IterableDiffers,
     OnChanges,
@@ -79,6 +81,7 @@ import { BooleanCellComponent } from '../boolean-cell/boolean-cell.component';
 import { JsonCellComponent } from '../json-cell/json-cell.component';
 import { AmountCellComponent } from '../amount-cell/amount-cell.component';
 import { NumberCellComponent } from '../number-cell/number-cell.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -325,10 +328,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private differ: any;
     private rowMenuCache: any = {};
 
-    private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
-    private dataRowsChanged: Subscription;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
@@ -349,11 +352,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     ngAfterContentInit() {
         if (this.columnList) {
-            this.subscriptions.push(
-                this.columnList.columns.changes.subscribe(() => {
-                    this.setTableSchema();
-                })
-            );
+            this.columnList.columns.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+                this.setTableSchema();
+            });
         }
         this.setTableSchema();
     }
@@ -713,7 +714,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.isSelectAllIndeterminate = false;
 
         if (this.multiselect) {
-            const selectableRows = this.data.getRows().filter(row => row?.isSelectable);
+            const selectableRows = this.data.getRows().filter((row) => row?.isSelectable);
             if (selectableRows && selectableRows.length > 0) {
                 for (let i = 0; i < selectableRows.length; i++) {
                     this.selectRow(selectableRows[i], matCheckboxChange.checked);
@@ -954,14 +955,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     ngOnDestroy() {
         this.unsubscribeClickStream();
-
-        this.subscriptions.forEach((s) => s.unsubscribe());
-        this.subscriptions = [];
-
-        if (this.dataRowsChanged) {
-            this.dataRowsChanged.unsubscribe();
-            this.dataRowsChanged = null;
-        }
     }
 
     getNameColumnValue() {

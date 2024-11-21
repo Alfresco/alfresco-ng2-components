@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { Directive, Inject, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
-import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { IFeaturesService, FeaturesServiceToken, FlagChangeset } from '../interfaces/features.interface';
-import { takeUntil } from 'rxjs/operators';
+import { Directive, Inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { FeaturesServiceToken, FlagChangeset, IFeaturesService } from '../interfaces/features.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     /* eslint-disable-next-line @angular-eslint/directive-selector */
     selector: '[adfForFeatures]',
     standalone: true
 })
-export class FeaturesDirective implements OnDestroy {
+export class FeaturesDirective {
     private hasView = false;
     private inputUpdate$ = new BehaviorSubject([] as string[]);
-    private destroy$ = new Subject();
-
+    
     @Input()
     set adfForFeatures(feature: string[] | string) {
         this.inputUpdate$.next(Array.isArray(feature) ? feature : [feature]);
@@ -41,7 +40,7 @@ export class FeaturesDirective implements OnDestroy {
         private viewContainer: ViewContainerRef
     ) {
         combineLatest([this.featuresService.getFlags$(), this.inputUpdate$])
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed())
             .subscribe(([flags, features]: any) => this.updateView(flags, features));
     }
 
@@ -55,10 +54,5 @@ export class FeaturesDirective implements OnDestroy {
             this.viewContainer.clear();
             this.hasView = false;
         }
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next({});
-        this.destroy$.complete();
     }
 }

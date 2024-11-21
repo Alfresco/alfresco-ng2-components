@@ -57,6 +57,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -70,12 +71,16 @@ describe('EditTaskFilterCloudComponent', () => {
     let getTaskFilterSpy: jasmine.Spy;
     let getDeployedApplicationsSpy: jasmine.Spy;
     let taskService: TaskCloudService;
-    const afterClosedSubject = new Subject<any>();
+    const afterClosedSubject = new Subject<unknown>();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudModule, MatIconTestingModule],
-            providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            providers: [
+                MatDialog,
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })
+            ]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
@@ -85,9 +90,8 @@ describe('EditTaskFilterCloudComponent', () => {
         taskService = TestBed.inject(TaskCloudService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
-        const dialogRefMock: any = {
-            afterClosed: () => afterClosedSubject
-        };
+        const dialogRefMock = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
+        dialogRefMock.afterClosed.and.returnValue(afterClosedSubject);
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mockAlfrescoApi);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeFilter));

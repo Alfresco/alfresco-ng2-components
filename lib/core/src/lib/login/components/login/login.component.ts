@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -27,8 +27,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../../app-config';
 import { AuthenticationService, BasicAlfrescoAuthService } from '../../../auth';
 import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
@@ -38,6 +36,7 @@ import { TranslationService } from '../../../translation';
 import { LoginErrorEvent } from '../../models/login-error.event';
 import { LoginSubmitEvent } from '../../models/login-submit.event';
 import { LoginSuccessEvent } from '../../models/login-success.event';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -76,7 +75,7 @@ interface LoginFormValues {
     ],
     host: { class: 'adf-login' }
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
     isPasswordShow: boolean = false;
 
     /**
@@ -146,7 +145,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     data: any;
 
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
-    private onDestroy$ = new Subject<boolean>();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private _fb: UntypedFormBuilder,
@@ -191,12 +191,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.form = this._fb.group(this.fieldsValidation);
         }
 
-        this.form.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((data) => this.onValueChanged(data));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+        this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.onValueChanged(data));
     }
 
     submit() {

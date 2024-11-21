@@ -20,6 +20,7 @@
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 export class ProcessFilterCloudModel {
     id: string;
@@ -52,6 +53,8 @@ export class ProcessFilterCloudModel {
     initiators: string[] | null;
     appVersions: string[] | null;
     statuses: string[] | null;
+
+    processVariableFilters?: ProcessVariableFilterModel[]
 
     private dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string;
@@ -104,6 +107,7 @@ export class ProcessFilterCloudModel {
             this.initiators = obj.initiators || null;
             this.appVersions = obj.appVersions || null;
             this.statuses = obj.statuses || null;
+            this.processVariableFilters = obj.processVariableFilters ?? [];
         }
     }
 

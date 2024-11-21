@@ -16,8 +16,9 @@
  */
 
 import { Pagination } from '@alfresco/js-api';
-import { TaskListCloudSortingModel } from './task-list-sorting.model';
+import { TaskListCloudSortingModel, TaskListRequestSortingModel } from './task-list-sorting.model';
 import { TaskFilterCloudModel } from '../task/task-filters/models/filter-cloud.model';
+import { ProcessVariableFilterModel } from './process-variable-filter.model';
 
 export class TaskQueryCloudRequestModel {
     appName: string;
@@ -93,17 +94,10 @@ export class TaskQueryCloudRequestModel {
     }
 }
 
-export interface TaskListRequestTaskVariableFilter {
-    name?: string;
-    type?: string;
-    value?: string;
-    operator?: string;
-}
-
 export class TaskListRequestModel {
     appName: string;
     pagination?: Pagination;
-    sorting?: TaskListCloudSortingModel[];
+    sorting?: TaskListRequestSortingModel;
 
     onlyStandalone?: boolean;
     onlyRoot?: boolean;
@@ -114,6 +108,7 @@ export class TaskListRequestModel {
     status?: string[];
     completedBy?: string[];
     assignee?: string[];
+    processInstanceId?: string;
     createdFrom?: string;
     createdTo?: string;
     lastModifiedFrom?: string;
@@ -127,8 +122,8 @@ export class TaskListRequestModel {
     candidateUserId?: string[];
     candidateGroupId?: string[];
 
-    taskVariableFilters?: TaskListRequestTaskVariableFilter[];
-    variableKeys?: string[];
+    processVariableKeys?: string[];
+    processVariableFilters?: ProcessVariableFilterModel[];
 
     constructor(obj: Partial<TaskListRequestModel>) {
         if (!obj.appName) {
@@ -148,6 +143,7 @@ export class TaskListRequestModel {
         this.status = obj.status;
         this.completedBy = obj.completedBy;
         this.assignee = obj.assignee;
+        this.processInstanceId = obj.processInstanceId;
         this.createdFrom = obj.createdFrom;
         this.createdTo = obj.createdTo;
         this.lastModifiedFrom = obj.lastModifiedFrom;
@@ -160,8 +156,8 @@ export class TaskListRequestModel {
         this.completedTo = obj.completedTo;
         this.candidateUserId = obj.candidateUserId;
         this.candidateGroupId = obj.candidateGroupId;
-        this.taskVariableFilters = obj.taskVariableFilters;
-        this.variableKeys = obj.variableKeys;
+        this.processVariableFilters = obj.processVariableFilters ?? [];
+        this.processVariableKeys = obj.processVariableKeys;
     }
 }
 
@@ -170,7 +166,11 @@ export class TaskFilterCloudAdapter extends TaskListRequestModel {
         super({
             appName: filter.appName,
             pagination: { maxItems: 25, skipCount: 0 },
-            sorting: [{ orderBy: filter.sort, direction: filter.order }],
+            sorting: new TaskListRequestSortingModel({
+                orderBy: filter.sort,
+                direction: filter.order,
+                isFieldProcessVariable: false
+            }),
 
             onlyStandalone: filter.standalone,
             name: filter.taskNames,

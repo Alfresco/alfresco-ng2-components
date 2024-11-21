@@ -16,47 +16,54 @@
  */
 
 import {
-    Component,
-    ViewEncapsulation,
-    OnChanges,
     AfterContentInit,
+    Component,
     ContentChild,
-    Output,
     EventEmitter,
-    SimpleChanges,
-    Input,
-    ViewChild,
     Inject,
-    OnDestroy,
-    Optional
+    Input,
+    OnChanges,
+    Optional,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import {
-    DataTableSchema,
-    PaginatedComponent,
-    CustomEmptyContentTemplateDirective,
     AppConfigService,
-    UserPreferencesService,
-    PaginationModel,
-    UserPreferenceValues,
-    DataRowEvent,
+    CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     DataCellEvent,
+    DataColumn,
     DataRowActionEvent,
+    DataRowEvent,
     DataTableComponent,
-    DataColumn
+    DataTableSchema,
+    PaginatedComponent,
+    PaginationModel,
+    UserPreferencesService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
-import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from '../models/process-list-sorting.model';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import {
+    PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+    PROCESS_SEARCH_API_METHOD_TOKEN
+} from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
-import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
+import {
+    PROCESS_LIST_CUSTOM_VARIABLE_COLUMN,
+    ProcessListDataColumnCustomData
+} from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -66,7 +73,9 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataColumnCustomData> implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
+export class ProcessListCloudComponent
+    extends DataTableSchema<ProcessListDataColumnCustomData>
+    implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
@@ -227,6 +236,13 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     @Input()
     statuses: string[] = [];
 
+    /**
+     * Filter the processes. Display only processes with specific process variables.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processVariables: ProcessVariableFilterModel[];
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -254,8 +270,6 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
-
-    private onDestroy$ = new Subject<boolean>();
 
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
@@ -293,17 +307,13 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             totalItems: 0
         });
 
-        this.isLoading = true;
-
         combineLatest([
             this.isColumnSchemaCreated$,
             this.fetchProcessesTrigger$
         ]).pipe(
-            filter(([isColumnSchemaCreated]) => {
-                return isColumnSchemaCreated;
-            }),
+            tap(() => this.isLoading = true),
+            filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
             switchMap(() => {
-                console.count('load');
                 if (this.searchMethod === 'POST') {
                     const requestNode = this.createProcessListRequestNode();
                     this.processListRequestNode = requestNode;
@@ -314,7 +324,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                     return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
                 }
             }),
-            takeUntil(this.onDestroy$)
+            takeUntilDestroyed()
         ).subscribe({
             next: (processes) => {
                 this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
@@ -326,6 +336,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                 this.pagination.next(processes.list.pagination);
             },
             error: (error) => {
+                console.error(error);
                 this.error.emit(error);
                 this.isLoading = false;
             }
@@ -368,12 +379,6 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                 this.createDatatableSchema();
             });
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
             this.formatSorting(changes['sorting'].currentValue);
@@ -530,7 +535,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                 maxItems: this.size,
                 skipCount: this.skipCount
             },
-            sorting: this.sorting,
+            sorting: this.getProcessListRequestSorting(),
             name: this.names,
             initiator: this.initiators,
             appVersion: this.appVersions,
@@ -543,10 +548,44 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             completedTo: this.completedTo,
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
-            variableKeys: this.getVariableDefinitionsRequestModel()
+            processVariableKeys: this.getVariableDefinitionsRequestModel(),
+            processVariableFilters: this.processVariables
         };
 
         return new ProcessListRequestModel(requestNode);
+    }
+
+    private getProcessListRequestSorting(): ProcessListRequestSortingModel {
+        if (!this.sorting?.length) {
+            return new ProcessListRequestSortingModel({
+                orderBy: this.defaultSorting.key,
+                direction: this.defaultSorting.direction,
+                isFieldProcessVariable: false
+            });
+        }
+
+        const orderBy = this.sorting[0]?.orderBy;
+        const direction = this.sorting[0]?.direction;
+        const orderByColumn = this.columnList?.columns.find((column) => column.key === orderBy);
+        const isFieldProcessVariable = orderByColumn?.customData?.columnType === 'process-variable-column';
+
+        if (isFieldProcessVariable) {
+            const processDefinitionKeys = orderByColumn.customData.variableDefinitionsPayload.map(
+                (variableDefinition) => variableDefinition.split('/')[0]
+            );
+            const variableName = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[1];
+            return new ProcessListRequestSortingModel({
+                orderBy: variableName,
+                direction,
+                isFieldProcessVariable: true,
+                processVariableData: {
+                    processDefinitionKeys,
+                    type: orderByColumn.customData.variableType
+                }
+            });
+        } else {
+            return new ProcessListRequestSortingModel({orderBy, direction, isFieldProcessVariable: false});
+        }
     }
 
     private createRequestNode(): ProcessQueryCloudRequestModel {

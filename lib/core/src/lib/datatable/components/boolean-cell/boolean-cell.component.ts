@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CommonModule } from '@angular/common';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     standalone: true,
@@ -39,7 +39,7 @@ export class BooleanCellComponent extends DataTableCellComponent implements OnIn
     ngOnInit() {
         super.ngOnInit();
 
-        this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
+        this.value$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
             this.boolValue = this.transformBoolean(value);
         });
     }

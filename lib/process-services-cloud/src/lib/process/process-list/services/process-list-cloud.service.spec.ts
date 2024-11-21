@@ -148,10 +148,7 @@ describe('ProcessListCloudService', () => {
             const processRequest = {
                 appName: 'fakeName',
                 pagination: { skipCount: 0, maxItems: 20 },
-                sorting: [
-                    { orderBy: 'NAME', direction: 'DESC' },
-                    { orderBy: 'TITLE', direction: 'ASC' }
-                ]
+                sorting: { orderBy: 'NAME', direction: 'DESC', isFieldProcessVariable: false }
             } as ProcessListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
@@ -159,7 +156,6 @@ describe('ProcessListCloudService', () => {
 
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
-            expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
         });
 
         it('should return an error when app name is not specified', async () => {

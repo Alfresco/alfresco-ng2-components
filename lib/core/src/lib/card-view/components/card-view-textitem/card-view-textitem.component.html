@@ -129,7 +129,8 @@
                     'adf-property-value-editable': editable,
                     'adf-textitem-clickable-value': isClickable,
                     'adf-property-readonly-value': isReadonlyProperty,
-                    'adf-property-value-has-error': isEditable && hasErrors
+                    'adf-property-value-has-error': isEditable && hasErrors,
+                    'adf-property-value-has-icon-suffix': showClickableIcon
                 }"
                 [placeholder]="property.default"
                 [attr.aria-label]="property.label | translate"

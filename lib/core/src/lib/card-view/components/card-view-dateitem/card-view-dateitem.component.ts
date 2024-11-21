@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
@@ -26,7 +26,6 @@ import {
 } from '@mat-datetimepicker/core';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
-import { takeUntil } from 'rxjs/operators';
 import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
@@ -41,6 +40,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     providers: [
@@ -66,7 +66,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-card-view-dateitem' }
 })
-export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
+export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit {
     @Input()
     displayEmpty = true;
 
@@ -77,6 +77,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     public datepicker: MatDatetimepickerComponent<any>;
 
     valueDate: Date;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private dateAdapter: DateAdapter<Date>,
@@ -90,7 +92,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((locale) => {
                 this.property.locale = locale;
             });
@@ -102,10 +104,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         } else {
             this.initSingleValueProperty();
         }
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     get showProperty(): boolean {

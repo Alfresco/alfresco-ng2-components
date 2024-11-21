@@ -15,19 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, OnDestroy, EventEmitter, ViewEncapsulation, Output } from '@angular/core';
 import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
+import {
+    AppConfigService,
+    CardViewBaseItemModel,
+    CardViewDateItemModel,
     CardViewItem,
     CardViewTextItemModel,
-    TranslationService,
-    AppConfigService,
-    CardViewDateItemModel,
-    CardViewBaseItemModel
+    TranslationService
 } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-process-header',
@@ -36,7 +45,7 @@ import { Subject } from 'rxjs';
     styleUrls: ['./process-header-cloud.component.scss'],
     host: { class: 'adf-cloud-process-header' }
 })
-export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy {
+export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
     /** (Required) The name of the application. */
     @Input()
     appName: string = '';
@@ -54,7 +63,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
     dateFormat: string;
     dateLocale: string;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private processCloudService: ProcessCloudService,
@@ -66,7 +75,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
         this.dateFormat = this.appConfig.get('adf-cloud-process-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
 
-        this.processCloudService.dataChangesDetected.pipe(takeUntil(this.onDestroy$)).subscribe((processDetails) => this.onLoaded(processDetails));
+        this.processCloudService.dataChangesDetected.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((processDetails) => this.onLoaded(processDetails));
     }
 
     ngOnChanges() {
@@ -151,10 +160,5 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

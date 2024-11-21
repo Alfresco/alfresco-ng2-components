@@ -16,81 +16,74 @@
  */
 
 import { Pagination } from '@alfresco/js-api';
-import { ProcessListCloudSortingModel } from './process-list-sorting.model';
+import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from './process-list-sorting.model';
 import { ProcessFilterCloudModel } from '../../process-filters/models/process-filter-cloud.model';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 export class ProcessQueryCloudRequestModel {
-   appName: string;
-   appVersion?: number | string;
-   initiator?: null;
-   id?: string;
-   environmentId?: string;
-   name?: string;
-   processDefinitionId?: string;
-   processDefinitionName?: string;
-   processDefinitionKey?: string;
-   status?: string;
-   startDate?: string;
-   businessKey?: string;
-   lastModified?: string;
-   lastModifiedTo?: string;
-   lastModifiedFrom?: string;
-   startFrom?: string;
-   startTo?: string;
-   completedFrom?: string;
-   completedTo?: string;
-   suspendedFrom?: string;
-   suspendedTo?: string;
-   completedDate?: string;
-   maxItems: number;
-   skipCount: number;
-   sorting?: ProcessListCloudSortingModel[];
-   variableKeys?: string[];
+    appName: string;
+    appVersion?: number | string;
+    initiator?: null;
+    id?: string;
+    environmentId?: string;
+    name?: string;
+    processDefinitionId?: string;
+    processDefinitionName?: string;
+    processDefinitionKey?: string;
+    status?: string;
+    startDate?: string;
+    businessKey?: string;
+    lastModified?: string;
+    lastModifiedTo?: string;
+    lastModifiedFrom?: string;
+    startFrom?: string;
+    startTo?: string;
+    completedFrom?: string;
+    completedTo?: string;
+    suspendedFrom?: string;
+    suspendedTo?: string;
+    completedDate?: string;
+    maxItems: number;
+    skipCount: number;
+    sorting?: ProcessListCloudSortingModel[];
+    variableKeys?: string[];
 
     constructor(obj?: any) {
-       if (obj) {
-           this.appName = obj.appName;
-           this.appVersion = obj.appVersion;
-           this.initiator = obj.initiator;
-           this.id = obj.id;
-           this.environmentId = obj.environmentId;
-           this.name = obj.name;
-           this.processDefinitionId = obj.processDefinitionId;
-           this.processDefinitionName = obj.processDefinitionName;
-           this.processDefinitionKey = obj.processDefinitionKey;
-           this.status = obj.status;
-           this.startDate = obj.startDate;
-           this.businessKey = obj.businessKey;
-           this.lastModified = obj.lastModified;
-           this.lastModifiedTo = obj.lastModifiedTo;
-           this.lastModifiedFrom = obj.lastModifiedFrom;
-           this.startFrom = obj.startFrom;
-           this.startTo = obj.startTo;
-           this.completedFrom = obj.completedFrom;
-           this.completedTo = obj.completedTo;
-           this.suspendedFrom = obj.suspendedFrom;
-           this.suspendedTo = obj.suspendedTo;
-           this.completedDate = obj.completedDate;
-           this.maxItems = obj.maxItems;
-           this.skipCount = obj.skipCount;
-           this.sorting = obj.sorting;
-           this.variableKeys = obj.variableKeys;
-       }
-   }
-}
-
-export interface ProcessListRequestProcessVariableFilter {
-    processDefinitionKey?: string;
-    name?: string;
-    type?: string;
-    value?: string;
-    operator?: string;
+        if (obj) {
+            this.appName = obj.appName;
+            this.appVersion = obj.appVersion;
+            this.initiator = obj.initiator;
+            this.id = obj.id;
+            this.environmentId = obj.environmentId;
+            this.name = obj.name;
+            this.processDefinitionId = obj.processDefinitionId;
+            this.processDefinitionName = obj.processDefinitionName;
+            this.processDefinitionKey = obj.processDefinitionKey;
+            this.status = obj.status;
+            this.startDate = obj.startDate;
+            this.businessKey = obj.businessKey;
+            this.lastModified = obj.lastModified;
+            this.lastModifiedTo = obj.lastModifiedTo;
+            this.lastModifiedFrom = obj.lastModifiedFrom;
+            this.startFrom = obj.startFrom;
+            this.startTo = obj.startTo;
+            this.completedFrom = obj.completedFrom;
+            this.completedTo = obj.completedTo;
+            this.suspendedFrom = obj.suspendedFrom;
+            this.suspendedTo = obj.suspendedTo;
+            this.completedDate = obj.completedDate;
+            this.maxItems = obj.maxItems;
+            this.skipCount = obj.skipCount;
+            this.sorting = obj.sorting;
+            this.variableKeys = obj.variableKeys;
+        }
+    }
 }
 
 export class ProcessListRequestModel {
     appName: string;
     pagination?: Pagination;
-    sorting?: ProcessListCloudSortingModel[];
+    sorting?: ProcessListRequestSortingModel;
 
     name?: string[];
     initiator?: string[];
@@ -105,8 +98,8 @@ export class ProcessListRequestModel {
     suspendedFrom?: string;
     suspendedTo?: string;
 
-    processVariableFilters?: ProcessListRequestProcessVariableFilter[];
-    variableKeys?: string[];
+    processVariableFilters?: ProcessVariableFilterModel[];
+    processVariableKeys?: string[];
 
     constructor(obj: Partial<ProcessListRequestModel>) {
         if (!obj.appName) {
@@ -129,7 +122,8 @@ export class ProcessListRequestModel {
         this.completedTo = obj.completedTo;
         this.suspendedFrom = obj.suspendedFrom;
         this.suspendedTo = obj.suspendedTo;
-        this.variableKeys = obj.variableKeys;
+        this.processVariableKeys = obj.processVariableKeys;
+        this.processVariableFilters = obj.processVariableFilters;
     }
 }
 
@@ -138,12 +132,17 @@ export class ProcessFilterCloudAdapter extends ProcessListRequestModel {
         super({
             appName: filter.appName,
             pagination: { maxItems: 25, skipCount: 0 },
-            sorting: [{ orderBy: filter.sort, direction: filter.order }],
+            sorting: new ProcessListRequestSortingModel({
+                orderBy: filter.sort,
+                direction: filter.order,
+                isFieldProcessVariable: false
+            }),
 
             name: filter.processDefinitionNames,
             initiator: filter.initiators,
             appVersion: filter.appVersions,
             status: filter.statuses,
+            processVariableFilters: filter.processVariableFilters,
             lastModifiedFrom: filter.lastModifiedFrom?.toISOString(),
             lasModifiedTo: filter.lastModifiedTo?.toISOString(),
             startFrom: filter.startFrom,

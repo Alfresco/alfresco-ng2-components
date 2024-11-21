@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-status-column',
@@ -35,20 +35,20 @@ import { TranslateModule } from '@ngx-translate/core';
     `,
     host: { class: 'adf-library-status-column adf-datatable-content-cell' }
 })
-export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
+export class LibraryStatusColumnComponent implements OnInit {
     @Input()
     context: any;
 
     displayText$ = new BehaviorSubject<string>('');
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+        this.nodesApiService.nodeUpdated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
             const row: ShareDataRow = this.context.row;
             if (row) {
                 const { entry } = row.node;
@@ -83,8 +83,4 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
 }

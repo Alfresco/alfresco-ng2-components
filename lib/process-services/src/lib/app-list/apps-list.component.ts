@@ -17,8 +17,16 @@
 
 import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AppsProcessService } from '../services/apps-process.service';
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { IconModel } from './icon.model';
 import { finalize, map } from 'rxjs/operators';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
@@ -55,7 +63,7 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-apps' }
 })
-export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
+export class AppsListComponent implements OnInit, AfterContentInit {
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -88,8 +96,6 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     hasEmptyCustomContentTemplate: boolean = false;
 
     private iconsMDL: IconModel;
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(private appsProcessService: AppsProcessService) {}
 
     ngOnInit() {
@@ -99,11 +105,6 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
         this.iconsMDL = new IconModel();
         this.load();
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     ngAfterContentInit() {

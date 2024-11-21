@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DestroyRef,
+    inject,
+    Input,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { DataTableService } from '../../services/datatable.service';
 import { CommonModule } from '@angular/common';
 import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-datatable-cell',
@@ -49,7 +57,7 @@ import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
-export class DataTableCellComponent implements OnInit, OnDestroy {
+export class DataTableCellComponent implements OnInit {
     /** Data table adapter instance. */
     @Input()
     data: DataTableAdapter;
@@ -74,7 +82,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     @Input()
     resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
-    protected onDestroy$ = new Subject<boolean>();
+    protected destroyRef = inject(DestroyRef);
     protected dataTableService = inject(DataTableService, { optional: true });
     value$ = new BehaviorSubject<any>('');
 
@@ -100,7 +108,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
+        this.dataTableService.rowUpdate.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
             if (data?.id === this.row?.id && data.obj) {
                 this.row.obj = data.obj;
                 this.row['cache'][this.column.key] = this.getNestedPropertyValue(data.obj, this.column.key);
@@ -112,10 +120,5 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     private getNestedPropertyValue(obj: any, path: string) {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }
