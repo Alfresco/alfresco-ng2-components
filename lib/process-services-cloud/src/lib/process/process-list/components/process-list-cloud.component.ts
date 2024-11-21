@@ -63,7 +63,7 @@ import {
 } from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ProcessVariableFilterModel } from '../../process-filters/models/process-filter-cloud.model';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -241,7 +241,7 @@ export class ProcessListCloudComponent
      * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
-    processVariables: ProcessVariableFilterModel[]
+    processVariables: ProcessVariableFilterModel[];
 
     /** Emitted when a row in the process list is clicked. */
     @Output()

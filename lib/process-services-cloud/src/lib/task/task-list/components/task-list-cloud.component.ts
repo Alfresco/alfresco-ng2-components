@@ -33,6 +33,7 @@ import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model'
 import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TaskListRequestSortingModel } from '../../../models/task-list-sorting.model';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -189,6 +190,13 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     completedByUsers: string[] = [];
 
+    /**
+     * Filter the processes. Display only processes with specific process variables.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processVariableFilters: ProcessVariableFilterModel[];
+
     rows: TaskInstanceCloudListViewModel[] = [];
     dataAdapter: TasksListDatatableAdapter | undefined;
 
@@ -278,7 +286,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             dueDateTo: this.dueDateTo,
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
-            processVariableKeys: this.getRequestNodeVariables()
+            processVariableKeys: this.getRequestNodeVariables(),
+            processVariableFilters: this.processVariableFilters ?? []
         };
 
         return new TaskListRequestModel(requestNode);
@@ -362,7 +371,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                 }
             });
         } else {
-            return new TaskListRequestSortingModel({orderBy, direction, isFieldProcessVariable: false});
+            return new TaskListRequestSortingModel({ orderBy, direction, isFieldProcessVariable: false });
         }
     }
 }

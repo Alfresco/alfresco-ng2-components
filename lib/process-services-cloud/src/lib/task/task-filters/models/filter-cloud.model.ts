@@ -24,6 +24,7 @@ import { DateRangeFilterService } from '../../../common/date-range-filter/date-r
 import { ComponentSelectionMode } from '../../../types';
 import { IdentityGroupModel } from '../../../group/models/identity-group.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 export class TaskFilterCloudModel {
     id: string;
@@ -75,6 +76,8 @@ export class TaskFilterCloudModel {
     private _createdTo: string;
     private dateRangeFilterService = new DateRangeFilterService();
 
+    processVariableFilters?: ProcessVariableFilterModel[];
+
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || Math.random().toString(36).substr(2, 9);
@@ -115,13 +118,13 @@ export class TaskFilterCloudModel {
             this.createdTo = obj._createdTo || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.showCounter = obj.showCounter || false;
-
             this.taskNames = obj.taskNames || null;
             this.statuses = obj.statuses || null;
             this.assignees = obj.assignees || null;
             this.processDefinitionNames = obj.processDefinitionNames || null;
             this.priorities = obj.priorities || null;
             this.completedByUsers = obj.completedByUsers || null;
+            this.processVariableFilters = obj.processVariableFilters ?? [];
         }
     }
 

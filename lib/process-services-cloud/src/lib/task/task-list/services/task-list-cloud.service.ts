@@ -111,7 +111,8 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
             createdTo: requestNode.createdTo,
             dueDateFrom: requestNode.dueDateFrom,
             dueDateTo: requestNode.dueDateTo,
-            processVariableKeys: requestNode.processVariableKeys
+            processVariableKeys: requestNode.processVariableKeys,
+            processVariableFilters: requestNode.processVariableFilters
         };
 
         if (requestNode.sorting) {

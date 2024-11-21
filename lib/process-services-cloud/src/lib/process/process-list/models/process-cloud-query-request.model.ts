@@ -17,7 +17,8 @@
 
 import { Pagination } from '@alfresco/js-api';
 import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from './process-list-sorting.model';
-import { ProcessFilterCloudModel, ProcessVariableFilterModel } from '../../process-filters/models/process-filter-cloud.model';
+import { ProcessFilterCloudModel } from '../../process-filters/models/process-filter-cloud.model';
+import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 
 export class ProcessQueryCloudRequestModel {
     appName: string;
