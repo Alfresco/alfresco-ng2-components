@@ -237,9 +237,9 @@ export class ProcessListCloudComponent
     statuses: string[] = [];
 
     /**
-    * Filter the processes. Display only processes with specific process variables.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
-    */
+     * Filter the processes. Display only processes with specific process variables.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
     @Input()
     processVariables: ProcessVariableFilterModel[]
 
