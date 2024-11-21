@@ -237,7 +237,7 @@
                      (click)="onRowClick(row, $event)"
                      tabindex="0"
                      (keydown.enter)="onEnterKeyPressed(row, $any($event))"
-                    [adf-context-menu]="contextMenuOptions(row, col)"
+                     [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu"
                      adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row"
                      [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}">
