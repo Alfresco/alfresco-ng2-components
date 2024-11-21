@@ -803,7 +803,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return false;
     }
 
-    getContextMenuActions(row: DataRow, col: DataColumn): () => any[] {
+    contextMenuOptions(row: DataRow, col: DataColumn): () => any[] {
         return () => {
             const event = new DataCellEvent(row, col, []);
             this.showRowContextMenu.emit(event);
