@@ -36,6 +36,7 @@ export class CardTextItemPage {
                 `//${materialLocators.Label.root}[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`
             )
         );
+        this.label = label;
     }
 
     async getFieldValue(): Promise<string> {

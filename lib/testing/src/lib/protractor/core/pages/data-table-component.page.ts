@@ -337,7 +337,7 @@ export class DataTableComponentPage {
 
     getRow(columnName: string, columnValue: string): ElementFinder {
         return this.rootElement
-            .all(by.css(`adf-datatable-row:has(.adf-datatable-cell[title='${columnName}']):has(.adf-datatable-cell-value[title='${columnValue}'])`))
+            .all(by.css(`adf-datatable-row:has(.adf-datatable-cell[title='${columnName}']):has(.adf-datatable-cell-value[title*='${columnValue}'])`))
             .first();
     }
 
