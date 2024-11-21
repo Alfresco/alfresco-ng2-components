@@ -48,7 +48,7 @@ import { ProcessListCloudService } from '../services/process-list-cloud.service'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
-import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from '../models/process-list-sorting.model';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import {
@@ -328,6 +328,7 @@ export class ProcessListCloudComponent
                 this.pagination.next(processes.list.pagination);
             },
             error: (error) => {
+                console.error(error);
                 this.error.emit(error);
                 this.isLoading = false;
             }
@@ -526,7 +527,7 @@ export class ProcessListCloudComponent
                 maxItems: this.size,
                 skipCount: this.skipCount
             },
-            sorting: this.sorting,
+            sorting: this.getProcessListRequestSorting(),
             name: this.names,
             initiator: this.initiators,
             appVersion: this.appVersions,
@@ -543,6 +544,39 @@ export class ProcessListCloudComponent
         };
 
         return new ProcessListRequestModel(requestNode);
+    }
+
+    private getProcessListRequestSorting(): ProcessListRequestSortingModel {
+        if (!this.sorting?.length) {
+            return new ProcessListRequestSortingModel({
+                orderBy: this.defaultSorting.key,
+                direction: this.defaultSorting.direction,
+                isFieldProcessVariable: false
+            });
+        }
+
+        const orderBy = this.sorting[0]?.orderBy;
+        const direction = this.sorting[0]?.direction;
+        const orderByColumn = this.columnList?.columns.find((column) => column.key === orderBy);
+        const isFieldProcessVariable = orderByColumn?.customData?.columnType === 'process-variable-column';
+
+        if (isFieldProcessVariable) {
+            const processDefinitionKeys = orderByColumn.customData.variableDefinitionsPayload.map(
+                (variableDefinition) => variableDefinition.split('/')[0]
+            );
+            const variableName = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[1];
+            return new ProcessListRequestSortingModel({
+                orderBy: variableName,
+                direction,
+                isFieldProcessVariable: true,
+                processVariableData: {
+                    processDefinitionKeys,
+                    type: orderByColumn.customData.variableType
+                }
+            });
+        } else {
+            return new ProcessListRequestSortingModel({orderBy, direction, isFieldProcessVariable: false});
+        }
     }
 
     private createRequestNode(): ProcessQueryCloudRequestModel {

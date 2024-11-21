@@ -59,7 +59,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
 // eslint-disable-next-line @typescript-eslint/brace-style
     implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
-    
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -148,7 +148,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
 
-    private defaultSorting = { key: 'startDate', direction: 'desc' };
+    protected defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
     protected abstract isLoading$: Observable<boolean>;

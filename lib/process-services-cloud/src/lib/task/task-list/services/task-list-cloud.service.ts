@@ -74,8 +74,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
 
         const queryParams = {
             maxItems: requestNode.pagination?.maxItems || 25,
-            skipCount: requestNode.pagination?.skipCount || 0,
-            sort: this.buildSortingParam(requestNode.sorting || [])
+            skipCount: requestNode.pagination?.skipCount || 0
         };
 
         const queryData = this.buildQueryData(requestNode);
@@ -114,6 +113,18 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
             dueDateTo: requestNode.dueDateTo,
             processVariableKeys: requestNode.processVariableKeys
         };
+
+        if (requestNode.sorting) {
+            queryData['sort'] = {
+                field: requestNode.sorting.orderBy,
+                direction: requestNode.sorting.direction.toLowerCase(),
+                isProcessVariable: requestNode.sorting.isFieldProcessVariable
+            };
+            if (queryData['sort'].isProcessVariable) {
+                queryData['sort'].processDefinitionKeys = requestNode.sorting.processVariableData?.processDefinitionKeys;
+                queryData['sort'].type = requestNode.sorting.processVariableData?.type;
+            }
+        }
 
         Object.keys(queryData).forEach((key) => {
             const value = queryData[key];
