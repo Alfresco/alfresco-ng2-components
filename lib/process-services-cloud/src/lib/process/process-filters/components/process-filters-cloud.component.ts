@@ -323,7 +323,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {
         return this.searchMethod === 'POST'
-        ? this.processListCloudService.getProcessListCounter(new ProcessFilterCloudAdapter(filter))
-        : this.processListCloudService.getProcessCounter(filter.appName, filter.status)
+            ? this.processListCloudService.getProcessListCounter(new ProcessFilterCloudAdapter(filter))
+            : this.processListCloudService.getProcessCounter(filter.appName, filter.status)
     }
 }

@@ -114,7 +114,8 @@ export class ProcessListCloudService extends BaseCloudService {
             completedTo: requestNode.completedTo,
             suspendedFrom: requestNode.suspendedFrom,
             suspendedTo: requestNode.suspendedTo,
-            processVariableKeys: requestNode.processVariableKeys
+            processVariableKeys: requestNode.processVariableKeys,
+            processVariableFilters: requestNode.processVariableFilters
         };
 
         if (requestNode.sorting) {

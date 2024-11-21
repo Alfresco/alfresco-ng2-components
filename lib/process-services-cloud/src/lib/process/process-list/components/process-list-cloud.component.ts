@@ -63,6 +63,7 @@ import {
 } from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ProcessVariableFilterModel } from '../../process-filters/models/process-filter-cloud.model';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -234,6 +235,13 @@ export class ProcessListCloudComponent
     */
     @Input()
     statuses: string[] = [];
+
+    /**
+     * Filter the processes. Display only processes with specific process variables.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processVariables: ProcessVariableFilterModel[]
 
     /** Emitted when a row in the process list is clicked. */
     @Output()
@@ -540,7 +548,8 @@ export class ProcessListCloudComponent
             completedTo: this.completedTo,
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
-            processVariableKeys: this.getVariableDefinitionsRequestModel()
+            processVariableKeys: this.getVariableDefinitionsRequestModel(),
+            processVariableFilters: this.processVariables
         };
 
         return new ProcessListRequestModel(requestNode);
