@@ -2,7 +2,7 @@
   "COMMON": {
     "APPLY": "Appliquer",
     "CANCEL": "Annuler",
-    "NAME": "Name"
+    "NAME": ""
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -147,7 +147,7 @@
       "NO_EXISTING_TAGS": "Aucun tag existant",
       "TITLE": "Créer des tags",
       "CREATE_TAG": "Créer : {{tag}}",
-      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
+      "TAG_SEARCH_PLACEHOLDER": "",
       "ERRORS": {
         "EXISTING_TAG": "Le tag existe déjà",
         "ALREADY_ADDED_TAG": "Le tag a déjà été ajouté",
@@ -155,7 +155,7 @@
         "REQUIRED": "Le nom du tag est obligatoire",
         "FETCH_TAGS": "Erreur lors de la récupération des tags",
         "CREATE_TAGS": "Erreur lors de la création des tags",
-        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
+        "SPECIAL_CHARACTERS": ""
       },
       "TOOLTIPS": {
         "DELETE_TAG": "Supprimer le tag"
@@ -176,7 +176,7 @@
     "GENERIC_CREATE": "Créer : {{name}}",
     "NAME": "Nom de catégorie",
     "LOADING": "Chargement en cours",
-    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "NO_CATEGORIES_ADDED": "",
     "ERRORS": {
       "NOT_FOUND": "Catégories non trouvées",
       "REQUIRED": "Le nom de la catégorie est obligatoire",
@@ -186,7 +186,7 @@
       "CREATE_CATEGORIES": "Erreur lors de la création des catégories",
       "EXISTING_CATEGORIES": "Certaines catégories existent déjà"
     },
-    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
+    "CATEGORIES_SEARCH_PLACEHOLDER": ""
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -274,15 +274,15 @@
       "ARIA-LABEL": "Bouton Rechercher"
     },
     "INPUT": {
-      "LABEL": "Search",
-      "PLACEHOLDER": "Search Query",
+      "LABEL": "",
+      "PLACEHOLDER": "",
       "ARIA-LABEL": "Rechercher"
     },
     "RESULTS": {
       "SUMMARY": "{{numResults}} résultat(s) trouvé(s) pour {{searchTerm}}",
       "NONE": "Aucun résultat trouvé pour {{searchTerm}}",
       "ERROR": "Un problème est survenu pendant la recherche, veuillez réessayer.",
-      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
+      "WILL_CONTAIN": "",
       "COLUMNS": {
         "NAME": "Nom affiché",
         "MODIFIED_BY": "Modifié par",
@@ -333,11 +333,11 @@
         "OPTIONS-SELECTION": "Sélection d'options"
       },
       "ANY": "N'importe lequel",
-      "PEOPLE": "People"
+      "PEOPLE": ""
     },
     "FACET_FIELDS": {
-      "MODIFIER_LABEL": "Modified by",
-      "CREATOR_LABEL": "Created by"
+      "MODIFIER_LABEL": "",
+      "CREATOR_LABEL": ""
     },
     "ICONS": {
       "ft_ic_raster_image": "Fichier d'image",
@@ -376,7 +376,7 @@
     "UNKNOWN_CONFIGURATION": "Configuration inconnue",
     "SEARCH_HEADER": {
       "TITLE": "Filtre",
-      "TYPE": "Type",
+      "TYPE": "",
       "FILTER_BY": "Filtrer par {{ category }}",
       "CLEAR": "Supprimer",
       "APPLY": "Appliquer",
@@ -388,7 +388,7 @@
         "TYPE": {
           "TITLE": "Cocher le type",
           "FOLDER": "Dossier",
-          "DOCUMENT": "Document"
+          "DOCUMENT": ""
         },
         "SIZE": {
           "TITLE": "Taille du contenu (plage)",
@@ -405,67 +405,67 @@
     "LOGICAL_SEARCH": {
       "MATCH_ALL": "TOUT",
       "MATCH_ALL_LABEL": "Associez TOUTES ces phrases",
-      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ALL_HINT": "",
       "MATCH_ANY": "N'IMPORTE LEQUEL",
       "MATCH_ANY_LABEL": "Associez N'IMPORTE QUELLE de ces phrases",
-      "MATCH_ANY_HINT": "Results will match any words entered here",
-      "MATCH_EXACT": "EXACT",
-      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
-      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "MATCH_ANY_HINT": "",
+      "MATCH_EXACT": "",
+      "MATCH_EXACT_LABEL": "",
+      "MATCH_EXACT_HINT": "",
       "EXCLUDE": "EXCLURE",
       "EXCLUDE_LABEL": "EXCLURE ces phrases",
-      "EXCLUDE_HINT": "Results will exclude matches with these words"
+      "EXCLUDE_HINT": ""
     },
     "DATE_RANGE_ADVANCED": {
       "OPTIONS": {
-        "ANYTIME": "Anytime",
-        "IN_LAST": "In the last",
-        "BETWEEN": "Between"
+        "ANYTIME": "",
+        "IN_LAST": "",
+        "BETWEEN": ""
       },
       "IN_LAST_LABELS": {
-        "DAYS": "Days",
-        "WEEKS": "Weeks",
-        "MONTHS": "Months"
+        "DAYS": "",
+        "WEEKS": "",
+        "MONTHS": ""
       },
       "IN_LAST_DISPLAY_LABELS": {
-        "DAYS": "In the last {{value}} days",
-        "WEEKS": "In the last {{value}} weeks",
-        "MONTHS": "In the last {{value}} months"
+        "DAYS": "",
+        "WEEKS": "",
+        "MONTHS": ""
       },
       "BETWEEN_PLACEHOLDERS": {
-        "START_DATE": "Start Date",
-        "END_DATE": "End Date"
+        "START_DATE": "",
+        "END_DATE": ""
       },
       "ERROR": {
-        "IN_LAST": "Value required",
+        "IN_LAST": "",
         "START_DATE": {
-          "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid"
+          "REQUIRED": "",
+          "INVALID_FORMAT": ""
         },
         "END_DATE": {
-          "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid"
+          "REQUIRED": "",
+          "INVALID_FORMAT": ""
         }
       },
       "ARIA_LABEL": {
-        "NUMBER_INPUT": "Number input"
+        "NUMBER_INPUT": ""
       }
     },
     "SEARCH_PROPERTIES": {
-      "FILE_SIZE": "File Size",
-      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE": "",
+      "FILE_SIZE_PLACEHOLDER": "",
       "FILE_SIZE_OPERATOR": {
-        "AT_LEAST": "At Least",
-        "AT_MOST": "At Most",
-        "EXACTLY": "Exactly"
+        "AT_LEAST": "",
+        "AT_MOST": "",
+        "EXACTLY": ""
       },
       "FILE_SIZE_UNIT_ABBREVIATION": {
-        "KB": "KB",
-        "MB": "MB",
-        "GB": "GB"
+        "KB": "",
+        "MB": "",
+        "GB": ""
       },
-      "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type"
+      "FILE_TYPE": "",
+      "FILE_TYPE_PLACEHOLDER": ""
     }
   },
   "PERMISSION": {
@@ -476,7 +476,7 @@
       "HEADER": "Propriétés",
       "NAME": "Nom",
       "TITLE": "Titre",
-      "DESCRIPTION": "Description",
+      "DESCRIPTION": "",
       "AUTHOR": "Auteur",
       "MIMETYPE": "Type MIME",
       "SIZE": "Taille",
@@ -485,10 +485,10 @@
       "MODIFIER": "Modificateur",
       "MODIFIED_DATE": "Date de modification",
       "CONTENT_TYPE": "Type de contenu",
-      "TAGS": "Tags",
-      "NO_TAGS_ADDED": "There are currently no tags added",
-      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
-      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
+      "TAGS": "",
+      "NO_TAGS_ADDED": "",
+      "NO_ITEMS_MESSAGE": "",
+      "SAVE_OR_DISCARD_CHANGES": ""
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -500,7 +500,7 @@
         "VIEW_DETAILS": "Afficher les détails",
         "PROPERTY": {
           "NAME": "Nom",
-          "DESCRIPTION": "Description",
+          "DESCRIPTION": "",
           "DATA_TYPE": "Type de données"
         }
       }
@@ -535,7 +535,7 @@
     },
     "UNSHARE_ERROR": "Erreur lors de l'annulation du partage de ce fichier",
     "UNSHARE_PERMISSION_ERROR": "Vous n'avez pas les droits d'accès pour ne pas partager ce fichier",
-    "INVALID_DATE_ERROR": "Invalid date"
+    "INVALID_DATE_ERROR": ""
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -616,7 +616,7 @@
       "EDIT": "Modifier",
       "CANCEL": "Annuler",
       "FORM": {
-        "DESCRIPTION": "Description",
+        "DESCRIPTION": "",
         "SITE_ID": "ID de Bibliothèque",
         "NAME": "Nom",
         "VISIBILITY": "Visibilité"
@@ -631,7 +631,7 @@
     },
     "VISIBILITY": {
       "PRIVATE": "Liste privée",
-      "PUBLIC": "Public",
+      "PUBLIC": "",
       "MODERATED": "Modéré"
     },
     "HINTS": {
@@ -659,7 +659,7 @@
       "DROPDOWN": "Liste déroulante"
     },
     "HEADER": {
-      "SELECTED": "Selected ({{ count }})"
+      "SELECTED": ""
     }
   },
   "NAME_COLUMN_LINK": {
@@ -669,7 +669,7 @@
   },
   "ADF-ASPECT-LIST": {
     "PROPERTY_NAME": "Nom de la propriété",
-    "DESCRIPTION": "Description",
+    "DESCRIPTION": "",
     "DATA_TYPE": "Type de données",
     "DIALOG": {
       "TITLE": "Personnaliser les propriétés",
@@ -705,8 +705,8 @@
   "KNOWLEDGE_RETRIEVAL": {
     "SEARCH": {
       "WARNINGS": {
-        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
-        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+        "TOO_MANY_FILES_SELECTED": "",
+        "FOLDER_SELECTED": ""
       }
     }
   }

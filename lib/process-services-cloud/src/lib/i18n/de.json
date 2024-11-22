@@ -8,12 +8,12 @@
     "PROPERTIES": {
       "NAME": "Prozessname",
       "CREATED": "Erstellt",
-      "STATUS": "Status",
+      "STATUS": "",
       "START_DATE": "Startdatum",
       "COMPLETED_DATE": "Abschlussdatum",
       "COMPLETED_BY": "Abgeschlossen von",
       "ID": "ID",
-      "INITIATOR": "Initiator",
+      "INITIATOR": "",
       "STARTED_BY": "Gestartet von",
       "APP_NAME": "Anwendungsname",
       "BUSINESS_KEY": "Geschäftsschlüssel",
@@ -67,7 +67,7 @@
       "FORM": {
         "TITLE": "Aufgabe starten",
         "LABEL": {
-          "NAME": "Name",
+          "NAME": "",
           "DESCRIPTION": "Beschreibung",
           "ATTACHFORM": "Formular anhängen",
           "ASSIGNEE": "Zugewiesener Benutzer",
@@ -78,7 +78,7 @@
           "PRIORITY": "Priorität"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "",
           "CANCEL": "Abbrechen"
         }
       }
@@ -87,18 +87,18 @@
       "NAME": "Aufgabenname",
       "ASSIGNEE": "Zugewiesener Benutzer",
       "ID": "ID",
-      "STATUS": "Status",
+      "STATUS": "",
       "PRIORITY": "Priorität",
       "CREATED_DATE": "Datum der Erstellung",
       "LAST_MODIFIED": "Zuletzt geändert",
       "DUE_DATE": "Fälligkeitsdatum",
       "CREATED": "Erstellt",
-      "JSON_CELL": "Json",
+      "JSON_CELL": "",
       "COMPLETED_BY": "Abgeschlossen von",
       "PRIORITY_VALUES": {
         "NONE": "Keine",
         "LOW": "Niedrig",
-        "NORMAL": "Normal",
+        "NORMAL": "",
         "HIGH": "Hoch"
       },
       "DESCRIPTION": "Beschreibung"
@@ -114,11 +114,11 @@
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
       "ACTIVITY_NAME": "Aktivitätsname",
-      "ACTIVITY_TYPE": "Status",
+      "ACTIVITY_TYPE": "",
       "ID": "ID",
       "COMPLETED_DATE": "Abschlussdatum",
       "STARTED_DATE": "Startdatum",
-      "STATUS": "Status"
+      "STATUS": ""
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
@@ -187,7 +187,7 @@
       "TASK_ID": "Aufgaben-ID",
       "PROCESS_DEF_NAME": "Name der Prozessdefinition",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
-      "STATUS": "Status",
+      "STATUS": "",
       "ASSIGNMENT": "Zugewiesener Benutzer",
       "DIRECTION": "Richtung",
       "PROCESS_INSTANCE_ID": "Prozessinstanz-ID",
@@ -221,7 +221,7 @@
       "PROCESS_DEF_NAME": "Name der Prozessdefinition",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
       "PROCESS_INSTANCE_ID": "Prozessinstanz-ID",
-      "STATUS": "Status",
+      "STATUS": "",
       "DIRECTION": "Richtung",
       "ACTIVITY_NAME": "Aktivitätsname",
       "ACTIVITY_TYPE": "Aktivitätstyp",
@@ -236,8 +236,8 @@
     "LABEL": {
       "APP_NAME": "Anwendungsname",
       "PROCESS_INS_ID": "Prozessinstanz-ID",
-      "STATUS": "Status",
-      "INITIATOR": "Initiator",
+      "STATUS": "",
+      "INITIATOR": "",
       "ASSIGNMENT": "Zugewiesener Benutzer",
       "SORT": "Sortieren",
       "DIRECTION": "Richtung",
@@ -318,13 +318,13 @@
       "THUMBNAIL": "Miniaturansicht",
       "DURATION": "Dauer",
       "PARENT_TASK_ID": "Übergeordnete Aufgaben-ID",
-      "NAME": "Name",
+      "NAME": "",
       "ASSIGNEE": "Zugewiesener Benutzer",
       "ASSIGNEE_DEFAULT": "Kein zugewiesener Benutzer",
       "PRIORITY": "Priorität",
       "DUE_DATE": "Fälligkeitsdatum",
       "DUE_DATE_DEFAULT": "Kein Datum",
-      "STATUS": "Status",
+      "STATUS": "",
       "CATEGORY": "Kategorie",
       "CATEGORY_DEFAULT": "Keine Kategorie",
       "PARENT_NAME": "Name übergeordnetes Element",
@@ -332,7 +332,7 @@
       "CREATED_BY": "Erstellt von",
       "CREATED": "Erstellt",
       "END_DATE": "Enddatum",
-      "ID": "ID",
+      "ID": "",
       "PROCESS_INSTANCE_ID": "Prozessinstanz-ID",
       "PROCESS_INSTANCE_ID_DEFAULT": "Keine Prozessinstanz-ID",
       "DESCRIPTION": "Beschreibung",
@@ -350,14 +350,14 @@
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
-      "ID": "ID",
+      "ID": "",
       "NAME": "Prozessname",
       "NAME_DEFAULT": "Kein Name",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
-      "STATUS": "Status",
+      "STATUS": "",
       "BUSINESS_KEY": "Geschäftsschlüssel",
-      "INITIATOR": "Initiator",
+      "INITIATOR": "",
       "START_DATE": "Gestartet",
       "LAST_MODIFIED": "Aktualisiert",
       "PARENT_ID": "Übergeordnete ID",

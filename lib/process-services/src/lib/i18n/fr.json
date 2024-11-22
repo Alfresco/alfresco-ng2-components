@@ -43,8 +43,8 @@
       "CREATED_BY": "Créé par",
       "CREATED": "Créé",
       "END_DATE": "Date de fin",
-      "ID": "ID",
-      "DESCRIPTION": "Description",
+      "ID": "",
+      "DESCRIPTION": "",
       "DESCRIPTION_DEFAULT": "Aucune description",
       "FORM_NAME": "Nom du formulaire",
       "FORM_NAME_DEFAULT": "Aucun formulaire"
@@ -121,7 +121,7 @@
         "LABEL": {
           "NONE": "Aucune",
           "NAME": "Nom",
-          "DESCRIPTION": "Description",
+          "DESCRIPTION": "",
           "ATTACHFORM": "Joindre un formulaire",
           "ASSIGNEE": "Personne assignée",
           "FORM": "Formulaire",
@@ -198,9 +198,9 @@
       "CREATED": "Créé",
       "BUSINESS_KEY": "Clé de processus métier",
       "BUSINESS_KEY_DEFAULT": "Aucune",
-      "DESCRIPTION": "Description",
+      "DESCRIPTION": "",
       "DESCRIPTION_DEFAULT": "Aucune description",
-      "ID": "ID"
+      "ID": ""
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Afficher",
@@ -248,7 +248,7 @@
         "ADD_DIALOG": {
           "TITLE": "Nouveau commentaire",
           "LABEL": {
-            "MESSAGE": "Message"
+            "MESSAGE": ""
           },
           "BUTTON": {
             "ADD": "Ajouter un commentaire",

@@ -6,7 +6,7 @@
       "CONTRIBUTOR": "Beitragender",
       "COLLABORATOR": "Mitarbeiter",
       "COORDINATOR": "Koordinator",
-      "EDITOR": "Editor",
+      "EDITOR": "",
       "CONSUMER": "Verbraucher",
       "SITECOLLABORATOR": "Site-Mitarbeiter",
       "SITECONSUMER": "Site-Verbraucher",
@@ -26,7 +26,7 @@
     "NO_MESSAGE": "Sie haben momentan keine Benachrichtigungen.",
     "TITLE": "Benachrichtigungen",
     "MARK_AS_READ": "Alles als gelesen markieren",
-    "SYSTEM": "System",
+    "SYSTEM": "",
     "LOAD_MORE": "Mehr laden",
     "OPEN_HISTORY": "Benachrichtigungsverlauf öffnen"
   },
@@ -37,7 +37,7 @@
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "Vorschau nicht verfügbar",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": ""
       }
     },
     "FIELD": {
@@ -49,15 +49,15 @@
       "UPLOAD": "Hochladen",
       "REQUIRED": "Feld erforderlich",
       "REST_API_FAILED": "Der Server '{{ hostname }}' ist nicht erreichbar",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "",
+      "DATA_TABLE_LOAD_FAILED": "",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "",
       "FILE_NAME": "Dateiname",
       "NO_FILE_ATTACHED": "Keine Datei angehängt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DECIMAL_NUMBER": "",
+        "INVALID_DECIMAL_PRECISION": "",
         "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
         "INVALID_VALUE": "Geben Sie einen anderen Wert ein",
         "NOT_GREATER_THAN": "Darf nicht größer als {{ maxValue }} sein",
@@ -72,39 +72,39 @@
       "NAMELESS_TASK": "Namenlose Aufgabe"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "",
+      "FONT_WEIGHT": "",
+      "FONT_COLOR": "",
       "FONT_WEIGHTS": {
-        "REGULAR": "regular",
-        "BOLD": "bold"
+        "REGULAR": "",
+        "BOLD": ""
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "",
+        "BLACK": "",
+        "GREY": "",
+        "RED": "",
+        "GREEN": "",
+        "BLUE": "",
+        "YELLOW": ""
       },
       "PREDEFINED": {
         "HEADER": {
-          "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "NORMAL": "",
+          "HEADING": "",
+          "TITLE": ""
         },
         "RADIO_BUTTONS": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "NORMAL": "",
+          "STRONG": "",
+          "HEADING": ""
         },
         "READONLY_TEXT": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "NORMAL": "",
+          "STRONG": "",
+          "HEADING": "",
+          "TITLE": "",
+          "ANNOTATION": ""
         }
       }
     }
@@ -117,15 +117,15 @@
       }
     },
     "FILE_SIZE": {
-      "BYTES": "Bytes",
-      "KB": "KB",
-      "MB": "MB",
-      "GB": "GB",
-      "TB": "TB",
-      "PB": "PB",
-      "EB": "EB",
-      "ZB": "ZB",
-      "YB": "YB"
+      "BYTES": "",
+      "KB": "",
+      "MB": "",
+      "GB": "",
+      "TB": "",
+      "PB": "",
+      "EB": "",
+      "ZB": "",
+      "YB": ""
     },
     "PAGINATION": {
       "ARIA": {
@@ -145,21 +145,21 @@
           "CANCEL": "Abbrechen"
         },
         "TITLE": "Dateien werden zu ZIP-Ordner hinzugefügt. Dies kann ein paar Minuten dauern",
-        "COMPLETE": "complete"
+        "COMPLETE": ""
       },
       "EDIT_JSON": {
         "CLOSE": "Schließen",
         "UPDATE": "Aktualisieren"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "",
+        "DESCRIPTION": "",
+        "DISCARD_CHANGES_BUTTON": ""
       }
     },
     "BREADCRUMBS": {
-      "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "TITLE": "",
+      "SHOWALL": ""
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Datei sperren",
@@ -177,7 +177,7 @@
       "CREATE_FOLDER_TITLE": "Neuen Ordner erstellen",
       "EDIT_FOLDER_TITLE": "Ordner bearbeiten",
       "FOLDER_NAME": {
-        "LABEL": "Name",
+        "LABEL": "",
         "ERRORS": {
           "REQUIRED": "Ordnername ist erforderlich",
           "SPECIAL_CHARACTERS": "Ordnername darf die folgenden Zeichen nicht enthalten: * \" < > \\ / ? : |",
@@ -227,25 +227,25 @@
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Neue hinzufügen",
-        "NAME": "Name",
+        "NAME": "",
         "VALUE": "Wert"
       },
       "NONE": "Keine",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
         "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat",
-        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LONG_VALIDATION_ERROR": "",
         "LENGTH_VALIDATION_ERROR": "Wert muss zwischen {{ minLength }} und {{ maxLength }} lang sein",
         "MATCH_VALIDATION_ERROR": "Wert muss dem folgenden Muster entsprechen: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "Wert muss zwischen {{ minValue }} und {{ maxValue }} liegen",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "ONLY_POSITIVE_NUMBER": ""
       },
       "MORE": "Mehr"
     },
     "METADATA": {
       "BASIC": {
         "HEADER": "Eigenschaften",
-        "NAME": "Name",
+        "NAME": "",
         "TITLE": "Titel",
         "DESCRIPTION": "Beschreibung",
         "AUTHOR": "Autor",
@@ -266,7 +266,7 @@
           "APPLY": "Änderungen speichern",
           "VIEW_DETAILS": "Details anzeigen",
           "PROPERTY": {
-            "NAME": "Name",
+            "NAME": "",
             "DESCRIPTION": "Beschreibung",
             "DATA_TYPE": "Datentyp"
           }
@@ -293,14 +293,14 @@
       "SORT_BY": "Sortieren nach"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "",
+      "FILTER_OR_ADD_NEW": "",
+      "FILTER": "",
+      "ADD_NEW": ""
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
+    "PROFILE_IMAGE": "",
     "NONE": "Keine Kommentare vorhanden",
     "ADD": "Hinzufügen",
     "HEADER": "Kommentare ({{ count }})",
@@ -318,7 +318,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "",
     "LABEL": {
       "LOGIN": "Anmelden",
       "USERNAME": "Benutzername",
@@ -366,7 +366,7 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Content-Aktionen",
-      "SELECT_COLUMNS": "Select columns"
+      "SELECT_COLUMNS": ""
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Aktionen",
@@ -381,20 +381,20 @@
       "ICON_TEXT": "Elementtyp {{ type }}",
       "ICON_DISABLED": "Deaktiviert",
       "ROW_OPTION_BUTTON": "Aktionen",
-      "DRAG": "Drag button",
+      "DRAG": "",
       "EMPTY_HEADER": "Leerer Header"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
       "FOLDER": "Ordner",
-      "PDF": "PDF",
+      "PDF": "",
       "IMAGE": "Bild",
       "EXCEL": "Excel-Arbeitsblatt",
       "WORD": "Word-Dokument",
       "POWERPOINT": "Powerpoint-Präsentation",
-      "VIDEO": "Video",
-      "AUDIO": "Audio",
-      "WEBSITE": "Website",
+      "VIDEO": "",
+      "AUDIO": "",
+      "WEBSITE": "",
       "ARCHIVE": "Archiv",
       "PRESENTATION": "Präsentation",
       "SPREADSHEET": "Tabelle",
@@ -417,8 +417,8 @@
       "MY_PROFILE": "Mein Profil"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "",
+      "PS": ""
     }
   },
   "ADF_VIEWER": {
@@ -429,7 +429,7 @@
       "PRINT": "Drucken",
       "SHARE": "Freigeben",
       "MORE_ACTIONS": "Weitere Aktionen",
-      "INFO": "Info",
+      "INFO": "",
       "FULLSCREEN": "Vollbildmodus aktivieren",
       "CLOSE": "Schließen",
       "NEXT_FILE": "Nächste Datei",
@@ -437,7 +437,7 @@
       "WAIT": "Warten"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
+      "MIME_TYPE_ICON": "",
       "PREVIOUS_PAGE": "Vorherige Seite",
       "NEXT_PAGE": "Nächste Seite",
       "ZOOM_IN": "Vergrößern",
@@ -548,24 +548,24 @@
     }
   },
   "ABOUT": {
-    "VERSION": "Version",
+    "VERSION": "",
     "SERVER_SETTINGS": {
       "TITLE": "Servereinstellungen",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
     },
-    "REPOSITORY": "Repository",
+    "REPOSITORY": "",
     "PACKAGES": {
       "TITLE": "Pakete",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "NAME": "",
+      "VERSION": ""
     },
     "EXTENSIONS": {
-      "TITLE": "Plugins",
+      "TITLE": "",
       "TABLE_HEADERS": {
-        "ID": "ID",
-        "NAME": "Name",
-        "VERSION": "Version",
+        "ID": "",
+        "NAME": "",
+        "VERSION": "",
         "VENDOR": "Hersteller",
         "LICENSE": "Lizenz",
         "RUNTIME": "Laufzeit",
@@ -578,19 +578,19 @@
       "VALUE": "Wert"
     },
     "STATUS": {
-      "TITLE": "Status",
+      "TITLE": "",
       "PROPERTY": "Eigenschaft",
       "VALUE": "Wert"
     },
     "MODULES": {
       "TITLE": "Module",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "NAME": "",
+      "VERSION": ""
     },
     "PLUGINS": {
-      "TITLE": "Plugins",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "",
+      "NAME": "",
+      "VERSION": ""
     }
   },
   "CLIPBOARD": {
@@ -611,10 +611,10 @@
     "SELECTION_ARIA_LABEL": "{{placeholder}} Kombinationsfeld {{selectedOption}}"
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": ""
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": ""
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bestätigen",

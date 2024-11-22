@@ -93,7 +93,7 @@
       "LAST_MODIFIED": "Modificada por última vez",
       "DUE_DATE": "Fecha de vencimiento",
       "CREATED": "Creado",
-      "JSON_CELL": "Json",
+      "JSON_CELL": "",
       "COMPLETED_BY": "Completado por",
       "PRIORITY_VALUES": {
         "NONE": "Ninguna",
@@ -147,7 +147,7 @@
       "STARTED": "Iniciado",
       "COMPLETED": "Completado",
       "CANCELLED": "Cancelado",
-      "ERROR": "Error"
+      "ERROR": ""
     }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -332,7 +332,7 @@
       "CREATED_BY": "Creado por",
       "CREATED": "Creado",
       "END_DATE": "Fecha de fin",
-      "ID": "ID",
+      "ID": "",
       "PROCESS_INSTANCE_ID": "ID de instancia de proceso",
       "PROCESS_INSTANCE_ID_DEFAULT": "Sin ID de instacia de proceso",
       "DESCRIPTION": "Descripción",
@@ -350,7 +350,7 @@
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
-      "ID": "ID",
+      "ID": "",
       "NAME": "Nombre del proceso",
       "NAME_DEFAULT": "Sin nombre",
       "DESCRIPTION": "Descripción",

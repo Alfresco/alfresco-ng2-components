@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALYTICS",
+    "TITLE": "",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
-      "FILL-PARAMETER": "Choose from the report options",
-      "NO-DATA-FOUND": "No data found",
-      "ZERO-DATA-FOUND": "There are only zero values",
-      "ICON-SETTING": "Settings",
-      "ICON-SAVE": "Save",
-      "ICON-DELETE": "Delete",
-      "ICON-EXPORT-CSV": "Export"
+      "UNKNOWN-WIDGET-TYPE": "",
+      "FILL-PARAMETER": "",
+      "NO-DATA-FOUND": "",
+      "ZERO-DATA-FOUND": "",
+      "ICON-SETTING": "",
+      "ICON-SAVE": "",
+      "ICON-DELETE": "",
+      "ICON-EXPORT-CSV": ""
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": ""
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
+        "TYPE-FILTERING": ""
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
+        "PROCESS-DEFINITION": "",
+        "DATE-RANGE": "",
+        "SLOW-PROC-INST-NUMBER": ""
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "DATE-RANGE-INTERVAL": "Group dates by"
+        "PROCESS-DEFINITION": "",
+        "DATE-RANGE": "",
+        "DATE-RANGE-INTERVAL": ""
       },
       "TASK-SLA": {
-        "TASK": "Task",
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLA-DURATION": "SLA required completion time"
+        "TASK": "",
+        "PROCESS-DEFINITION": "",
+        "DATE-RANGE": "",
+        "SLA-DURATION": ""
       }
     },
-    "PROCESS-STATUS": "Process status",
-    "TASK-STATUS": "Task status"
+    "PROCESS-STATUS": "",
+    "TASK-STATUS": ""
   },
-  "DIAGRAMS": "Diagrams"
+  "DIAGRAMS": ""
 }

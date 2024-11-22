@@ -6,7 +6,7 @@
       "CONTRIBUTOR": "Contribuidor",
       "COLLABORATOR": "Colaborador",
       "COORDINATOR": "Coordinador",
-      "EDITOR": "Editor",
+      "EDITOR": "",
       "CONSUMER": "Consumidor",
       "SITECOLLABORATOR": "Colaborador de sitio",
       "SITECONSUMER": "Consumidor de sitio",
@@ -37,7 +37,7 @@
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "Vista previa no disponible",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": ""
       }
     },
     "FIELD": {
@@ -49,15 +49,15 @@
       "UPLOAD": "Cargar",
       "REQUIRED": "Campo obligatorio",
       "REST_API_FAILED": "No se puede acceder al servidor '{{ hostname }}'",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "",
+      "DATA_TABLE_LOAD_FAILED": "",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "",
       "FILE_NAME": "Nombre del fichero",
       "NO_FILE_ATTACHED": "Sin fichero adjunto",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizar un formato de número diferente",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DECIMAL_NUMBER": "",
+        "INVALID_DECIMAL_PRECISION": "",
         "INVALID_DATE": "Utilizar un formato de fecha diferente",
         "INVALID_VALUE": "Introducir un valor diferente",
         "NOT_GREATER_THAN": "No puede ser mayor que {{ maxValue }}",
@@ -72,39 +72,39 @@
       "NAMELESS_TASK": "Tarea sin nombre"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "",
+      "FONT_WEIGHT": "",
+      "FONT_COLOR": "",
       "FONT_WEIGHTS": {
-        "REGULAR": "regular",
-        "BOLD": "bold"
+        "REGULAR": "",
+        "BOLD": ""
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "",
+        "BLACK": "",
+        "GREY": "",
+        "RED": "",
+        "GREEN": "",
+        "BLUE": "",
+        "YELLOW": ""
       },
       "PREDEFINED": {
         "HEADER": {
-          "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "NORMAL": "",
+          "HEADING": "",
+          "TITLE": ""
         },
         "RADIO_BUTTONS": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "NORMAL": "",
+          "STRONG": "",
+          "HEADING": ""
         },
         "READONLY_TEXT": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "NORMAL": "",
+          "STRONG": "",
+          "HEADING": "",
+          "TITLE": "",
+          "ANNOTATION": ""
         }
       }
     }
@@ -118,14 +118,14 @@
     },
     "FILE_SIZE": {
       "BYTES": "bytes",
-      "KB": "KB",
-      "MB": "MB",
-      "GB": "GB",
-      "TB": "TB",
-      "PB": "PB",
-      "EB": "EB",
-      "ZB": "ZB",
-      "YB": "YB"
+      "KB": "",
+      "MB": "",
+      "GB": "",
+      "TB": "",
+      "PB": "",
+      "EB": "",
+      "ZB": "",
+      "YB": ""
     },
     "PAGINATION": {
       "ARIA": {
@@ -145,21 +145,21 @@
           "CANCEL": "Cancelar"
         },
         "TITLE": "Añadiendo ficheros al zip; esto puede tardar unos minutos",
-        "COMPLETE": "complete"
+        "COMPLETE": ""
       },
       "EDIT_JSON": {
         "CLOSE": "Cerrar",
         "UPDATE": "Actualizar"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "",
+        "DESCRIPTION": "",
+        "DISCARD_CHANGES_BUTTON": ""
       }
     },
     "BREADCRUMBS": {
-      "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "TITLE": "",
+      "SHOWALL": ""
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Bloquear fichero",
@@ -234,11 +234,11 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizar un formato de número",
         "INT_VALIDATION_ERROR": "Utilizar un formato de entero",
-        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LONG_VALIDATION_ERROR": "",
         "LENGTH_VALIDATION_ERROR": "El valor debe tener una longitud entre {{ minLength }} y {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "El valor no coincide con el patrón: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "El valor debe estar entre {{ minValue }} y {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "ONLY_POSITIVE_NUMBER": ""
       },
       "MORE": "Más"
     },
@@ -293,14 +293,14 @@
       "SORT_BY": "Clasificar por"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "",
+      "FILTER_OR_ADD_NEW": "",
+      "FILTER": "",
+      "ADD_NEW": ""
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
+    "PROFILE_IMAGE": "",
     "NONE": "No hay comentarios",
     "ADD": "Añadir",
     "HEADER": "Comentarios ({{ count }})",
@@ -318,7 +318,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "",
     "LABEL": {
       "LOGIN": "Iniciar sesión",
       "USERNAME": "Nombre de usuario",
@@ -366,7 +366,7 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Acciones de contenido",
-      "SELECT_COLUMNS": "Select columns"
+      "SELECT_COLUMNS": ""
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Acciones",
@@ -381,19 +381,19 @@
       "ICON_TEXT": "Tipo de elemento {{ type }}",
       "ICON_DISABLED": "Desactivado",
       "ROW_OPTION_BUTTON": "Acciones",
-      "DRAG": "Drag button",
+      "DRAG": "",
       "EMPTY_HEADER": "Encabezado vacío"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
       "FOLDER": "Carpeta",
-      "PDF": "PDF",
+      "PDF": "",
       "IMAGE": "Imagen",
       "EXCEL": "Hoja de Excel",
       "WORD": "Documento de Word",
       "POWERPOINT": "Presentación de Powerpoint",
       "VIDEO": "Vídeo",
-      "AUDIO": "Audio",
+      "AUDIO": "",
       "WEBSITE": "Sitio web",
       "ARCHIVE": "Archivo",
       "PRESENTATION": "Presentación",
@@ -417,8 +417,8 @@
       "MY_PROFILE": "Mi Perfil"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "",
+      "PS": ""
     }
   },
   "ADF_VIEWER": {
@@ -437,7 +437,7 @@
       "WAIT": "Espere por favor"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
+      "MIME_TYPE_ICON": "",
       "PREVIOUS_PAGE": "Página anterior",
       "NEXT_PAGE": "Página siguiente",
       "ZOOM_IN": "Acercar",
@@ -563,7 +563,7 @@
     "EXTENSIONS": {
       "TITLE": "Complementos",
       "TABLE_HEADERS": {
-        "ID": "ID",
+        "ID": "",
         "NAME": "Nombre",
         "VERSION": "Versión",
         "VENDOR": "Proveedor",
@@ -608,18 +608,18 @@
   },
   "ADF_DROPDOWN": {
     "LOADING": "Cargando...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+    "SELECTION_ARIA_LABEL": ""
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": ""
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": ""
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmar",
     "ACTION": "¿Desea continuar?",
     "YES_LABEL": "Sí",
-    "NO_LABEL": "No"
+    "NO_LABEL": ""
   }
 }

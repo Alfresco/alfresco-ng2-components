@@ -1,625 +1,625 @@
 {
   "ADF": {
-    "LANGUAGE": "Language",
+    "LANGUAGE": "",
     "ROLES": {
-      "ALL": "All",
-      "CONTRIBUTOR": "Contributor",
-      "COLLABORATOR": "Collaborator",
-      "COORDINATOR": "Coordinator",
-      "EDITOR": "Editor",
-      "CONSUMER": "Consumer",
-      "SITECOLLABORATOR": "Site Collaborator",
-      "SITECONSUMER": "Site Consumer",
-      "SITECONTRIBUTOR": "Site Contributor",
-      "SITEMANAGER": "Site Manager"
+      "ALL": "",
+      "CONTRIBUTOR": "",
+      "COLLABORATOR": "",
+      "COORDINATOR": "",
+      "EDITOR": "",
+      "CONSUMER": "",
+      "SITECOLLABORATOR": "",
+      "SITECONSUMER": "",
+      "SITECONTRIBUTOR": "",
+      "SITEMANAGER": ""
     }
   },
-  "SAVE": "SAVE",
-  "COMPLETE": "COMPLETE",
-  "CANCEL": "CANCEL",
-  "CLAIM": "CLAIM",
-  "UNCLAIM": "RELEASE",
-  "START PROCESS": "START PROCESS",
-  "DATA_LOADING": "Data is loading",
-  "CLOSE": "CLOSE",
+  "SAVE": "",
+  "COMPLETE": "",
+  "CANCEL": "",
+  "CLAIM": "",
+  "UNCLAIM": "",
+  "START PROCESS": "",
+  "DATA_LOADING": "",
+  "CLOSE": "",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "You have no notifications at this time.",
-    "TITLE": "Notifications",
-    "MARK_AS_READ": "Mark all as read",
-    "SYSTEM": "System",
-    "LOAD_MORE": "Load more",
-    "OPEN_HISTORY": "Open notification history"
+    "NO_MESSAGE": "",
+    "TITLE": "",
+    "MARK_AS_READ": "",
+    "SYSTEM": "",
+    "LOAD_MORE": "",
+    "OPEN_HISTORY": ""
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "Start Form"
+      "TITLE": ""
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "IMAGE_NOT_AVAILABLE": "",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": ""
       }
     },
     "FIELD": {
-      "LOCALSTORAGE": "Local storage",
-      "SOURCE": "Select source from ",
-      "VIEW_FILE": "View",
-      "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE": "Remove",
-      "UPLOAD": "UPLOAD",
-      "REQUIRED": "This is a required field",
-      "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
-      "FILE_NAME": "File Name",
-      "NO_FILE_ATTACHED": "No file attached",
+      "LOCALSTORAGE": "",
+      "SOURCE": "",
+      "VIEW_FILE": "",
+      "DOWNLOAD_FILE": "",
+      "REMOVE_FILE": "",
+      "UPLOAD": "",
+      "REQUIRED": "",
+      "REST_API_FAILED": "",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "",
+      "DATA_TABLE_LOAD_FAILED": "",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "",
+      "FILE_NAME": "",
+      "NO_FILE_ATTACHED": "",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Use a different number format",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
-        "INVALID_DATE": "Use a different date format",
-        "INVALID_VALUE": "Enter a different value",
-        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
-        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
-        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
-        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
+        "INVALID_NUMBER": "",
+        "INVALID_DECIMAL_NUMBER": "",
+        "INVALID_DECIMAL_PRECISION": "",
+        "INVALID_DATE": "",
+        "INVALID_VALUE": "",
+        "NOT_GREATER_THAN": "",
+        "NOT_LESS_THAN": "",
+        "AT_LEAST_LONG": "",
+        "NO_LONGER_THAN": ""
       },
-      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
-      "ATTACH": "Attach"
+      "FILE_ALREADY_UPLOADED": "",
+      "ATTACH": ""
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Nameless task"
+      "NAMELESS_TASK": ""
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "",
+      "FONT_WEIGHT": "",
+      "FONT_COLOR": "",
       "FONT_WEIGHTS": {
-        "REGULAR": "regular",
-        "BOLD": "bold"
+        "REGULAR": "",
+        "BOLD": ""
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "",
+        "BLACK": "",
+        "GREY": "",
+        "RED": "",
+        "GREEN": "",
+        "BLUE": "",
+        "YELLOW": ""
       },
       "PREDEFINED": {
         "HEADER": {
-          "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "NORMAL": "",
+          "HEADING": "",
+          "TITLE": ""
         },
         "RADIO_BUTTONS": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "NORMAL": "",
+          "STRONG": "",
+          "HEADING": ""
         },
         "READONLY_TEXT": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "NORMAL": "",
+          "STRONG": "",
+          "HEADING": "",
+          "TITLE": "",
+          "ANNOTATION": ""
         }
       }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Company Logo",
+      "LOGO_ARIA": "",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": ""
       }
     },
     "FILE_SIZE": {
-      "BYTES": "Bytes",
-      "KB": "KB",
-      "MB": "MB",
-      "GB": "GB",
-      "TB": "TB",
-      "PB": "PB",
-      "EB": "EB",
-      "ZB": "ZB",
-      "YB": "YB"
+      "BYTES": "",
+      "KB": "",
+      "MB": "",
+      "GB": "",
+      "TB": "",
+      "PB": "",
+      "EB": "",
+      "ZB": "",
+      "YB": ""
     },
     "PAGINATION": {
       "ARIA": {
-        "ITEMS_PER_PAGE": "Page size selector",
-        "CURRENT_PAGE": "Current page selector",
-        "PREVIOUS_PAGE": "Previous page button",
-        "NEXT_PAGE": "Next page button"
+        "ITEMS_PER_PAGE": "",
+        "CURRENT_PAGE": "",
+        "PREVIOUS_PAGE": "",
+        "NEXT_PAGE": ""
       },
-      "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
-      "ITEMS_PER_PAGE": "Items per page",
-      "CURRENT_PAGE": "Page {{ number }}",
-      "TOTAL_PAGES": "of {{ total }}"
+      "ITEMS_RANGE": "",
+      "ITEMS_PER_PAGE": "",
+      "CURRENT_PAGE": "",
+      "TOTAL_PAGES": ""
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Cancel"
+          "CANCEL": ""
         },
-        "TITLE": "Adding files to zip, this could take a few minutes",
-        "COMPLETE": "complete"
+        "TITLE": "",
+        "COMPLETE": ""
       },
       "EDIT_JSON": {
-        "CLOSE": "Close",
-        "UPDATE": "Update"
+        "CLOSE": "",
+        "UPDATE": ""
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "",
+        "DESCRIPTION": "",
+        "DISCARD_CHANGES_BUTTON": ""
       }
     },
     "BREADCRUMBS": {
-      "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "TITLE": "",
+      "SHOWALL": ""
     },
     "FILE_DIALOG": {
-      "FILE_LOCK": "Lock file",
-      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
-      "FILE_LOCK_CHECKBOX": "Lock file",
-      "TIME_LOCK_CHECKBOX": "Time lock",
+      "FILE_LOCK": "",
+      "ALLOW_OTHERS_CHECKBOX": "",
+      "FILE_LOCK_CHECKBOX": "",
+      "TIME_LOCK_CHECKBOX": "",
       "SAVE_BUTTON": {
-        "LABEL": "Save"
+        "LABEL": ""
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Cancel"
+        "LABEL": ""
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Create new folder",
-      "EDIT_FOLDER_TITLE": "Edit folder",
+      "CREATE_FOLDER_TITLE": "",
+      "EDIT_FOLDER_TITLE": "",
       "FOLDER_NAME": {
-        "LABEL": "Name",
+        "LABEL": "",
         "ERRORS": {
-          "REQUIRED": "Folder name is required",
-          "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
-          "ENDING_DOT": "Folder name can't end with a period .",
-          "ONLY_SPACES": "Folder name can't contain only spaces"
+          "REQUIRED": "",
+          "SPECIAL_CHARACTERS": "",
+          "ENDING_DOT": "",
+          "ONLY_SPACES": ""
         }
       },
       "FOLDER_DESCRIPTION": {
-        "LABEL": "Description"
+        "LABEL": ""
       },
       "FOLDER_TITLE": {
-        "LABEL": "Title"
+        "LABEL": ""
       },
       "CREATE_BUTTON": {
-        "LABEL": "Create"
+        "LABEL": ""
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Update"
+        "LABEL": ""
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Cancel"
+        "LABEL": ""
       }
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
-        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
+        "GENERIC": "",
+        "EXISTENT_FOLDER": ""
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "View",
-      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
-      "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
-      "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
-      "GENERIC": "There was a problem restoring {{ name }} item",
-      "PLURAL": "Restore successful",
-      "SINGULAR": "{{ name }} item restored"
+      "VIEW": "",
+      "PARTIAL_PLURAL": "",
+      "NODE_EXISTS": "",
+      "LOCATION_MISSING": "",
+      "GENERIC": "",
+      "PLURAL": "",
+      "SINGULAR": ""
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} deleted",
-      "PLURAL": "{{ number }} items deleted",
-      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
-      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
-      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
-      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
+      "SINGULAR": "",
+      "PLURAL": "",
+      "PARTIAL_SINGULAR": "",
+      "PARTIAL_PLURAL": "",
+      "ERROR_SINGULAR": "",
+      "ERROR_PLURAL": ""
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "Add New",
-        "NAME": "Name",
-        "VALUE": "Value"
+        "ADD": "",
+        "NAME": "",
+        "VALUE": ""
       },
-      "NONE": "None",
+      "NONE": "",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "Use a number format",
-        "INT_VALIDATION_ERROR": "Use an integer format",
-        "LONG_VALIDATION_ERROR": "Use a long format",
-        "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
-        "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "FLOAT_VALIDATION_ERROR": "",
+        "INT_VALIDATION_ERROR": "",
+        "LONG_VALIDATION_ERROR": "",
+        "LENGTH_VALIDATION_ERROR": "",
+        "MATCH_VALIDATION_ERROR": "",
+        "MINMAX_VALIDATION_ERROR": "",
+        "ONLY_POSITIVE_NUMBER": ""
       },
-      "MORE": "More"
+      "MORE": ""
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "General info",
-        "NAME": "Name",
-        "TITLE": "Title",
-        "DESCRIPTION": "Description",
-        "AUTHOR": "Author",
-        "MIMETYPE": "Mimetype",
-        "SIZE": "Size",
-        "CREATOR": "Creator",
-        "CREATED_DATE": "Created Date",
-        "MODIFIER": "Modifier",
-        "MODIFIED_DATE": "Modified Date",
-        "CONTENT_TYPE": "Content Type"
+        "HEADER": "",
+        "NAME": "",
+        "TITLE": "",
+        "DESCRIPTION": "",
+        "AUTHOR": "",
+        "MIMETYPE": "",
+        "SIZE": "",
+        "CREATOR": "",
+        "CREATED_DATE": "",
+        "MODIFIER": "",
+        "MODIFIED_DATE": "",
+        "CONTENT_TYPE": ""
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "Change content type",
-          "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
-          "CONFIRM": "Are you sure you want to change the content type?",
-          "CANCEL": "CANCEL",
-          "APPLY": "Save Changes",
-          "VIEW_DETAILS": "View details",
+          "TITLE": "",
+          "DESCRIPTION": "",
+          "CONFIRM": "",
+          "CANCEL": "",
+          "APPLY": "",
+          "VIEW_DETAILS": "",
           "PROPERTY": {
-            "NAME": "Name",
-            "DESCRIPTION": "Description",
-            "DATA_TYPE": "Data type"
+            "NAME": "",
+            "DESCRIPTION": "",
+            "DATA_TYPE": ""
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "Edit",
-        "SAVE": "Save",
-        "CANCEL": "Cancel",
-        "CLEAR": "Clear",
-        "TOGGLE": "Toggle value",
-        "COPY_TO_CLIPBOARD": "Double click to copy value",
-        "EDIT_ASPECTS": "Edit Aspect"
+        "EDIT": "",
+        "SAVE": "",
+        "CANCEL": "",
+        "CLEAR": "",
+        "TOGGLE": "",
+        "COPY_TO_CLIPBOARD": "",
+        "EDIT_ASPECTS": ""
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit button",
-        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
-        "EDIT_ASPECTS": "Edit Aspect"
+        "EDIT": "",
+        "DATEPICKER": "",
+        "COPY_TO_CLIPBOARD_MESSAGE": "",
+        "EDIT_ASPECTS": ""
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
-      "SORT_BY": "Sort by"
+      "TOGGLE_ASC_DESC_ORDER": "",
+      "SORT_BY": ""
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "",
+      "FILTER_OR_ADD_NEW": "",
+      "FILTER": "",
+      "ADD_NEW": ""
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
-    "NONE": "No comments",
-    "ADD": "Add",
-    "HEADER": "Comments ({{ count }})",
-    "CREATED_BY_HEADER": "Created by",
-    "MESSAGE_HEADER": "Message",
+    "PROFILE_IMAGE": "",
+    "NONE": "",
+    "ADD": "",
+    "HEADER": "",
+    "CREATED_BY_HEADER": "",
+    "MESSAGE_HEADER": "",
     "DIALOG": {
-      "TITLE": "New comment",
+      "TITLE": "",
       "LABELS": {
-        "MESSAGE": "Message"
+        "MESSAGE": ""
       },
       "BUTTON": {
-        "ADD": "Add Comment",
-        "CANCEL": "Cancel"
+        "ADD": "",
+        "CANCEL": ""
       }
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "",
     "LABEL": {
-      "LOGIN": "Sign in",
-      "USERNAME": "Username",
-      "PASSWORD": "Password",
-      "REMEMBER": "Remember me"
+      "LOGIN": "",
+      "USERNAME": "",
+      "PASSWORD": "",
+      "REMEMBER": ""
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Show password",
-      "HIDE-PASSWORD": "Hide password"
+      "SHOW-PASSWORD": "",
+      "HIDE-PASSWORD": ""
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Required",
-      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
-      "PASSWORD-REQUIRED": "Enter your password to sign in",
-      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
-      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
-      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
-      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
-      "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
+      "USERNAME-REQUIRED": "",
+      "USERNAME-MIN": "",
+      "PASSWORD-REQUIRED": "",
+      "LOGIN-ERROR-CREDENTIALS": "",
+      "LOGIN-ERROR-PROVIDERS": "",
+      "LOGIN-ERROR-CORS": "",
+      "LOGIN-ERROR-CSRF": "",
+      "LOGIN-ECM-LICENSE": "",
+      "SSO-WRONG-CONFIGURATION": ""
     },
     "BUTTON": {
-      "LOGIN": "SIGN IN",
-      "CHECKING": "CHECKING",
-      "WELCOME": "WELCOME",
-      "SSO": "SIGN IN SSO"
+      "LOGIN": "",
+      "CHECKING": "",
+      "WELCOME": "",
+      "SSO": ""
     },
     "ACTION": {
-      "HELP": "NEED HELP?",
-      "REGISTER": "REGISTER"
+      "HELP": "",
+      "REGISTER": ""
     },
     "DIALOG": {
-      "CANCEL": "Cancel",
-      "CHOOSE": "Choose",
-      "LOGIN": "Sign in"
+      "CANCEL": "",
+      "CHOOSE": "",
+      "LOGIN": ""
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-      "HEADER": "This list is empty",
+      "HEADER": "",
       "DRAG-AND-DROP": {
-        "TITLE": "Drag and drop",
-        "SUBTITLE": "to upload files"
+        "TITLE": "",
+        "SUBTITLE": ""
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Content actions",
-      "SELECT_COLUMNS": "Select columns"
+      "TOOLTIP": "",
+      "SELECT_COLUMNS": ""
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "Actions",
-      "SELECT_ALL": "Select all",
-      "SELECT_FILE": "Select file",
-      "SORT_ASCENDING": "Ascending",
-      "SORT_DESCENDING": "Descending",
-      "SORT_NONE": "None",
-      "SORT_DEFAULT": "Sortable",
-      "SORT_ASCENDING_BY": "Ascending by {{ string }}",
-      "SORT_DESCENDING_BY": "Descending by {{ string }}",
-      "ICON_TEXT": "Item type {{ type }}",
-      "ICON_DISABLED": "Disabled",
-      "ROW_OPTION_BUTTON": "Actions",
-      "DRAG": "Drag button",
-      "EMPTY_HEADER": "Empty header"
+      "ACTIONS": "",
+      "SELECT_ALL": "",
+      "SELECT_FILE": "",
+      "SORT_ASCENDING": "",
+      "SORT_DESCENDING": "",
+      "SORT_NONE": "",
+      "SORT_DEFAULT": "",
+      "SORT_ASCENDING_BY": "",
+      "SORT_DESCENDING_BY": "",
+      "ICON_TEXT": "",
+      "ICON_DISABLED": "",
+      "ROW_OPTION_BUTTON": "",
+      "DRAG": "",
+      "EMPTY_HEADER": ""
     },
     "FILE_TYPE": {
-      "DOCUMENT": "Document",
-      "FOLDER": "Folder",
-      "PDF": "PDF",
-      "IMAGE": "Image",
-      "EXCEL": "Excel spreadsheet",
-      "WORD": "Word document",
-      "POWERPOINT": "Powerpoint presentation",
-      "VIDEO": "Video",
-      "AUDIO": "Audio",
-      "WEBSITE": "Website",
-      "ARCHIVE": "Archive",
-      "PRESENTATION": "Presentation",
-      "SPREADSHEET": "Spreadsheet",
-      "MISCELLANEOUS": "Miscellaneous"
+      "DOCUMENT": "",
+      "FOLDER": "",
+      "PDF": "",
+      "IMAGE": "",
+      "EXCEL": "",
+      "WORD": "",
+      "POWERPOINT": "",
+      "VIDEO": "",
+      "AUDIO": "",
+      "WEBSITE": "",
+      "ARCHIVE": "",
+      "PRESENTATION": "",
+      "SPREADSHEET": "",
+      "MISCELLANEOUS": ""
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Columns",
-      "SEARCH": "Search",
-      "APPLY": "Apply"
+      "COLUMNS": "",
+      "SEARCH": "",
+      "APPLY": ""
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "Job Title"
+        "JOB_TITLE": ""
       },
       "BPM": {
-        "TENANT": "Tenant"
+        "TENANT": ""
       },
-      "MY_PROFILE": "My Profile"
+      "MY_PROFILE": ""
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "",
+      "PS": ""
     }
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-      "BACK": "Back",
-      "OPEN_WITH": "Open with",
-      "DOWNLOAD": "Download",
-      "PRINT": "Print",
-      "SHARE": "Share",
-      "MORE_ACTIONS": "More actions",
-      "INFO": "Info",
-      "FULLSCREEN": "Activate full-screen mode",
-      "CLOSE": "Close",
-      "NEXT_FILE": "Next File",
-      "PREV_FILE": "Previous File",
-      "WAIT": "Wait"
+      "BACK": "",
+      "OPEN_WITH": "",
+      "DOWNLOAD": "",
+      "PRINT": "",
+      "SHARE": "",
+      "MORE_ACTIONS": "",
+      "INFO": "",
+      "FULLSCREEN": "",
+      "CLOSE": "",
+      "NEXT_FILE": "",
+      "PREV_FILE": "",
+      "WAIT": ""
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
-      "PREVIOUS_PAGE": "Previous page",
-      "NEXT_PAGE": "Next page",
-      "ZOOM_IN": "Zoom in",
-      "ZOOM_OUT": "Zoom out",
-      "FIT_PAGE": "Fit page",
-      "ROTATE": "Rotate",
-      "CROP": "Crop",
-      "SAVE": "Save",
-      "CANCEL": "Cancel",
-      "RESET": "Reset",
-      "THUMBNAILS": "Document thumbnails",
-      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel"
+      "MIME_TYPE_ICON": "",
+      "PREVIOUS_PAGE": "",
+      "NEXT_PAGE": "",
+      "ZOOM_IN": "",
+      "ZOOM_OUT": "",
+      "FIT_PAGE": "",
+      "ROTATE": "",
+      "CROP": "",
+      "SAVE": "",
+      "CANCEL": "",
+      "RESET": "",
+      "THUMBNAILS": "",
+      "THUMBNAILS_PANLEL_CLOSE": ""
     },
     "PAGE_LABEL": {
-      "SHOWING": "Showing",
-      "OF": "of",
-      "PAGE_SELECTOR_LABEL": "Page selector"
+      "SHOWING": "",
+      "OF": "",
+      "PAGE_SELECTOR_LABEL": ""
     },
-    "LOADING": "Loading",
-    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
+    "LOADING": "",
+    "UNKNOWN_FORMAT": "",
     "SIDEBAR": {
       "THUMBNAILS": {
-        "PAGE": "Page {{ pageNum }}"
+        "PAGE": ""
       }
     },
     "PDF_DIALOG": {
-      "SUBMIT": "Submit",
-      "CLOSE": "Close",
-      "PLACEHOLDER": "Password",
-      "ERROR": "Password is wrong"
+      "SUBMIT": "",
+      "CLOSE": "",
+      "PLACEHOLDER": "",
+      "ERROR": ""
     },
-    "SUBTITLES": "Subtitles",
+    "SUBTITLES": "",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "Preview loading delayed",
-      "LABEL": "You can continue to wait, or download the document."
+      "HEADER": "",
+      "LABEL": ""
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "We hit a problem.",
-      "DESCRIPTION": "Looks like something went wrong.",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     },
     "403": {
-      "TITLE": "You don't have permission to access this server.",
-      "DESCRIPTION": "You're not allowed access to this resource on the server.",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
-        "TEXT": "Report issue"
+        "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     },
     "404": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "We couldn’t find the page you were looking for.",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     },
     "500": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "Internal server error, try again or contact IT support [500].",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     },
     "502": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "Bad Gateway, try again or contact IT support [502].",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     },
     "503": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "Service Temporarily Unavailable [503].",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     },
     "504": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
+      "TITLE": "",
+      "DESCRIPTION": "",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": ""
       }
     }
   },
   "ABOUT": {
-    "VERSION": "Version",
+    "VERSION": "",
     "SERVER_SETTINGS": {
-      "TITLE": "Server settings",
-      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
-      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
+      "TITLE": "",
+      "CONTENT_SERVICE_HOST": "",
+      "PROCESS_SERVICE_HOST": ""
     },
-    "REPOSITORY": "Repository",
+    "REPOSITORY": "",
     "PACKAGES": {
-      "TITLE": "Packages",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "",
+      "NAME": "",
+      "VERSION": ""
     },
     "EXTENSIONS": {
-      "TITLE": "Plugins",
+      "TITLE": "",
       "TABLE_HEADERS": {
-        "ID": "ID",
-        "NAME": "Name",
-        "VERSION": "Version",
-        "VENDOR": "Vendor",
-        "LICENSE": "License",
-        "RUNTIME": "Runtime",
-        "DESCRIPTION": "Description"
+        "ID": "",
+        "NAME": "",
+        "VERSION": "",
+        "VENDOR": "",
+        "LICENSE": "",
+        "RUNTIME": "",
+        "DESCRIPTION": ""
       }
     },
     "LICENSE": {
-      "TITLE": "License",
-      "PROPERTY": "Property",
-      "VALUE": "Value"
+      "TITLE": "",
+      "PROPERTY": "",
+      "VALUE": ""
     },
     "STATUS": {
-      "TITLE": "Status",
-      "PROPERTY": "Property",
-      "VALUE": "Value"
+      "TITLE": "",
+      "PROPERTY": "",
+      "VALUE": ""
     },
     "MODULES": {
-      "TITLE": "Modules",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "",
+      "NAME": "",
+      "VERSION": ""
     },
     "PLUGINS": {
-      "TITLE": "Plugins",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "",
+      "NAME": "",
+      "VERSION": ""
     }
   },
   "CLIPBOARD": {
-    "CLICK_TO_COPY": "Click to copy",
-    "SUCCESS_COPY": "Text copied to clipboard"
+    "CLICK_TO_COPY": "",
+    "SUCCESS_COPY": ""
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Search",
-      "ARIA_LABEL": "Search options"
+      "PLACEHOLDER": "",
+      "ARIA_LABEL": ""
     },
     "BUTTON": {
-      "ARIA_LABEL": "Clear"
+      "ARIA_LABEL": ""
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Loading...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+    "LOADING": "",
+    "SELECTION_ARIA_LABEL": ""
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": ""
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": ""
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Confirm",
-    "ACTION": "Do you want to proceed?",
-    "YES_LABEL": "Yes",
-    "NO_LABEL": "No"
+    "TITLE": "",
+    "ACTION": "",
+    "YES_LABEL": "",
+    "NO_LABEL": ""
   }
 }

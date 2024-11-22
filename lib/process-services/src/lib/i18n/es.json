@@ -43,7 +43,7 @@
       "CREATED_BY": "Creado por",
       "CREATED": "Creado",
       "END_DATE": "Fecha de fin",
-      "ID": "ID",
+      "ID": "",
       "DESCRIPTION": "Descripción",
       "DESCRIPTION_DEFAULT": "Sin descripción",
       "FORM_NAME": "Nombre del formulario",
@@ -200,7 +200,7 @@
       "BUSINESS_KEY_DEFAULT": "Ninguna",
       "DESCRIPTION": "Descripción",
       "DESCRIPTION_DEFAULT": "Sin descripción",
-      "ID": "ID"
+      "ID": ""
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Ver",

@@ -8,7 +8,7 @@
     "PROPERTIES": {
       "NAME": "Nazwa procesu",
       "CREATED": "Utworzono",
-      "STATUS": "Status",
+      "STATUS": "",
       "START_DATE": "Data rozpoczęcia",
       "COMPLETED_DATE": "Data ukończenia",
       "COMPLETED_BY": "Ukończone przez",
@@ -87,13 +87,13 @@
       "NAME": "Nazwa zadania",
       "ASSIGNEE": "Osoba przypisana",
       "ID": "Identyfikator",
-      "STATUS": "Status",
+      "STATUS": "",
       "PRIORITY": "Priorytet",
       "CREATED_DATE": "Data utworzenia",
       "LAST_MODIFIED": "Ostatnia modyfikacja",
       "DUE_DATE": "Data ukończenia",
       "CREATED": "Utworzono",
-      "JSON_CELL": "Json",
+      "JSON_CELL": "",
       "COMPLETED_BY": "Ukończone przez",
       "PRIORITY_VALUES": {
         "NONE": "Brak",
@@ -114,11 +114,11 @@
   "ADF_CLOUD_SERVICE_TASK_LIST": {
     "PROPERTIES": {
       "ACTIVITY_NAME": "Nazwa działania",
-      "ACTIVITY_TYPE": "Status",
+      "ACTIVITY_TYPE": "",
       "ID": "Identyfikator",
       "COMPLETED_DATE": "Data ukończenia",
       "STARTED_DATE": "Data rozpoczęcia",
-      "STATUS": "Status"
+      "STATUS": ""
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
@@ -187,7 +187,7 @@
       "TASK_ID": "Identyfikator zadania",
       "PROCESS_DEF_NAME": "Nazwa definicji procesu",
       "PROCESS_DEF_ID": "Identyfikator definicji procesu",
-      "STATUS": "Status",
+      "STATUS": "",
       "ASSIGNMENT": "Osoba przypisana",
       "DIRECTION": "Kolejność",
       "PROCESS_INSTANCE_ID": "Identyfikator wystąpienia procesu",
@@ -221,7 +221,7 @@
       "PROCESS_DEF_NAME": "Nazwa definicji procesu",
       "PROCESS_DEF_ID": "Identyfikator definicji procesu",
       "PROCESS_INSTANCE_ID": "Identyfikator wystąpienia procesu",
-      "STATUS": "Status",
+      "STATUS": "",
       "DIRECTION": "Kolejność",
       "ACTIVITY_NAME": "Nazwa działania",
       "ACTIVITY_TYPE": "Typ działania",
@@ -236,7 +236,7 @@
     "LABEL": {
       "APP_NAME": "Nazwa aplikacji",
       "PROCESS_INS_ID": "Identyfikator wystąpienia procesu",
-      "STATUS": "Status",
+      "STATUS": "",
       "INITIATOR": "Inicjator",
       "ASSIGNMENT": "Osoba przypisana",
       "SORT": "Sortuj",
@@ -324,7 +324,7 @@
       "PRIORITY": "Priorytet",
       "DUE_DATE": "Data ukończenia",
       "DUE_DATE_DEFAULT": "Brak daty",
-      "STATUS": "Status",
+      "STATUS": "",
       "CATEGORY": "Kategoria",
       "CATEGORY_DEFAULT": "Brak kategorii",
       "PARENT_NAME": "Nazwa obiektu nadrzędnego",
@@ -355,7 +355,7 @@
       "NAME_DEFAULT": "Bez nazwy",
       "DESCRIPTION": "Opis",
       "DESCRIPTION_DEFAULT": "Brak opisu",
-      "STATUS": "Status",
+      "STATUS": "",
       "BUSINESS_KEY": "Klucz biznesowy",
       "INITIATOR": "Inicjator",
       "START_DATE": "Uruchomione",

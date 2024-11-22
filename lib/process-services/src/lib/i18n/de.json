@@ -35,7 +35,7 @@
       "PRIORITY": "Priorität",
       "DUE_DATE": "Fälligkeitsdatum",
       "DUE_DATE_DEFAULT": "Kein Datum",
-      "STATUS": "Status",
+      "STATUS": "",
       "CATEGORY": "Kategorie",
       "CATEGORY_DEFAULT": "Keine Kategorie",
       "PARENT_NAME": "Name übergeordnetes Element",
@@ -43,7 +43,7 @@
       "CREATED_BY": "Erstellt von",
       "CREATED": "Erstellt",
       "END_DATE": "Enddatum",
-      "ID": "ID",
+      "ID": "",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
       "FORM_NAME": "Formularname",
@@ -59,7 +59,7 @@
       "LABELS": {
         "INFO_DRAWER_TITLE": "Aktivitäten",
         "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivität",
-        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "",
         "ASSIGNEE": "Zugewiesener Benutzer",
         "DUE": "Fällig",
         "FORM": "Formular",
@@ -99,7 +99,7 @@
           "TITLE": "Neue Auswahl",
           "CANCEL-BUTTON": "Abbrechen",
           "ADD-BUTTON": "Prüfliste hinzufügen",
-          "PLACEHOLDER": "Name"
+          "PLACEHOLDER": ""
         }
       },
       "ERROR": {
@@ -120,7 +120,7 @@
         "TITLE": "Aufgabe starten",
         "LABEL": {
           "NONE": "Keine",
-          "NAME": "Name",
+          "NAME": "",
           "DESCRIPTION": "Beschreibung",
           "ATTACHFORM": "Formular anhängen",
           "ASSIGNEE": "Zugewiesener Benutzer",
@@ -128,7 +128,7 @@
           "DATE": "Datum auswählen"
         },
         "ACTION": {
-          "START": "Start",
+          "START": "",
           "CANCEL": "Abbrechen"
         },
         "ERROR": {
@@ -186,9 +186,9 @@
     },
     "PROPERTIES": {
       "PROCESS_NAME": "Prozess",
-      "NAME": "Name",
+      "NAME": "",
       "THUMBNAIL": "Miniaturansicht",
-      "STATUS": "Status",
+      "STATUS": "",
       "END_DATE": "Enddatum",
       "END_DATE_DEFAULT": "Kein Datum",
       "CATEGORY": "Kategorie",
@@ -200,7 +200,7 @@
       "BUSINESS_KEY_DEFAULT": "Keine",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
-      "ID": "ID"
+      "ID": ""
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Anzeigen",
@@ -259,7 +259,7 @@
       "ADD_DIALOG": {
         "TITLE": "Prozessvariable festlegen",
         "LABEL": {
-          "NAME": "Name",
+          "NAME": "",
           "VALUE": "Wert",
           "SCOPE": "Bereich"
         }
@@ -309,7 +309,7 @@
         "HEADER": "Keine Dateien verfügbar"
       },
       "COLUMNS": {
-        "NAME": "Name",
+        "NAME": "",
         "CREATED-ON": "Erstellt am"
       }
     }

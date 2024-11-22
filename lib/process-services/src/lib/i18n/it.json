@@ -43,7 +43,7 @@
       "CREATED_BY": "Creato da",
       "CREATED": "Creato",
       "END_DATE": "Data di fine",
-      "ID": "ID",
+      "ID": "",
       "DESCRIPTION": "Descrizione",
       "DESCRIPTION_DEFAULT": "Nessuna descrizione",
       "FORM_NAME": "Nome modulo",
@@ -200,7 +200,7 @@
       "BUSINESS_KEY_DEFAULT": "Nessuno",
       "DESCRIPTION": "Descrizione",
       "DESCRIPTION_DEFAULT": "Nessuna descrizione",
-      "ID": "ID"
+      "ID": ""
     },
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Visualizza",
@@ -327,7 +327,7 @@
       "LOGIN": "Accedi in \"{{ ecmHost }}\""
     },
     "ACTIONS": {
-      "LOGIN": "Login",
+      "LOGIN": "",
       "CANCEL": "Annulla",
       "CHOOSE": "Seleziona",
       "CHOOSE_ITEM": "Selezionare il contenuto da allegare da \"{{ name }}\""

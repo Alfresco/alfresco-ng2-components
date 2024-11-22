@@ -93,7 +93,7 @@
       "LAST_MODIFIED": "Ultima modifica",
       "DUE_DATE": "Scadenza",
       "CREATED": "Creato",
-      "JSON_CELL": "Json",
+      "JSON_CELL": "",
       "COMPLETED_BY": "Completato da",
       "PRIORITY_VALUES": {
         "NONE": "Nessuno",
@@ -332,7 +332,7 @@
       "CREATED_BY": "Creato da",
       "CREATED": "Creato",
       "END_DATE": "Data di fine",
-      "ID": "ID",
+      "ID": "",
       "PROCESS_INSTANCE_ID": "ID istanza di processo",
       "PROCESS_INSTANCE_ID_DEFAULT": "Nessun ID istanza di processo",
       "DESCRIPTION": "Descrizione",
@@ -350,7 +350,7 @@
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
-      "ID": "ID",
+      "ID": "",
       "NAME": "Nome processo",
       "NAME_DEFAULT": "Nessun nome",
       "DESCRIPTION": "Descrizione",

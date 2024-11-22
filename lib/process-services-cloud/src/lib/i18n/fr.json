@@ -17,7 +17,7 @@
       "STARTED_BY": "Démarré par",
       "APP_NAME": "Nom de l'application",
       "BUSINESS_KEY": "Clé de processus métier",
-      "DESCRIPTION": "Description",
+      "DESCRIPTION": "",
       "LAST_MODIFIED": "Dernière modification",
       "PROCESS_NAME": "Nom de processus",
       "PROCESS_DEFINITION_NAME": "Nom de la définition de processus",
@@ -68,7 +68,7 @@
         "TITLE": "Démarrer la tâche",
         "LABEL": {
           "NAME": "Nom",
-          "DESCRIPTION": "Description",
+          "DESCRIPTION": "",
           "ATTACHFORM": "Joindre un formulaire",
           "ASSIGNEE": "Personne assignée",
           "CANDIDATE_GROUP": "Groupe candidat",
@@ -93,7 +93,7 @@
       "LAST_MODIFIED": "Dernière modification",
       "DUE_DATE": "Date d'échéance",
       "CREATED": "Créé",
-      "JSON_CELL": "Json",
+      "JSON_CELL": "",
       "COMPLETED_BY": "Terminé le",
       "PRIORITY_VALUES": {
         "NONE": "Aucune",
@@ -101,7 +101,7 @@
         "NORMAL": "Normale",
         "HIGH": "Élevée"
       },
-      "DESCRIPTION": "Description"
+      "DESCRIPTION": ""
     },
     "LIST": {
       "MESSAGES": {
@@ -189,7 +189,7 @@
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "STATUS": "Statut",
       "ASSIGNMENT": "Personne assignée",
-      "DIRECTION": "Direction",
+      "DIRECTION": "",
       "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
       "TASK_NAME": "Nom de la tâche",
       "PARENT_TASK_ID": "ID de la tâche parent",
@@ -222,7 +222,7 @@
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
       "STATUS": "Statut",
-      "DIRECTION": "Direction",
+      "DIRECTION": "",
       "ACTIVITY_NAME": "Nom de l'activité",
       "ACTIVITY_TYPE": "Type d'activité",
       "SORT": "Trier",
@@ -240,7 +240,7 @@
       "INITIATOR": "Initiateur",
       "ASSIGNMENT": "Personne assignée",
       "SORT": "Trier",
-      "DIRECTION": "Direction",
+      "DIRECTION": "",
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "PROCESS_DEF_NAME": "Nom de la définition de processus",
       "PROCESS_DEF_KEY": "Clé de définition de processus",
@@ -332,10 +332,10 @@
       "CREATED_BY": "Créé par",
       "CREATED": "Créé",
       "END_DATE": "Date de fin",
-      "ID": "ID",
+      "ID": "",
       "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
       "PROCESS_INSTANCE_ID_DEFAULT": "Aucun ID d'instance de processus",
-      "DESCRIPTION": "Description",
+      "DESCRIPTION": "",
       "DESCRIPTION_DEFAULT": "Aucune description",
       "FORM_NAME": "Nom du formulaire",
       "FORM_NAME_DEFAULT": "Aucun formulaire",
@@ -350,10 +350,10 @@
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
-      "ID": "ID",
+      "ID": "",
       "NAME": "Nom du processus",
       "NAME_DEFAULT": "Aucun nom",
-      "DESCRIPTION": "Description",
+      "DESCRIPTION": "",
       "DESCRIPTION_DEFAULT": "Aucune description",
       "STATUS": "Statut",
       "BUSINESS_KEY": "Clé de processus métier",

@@ -1,353 +1,353 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
+    "SAVE_MESSAGE": "",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Start date",
-    "END-DATE": "End date",
+    "START-DATE": "",
+    "END-DATE": "",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Start date is required",
-      "START-LESS-THAN-END-DATE": "Start date must be before end date"
+      "START-DATE-REQUIRED": "",
+      "START-LESS-THAN-END-DATE": ""
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later",
-      "TASK_APP_NAME": "Task App"
+      "TITLE": "",
+      "SUBTITLE": "",
+      "TASK_APP_NAME": ""
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "",
+        "SUBTITLE": "",
+        "NONE": ""
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
-      "THUMBNAIL": "Thumbnail",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
-      "STATUS": "Status",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
-      "CREATED": "Created",
-      "END_DATE": "End date",
-      "ID": "ID",
-      "DESCRIPTION": "Description",
-      "DESCRIPTION_DEFAULT": "No description",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form"
+      "TASK_NAME": "",
+      "THUMBNAIL": "",
+      "DURATION": "",
+      "PARENT_TASK_ID": "",
+      "NAME": "",
+      "ASSIGNEE": "",
+      "ASSIGNEE_DEFAULT": "",
+      "PRIORITY": "",
+      "DUE_DATE": "",
+      "DUE_DATE_DEFAULT": "",
+      "STATUS": "",
+      "CATEGORY": "",
+      "CATEGORY_DEFAULT": "",
+      "PARENT_NAME": "",
+      "PARENT_NAME_DEFAULT": "",
+      "CREATED_BY": "",
+      "CREATED": "",
+      "END_DATE": "",
+      "ID": "",
+      "DESCRIPTION": "",
+      "DESCRIPTION_DEFAULT": "",
+      "FORM_NAME": "",
+      "FORM_NAME_DEFAULT": ""
     },
     "MENU_ACTIONS": {
-      "VIEW_CONTENT": "View",
-      "REMOVE_CONTENT": "Remove",
-      "DOWNLOAD_CONTENT": "Download",
-      "DOWNLOAD_AUDIT": "Download Audit"
+      "VIEW_CONTENT": "",
+      "REMOVE_CONTENT": "",
+      "DOWNLOAD_CONTENT": "",
+      "DOWNLOAD_AUDIT": ""
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activities",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
-        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
-        "ASSIGNEE": "Assignee",
-        "DUE": "Due",
-        "FORM": "Form",
-        "PEOPLE": "People this task is shared with",
-        "COMMENTS": "Comments",
-        "CHECKLIST": "Checklist",
-        "INVOLVED_PEOPLE": "People Involved",
-        "ADD_PEOPLE": "Add people and groups",
-        "ADD_ASSIGNEE": "Add new assignee"
+        "INFO_DRAWER_TITLE": "",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "",
+        "ASSIGNEE": "",
+        "DUE": "",
+        "FORM": "",
+        "PEOPLE": "",
+        "COMMENTS": "",
+        "CHECKLIST": "",
+        "INVOLVED_PEOPLE": "",
+        "ADD_PEOPLE": "",
+        "ADD_ASSIGNEE": ""
       },
       "BUTTON": {
-        "COMPLETE": "Complete",
-        "CLAIM": "Claim",
-        "UNCLAIM": "Release",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment"
+        "COMPLETE": "",
+        "CLAIM": "",
+        "UNCLAIM": "",
+        "DRAG-ATTACHMENT": "",
+        "UPLOAD-ATTACHMENT": ""
       },
       "MESSAGES": {
-        "NONE": "No task details found",
-        "CLAIM": "Click Claim to work on this task"
+        "NONE": "",
+        "CLAIM": ""
       },
       "FORM": {
-        "NONE": "No form"
+        "NONE": ""
       },
       "DUE": {
-        "NONE": "No due date"
+        "NONE": ""
       },
       "ASSIGNEE": {
-        "NONE": "No assignee"
+        "NONE": ""
       },
       "PEOPLE": {
-        "NONE": "Nobody involved"
+        "NONE": ""
       },
       "CHECKLIST": {
-        "NONE": "No checklist",
+        "NONE": "",
         "DIALOG": {
-          "TITLE": "New Check",
-          "CANCEL-BUTTON": "Cancel",
-          "ADD-BUTTON": "Add Checklist",
-          "PLACEHOLDER": "Name"
+          "TITLE": "",
+          "CANCEL-BUTTON": "",
+          "ADD-BUTTON": "",
+          "PLACEHOLDER": ""
         }
       },
       "ERROR": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "Try again or check that you have access.",
-        "CLOSE": "Close"
+        "TITLE": "",
+        "DESCRIPTION": "",
+        "CLOSE": ""
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No task filter selected"
+        "NONE": ""
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "My Default Task",
-      "BUTTON": "CREATE TASK",
+      "DEFAULT_NAME": "",
+      "BUTTON": "",
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "",
         "LABEL": {
-          "NONE": "None",
-          "NAME": "Name",
-          "DESCRIPTION": "Description",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "FORM": "Form",
-          "DATE": "Choose Date"
+          "NONE": "",
+          "NAME": "",
+          "DESCRIPTION": "",
+          "ATTACHFORM": "",
+          "ASSIGNEE": "",
+          "FORM": "",
+          "DATE": ""
         },
         "ACTION": {
-          "START": "Start",
-          "CANCEL": "Cancel"
+          "START": "",
+          "CANCEL": ""
         },
         "ERROR": {
-          "REQUIRED": "Field required",
-          "DATE": "Date format DD/MM/YYYY",
-          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-          "MESSAGE": "Enter a different value"
+          "REQUIRED": "",
+          "DATE": "",
+          "MAXIMUM_LENGTH": "",
+          "MESSAGE": ""
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Assignee",
-      "DIALOG_CLOSE": "CLOSE",
-      "ADD_USER": "ADD",
-      "ADD_ASSIGNEE": "ASSIGN",
-      "SEARCH_USER": "Search user",
+      "ASSIGNEE": "",
+      "DIALOG_CLOSE": "",
+      "ADD_USER": "",
+      "ADD_ASSIGNEE": "",
+      "SEARCH_USER": "",
       "SEARCH": {
-        "NO_USERS": "Nobody found to involve"
+        "NO_USERS": ""
       }
     },
     "ATTACHMENT": {
       "EMPTY": {
-        "HEADER": "This list is empty",
+        "HEADER": "",
         "DRAG-AND-DROP": {
-          "TITLE": "Drag and drop",
-          "SUBTITLE": "to upload files"
+          "TITLE": "",
+          "SUBTITLE": ""
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": ""
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "No forms attached",
-      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+      "NO_FORM_MESSAGE": "",
+      "COMPLETE_TASK_MESSAGE": "",
+      "COMPLETE_TASK_SUB_MESSAGE": ""
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Select Form To Attach",
-      "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Select an option"
+      "SELECT_FORM": "",
+      "REMOVE_FORM": "",
+      "SELECT_OPTION": ""
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "SUMMARY": "{{total}} process instances found",
-      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
+      "TITLE": "",
+      "SUBTITLE": "",
+      "SUMMARY": "",
+      "ERROR": ""
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No process instance filter selected."
+        "NONE": ""
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Process",
-      "NAME": "Name",
-      "THUMBNAIL": "Thumbnail",
-      "STATUS": "Status",
-      "END_DATE": "End Date",
-      "END_DATE_DEFAULT": "No date",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "CREATED_BY": "Created By",
-      "CREATED_BY_DEFAULT": "No assignee",
-      "CREATED": "Created",
-      "BUSINESS_KEY": "Business key",
-      "BUSINESS_KEY_DEFAULT": "None",
-      "DESCRIPTION": "Description",
-      "DESCRIPTION_DEFAULT": "No description",
-      "ID": "ID"
+      "PROCESS_NAME": "",
+      "NAME": "",
+      "THUMBNAIL": "",
+      "STATUS": "",
+      "END_DATE": "",
+      "END_DATE_DEFAULT": "",
+      "CATEGORY": "",
+      "CATEGORY_DEFAULT": "",
+      "CREATED_BY": "",
+      "CREATED_BY_DEFAULT": "",
+      "CREATED": "",
+      "BUSINESS_KEY": "",
+      "BUSINESS_KEY_DEFAULT": "",
+      "DESCRIPTION": "",
+      "DESCRIPTION_DEFAULT": "",
+      "ID": ""
     },
     "MENU_ACTIONS": {
-      "VIEW_CONTENT": "View",
-      "REMOVE_CONTENT": "Remove",
-      "DOWNLOAD_CONTENT": "Download",
-      "DOWNLOAD_AUDIT": "Download audit",
-      "VIEW_TASK": "View Task"
+      "VIEW_CONTENT": "",
+      "REMOVE_CONTENT": "",
+      "DOWNLOAD_CONTENT": "",
+      "DOWNLOAD_AUDIT": "",
+      "VIEW_TASK": ""
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Started by",
-        "STARTED": "Started",
-        "ENDED": "Ended",
-        "COMMENTS": "Comments",
-        "START_FORM": "Start Form",
-        "TASKS_ACTIVE": "Active Tasks",
-        "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
-        "REFRESH": "Refresh"
+        "STARTED_BY": "",
+        "STARTED": "",
+        "ENDED": "",
+        "COMMENTS": "",
+        "START_FORM": "",
+        "TASKS_ACTIVE": "",
+        "TASKS_COMPLETED": "",
+        "TASK_SUBTITLE": "",
+        "REFRESH": ""
       },
       "BUTTON": {
-        "CANCEL": "Cancel Process",
-        "CLOSE": "Close",
-        "SHOW_DIAGRAM": "Show Diagram",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment",
-        "FILE_OPTION_MENU": "File Option Menu"
+        "CANCEL": "",
+        "CLOSE": "",
+        "SHOW_DIAGRAM": "",
+        "DRAG-ATTACHMENT": "",
+        "UPLOAD-ATTACHMENT": "",
+        "FILE_OPTION_MENU": ""
       },
       "MESSAGES": {
-        "NONE": "No process details found"
+        "NONE": ""
       },
       "TASKS": {
-        "NO_ACTIVE": "No currently active tasks",
-        "NO_COMPLETED": "No tasks completed yet",
-        "TASK_DETAILS": "Task details",
-        "TASK_CLOSE": "Close"
+        "NO_ACTIVE": "",
+        "NO_COMPLETED": "",
+        "TASK_DETAILS": "",
+        "TASK_CLOSE": ""
       },
       "COMMENTS": {
-        "ADD": "Add a comment",
-        "HEADER": "Comments ({{ count }})",
-        "NONE": "No comments",
+        "ADD": "",
+        "HEADER": "",
+        "NONE": "",
         "BUTTON": {
-          "ADD": "Add a comment"
+          "ADD": ""
         },
         "ADD_DIALOG": {
-          "TITLE": "New comment",
+          "TITLE": "",
           "LABEL": {
-            "MESSAGE": "Message"
+            "MESSAGE": ""
           },
           "BUTTON": {
-            "ADD": "Add Comment",
-            "CANCEL": "Cancel"
+            "ADD": "",
+            "CANCEL": ""
           }
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Set process variable",
+        "TITLE": "",
         "LABEL": {
-          "NAME": "Name",
-          "VALUE": "Value",
-          "SCOPE": "Scope"
+          "NAME": "",
+          "VALUE": "",
+          "SCOPE": ""
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Edit process variable"
+        "TITLE": ""
       },
       "ERROR_DIALOG": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
+        "TITLE": "",
+        "DESCRIPTION": ""
       }
     },
     "START_PROCESS": {
-      "BUTTON": "Start Process",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-      "NO_START_FORM": "No start form",
-      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
+      "BUTTON": "",
+      "NO_PROCESS_DEFINITIONS": "",
+      "NO_START_FORM": "",
+      "NO_PROCESS_DEF_SELECTED": "",
       "FORM": {
         "LABEL": {
-          "SELECT_APPLICATION": "Select Application",
-          "TYPE": "Select Process",
-          "NAME": "Process Name"
+          "SELECT_APPLICATION": "",
+          "TYPE": "",
+          "NAME": ""
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "",
         "ACTION": {
-          "START": "Start Process",
-          "CANCEL": "Cancel"
+          "START": "",
+          "CANCEL": ""
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
-        "PROCESS_NAME_REQUIRED": "Process name is required."
+        "LOAD_PROCESS_DEFS": "",
+        "START": "",
+        "MAXIMUM_LENGTH": "",
+        "SPACE_VALIDATOR": "",
+        "PROCESS_NAME_REQUIRED": ""
       }
     },
     "PROCESS-ATTACHMENT": {
       "EMPTY": {
-        "HEADER": "This list is empty",
+        "HEADER": "",
         "DRAG-AND-DROP": {
-          "TITLE": "Drag and drop",
-          "SUBTITLE": "to upload files"
+          "TITLE": "",
+          "SUBTITLE": ""
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": ""
       },
       "COLUMNS": {
-        "NAME": "Name",
-        "CREATED-ON": "Created on"
+        "NAME": "",
+        "CREATED-ON": ""
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Continue",
-      "TITLE": "Select a process app",
-      "LIST": "Process App list",
-      "ERROR": "There is a problem connecting to Process Services"
+      "START": "",
+      "TITLE": "",
+      "LIST": "",
+      "ERROR": ""
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Sign into '{{ ecmHost }}'"
+      "LOGIN": ""
     },
     "ACTIONS": {
-      "LOGIN": "Login",
-      "CANCEL": "Cancel",
-      "CHOOSE": "Select",
-      "CHOOSE_ITEM": "Select content to attach from '{{ name }}'"
+      "LOGIN": "",
+      "CANCEL": "",
+      "CHOOSE": "",
+      "CHOOSE_ITEM": ""
     }
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Attach a form that can be viewed later",
-      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "SUBTITLE": "",
+      "COMPLETE-TASK-MESSAGE": "",
+      "COMPLETE-TASK-SUB-MESSAGE": "",
       "BUTTONS": {
-        "COMPLETE": "COMPLETE",
-        "CANCEL": "CANCEL",
-        "CLAIM": "CLAIM",
-        "UNCLAIM": "RELEASE"
+        "COMPLETE": "",
+        "CANCEL": "",
+        "CLAIM": "",
+        "UNCLAIM": ""
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Task {{taskName}} completed",
-      "SUBTITLE": "No forms to be added"
+      "TITLE": "",
+      "SUBTITLE": ""
     }
   }
 }
