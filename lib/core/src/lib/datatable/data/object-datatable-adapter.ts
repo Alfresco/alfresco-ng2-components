@@ -60,7 +60,10 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     constructor(data: any[] = [], schema: DataColumn[] = [], sortingMode: SortingMode = 'client') {
         this._rows = [];
         this._columns = [];
-        this._sortingMode = sortingMode?.toString().toLowerCase() === 'server' ? 'server' : 'client';
+
+        if (!sortingMode) {
+            sortingMode = 'client';
+        }
 
         if (data && data.length > 0) {
             this._rows = data.map((item) => new ObjectDataRow(item));
