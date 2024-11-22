@@ -8,7 +8,6 @@ eval projects=( "adf-core"
     "adf-insights"
     "adf-content-services"
     "adf-extensions"
-    "adf-testing"
     "adf-process-services"
     "adf-process-services-cloud" )
 

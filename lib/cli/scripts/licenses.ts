@@ -45,7 +45,6 @@ const nonStandardLicenses = {
 };
 
 const missingRepositories = {
-    '@alfresco/adf-testing': 'https://github.com/Alfresco/alfresco-ng2-components',
     '@webassemblyjs/helper-api-error': 'https://github.com/xtuc/webassemblyjs',
     '@webassemblyjs/helper-fsm': 'https://github.com/xtuc/webassemblyjs',
     '@webassemblyjs/ieee754': 'https://github.com/xtuc/webassemblyjs',

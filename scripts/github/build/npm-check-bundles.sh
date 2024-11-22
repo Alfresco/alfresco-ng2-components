@@ -7,7 +7,6 @@ eval projects=( "js-api"
     "adf-insights"
     "adf-content-services"
     "adf-extensions"
-    "adf-testing"
     "adf-process-services"
     "adf-process-services-cloud"
     "eslint-plugin-eslint-angular" )
@@ -45,15 +44,6 @@ do
         fi
     fi
 
-    if [ $PACKAGE == 'adf-testing' ]; then
-        if [ ! -f package/'main.js' ]; then
-            error_out '31;1' "$PACKAGE testing: main.js not found!" >&2
-            exit 1
-        else
-            echo "testing: ok"
-        fi
-    fi
-
     if [ $PACKAGE == 'adf-core' ]; then
         if [ ! -f package/lib/prebuilt-themes/'adf-blue-orange.css' ]; then
             error_out '31;1' "$PACKAGE prebuilt-theme: adf-blue-orange.css not found!" >&2
@@ -63,7 +53,7 @@ do
         fi
     fi
 
-    if [ $PACKAGE != 'adf-testing' ] && [ $PACKAGE != 'js-api' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
+    if [ $PACKAGE != 'js-api' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
         if [ ! -f package/fesm2022/$PACKAGE'.mjs' ]; then
             error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2
             exit 1
@@ -94,8 +84,6 @@ do
 
         if [ ! -f package/bundles/assets/$PACKAGE/i18n/en.json ]; then
             if [ $PACKAGE == 'adf-extensions' ]; then
-                echo "no i18n needed"
-            elif [ $PACKAGE == 'adf-testing' ]; then
                 echo "no i18n needed"
             else
                 error_out '31;1' "$PACKAGE i18n not found!" >&2
