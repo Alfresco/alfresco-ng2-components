@@ -60,4 +60,9 @@ describe('TasksListDatatableAdapter', () => {
 
         expect(adapter.getColumnType(row, column)).toBe('number');
     });
+
+    it('should initialize constructor with server sortingMode', () => {
+        const adapter = new TasksListDatatableAdapter([], []);
+        expect(adapter['_sortingMode']).toBe('server');
+    });
 });
