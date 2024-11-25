@@ -36,6 +36,7 @@
         &-actions {
             margin-top: 11px;
             margin-bottom: 1px;
+            margin-left: 40px;
             padding: 0;
             align-items: flex-end;
 
@@ -51,7 +52,6 @@
 
             &-cancel-button,
             &-discard-changes-button {
-                padding: 4px 12px;
                 height: 32px;
                 display: flex;
                 align-items: center;
