@@ -91,7 +91,8 @@ export class WebSocketService {
 
     private createWsUrl(serviceUrl: string): string {
         const url = new URL(serviceUrl, this.host);
-        url.protocol = url.protocol === 'https' ? 'wss' : 'ws';
+        const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+        url.protocol = protocol;
 
         return url.href;
     }
