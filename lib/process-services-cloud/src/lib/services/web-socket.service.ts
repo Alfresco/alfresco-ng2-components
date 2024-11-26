@@ -37,7 +37,7 @@ import { Kind, OperationTypeNode } from 'graphql';
 import { Apollo } from 'apollo-angular';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
 
