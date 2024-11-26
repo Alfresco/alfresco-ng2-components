@@ -30,7 +30,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
-    private readonly _sortingMode: SortingMode;
+    private _sortingMode: SortingMode;
 
     selectedRow: DataRow;
     rowsChanged: Subject<Array<DataRow>>;
@@ -57,6 +57,17 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return schema;
     }
 
+    get sortingMode(): SortingMode {
+        return this._sortingMode;
+    }
+    set sortingMode(sortingMode: SortingMode) {
+        if (!sortingMode) {
+            sortingMode = 'client';
+        }
+
+        this._sortingMode = sortingMode;
+    }
+
     constructor(data: any[] = [], schema: DataColumn[] = [], sortingMode: SortingMode = 'client') {
         this._rows = [];
         this._columns = [];
@@ -64,6 +75,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         if (!sortingMode) {
             sortingMode = 'client';
         }
+        this._sortingMode = sortingMode;
 
         if (data && data.length > 0) {
             this._rows = data.map((item) => new ObjectDataRow(item));

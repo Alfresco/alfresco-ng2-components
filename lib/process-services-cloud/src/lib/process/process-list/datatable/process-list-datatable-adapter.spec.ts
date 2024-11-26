@@ -53,6 +53,6 @@ describe('ProcessListDatatableAdapter', () => {
 
     it('should initialize constructor with server sortingMode', () => {
         const adapter = new ProcessListDatatableAdapter([], []);
-        expect(adapter['_sortingMode']).toBe('server');
+        expect(adapter.sortingMode).toBe('server');
     });
 });

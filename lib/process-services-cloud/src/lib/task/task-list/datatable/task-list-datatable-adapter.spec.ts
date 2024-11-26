@@ -63,6 +63,6 @@ describe('TasksListDatatableAdapter', () => {
 
     it('should initialize constructor with server sortingMode', () => {
         const adapter = new TasksListDatatableAdapter([], []);
-        expect(adapter['_sortingMode']).toBe('server');
+        expect(adapter.sortingMode).toBe('server');
     });
 });
