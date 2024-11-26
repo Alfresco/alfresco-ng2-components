@@ -71,6 +71,12 @@ export class BrowserActions {
             .match(new RegExp(/ContainingText\("(.+?)",."(.+?)"/));
         const locatorClass = locatorMatch[1];
         const locatorText = locatorMatch[2];
+        console.log('==================== LOCATOR CLASS ==================');
+        console.log(locatorClass);
+        console.log('==================== LOCATOR CLASS ==================');
+        console.log('==================== LOCATOR TEXT ==================');
+        console.log(locatorText);
+        console.log('==================== LOCATOR TEXT ==================');
         await browser.executeScript(`function filterElementsByText(selector, text) {
             const elements = document.querySelectorAll(selector);
             return Array.from(elements).filter(element => element.textContent.includes(text));
