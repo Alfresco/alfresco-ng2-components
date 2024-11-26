@@ -71,20 +71,11 @@ export class BrowserActions {
             .match(new RegExp(/ContainingText\("(.+?)",."(.+?)"/));
         const locatorClass = locatorMatch[1];
         const locatorText = locatorMatch[2];
-        console.log('==================== LOCATOR CLASS ==================');
-        console.log(locatorClass);
-        console.log('==================== LOCATOR CLASS ==================');
-        console.log('==================== LOCATOR TEXT ==================');
-        console.log(locatorText);
-        console.log('==================== LOCATOR TEXT ==================');
         await browser.executeScript(`function filterElementsByText(selector, text) {
             const elements = document.querySelectorAll(selector);
             return Array.from(elements).filter(element => element.textContent.includes(text));
         }
         const filteredElements = filterElementsByText('${locatorClass}', '${locatorText}');
-        console.log('==================== SCRIPT filteredElements[0] ==================');
-        console.log(filteredElements[0]);
-        console.log('==================== SCRIPT filteredElements[0] ==================');
         filteredElements[0].click()`);
     }
 
@@ -116,9 +107,6 @@ export class BrowserActions {
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
-        // const attributeValue: string = await browser.executeScript(
-        //     `return document.querySelector('${elementFinder.locator().value}').getAttribute('${attribute}')`
-        // );
         const attributeValue: string = await elementFinder.getAttribute(`${attribute}`);
         return attributeValue || 'BrowserActions.getAttribute() empty value';
     }
@@ -151,7 +139,7 @@ export class BrowserActions {
 
         const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
-            return browser.executeScript(`return document.querySelector('${elementFinder.locator().value}').value`);
+            return elementFinder.getAttribute('value');
         } else {
             Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
