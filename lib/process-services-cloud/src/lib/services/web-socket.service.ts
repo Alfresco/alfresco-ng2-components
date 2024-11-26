@@ -17,7 +17,7 @@
 
 import { createClient } from 'graphql-ws';
 import { Inject, Injectable } from '@angular/core';
-import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
@@ -59,11 +59,12 @@ export class WebSocketService {
 
     constructor(
         private readonly apollo: Apollo,
-        private readonly appConfigService: AppConfigService,
+        // private readonly appConfigService: AppConfigService,
         private readonly authService: AuthenticationService,
         @Inject(FeaturesServiceToken) private featuresService: IFeaturesService
     ) {
-        this.host = this.appConfigService.get('bpmHost', '');
+        this.host = 'https://aae-rc-apa.envalfresco.com';
+        // this.host = this.appConfigService.get('bpmHost', '');
     }
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
@@ -91,7 +92,8 @@ export class WebSocketService {
 
     private createWsUrl(serviceUrl: string): string {
         const url = new URL(serviceUrl, this.host);
-        url.protocol = url.protocol === 'https' ? 'wss' : 'ws';
+        const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+        url.protocol = protocol;
 
         return url.href;
     }
