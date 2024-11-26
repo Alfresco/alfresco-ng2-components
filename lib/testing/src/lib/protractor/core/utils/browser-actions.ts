@@ -82,6 +82,9 @@ export class BrowserActions {
             return Array.from(elements).filter(element => element.textContent.includes(text));
         }
         const filteredElements = filterElementsByText('${locatorClass}', '${locatorText}');
+        console.log('==================== SCRIPT filteredElements[0] ==================');
+        console.log(filteredElements[0]);
+        console.log('==================== SCRIPT filteredElements[0] ==================');
         filteredElements[0].click()`);
     }
 
@@ -113,10 +116,11 @@ export class BrowserActions {
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
-        const attributeValue: string = await browser.executeScript(
-            `return document.querySelector('${elementFinder.locator().value}').getAttribute('${attribute}')`
-        );
-        return attributeValue || '';
+        // const attributeValue: string = await browser.executeScript(
+        //     `return document.querySelector('${elementFinder.locator().value}').getAttribute('${attribute}')`
+        // );
+        const attributeValue: string = await elementFinder.getAttribute(`${attribute}`);
+        return attributeValue || 'BrowserActions.getAttribute() empty value';
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
