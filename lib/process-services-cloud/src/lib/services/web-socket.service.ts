@@ -89,9 +89,15 @@ export class WebSocketService {
         );
     }
 
-    private createUrl(serviceUrl: string, protocol: 'https' | 'wss' = 'wss'): string {
+    private createWsUrl(serviceUrl: string): string {
         const url = new URL(serviceUrl, this.host);
-        url.protocol = protocol;
+        url.protocol = url.protocol === 'https' ? 'wss' : 'ws';
+
+        return url.href;
+    }
+
+    private createHttpUrl(serviceUrl: string): string {
+        const url = new URL(serviceUrl, this.host);
 
         return url.href;
     }
@@ -110,7 +116,7 @@ export class WebSocketService {
 
         this.httpLink = options.httpUrl
             ? new HttpLink({
-                  uri: this.createUrl(options.httpUrl, 'https')
+                  uri: this.createHttpUrl(options.httpUrl)
               })
             : undefined;
 
@@ -172,7 +178,7 @@ export class WebSocketService {
 
     private createTransportWsLink(options: serviceOptions) {
         this.wsLink = new WebSocketLink({
-            uri: this.createUrl(options.wsUrl, 'wss') + '/ws/graphql',
+            uri: this.createWsUrl(options.wsUrl) + '/ws/graphql',
             options: {
                 reconnect: true,
                 lazy: true,
@@ -187,7 +193,7 @@ export class WebSocketService {
     private createGraphQLWsLink(options: serviceOptions) {
         this.wsLink = new GraphQLWsLink(
             createClient({
-                url: this.createUrl(options.wsUrl, 'wss') + '/v2/ws/graphql',
+                url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
                 connectionParams: {
                     Authorization: 'Bearer ' + this.authService.getToken()
                 },
