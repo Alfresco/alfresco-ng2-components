@@ -123,6 +123,33 @@ describe('UnsavedChangesGuard', () => {
                 expectGuardToBe(true, done, true);
                 afterClosed$.next(false);
             });
+
+            it('should call open on dialog with correct parameters when maxWidth is not set', () => {
+                guard.unsaved = true;
+                guard.data = {
+                    headerText: 'header'
+                };
+
+                guard.canDeactivate();
+                expect(dialog.open).toHaveBeenCalledWith(UnsavedChangesDialogComponent, {
+                    maxWidth: 346,
+                    data: guard.data
+                });
+            });
+
+            it('should call open on dialog with correct parameters when maxWidth is set', () => {
+                guard.unsaved = true;
+                guard.data = {
+                    headerText: 'header',
+                    maxWidth: 'none'
+                };
+
+                guard.canDeactivate();
+                expect(dialog.open).toHaveBeenCalledWith(UnsavedChangesDialogComponent, {
+                    maxWidth: 'none',
+                    data: guard.data
+                });
+            });
         });
 
         describe('Without auth', () => {

@@ -20,5 +20,5 @@ export interface UnsavedChangesDialogData {
     confirmButtonText?: string;
     descriptionText?: string;
     headerText?: string;
-    maxWidth?: number;
+    maxWidth?: number | string;
 }

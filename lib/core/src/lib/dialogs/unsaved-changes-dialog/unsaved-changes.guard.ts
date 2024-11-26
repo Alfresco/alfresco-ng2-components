@@ -49,7 +49,7 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
         return this.unsaved
             ? this.dialog
                   .open<UnsavedChangesDialogComponent>(UnsavedChangesDialogComponent, {
-                      maxWidth: this.data?.maxWidth ?? 'none',
+                      maxWidth: this.data?.maxWidth ?? 346,
                       data: this.data
                   })
                   .afterClosed()
