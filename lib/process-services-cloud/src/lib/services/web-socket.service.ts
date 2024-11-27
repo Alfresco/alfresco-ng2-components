@@ -17,7 +17,7 @@
 
 import { createClient } from 'graphql-ws';
 import { Inject, Injectable } from '@angular/core';
-import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
+import { AppConfigService, AuthenticationService, LogService } from '@alfresco/adf-core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
@@ -61,7 +61,8 @@ export class WebSocketService {
         private readonly apollo: Apollo,
         private readonly appConfigService: AppConfigService,
         private readonly authService: AuthenticationService,
-        @Inject(FeaturesServiceToken) private featuresService: IFeaturesService
+        @Inject(FeaturesServiceToken) private featuresService: IFeaturesService,
+        private logger: LogService
     ) {
         this.host = this.appConfigService.get('bpmHost', '');
     }
@@ -95,7 +96,9 @@ export class WebSocketService {
         url.protocol = protocol2;
         const protocol = this.host.split('://')[0] === 'https' ? 'wss' : 'ws';
         const subHost = this.host.split('://')[1];
-        return `${protocol}://${subHost}/${apolloClientName}/notifications/ws/graphql`;
+        const finalUrl = `${protocol}://${subHost}/${apolloClientName}/notifications/ws/graphql`;
+        this.logger.info(`WebSocketService: createWsUrl: ${finalUrl}`);
+        return finalUrl;
     }
 
     private createHttpUrl(serviceUrl: string): string {
