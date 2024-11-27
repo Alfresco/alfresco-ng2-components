@@ -89,12 +89,13 @@ export class WebSocketService {
         );
     }
 
-    private createWsUrl(serviceUrl: string): string {
+    private createWsUrl(apolloClientName: string, serviceUrl: string): string {
         const url = new URL(serviceUrl, this.host);
-        const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
-        url.protocol = protocol;
-
-        return url.href;
+        const protocol2 = url.protocol === 'https:' ? 'wss:' : 'ws:';
+        url.protocol = protocol2;
+        const protocol = this.host.split('://')[0] === 'https' ? 'wss' : 'ws';
+        const subHost = this.host.split('://')[1];
+        return `${protocol}://${subHost}/${apolloClientName}/notifications/ws/graphql`;
     }
 
     private createHttpUrl(serviceUrl: string): string {
@@ -179,7 +180,7 @@ export class WebSocketService {
 
     private createTransportWsLink(options: serviceOptions) {
         this.wsLink = new WebSocketLink({
-            uri: this.createWsUrl(options.wsUrl) + '/ws/graphql',
+            uri: this.createWsUrl(options.apolloClientName, options.wsUrl) + '/ws/graphql',
             options: {
                 reconnect: true,
                 lazy: true,
@@ -194,7 +195,7 @@ export class WebSocketService {
     private createGraphQLWsLink(options: serviceOptions) {
         this.wsLink = new GraphQLWsLink(
             createClient({
-                url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
+                url: this.createWsUrl(options.apolloClientName, options.wsUrl) + '/v2/ws/graphql',
                 connectionParams: {
                     Authorization: 'Bearer ' + this.authService.getToken()
                 },
