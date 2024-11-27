@@ -17,7 +17,7 @@
 
 import { createClient } from 'graphql-ws';
 import { Inject, Injectable } from '@angular/core';
-import { AppConfigService, AuthenticationService, LogService } from '@alfresco/adf-core';
+import { AuthenticationService, LogService } from '@alfresco/adf-core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
