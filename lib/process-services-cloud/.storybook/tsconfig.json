@@ -6,5 +6,5 @@
   },
 
   "exclude": ["../**/*.spec.ts" ],
-  "include": ["../src/**/*", "*.js", "../../core/feature-flags"]
+  "include": ["../src/**/*", "*.js"]
 }
