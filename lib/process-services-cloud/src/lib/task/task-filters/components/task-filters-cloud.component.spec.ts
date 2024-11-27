@@ -16,7 +16,7 @@
  */
 
 import { AppConfigService } from '@alfresco/adf-core';
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, throwError } from 'rxjs';
@@ -32,7 +32,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatActionListItemHarness } from '@angular/material/list/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
-import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
@@ -46,14 +45,10 @@ describe('TaskFiltersCloudComponent', () => {
     let getTaskListFiltersSpy: jasmine.Spy;
     let getTaskListCounterSpy: jasmine.Spy;
 
-    const configureTestingModule = (providers: unknown[]) => {
+    const configureTestingModule = (providers: any[]) => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false }),
-                ...providers
-            ]
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }, ...providers]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         taskListService = TestBed.inject(TaskListCloudService);
@@ -107,7 +102,7 @@ describe('TaskFiltersCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const filters: DebugElement[] = fixture.debugElement.queryAll(By.css('.adf-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
             expect(filters.length).toBe(0);
         });
 
@@ -270,7 +265,7 @@ describe('TaskFiltersCloudComponent', () => {
             component.showIcons = false;
             fixture.detectChanges();
 
-            const filters: DebugElement[] = fixture.debugElement.queryAll(By.css('.adf-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
 
             expect(filters.length).toBe(0);
         });

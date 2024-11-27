@@ -37,7 +37,6 @@ import { IdentityUserService } from '../../../people/services/identity-user.serv
 import { ApolloModule } from 'apollo-angular';
 import { StorageService } from '@alfresco/adf-core';
 import { TaskStatusFilter } from '../public-api';
-import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -58,10 +57,7 @@ describe('TaskFilterCloudService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
-                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })
-            ]
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
         notificationCloudService = TestBed.inject(NotificationCloudService);
@@ -270,10 +266,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })
-            ]
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;

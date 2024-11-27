@@ -24,4 +24,3 @@ export * from './form-fields.interfaces';
 export * from './base-cloud.service';
 export * from './task-list-cloud.service.interface';
 export * from './variable-mapper.sevice';
-export * from './web-socket.service';

@@ -18,12 +18,17 @@
 import { TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { NotificationCloudService } from './notification-cloud.service';
-import { WebSocketService } from './web-socket.service';
-import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
+import { Apollo } from 'apollo-angular';
 
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
-    let wsService: WebSocketService;
+    let apollo: Apollo;
+    let apolloCreateSpy: jasmine.Spy;
+    let apolloSubscribeSpy: jasmine.Spy;
+
+    const useMock: any = {
+        subscribe: () => {}
+    };
 
     const queryMock = `
         subscription {
@@ -38,25 +43,39 @@ describe('NotificationCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            providers: [WebSocketService, provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })]
+            imports: [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(NotificationCloudService);
-        wsService = TestBed.inject(WebSocketService);
+        apollo = TestBed.inject(Apollo);
+
+        service.appsListening = [];
+        apolloCreateSpy = spyOn(apollo, 'createNamed');
+        apolloSubscribeSpy = spyOn(apollo, 'use').and.returnValue(useMock);
     });
 
-    it('should call getSubscription with the correct parameters', () => {
-        const getSubscriptionSpy = spyOn(wsService, 'getSubscription').and.callThrough();
+    it('should not create more than one websocket per app if it was already created', () => {
+        service.makeGQLQuery('myAppName', queryMock);
+        expect(service.appsListening.length).toBe(1);
+        expect(service.appsListening[0]).toBe('myAppName');
 
         service.makeGQLQuery('myAppName', queryMock);
+        expect(service.appsListening.length).toBe(1);
+        expect(service.appsListening[0]).toBe('myAppName');
 
-        expect(getSubscriptionSpy).toHaveBeenCalledWith({
-            apolloClientName: 'myAppName',
-            wsUrl: 'myAppName/notifications',
-            httpUrl: 'myAppName/notifications/graphql',
-            subscriptionOptions: {
-                query: jasmine.any(Object)
-            }
-        });
+        expect(apolloCreateSpy).toHaveBeenCalledTimes(1);
+        expect(apolloSubscribeSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should create new websocket if it is subscribing to new app', () => {
+        service.makeGQLQuery('myAppName', queryMock);
+        expect(service.appsListening.length).toBe(1);
+        expect(service.appsListening[0]).toBe('myAppName');
+
+        service.makeGQLQuery('myOtherAppName', queryMock);
+        expect(service.appsListening.length).toBe(2);
+        expect(service.appsListening[1]).toBe('myOtherAppName');
+
+        expect(apolloCreateSpy).toHaveBeenCalledTimes(2);
+        expect(apolloSubscribeSpy).toHaveBeenCalledTimes(2);
     });
 });

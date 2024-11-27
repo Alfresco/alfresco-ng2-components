@@ -15,24 +15,101 @@
  * limitations under the License.
  */
 
-import { gql } from '@apollo/client/core';
+import { Apollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { split, gql, InMemoryCache, ApolloLink, InMemoryCacheConfig } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { onError } from '@apollo/client/link/error';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
-import { WebSocketService } from './web-socket.service';
+import { AuthenticationService } from '@alfresco/adf-core';
+import { BaseCloudService } from './base-cloud.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
-export class NotificationCloudService {
-    constructor(private readonly webSocketService: WebSocketService) {}
+export class NotificationCloudService extends BaseCloudService {
+    appsListening = [];
+
+    constructor(public apollo: Apollo, private http: HttpLink, private authService: AuthenticationService, protected adfHttpClient: AdfHttpClient) {
+        super(adfHttpClient);
+    }
+
+    private get webSocketHost() {
+        return this.contextRoot.split('://')[1];
+    }
+
+    private get protocol() {
+        return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
+    }
+
+    initNotificationsForApp(appName: string) {
+        if (!this.appsListening.includes(appName)) {
+            this.appsListening.push(appName);
+            const httpLink = this.http.create({
+                uri: `${this.getBasePath(appName)}/notifications/graphql`
+            });
+
+            const webSocketLink = new WebSocketLink({
+                uri: `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
+                options: {
+                    reconnect: true,
+                    lazy: true,
+                    connectionParams: {
+                        kaInterval: 2000,
+                        // eslint-disable-next-line @typescript-eslint/naming-convention
+                        'X-Authorization': 'Bearer ' + this.authService.getToken()
+                    }
+                }
+            });
+
+            const link = split(
+                ({ query }) => {
+                    const definition = getMainDefinition(query);
+                    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+                },
+                webSocketLink,
+                httpLink
+            );
+
+            const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+                if (graphQLErrors) {
+                    for (const err of graphQLErrors) {
+                        switch (err.extensions.code) {
+                            case 'UNAUTHENTICATED': {
+                                const oldHeaders = operation.getContext().headers;
+                                operation.setContext({
+                                    headers: {
+                                        ...oldHeaders,
+                                        // eslint-disable-next-line @typescript-eslint/naming-convention
+                                        'X-Authorization': 'Bearer ' + this.authService.getToken()
+                                    }
+                                });
+                                forward(operation);
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                    }
+                }
+            });
+
+            this.apollo.createNamed(appName, {
+                link: ApolloLink.from([errorLink, link]),
+                cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig),
+                defaultOptions: {
+                    watchQuery: {
+                        errorPolicy: 'all'
+                    }
+                }
+            });
+        }
+    }
 
     makeGQLQuery(appName: string, gqlQuery: string) {
-        return this.webSocketService.getSubscription({
-            apolloClientName: appName,
-            wsUrl: `${appName}/notifications`,
-            httpUrl: `${appName}/notifications/graphql`,
-            subscriptionOptions: {
-                query: gql(gqlQuery)
-            }
-        });
+        this.initNotificationsForApp(appName);
+        return this.apollo.use(appName).subscribe({ query: gql(gqlQuery) });
     }
 }
