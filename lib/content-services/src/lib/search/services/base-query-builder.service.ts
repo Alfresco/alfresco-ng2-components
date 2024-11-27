@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Subject, Observable, from, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from, Observable, ReplaySubject, Subject } from 'rxjs';
 import { AppConfigService } from '@alfresco/adf-core';
 import {
-    SearchRequest,
     RequestFacetFields,
-    RequestSortDefinitionInner,
-    ResultSetPaging,
     RequestHighlight,
     RequestScope,
+    RequestSortDefinitionInner,
+    ResultSetPaging,
+    SEARCH_LANGUAGE,
     SearchApi,
-    SEARCH_LANGUAGE
+    SearchRequest
 } from '@alfresco/js-api';
 import { SearchCategory } from '../models/search-category.interface';
 import { FilterQuery } from '../models/filter-query.interface';
@@ -67,6 +67,9 @@ export abstract class BaseQueryBuilderService {
 
     /*  Stream that emits search forms  */
     searchForms = new ReplaySubject<SearchForm[]>(1);
+
+    /*  Stream that emits void when change in filterQueries  */
+    filterQueryUpdate = new Subject<void>();
 
     /*  Stream that emits the initial value for some or all search filters */
     populateFilters = new BehaviorSubject<{ [key: string]: any }>({});
@@ -247,6 +250,7 @@ export abstract class BaseQueryBuilderService {
             const existing = this.filterQueries.find((filterQuery) => filterQuery.query === query);
             if (!existing) {
                 this.filterQueries.push({ query });
+                this.filterQueryUpdate.next();
             }
         }
     }
@@ -259,6 +263,7 @@ export abstract class BaseQueryBuilderService {
     removeFilterQuery(query: string): void {
         if (query) {
             this.filterQueries = this.filterQueries.filter((filterQuery) => filterQuery.query !== query);
+            this.filterQueryUpdate.next();
         }
     }
 
