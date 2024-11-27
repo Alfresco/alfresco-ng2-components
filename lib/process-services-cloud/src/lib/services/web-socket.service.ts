@@ -95,13 +95,9 @@ export class WebSocketService extends BaseCloudService {
 
     private createWsUrl(apolloClientName: string, serviceUrl: string): string {
         const url = new URL(serviceUrl, this.host);
-        const protocol2 = url.protocol === 'https:' ? 'wss:' : 'ws:';
-        url.protocol = protocol2;
-        const protocol = this.host.split('://')[0] === 'https' ? 'wss' : 'ws';
-        const subHost = this.host.split('://')[1];
-        const finalUrl = `${protocol}://${subHost}/${apolloClientName}/notifications`;
-        this.logger.error(`WebSocketService: createWsUrl: ${finalUrl}`);
-        return finalUrl;
+        url.protocol = url.protocol === 'https' ? 'wss' : 'ws';
+
+        return url.href;
     }
 
     private createHttpUrl(serviceUrl: string): string {
