@@ -40,6 +40,8 @@ import { RetryLink } from '@apollo/client/link/retry';
 import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
+import { BaseCloudService } from './base-cloud.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 interface serviceOptions {
     apolloClientName: string;
@@ -51,7 +53,7 @@ interface serviceOptions {
 @Injectable({
     providedIn: 'root'
 })
-export class WebSocketService {
+export class WebSocketService extends BaseCloudService {
     private host = '';
     private subscriptionProtocol: 'graphql-ws' | 'transport-ws' = 'transport-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
@@ -59,12 +61,13 @@ export class WebSocketService {
 
     constructor(
         private readonly apollo: Apollo,
-        private readonly appConfigService: AppConfigService,
         private readonly authService: AuthenticationService,
         @Inject(FeaturesServiceToken) private featuresService: IFeaturesService,
+        adfHttpClient: AdfHttpClient,
         private logger: LogService
     ) {
-        this.host = this.appConfigService.get('bpmHost', '');
+        super(adfHttpClient);
+        this.host = this.contextRoot;
     }
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
@@ -96,8 +99,8 @@ export class WebSocketService {
         url.protocol = protocol2;
         const protocol = this.host.split('://')[0] === 'https' ? 'wss' : 'ws';
         const subHost = this.host.split('://')[1];
-        const finalUrl = `${protocol}://${subHost}/${apolloClientName}/notifications/ws/graphql`;
-        this.logger.info(`WebSocketService: createWsUrl: ${finalUrl}`);
+        const finalUrl = `${protocol}://${subHost}/${apolloClientName}/notifications`;
+        this.logger.error(`WebSocketService: createWsUrl: ${finalUrl}`);
         return finalUrl;
     }
 
