@@ -201,6 +201,14 @@ describe('SearchQueryBuilder', () => {
         expect(builder.filterQueries.length).toBe(2);
     });
 
+    it('should call filterQueryUpdate after adding or removing filterQuery', () => {
+        const builder = createQueryBuilder();
+        spyOn(builder.filterQueryUpdate, 'next');
+        builder.addFilterQuery('q1');
+        builder.removeFilterQuery('q1');
+        expect(builder.filterQueryUpdate.next).toHaveBeenCalledTimes(2);
+    });
+
     it('should fetch facet query from config', () => {
         const config: SearchConfiguration = {
             categories: [],
