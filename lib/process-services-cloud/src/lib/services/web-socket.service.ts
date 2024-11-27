@@ -37,7 +37,7 @@ import { Kind, OperationTypeNode } from 'graphql';
 import { Apollo } from 'apollo-angular';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
 import { BaseCloudService } from './base-cloud.service';
@@ -93,15 +93,9 @@ export class WebSocketService extends BaseCloudService {
         );
     }
 
-    private createWsUrl(apolloClientName: string, serviceUrl: string): string {
+    private createUrl(serviceUrl: string, protocol: 'https' | 'wss' = 'wss'): string {
         const url = new URL(serviceUrl, this.host);
-        url.protocol = url.protocol === 'https' ? 'wss' : 'ws';
-
-        return url.href;
-    }
-
-    private createHttpUrl(serviceUrl: string): string {
-        const url = new URL(serviceUrl, this.host);
+        url.protocol = protocol;
 
         return url.href;
     }
@@ -120,7 +114,7 @@ export class WebSocketService extends BaseCloudService {
 
         this.httpLink = options.httpUrl
             ? new HttpLink({
-                  uri: this.createHttpUrl(options.httpUrl)
+                  uri: this.createUrl(options.httpUrl, 'https')
               })
             : undefined;
 
@@ -182,7 +176,7 @@ export class WebSocketService extends BaseCloudService {
 
     private createTransportWsLink(options: serviceOptions) {
         this.wsLink = new WebSocketLink({
-            uri: this.createWsUrl(options.apolloClientName, options.wsUrl) + '/ws/graphql',
+            uri: this.createUrl(options.wsUrl, 'wss') + '/ws/graphql',
             options: {
                 reconnect: true,
                 lazy: true,
@@ -197,7 +191,7 @@ export class WebSocketService extends BaseCloudService {
     private createGraphQLWsLink(options: serviceOptions) {
         this.wsLink = new GraphQLWsLink(
             createClient({
-                url: this.createWsUrl(options.apolloClientName, options.wsUrl) + '/v2/ws/graphql',
+                url: this.createUrl(options.wsUrl, 'wss') + '/v2/ws/graphql',
                 connectionParams: {
                     Authorization: 'Bearer ' + this.authService.getToken()
                 },
