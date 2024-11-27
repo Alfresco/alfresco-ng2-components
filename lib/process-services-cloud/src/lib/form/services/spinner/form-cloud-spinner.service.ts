@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Injectable, inject } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
-import { Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class FormCloudSpinnerService {
@@ -30,8 +29,8 @@ export class FormCloudSpinnerService {
 
     private overlayRef?: OverlayRef;
 
-    initSpinnerHandling(onDestroy$: Observable<boolean>): void {
-        this.formService.toggleFormSpinner.pipe(takeUntil(onDestroy$)).subscribe((event: FormSpinnerEvent) => {
+    initSpinnerHandling(destroyRef: DestroyRef): void {
+        this.formService.toggleFormSpinner.pipe(takeUntilDestroyed(destroyRef)).subscribe((event: FormSpinnerEvent) => {
             if (event?.payload.showSpinner) {
                 this.overlayRef = this.overlay.create({
                     hasBackdrop: true

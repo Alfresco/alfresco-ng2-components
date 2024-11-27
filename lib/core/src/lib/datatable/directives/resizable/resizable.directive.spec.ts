@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ElementRef, NgZone, Renderer2 } from '@angular/core';
+import { ElementRef, Injector, NgZone, Renderer2, runInInjectionContext } from '@angular/core';
 import { ResizableDirective } from './resizable.directive';
 
 describe('ResizableDirective', () => {
@@ -64,9 +64,12 @@ describe('ResizableDirective', () => {
         element = TestBed.inject(ElementRef);
         renderer = TestBed.inject(Renderer2);
         ngZone = TestBed.inject(NgZone);
+        const injector = TestBed.inject(Injector);
         spyOn(ngZone, 'runOutsideAngular').and.callFake((fn) => fn());
         spyOn(ngZone, 'run').and.callFake((fn) => fn());
-        directive = new ResizableDirective(renderer, element, ngZone);
+        runInInjectionContext(injector, () => {
+            directive = new ResizableDirective(renderer, element, ngZone);
+        });
 
         directive.ngOnInit();
     });

@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeaturesServiceToken, IDebugFeaturesService } from '../interfaces/features.interface';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-feature-flags-override-indicator',
@@ -49,9 +48,8 @@ import { Subject } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FlagsOverrideComponent implements OnDestroy {
+export class FlagsOverrideComponent {
     isEnabled = false;
-    destroy$ = new Subject<void>();
 
     @Input()
     size: 'small' | 'medium' | 'large' = 'medium';
@@ -64,16 +62,11 @@ export class FlagsOverrideComponent implements OnDestroy {
         if (this.featuresService.isEnabled$) {
             this.featuresService
                 .isEnabled$()
-                .pipe(takeUntil(this.destroy$))
+                .pipe(takeUntilDestroyed())
                 .subscribe((isEnabled) => {
                     this.isEnabled = isEnabled;
                     changeDetectorRef.markForCheck();
                 });
         }
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 }

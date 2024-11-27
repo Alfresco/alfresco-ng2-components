@@ -39,6 +39,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -50,12 +51,16 @@ describe('EditServiceTaskFilterCloudComponent', () => {
     let getTaskFilterSpy: jasmine.Spy;
     let getDeployedApplicationsSpy: jasmine.Spy;
     let taskService: TaskCloudService;
-    const afterClosedSubject = new Subject<any>();
+    const afterClosedSubject = new Subject<unknown>();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, MatIconTestingModule],
-            providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            providers: [
+                MatDialog,
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })
+            ]
         });
         fixture = TestBed.createComponent(EditServiceTaskFilterCloudComponent);
         component = fixture.componentInstance;
@@ -63,9 +68,8 @@ describe('EditServiceTaskFilterCloudComponent', () => {
         appsService = TestBed.inject(AppsProcessCloudService);
         taskService = TestBed.inject(TaskCloudService);
         dialog = TestBed.inject(MatDialog);
-        const dialogRefMock: any = {
-            afterClosed: () => afterClosedSubject
-        };
+        const dialogRefMock = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
+        dialogRefMock.afterClosed.and.returnValue(afterClosedSubject);
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeServiceFilter));
         getDeployedApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));

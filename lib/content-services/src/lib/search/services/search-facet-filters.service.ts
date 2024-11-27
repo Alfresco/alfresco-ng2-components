@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
-import { Subject, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { SearchService } from './search.service';
-import { catchError, takeUntil } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { SearchFilterList } from '../models/search-filter-list.model';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { CategoryService } from '../../category/services/category.service';
 import { TabbedFacetField } from '../models/tabbed-facet-field.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface SelectedBucket {
     field: FacetField;
@@ -38,7 +39,7 @@ const DEFAULT_PAGE_SIZE: number = 5;
 @Injectable({
     providedIn: 'root'
 })
-export class SearchFacetFiltersService implements OnDestroy {
+export class SearchFacetFiltersService {
     /**
      * All facet field items to be displayed in the component. These are updated according to the response.
      * When a new search is performed, the already existing items are updated with the new bucket count values and
@@ -52,8 +53,6 @@ export class SearchFacetFiltersService implements OnDestroy {
     selectedBuckets: SelectedBucket[] = [];
 
     private readonly facetQueriesPageSize = DEFAULT_PAGE_SIZE;
-    private readonly onDestroy$ = new Subject<boolean>();
-
     constructor(
         private queryBuilder: SearchQueryBuilderService,
         private searchService: SearchService,
@@ -64,14 +63,14 @@ export class SearchFacetFiltersService implements OnDestroy {
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || DEFAULT_PAGE_SIZE;
         }
 
-        this.queryBuilder.configUpdated.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.queryBuilder.configUpdated.pipe(takeUntilDestroyed()).subscribe(() => {
             this.selectedBuckets = [];
             this.responseFacets = null;
         });
 
-        this.queryBuilder.updated.pipe(takeUntil(this.onDestroy$)).subscribe((query) => this.queryBuilder.execute(true, query));
+        this.queryBuilder.updated.pipe(takeUntilDestroyed()).subscribe((query) => this.queryBuilder.execute(true, query));
 
-        this.queryBuilder.executed.pipe(takeUntil(this.onDestroy$)).subscribe((resultSetPaging: ResultSetPaging) => {
+        this.queryBuilder.executed.pipe(takeUntilDestroyed()).subscribe((resultSetPaging: ResultSetPaging) => {
             this.onDataLoaded(resultSetPaging);
             this.searchService.dataLoaded.next(resultSetPaging);
         });
@@ -418,11 +417,6 @@ export class SearchFacetFiltersService implements OnDestroy {
         } else {
             this.selectedBuckets = [];
         }
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(undefined);
-        this.onDestroy$.complete();
     }
 
     resetAllSelectedBuckets() {

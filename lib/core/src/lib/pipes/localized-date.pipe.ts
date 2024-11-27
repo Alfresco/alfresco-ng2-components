@@ -28,7 +28,6 @@ import { takeUntil } from 'rxjs/operators';
     pure: false
 })
 export class LocalizedDatePipe implements PipeTransform, OnDestroy {
-
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_FORMAT = 'mediumDate';
 
@@ -37,14 +36,12 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public userPreferenceService?: UserPreferencesService,
-                public appConfig?: AppConfigService) {
-
+    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
             this.userPreferenceService
                 .select(UserPreferenceValues.Locale)
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe(locale => {
+                .subscribe((locale) => {
                     if (locale) {
                         this.defaultLocale = locale;
                     }
@@ -67,5 +64,4 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
-
 }

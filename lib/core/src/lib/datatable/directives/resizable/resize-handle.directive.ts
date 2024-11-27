@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs';
 import { ResizableDirective } from './resizable.directive';
-import { Input, OnInit, Directive, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
+import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
     selector: '[adf-resize-handle]',
@@ -32,9 +31,6 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private unlistenMouseDown?: () => void;
     private unlistenMouseMove?: () => void;
     private unlistenMouseUp?: () => void;
-
-    private destroy$ = new Subject<void>();
-
     constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
 
     ngOnInit(): void {
@@ -49,7 +45,6 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
         this.unlistenMouseDown?.();
         this.unlistenMouseMove?.();
         this.unlistenMouseUp?.();
-        this.destroy$.next();
     }
 
     private onMousedown(event: MouseEvent): void {

@@ -19,29 +19,32 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 import {
     ChangeDetectorRef,
     Component,
-    Input,
-    Output,
+    DestroyRef,
+    ElementRef,
     EventEmitter,
+    HostBinding,
+    inject,
+    Input,
     OnDestroy,
     OnInit,
+    Output,
     ViewChild,
-    HostBinding,
-    ElementRef,
     ViewEncapsulation
 } from '@angular/core';
-import { Subscription, merge, Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { Direction } from '@angular/cdk/bidi';
-import { takeUntil, delay } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
-import { FileUploadDeleteEvent, FileUploadCompleteEvent } from '../../common/events/file.event';
+import { FileUploadCompleteEvent, FileUploadDeleteEvent } from '../../common/events/file.event';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 import { A11yModule } from '@angular/cdk/a11y';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
@@ -54,7 +57,6 @@ import { A11yModule } from '@angular/cdk/a11y';
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog direction. Can be 'ltr' or 'rtl. */
     private direction: Direction = 'ltr';
-    private onDestroy$ = new Subject<boolean>();
 
     @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
@@ -87,11 +89,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     isDialogMinimized: boolean = false;
     isConfirmation: boolean = false;
 
-    private listSubscription: Subscription;
-    private counterSubscription: Subscription;
-    private fileUploadSubscription: Subscription;
-    private errorSubscription: Subscription;
     private dialogActive = new Subject<boolean>();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private uploadService: UploadService,
@@ -101,14 +101,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.dialogActive.pipe(delay(100), takeUntil(this.onDestroy$)).subscribe(() => {
+        this.dialogActive.pipe(delay(100), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             const element: any = this.elementRef.nativeElement.querySelector('#upload-dialog');
             if (element) {
                 element.focus();
             }
         });
 
-        this.listSubscription = this.uploadService.queueChanged.pipe(takeUntil(this.onDestroy$)).subscribe((fileList) => {
+        this.uploadService.queueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((fileList) => {
             this.filesUploadingList = fileList;
 
             if (this.filesUploadingList.length && !this.isDialogActive) {
@@ -119,23 +119,23 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.counterSubscription = merge(this.uploadService.fileUploadComplete, this.uploadService.fileUploadDeleted)
-            .pipe(takeUntil(this.onDestroy$))
+        merge(this.uploadService.fileUploadComplete, this.uploadService.fileUploadDeleted)
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((event: FileUploadCompleteEvent | FileUploadDeleteEvent) => {
                 this.totalCompleted = event.totalComplete;
                 this.changeDetector.detectChanges();
             });
 
-        this.errorSubscription = this.uploadService.fileUploadError.pipe(takeUntil(this.onDestroy$)).subscribe((event) => {
+        this.uploadService.fileUploadError.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
             this.totalErrors = event.totalError;
             this.changeDetector.detectChanges();
         });
 
-        this.fileUploadSubscription = this.uploadService.fileUpload.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.uploadService.fileUpload.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.changeDetector.detectChanges();
         });
 
-        this.uploadService.fileDeleted.pipe(takeUntil(this.onDestroy$)).subscribe((objId) => {
+        this.uploadService.fileDeleted.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((objId) => {
             if (this.filesUploadingList) {
                 const uploadedFile = this.filesUploadingList.find((file) => (file.data ? file.data.entry.id === objId : false));
                 if (uploadedFile) {
@@ -147,7 +147,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
         this.userPreferencesService
             .select('textOrientation')
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((textOrientation: Direction) => {
                 this.direction = textOrientation;
             });
@@ -201,12 +201,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.uploadService.clearQueue();
-        this.listSubscription.unsubscribe();
-        this.counterSubscription.unsubscribe();
-        this.fileUploadSubscription.unsubscribe();
-        this.errorSubscription.unsubscribe();
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     canShowDialog(): boolean {

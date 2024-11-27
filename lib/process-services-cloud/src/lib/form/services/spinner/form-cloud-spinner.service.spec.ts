@@ -21,7 +21,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
@@ -33,18 +33,20 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
     selector: 'adf-cloud-overlay-test',
     template: `<div>adf-cloud-overlay-test</div>`
 })
-class SpinnerTestComponent {}
+class SpinnerTestComponent {
+    destroyRef = inject(DestroyRef)
+}
 
 describe('FormCloudSpinnerService', () => {
     let fixture: ComponentFixture<SpinnerTestComponent>;
     let rootLoader: HarnessLoader;
     let spinnerService: FormCloudSpinnerService;
     let formService: FormService;
+    let destroyRef: DestroyRef;
 
     const showSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: true, message: 'LOAD_SPINNER_MESSAGE' });
     const hideSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: false });
 
-    const onDestroy$ = new Subject<boolean>();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -65,10 +67,11 @@ describe('FormCloudSpinnerService', () => {
         rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         spinnerService = TestBed.inject(FormCloudSpinnerService);
         formService = TestBed.inject(FormService);
+        destroyRef = fixture.componentInstance.destroyRef
     });
 
     it('should toggle spinner', async () => {
-        spinnerService.initSpinnerHandling(onDestroy$);
+        spinnerService.initSpinnerHandling(destroyRef);
         formService.toggleFormSpinner.next(showSpinnerEvent);
         fixture.detectChanges();
 

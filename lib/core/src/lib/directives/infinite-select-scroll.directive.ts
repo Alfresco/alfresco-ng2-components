@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Inject, AfterViewInit, Directive, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, DestroyRef, Directive, EventEmitter, inject, Inject, Output } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const SELECT_ITEM_HEIGHT_EM = 3;
 
@@ -26,29 +25,24 @@ const SELECT_ITEM_HEIGHT_EM = 3;
     selector: '[adf-infinite-select-scroll]',
     standalone: true
 })
-export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
+export class InfiniteSelectScrollDirective implements AfterViewInit {
     static readonly MAX_ITEMS = 50;
 
     /** Emitted when scroll reaches the last item. */
     @Output() scrollEnd = new EventEmitter<Event>();
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
     private itemHeightToWaitBeforeLoadNext = 0;
 
     constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
 
     ngAfterViewInit() {
-        this.matSelect.openedChange.pipe(takeUntil(this.onDestroy$)).subscribe((opened: boolean) => {
+        this.matSelect.openedChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((opened: boolean) => {
             if (opened) {
                 this.itemHeightToWaitBeforeLoadNext = this.getItemHeight() * (InfiniteSelectScrollDirective.MAX_ITEMS / 2);
                 this.matSelect.panel.nativeElement.addEventListener('scroll', (event: Event) => this.handleScrollEvent(event));
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     private handleScrollEvent(event: Event) {

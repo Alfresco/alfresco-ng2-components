@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkBodyCreate } from '@alfresco/js-api';
 import { ClipboardDirective, ConfirmDialogComponent } from '@alfresco/adf-core';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
-import { format, add, endOfDay, isBefore } from 'date-fns';
+import { add, endOfDay, format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -61,7 +60,7 @@ interface SharedDialogFormProps {
     host: { class: 'adf-share-dialog' },
     encapsulation: ViewEncapsulation.None
 })
-export class ShareDialogComponent implements OnInit, OnDestroy {
+export class ShareDialogComponent implements OnInit {
     private minDateValidator = (control: FormControl<Date>): any =>
         isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
 
@@ -80,9 +79,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     @ViewChild('slideToggleExpirationDate', { static: true })
     slideToggleExpirationDate;
-
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(
         private sharedLinksApiService: SharedLinksApiService,
         private dialogRef: MatDialogRef<ShareDialogComponent>,
@@ -121,12 +117,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     get time(): FormControl<Date> {
         return this.form.controls['time'];
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     onSlideShareChange(event: MatSlideToggleChange) {
         if (event.checked) {
             this.createSharedLinks(this.data.node.entry.id);

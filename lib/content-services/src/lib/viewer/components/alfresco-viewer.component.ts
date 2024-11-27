@@ -19,10 +19,11 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChild,
+    DestroyRef,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
-    OnDestroy,
     OnInit,
     Output,
     SimpleChanges,
@@ -33,8 +34,8 @@ import {
 import {
     CloseButtonPosition,
     Track,
-    ViewerComponent,
     VIEWER_DIRECTIVES,
+    ViewerComponent,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
     ViewerSidebarComponent,
@@ -43,11 +44,10 @@ import {
     ViewUtilService
 } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { Subject } from 'rxjs';
 import { ContentApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -58,6 +58,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NodeDownloadDirective } from '../../directives';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -69,7 +70,7 @@ import { NodeDownloadDirective } from '../../directives';
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
 })
-export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
+export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @ViewChild('adfViewer')
     adfViewer: ViewerComponent<{ node: Node }>;
 
@@ -204,8 +205,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
-    private onDestroy$ = new Subject<boolean>();
-
     private cacheBusterNumber: number;
 
     versionEntry: VersionEntry;
@@ -247,6 +246,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         return this._contentApi;
     }
 
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private apiService: AlfrescoApiService,
         private nodesApiService: NodesApiService,
@@ -268,7 +269,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                     (node) =>
                         node && node.id === this.nodeId && this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
                 ),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((node) => this.onNodeUpdated(node));
     }
@@ -456,11 +457,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setupSharedLink();
             }
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     onDownloadFile() {

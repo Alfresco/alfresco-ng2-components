@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, EventEmitter, inject } from '@angular/core';
+import { DestroyRef, Directive, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { debounceTime, filter, finalize, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
 import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
@@ -32,6 +32,7 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
 import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
 import { isValid } from 'date-fns';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -54,7 +55,7 @@ const ORDER_PROPERTY = 'order';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges, OnDestroy {
+export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges {
     public static ACTIONS_DISABLED_BY_DEFAULT = [ACTION_SAVE, ACTION_DELETE];
 
     /** (required) Name of the app. */
@@ -133,9 +134,9 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Output()
     filterChange = new EventEmitter<T>();
 
-    protected onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
 
+    protected destroyRef = inject(DestroyRef);
     protected translateService = inject(TranslationService);
     protected taskCloudService = inject(TaskCloudService);
     protected userPreferencesService = inject(UserPreferencesService);
@@ -147,7 +148,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((locale) => this.dateAdapter.setLocale(locale));
     }
 
@@ -156,11 +157,6 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         if (id && id.currentValue !== id.previousValue) {
             this.retrieveTaskFilterAndBuildForm();
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     createFilterActions(): TaskFilterAction[] {
@@ -430,7 +426,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             .pipe(
                 debounceTime(500),
                 filter(() => this.isFormValid()),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((formValues) => {
                 this.assignNewFilter(formValues);
@@ -471,7 +467,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.getTaskFilterById(this.appName, this.id)
             .pipe(
                 finalize(() => (this.isLoading = false)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((response) => {
                 this.taskFilter = response;
@@ -490,14 +486,14 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                     return filters.length === 0;
                 }),
                 switchMap(() => this.restoreDefaultTaskFilters()),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {});
     }
 
     save(saveAction: TaskFilterAction): void {
         this.updateFilter(this.changedTaskFilter)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
                 saveAction.filter = this.changedTaskFilter;
                 this.action.emit(saveAction);

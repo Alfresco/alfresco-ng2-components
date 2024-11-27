@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -42,9 +42,7 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
     },
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-
-    private onDestroy$ = new Subject<boolean>();
+export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit {
 
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;
@@ -55,6 +53,8 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     search: UntypedFormControl;
     groupsRestriction: string[];
     validate = false;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(formService: FormService, private identityUserService: IdentityUserService) {
         super(formService);
@@ -75,7 +75,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
         this.search.statusChanges
             .pipe(
                 filter((value: string) => value === 'INVALID'),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 this.field.markAsInvalid();
@@ -85,7 +85,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
         this.search.statusChanges
             .pipe(
                 filter((value: string) => value === 'VALID'),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 this.field.validate();
@@ -97,11 +97,6 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.preSelectUsers = [ userInfo ];
             this.onChangedUser(this.preSelectUsers);
         }
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     onChangedUser(users: IdentityUserModel[]): void {

@@ -32,6 +32,7 @@ import {
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -52,7 +53,10 @@ describe('ProcessFilterCloudService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
-            providers: [{ provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            providers: [
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })
+            ]
         });
         service = TestBed.inject(ProcessFilterCloudService);
 
@@ -68,7 +72,7 @@ describe('ProcessFilterCloudService', () => {
     });
 
     it('should create processfilter key by using appName and the username', (done) => {
-        service.getProcessFilters('mock-appName').subscribe((res: any) => {
+        service.getProcessFilters('mock-appName').subscribe((res: ProcessFilterCloudModel[]) => {
             expect(res).toBeDefined();
             expect(getCurrentUserInfoSpy).toHaveBeenCalled();
             done();
@@ -137,7 +141,7 @@ describe('ProcessFilterCloudService', () => {
     it('should create the process filters in case the filters are not exist in the user preferences', (done) => {
         getPreferencesSpy.and.returnValue(of(fakeProcessCloudFilterWithDifferentEntries));
 
-        service.getProcessFilters('mock-appName').subscribe((res: any) => {
+        service.getProcessFilters('mock-appName').subscribe((res: ProcessFilterCloudModel[]) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -243,6 +247,7 @@ describe('ProcessFilterCloudService', () => {
     it('should reset filters to default values', async () => {
         const changedFilter = new ProcessFilterCloudModel(fakeProcessCloudFilters[0]);
         changedFilter.processDefinitionKey = 'modifiedProcessDefinitionKey';
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         spyOn<any>(service, 'defaultProcessFilters').and.returnValue(fakeProcessCloudFilters);
 
         await service.resetProcessFilterToDefaults('mock-appName', changedFilter).toPromise();

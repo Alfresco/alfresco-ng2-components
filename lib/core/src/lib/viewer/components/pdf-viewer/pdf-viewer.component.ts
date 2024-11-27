@@ -134,7 +134,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         cMapPacked: true
     };
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
-    private onDestroy$ = new Subject<boolean>();
 
     constructor(private dialog: MatDialog, private renderingQueueServices: RenderingQueueServices, private appConfigService: AppConfigService) {
         // needed to preserve "this" context
@@ -276,9 +275,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.loadingTask) {
             this.pdfjsWorkerDestroy$.next(true);
         }
-        this.onDestroy$.next(true);
         this.pdfjsWorkerDestroy$.complete();
-        this.onDestroy$.complete();
     }
 
     private destroyPdJsWorker() {

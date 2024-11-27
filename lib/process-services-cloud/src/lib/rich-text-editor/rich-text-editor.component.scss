@@ -1,5 +1,7 @@
 /* stylelint-disable selector-class-pattern */
 .adf-rich-text-editor-container {
+    color: var(--theme-text-fg-color, rgba(0, 0, 0, 0.87));
+
     .editorjs {
         &.readonly {
             .codex-editor__redactor {
@@ -11,11 +13,20 @@
 
     .ce-inline-toolbar {
         transform: scale(1);
+
+        .ce-popover__items {
+            overflow: hidden;
+        }
+
+        .ce-inline-tool .material-icons {
+            font-size: 20px;
+        }
     }
 }
 
 xy-color-picker {
     position: relative;
     background-color: transparent;
-    width: 22px;
+    margin: 0;
+    overflow: hidden;
 }

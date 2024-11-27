@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NodesApiService } from '../common/services/nodes-api.service';
-import { Observable, Subject, zip } from 'rxjs';
-import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
+import { Observable, zip } from 'rxjs';
+import { concatMap, map, tap } from 'rxjs/operators';
 import { AspectListService } from './services/aspect-list.service';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { AspectEntry } from '@alfresco/js-api';
@@ -27,6 +27,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-aspect-list',
@@ -36,7 +37,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     styleUrls: ['./aspect-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AspectListComponent implements OnInit, OnDestroy {
+export class AspectListComponent implements OnInit {
     /** Node Id of the node that we want to update */
     @Input()
     nodeId: string = '';
@@ -60,14 +61,9 @@ export class AspectListComponent implements OnInit, OnDestroy {
     notDisplayedAspects: string[] = [];
     hasEqualAspect: boolean = true;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
 
     ngOnInit(): void {
         let aspects$: Observable<AspectEntry[]>;
@@ -89,10 +85,10 @@ export class AspectListComponent implements OnInit, OnDestroy {
                     this.updateCounter.emit(this.nodeAspects.length);
                 }),
                 concatMap(() => this.aspectListService.getAspects()),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             );
         } else {
-            aspects$ = this.aspectListService.getAspects().pipe(takeUntil(this.onDestroy$));
+            aspects$ = this.aspectListService.getAspects().pipe(takeUntilDestroyed(this.destroyRef));
         }
         this.aspects$ = aspects$.pipe(map((aspects) => aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))));
     }

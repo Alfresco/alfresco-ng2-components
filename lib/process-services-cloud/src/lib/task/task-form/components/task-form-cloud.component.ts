@@ -15,17 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent, FormFieldValidator, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
+import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -33,7 +44,7 @@ import { FormCloudComponent } from '../../../form/components/form-cloud.componen
     styleUrls: ['./task-form-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class TaskFormCloudComponent implements OnInit, OnChanges {
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -138,7 +149,8 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     candidateGroups: string[] = [];
 
     loading: boolean = false;
-    onDestroy$ = new Subject<boolean>();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
@@ -176,7 +188,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.loading = true;
         this.taskCloudService
             .getTaskById(this.appName, this.taskId)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((details) => {
                 this.taskDetails = details;
                 this.loading = false;
@@ -270,10 +282,5 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOff.emit(displayModeConfiguration);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

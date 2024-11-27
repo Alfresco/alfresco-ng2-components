@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export enum LogicalSearchFields {
     MATCH_ALL = 'matchAll',
@@ -46,7 +47,7 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     styleUrls: ['./search-logical-filter.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -56,7 +57,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
     LogicalSearchFields = LogicalSearchFields;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private readonly destroy$ = new Subject<void>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private translationService: TranslationService) {}
 
@@ -66,7 +67,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
             .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -77,11 +78,6 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
                 }
                 this.context.filterLoaded.next();
             });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     submitValues(updateContext = true) {

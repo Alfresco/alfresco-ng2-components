@@ -156,6 +156,20 @@ describe('DataTable', () => {
         fixture.destroy();
     });
 
+    it('should not emit showRowContextMenu when the component is loaded with rows', () => {
+        spyOn(dataTable.showRowContextMenu, 'emit');
+        const newData = new ObjectDataTableAdapter([{ name: 'TEST' }, { name: 'FAKE' }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(dataTable.showRowContextMenu.emit).not.toHaveBeenCalled();
+    });
+
     it('should return only visible columns', () => {
         const columns = [
             { key: 'col1', isHidden: false },

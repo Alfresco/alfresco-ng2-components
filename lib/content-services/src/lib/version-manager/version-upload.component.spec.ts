@@ -22,6 +22,9 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
 import { UploadService } from '../common/services/upload.service';
 import { ContentService } from '../common/services/content.service';
+import { Subject } from 'rxjs';
+import { FileUploadErrorEvent, FileUploadEvent, UploadVersionButtonComponent } from '@alfresco/adf-content-services';
+import { By } from '@angular/platform-browser';
 
 describe('VersionUploadComponent', () => {
     let component: VersionUploadComponent;
@@ -58,38 +61,10 @@ describe('VersionUploadComponent', () => {
         contentService = TestBed.inject(ContentService);
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
         component.node = node;
-
-        fixture.detectChanges();
     });
 
     afterEach(() => {
         fixture.destroy();
-    });
-
-    it('should disabled upload button on upload starts', () => {
-        component.uploadStarted.subscribe(() => {
-            expect(component.disabled).toEqual(true);
-        });
-
-        uploadService.fileUploadStarting.next(undefined);
-    });
-
-    it('should enable upload button on error', () => {
-        spyOn(component, 'canUpload').and.returnValue(true);
-        component.error.subscribe(() => {
-            expect(component.disabled).toEqual(false);
-        });
-        component.onError({} as any);
-        fixture.detectChanges();
-    });
-
-    it('should enable upload button on success', () => {
-        spyOn(component, 'canUpload').and.returnValue(true);
-        component.success.subscribe(() => {
-            expect(component.disabled).toEqual(false);
-        });
-        component.onSuccess(true);
-        fixture.detectChanges();
     });
 
     it('should update next major version', () => {
@@ -104,5 +79,65 @@ describe('VersionUploadComponent', () => {
         expect(minorVersion).toEqual('1.1');
         minorVersion = component.getNextMinorVersion('1.10');
         expect(minorVersion).toEqual('1.11');
+    });
+
+    describe('Upload version button', () => {
+        let uploadVersionButtonComponent: UploadVersionButtonComponent;
+        let upload$: Subject<FileUploadEvent>;
+        let uploadEvent: FileUploadEvent;
+
+        beforeEach(() => {
+            upload$ = new Subject<FileUploadEvent>();
+            uploadService.fileUploadStarting = upload$;
+            fixture.detectChanges();
+            uploadVersionButtonComponent = fixture.debugElement.query(By.directive(UploadVersionButtonComponent)).componentInstance;
+            uploadEvent = {
+                file: {
+                    name: 'some file'
+                }
+            } as FileUploadEvent;
+            spyOn(component.uploadStarted, 'emit');
+            upload$.next(uploadEvent);
+            fixture.detectChanges();
+        });
+
+        it('should be disabled when uploading', () => {
+            expect(uploadVersionButtonComponent.disabled).toBeTrue();
+        });
+
+        it('should be disabled when uploading is successful', () => {
+            uploadVersionButtonComponent.success.next({});
+            fixture.detectChanges();
+            expect(uploadVersionButtonComponent.disabled).toBeTrue();
+        });
+
+        it('should be enabled when uploading is failed', () => {
+            uploadVersionButtonComponent.error.next({} as FileUploadErrorEvent);
+            fixture.detectChanges();
+            expect(uploadVersionButtonComponent.disabled).toBeFalse();
+        });
+
+        it('should be emitted uploadStarted when started uploading', () => {
+            expect(component.uploadStarted.emit).toHaveBeenCalledWith(uploadEvent);
+        });
+
+        it('should be emitted success when uploading is successful', () => {
+            spyOn(component.success, 'emit');
+
+            uploadVersionButtonComponent.success.next({});
+            fixture.detectChanges();
+            expect(component.success.emit).toHaveBeenCalledWith({});
+        });
+
+        it('should be emitted error when uploading is failed', () => {
+            spyOn(component.error, 'emit');
+            const errorEvent = {
+                error: 'Some error'
+            } as FileUploadErrorEvent;
+
+            uploadVersionButtonComponent.error.next(errorEvent);
+            fixture.detectChanges();
+            expect(component.error.emit).toHaveBeenCalledWith(errorEvent);
+        });
     });
 });
