@@ -2,9 +2,7 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true
-
   },
-
-  "exclude": ["../**/*.spec.ts" ],
-  "include": ["../src/**/*", "*.js", "../../core/feature-flags"]
+  "exclude": ["../**/*.spec.ts", "../**/*.mock.ts", "../**/test.ts", "../**/*.module.ts" ],
+  "include": ["../src/**/*", "*.js"]
 }
