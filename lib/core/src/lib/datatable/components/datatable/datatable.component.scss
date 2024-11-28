@@ -350,7 +350,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-datatable-row:not(:hover) .adf-datatable-hide-actions-without-hover {
-        display: none;
+        visibility: hidden;
+    }
+
+    .adf-datatable-actions-menu:focus-visible,
+    .adf-datatable-actions-menu:focus-within {
+        .adf-datatable-hide-actions-without-hover {
+            visibility: visible;
+        }
     }
 
     .adf-datatable-cell--image {
