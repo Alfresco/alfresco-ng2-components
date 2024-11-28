@@ -191,10 +191,8 @@ describe('Oauth2  test', () => {
             });
         });
 
-        // TODO: we need to fix this test
-        // eslint-disable-next-line ban/ban
-        xit('should refresh token when the login not use the implicitFlow ', (done) => {
-            jest.setTimeout(3000);
+        it('should refresh token when the login not use the implicitFlow ', (done) => {
+            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -229,9 +227,8 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin');
         });
 
-        // TODO: we need to fix this test
-        // eslint-disable-next-line ban/ban
-        xit('should not hang the app also if teh logout is missing', (done) => {
+        it('should not hang the app also if the logout is missing', (done) => {
+            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
