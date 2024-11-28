@@ -22,6 +22,7 @@ import { ErrorMessageModel, FormFieldOption, FormService, WidgetComponent } from
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormUtilsService } from '../../../services/form-utils.service';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
@@ -46,7 +47,12 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(public formService: FormService, private formCloudService: FormCloudService, private translateService: TranslateService) {
+    constructor(
+        public formService: FormService,
+        private formCloudService: FormCloudService,
+        private translateService: TranslateService,
+        private formUtilsService: FormUtilsService
+    ) {
         super(formService);
     }
 
@@ -57,8 +63,10 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     getValuesFromRestApi() {
+        const body = this.formUtilsService.getRestUrlVariablesMap(this.field.form, this.field.restUrl, {});
+
         this.formCloudService
-            .getRestWidgetData(this.field.form.id, this.field.id)
+            .getRestWidgetData(this.field.form.id, this.field.id, body)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
                 (result: FormFieldOption[]) => {
