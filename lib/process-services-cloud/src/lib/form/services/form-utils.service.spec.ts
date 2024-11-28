@@ -21,6 +21,26 @@ import { FormModel, FormVariableModel } from '@alfresco/adf-core';
 
 describe('FormUtilsService', () => {
     let service: FormUtilsService;
+    const variables: FormVariableModel[] = [
+        { id: '1', name: 'var1', type: 'string', value: 'value1' },
+        { id: '2', name: 'var2', type: 'string', value: 'value2' }
+    ];
+
+    /**
+     * Test the getRestUrlVariablesMap method
+     *
+     * @param restUrl The rest URL for getRestUrlVariablesMap
+     * @param inputBody The input body for getRestUrlVariablesMap
+     * @param expected The expected result of getRestUrlVariablesMap
+     */
+    function testRestUrlVariablesMap(restUrl: string, inputBody: { [key: string]: any }, expected: { [key: string]: any }) {
+        const formModel = new FormModel({ variables });
+        spyOn(formModel, 'getProcessVariableValue').and.callFake((name) => {
+            return variables.find((variable) => variable.name === name)?.value;
+        });
+        const result = service.getRestUrlVariablesMap(formModel, restUrl, inputBody);
+        expect(result).toEqual(expected);
+    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
@@ -38,51 +58,18 @@ describe('FormUtilsService', () => {
     });
 
     it('should map variable values to the input body if they are present in the restUrl', () => {
-        const variables: FormVariableModel[] = [
-            { id: '1', name: 'var1', type: 'string', value: 'value1' },
-            { id: '2', name: 'var2', type: 'string', value: 'value2' }
-        ];
-        const formModel = new FormModel({ variables });
-        spyOn(formModel, 'getProcessVariableValue').and.callFake((name) => {
-            return variables.find((variable) => variable.name === name)?.value;
-        });
-        const restUrl = 'https://example.com/api?var1=${var1}&var2=${var2}';
-        const inputBody = {};
-
-        const result = service.getRestUrlVariablesMap(formModel, restUrl, inputBody);
-
-        expect(result).toEqual({ var1: 'value1', var2: 'value2' });
+        testRestUrlVariablesMap('https://example.com/api?var1=${var1}&var2=${var2}', {}, { var1: 'value1', var2: 'value2' });
     });
 
     it('should not map variable values if they are not present in the restUrl', () => {
-        const variables: FormVariableModel[] = [
-            { id: '1', name: 'var1', type: 'string', value: 'value1' },
-            { id: '2', name: 'var2', type: 'string', value: 'value2' }
-        ];
-        const formModel = new FormModel({ variables });
-        spyOn(formModel, 'getProcessVariableValue').and.callFake((name) => {
-            return variables.find((variable) => variable.name === name)?.value;
-        });
-        const restUrl = 'https://example.com/api';
-        const inputBody = {};
-
-        const result = service.getRestUrlVariablesMap(formModel, restUrl, inputBody);
-
-        expect(result).toEqual({});
+        testRestUrlVariablesMap('https://example.com/api', {}, {});
     });
 
     it('should merge the mapped variables with the input body', () => {
-        const variables: FormVariableModel[] = [
-            { id: '1', name: 'var1', type: 'string', value: 'value1' },
-            { id: '2', name: 'var2', type: 'string', value: 'value2' }
-        ];
-        const formModel = new FormModel({ variables });
-        spyOn(formModel, 'getProcessVariableValue').and.callFake((name) => variables.find((variable) => variable.name === name)?.value);
-        const restUrl = 'https://example.com/api?var1=${var1}';
-        const inputBody = { existingKey: 'existingValue' };
-
-        const result = service.getRestUrlVariablesMap(formModel, restUrl, inputBody);
-
-        expect(result).toEqual({ existingKey: 'existingValue', var1: 'value1' });
+        testRestUrlVariablesMap(
+            'https://example.com/api?var1=${var1}',
+            { existingKey: 'existingValue' },
+            { existingKey: 'existingValue', var1: 'value1' }
+        );
     });
 });
