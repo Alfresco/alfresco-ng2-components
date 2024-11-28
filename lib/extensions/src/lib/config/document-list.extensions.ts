@@ -51,4 +51,6 @@ export interface DocumentListPresetRef extends ExtensionElement {
     };
     draggable?: boolean;
     resizable?: boolean;
+    truncated?: boolean;
+    maxTextLength?: number;
 }

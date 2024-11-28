@@ -97,4 +97,24 @@ describe('DataTableCellComponent', () => {
 
         expect(component.row.obj).toBe('New Value');
     });
+
+    it('should truncate display text and not truncate tooltip if configured on column', () => {
+        const row: DataRow = {
+            id: '1',
+            isSelected: false,
+            hasValue: () => true,
+            getValue: () => 'hello world',
+            obj: 'Initial Value',
+            cache: []
+        };
+
+        component.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
+        component.column = { key: 'car_name', type: 'text', truncated: true, maxTextLength: 10 };
+        component.row = row;
+
+        fixture.detectChanges();
+
+        checkDisplayedText('hello worl...');
+        checkDisplayedTooltip('hello world');
+    });
 });

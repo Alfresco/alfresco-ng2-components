@@ -43,6 +43,8 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     currencyConfig?: CurrencyConfig;
     decimalConfig?: DecimalConfig;
     dateConfig?: DateConfig;
+    truncated?: boolean;
+    maxTextLength?: number;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -67,5 +69,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.currencyConfig = input.currencyConfig;
         this.decimalConfig = input.decimalConfig;
         this.dateConfig = input.dateConfig;
+        this.truncated = input.truncated ?? false;
+        this.maxTextLength = input.maxTextLength ?? 250;
     }
 }
