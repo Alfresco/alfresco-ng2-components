@@ -39,6 +39,7 @@ import { filter, map } from 'rxjs/operators';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormUtilsService } from '../../../services/form-utils.service';
 
 export const DEFAULT_OPTION = {
     id: 'empty',
@@ -70,6 +71,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     public formService = inject(FormService);
     private formCloudService = inject(FormCloudService);
     private appConfig = inject(AppConfigService);
+    private formUtilsService = inject(FormUtilsService);
 
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
@@ -351,7 +353,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             const parentWidgetId = this.linkedWidgetId;
             bodyParam[parentWidgetId] = parentWidgetValue;
         }
-        return bodyParam;
+
+        return this.formUtilsService.getRestUrlVariablesMap(this.field.form, this.field.restUrl, bodyParam);
     }
 
     private loadFieldOptionsForLinkedWidget() {
