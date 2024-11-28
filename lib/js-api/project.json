@@ -104,20 +104,6 @@
       },
       "dependsOn": ["build"]
     },
-    "test-old-mocha": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "commands": ["nx run js-api:build:test", "mocha --full-trace --config lib/js-api/.mocharc.json", "rm -fr dist/tmp/libs/js-api"],
-        "parallel": false
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
