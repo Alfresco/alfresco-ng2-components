@@ -69,7 +69,6 @@ jobs:
           npm ci
           npx nx run js-api:bundle
           npx nx run cli:bundle
-          npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   release-storybook:

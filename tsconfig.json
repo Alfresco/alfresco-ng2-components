@@ -34,7 +34,6 @@
       "@alfresco/adf-insights": ["lib/insights/src/public-api.ts"],
       "@alfresco/adf-process-services": ["lib/process-services/src/public-api.ts"],
       "@alfresco/adf-process-services-cloud": ["lib/process-services-cloud/src/public-api.ts"],
-      "@alfresco/adf-testing": ["lib/testing/src/public-api.ts"],
       "@alfresco/js-api": ["lib/js-api/src/index.ts"]
     }
   },

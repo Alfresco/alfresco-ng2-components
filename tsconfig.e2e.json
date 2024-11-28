@@ -26,8 +26,6 @@
       "@alfresco/adf-core/*": ["../lib/core/*"],
       "@alfresco/adf-process-services-cloud": ["../lib/process-services-cloud"],
       "@alfresco/adf-process-services-cloud/*": ["../lib/process-services-cloud/*"],
-      "@alfresco/adf-testing": ["../lib/testing"],
-      "@alfresco/adf-testing/*": ["../lib/testing/*"]
     }
   },
   "include": [
