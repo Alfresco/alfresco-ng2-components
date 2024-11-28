@@ -93,7 +93,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
     private setEditableProperty(propertyGroup: Property | Property[], itemConfig): Property | Property[] {
         if (Array.isArray(propertyGroup)) {
-            propertyGroup.map((property) => (property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true));
+            propertyGroup.forEach((property) => (property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true));
         } else {
             propertyGroup.editable = itemConfig.editable !== undefined ? itemConfig.editable : true;
         }
