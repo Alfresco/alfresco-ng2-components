@@ -18,9 +18,6 @@
 import assert from 'assert';
 import { AlfrescoApi, Oauth2Auth } from '../src';
 
-declare let window: any;
-const globalAny: any = global;
-
 describe('Oauth2 Implicit flow test', () => {
     let oauth2Auth: Oauth2Auth;
     let alfrescoJsApi: AlfrescoApi;
@@ -28,6 +25,26 @@ describe('Oauth2 Implicit flow test', () => {
     beforeEach(() => {
         alfrescoJsApi = new AlfrescoApi({
             hostEcm: ''
+        });
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: {
+                ancestorOrigins: null,
+                hash: '',
+                host: 'dummy.com',
+                port: '80',
+                protocol: 'http:',
+                hostname: 'dummy.com',
+                href: 'http://localhost/',
+                origin: 'dummy.com',
+                pathname: null,
+                search: null,
+                assign: (url: string) => {
+                    window.location.href = url;
+                },
+                reload: null,
+                replace: null
+            }
         });
     });
 
@@ -53,16 +70,7 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should redirect to login if access token is not valid', (done) => {
-        window = globalAny.window = {
-            location: {
-                assign: (v: any) => {
-                    window.location.href = v;
-                }
-            }
-        };
-        globalAny.document = {
-            getElementById: () => ''
-        };
+        document.getElementById = () => null;
 
         oauth2Auth = new Oauth2Auth(
             {
@@ -87,16 +95,7 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should not loop over redirection when redirectUri contains hash and token is not valid ', (done) => {
-        window = globalAny.window = {
-            location: {
-                assign: (v: any) => {
-                    window.location.href = v;
-                }
-            }
-        };
-        globalAny.document = {
-            getElementById: () => ''
-        };
+        document.getElementById = () => null;
         oauth2Auth = new Oauth2Auth(
             {
                 oauth2: {
@@ -124,16 +123,7 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should not redirect to login if access token is valid', (done) => {
-        window = globalAny.window = {
-            location: {
-                assign: (v: any) => {
-                    window.location.href = v;
-                }
-            }
-        };
-        globalAny.document = {
-            getElementById: () => ''
-        };
+        document.getElementById = () => null;
         oauth2Auth = new Oauth2Auth(
             {
                 oauth2: {
@@ -152,7 +142,7 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth.isValidToken = () => true;
 
         oauth2Auth.on('token_issued', () => {
-            assert.equal(window.location.url, undefined);
+            assert.equal(window.location.href, 'http://localhost/');
             done();
         });
 
@@ -162,27 +152,9 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should set the loginFragment to redirect after the login if it is present', (done) => {
-        window = globalAny.window = {
-            location: {
-                assign: (v: any) => {
-                    window.location.href = v;
-                }
-            }
-        };
-        globalAny.document = {
-            getElementById: () => ''
-        };
-        window.location.hash = 'asfasfasfa';
-
-        Object.defineProperty(window.location, 'hash', {
-            writable: true,
-            value: '#/redirect-path&session_state=eqfqwfqwf'
-        });
-
-        Object.defineProperty(window.location, 'href', {
-            writable: true,
-            value: 'https://stoca/#/redirect-path&session_state=eqfqwfqwf'
-        });
+        document.getElementById = () => null;
+        window.location.hash = '#/redirect-path&session_state=eqfqwfqwf';
+        window.location.href = 'https://stoca/#/redirect-path&session_state=eqfqwfqwf';
 
         oauth2Auth = new Oauth2Auth(
             {
