@@ -23,7 +23,6 @@ import { FormModel, FormVariableModel } from '@alfresco/adf-core';
 })
 export class FormUtilsService {
     getRestUrlVariablesMap(formModel: FormModel, restUrl: string, inputBody: { [key: string]: any }) {
-        console.log(formModel);
         return formModel.variables.reduce((map: { [key: string]: any }, variable: FormVariableModel) => {
             const variablePattern = new RegExp(`\\$\\{${variable.name}\\}`);
             if (variablePattern.test(restUrl)) map[variable.name] = formModel.getProcessVariableValue(variable.name);
