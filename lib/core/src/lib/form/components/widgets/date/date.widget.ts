@@ -32,6 +32,7 @@ import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
 import { parseISO } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormWidget } from '../reactive-widget.interface';
 
 @Component({
     selector: 'date-widget',
@@ -55,7 +56,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [MatFormFieldModule, TranslateModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent, NgIf],
     encapsulation: ViewEncapsulation.None
 })
-export class DateWidgetComponent extends WidgetComponent implements OnInit {
+export class DateWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     minDate: Date;
     maxDate: Date;
     startAt: Date;
@@ -68,7 +69,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        this.patchFormControl();
+        this.setFormControlValue();
+        this.updateFormControlState();
         this.initDateAdapter();
         this.initDateRange();
         this.initStartAt();
@@ -80,12 +82,21 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
         this.validateField();
         this.onFieldChanged(this.field);
     }
-    private patchFormControl(): void {
+
+    updateReactiveFormControl(): void {
+        this.updateFormControlState();
+        this.validateField();
+    }
+
+    private setFormControlValue(): void {
         this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+    }
+
+    private updateFormControlState(): void {
         this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
-        if (this.field?.readOnly || this.readOnly) {
-            this.dateInputControl.disable({ emitEvent: false });
-        }
+        this.field?.readOnly || this.readOnly
+            ? this.dateInputControl.disable({ emitEvent: false })
+            : this.dateInputControl.enable({ emitEvent: false });
 
         this.dateInputControl.updateValueAndValidity({ emitEvent: false });
     }
