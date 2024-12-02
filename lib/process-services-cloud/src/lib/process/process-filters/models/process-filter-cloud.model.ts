@@ -50,6 +50,7 @@ export class ProcessFilterCloudModel {
     environmentId?: string;
 
     processDefinitionNames: string[] | null;
+    processNames: string[] | null;
     initiators: string[] | null;
     appVersions: string[] | null;
     statuses: string[] | null;
@@ -104,6 +105,7 @@ export class ProcessFilterCloudModel {
             this._suspendedTo = obj._suspendedTo || null;
 
             this.processDefinitionNames = obj.processDefinitionNames || null;
+            this.processNames = obj.processNames || null;
             this.initiators = obj.initiators || null;
             this.appVersions = obj.appVersions || null;
             this.statuses = obj.statuses || null;
