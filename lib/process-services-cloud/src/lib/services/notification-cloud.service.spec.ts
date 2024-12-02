@@ -18,8 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { NotificationCloudService } from './notification-cloud.service';
-import { WebSocketService } from './web-socket.service';
 import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
+import { WebSocketService } from '@alfresco/adf-core';
 
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
