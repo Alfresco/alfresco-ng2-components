@@ -15,23 +15,4 @@
  * limitations under the License.
  */
 
-import { gql } from '@apollo/client/core';
-import { Injectable } from '@angular/core';
-import { WebSocketService } from '@alfresco/adf-core';
-@Injectable({
-    providedIn: 'root'
-})
-export class NotificationCloudService {
-    constructor(private readonly webSocketService: WebSocketService) {}
-
-    makeGQLQuery(appName: string, gqlQuery: string) {
-        return this.webSocketService.getSubscription({
-            apolloClientName: appName,
-            wsUrl: `${appName}/notifications`,
-            httpUrl: `${appName}/notifications/graphql`,
-            subscriptionOptions: {
-                query: gql(gqlQuery)
-            }
-        });
-    }
-}
+export * from './public-api';
