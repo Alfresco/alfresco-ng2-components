@@ -17,8 +17,6 @@
 
 import { createClient } from 'graphql-ws';
 import { Inject, Injectable } from '@angular/core';
-import { AuthenticationService } from '../auth';
-import { AppConfigService } from '../app-config';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
@@ -41,6 +39,8 @@ import { RetryLink } from '@apollo/client/link/retry';
 import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
+import { AuthenticationService } from '../../auth';
+import { AppConfigService } from '../../app-config';
 
 interface serviceOptions {
     apolloClientName: string;

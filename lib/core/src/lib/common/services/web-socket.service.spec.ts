@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
 import { TestBed } from '@angular/core/testing';
 import { Apollo, gql } from 'apollo-angular';
 import { of, Subject } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
-import { FeaturesServiceToken, IFeaturesService, provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from '../../auth';
+import { AppConfigService } from '../../app-config';
+import { FeaturesServiceToken, IFeaturesService, provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('WebSocketService', () => {
     let service: WebSocketService;

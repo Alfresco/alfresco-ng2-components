@@ -56,7 +56,6 @@ export * from './lib/mock/index';
 export * from './lib/testing';
 
 export * from './lib/auth';
-export * from './lib/services';
 export * from './lib/common';
 
 export * from './lib/core.module';
