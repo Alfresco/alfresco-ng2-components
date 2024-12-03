@@ -69,9 +69,9 @@ export const HIDE_FILTER_LIMIT = 5;
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit {
     public formService = inject(FormService);
-    private formCloudService = inject(FormCloudService);
-    private appConfig = inject(AppConfigService);
-    private formUtilsService = inject(FormUtilsService);
+    private readonly formCloudService = inject(FormCloudService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly formUtilsService = inject(FormUtilsService);
 
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;

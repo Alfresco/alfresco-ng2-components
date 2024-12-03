@@ -49,9 +49,9 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     constructor(
         public formService: FormService,
-        private formCloudService: FormCloudService,
-        private translateService: TranslateService,
-        private formUtilsService: FormUtilsService
+        private readonly formCloudService: FormCloudService,
+        private readonly translateService: TranslateService,
+        private readonly formUtilsService: FormUtilsService
     ) {
         super(formService);
     }
