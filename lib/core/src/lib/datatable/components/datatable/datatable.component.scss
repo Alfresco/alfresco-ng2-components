@@ -324,6 +324,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         margin-left: auto;
         justify-content: end;
         padding-right: 15px;
+
+        &-provided {
+            max-width: 100px !important;
+            justify-content: center;
+            padding-right: 0;
+        }
     }
 
     .adf-datatable-checkbox {
