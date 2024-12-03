@@ -57,15 +57,14 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     maxDate: Date;
     datetimeInputControl: FormControl<Date> = new FormControl<Date>(null);
 
-
     public readonly formService = inject(FormService);
-    
     private readonly destroyRef = inject(DestroyRef);
     private readonly dateAdapter = inject(DateAdapter);
     private readonly dateTimeAdapter = inject(DatetimeAdapter);
 
     ngOnInit(): void {
-        this.patchFormControl();
+        this.setFormControlValue();
+        this.updateFormControlState();
         this.initDateAdapter();
         this.initDateRange();
         this.subscribeToDateChanges();
@@ -77,12 +76,20 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         this.onFieldChanged(this.field);
     }
 
-    private patchFormControl(): void {
+    updateReactiveFormControl(): void {
+        this.updateFormControlState();
+        this.validateField();
+    }
+
+    private setFormControlValue(): void {
         this.datetimeInputControl.setValue(this.field.value, { emitEvent: false });
+    }
+
+    private updateFormControlState(): void {
         this.datetimeInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
-        if (this.field?.readOnly || this.readOnly) {
-            this.datetimeInputControl.disable({ emitEvent: false });
-        }
+        this.field?.readOnly || this.readOnly
+            ? this.datetimeInputControl.disable({ emitEvent: false })
+            : this.datetimeInputControl.enable({ emitEvent: false });
 
         this.datetimeInputControl.updateValueAndValidity({ emitEvent: false });
     }

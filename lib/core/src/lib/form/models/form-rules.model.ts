@@ -42,7 +42,7 @@ export abstract class FormRulesManager<T> {
     constructor(protected formService: FormService) {}
 
     protected formModel: FormModel;
-    private onDestroy$ = new Subject<boolean>();
+    protected onDestroy$ = new Subject<boolean>();
     private initialized = false;
 
     initialize(formModel: FormModel) {
@@ -59,14 +59,14 @@ export abstract class FormRulesManager<T> {
             if (rules) {
                 this.formService.formRulesEvent
                     .pipe(
-                        filter((event) => !!event?.form?.id && event.form.id === formModel?.id),
+                        filter((event) => !!event?.form?.id && event.form.id === this.formModel?.id),
                         takeUntil(this.onDestroy$)
                     )
                     .subscribe((event) => {
                         this.handleRuleEvent(event, rules);
                     });
 
-                const onFormLoadedEvent = new FormEvent(formModel);
+                const onFormLoadedEvent = new FormEvent(this.formModel);
                 const formRules = new FormRulesEvent('formLoaded', onFormLoadedEvent);
                 this.formService.formRulesEvent.next(formRules);
             }

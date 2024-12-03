@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * @license
  * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
@@ -15,18 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { FormModel, FormVariableModel } from 'lib/core/src/lib/form';
+import { FormService } from '../../services/form.service';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class FormUtilsService {
-    getRestUrlVariablesMap(formModel: FormModel, restUrl: string, inputBody: { [key: string]: any }) {
-        return formModel.variables.reduce((map: { [key: string]: any }, variable: FormVariableModel) => {
-            const variablePattern = new RegExp(`\\$\\{${variable.name}\\}`);
-            if (variablePattern.test(restUrl)) map[variable.name] = formModel.getProcessVariableValue(variable.name);
-            return map;
-        }, inputBody);
-    }
+export interface ReactiveFormWidget {
+    updateReactiveFormControl(): void;
+    formService: FormService;
 }

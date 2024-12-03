@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, DestroyRef, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     ADF_DATE_FORMATS,
@@ -27,7 +27,8 @@ import {
     ErrorMessageModel,
     ErrorWidgetComponent,
     FormService,
-    WidgetComponent
+    WidgetComponent,
+    ReactiveFormWidget
 } from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addDays, parseISO } from 'date-fns';
@@ -61,7 +62,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DateCloudWidgetComponent extends WidgetComponent implements OnInit {
+export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     typeId = 'DateCloudWidgetComponent';
 
     minDate: Date = null;
@@ -71,12 +72,13 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit 
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
     public readonly formService = inject(FormService);
-    
+
     private readonly destroyRef = inject(DestroyRef);
     private readonly dateAdapter = inject(DateAdapter);
 
     ngOnInit(): void {
-        this.patchFormControl();
+        this.setFormControlValue();
+        this.updateFormControlState();
         this.initDateAdapter();
         this.initRangeSelection();
         this.initStartAt();
@@ -89,12 +91,20 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit 
         this.onFieldChanged(this.field);
     }
 
-    private patchFormControl(): void {
+    updateReactiveFormControl(): void {
+        this.updateFormControlState();
+        this.validateField();
+    }
+
+    private setFormControlValue(): void {
         this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+    }
+
+    private updateFormControlState(): void {
         this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
-        if (this.field?.readOnly || this.readOnly) {
-            this.dateInputControl.disable({ emitEvent: false });
-        }
+        this.field?.readOnly || this.readOnly
+            ? this.dateInputControl.disable({ emitEvent: false })
+            : this.dateInputControl.enable({ emitEvent: false });
 
         this.dateInputControl.updateValueAndValidity({ emitEvent: false });
     }
