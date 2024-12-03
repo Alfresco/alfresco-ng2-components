@@ -960,4 +960,32 @@ export class NodesApi extends BaseApi {
             returnType: DirectAccessUrlEntry
         });
     }
+
+    initialFolderSizeCalculation(nodeId: string): Promise<{ entry: { jobId: string } }> {
+        throwIfNotDefined(nodeId, 'nodeId');
+
+        const pathParams = {
+            nodeId
+        };
+
+        return this.post({
+            path: '/nodes/{nodeId}/size-details',
+            pathParams
+        });
+    }
+
+    getFolderSizeInfo(nodeId: string, jobId: string): Promise<any> {
+        throwIfNotDefined(nodeId, 'nodeId');
+        throwIfNotDefined(jobId, 'jobId');
+
+        const pathParams = {
+            nodeId,
+            jobId
+        };
+
+        return this.get({
+            path: 'nodes/{nodeId}/size-details/{jobId}',
+            pathParams
+        });
+    }
 }
