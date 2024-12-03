@@ -170,11 +170,18 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     statuses: string[] = [];
 
     /**
-     * Filter the tasks. Display only tasks under provided processes.
+     * Filter the tasks. Display only tasks under processes with provided definition names.
      * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     processDefinitionNames: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks under processes with provided names.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processNames: string[] = [];
 
     /**
      * Filter the tasks. Display only tasks with provided priorities.
@@ -273,6 +280,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             onlyStandalone: this.standalone,
             name: this.names,
             processDefinitionName: this.processDefinitionNames,
+            processName: this.processNames,
             processInstanceId: this.processInstanceId,
             priority: this.priorities,
             status: this.statuses,

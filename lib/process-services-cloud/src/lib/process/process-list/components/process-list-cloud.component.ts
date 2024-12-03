@@ -213,7 +213,14 @@ export class ProcessListCloudComponent
      * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
-    names: string[] = [];
+    processNames: string[] = [];
+
+    /**
+     * Filter the processes. Display only processes with definition names matching any of the supplied strings.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processDefinitionNames: string[] = [];
 
    /**
     * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
@@ -536,7 +543,8 @@ export class ProcessListCloudComponent
                 skipCount: this.skipCount
             },
             sorting: this.getProcessListRequestSorting(),
-            name: this.names,
+            processName: this.processNames,
+            processDefinitionName: this.processDefinitionNames,
             initiator: this.initiators,
             appVersion: this.appVersions,
             status: this.statuses,

@@ -104,6 +104,7 @@ export class TaskListRequestModel {
     name?: string[];
     description?: string[];
     processDefinitionName?: string[];
+    processName?: string[];
     priority?: string[];
     status?: string[];
     completedBy?: string[];
@@ -139,6 +140,7 @@ export class TaskListRequestModel {
         this.name = obj.name;
         this.description = obj.description;
         this.processDefinitionName = obj.processDefinitionName;
+        this.processName = obj.processName;
         this.priority = obj.priority;
         this.status = obj.status;
         this.completedBy = obj.completedBy;
@@ -175,6 +177,7 @@ export class TaskFilterCloudAdapter extends TaskListRequestModel {
             onlyStandalone: filter.standalone,
             name: filter.taskNames,
             processDefinitionName: filter.processDefinitionNames,
+            processName: filter.processNames,
             priority: filter.priorities?.map((priority) => priority.toString()),
             status: filter.statuses,
             completedBy: filter.completedByUsers,
