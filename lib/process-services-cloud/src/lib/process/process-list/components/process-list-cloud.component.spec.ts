@@ -194,7 +194,7 @@ describe('ProcessListCloudComponent', () => {
                 component.ngAfterContentInit();
                 component.reload();
 
-                expect(component.requestNode.parentId).toEqual('');
+                expect(component.requestNode.parentId).toBeUndefined();
             });
         });
 

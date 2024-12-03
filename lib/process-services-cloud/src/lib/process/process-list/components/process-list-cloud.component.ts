@@ -111,7 +111,7 @@ export class ProcessListCloudComponent
 
     /** Filter the processes to display only the ones with this parentId. */
     @Input()
-    parentId: string = '';
+    parentId?: string;
 
     /** Filter the processes to display only the ones with this process definition ID. */
     @Input()
