@@ -109,6 +109,10 @@ export class ProcessListCloudComponent
     @Input()
     name: string = '';
 
+    /** Filter the processes to display only the ones with this parentId. */
+    @Input()
+    parentId?: string;
+
     /** Filter the processes to display only the ones with this process definition ID. */
     @Input()
     processDefinitionId: string = '';
@@ -606,6 +610,7 @@ export class ProcessListCloudComponent
             id: this.id,
             environmentId: this.environmentId,
             name: this.name,
+            parentId: this.parentId,
             processDefinitionId: this.processDefinitionId,
             processDefinitionName: this.processDefinitionName,
             processDefinitionKey: this.processDefinitionKey,

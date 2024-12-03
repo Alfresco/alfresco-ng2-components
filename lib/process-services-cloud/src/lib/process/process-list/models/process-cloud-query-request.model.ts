@@ -27,6 +27,7 @@ export class ProcessQueryCloudRequestModel {
     id?: string;
     environmentId?: string;
     name?: string;
+    parentId?: string;
     processDefinitionId?: string;
     processDefinitionName?: string;
     processDefinitionKey?: string;
@@ -56,6 +57,7 @@ export class ProcessQueryCloudRequestModel {
             this.id = obj.id;
             this.environmentId = obj.environmentId;
             this.name = obj.name;
+            this.parentId = obj.parentId;
             this.processDefinitionId = obj.processDefinitionId;
             this.processDefinitionName = obj.processDefinitionName;
             this.processDefinitionKey = obj.processDefinitionKey;
