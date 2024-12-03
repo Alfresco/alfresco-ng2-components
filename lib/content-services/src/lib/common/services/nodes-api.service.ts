@@ -246,6 +246,14 @@ export class NodesApiService {
         return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
     }
 
+    initiateFolderSizeCalculation(nodeId: string): Observable<{ entry: { jobId: string } }> {
+        return from(this.nodesApi.initialFolderSizeCalculation(nodeId));
+    }
+
+    getFolderSizeInfo(nodeId: string, jobId: string): Observable<any> {
+        return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
+    }
+
     private randomNodeName(): string {
         return `node_${Date.now()}`;
     }
