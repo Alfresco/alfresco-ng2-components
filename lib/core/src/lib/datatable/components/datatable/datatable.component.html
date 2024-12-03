@@ -130,6 +130,7 @@
                 *ngIf="(actions && actionsPosition === 'right') ||
                        (mainActionTemplate && showMainDatatableActions)"
                 class="adf-actions-column adf-datatable-actions-menu adf-datatable-cell-header adf-datatable__actions-cell"
+                [class.adf-datatable-actions-menu-provided]="showProvidedActions"
             >
                 <ng-container *ngIf="mainActionTemplate">
                     <button
