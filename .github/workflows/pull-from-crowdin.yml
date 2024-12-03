@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Pull translations from Crowdin
-        uses: crowdin/github-action@2d540f18b0a416b1fbf2ee5be35841bd380fc1da # v2.3.0
+        uses: crowdin/github-action@a9ffb7d5ac46eca1bb1f06656bf888b39462f161 # v2.4.0
         with:
           upload_sources: false
           download_translations: true

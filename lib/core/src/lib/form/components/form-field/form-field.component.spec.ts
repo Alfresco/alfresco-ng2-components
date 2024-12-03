@@ -42,7 +42,7 @@ describe('FormFieldComponent', () => {
         fixture.destroy();
     });
 
-    it('should create default component instance', (done) => {
+    it('should create default component instance', () => {
         const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
@@ -51,14 +51,29 @@ describe('FormFieldComponent', () => {
         component.field = field;
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            expect(component.componentRef).toBeDefined();
-            expect(component.componentRef.instance instanceof TextWidgetComponent).toBeTruthy();
-            done();
-        });
+        expect(component.componentRef).toBeDefined();
+        expect(component.componentRef.instance instanceof TextWidgetComponent).toBeTruthy();
     });
 
-    it('should create custom component instance', (done) => {
+    it('should call update form control state for reactive type widget on formRulesEvent change', () => {
+        const field = new FormFieldModel(form, {
+            type: FormFieldTypes.DATE,
+            id: 'FAKE-DATE-WIDGET'
+        });
+
+        component.field = field;
+        fixture.detectChanges();
+
+        const widgetInstance = component.componentRef.instance;
+        const updateFormControlState = spyOn(widgetInstance, 'updateReactiveFormControl');
+
+        widgetInstance.formService.formRulesEvent.next();
+        fixture.detectChanges();
+
+        expect(updateFormControlState).toHaveBeenCalled();
+    });
+
+    it('should create custom component instance', () => {
         formRenderingService.setComponentTypeResolver(FormFieldTypes.AMOUNT, () => CheckboxWidgetComponent, true);
 
         const field = new FormFieldModel(form, {
@@ -67,16 +82,14 @@ describe('FormFieldComponent', () => {
         });
 
         component.field = field;
+
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            expect(component.componentRef).toBeDefined();
-            expect(component.componentRef.instance instanceof CheckboxWidgetComponent).toBeTruthy();
-            done();
-        });
+        expect(component.componentRef).toBeDefined();
+        expect(component.componentRef.instance instanceof CheckboxWidgetComponent).toBeTruthy();
     });
 
-    it('should require component type to be resolved', (done) => {
+    it('should require component type to be resolved', () => {
         const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
@@ -84,16 +97,14 @@ describe('FormFieldComponent', () => {
 
         spyOn(formRenderingService, 'resolveComponentType').and.returnValue(null);
         component.field = field;
+
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            expect(formRenderingService.resolveComponentType).toHaveBeenCalled();
-            expect(component.componentRef).toBeUndefined();
-            done();
-        });
+        expect(formRenderingService.resolveComponentType).toHaveBeenCalled();
+        expect(component.componentRef).toBeUndefined();
     });
 
-    it('should hide the field when it is not visible', (done) => {
+    it('should hide the field when it is not visible', () => {
         const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
@@ -101,29 +112,26 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         component.field.isVisible = false;
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style;
-            expect(debugElement.visibility).toEqual('hidden');
-            expect(debugElement.display).toEqual('none');
-            done();
-        });
+
+        const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style;
+        expect(debugElement.visibility).toEqual('hidden');
+        expect(debugElement.display).toEqual('none');
     });
 
-    it('should show the field when it is visible', (done) => {
+    it('should show the field when it is visible', () => {
         const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
+
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
-            expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
-            done();
-        });
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
     });
 
     it('should hide a visible element', () => {
@@ -142,7 +150,7 @@ describe('FormFieldComponent', () => {
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('none');
     });
 
-    it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {
+    it('[C213878] - Should fields be correctly rendered when filled with process variables', () => {
         const field = new FormFieldModel(form, {
             fieldType: 'HyperlinkRepresentation',
             id: 'label2',
