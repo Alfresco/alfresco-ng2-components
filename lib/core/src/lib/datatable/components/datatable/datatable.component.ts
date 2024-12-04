@@ -178,6 +178,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     showMainDatatableActions: boolean = false;
 
+    /** Toggles the provided actions. */
+    @Input()
+    showProvidedActions: boolean = false;
+
     /** Position of the actions dropdown menu. Can be "left" or "right". */
     @Input()
     actionsPosition: string = 'right'; // left|right

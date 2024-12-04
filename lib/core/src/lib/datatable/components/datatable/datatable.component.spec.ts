@@ -2188,4 +2188,95 @@ describe('Column Resizing', () => {
         dataTable.onDragDrop(data as CdkDragDrop<any>);
         expect(dataTable.dragDropped.emit).toHaveBeenCalledWith(data);
     });
+
+    describe('show correct column count', () => {
+        it('should display 2 columns for no provided actions and no default actions', () => {
+            dataTable.data = new ObjectDataTableAdapter(
+                [{ name: '1' }],
+                [new ObjectDataColumn({ key: 'name', title: 'Name', sortable: true }), new ObjectDataColumn({ key: 'other', title: 'Other', sortable: true })]
+            );
+
+            fixture.detectChanges();
+    
+            const visibleColumns = dataTable.getVisibleColumns();
+    
+            const datatableCellHeaders = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+            const datatableCells = fixture.debugElement.queryAll(By.css('.adf-datatable-cell'));
+    
+            expect(visibleColumns.length).toBe(2);
+
+            const expectedNumberOfColumns = 2;
+
+            expect(datatableCellHeaders.length).toBe(expectedNumberOfColumns);
+            expect(datatableCells.length).toBe(expectedNumberOfColumns);
+        });
+
+        it('should display 2 columns if last column has no title and there are no provided actions and no default actions', () => {
+            dataTable.data = new ObjectDataTableAdapter(
+                [{ name: '1' }],
+                [new ObjectDataColumn({ key: 'name', title: 'Name', sortable: true }), new ObjectDataColumn({ key: 'other', sortable: true })]
+            );
+            
+            fixture.detectChanges();
+    
+            const visibleColumns = dataTable.getVisibleColumns();
+    
+            const datatableCellHeaders = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+            const datatableCells = fixture.debugElement.queryAll(By.css('.adf-datatable-cell'));
+    
+            expect(visibleColumns.length).toBe(2);
+
+            const expectedNumberOfColumns = 2;
+
+            expect(datatableCellHeaders.length).toBe(expectedNumberOfColumns);
+            expect(datatableCells.length).toBe(expectedNumberOfColumns);
+        });
+
+        it('should display 3 columns if there are default actions', () => {
+            dataTable.data = new ObjectDataTableAdapter(
+                [{ name: '1' }],
+                [new ObjectDataColumn({ key: 'name', title: 'Name', sortable: true }), new ObjectDataColumn({ key: 'other', title: 'Other', sortable: true })]
+            );
+
+            dataTable.actions = true;
+            
+            fixture.detectChanges();
+    
+            const visibleColumns = dataTable.getVisibleColumns();
+    
+            const datatableCellHeaders = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+            const datatableCells = fixture.debugElement.queryAll(By.css('.adf-datatable-cell'));
+    
+            expect(visibleColumns.length).toBe(2);
+
+            const expectedNumberOfColumns = 3;
+
+            expect(datatableCellHeaders.length).toBe(expectedNumberOfColumns);
+            expect(datatableCells.length).toBe(expectedNumberOfColumns);
+        });
+
+        it('should display 2 columns if there are default actions and provided actions', () => {
+            dataTable.data = new ObjectDataTableAdapter(
+                [{ name: '1' }],
+                [new ObjectDataColumn({ key: 'name', title: 'Name', sortable: true }), new ObjectDataColumn({ key: 'other', sortable: true })]
+            );
+
+            dataTable.actions = true;
+            dataTable.showProvidedActions = true;
+            
+            fixture.detectChanges();
+    
+            const visibleColumns = dataTable.getVisibleColumns();
+    
+            const datatableCellHeaders = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+            const datatableCells = fixture.debugElement.queryAll(By.css('.adf-datatable-cell'));
+    
+            expect(visibleColumns.length).toBe(2);
+
+            const expectedNumberOfColumns = 2;
+
+            expect(datatableCellHeaders.length).toBe(expectedNumberOfColumns);
+            expect(datatableCells.length).toBe(expectedNumberOfColumns);
+        });
+    });
 });
