@@ -35,6 +35,9 @@ describe('PeopleWidgetComponent', () => {
     let translationService: TranslateService;
     let peopleProcessService: PeopleProcessService;
 
+    const getChipById = async (id: string) =>
+        loader.getHarness(MatChipHarness.with({ selector: `[data-automation-id="adf-people-widget-chip-${id}"]` }));
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule]
@@ -90,7 +93,7 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        const chip = await getChipById('people-id');
         expect(await chip.getText()).toBe('John Doe');
     });
 
@@ -134,7 +137,7 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        const chip = await getChipById('people-id');
         expect(await chip.getText()).toBe('John Doe');
         expect(await chip.isDisabled()).toBe(true);
         expect((element.querySelector('input') as HTMLInputElement).disabled).toBeTruthy();
@@ -153,7 +156,7 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        const chip = await getChipById('people-id');
         const cancelIcon = await chip.getRemoveButton();
         expect(cancelIcon).toBeDefined();
     });
@@ -194,7 +197,7 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        const chip = await getChipById('people-id');
         expect(await chip.getText()).toBe('John Doe');
     });
 

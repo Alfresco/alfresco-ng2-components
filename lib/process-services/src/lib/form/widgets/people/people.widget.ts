@@ -168,7 +168,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     isUserAlreadySelected(user: LightUserRepresentation): boolean {
-        if (this.selectedUsers && this.selectedUsers.length > 0) {
+        if (this.selectedUsers?.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => selectedUser.id === user.id);
 
             return !!result;

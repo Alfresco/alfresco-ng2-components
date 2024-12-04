@@ -4,7 +4,7 @@
      id="people-widget-content">
     <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-        <mat-chip-grid #chipGrid aria-label="People selection" data-automation-id="adf-people-widget-chip-list">
+        <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
                 (removed)="onRemove(user)"
