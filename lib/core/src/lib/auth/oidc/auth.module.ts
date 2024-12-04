@@ -35,7 +35,6 @@ export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE
 
 /**
  * Create a Login Factory function
- *
  * @param redirectService auth redirect service
  * @returns a factory function
  */
