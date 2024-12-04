@@ -4,22 +4,37 @@
      id="people-widget-content">
     <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-        <input #inputValue
-               matInput
-               class="adf-input"
-               data-automation-id="adf-people-search-input"
-               type="text"
-               [id]="field.id"
-               [formControl]="searchTerm"
-               [placeholder]="field.placeholder"
-               [matAutocomplete]="auto"
-               (blur)="markAsTouched()"
-               [title]="field.tooltip">
+        <mat-chip-grid #chipGrid aria-label="People selection" data-automation-id="adf-people-widget-chip-list">
+            <mat-chip-row
+                *ngFor="let user of selectedUsers"
+                (removed)="onRemove(user)"
+                [disabled]="field.readOnly"
+                [attr.data-automation-id]="'adf-people-widget-chip-' + user.id">
+                {{ getDisplayName(user) }}
+                <button matChipRemove [attr.aria-label]="'remove ' + user.firstName">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            <input #inputValue
+                   matInput
+                   class="adf-input"
+                   [matChipInputFor]="chipGrid"
+                   data-automation-id="adf-people-search-input"
+                   type="text"
+                   [disabled]="!multiSelect && selectedUsers.length > 0 || field.readOnly"
+                   [id]="field.id"
+                   [formControl]="searchTerm"
+                   [placeholder]="selectedUsers.length > 0 ? '' : field.placeholder"
+                   [matAutocomplete]="auto"
+                   (blur)="markAsTouched()"
+                   [title]="field.tooltip">
+        </mat-chip-grid>
+
         <mat-autocomplete class="adf-people-widget-list"
                           #auto="matAutocomplete"
                           (optionSelected)="onItemSelect($event.option.value)"
                           [displayWith]="getDisplayName">
-            <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
+            <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user" [disabled]="isUserAlreadySelected(user)">
                 <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
                     <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
                     <div *ngIf="user.pictureId" class="adf-people-widget-image-row">

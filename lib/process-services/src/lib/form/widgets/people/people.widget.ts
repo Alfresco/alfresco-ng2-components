@@ -20,8 +20,10 @@
 import { ErrorWidgetComponent, FormService, InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import { Observable, of } from 'rxjs';
-import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -38,6 +40,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         TranslateModule,
         MatFormFieldModule,
         MatInputModule,
+        MatChipsModule,
+        MatIconModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
         InitialUsernamePipe,
@@ -66,20 +70,19 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @Output()
     peopleSelected: EventEmitter<number> = new EventEmitter();
 
+    selectedUsers: LightUserRepresentation[] = [];
+    multiSelect = false;
     groupId: number;
-    value: any;
 
     searchTerm = new UntypedFormControl();
     searchTerms$: Observable<any> = this.searchTerm.valueChanges;
 
-    users$ = this.searchTerms$.pipe(
-        tap((searchInput) => {
-            if (typeof searchInput === 'string') {
-                this.onItemSelect();
-            }
-        }),
+    users$: Observable<LightUserRepresentation[]> = this.searchTerms$.pipe(
         distinctUntilChanged(),
         switchMap((searchTerm) => {
+            if (!searchTerm) {
+                return of([]);
+            }
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.peopleProcessService.getWorkflowUsers(undefined, value, this.groupId).pipe(catchError(() => of([])));
         }),
@@ -97,15 +100,15 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     ngOnInit() {
         if (this.field) {
             if (this.field.value) {
-                this.searchTerm.setValue(this.field.value);
-            }
-            if (this.field.readOnly) {
-                this.searchTerm.disable();
+                Array.isArray(this.field.value) ? this.selectedUsers.push(...this.field.value) : this.selectedUsers.push(this.field.value);
             }
             const params = this.field.params;
             if (params?.restrictWithGroup) {
                 const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
+            }
+            if (params?.multiple) {
+                this.multiSelect = params.multiple;
             }
         }
     }
@@ -126,11 +129,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     isValidUser(users: LightUserRepresentation[], name: string): boolean {
         if (users) {
             return !!users.find((user) => {
-                const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
-                if (selectedUser) {
-                    this.peopleSelected.emit(user?.id || undefined);
-                }
-                return selectedUser;
+                return this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
             });
         }
         return false;
@@ -144,11 +143,36 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item?: LightUserRepresentation) {
-        if (item) {
-            this.field.value = item;
-        } else {
-            this.field.value = null;
+    onRemove(user: LightUserRepresentation) {
+        const index = this.selectedUsers.indexOf(user);
+        if (index >= 0) {
+            this.selectedUsers.splice(index, 1);
+            this.field.value = this.selectedUsers;
         }
+    }
+
+    onItemSelect(user: LightUserRepresentation) {
+        if (this.multiSelect) {
+            if (!this.isUserAlreadySelected(user)) {
+                this.selectedUsers.push(user);
+            }
+            this.field.value = this.selectedUsers;
+        } else {
+            this.selectedUsers = [user];
+            this.field.value = user;
+        }
+
+        this.peopleSelected.emit(user?.id || undefined);
+        this.input.nativeElement.value = '';
+        this.searchTerm.setValue('');
+    }
+
+    isUserAlreadySelected(user: LightUserRepresentation): boolean {
+        if (this.selectedUsers && this.selectedUsers.length > 0) {
+            const result = this.selectedUsers.find((selectedUser) => selectedUser.id === user.id);
+
+            return !!result;
+        }
+        return false;
     }
 }

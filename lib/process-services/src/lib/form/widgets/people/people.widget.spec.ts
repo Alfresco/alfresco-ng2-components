@@ -23,11 +23,15 @@ import { PeopleWidgetComponent } from './people.widget';
 import { TranslateService } from '@ngx-translate/core';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
+import { MatChipHarness } from '@angular/material/chips/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
 
 describe('PeopleWidgetComponent', () => {
     let widget: PeopleWidgetComponent;
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
+    let loader: HarnessLoader;
     let translationService: TranslateService;
     let peopleProcessService: PeopleProcessService;
 
@@ -37,6 +41,7 @@ describe('PeopleWidgetComponent', () => {
         });
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         peopleProcessService = TestBed.inject(PeopleProcessService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
 
         translationService = TestBed.inject(TranslateService);
         spyOn(translationService, 'instant').and.callFake((key) => key);
@@ -48,26 +53,28 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should return empty display name for missing model', () => {
-        expect(widget.getDisplayName(null)).toBe('');
-    });
+    describe('display name', () => {
+        it('should return empty display name for missing model', () => {
+            expect(widget.getDisplayName(null)).toBe('');
+        });
 
-    it('should return full name for a given model', () => {
-        const model = {
-            firstName: 'John',
-            lastName: 'Doe'
-        };
-        expect(widget.getDisplayName(model)).toBe('John Doe');
-    });
+        it('should return full name for a given model', () => {
+            const model = {
+                firstName: 'John',
+                lastName: 'Doe'
+            };
+            expect(widget.getDisplayName(model)).toBe('John Doe');
+        });
 
-    it('should skip first name for display name', () => {
-        const model = { firstName: null, lastName: 'Doe' };
-        expect(widget.getDisplayName(model)).toBe('Doe');
-    });
+        it('should skip first name for display name', () => {
+            const model = { firstName: null, lastName: 'Doe' };
+            expect(widget.getDisplayName(model)).toBe('Doe');
+        });
 
-    it('should skip last name for display name', () => {
-        const model = { firstName: 'John', lastName: null };
-        expect(widget.getDisplayName(model)).toBe('John');
+        it('should skip last name for display name', () => {
+            const model = { firstName: 'John', lastName: null };
+            expect(widget.getDisplayName(model)).toBe('John');
+        });
     });
 
     it('should init value from the field', async () => {
@@ -83,7 +90,33 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        expect(await chip.getText()).toBe('John Doe');
+    });
+
+    it('should show correct number of chips if multiple users provided', async () => {
+        widget.field.readOnly = false;
+        widget.field.params.multiple = true;
+        widget.field.value = [
+            {
+                id: 'people-id-1',
+                firstName: 'John',
+                lastName: 'Doe'
+            },
+            {
+                id: 'people-id-2',
+                firstName: 'Rick',
+                lastName: 'Grimes'
+            }
+        ];
+        widget.ngOnInit();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const chips = await loader.getAllHarnesses(MatChipHarness);
+        expect(chips.length).toBe(2);
+        expect(await chips[0].getText()).toBe('John Doe');
+        expect(await chips[1].getText()).toBe('Rick Grimes');
     });
 
     it('should show the readonly value when the form is readonly', async () => {
@@ -101,8 +134,28 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        expect(await chip.getText()).toBe('John Doe');
+        expect(await chip.isDisabled()).toBe(true);
         expect((element.querySelector('input') as HTMLInputElement).disabled).toBeTruthy();
+    });
+
+    it('should display the cancel button in the chip', async () => {
+        widget.field.value = {
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe'
+        };
+
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of(null));
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        const cancelIcon = await chip.getRemoveButton();
+        expect(cancelIcon).toBeDefined();
     });
 
     it('should require form field to setup values on init', () => {
@@ -138,13 +191,63 @@ describe('PeopleWidgetComponent', () => {
             email: 'john@test.com'
         };
         widget.ngOnInit();
-
-        const involvedUser = fixture.debugElement.nativeElement.querySelector('input[data-automation-id="adf-people-search-input"]');
-
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(involvedUser.value).toBe('John Doe');
+        const chip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="adf-people-widget-chip-people-id"]' }));
+        expect(await chip.getText()).toBe('John Doe');
+    });
+
+    it('should add user to selectedUsers when multiSelect is false and user is not already selected', () => {
+        const user: LightUserRepresentation = { id: 1, firstName: 'John', lastName: 'Doe' };
+        widget.multiSelect = false;
+        widget.onItemSelect(user);
+        expect(widget.selectedUsers).toContain(user);
+        expect(widget.field.value).toEqual(widget.selectedUsers[0]);
+    });
+
+    it('should not add user to selectedUsers when multiSelect is true and user is already selected', () => {
+        const user: LightUserRepresentation = { id: 1, firstName: 'John', lastName: 'Doe' };
+        widget.multiSelect = true;
+        widget.selectedUsers = [user];
+        widget.onItemSelect(user);
+        expect(widget.selectedUsers.length).toBe(1);
+    });
+
+    it('should clear the input value after selection', () => {
+        const user: LightUserRepresentation = { id: 1, firstName: 'John', lastName: 'Doe' };
+        widget.input.nativeElement.value = 'test';
+        widget.onItemSelect(user);
+        expect(widget.input.nativeElement.value).toBe('');
+    });
+
+    it('should reset the search term after selection', () => {
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of(null));
+        const user: LightUserRepresentation = { id: 1, firstName: 'John', lastName: 'Doe' };
+        widget.searchTerm.setValue('test');
+        widget.onItemSelect(user);
+        expect(widget.searchTerm.value).toBe('');
+    });
+
+    it('should remove user from selectedUsers if user exists', () => {
+        const users: LightUserRepresentation[] = [
+            { id: 1, firstName: 'John', lastName: 'Doe' },
+            { id: 2, firstName: 'Jane', lastName: 'Doe' }
+        ];
+
+        widget.selectedUsers = [...users];
+        widget.onRemove(users[0]);
+
+        expect(widget.selectedUsers).not.toContain(users[0]);
+        expect(widget.field.value).toEqual([users[1]]);
+    });
+
+    it('should not change selectedUsers if user does not exist', () => {
+        const selectedUser: LightUserRepresentation = { id: 1, firstName: 'John', lastName: 'Doe' };
+        const anotherUser: LightUserRepresentation = { id: 2, firstName: 'Jane', lastName: 'Doe' };
+        widget.selectedUsers = [selectedUser];
+        widget.onRemove(anotherUser);
+        expect(widget.selectedUsers).toEqual([selectedUser]);
     });
 
     describe('when is required', () => {
@@ -274,16 +377,12 @@ describe('PeopleWidgetComponent', () => {
 
         it('should emit peopleSelected if option is valid', async () => {
             const selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
-            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
-            peopleHTMLElement.focus();
-            peopleHTMLElement.value = 'Test01 Test01';
-            peopleHTMLElement.dispatchEvent(new Event('keyup'));
-            peopleHTMLElement.dispatchEvent(new Event('input'));
+            widget.onItemSelect(fakeUserResult[0]);
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(selectEmitSpy).toHaveBeenCalledWith(1001);
+            expect(selectEmitSpy).toHaveBeenCalledWith(fakeUserResult[0].id);
         });
 
         it('should display tooltip when tooltip is set', async () => {
