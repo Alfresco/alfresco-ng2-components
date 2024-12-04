@@ -36,9 +36,9 @@ export class SearchFilterTabbedComponent implements OnInit, OnDestroy {
     selectedIndex: number = 0;
 
     @ViewChild(MatTabGroup)
-    private tabGroup: MatTabGroup;
+    private readonly tabGroup: MatTabGroup;
 
-    private intersectionObserver = new IntersectionObserver(
+    private readonly intersectionObserver = new IntersectionObserver(
         (entries) => {
             if (!entries[0].isIntersecting) {
                 this.tabGroup.selectedIndex = (this.selectedIndex + 1) % this.tabsContents.length;
@@ -52,7 +52,7 @@ export class SearchFilterTabbedComponent implements OnInit, OnDestroy {
         }
     );
 
-    constructor(private element: ElementRef, private changeDetector: ChangeDetectorRef) {}
+    constructor(private readonly element: ElementRef, private readonly changeDetector: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.intersectionObserver.observe(this.element.nativeElement);

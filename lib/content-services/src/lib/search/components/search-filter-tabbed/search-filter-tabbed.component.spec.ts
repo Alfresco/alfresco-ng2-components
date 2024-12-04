@@ -37,7 +37,6 @@ import { NoopTranslateModule } from '@alfresco/adf-core';
 class SearchFilterTabbedTestComponent {}
 
 describe('SearchFilterTabbedComponent', () => {
-    let searchFilterTabbedTestComponent: SearchFilterTabbedTestComponent;
     let searchFilterTabbedTestFixture: ComponentFixture<SearchFilterTabbedTestComponent>;
 
     beforeEach(() => {
@@ -45,7 +44,6 @@ describe('SearchFilterTabbedComponent', () => {
             imports: [SearchFilterTabbedTestComponent, NoopTranslateModule, ContentTestingModule]
         });
         searchFilterTabbedTestFixture = TestBed.createComponent(SearchFilterTabbedTestComponent);
-        searchFilterTabbedTestComponent = searchFilterTabbedTestFixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
