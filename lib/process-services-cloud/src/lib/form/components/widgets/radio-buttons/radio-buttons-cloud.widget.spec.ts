@@ -24,11 +24,13 @@ import { of, throwError } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { FormUtilsService } from '../../../services/form-utils.service';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
     let widget: RadioButtonsCloudWidgetComponent;
     let formCloudService: FormCloudService;
+    let formUtilsService: FormUtilsService;
     let element: HTMLElement;
     let loader: HarnessLoader;
     const restOption: FormFieldOption[] = [
@@ -47,6 +49,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
             imports: [ProcessServiceCloudTestingModule]
         });
         formCloudService = TestBed.inject(FormCloudService);
+        formUtilsService = TestBed.inject(FormUtilsService);
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -132,6 +135,21 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         beforeEach(() => {
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
+        });
+
+        it('should call getRestWidgetData with correct parameters and update field options on success', () => {
+            const formId = 'form-id';
+            const fieldId = 'field-id';
+            widget.field = new FormFieldModel(new FormModel({ id: formId }), { id: fieldId, restUrl: '<url>' });
+            const body = { var1: 'value1', var2: 'value2' };
+            spyOn(formUtilsService, 'getRestUrlVariablesMap').and.returnValue(body);
+            spyOn(widget.field, 'updateForm');
+
+            widget.getValuesFromRestApi();
+
+            expect(formCloudService.getRestWidgetData).toHaveBeenCalledWith(formId, fieldId, body);
+            expect(widget.field.options).toEqual(restOption);
+            expect(widget.field.updateForm).toHaveBeenCalled();
         });
 
         describe('when widget is readonly', () => {

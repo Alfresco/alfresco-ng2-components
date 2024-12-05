@@ -555,9 +555,19 @@ describe('FormModel', () => {
             expect(value).toBeUndefined();
         });
 
-        it('should find a process variable by form variable name', () => {
+        it('should find a process variable by full form variable name', () => {
             const value = form.getProcessVariableValue('variables.name1');
             expect(value).toBe('hello');
+        });
+
+        it('should find a process variable by form variable name', () => {
+            const value = form.getProcessVariableValue('name1');
+            expect(value).toBe('hello');
+        });
+
+        it('should find default form variable by form variable name', () => {
+            const value = form.getProcessVariableValue('name2');
+            expect(value).toBe('29.09.2019T00:00:00.000Z');
         });
 
         it('should find a process variable by name', () => {
