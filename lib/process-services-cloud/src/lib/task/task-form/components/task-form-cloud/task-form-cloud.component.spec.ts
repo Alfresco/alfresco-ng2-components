@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FORM_FIELD_VALIDATORS, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import {
     TaskDetailsCloudModel,
@@ -29,15 +29,15 @@ import {
     TASK_CREATED_STATE,
     TASK_RELEASE_PERMISSION,
     TASK_VIEW_PERMISSION
-} from '../../start-task/models/task-details-cloud.model';
-import { TaskCloudService } from '../../services/task-cloud.service';
-import { IdentityUserService } from '../../../people/services/identity-user.service';
+} from '../../../start-task/models/task-details-cloud.model';
+import { TaskCloudService } from '../../../services/task-cloud.service';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { DisplayModeService } from '../../../form/services/display-mode.service';
-import { FormCloudComponent } from '../../../form/components/form-cloud.component';
-import { MockFormFieldValidator } from '../mocks/task-form-cloud.mock';
+import { DisplayModeService } from '../../../../form/services/display-mode.service';
+import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
+import { MockFormFieldValidator } from '../../mocks/task-form-cloud.mock';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
