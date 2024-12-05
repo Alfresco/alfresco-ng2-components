@@ -109,7 +109,7 @@ describe('DataTableCellComponent', () => {
         };
 
         component.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
-        component.column = { key: 'car_name', type: 'text', truncated: true, maxTextLength: 10 };
+        component.column = { key: 'car_name', type: 'text', maxTextLength: 10 };
         component.row = row;
 
         fixture.detectChanges();

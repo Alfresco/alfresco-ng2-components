@@ -40,12 +40,12 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
-                >{{ column?.truncated ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async) }}</span
+                >{{ column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async) }}</span
             >
         </ng-container>
         <ng-template #defaultCell>
             <span [title]="tooltip" class="adf-datatable-cell-value">{{
-                column?.truncated ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async)
+                column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async)
             }}</span>
         </ng-template>
     `,

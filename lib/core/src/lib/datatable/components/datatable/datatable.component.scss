@@ -325,6 +325,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         justify-content: end;
         padding-right: 15px;
 
+        &:focus-visible,
+        &:focus-within {
+            .adf-datatable-hide-actions-without-hover {
+                visibility: visible;
+            }
+        }
+
         &-provided {
             max-width: 100px !important;
             justify-content: center;
@@ -357,13 +364,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
     .adf-datatable-row:not(:hover) .adf-datatable-hide-actions-without-hover {
         visibility: hidden;
-    }
-
-    .adf-datatable-actions-menu:focus-visible,
-    .adf-datatable-actions-menu:focus-within {
-        .adf-datatable-hide-actions-without-hover {
-            visibility: visible;
-        }
     }
 
     .adf-datatable-cell--image {
