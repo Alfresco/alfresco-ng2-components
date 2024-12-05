@@ -19,4 +19,11 @@ import { SizeDetails } from './sizeDetails';
 
 export class SizeDetailsEntry {
     entry: SizeDetails;
+
+    constructor(input?: Partial<SizeDetailsEntry>) {
+        if (input) {
+            Object.assign(this, input);
+            this.entry = input.entry ? new SizeDetails(input.entry) : undefined;
+        }
+    }
 }
