@@ -28,7 +28,9 @@ import {
     NodeBodyMove,
     NodeBodyUpdate,
     NodeChildAssociationPaging,
-    NodeEntry
+    NodeEntry,
+    SizeDetailsEntry,
+    JobIdBodyEntry
 } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
@@ -983,7 +985,7 @@ export class NodesApi extends BaseApi {
         });
     }
 
-    initialFolderSizeCalculation(nodeId: string): Promise<{ entry: { jobId: string } }> {
+    initialFolderSizeCalculation(nodeId: string): Promise<JobIdBodyEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
 
         const pathParams = {
@@ -992,11 +994,12 @@ export class NodesApi extends BaseApi {
 
         return this.post({
             path: '/nodes/{nodeId}/size-details',
-            pathParams
+            pathParams,
+            returnType: JobIdBodyEntry
         });
     }
 
-    getFolderSizeInfo(nodeId: string, jobId: string): Promise<any> {
+    getFolderSizeInfo(nodeId: string, jobId: string): Promise<SizeDetailsEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(jobId, 'jobId');
 
@@ -1007,7 +1010,8 @@ export class NodesApi extends BaseApi {
 
         return this.get({
             path: 'nodes/{nodeId}/size-details/{jobId}',
-            pathParams
+            pathParams,
+            returnType: SizeDetailsEntry
         });
     }
 }

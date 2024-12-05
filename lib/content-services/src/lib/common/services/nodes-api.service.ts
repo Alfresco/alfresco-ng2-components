@@ -16,7 +16,18 @@
  */
 
 import { UserPreferencesService } from '@alfresco/adf-core';
-import { ContentPagingQuery, Node, NodeAssignedHold, NodeEntry, NodePaging, NodesApi, NodesIncludeQuery, TrashcanApi } from '@alfresco/js-api';
+import {
+    ContentPagingQuery,
+    Node,
+    NodeAssignedHold,
+    NodeEntry,
+    NodePaging,
+    NodesApi,
+    NodesIncludeQuery,
+    TrashcanApi,
+    SizeDetailsEntry,
+    JobIdBodyEntry
+} from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -246,11 +257,11 @@ export class NodesApiService {
         return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
     }
 
-    initiateFolderSizeCalculation(nodeId: string): Observable<{ entry: { jobId: string } }> {
+    initiateFolderSizeCalculation(nodeId: string): Observable<JobIdBodyEntry> {
         return from(this.nodesApi.initialFolderSizeCalculation(nodeId));
     }
 
-    getFolderSizeInfo(nodeId: string, jobId: string): Observable<any> {
+    getFolderSizeInfo(nodeId: string, jobId: string): Observable<SizeDetailsEntry> {
         return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
     }
 
