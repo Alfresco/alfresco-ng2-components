@@ -15,7 +15,23 @@
  * limitations under the License.
  */
 
-export * from './components/task-form-cloud/task-form-cloud.component';
-export * from './components/user-task-cloud/user-task-cloud.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UserTaskCloudComponent } from './user-task-cloud.component';
 
-export * from './task-form.module';
+describe('UserTaskCloudComponent', () => {
+    let component: UserTaskCloudComponent;
+    let fixture: ComponentFixture<UserTaskCloudComponent>;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [UserTaskCloudComponent]
+        });
+        fixture = TestBed.createComponent(UserTaskCloudComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});
