@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnInit,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
@@ -32,11 +24,12 @@ import { DataTableService } from '../../services/datatable.service';
 import { CommonModule } from '@angular/common';
 import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TruncatePipe } from '../../../pipes/truncate.pipe';
 
 @Component({
     selector: 'adf-datatable-cell',
     standalone: true,
-    imports: [CommonModule, ClipboardDirective],
+    imports: [CommonModule, ClipboardDirective, TruncatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
@@ -47,11 +40,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
-                >{{ value$ | async }}</span
+                >{{ column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async) }}</span
             >
         </ng-container>
         <ng-template #defaultCell>
-            <span [title]="tooltip" class="adf-datatable-cell-value">{{ value$ | async }}</span>
+            <span [title]="tooltip" class="adf-datatable-cell-value">{{
+                column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async)
+            }}</span>
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,

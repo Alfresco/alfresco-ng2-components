@@ -152,31 +152,50 @@ describe('ProcessListCloudComponent', () => {
             expect(component.rows.length).toEqual(3);
         });
 
-        it('should the payload contain the appVersion if it is defined', () => {
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.appVersion = 1;
-            component.ngAfterContentInit();
-            component.reload();
+        describe('Payload', () => {
+            it('should the payload contain the appVersion if it is defined', () => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.appVersion = 1;
+                component.ngAfterContentInit();
+                component.reload();
 
-            expect(component.requestNode.appVersion).toEqual('1');
-        });
+                expect(component.requestNode.appVersion).toEqual('1');
+            });
 
-        it('should the payload contain all the app versions joined by a comma separator', () => {
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.appVersion = [1, 2, 3];
-            component.ngAfterContentInit();
-            component.reload();
+            it('should the payload contain all the app versions joined by a comma separator', () => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.appVersion = [1, 2, 3];
+                component.ngAfterContentInit();
+                component.reload();
 
-            expect(component.requestNode.appVersion).toEqual('1,2,3');
-        });
+                expect(component.requestNode.appVersion).toEqual('1,2,3');
+            });
 
-        it('should the payload NOT contain any app version when appVersion does not have a value', () => {
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.appVersion = undefined;
-            component.ngAfterContentInit();
-            component.reload();
+            it('should the payload NOT contain any app version when appVersion does not have a value', () => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.appVersion = undefined;
+                component.ngAfterContentInit();
+                component.reload();
 
-            expect(component.requestNode.appVersion).toEqual('');
+                expect(component.requestNode.appVersion).toEqual('');
+            });
+
+            it('should the payload contain the parentId if it is defined', () => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.parentId = 'fake-parent-id';
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.requestNode.parentId).toEqual('fake-parent-id');
+            });
+
+            it('should the payload contain an empty parentId if it is NOT defined', () => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.requestNode.parentId).toBeUndefined();
+            });
         });
 
         it('should return the results if an application name is given', (done) => {

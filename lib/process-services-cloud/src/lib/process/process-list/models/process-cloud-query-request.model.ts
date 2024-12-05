@@ -27,6 +27,7 @@ export class ProcessQueryCloudRequestModel {
     id?: string;
     environmentId?: string;
     name?: string;
+    parentId?: string;
     processDefinitionId?: string;
     processDefinitionName?: string;
     processDefinitionKey?: string;
@@ -56,6 +57,7 @@ export class ProcessQueryCloudRequestModel {
             this.id = obj.id;
             this.environmentId = obj.environmentId;
             this.name = obj.name;
+            this.parentId = obj.parentId;
             this.processDefinitionId = obj.processDefinitionId;
             this.processDefinitionName = obj.processDefinitionName;
             this.processDefinitionKey = obj.processDefinitionKey;
@@ -85,7 +87,8 @@ export class ProcessListRequestModel {
     pagination?: Pagination;
     sorting?: ProcessListRequestSortingModel;
 
-    name?: string[];
+    processName?: string[];
+    processDefinitionName?: string[];
     initiator?: string[];
     appVersion?: string[];
     status?: string[];
@@ -110,7 +113,8 @@ export class ProcessListRequestModel {
         this.pagination = obj.pagination;
         this.sorting = obj.sorting;
 
-        this.name = obj.name;
+        this.processName = obj.processName;
+        this.processDefinitionName = obj.processDefinitionName;
         this.initiator = obj.initiator;
         this.appVersion = obj.appVersion;
         this.status = obj.status;
@@ -138,7 +142,8 @@ export class ProcessFilterCloudAdapter extends ProcessListRequestModel {
                 isFieldProcessVariable: false
             }),
 
-            name: filter.processDefinitionNames,
+            processDefinitionName: filter.processDefinitionNames,
+            processName: filter.processNames,
             initiator: filter.initiators,
             appVersion: filter.appVersions,
             status: filter.statuses,

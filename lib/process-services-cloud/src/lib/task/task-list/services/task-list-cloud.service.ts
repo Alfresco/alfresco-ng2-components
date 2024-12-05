@@ -101,6 +101,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         const queryData: any = {
             status: requestNode.status,
             processDefinitionName: requestNode.processDefinitionName,
+            processName: requestNode.processName,
             assignee: requestNode.assignee,
             priority: requestNode.priority,
             name: requestNode.name,

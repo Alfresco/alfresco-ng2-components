@@ -30,6 +30,7 @@ import { DecimalNumberPipe } from './decimal-number.pipe';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { DateTimePipe } from './date-time.pipe';
+import { TruncatePipe } from './truncate.pipe';
 
 export const CORE_PIPES = [
     LocalizedDatePipe,
@@ -44,7 +45,8 @@ export const CORE_PIPES = [
     MomentDatePipe,
     MomentDateTimePipe,
     DateTimePipe,
-    InitialUsernamePipe
+    InitialUsernamePipe,
+    TruncatePipe
 ] as const;
 
 /**

@@ -692,6 +692,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
                 value: 'appVersion'
             },
             {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.MAIN_PROCESS_ID',
+                key: 'parentId',
+                value: 'parentId'
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
                 key: 'processInstanceId',
                 value: 'processInstanceId'
@@ -766,6 +771,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
                 type: 'text',
                 key: 'processInstanceId',
                 value: filterModel.processInstanceId || ''
+            },
+            {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.MAIN_PROCESS_ID',
+                type: 'text',
+                key: 'parentId',
+                value: filterModel.parentId
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',

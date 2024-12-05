@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ContentChildren, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SearchFilterTabDirective } from './search-filter-tab.directive';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -29,11 +29,38 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./search-filter-tabbed.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterTabbedComponent {
+export class SearchFilterTabbedComponent implements OnInit, OnDestroy {
     @ContentChildren(SearchFilterTabDirective)
     tabsContents: QueryList<SearchFilterTabDirective>;
 
     selectedIndex: number = 0;
+
+    @ViewChild(MatTabGroup)
+    private readonly tabGroup: MatTabGroup;
+
+    private readonly intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            if (!entries[0].isIntersecting) {
+                this.tabGroup.selectedIndex = (this.selectedIndex + 1) % this.tabsContents.length;
+                this.changeDetector.detectChanges();
+                this.tabGroup.selectedIndex = this.selectedIndex;
+                this.changeDetector.detectChanges();
+            }
+        },
+        {
+            threshold: [0, 1]
+        }
+    );
+
+    constructor(private readonly element: ElementRef, private readonly changeDetector: ChangeDetectorRef) {}
+
+    ngOnInit(): void {
+        this.intersectionObserver.observe(this.element.nativeElement);
+    }
+
+    ngOnDestroy(): void {
+        this.intersectionObserver.disconnect();
+    }
 
     onTabIndexChanged(index: number): void {
         this.selectedIndex = index;
