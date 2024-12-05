@@ -15,7 +15,24 @@
  * limitations under the License.
  */
 
-export * from './components/task-form-cloud/task-form-cloud.component';
-export * from './components/user-task-cloud/user-task-cloud.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-export * from './task-form.module';
+import { ScreenCloudComponent } from './screen-cloud.component';
+
+describe('ScreenCloudComponent', () => {
+    let component: ScreenCloudComponent;
+    let fixture: ComponentFixture<ScreenCloudComponent>;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ScreenCloudComponent]
+        });
+        fixture = TestBed.createComponent(ScreenCloudComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});
