@@ -65,6 +65,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | currencyConfig | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component. |
 | decimalConfig | `DecimalConfig` | [Default decimal config](#default-decimal-config) | Decimal configuration to customize the formatting and display of decimal values within the component. |
 | dateConfig | `DateConfig` | [Default date config](#default-date-config) | Date configuration to customize the formatting and localization of date values within the component. |
+| maxTextLength | `number` | 250 | Max length of the text displayed in column before truncation. |
 
 ## Properties configuration
 
@@ -466,6 +467,31 @@ const shouldPerformAction = this.columns
 
 if (shouldPerformAction) { /* action */}
 ```
+
+### Specifying max text length in the column
+
+If you want to restrict max number of characters displayed in the column you can use `maxTextLength` param.
+
+Example of using `maxTextLength` from a JSON config file:
+
+```json
+[
+ {"type": "text", "key": "id", "title": "Id"},
+ {"type": "text", "key": "name", "title": "name", "maxTextLength": 100},
+]
+```
+
+HTML `<data-column>` element example:
+
+```html
+...
+    <data-columns>
+        <data-column [maxTextLength]="100" key="name" title="Name"></data-column>
+        ...
+    </data-columns>
+...
+```
+
 
 ## See also
 
