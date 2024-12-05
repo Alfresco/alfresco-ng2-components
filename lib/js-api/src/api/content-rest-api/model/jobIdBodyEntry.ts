@@ -19,4 +19,11 @@ import { JobIdBody } from './jobIdBody';
 
 export class JobIdBodyEntry {
     entry: JobIdBody;
+
+    constructor(input?: Partial<JobIdBodyEntry>) {
+        if (input) {
+            Object.assign(this, input);
+            this.entry = input.entry ? new JobIdBody(input.entry) : undefined;
+        }
+    }
 }

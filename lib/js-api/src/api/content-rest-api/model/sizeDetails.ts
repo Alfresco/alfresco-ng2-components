@@ -22,4 +22,13 @@ export class SizeDetails {
     numberOfFiles: number;
     status: string;
     jobId: string;
+
+    constructor(entry: SizeDetails) {
+        this.id = entry.id;
+        this.sizeInBytes = entry.sizeInBytes;
+        this.calculatedAt = entry.calculatedAt;
+        this.numberOfFiles = entry.numberOfFiles;
+        this.status = entry.status;
+        this.jobId = entry.jobId;
+    }
 }

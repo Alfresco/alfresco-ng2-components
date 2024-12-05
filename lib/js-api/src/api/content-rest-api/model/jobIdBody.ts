@@ -17,4 +17,8 @@
 
 export class JobIdBody {
     jobId: string;
+
+    constructor(jobIdBody: JobIdBody) {
+        this.jobId = jobIdBody.jobId;
+    }
 }
