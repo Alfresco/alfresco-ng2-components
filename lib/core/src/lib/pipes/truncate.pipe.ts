@@ -23,6 +23,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TruncatePipe implements PipeTransform {
     transform(value: string, maxTextLength = 250, ellipsis = '...') {
-        return value.length > maxTextLength ? value.slice(0, maxTextLength) + ellipsis : value;
+        return value?.length > maxTextLength ? value.slice(0, maxTextLength) + ellipsis : value;
     }
 }
