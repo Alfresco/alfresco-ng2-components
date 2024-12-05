@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { FormModel, FormVariableModel } from 'lib/core/src/lib/form';
+import { FormModel, FormVariableModel } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
