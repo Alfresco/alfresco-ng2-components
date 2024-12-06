@@ -68,7 +68,6 @@ export class AspectsApi extends BaseApi {
      * Get an aspect
      *
      * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-     *
      * @param aspectId The `Qname` of an aspect(prefix:name) e.g 'cm:title'
      * @returns Promise<AspectEntry>
      */
@@ -90,7 +89,6 @@ export class AspectsApi extends BaseApi {
      * List aspects
      *
      * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-     *
      * @param opts Optional parameters
      * @returns Promise<AspectPaging>
      */

@@ -69,6 +69,7 @@ class ViewerWithCustomToolbarComponent {}
     selector: 'adf-viewer-container-toolbar-actions',
     standalone: true,
     imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
             <button mat-icon-button id="custom-button">
@@ -103,6 +104,7 @@ class DummyDialogComponent {}
     selector: 'adf-viewer-container-open-with',
     standalone: true,
     imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-alfresco-viewer>
             <adf-viewer-open-with>
@@ -128,6 +130,7 @@ class ViewerWithCustomOpenWithComponent {}
     selector: 'adf-viewer-container-more-actions',
     standalone: true,
     imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>
             <button mat-menu-item>

@@ -87,7 +87,7 @@
                 </ng-container>
 
                 <div *ngIf="col.header" class="adf-datatable-cell-value">
-                    <ng-template [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+                    <ng-template [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}" />
                 </div>
 
                 <span
@@ -95,7 +95,7 @@
                     [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
                 </span>
 
-                <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+                <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}" />
 
                 <span
                     *ngIf="col.draggable"
@@ -406,9 +406,8 @@
                 <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
-                                 [ngForTemplate]="noContentTemplate">
-                    </ng-template>
-                    <ng-content select="adf-empty-list"></ng-content>
+                                 [ngForTemplate]="noContentTemplate" />
+                    <ng-content select="adf-empty-list" />
                 </div>
             </div>
         </ng-container>
@@ -418,16 +417,14 @@
             <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="noPermissionTemplate"
                              ngFor [ngForOf]="[data]"
-                             [ngForTemplate]="noPermissionTemplate">
-                </ng-template>
+                             [ngForTemplate]="noPermissionTemplate" />
             </div>
         </div>
         <div *ngIf="loading" class="adf-datatable-row">
             <div class="adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
-                             [ngForTemplate]="loadingTemplate">
-                </ng-template>
+                             [ngForTemplate]="loadingTemplate" />
             </div>
         </div>
     </div>

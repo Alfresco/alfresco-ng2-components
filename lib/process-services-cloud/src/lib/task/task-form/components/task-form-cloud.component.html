@@ -21,8 +21,7 @@
                     (displayModeOn)="onDisplayModeOn($event)"
                     (displayModeOff)="onDisplayModeOff($event)">
         <adf-cloud-form-custom-outcomes>
-            <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
-            </ng-template>
+            <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
         </adf-cloud-form-custom-outcomes>
     </adf-cloud-form>
 
@@ -44,8 +43,7 @@
                     [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'" />
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions" align="end">
-                <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
-                </ng-template>
+                <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                 <button mat-button *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName"
                         [taskId]="taskId" (success)="onCompleteTask()" (error)="onError($event)" color="primary" id="adf-form-complete">
                     {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}

@@ -24,7 +24,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class ModelsBpmnApi extends BaseApi {
     /**
      * Export a historic version of a process definition as BPMN 2.0 XML
-     *
      * @param processModelId processModelId
      * @param processModelHistoryId processModelHistoryId
      * @return Promise<{}>
@@ -49,7 +48,6 @@ export class ModelsBpmnApi extends BaseApi {
 
     /**
      * Export a process definition as BPMN 2.0 XML
-     *
      * @param processModelId processModelId
      * @return Promise<{}>
      */

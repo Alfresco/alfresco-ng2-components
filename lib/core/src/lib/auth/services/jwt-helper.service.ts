@@ -37,7 +37,6 @@ export class JwtHelperService {
 
     /**
      * Decodes a JSON web token into a JS object.
-     *
      * @param token Token in encoded form
      * @returns Decoded token data object
      */
@@ -79,7 +78,6 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access or id token.
-     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
@@ -89,7 +87,6 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access token.
-     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
@@ -99,7 +96,6 @@ export class JwtHelperService {
 
     /**
      * Gets access token
-     *
      * @returns access token
      */
     getAccessToken(): string {
@@ -108,7 +104,6 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user id token.
-     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
@@ -118,7 +113,6 @@ export class JwtHelperService {
 
     /**
      * Gets id token
-     *
      * @returns id token
      */
     getIdToken(): string {
@@ -127,7 +121,6 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access token.
-     *
      * @param token your SSO access token where the value is encode
      * @param key Key name of the field to retrieve
      * @returns Value from the token
@@ -144,7 +137,6 @@ export class JwtHelperService {
 
     /**
      * Gets realm roles.
-     *
      * @returns Array of realm roles
      */
     getRealmRoles(): string[] {
@@ -154,7 +146,6 @@ export class JwtHelperService {
 
     /**
      * Gets Client roles.
-     *
      * @param clientName client name
      * @returns Array of client roles
      */
@@ -165,7 +156,6 @@ export class JwtHelperService {
 
     /**
      * Checks for single realm role.
-     *
      * @param role Role name to check
      * @returns True if it contains given role, false otherwise
      */
@@ -180,7 +170,6 @@ export class JwtHelperService {
 
     /**
      * Checks for realm roles.
-     *
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
@@ -190,7 +179,6 @@ export class JwtHelperService {
 
     /**
      * Checks for client roles.
-     *
      * @param clientName Targeted client name
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
@@ -201,7 +189,6 @@ export class JwtHelperService {
 
     /**
      * Checks for client role.
-     *
      * @param clientName Targeted client name
      * @param role Role name to check
      * @returns True if it contains given role, false otherwise

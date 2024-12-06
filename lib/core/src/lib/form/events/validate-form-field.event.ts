@@ -19,11 +19,9 @@ import { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { FormFieldEvent } from './form-field.event';
 
 export class ValidateFormFieldEvent extends FormFieldEvent {
-
     isValid = true;
 
     constructor(form: any, field: FormFieldModel) {
         super(form, field);
     }
-
 }

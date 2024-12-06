@@ -59,7 +59,7 @@ export const fakeForm: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'RestFieldRepresentation',
                         id: 'dropdownId',
@@ -121,7 +121,7 @@ export const fakeForm: any = {
                         requestHeaders: null
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'RestFieldRepresentation',
                         id: 'radio',
@@ -215,7 +215,7 @@ export const fakeForm: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'date',
@@ -258,7 +258,7 @@ export const fakeForm: any = {
                         visibilityCondition: null
                     }
                 ],
-                2: []
+                '2': []
             }
         }
     ],

@@ -6,12 +6,12 @@
         [@sidenavAnimation]="sidenavAnimationState"
         [opened]="!isMobileScreenSize || !hideSidenav"
         [mode]="isMobileScreenSize ? 'over' : 'side'">
-        <ng-content sidenav select="[app-layout-navigation]"></ng-content>
+        <ng-content sidenav select="[app-layout-navigation]" />
     </mat-sidenav>
 
     <div>
         <div class="adf-container-full-width" [@contentAnimationLeft]="getContentAnimationState()">
-            <ng-content select="[app-layout-content]"></ng-content>
+            <ng-content select="[app-layout-content]" />
         </div>
     </div>
 </mat-sidenav-container>

@@ -22,7 +22,13 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from '../interfaces/identity-user.service.interface';
+import {
+    IdentityJoinGroupRequestModel,
+    IdentityUserServiceInterface,
+    IdentityUserPasswordModel,
+    IdentityUserQueryCloudRequestModel,
+    IdentityUserQueryResponse
+} from '../interfaces/identity-user.service.interface';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
 
@@ -30,11 +36,7 @@ import { OAuth2Service } from './oauth2.service';
     providedIn: 'root'
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
-
-    constructor(
-        private jwtHelperService: JwtHelperService,
-        private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService) { }
+    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
@@ -46,7 +48,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets the name and other basic details of the current user.
-     *
      * @returns The user's details
      */
     getCurrentUserInfo(): IdentityUserModel {
@@ -59,7 +60,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Find users based on search input.
-     *
      * @param search Search query string
      * @returns List of users
      */
@@ -75,7 +75,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Find users based on username input.
-     *
      * @param username Search query string
      * @returns List of users
      */
@@ -86,12 +85,11 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         const url = this.buildUserUrl();
         const queryParams = { username };
 
-        return this.oAuth2Service.get({url, queryParams });
+        return this.oAuth2Service.get({ url, queryParams });
     }
 
     /**
      * Find users based on email input.
-     *
      * @param email Search query string
      * @returns List of users
      */
@@ -107,7 +105,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Find users based on id input.
-     *
      * @param id Search query string
      * @returns users object
      */
@@ -121,7 +118,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Get client roles of a user for a particular client.
-     *
      * @param userId ID of the target user
      * @param clientId ID of the client app
      * @returns List of client roles
@@ -133,20 +129,16 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Checks whether user has access to a client app.
-     *
      * @param userId ID of the target user
      * @param clientId ID of the client app
      * @returns True if the user has access, false otherwise
      */
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
-        return this.getClientRoles(userId, clientId).pipe(
-            map((clientRoles) => clientRoles.length > 0)
-        );
+        return this.getClientRoles(userId, clientId).pipe(map((clientRoles) => clientRoles.length > 0));
     }
 
     /**
      * Checks whether a user has any of the client app roles.
-     *
      * @param userId ID of the target user
      * @param clientId ID of the client app
      * @param roleNames List of role names to check for
@@ -173,7 +165,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets the client ID for an application.
-     *
      * @param applicationName Name of the application
      * @returns Client ID string
      */
@@ -181,29 +172,21 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         const url = `${this.identityHost}/clients`;
         const queryParams = { clientId: applicationName };
 
-        return this.oAuth2Service
-            .get<any[]>({url, queryParams })
-            .pipe(
-                map((response) => response && response.length > 0 ? response[0].id : '')
-            );
+        return this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(map((response) => (response && response.length > 0 ? response[0].id : '')));
     }
 
     /**
      * Checks if a user has access to an application.
-     *
      * @param userId ID of the user
      * @param applicationName Name of the application
      * @returns True if the user has access, false otherwise
      */
     checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
-        return this.getClientIdByApplicationName(applicationName).pipe(
-            switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId))
-        );
+        return this.getClientIdByApplicationName(applicationName).pipe(switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId)));
     }
 
     /**
      * Checks if a user has any application role.
-     *
      * @param userId ID of the target user
      * @param applicationName Name of the application
      * @param roleNames List of role names to check for
@@ -217,7 +200,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets details for all users.
-     *
      * @returns Array of user info objects
      */
     getUsers(): Observable<IdentityUserModel[]> {
@@ -227,7 +209,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets a list of roles for a user.
-     *
      * @param userId ID of the user
      * @returns Array of role info objects
      */
@@ -238,7 +219,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets an array of users (including the current user) who have any of the roles in the supplied list.
-     *
      * @param roleNames List of role names to look for
      * @returns Array of user info objects
      */
@@ -260,7 +240,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets an array of users (not including the current user) who have any of the roles in the supplied list.
-     *
      * @param roleNames List of role names to look for
      * @returns Array of user info objects
      */
@@ -296,30 +275,30 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Checks if a user has one of the roles from a list.
-     *
      * @param userId ID of the target user
      * @param roleNames Array of roles to check for
      * @returns True if the user has one of the roles, false otherwise
      */
     checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean> {
-        return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
-            let hasRole = false;
-            if (userRoles && userRoles.length > 0) {
-                roleNames.forEach((roleName: string) => {
-                    const role = userRoles.find(({ name }) => roleName === name);
-                    if (role) {
-                        hasRole = true;
-                        return;
-                    }
-                });
-            }
-            return hasRole;
-        }));
+        return this.getUserRoles(userId).pipe(
+            map((userRoles: IdentityRoleModel[]) => {
+                let hasRole = false;
+                if (userRoles && userRoles.length > 0) {
+                    roleNames.forEach((roleName: string) => {
+                        const role = userRoles.find(({ name }) => roleName === name);
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
     }
 
     /**
      * Gets details for all users.
-     *
      * @param requestQuery query model
      * @returns Array of user information objects.
      */
@@ -330,16 +309,19 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         return this.getTotalUsersCount().pipe(
             switchMap((totalCount) =>
                 this.oAuth2Service.get<IdentityUserModel[]>({ url, queryParams }).pipe(
-                    map((response) => ({
-                        entries: response,
-                        pagination: {
-                            skipCount: requestQuery.first,
-                            maxItems: requestQuery.max,
-                            count: totalCount,
-                            hasMoreItems: false,
-                            totalItems: totalCount
-                        }
-                    } as IdentityUserQueryResponse))
+                    map(
+                        (response) =>
+                            ({
+                                entries: response,
+                                pagination: {
+                                    skipCount: requestQuery.first,
+                                    maxItems: requestQuery.max,
+                                    count: totalCount,
+                                    hasMoreItems: false,
+                                    totalItems: totalCount
+                                }
+                            } as IdentityUserQueryResponse)
+                    )
                 )
             )
         );
@@ -347,7 +329,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets users total count.
-     *
      * @returns Number of users count.
      */
     getTotalUsersCount(): Observable<number> {
@@ -357,7 +338,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Creates new user.
-     *
      * @param newUser Object containing the new user details.
      * @returns Empty response when the user created.
      */
@@ -370,7 +350,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Updates user details.
-     *
      * @param userId Id of the user.
      * @param updatedUser Object containing the user details.
      * @returns Empty response when the user updated.
@@ -384,7 +363,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Deletes User.
-     *
      * @param userId Id of the  user.
      * @returns Empty response when the user deleted.
      */
@@ -395,7 +373,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Changes user password.
-     *
      * @param userId Id of the user.
      * @param newPassword Details of user Credentials.
      * @returns Empty response when the password changed.
@@ -409,7 +386,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets involved groups.
-     *
      * @param userId Id of the user.
      * @returns Array of involved groups information objects.
      */
@@ -422,7 +398,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Joins group.
-     *
      * @param joinGroupRequest Details of join group request (IdentityJoinGroupRequestModel).
      * @returns Empty response when the user joined the group.
      */
@@ -435,7 +410,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Leaves group.
-     *
      * @param userId Id of the user.
      * @param groupId Id of the  group.
      * @returns Empty response when the user left the group.
@@ -447,7 +421,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets available roles
-     *
      * @param userId Id of the user.
      * @returns Array of available roles information objects
      */
@@ -458,7 +431,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets assigned roles.
-     *
      * @param userId Id of the user.
      * @returns Array of assigned roles information objects
      */
@@ -471,7 +443,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets effective roles.
-     *
      * @param userId Id of the user.
      * @returns Array of composite roles information objects
      */
@@ -484,7 +455,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Assigns roles to the user.
-     *
      * @param userId Id of the user.
      * @param roles Array of roles.
      * @returns Empty response when the role assigned.
@@ -498,7 +468,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Removes assigned roles.
-     *
      * @param userId Id of the user.
      * @param removedRoles Array of roles.
      * @returns Empty response when the role removed.

@@ -24,21 +24,16 @@ import { TranslationService } from '../../translation/translation.service';
     providedIn: 'root'
 })
 export class PageTitleService {
-
     private originalTitle: string = '';
     private translatedTitle: string = '';
 
-    constructor(
-        private titleService: Title,
-        private appConfig: AppConfigService,
-        private translationService: TranslationService) {
+    constructor(private titleService: Title, private appConfig: AppConfigService, private translationService: TranslationService) {
         translationService.translate.onLangChange.subscribe(() => this.onLanguageChanged());
         translationService.translate.onTranslationChange.subscribe(() => this.onLanguageChanged());
     }
 
     /**
      * Sets the page title.
-     *
      * @param value The new title
      */
     setTitle(value: string = '') {

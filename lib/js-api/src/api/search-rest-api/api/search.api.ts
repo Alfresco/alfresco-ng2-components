@@ -23,7 +23,6 @@ import { LegacyHttpClient } from '../../../api-clients/http-client.interface';
 
 /**
  * Search service.
- *
  * @module SearchApi
  */
 export class SearchApi extends ApiClient {
@@ -35,7 +34,6 @@ export class SearchApi extends ApiClient {
      * Searches Alfresco
      *
      * **Note**: this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param queryBody Generic query API
      * @returns Promise<ResultSetPaging>
      */

@@ -18,7 +18,6 @@
 const DEFAULT_PAGE_SIZE = 5;
 
 export class SearchFilterList<T> implements Iterable<T> {
-
     private filteredItems: T[] = [];
     private _filterText: string = '';
 
@@ -41,7 +40,7 @@ export class SearchFilterList<T> implements Iterable<T> {
         return this._filter;
     }
 
-    set filter(value: (item: T) => boolean ) {
+    set filter(value: (item: T) => boolean) {
         this._filter = value;
         this.applyFilter();
     }
@@ -57,7 +56,6 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     /**
      * Returns visible portion of the items.
-     *
      * @returns list of items
      */
     get visibleItems(): T[] {
@@ -66,7 +64,6 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     /**
      * Get items length
-     *
      * @returns entire collection length including items not displayed on the page
      */
     get length(): number {
@@ -75,7 +72,6 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     /**
      * Detect whether more items can be displayed.
-     *
      * @returns `true` if can show more items, otherwise `false`
      */
     get canShowMoreItems(): boolean {
@@ -84,7 +80,6 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     /**
      * Detect whether less items can be displayed.
-     *
      * @returns `true` if can show less items, otherwise `false`
      */
     get canShowLessItems(): boolean {
@@ -93,7 +88,6 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     /**
      * Detect whether content fits single page.
-     *
      * @returns `true` if content fits single page, otherwise `false`.
      */
     get fitsPage(): boolean {

@@ -26,10 +26,8 @@ export interface HighlightTransformResult {
     providedIn: 'root'
 })
 export class HighlightTransformService {
-
     /**
      * Searches for `search` string(s) within `text` and highlights all occurrences.
-     *
      * @param text Text to search within
      * @param search Text pattern to search for
      * @param wrapperClass CSS class used to provide highlighting style
@@ -42,7 +40,10 @@ export class HighlightTransformService {
         if (search && text) {
             // eslint-disable-next-line no-useless-escape
             let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-            pattern = pattern.split(' ').filter((t) => t.length > 0).join('|');
+            pattern = pattern
+                .split(' ')
+                .filter((t) => t.length > 0)
+                .join('|');
 
             const regex = new RegExp(pattern, 'gi');
             result = this.removeHtmlTags(text).replace(regex, (match) => {

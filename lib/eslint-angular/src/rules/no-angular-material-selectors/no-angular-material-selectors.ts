@@ -33,7 +33,7 @@ const messages = {
 
 type MessageIds = keyof typeof messages;
 
-const filetypeErrors: {regexp: RegExp; messageId: MessageIds}[] = [
+const filetypeErrors: { regexp: RegExp; messageId: MessageIds }[] = [
     {
         regexp: /.*\.spec\.ts/,
         messageId: 'useAngularMaterialTestingHarness'
@@ -52,8 +52,7 @@ export default createESLintRule<unknown[], MessageIds>({
     meta: {
         type: 'suggestion',
         docs: {
-            description: 'Disallows using Angular Material internal selectors',
-            recommended: 'error'
+            description: 'Disallows using Angular Material internal selectors'
         },
         hasSuggestions: true,
         schema: [],
@@ -63,9 +62,9 @@ export default createESLintRule<unknown[], MessageIds>({
     create(context) {
         return {
             [ASTSelectors.join(',')](node: TSESTree.Literal | TSESTree.TemplateLiteral) {
-                const message = filetypeErrors.find((fileTypeError) =>
-                    context.getFilename().match(fileTypeError.regexp)
-                ) || { messageId: 'noAngularMaterialSelectors' };
+                const message = filetypeErrors.find((fileTypeError) => context.getFilename().match(fileTypeError.regexp)) || {
+                    messageId: 'noAngularMaterialSelectors'
+                };
 
                 context.report({
                     node,

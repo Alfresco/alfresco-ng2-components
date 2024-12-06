@@ -172,18 +172,16 @@ export class ThumbnailService {
 
     /**
      * Gets a thumbnail URL for a MIME type.
-     *
      * @param mimeType MIME type for the thumbnail
      * @returns URL string
      */
     public getMimeTypeIcon(mimeType: string): string {
         const icon = this.mimeTypeIcons[mimeType];
-        return (icon || DEFAULT_ICON);
+        return icon || DEFAULT_ICON;
     }
 
     /**
      * Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
-     *
      * @returns URL string
      */
     getDefaultMimeTypeIcon(): string {
