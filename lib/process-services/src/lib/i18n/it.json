@@ -281,7 +281,8 @@
         "LABEL": {
           "SELECT_APPLICATION": "Selezionare applicazione",
           "TYPE": "Seleziona processo",
-          "NAME": "Nome processo"
+          "NAME": "Nome processo",
+          "SELECTED_PEOPLE": "Selected people"
         },
         "TYPE_PLACEHOLDER": "Effettuare una scelta...",
         "ACTION": {
