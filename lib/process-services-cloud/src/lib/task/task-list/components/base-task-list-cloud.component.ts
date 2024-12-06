@@ -299,7 +299,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     /**
      * Resets the pagination values and
      * Reloads the task list
-     *
      * @param pagination Pagination values to be set
      */
     updatePagination(pagination: PaginationModel) {
