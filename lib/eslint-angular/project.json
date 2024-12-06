@@ -6,31 +6,23 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nx/webpack:webpack",
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "projectRoot": "lib/eslint-angular",
         "outputPath": "dist/libs/eslint-plugin-eslint-angular",
         "main": "lib/eslint-angular/index.ts",
-        "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
-        "webpackConfig": "lib/eslint-angular/webpack.config.js",
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        },
-        "target": "node",
-        "compiler": "tsc"
+        "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
       },
       "configurations": {
         "production": {
-          "projectRoot": "lib/eslint-angular",
-          "outputPath": "dist/libs/eslint-plugin-eslint-angular",
-          "main": "lib/eslint-angular/index.ts",
-          "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
+          "optimization": true,
+          "sourceMap": false,
+          "extractLicenses": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "lint": {
-      "executor": "@nx/eslint:lint:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
       }
@@ -49,8 +41,15 @@
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
       "options": {
-        "command": "npm publish --tag {args.tag}"
+        "cwd": "dist/libs/eslint-plugin-eslint-angular",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
       }
     }
-  }
+  },
+  "tags": []
 }
