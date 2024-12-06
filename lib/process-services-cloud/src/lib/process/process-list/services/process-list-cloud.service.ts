@@ -104,6 +104,7 @@ export class ProcessListCloudService extends BaseCloudService {
         const queryData: any = {
             name: requestNode.processName,
             processInstanceId: requestNode.processInstanceId,
+            parentId: requestNode.parentId,
             processDefinitionName: requestNode.processDefinitionName,
             initiator: requestNode.initiator,
             appVersion: requestNode.appVersion,

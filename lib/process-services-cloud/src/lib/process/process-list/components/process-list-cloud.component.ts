@@ -231,6 +231,13 @@ export class ProcessListCloudComponent
     processInstanceIds: string[] = [];
 
     /**
+     * Filter the processes. Display only processes with parent Ids matching any of the supplied strings.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    parentIds: string[] = [];
+
+    /**
      * Filter the processes. Display only processes with definition names matching any of the supplied strings.
      * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
@@ -560,6 +567,7 @@ export class ProcessListCloudComponent
             sorting: this.getProcessListRequestSorting(),
             processName: this.processNames,
             processInstanceId: this.processInstanceIds,
+            parentId: this.parentIds,
             processDefinitionName: this.processDefinitionNames,
             initiator: this.initiators,
             appVersion: this.appVersions,
