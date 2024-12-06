@@ -253,6 +253,7 @@
       "SUSPENDED_DATE": "Sperrdatum",
       "STARTED_BY": "Gestartet von",
       "COMPLETED_DATE": "Abschlussdatum",
+      "MAIN_PROCESS_ID": "Main process id",
       "DATE_RANGE": {
         "NO_DATE": "kein Datum",
         "TODAY": "heute",
