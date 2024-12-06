@@ -98,7 +98,7 @@
     "@quanzo/change-font-size": "1.0.0",
     "@schematics/angular": "16.2.9",
     "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/angular": "^8.2.9",
+    "@storybook/angular": "^8.4.6",
     "@storybook/core-server": "^8.2.9",
     "@storybook/manager-api": "^8.4.5",
     "@types/ejs": "^3.1.5",
