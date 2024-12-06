@@ -257,10 +257,21 @@ export class NodesApiService {
         return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
     }
 
+    /**
+     * Initiate a new request to calculate folder size.
+     * @param nodeId Node Id
+     * @returns The job id which can be used to track request status
+     */
     initiateFolderSizeCalculation(nodeId: string): Observable<JobIdBodyEntry> {
         return from(this.nodesApi.initialFolderSizeCalculation(nodeId));
     }
 
+    /**
+     * Gets the size of a folder.
+     * @param nodeId Node Id
+     * @param jobId Job Id
+     * @returns Folder details
+     */
     getFolderSizeInfo(nodeId: string, jobId: string): Observable<SizeDetailsEntry> {
         return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
     }
