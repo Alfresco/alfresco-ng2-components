@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     CustomEmptyContentTemplateDirective,
     DataColumnComponent,
@@ -40,24 +30,9 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import {
-    FileUploadCompleteEvent,
-    FileUploadDeleteEvent,
-    NodesApiService,
-    SitesService,
-    UploadService
-} from '../../common';
+import { FileUploadCompleteEvent, FileUploadDeleteEvent, NodesApiService, SitesService, UploadService } from '../../common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import {
-    Node,
-    NodeEntry,
-    NodePaging,
-    Pagination,
-    RequestScope,
-    SearchRequest,
-    SiteEntry,
-    SitePaging
-} from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, Pagination, RequestScope, SearchRequest, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
 import { RowFilter } from '../../document-list/data/row-filter.model';
 import { ImageResolver } from '../../document-list/data/image-resolver.model';
@@ -124,7 +99,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         skipCount: 0
     });
 
-    readonly DISABLE_ACTION_FOLDER_LIST = ['-mysites-'];
+    readonly disableActionFolderList = ['-mysites-'];
 
     private showSiteList = true;
     private showSearchField = true;
@@ -360,11 +335,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch), takeUntilDestroyed(this.destroyRef)).subscribe((searchValue: string) => {
-            this.searchTerm = searchValue;
-            this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
-            this.queryBuilderService.update();
-        });
+        this.searchInput.valueChanges
+            .pipe(debounceTime(this.debounceSearch), takeUntilDestroyed(this.destroyRef))
+            .subscribe((searchValue: string) => {
+                this.searchTerm = searchValue;
+                this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
+                this.queryBuilderService.update();
+            });
 
         this.queryBuilderService.updated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((searchRequest) => {
             if (searchRequest) {
@@ -663,7 +640,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     private isActionDisabledForFolder(folderId: string): boolean {
-        return this.DISABLE_ACTION_FOLDER_LIST.includes(folderId);
+        return this.disableActionFolderList.includes(folderId);
     }
 
     /**

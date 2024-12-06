@@ -441,7 +441,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const fakeNode = new Node({
                     id: 'fake-node',
                     path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] }
-                }) as Node;
+                });
                 component.chosenNode = [fakeNode];
                 component.documentList.currentFolderId = '-mysites-';
                 component.documentList.folderNode = fakeFolderNode;
