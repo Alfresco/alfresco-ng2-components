@@ -101,6 +101,10 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggles the provided actions. */
+    @Input()
+    showProvidedActions: boolean = false;
+
     /** Toggles main datatable actions. */
     @Input()
     showMainDatatableActions: boolean = false;
