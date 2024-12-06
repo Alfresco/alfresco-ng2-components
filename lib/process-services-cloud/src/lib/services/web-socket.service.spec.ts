@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { Apollo, gql } from 'apollo-angular';
-import { of, Subject } from 'rxjs';
+import { lastValueFrom, of, Subject } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -71,37 +71,35 @@ describe('WebSocketService', () => {
         apolloMock.createNamed.calls.reset();
     });
 
-    it('should not create a new Apollo client if it is already in use', (done) => {
+    it('should not create a new Apollo client if it is already in use', async () => {
         const apolloClientName = 'testClient';
         const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
         apolloMock.use.and.returnValues(true, { subscribe: () => of({}) });
 
-        service.getSubscription(wsOptions).subscribe(() => {
-            expect(apolloMock.use).toHaveBeenCalledTimes(2);
-            expect(apolloMock.use).toHaveBeenCalledWith(apolloClientName);
-            expect(apolloMock.createNamed).not.toHaveBeenCalled();
-            done();
-        });
+        await lastValueFrom(service.getSubscription(wsOptions));
+
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
+        expect(apolloMock.use).toHaveBeenCalledWith(apolloClientName);
+        expect(apolloMock.createNamed).not.toHaveBeenCalled();
     });
 
-    it('should subscribe to Apollo client if not already in use', (done) => {
+    it('should subscribe to Apollo client if not already in use', async () => {
         const apolloClientName = 'testClient';
         const expectedApolloClientName = 'testClient';
         const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
-        service.getSubscription(wsOptions).subscribe(() => {
-            expect(apolloMock.use).toHaveBeenCalledWith(expectedApolloClientName);
-            expect(apolloMock.use).toHaveBeenCalledTimes(2);
-            expect(apolloMock.createNamed).toHaveBeenCalledTimes(1);
-            expect(apolloMock.createNamed).toHaveBeenCalledWith(expectedApolloClientName, jasmine.any(Object));
-            done();
-        });
+        await lastValueFrom(service.getSubscription(wsOptions));
+
+        expect(apolloMock.use).toHaveBeenCalledWith(expectedApolloClientName);
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
+        expect(apolloMock.createNamed).toHaveBeenCalledTimes(1);
+        expect(apolloMock.createNamed).toHaveBeenCalledWith(expectedApolloClientName, jasmine.any(Object));
     });
 
-    it('should create named client with the right authentication token when FF is on', (done) => {
+    it('should create named client with the right authentication token when FF is on', async () => {
         let headers = {};
         const expectedHeaders = { Authorization: 'Bearer testToken' };
         const apolloClientName = 'testClient';
@@ -111,15 +109,14 @@ describe('WebSocketService', () => {
             headers = options.headers;
         });
 
-        service.getSubscription(wsOptions).subscribe(() => {
-            expect(apolloMock.use).toHaveBeenCalledTimes(2);
-            expect(apolloMock.createNamed).toHaveBeenCalled();
-            expect(headers).toEqual(expectedHeaders);
-            done();
-        });
+        await lastValueFrom(service.getSubscription(wsOptions));
+
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
+        expect(apolloMock.createNamed).toHaveBeenCalled();
+        expect(headers).toEqual(expectedHeaders);
     });
 
-    it('should create named client with the right authentication token when FF is off', (done) => {
+    it('should create named client with the right authentication token when FF is off', async () => {
         isOnSpy.and.returnValues(of(false));
         let headers = {};
         const expectedHeaders = { 'X-Authorization': 'Bearer testToken' };
@@ -130,11 +127,10 @@ describe('WebSocketService', () => {
             headers = options.headers;
         });
 
-        service.getSubscription(wsOptions).subscribe(() => {
-            expect(apolloMock.use).toHaveBeenCalledTimes(2);
-            expect(apolloMock.createNamed).toHaveBeenCalled();
-            expect(headers).toEqual(expectedHeaders);
-            done();
-        });
+        await lastValueFrom(service.getSubscription(wsOptions));
+
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
+        expect(apolloMock.createNamed).toHaveBeenCalled();
+        expect(headers).toEqual(expectedHeaders);
     });
 });
