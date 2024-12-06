@@ -16,6 +16,8 @@
  */
 
 .adf-new-version-uploader-dialog {
+    display: block;
+
     &-list {
         height: 400px;
     }
@@ -50,6 +52,7 @@
         display: flex;
         justify-content: flex-end;
         color: var(--adf-theme-foreground-text-color-054);
+        -webkit-font-smoothing: antialiased;
 
         button {
             text-transform: uppercase;
