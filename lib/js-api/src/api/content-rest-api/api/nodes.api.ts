@@ -963,6 +963,14 @@ export class NodesApi extends BaseApi {
         });
     }
 
+    /**
+     * Initiate a new request to calculate folder size.
+     *
+     * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
+     *
+     * @param nodeId Node Id
+     * @returns The job id which can be used to track request status
+     */
     initialFolderSizeCalculation(nodeId: string): Promise<JobIdBodyEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
 
@@ -976,6 +984,16 @@ export class NodesApi extends BaseApi {
             returnType: JobIdBodyEntry
         });
     }
+
+    /**
+     * Gets the size of a folder.
+     *
+     * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
+     *
+     * @param nodeId Node Id
+     * @param jobId Job Id
+     * @returns Folder details
+     */
 
     getFolderSizeInfo(nodeId: string, jobId: string): Promise<SizeDetailsEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
