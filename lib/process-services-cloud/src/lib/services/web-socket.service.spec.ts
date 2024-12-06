@@ -22,14 +22,14 @@ import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
-import { FeaturesServiceToken, IFeaturesService, provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
+import { FeaturesServiceToken } from '@alfresco/adf-core/feature-flags';
 
 describe('WebSocketService', () => {
     let service: WebSocketService;
-    let featureService: IFeaturesService;
     const onLogoutSubject: Subject<void> = new Subject<void>();
 
     const apolloMock = jasmine.createSpyObj('Apollo', ['use', 'createNamed']);
+    const isOnSpy = jasmine.createSpy('isOn$');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -52,12 +52,18 @@ describe('WebSocketService', () => {
                         onLogout: onLogoutSubject.asObservable()
                     }
                 },
-                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: true })
+                {
+                    provide: FeaturesServiceToken,
+                    useValue: {
+                        isOn$: isOnSpy
+                    }
+                }
             ]
         });
         service = TestBed.inject(WebSocketService);
-        featureService = TestBed.inject(FeaturesServiceToken);
+        TestBed.inject(FeaturesServiceToken);
         apolloMock.use.and.returnValues(undefined, { subscribe: () => of({}) });
+        isOnSpy.and.returnValues(of(true));
     });
 
     afterEach(() => {
@@ -114,7 +120,7 @@ describe('WebSocketService', () => {
     });
 
     it('should create named client with the right authentication token when FF is off', (done) => {
-        featureService.getFlags$ = jasmine.createSpy().and.returnValue(of({ 'studio-ws-graphql-subprotocol': { current: false } }));
+        isOnSpy.and.returnValues(of(false));
         let headers = {};
         const expectedHeaders = { 'X-Authorization': 'Bearer testToken' };
         const apolloClientName = 'testClient';

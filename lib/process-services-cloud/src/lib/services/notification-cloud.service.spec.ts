@@ -16,14 +16,19 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { NotificationCloudService } from './notification-cloud.service';
 import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 import { WebSocketService } from './web-socket.service';
+import { Apollo } from 'apollo-angular';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
 
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
     let wsService: WebSocketService;
+    const apolloMock = jasmine.createSpyObj('Apollo', ['use', 'createNamed']);
+    const onLogoutSubject: Subject<void> = new Subject<void>();
 
     const queryMock = `
         subscription {
@@ -38,8 +43,22 @@ describe('NotificationCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            providers: [WebSocketService, provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false })]
+            imports: [HttpClientTestingModule],
+            providers: [
+                WebSocketService,
+                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false }),
+                {
+                    provide: Apollo,
+                    useValue: apolloMock
+                },
+                {
+                    provide: AuthenticationService,
+                    useValue: {
+                        getToken: () => 'testToken',
+                        onLogout: onLogoutSubject.asObservable()
+                    }
+                }
+            ]
         });
         service = TestBed.inject(NotificationCloudService);
         wsService = TestBed.inject(WebSocketService);
