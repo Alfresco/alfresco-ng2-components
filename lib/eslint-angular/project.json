@@ -41,13 +41,7 @@
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
       "options": {
-        "cwd": "dist/libs/eslint-plugin-eslint-angular",
-        "commands": [
-          {
-            "command": "npm publish --tag {args.tag}",
-            "forwardAllArgs": true
-          }
-        ]
+        "command": "npm publish --tag {args.tag}"
       }
     }
   },
