@@ -16,7 +16,7 @@
  */
 
 import { createClient } from 'graphql-ws';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { inject, Inject, Injectable, Optional } from '@angular/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
@@ -38,10 +38,8 @@ import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { switchMap, take, tap } from 'rxjs/operators';
-import { AuthenticationService } from '@alfresco/adf-core';
+import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
 import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
-import { BaseCloudService } from './base-cloud.service';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 interface serviceOptions {
     apolloClientName: string;
@@ -53,20 +51,18 @@ interface serviceOptions {
 @Injectable({
     providedIn: 'root'
 })
-export class WebSocketService extends BaseCloudService {
+export class WebSocketService {
+    private appConfigService = inject(AppConfigService);
     private subscriptionProtocol: 'graphql-ws' | 'transport-ws' = 'transport-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
     private httpLinkHandler: HttpLinkHandler;
 
     constructor(
-        adfHttpClient: AdfHttpClient,
         private readonly apollo: Apollo,
         private readonly httpLink: HttpLink,
         private readonly authService: AuthenticationService,
         @Optional() @Inject(FeaturesServiceToken) private featuresService: IFeaturesService
-    ) {
-        super(adfHttpClient);
-    }
+    ) {}
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
         const { apolloClientName, subscriptionOptions } = options;
@@ -89,6 +85,10 @@ export class WebSocketService extends BaseCloudService {
                 return this.apollo.use(apolloClientName).subscribe<T>({ errorPolicy: 'all', ...subscriptionOptions });
             })
         );
+    }
+
+    private get contextRoot() {
+        return this.appConfigService.get('bpmHost', '');
     }
 
     private createWsUrl(serviceUrl: string): string {
