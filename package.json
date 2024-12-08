@@ -93,7 +93,7 @@
     "@nx/js": "16.10.0",
     "@nx/node": "16.10.0",
     "@nx/storybook": "19.6.2",
-    "@nx/workspace": "16.10.0",
+    "@nx/workspace": "20.2.1",
     "@paperist/types-remark": "0.1.3",
     "@playwright/test": "1.46.1",
     "@quanzo/change-font-size": "1.0.0",
