@@ -119,7 +119,7 @@
     "ajv": "^8.12.0",
     "commander": "12.0.0",
     "css-loader": "^7.1.2",
-    "dotenv": "16.4.5",
+    "dotenv": "16.4.7",
     "editorjs-html": "3.4.3",
     "editorjs-paragraph-with-alignment": "3.0.0",
     "editorjs-text-alignment-blocktune": "^1.0.3",
