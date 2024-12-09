@@ -45,7 +45,7 @@ export class BasicPropertiesService {
                 key: 'properties.cm:name',
                 editable: true,
                 validators: [
-                    new CardViewItemMatchValidator('[\\/\\*\\\\"\\\\]')
+                    new CardViewItemMatchValidator('[\\/\\*\\\\"\\\\:]')
                 ]
             }),
             new CardViewTextItemModel({
