@@ -232,7 +232,7 @@ describe('ColumnsSelectorComponent', () => {
             const column: DataColumn = {
                 id: 'shownDataColumn',
                 title: 'title',
-                subTitle: 'subtitle',
+                subtitle: 'subtitle',
                 key: 'shownDataColumn',
                 type: 'text'
             };

@@ -27,7 +27,7 @@ export interface DataColumn<T = unknown> {
     format?: string;
     sortable?: boolean;
     title?: string;
-    subTitle?: string;
+    subtitle?: string;
     srTitle?: string;
     cssClass?: string;
     template?: TemplateRef<any>;

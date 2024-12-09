@@ -89,11 +89,11 @@
                     </span>
 
                     <span
-                        *ngIf="col.subTitle"
-                        title="{{col.subTitle | translate}}"
+                        *ngIf="col.subtitle"
+                        title="{{col.subtitle | translate}}"
                         class="adf-datatable-cell-value adf-datatable-cell-header_subtitle"
                     >
-                        ({{col.subTitle | translate}})
+                        ({{col.subtitle | translate}})
                     </span>
 
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
