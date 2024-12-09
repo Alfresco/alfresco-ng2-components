@@ -58,7 +58,7 @@ export class ColumnsSelectorComponent implements OnInit {
     columnItems: DataColumn[] = [];
     searchInputControl = new UntypedFormControl('');
     searchQuery = '';
-    
+
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
