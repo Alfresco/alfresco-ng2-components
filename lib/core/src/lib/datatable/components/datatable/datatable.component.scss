@@ -320,7 +320,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
     }
 
-    .adf-datatable-actions-menu {
+    .adf-datatable-row .adf-datatable-actions-menu {
         margin-left: auto;
         justify-content: end;
         padding-right: 15px;
@@ -333,7 +333,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         &-provided {
-            max-width: 100px !important;
+            max-width: 100px;
             justify-content: center;
             padding-right: 0;
         }
