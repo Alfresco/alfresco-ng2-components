@@ -333,7 +333,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         &-provided {
-            max-width: 100px;
+            /* stylelint-disable declaration-no-important */
+            max-width: 100px !important;
             justify-content: center;
             padding-right: 0;
         }
