@@ -36,6 +36,7 @@ interface PackageInfo {
     name: string;
     description: string;
     version: string;
+    dependencies: Record<string, string>;
 }
 
 const nonStandardLicenses = {
@@ -135,6 +136,8 @@ export default function main(_args: string[], workingDir: string) {
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
+        const packageJsonFile = getPackageFile(packagePath);
+        const mainDependencies = Object.keys(packageJsonFile.dependencies || {});
 
         checker.init(
             {
@@ -147,29 +150,34 @@ export default function main(_args: string[], workingDir: string) {
                     console.error(err);
                     reject(err);
                 } else {
+                    const filteredPackages = {};
+
                     // eslint-disable-next-line guard-for-in
                     for (const packageName in packages) {
                         const pack = packages[packageName];
-                        pack['licenseExp'] = pack['licenses']
-                            .toString()
-                            .replace(/\*/g, '')
-                            .replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
-                                const lowerMatch = match.toLowerCase();
 
-                                if (lowerMatch !== 'and' && lowerMatch !== 'or' && lowerMatch !== 'with') {
-                                    return licenseWithMDLinks(match);
-                                } else {
-                                    return match;
-                                }
-                            });
+                        const lastAtSignPos = packageName.lastIndexOf('@');
+                        const basePackageName = packageName.substring(0, lastAtSignPos);
 
-                        if (!pack['repository']) {
-                            const lastAtSignPos = packageName.lastIndexOf('@');
-                            const mainName = packageName.substring(0, lastAtSignPos);
+                        if (mainDependencies.includes(basePackageName)) {
+                            pack['licenseExp'] = pack['licenses']
+                                .toString()
+                                .replace(/\*/g, '')
+                                .replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
+                                    const lowerMatch = match.toLowerCase();
+                                    if (lowerMatch !== 'and' && lowerMatch !== 'or' && lowerMatch !== 'with') {
+                                        return licenseWithMDLinks(match);
+                                    } else {
+                                        return match;
+                                    }
+                                });
 
-                            if (missingRepositories[mainName]) {
-                                pack['repository'] = missingRepositories[mainName];
-                            }
+                            filteredPackages[packageName] = pack;
+                        }
+
+                        if (!pack['repository'] && missingRepositories[basePackageName]) {
+                            pack['repository'] = missingRepositories[basePackageName];
+                            filteredPackages[packageName] = pack;
                         }
                     }
 
@@ -178,7 +186,7 @@ export default function main(_args: string[], workingDir: string) {
                     ejs.renderFile(
                         templatePath,
                         {
-                            packages,
+                            filteredPackages,
                             projVersion: packageJson.version,
                             projName: packageJson.name
                         },
