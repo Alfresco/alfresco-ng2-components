@@ -245,7 +245,7 @@ describe('ColumnsSelectorComponent', () => {
 
             const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
             const labeTextOne = await checkboxes[0].getLabelText();
-            expect(labeTextOne).toBe(`${column.title}  device_hub  ${column.subTitle}`);
+            expect(labeTextOne).toBe(`${column.title}  device_hub  ${column.subtitle}`);
         });
     });
 });
