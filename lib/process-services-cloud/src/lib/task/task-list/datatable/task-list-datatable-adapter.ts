@@ -21,7 +21,7 @@ import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model'
 
 export class TasksListDatatableAdapter extends ObjectDataTableAdapter {
     constructor(data: TaskInstanceCloudListViewModel[], schema: DataColumn<ProcessListDataColumnCustomData>[]) {
-        super(data, schema);
+        super(data, schema, 'server');
     }
 
     getColumnType(row: DataRow, col: DataColumn<ProcessListDataColumnCustomData>): string {
