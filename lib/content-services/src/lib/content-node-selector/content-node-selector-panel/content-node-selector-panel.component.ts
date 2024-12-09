@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     CustomEmptyContentTemplateDirective,
     DataColumnComponent,
@@ -40,24 +30,9 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import {
-    FileUploadCompleteEvent,
-    FileUploadDeleteEvent,
-    NodesApiService,
-    SitesService,
-    UploadService
-} from '../../common';
+import { FileUploadCompleteEvent, FileUploadDeleteEvent, NodesApiService, SitesService, UploadService } from '../../common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import {
-    Node,
-    NodeEntry,
-    NodePaging,
-    Pagination,
-    RequestScope,
-    SearchRequest,
-    SiteEntry,
-    SitePaging
-} from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, Pagination, RequestScope, SearchRequest, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
 import { RowFilter } from '../../document-list/data/row-filter.model';
 import { ImageResolver } from '../../document-list/data/image-resolver.model';
@@ -123,6 +98,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         maxItems: 25,
         skipCount: 0
     });
+
+    readonly disableActionFolderList = ['-mysites-'];
 
     private showSiteList = true;
     private showSearchField = true;
@@ -358,11 +335,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch), takeUntilDestroyed(this.destroyRef)).subscribe((searchValue: string) => {
-            this.searchTerm = searchValue;
-            this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
-            this.queryBuilderService.update();
-        });
+        this.searchInput.valueChanges
+            .pipe(debounceTime(this.debounceSearch), takeUntilDestroyed(this.destroyRef))
+            .subscribe((searchValue: string) => {
+                this.searchTerm = searchValue;
+                this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
+                this.queryBuilderService.update();
+            });
 
         this.queryBuilderService.updated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((searchRequest) => {
             if (searchRequest) {
@@ -461,7 +440,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this._excludeSiteContent?.length && entry && entry.properties?.['st:componentId']) {
+        if (this._excludeSiteContent?.length && entry?.properties?.['st:componentId']) {
             const excludedItem = this._excludeSiteContent.find((id: string) => entry.properties['st:componentId'] === id);
             return !!excludedItem;
         }
@@ -655,9 +634,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * @param entry node entry
      */
     private attemptNodeSelection(entry: Node): void {
-        if (entry && this.isSelectionValid(entry)) {
+        if (entry && this.isSelectionValid(entry) && !this.isActionDisabledForFolder(this.documentList.currentFolderId)) {
             this.chosenNode = [entry];
         }
+    }
+
+    private isActionDisabledForFolder(folderId: string): boolean {
+        return this.disableActionFolderList.includes(folderId);
     }
 
     /**

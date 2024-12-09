@@ -37,11 +37,13 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { DebugElement } from '@angular/core';
+import { FormUtilsService } from '../../../services/form-utils.service';
 
 describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
+    let formUtilsService: FormUtilsService;
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
     let loader: HarnessLoader;
@@ -56,6 +58,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         formService = TestBed.inject(FormService);
         formCloudService = TestBed.inject(FormCloudService);
+        formUtilsService = TestBed.inject(FormUtilsService);
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
@@ -63,7 +66,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('Simple Dropdown', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
@@ -89,6 +92,26 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field = getFieldConfig('rest', 'fake-rest-url');
             widget.ngOnInit();
             expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
+        });
+
+        it('should call getRestWidgetData with correct body parameters when body is empty', () => {
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
+            widget.field.optionType = 'rest';
+
+            widget.ngOnInit();
+            expect(formCloudService.getRestWidgetData).toHaveBeenCalledWith('form-id', 'dropdown-id', {});
+        });
+
+        it('should call getRestWidgetData with correct body parameters when variables are mapped', () => {
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
+            widget.field.optionType = 'rest';
+            const body = { var1: 'value1', var2: 'value2' };
+            spyOn(formUtilsService, 'getRestUrlVariablesMap').and.returnValue(body);
+
+            widget.ngOnInit();
+
+            expect(formUtilsService.getRestUrlVariablesMap).toHaveBeenCalledWith(widget.field.form, widget.field.restUrl, {});
+            expect(formCloudService.getRestWidgetData).toHaveBeenCalledWith('form-id', 'dropdown-id', body);
         });
 
         it('should select the default value when an option is chosen as default', async () => {
@@ -623,6 +646,9 @@ describe('DropdownCloudWidgetComponent', () => {
                 await dropdown.open();
                 const allOptions = await dropdown.getOptions();
 
+                expect(formCloudService.getRestWidgetData).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', {
+                    parentDropdown: 'mock-value'
+                });
                 expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
                 expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('LO');
                 expect(await allOptions[0].getText()).toEqual('LONDON');

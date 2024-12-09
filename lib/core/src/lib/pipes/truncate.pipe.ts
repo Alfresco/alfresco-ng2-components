@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-import { gql } from '@apollo/client/core';
-import { Injectable } from '@angular/core';
-import { WebSocketService } from './web-socket.service';
-@Injectable({
-    providedIn: 'root'
-})
-export class NotificationCloudService {
-    constructor(private readonly webSocketService: WebSocketService) {}
+import { Pipe, PipeTransform } from '@angular/core';
 
-    makeGQLQuery(appName: string, gqlQuery: string) {
-        return this.webSocketService.getSubscription({
-            apolloClientName: appName,
-            wsUrl: `${appName}/notifications`,
-            httpUrl: `${appName}/notifications/graphql`,
-            subscriptionOptions: {
-                query: gql(gqlQuery)
-            }
-        });
+@Pipe({
+    standalone: true,
+    name: 'truncate'
+})
+export class TruncatePipe implements PipeTransform {
+    transform(value: string, maxTextLength = 250, ellipsis = '...') {
+        return value?.length > maxTextLength ? value.slice(0, maxTextLength) + ellipsis : value;
     }
 }

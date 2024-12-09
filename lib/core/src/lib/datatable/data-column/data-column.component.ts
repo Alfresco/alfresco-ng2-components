@@ -76,6 +76,9 @@ export class DataColumnComponent implements OnInit {
     @Input()
     title: string = '';
 
+    @Input()
+    subtitle: string = '';
+
     @ContentChild(TemplateRef)
     template: any;
 

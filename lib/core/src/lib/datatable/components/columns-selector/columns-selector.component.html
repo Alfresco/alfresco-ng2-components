@@ -45,7 +45,23 @@
                 [checked]="!column.isHidden"
                 [disabled]="isCheckboxDisabled(column)"
                 (change)="changeColumnVisibility(column)">
-                <div class="adf-columns-selector-list-content">{{column.title | translate}}</div>
+                <div class="adf-columns-selector-list-content">
+                    {{column.title | translate}}
+                </div>
+                <div
+                    *ngIf="column.subtitle"
+                    class="
+                        adf-columns-selector-list-content
+                        adf-columns-selector-subtitle
+                    "
+                >
+                    <mat-icon class="adf-columns-selector-subtitle-icon">
+                        device_hub
+                    </mat-icon>
+                    <span>
+                        {{column.subtitle | translate}}
+                    </span>
+                </div>
             </mat-checkbox>
         </div>
     </div>

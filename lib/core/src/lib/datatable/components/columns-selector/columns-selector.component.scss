@@ -27,8 +27,7 @@ $adf-columns-selector-space: 12px;
 
     &-list-container {
         max-height: 350px;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden auto;
     }
 
     &-list-item {
@@ -45,6 +44,22 @@ $adf-columns-selector-space: 12px;
         text-overflow: ellipsis;
         display: block;
         width: 210px;
+    }
+
+    &-subtitle {
+        color: var(--adf-theme-foreground-text-color);
+        font-size: var(--theme-caption-font-size);
+        opacity: 0.6;
+        display: flex;
+        column-gap: 3px;
+        align-items: center;
+    }
+
+    &-subtitle-icon {
+        margin-top: 3px;
+        height: var(--theme-caption-font-size);
+        width: var(--theme-caption-font-size);
+        font-size: var(--theme-caption-font-size);
     }
 
     &-column-checkbox {

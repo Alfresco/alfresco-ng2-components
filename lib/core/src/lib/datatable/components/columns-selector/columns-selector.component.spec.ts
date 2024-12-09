@@ -153,10 +153,10 @@ describe('ColumnsSelectorComponent', () => {
         const checkBoxName = await firstColumnCheckbox.getLabelText();
 
         const toggledColumnItem = component.columnItems.find((item) => item.title === checkBoxName);
-        expect(toggledColumnItem.isHidden).toBeFalsy();
+        expect(toggledColumnItem?.isHidden).toBe(undefined);
 
         await firstColumnCheckbox.toggle();
-        expect(toggledColumnItem.isHidden).toBe(true);
+        expect(toggledColumnItem?.isHidden).toBeTrue();
     });
 
     describe('checkboxes', () => {
@@ -207,9 +207,11 @@ describe('ColumnsSelectorComponent', () => {
             fixture.detectChanges();
 
             const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+            const labeTextOne = await checkboxes[0].getLabelText();
+            const labeTextTwo = await checkboxes[1].getLabelText();
 
-            expect(await checkboxes[0].getLabelText()).toBe(shownDataColumn.title);
-            expect(await checkboxes[1].getLabelText()).toBe(hiddenDataColumn.title);
+            expect(labeTextOne).toBe(shownDataColumn.title!);
+            expect(labeTextTwo).toBe(hiddenDataColumn.title!);
         });
 
         it('should NOT show hidden columns at the end of the list if sorting is disabled', async () => {
@@ -219,9 +221,31 @@ describe('ColumnsSelectorComponent', () => {
             fixture.detectChanges();
 
             const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+            const labeTextOne = await checkboxes[0].getLabelText();
+            const labeTextTwo = await checkboxes[1].getLabelText();
 
-            expect(await checkboxes[0].getLabelText()).toBe(hiddenDataColumn.title);
-            expect(await checkboxes[1].getLabelText()).toBe(shownDataColumn.title);
+            expect(labeTextOne).toBe(hiddenDataColumn.title!);
+            expect(labeTextTwo).toBe(shownDataColumn.title!);
+        });
+
+        it('should show subtitle', async () => {
+            const column: DataColumn = {
+                id: 'shownDataColumn',
+                title: 'title',
+                subtitle: 'subtitle',
+                key: 'shownDataColumn',
+                type: 'text'
+            };
+
+            component.columns = [column];
+
+            component.columnsSorting = false;
+            menuOpenedTrigger.next();
+            fixture.detectChanges();
+
+            const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+            const labeTextOne = await checkboxes[0].getLabelText();
+            expect(labeTextOne).toBe(`${column.title}  device_hub  ${column.subtitle}`);
         });
     });
 });

@@ -109,6 +109,10 @@ export class ProcessListCloudComponent
     @Input()
     name: string = '';
 
+    /** Filter the processes to display only the ones with this parentId. */
+    @Input()
+    parentId?: string;
+
     /** Filter the processes to display only the ones with this process definition ID. */
     @Input()
     processDefinitionId: string = '';
@@ -188,6 +192,10 @@ export class ProcessListCloudComponent
     @Input()
     showActions: boolean = false;
 
+    /** Toggles the provided actions. */
+    @Input()
+    showProvidedActions: boolean = false;
+
     /** Position of the actions dropdown menu. Can be "left" or "right". */
     @Input()
     actionsPosition: string = 'right'; // left|right
@@ -213,7 +221,28 @@ export class ProcessListCloudComponent
      * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
-    names: string[] = [];
+    processNames: string[] = [];
+
+    /**
+     * Filter the processes. Display only processes with instance Ids matching any of the supplied strings.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processInstanceIds: string[] = [];
+
+    /**
+     * Filter the processes. Display only processes with parent Ids matching any of the supplied strings.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    parentIds: string[] = [];
+
+    /**
+     * Filter the processes. Display only processes with definition names matching any of the supplied strings.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processDefinitionNames: string[] = [];
 
    /**
     * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
@@ -536,7 +565,10 @@ export class ProcessListCloudComponent
                 skipCount: this.skipCount
             },
             sorting: this.getProcessListRequestSorting(),
-            name: this.names,
+            processName: this.processNames,
+            processInstanceId: this.processInstanceIds,
+            parentId: this.parentIds,
+            processDefinitionName: this.processDefinitionNames,
             initiator: this.initiators,
             appVersion: this.appVersions,
             status: this.statuses,
@@ -598,6 +630,7 @@ export class ProcessListCloudComponent
             id: this.id,
             environmentId: this.environmentId,
             name: this.name,
+            parentId: this.parentId,
             processDefinitionId: this.processDefinitionId,
             processDefinitionName: this.processDefinitionName,
             processDefinitionKey: this.processDefinitionKey,

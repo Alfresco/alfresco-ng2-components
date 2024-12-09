@@ -437,6 +437,19 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(fakeNodePage.list.pagination.hasMoreItems).toBe(false);
             });
 
+            it('should not update chosen node if currently selected location is within the DISABLE_ACTION_FOLDER_LIST property', () => {
+                const fakeNode = new Node({
+                    id: 'fake-node',
+                    path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] }
+                });
+                component.chosenNode = [fakeNode];
+                component.documentList.currentFolderId = '-mysites-';
+                component.documentList.folderNode = fakeFolderNode;
+                component.onFolderLoaded(nodePage);
+                expect(component.chosenNode).not.toEqual([fakeFolderNode]);
+                expect(component.chosenNode).toEqual([fakeNode]);
+            });
+
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {
                 beforeEach(() => {
                     component.isSelectionValid = returnHasPermission;

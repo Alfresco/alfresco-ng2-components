@@ -27,6 +27,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     format: string;
     sortable: boolean;
     title: string;
+    subtitle?: string;
     srTitle: string;
     cssClass: string;
     template?: TemplateRef<any>;
@@ -43,6 +44,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     currencyConfig?: CurrencyConfig;
     decimalConfig?: DecimalConfig;
     dateConfig?: DateConfig;
+    maxTextLength?: number;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -51,6 +53,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.format = input.format;
         this.sortable = input.sortable;
         this.title = input.title;
+        this.subtitle = input.subtitle;
         this.srTitle = input.srTitle;
         this.cssClass = input.cssClass;
         this.template = input.template;
@@ -67,5 +70,6 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.currencyConfig = input.currencyConfig;
         this.decimalConfig = input.decimalConfig;
         this.dateConfig = input.dateConfig;
+        this.maxTextLength = input.maxTextLength;
     }
 }

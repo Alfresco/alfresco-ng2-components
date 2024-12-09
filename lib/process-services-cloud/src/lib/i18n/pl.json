@@ -253,6 +253,7 @@
       "SUSPENDED_DATE": "Data zawieszenia",
       "STARTED_BY": "Uruchomione przez",
       "COMPLETED_DATE": "Data ukończenia",
+      "MAIN_PROCESS_ID": "Main process id",
       "DATE_RANGE": {
         "NO_DATE": "Brak daty",
         "TODAY": "Dzisiaj",

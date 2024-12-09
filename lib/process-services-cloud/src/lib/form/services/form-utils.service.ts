@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * @license
  * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
@@ -15,23 +15,18 @@
  * limitations under the License.
  */
 
-import { gql } from '@apollo/client/core';
 import { Injectable } from '@angular/core';
-import { WebSocketService } from './web-socket.service';
+import { FormModel, FormVariableModel } from '@alfresco/adf-core';
+
 @Injectable({
     providedIn: 'root'
 })
-export class NotificationCloudService {
-    constructor(private readonly webSocketService: WebSocketService) {}
-
-    makeGQLQuery(appName: string, gqlQuery: string) {
-        return this.webSocketService.getSubscription({
-            apolloClientName: appName,
-            wsUrl: `${appName}/notifications`,
-            httpUrl: `${appName}/notifications/graphql`,
-            subscriptionOptions: {
-                query: gql(gqlQuery)
-            }
-        });
+export class FormUtilsService {
+    getRestUrlVariablesMap(formModel: FormModel, restUrl: string, inputBody: { [key: string]: any }) {
+        return formModel.variables.reduce((map: { [key: string]: any }, variable: FormVariableModel) => {
+            const variablePattern = new RegExp(`\\$\\{${variable.name}\\}`);
+            if (variablePattern.test(restUrl)) map[variable.name] = formModel.getProcessVariableValue(variable.name);
+            return map;
+        }, inputBody);
     }
 }

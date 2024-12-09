@@ -253,6 +253,7 @@
       "SUSPENDED_DATE": "Fecha de suspensión",
       "STARTED_BY": "Iniciado por",
       "COMPLETED_DATE": "Fecha completada",
+      "MAIN_PROCESS_ID": "Main process id",
       "DATE_RANGE": {
         "NO_DATE": "Sin fecha",
         "TODAY": "Hoy",

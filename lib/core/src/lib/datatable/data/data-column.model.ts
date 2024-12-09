@@ -27,6 +27,7 @@ export interface DataColumn<T = unknown> {
     format?: string;
     sortable?: boolean;
     title?: string;
+    subtitle?: string;
     srTitle?: string;
     cssClass?: string;
     template?: TemplateRef<any>;
@@ -45,6 +46,7 @@ export interface DataColumn<T = unknown> {
     currencyConfig?: CurrencyConfig;
     decimalConfig?: DecimalConfig;
     dateConfig?: DateConfig;
+    maxTextLength?: number;
 }
 
 export interface LocaleConfig {
