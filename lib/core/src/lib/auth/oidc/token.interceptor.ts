@@ -32,9 +32,6 @@ import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
  * https://github.com/manfredsteyer/angular-oauth2-oidc/blob/15.0.0/projects/lib/src/oauth-service.ts#L2555
  *
  * See the related issue: https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1443
- *
- * @implements {HttpInterceptor}
- * @class
  * @function intercept
  * @param {HttpRequest<unknown>} request - The outgoing HTTP request.
  * @param {HttpHandler} next - The next handler in the HTTP request chain.

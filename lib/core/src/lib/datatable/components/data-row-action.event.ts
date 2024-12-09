@@ -19,7 +19,6 @@ import { BaseEvent } from '../../events';
 import { DataRow } from '../data/data-row.model';
 
 export class DataRowActionModel {
-
     row: DataRow;
     action: any;
 
@@ -30,7 +29,6 @@ export class DataRowActionModel {
 }
 
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
-
     // backwards compatibility with 1.2.0 and earlier
     get args(): DataRowActionModel {
         return this.value;
@@ -40,5 +38,4 @@ export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
         super();
         this.value = new DataRowActionModel(row, action);
     }
-
 }

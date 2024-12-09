@@ -26,13 +26,11 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * UnfiledRecordFoldersApi service.
- *
  * @module UnfiledRecordFoldersApi
  */
 export class UnfiledRecordFoldersApi extends BaseApi {
     /**
      * Create a record or an unfiled record folder
-     *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
      * @param nodeBodyCreate The node information to create.
      * @param opts Optional parameters
@@ -71,7 +69,6 @@ export class UnfiledRecordFoldersApi extends BaseApi {
 
     /**
      * Delete an unfiled record folder. Deleted file plan components cannot be recovered, they are deleted permanently.
-     *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
      * @returns Promise<{}>
      */
@@ -93,7 +90,6 @@ export class UnfiledRecordFoldersApi extends BaseApi {
      *
      * Mandatory fields and the unfiled record folder's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
      * @param opts Optional parameters
      * @param opts.relativePath Return information on children in the unfiled records container resolved by this path. The path is relative to **unfiledRecordFolderId**.
@@ -130,7 +126,6 @@ export class UnfiledRecordFoldersApi extends BaseApi {
      *
      * Minimal information for each child is returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list. Here are some examples:
@@ -177,7 +172,6 @@ export class UnfiledRecordFoldersApi extends BaseApi {
     /**
      * Updates unfiled record folder **unfiledRecordFolderId**.
      * For example, you can rename a record folder:
-     *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
      * @param unfiledRecordFolderBodyUpdate The record folder information to update.
      * @param opts Optional parameters

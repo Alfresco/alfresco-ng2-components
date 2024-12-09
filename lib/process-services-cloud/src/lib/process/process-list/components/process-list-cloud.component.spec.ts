@@ -79,7 +79,7 @@ describe('ProcessListCloudComponent', () => {
     const configureTestingModule = (providers: any[]) => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
-            providers: providers
+            providers
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);

@@ -30,7 +30,6 @@ export class FavoritesApi extends BaseApi {
      *
      * Favorite a **site**, **file**, or **folder** in the repository.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param favoriteBodyCreate An object identifying the entity to be favorited.
      * The object consists of a single property which is an object with the name site, file, or folder.
@@ -76,7 +75,6 @@ export class FavoritesApi extends BaseApi {
      * Create a site favorite
      *
      * **Note:** this endpoint is deprecated as of Alfresco 4.2, and will be removed in the future. Use /people/{personId}/favorites instead.
-     *
      * @param personId The identifier of a person.
      * @param favoriteSiteBodyCreate The id of the site to favorite.
      * @param opts Optional parameters
@@ -106,7 +104,6 @@ export class FavoritesApi extends BaseApi {
      * Delete a favorite
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param favoriteId The identifier of a favorite.
      * @returns Promise<{}>
@@ -133,7 +130,6 @@ export class FavoritesApi extends BaseApi {
      * Use /people/{personId}/favorites/{favoriteId} instead.
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @returns Promise<{}>
@@ -158,7 +154,6 @@ export class FavoritesApi extends BaseApi {
      *
      * Gets favorite **favoriteId** for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param favoriteId The identifier of a favorite.
      * @param opts Optional parameters
@@ -201,7 +196,6 @@ export class FavoritesApi extends BaseApi {
      * Use /people/{personId}/favorites/{favoriteId} instead.
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
@@ -240,7 +234,6 @@ export class FavoritesApi extends BaseApi {
      * Use /people/{personId}/favorites instead.
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @returns Promise<SitePaging>
@@ -271,7 +264,6 @@ export class FavoritesApi extends BaseApi {
      *
      * Gets a list of favorites for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param opts optional parameters
      * @returns Promise<FavoritePaging>

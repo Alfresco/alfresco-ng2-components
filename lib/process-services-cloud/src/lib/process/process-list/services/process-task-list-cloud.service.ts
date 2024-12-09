@@ -27,7 +27,6 @@ import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.mod
 export class ProcessTaskListCloudService extends BaseCloudService {
     /**
      * Finds a task using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Task information
@@ -57,7 +56,6 @@ export class ProcessTaskListCloudService extends BaseCloudService {
 
     /**
      * Retrieves a list of tasks using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns List of tasks

@@ -17,4 +17,4 @@
 
 import { SecurityMark } from './securityMark';
 
-export interface SecurityMarks extends Array<SecurityMark> {}
+export type SecurityMarks = Array<SecurityMark>;

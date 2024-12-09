@@ -40,7 +40,6 @@ describe('UserAccessService', () => {
 
     /**
      * spy on auth realm access
-     *
      * @param realmRoles roles
      * @param resourceAccess access settings
      */
@@ -54,7 +53,6 @@ describe('UserAccessService', () => {
 
     /**
      * spy on HxP authorisation
-     *
      * @param appkey app key
      * @param roles roles list
      */

@@ -69,10 +69,7 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(
-            appConfigService as AppConfigService,
-            externalPrefixFactory
-        );
+        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService, externalPrefixFactory);
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe('prefix-from-factory');
@@ -95,10 +92,7 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(
-            appConfigService as AppConfigService,
-            externalPrefixFactory
-        );
+        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService, externalPrefixFactory);
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);

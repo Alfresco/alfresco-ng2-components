@@ -11,7 +11,7 @@
         "skipLibCheck": true,
         "baseUrl": "src",
         "types": [
-            "node"
+            "node", "@typescript-eslint/utils"
         ]
     },
     "include": [

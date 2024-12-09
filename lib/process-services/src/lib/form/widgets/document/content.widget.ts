@@ -130,7 +130,6 @@ export class ContentWidgetComponent implements OnChanges {
 
     /**
      * Invoke content download.
-     *
      * @param content content link model
      */
     download(content: ContentLinkModel): void {

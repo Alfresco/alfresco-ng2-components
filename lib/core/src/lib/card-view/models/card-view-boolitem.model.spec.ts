@@ -19,7 +19,6 @@ import { CardViewBoolItemModel } from './card-view-boolitem.model';
 import { CardViewBoolItemProperties } from '../interfaces/card-view.interfaces';
 
 describe('CardViewFloatItemModel', () => {
-
     let properties: CardViewBoolItemProperties;
 
     beforeEach(() => {

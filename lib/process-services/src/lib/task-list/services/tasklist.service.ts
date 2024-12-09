@@ -64,7 +64,6 @@ export class TaskListService {
 
     /**
      * Gets all the filters in the list that belong to a task.
-     *
      * @param taskId ID of the target task
      * @param filterList List of filters to search through
      * @returns Filters belonging to the task
@@ -78,7 +77,6 @@ export class TaskListService {
 
     /**
      * Checks if a taskId is filtered with the given filter.
-     *
      * @param taskId ID of the target task
      * @param filterModel The filter you want to check
      * @returns The filter if it is related or null otherwise
@@ -97,7 +95,6 @@ export class TaskListService {
 
     /**
      * Gets all the tasks matching the supplied query.
-     *
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
@@ -107,7 +104,6 @@ export class TaskListService {
 
     /**
      * Gets tasks matching a query and state value.
-     *
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
@@ -117,7 +113,6 @@ export class TaskListService {
 
     /**
      * Gets details for a task.
-     *
      * @param taskId ID of the target task.
      * @returns Task details
      */
@@ -127,7 +122,6 @@ export class TaskListService {
 
     /**
      * Gets the checklist for a task.
-     *
      * @param id ID of the target task
      * @returns Array of checklist task details
      */
@@ -137,7 +131,6 @@ export class TaskListService {
 
     /**
      * Gets all available reusable forms.
-     *
      * @returns Array of form details
      */
     getFormList(): Observable<Form[]> {
@@ -152,7 +145,6 @@ export class TaskListService {
 
     /**
      * Attaches a form to a task.
-     *
      * @param taskId ID of the target task
      * @param formId ID of the form to add
      * @returns Null response notifying when the operation is complete
@@ -163,7 +155,6 @@ export class TaskListService {
 
     /**
      * Adds a subtask (ie, a checklist task) to a parent task.
-     *
      * @param task The task to add
      * @returns The subtask that was added
      */
@@ -173,7 +164,6 @@ export class TaskListService {
 
     /**
      * Deletes a subtask (ie, a checklist task) from a parent task.
-     *
      * @param taskId The task to delete
      * @returns Null response notifying when the operation is complete
      */
@@ -183,7 +173,6 @@ export class TaskListService {
 
     /**
      * Deletes a form from a task.
-     *
      * @param taskId Task id related to form
      * @returns Null response notifying when the operation is complete
      */
@@ -193,7 +182,6 @@ export class TaskListService {
 
     /**
      * Gives completed status to a task.
-     *
      * @param taskId ID of the target task
      * @returns Null response notifying when the operation is complete
      */
@@ -203,7 +191,6 @@ export class TaskListService {
 
     /**
      * Creates a new standalone task.
-     *
      * @param task Details of the new task
      * @returns Details of the newly created task
      */
@@ -213,7 +200,6 @@ export class TaskListService {
 
     /**
      * Assigns a task to a user or group.
-     *
      * @param taskId The task to assign
      * @param requestNode User or group to assign the task to
      * @returns Details of the assigned task
@@ -225,7 +211,6 @@ export class TaskListService {
 
     /**
      * Assigns a task to a user.
-     *
      * @param taskId ID of the task to assign
      * @param userId ID of the user to assign the task to
      * @returns Details of the assigned task
@@ -238,7 +223,6 @@ export class TaskListService {
 
     /**
      * Claims a task for the current user.
-     *
      * @param taskId ID of the task to claim
      * @returns Details of the claimed task
      */
@@ -248,7 +232,6 @@ export class TaskListService {
 
     /**
      * Un-claims a task for the current user.
-     *
      * @param taskId ID of the task to unclaim
      * @returns Null response notifying when the operation is complete
      */
@@ -258,7 +241,6 @@ export class TaskListService {
 
     /**
      * Updates the details (name, description, due date) for a task.
-     *
      * @param taskId ID of the task to update
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      * @returns Updated task details
@@ -269,7 +251,6 @@ export class TaskListService {
 
     /**
      * Fetches the Task Audit information in PDF format.
-     *
      * @param taskId ID of the target task
      * @returns Binary PDF data
      */
@@ -279,7 +260,6 @@ export class TaskListService {
 
     /**
      * Fetch the Task Audit information in JSON format
-     *
      * @param taskId ID of the target task
      * @returns JSON data
      */

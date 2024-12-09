@@ -166,11 +166,9 @@ describe('LogService', () => {
     it('message Observable', fakeAsync(() => {
         appConfigService.config['logLevel'] = 'trace';
 
-        providesLogComponent.componentInstance.logService.onMessage.subscribe(
-            (message) => {
-                expect(message).toEqual({ text: 'Test message', type: 'LOG' });
-            }
-        );
+        providesLogComponent.componentInstance.logService.onMessage.subscribe((message) => {
+            expect(message).toEqual({ text: 'Test message', type: 'LOG' });
+        });
 
         providesLogComponent.componentInstance.log();
     }));

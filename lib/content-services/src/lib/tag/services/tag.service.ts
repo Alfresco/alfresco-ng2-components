@@ -44,7 +44,6 @@ export class TagService {
 
     /**
      * Gets a list of tags added to a node.
-     *
      * @param nodeId ID of the target node
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
@@ -54,7 +53,6 @@ export class TagService {
 
     /**
      * Gets a list of all the tags already defined in the repository.
-     *
      * @param opts Options supported by JS-API
      * @param includedCounts True if count field should be included in response object for each tag, false otherwise.
      * @returns TagPaging object (defined in JS-API) containing the tags
@@ -70,7 +68,6 @@ export class TagService {
 
     /**
      * Adds a tag to a node.
-     *
      * @param nodeId ID of the target node
      * @param tagName Name of the tag to add
      * @returns TagEntry object (defined in JS-API) with details of the new tag
@@ -84,7 +81,6 @@ export class TagService {
 
     /**
      * Removes a tag from a node.
-     *
      * @param nodeId ID of the target node
      * @param tag Name of the tag to remove
      * @returns Null object when the operation completes
@@ -95,7 +91,6 @@ export class TagService {
 
     /**
      * Creates tags.
-     *
      * @param tags list of tags to create.
      * @returns Created tags.
      */
@@ -105,7 +100,6 @@ export class TagService {
 
     /**
      * Update a tag
-     *
      * @param tagId The identifier of a tag.
      * @param tagBody The updated tag.
      * @returns Updated tag.
@@ -116,7 +110,6 @@ export class TagService {
 
     /**
      * Find tags which name contains searched name.
-     *
      * @param name Value for name which should be used during searching tags.
      * @param sorting Object which configures sorting. OrderBy field specifies field used for sorting, direction specified ascending or descending direction.
      * Default sorting is ascending by tag field.
@@ -147,7 +140,6 @@ export class TagService {
 
     /**
      * Find tag which name matches exactly to passed name.
-     *
      * @param name Value for name which should be used during finding exact tag.
      * @returns Found tag which name matches exactly to passed name.
      */
@@ -159,7 +151,6 @@ export class TagService {
      * Deletes a tag with tagId.
      * This will cause the tag to be removed from all nodes.
      * You must have admin rights to delete a tag.
-     *
      * @param tagId of the tag to be deleted
      * @returns Null object when the operation completes
      */
@@ -169,7 +160,6 @@ export class TagService {
 
     /**
      * Assign tags to node. If tag is new then tag is also created additionally, if tag already exists then it is just assigned.
-     *
      * @param nodeId Id of node to which tags should be assigned.
      * @param tags List of tags to create and assign or just assign if they already exist.
      * @returns Just linked tags to node or single tag if linked only one tag.
@@ -180,7 +170,6 @@ export class TagService {
 
     /**
      * Checks if tags plugin is enabled.
-     *
      * @returns boolean true if tags plugin is enabled, false otherwise.
      */
     areTagsEnabled(): boolean {

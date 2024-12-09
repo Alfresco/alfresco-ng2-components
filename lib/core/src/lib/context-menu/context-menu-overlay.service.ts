@@ -33,11 +33,7 @@ const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     providedIn: 'root'
 })
 export class ContextMenuOverlayService {
-
-    constructor(
-        private injector: Injector,
-        private overlay: Overlay
-    ) {}
+    constructor(private injector: Injector, private overlay: Overlay) {}
 
     open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };
@@ -53,12 +49,15 @@ export class ContextMenuOverlayService {
         // prevent native contextmenu on overlay element if config.hasBackdrop is true
         if (overlayConfig.hasBackdrop) {
             // eslint-disable-next-line no-underscore-dangle
-            (overlay as any)._backdropElement
-                .addEventListener('contextmenu', (event) => {
+            (overlay as any)._backdropElement.addEventListener(
+                'contextmenu',
+                (event) => {
                     event.preventDefault();
                     // eslint-disable-next-line no-underscore-dangle
                     (overlay as any)._backdropClick.next(null);
-                }, true);
+                },
+                true
+            );
         }
 
         return overlayRef;
@@ -88,28 +87,31 @@ export class ContextMenuOverlayService {
     }
 
     private getOverlayConfig(config: ContextMenuOverlayConfig): OverlayConfig {
-        const { clientY, clientX  } = config.source;
+        const { clientY, clientX } = config.source;
 
         const fakeElement: any = {
-            getBoundingClientRect: (): ClientRect => ({
-                bottom: clientY,
-                height: 0,
-                left: clientX,
-                right: clientX,
-                top: clientY,
-                width: 0
-            } as any)
+            getBoundingClientRect: (): ClientRect =>
+                ({
+                    bottom: clientY,
+                    height: 0,
+                    left: clientX,
+                    right: clientX,
+                    top: clientY,
+                    width: 0
+                } as any)
         };
 
         const positionStrategy = this.overlay
             .position()
             .flexibleConnectedTo(new ElementRef(fakeElement))
-            .withPositions([{
-                originX: 'start',
-                originY: 'bottom',
-                overlayX: 'start',
-                overlayY: 'top'
-            }]);
+            .withPositions([
+                {
+                    originX: 'start',
+                    originY: 'bottom',
+                    overlayX: 'start',
+                    overlayY: 'top'
+                }
+            ]);
 
         const overlayConfig = new OverlayConfig({
             hasBackdrop: config.hasBackdrop,

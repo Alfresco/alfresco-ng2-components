@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'adf-demo-breadcrumb',
-  template: `
+    selector: 'adf-demo-breadcrumb',
+    template: `
   <adf-breadcrumb [compact]="compact">
     <adf-breadcrumb-item>
         <a href="/">Home</a>
@@ -58,6 +58,6 @@ import {Component} from '@angular/core';
   `
 })
 export class DemoBreadcrumbComponent {
-  compact = false;
-  showBreadcrumbItemWithMenu = false;
+    compact = false;
+    showBreadcrumbItemWithMenu = false;
 }

@@ -26,7 +26,6 @@ export class AdminTenantsApi extends BaseApi {
     /**
      * Create a tenant
      * Only a tenant manager may access this endpoint
-     *
      * @param createTenantRepresentation createTenantRepresentation
      * @return Promise<LightTenantRepresentation>
      */
@@ -41,7 +40,6 @@ export class AdminTenantsApi extends BaseApi {
 
     /**
      * Delete a tenant
-     *
      * @param tenantId tenantId
      * @return Promise<{}>
      */
@@ -60,7 +58,6 @@ export class AdminTenantsApi extends BaseApi {
 
     /**
      * Get tenant events
-     *
      * @param tenantId tenantId
      * @return Promise<TenantEvent>
      */
@@ -80,7 +77,6 @@ export class AdminTenantsApi extends BaseApi {
 
     /**
      * Get a tenant's logo
-     *
      * @param tenantId tenantId
      * @return Promise<{}>
      */
@@ -99,7 +95,6 @@ export class AdminTenantsApi extends BaseApi {
 
     /**
      * Get a tenant
-     *
      * @param tenantId tenantId
      * @return Promise<TenantRepresentation>
      */
@@ -120,7 +115,6 @@ export class AdminTenantsApi extends BaseApi {
     /**
      * List tenants
      * Only a tenant manager may access this endpoint
-     *
      * @return Promise<LightTenantRepresentation>
      */
     getTenants(): Promise<LightTenantRepresentation> {
@@ -131,7 +125,6 @@ export class AdminTenantsApi extends BaseApi {
 
     /**
      * Update a tenant
-     *
      * @param tenantId tenantId
      * @param createTenantRepresentation createTenantRepresentation
      * @return Promise<TenantRepresentation>
@@ -154,7 +147,6 @@ export class AdminTenantsApi extends BaseApi {
 
     /**
      * Update a tenant's logo
-     *
      * @param tenantId tenantId
      * @param file file
      * @return Promise<ImageUploadRepresentation>

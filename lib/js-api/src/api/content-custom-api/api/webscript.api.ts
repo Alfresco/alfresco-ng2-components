@@ -27,7 +27,6 @@ export class WebscriptApi extends BaseApi {
      * Call a get on a  Web Scripts see https://wiki.alfresco.com/wiki/Web_Scripts for more details about Web Scripts
      * Url syntax definition : http[s]://<host>:<port>/[<contextPath>/]/<servicePath>[/<scriptPath>][?<scriptArgs>]
      * example: http://localhost:8081/share/service/mytasks?priority=1
-     *
      * @param httpMethod  GET, POST, PUT and DELETE
      * @param scriptPath script path
      * @param scriptArgs script arguments
