@@ -153,7 +153,7 @@ describe('ColumnsSelectorComponent', () => {
         const checkBoxName = await firstColumnCheckbox.getLabelText();
 
         const toggledColumnItem = component.columnItems.find((item) => item.title === checkBoxName);
-        expect(toggledColumnItem?.isHidden).toBeFalse();
+        expect(toggledColumnItem?.isHidden).toBe(undefined);
 
         await firstColumnCheckbox.toggle();
         expect(toggledColumnItem?.isHidden).toBeTrue();
