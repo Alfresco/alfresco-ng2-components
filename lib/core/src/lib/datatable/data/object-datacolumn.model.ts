@@ -27,6 +27,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     format: string;
     sortable: boolean;
     title: string;
+    subTitle?: string;
     srTitle: string;
     cssClass: string;
     template?: TemplateRef<any>;
@@ -52,6 +53,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.format = input.format;
         this.sortable = input.sortable;
         this.title = input.title;
+        this.subTitle = input.subTitle;
         this.srTitle = input.srTitle;
         this.cssClass = input.cssClass;
         this.template = input.template;

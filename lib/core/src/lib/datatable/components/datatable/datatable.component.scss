@@ -524,6 +524,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     color: var(--adf-theme-foreground-text-color);
     box-sizing: border-box;
 
+    &_subtitle {
+        margin-left: 3px;
+        opacity: 0.6;
+    }
+
     &.adf-sortable {
         @include adf-no-select;
 
