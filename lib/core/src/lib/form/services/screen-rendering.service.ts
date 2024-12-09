@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-export * from './components/task-form-cloud/task-form-cloud.component';
-export * from './components/user-task-cloud/user-task-cloud.component';
+import { Injectable } from '@angular/core';
+import { DynamicComponentMapper } from '../../common/services/dynamic-component-mapper.service';
 
-export * from './task-form.module';
+@Injectable({
+    providedIn: 'root'
+})
+export class ScreenRenderingService extends DynamicComponentMapper {}
