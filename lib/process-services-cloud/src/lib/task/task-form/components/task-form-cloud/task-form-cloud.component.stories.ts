@@ -16,13 +16,13 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { FormCloudService } from '../../../form/public-api';
-import { TaskCloudService } from '../../services/task-cloud.service';
-import { TaskFormModule } from '../task-form.module';
+import { FormCloudService } from '../../../../form/public-api';
+import { TaskCloudService } from '../../../services/task-cloud.service';
+import { TaskFormModule } from '../../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
-import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
-import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
-import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
+import { TaskCloudServiceMock } from '../../../mock/task-cloud.service.mock';
+import { FormCloudServiceMock } from '../../../../form/mocks/form-cloud.service.mock';
+import { ProcessServicesCloudStoryModule } from '../../../../testing/process-services-cloud-story.module';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
@@ -37,9 +37,7 @@ export default {
             ]
         }),
         applicationConfig({
-            providers: [
-                importProvidersFrom(ProcessServicesCloudStoryModule)
-            ]
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {

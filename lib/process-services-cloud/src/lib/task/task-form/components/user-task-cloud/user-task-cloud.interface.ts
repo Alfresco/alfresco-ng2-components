@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 
-export * from './components/task-form-cloud/task-form-cloud.component';
-export * from './components/user-task-cloud/user-task-cloud.component';
+import { EventEmitter } from '@angular/core';
 
-export * from './task-form.module';
+export interface UserTaskCustomUi {
+    error: EventEmitter<any>;
+    cancelClick: EventEmitter<string>;
+    taskClaimed: EventEmitter<string>;
+    taskUnclaimed: EventEmitter<string>;
+    taskCompleted: EventEmitter<string>;
+}
