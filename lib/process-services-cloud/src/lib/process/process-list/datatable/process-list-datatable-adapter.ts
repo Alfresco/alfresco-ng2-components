@@ -21,7 +21,7 @@ import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-c
 
 export class ProcessListDatatableAdapter extends ObjectDataTableAdapter {
     constructor(data: ProcessInstanceCloudListViewModel[], schema: DataColumn<ProcessListDataColumnCustomData>[]) {
-        super(data, schema);
+        super(data, schema, 'server');
     }
 
     getColumnType(row: DataRow, col: DataColumn<ProcessListDataColumnCustomData>): string {
