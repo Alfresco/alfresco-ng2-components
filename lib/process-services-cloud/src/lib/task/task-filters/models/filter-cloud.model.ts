@@ -129,6 +129,7 @@ export class TaskFilterCloudModel {
             this.processDefinitionNames = obj.processDefinitionNames || null;
             this.taskIds = obj.taskIds || null;
             this.parentTaskIds = obj.parentTaskIds || null;
+            this.processInstanceIds = obj.processInstanceIds || null;
             this.priorities = obj.priorities || null;
             this.completedByUsers = obj.completedByUsers || null;
             this.processVariableFilters = obj.processVariableFilters ?? [];
