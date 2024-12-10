@@ -102,8 +102,8 @@ export class ProcessListCloudService extends BaseCloudService {
 
     protected buildQueryData(requestNode: ProcessListRequestModel) {
         const queryData: any = {
-            name: requestNode.processName,
-            processInstanceId: requestNode.processInstanceId,
+            name: requestNode.name,
+            id: requestNode.id,
             parentId: requestNode.parentId,
             processDefinitionName: requestNode.processDefinitionName,
             initiator: requestNode.initiator,
@@ -128,7 +128,7 @@ export class ProcessListCloudService extends BaseCloudService {
                 isProcessVariable: requestNode.sorting.isFieldProcessVariable
             };
             if (queryData['sort'].isProcessVariable) {
-                queryData['sort'].processDefinitionKeys = requestNode.sorting.processVariableData?.processDefinitionKeys;
+                queryData['sort'].processDefinitionKey = requestNode.sorting.processVariableData?.processDefinitionKey;
                 queryData['sort'].type = requestNode.sorting.processVariableData?.type;
             }
         }

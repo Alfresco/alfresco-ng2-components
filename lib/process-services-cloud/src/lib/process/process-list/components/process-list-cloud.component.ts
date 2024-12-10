@@ -221,14 +221,14 @@ export class ProcessListCloudComponent
      * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
-    processNames: string[] = [];
+    names: string[] = [];
 
     /**
      * Filter the processes. Display only processes with instance Ids matching any of the supplied strings.
      * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
-    processInstanceIds: string[] = [];
+    ids: string[] = [];
 
     /**
      * Filter the processes. Display only processes with parent Ids matching any of the supplied strings.
@@ -558,15 +558,15 @@ export class ProcessListCloudComponent
     }
 
     private createProcessListRequestNode(): ProcessListRequestModel {
-        const requestNode = {
+        const requestNode: ProcessListRequestModel = {
             appName: this.appName,
             pagination: {
                 maxItems: this.size,
                 skipCount: this.skipCount
             },
             sorting: this.getProcessListRequestSorting(),
-            processName: this.processNames,
-            processInstanceId: this.processInstanceIds,
+            name: this.names,
+            id: this.ids,
             parentId: this.parentIds,
             processDefinitionName: this.processDefinitionNames,
             initiator: this.initiators,
@@ -602,16 +602,14 @@ export class ProcessListCloudComponent
         const isFieldProcessVariable = orderByColumn?.customData?.columnType === 'process-variable-column';
 
         if (isFieldProcessVariable) {
-            const processDefinitionKeys = orderByColumn.customData.variableDefinitionsPayload.map(
-                (variableDefinition) => variableDefinition.split('/')[0]
-            );
+            const processDefinitionKey = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[0];
             const variableName = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[1];
             return new ProcessListRequestSortingModel({
                 orderBy: variableName,
                 direction,
                 isFieldProcessVariable: true,
                 processVariableData: {
-                    processDefinitionKeys,
+                    processDefinitionKey,
                     type: orderByColumn.customData.variableType
                 }
             });

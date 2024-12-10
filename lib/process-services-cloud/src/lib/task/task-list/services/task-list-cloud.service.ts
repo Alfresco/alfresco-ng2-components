@@ -99,6 +99,9 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
 
     protected buildQueryData(requestNode: TaskListRequestModel) {
         const queryData: any = {
+            id: requestNode.id,
+            parentId: requestNode.parentId,
+            processInstanceId: requestNode.processInstanceId,
             status: requestNode.status,
             processDefinitionName: requestNode.processDefinitionName,
             processName: requestNode.processName,
@@ -123,7 +126,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
                 isProcessVariable: requestNode.sorting.isFieldProcessVariable
             };
             if (queryData['sort'].isProcessVariable) {
-                queryData['sort'].processDefinitionKeys = requestNode.sorting.processVariableData?.processDefinitionKeys;
+                queryData['sort'].processDefinitionKey = requestNode.sorting.processVariableData?.processDefinitionKey;
                 queryData['sort'].type = requestNode.sorting.processVariableData?.type;
             }
         }

@@ -177,6 +177,27 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     processDefinitionNames: string[] = [];
 
     /**
+     * Filter the tasks. Display only tasks with Ids matching any of the supplied strings.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    ids: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks with parentTaskIds matching any of the supplied strings.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    parentIds: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks with processInstanceIds matching any of the supplied strings.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processInstanceIds: string[] = [];
+
+    /**
      * Filter the tasks. Display only tasks under processes with provided names.
      * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
@@ -280,8 +301,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             onlyStandalone: this.standalone,
             name: this.names,
             processDefinitionName: this.processDefinitionNames,
+            id: this.ids,
+            parentId: this.parentIds,
             processName: this.processNames,
-            processInstanceId: this.processInstanceId,
+            processInstanceId: this.processInstanceIds,
             priority: this.priorities,
             status: this.statuses,
             completedBy: this.completedByUsers,
@@ -365,16 +388,14 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         const isFieldProcessVariable = orderByColumn?.customData?.columnType === 'process-variable-column';
 
         if (isFieldProcessVariable) {
-            const processDefinitionKeys = orderByColumn.customData.variableDefinitionsPayload.map(
-                (variableDefinition) => variableDefinition.split('/')[0]
-            );
+            const processDefinitionKey = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[0];
             const variableName = orderByColumn.customData.variableDefinitionsPayload[0].split('/')[1];
             return new TaskListRequestSortingModel({
                 orderBy: variableName,
                 direction,
                 isFieldProcessVariable: true,
                 processVariableData: {
-                    processDefinitionKeys,
+                    processDefinitionKey,
                     type: orderByColumn.customData.variableType
                 }
             });
