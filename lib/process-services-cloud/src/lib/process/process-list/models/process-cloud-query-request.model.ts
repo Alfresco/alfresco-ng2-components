@@ -87,8 +87,8 @@ export class ProcessListRequestModel {
     pagination?: Pagination;
     sorting?: ProcessListRequestSortingModel;
 
-    processName?: string[];
-    processInstanceId?: string[];
+    name?: string[];
+    id?: string[];
     parentId?: string[];
     processDefinitionName?: string[];
     initiator?: string[];
@@ -115,8 +115,8 @@ export class ProcessListRequestModel {
         this.pagination = obj.pagination;
         this.sorting = obj.sorting;
 
-        this.processName = obj.processName;
-        this.processInstanceId = obj.processInstanceId;
+        this.name = obj.name;
+        this.id = obj.id;
         this.parentId = obj.parentId;
         this.processDefinitionName = obj.processDefinitionName;
         this.initiator = obj.initiator;
@@ -147,8 +147,8 @@ export class ProcessFilterCloudAdapter extends ProcessListRequestModel {
             }),
 
             processDefinitionName: filter.processDefinitionNames,
-            processName: filter.processNames,
-            processInstanceId: filter.processInstanceIds,
+            name: filter.processNames,
+            id: filter.processInstanceIds,
             parentId: filter.parentIds,
             initiator: filter.initiators,
             appVersion: filter.appVersions,

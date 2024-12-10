@@ -31,7 +31,7 @@ export class ProcessListRequestSortingModel extends ProcessListCloudSortingModel
 
     isFieldProcessVariable: boolean;
     processVariableData?: {
-        processDefinitionKeys: string[];
+        processDefinitionKey: string;
         type: string;
     }
 
@@ -40,9 +40,7 @@ export class ProcessListRequestSortingModel extends ProcessListCloudSortingModel
         if (obj.isFieldProcessVariable) {
             this.isFieldProcessVariable = true;
             this.processVariableData = obj.processVariableData;
-            if (!this.processVariableData.processDefinitionKeys?.length ||
-                !this.processVariableData.type
-            ) {
+            if (!this.processVariableData.processDefinitionKey || !this.processVariableData.type) {
                 throw new Error('missing required property when sorting by process variable');
             }
         } else {

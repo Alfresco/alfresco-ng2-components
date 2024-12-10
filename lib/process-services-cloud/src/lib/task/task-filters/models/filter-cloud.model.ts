@@ -66,6 +66,9 @@ export class TaskFilterCloudModel {
     assignees: string[] | null;
     processNames: string[] | null;
     processDefinitionNames: string[] | null;
+    taskIds: string[] | null;
+    parentTaskIds: string[] | null;
+    processInstanceIds: string[] | null;
     priorities: string[] | null;
     completedByUsers: string[] | null;
 
@@ -124,6 +127,8 @@ export class TaskFilterCloudModel {
             this.assignees = obj.assignees || null;
             this.processNames = obj.processNames || null;
             this.processDefinitionNames = obj.processDefinitionNames || null;
+            this.taskIds = obj.taskIds || null;
+            this.parentTaskIds = obj.parentTaskIds || null;
             this.priorities = obj.priorities || null;
             this.completedByUsers = obj.completedByUsers || null;
             this.processVariableFilters = obj.processVariableFilters ?? [];
