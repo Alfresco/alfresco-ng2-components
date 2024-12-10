@@ -40,7 +40,6 @@ export class ViewUtilService {
 
     /**
      * Returns a list of the active Viewer content extensions.
-     *
      * @returns list of extension references
      */
     get viewerExtensions(): ViewerExtensionRef[] {
@@ -49,7 +48,6 @@ export class ViewUtilService {
 
     /**
      * Provides a list of file extensions supported by external plugins.
-     *
      * @returns list of extensions
      */
     get externalExtensions(): string[] {
@@ -60,7 +58,6 @@ export class ViewUtilService {
 
     /**
      * get File name from url
-     *
      * @param  url - url file
      * @returns file name portion of the url
      */
@@ -76,7 +73,6 @@ export class ViewUtilService {
      * Supports the URL formats like:
      * http://localhost/test.jpg?cache=1000
      * http://localhost/test.jpg#cache=1000
-     *
      * @param fileName - file name
      * @returns file extension
      */

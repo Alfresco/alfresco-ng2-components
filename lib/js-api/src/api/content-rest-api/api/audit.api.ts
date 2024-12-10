@@ -37,7 +37,6 @@ export class AuditApi extends BaseApi {
      * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
      * - where=(id BETWEEN ('1234', '4321')
      * You must have admin rights to delete audit information.
-     *
      * @param auditApplicationId The identifier of an audit application.
      * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids. For example:
      * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
@@ -68,7 +67,6 @@ export class AuditApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
      * You must have admin rights to delete audit information.
-     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
      * @return Promise<{}>
@@ -95,7 +93,6 @@ export class AuditApi extends BaseApi {
      * You must have admin rights to retrieve audit information.
      *
      * You can use the **include** parameter to return the minimum and/or maximum audit record id for the application.
-     *
      * @param auditApplicationId The identifier of an audit application.
      * @param opts Optional parameters
      * @return Promise<AuditApp>
@@ -124,7 +121,6 @@ export class AuditApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
      * You must have admin rights to access audit information.
-     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
      * @param opts Optional parameters
@@ -164,7 +160,6 @@ export class AuditApi extends BaseApi {
      * - Alfresco Sync Service (used by Enterprise Cloud Sync)
      *
      * You must have admin rights to retrieve audit information.
-     *
      * @param opts Optional parameters
      * @return Promise<AuditAppPaging>
      */
@@ -201,7 +196,6 @@ export class AuditApi extends BaseApi {
      *
      * For example, specifying orderBy=createdAt DESC returns audit entries in descending **createdAt** order.
      * You must have admin rights to retrieve audit information.
-     *
      * @param auditApplicationId The identifier of an audit application.
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
@@ -262,7 +256,6 @@ export class AuditApi extends BaseApi {
      *
      * For example, specifying orderBy=createdAt DESC returns audit entries in descending **createdAt** order.
      * This relies on the pre-configured 'alfresco-access' audit application.
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
@@ -319,7 +312,6 @@ export class AuditApi extends BaseApi {
      * Note, it is still possible to query &/or delete any existing audit entries even
      * if auditing is disabled for the audit application.
      * You must have admin rights to update audit application.
-     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditAppBodyUpdate The audit application to update.
      * @param opts Optional parameters

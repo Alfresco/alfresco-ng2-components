@@ -29,5 +29,4 @@ export class RedirectionModel {
             this.url = obj.url || null;
         }
     }
-
 }

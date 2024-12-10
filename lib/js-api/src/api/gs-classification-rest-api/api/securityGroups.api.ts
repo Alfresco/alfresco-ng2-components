@@ -21,13 +21,11 @@ import { GsGroupInclude, GsPagingQuery } from './types';
 
 /**
  * SecurityGroupsApi service.
- *
  * @module SecurityGroupsApi
  */
 export class SecurityGroupsApi extends BaseApi {
     /**
      * Get All security groups
-     *
      * @param opts Optional parameters
      * @returns Promise<SecurityGroupPaging>
      */
@@ -40,7 +38,6 @@ export class SecurityGroupsApi extends BaseApi {
 
     /**
      * Create security group
-     *
      * @param securityGroupBody securityGroupBody.
      * @param opts Optional parameters
      * @returns Promise<SecurityGroupEntry>
@@ -55,7 +52,6 @@ export class SecurityGroupsApi extends BaseApi {
 
     /**
      * Get a security groups information
-     *
      * @param securityGroupId The Key of Security Group id for which info is required
      * @param opts Optional parameters
      * @returns Promise<SecurityGroupEntry>
@@ -74,7 +70,6 @@ export class SecurityGroupsApi extends BaseApi {
 
     /**
      * Update a security groups information
-     *
      * @param securityGroupId The Key of Security Group id for which info is required
      * @param securityGroupBody SecurityGroupBody
      * @param opts Optional parameters
@@ -95,7 +90,6 @@ export class SecurityGroupsApi extends BaseApi {
 
     /**
      * Delete security group
-     *
      * @param securityGroupId The key for the security group id.
      * @returns Promise<SecurityMarkEntry>
      */

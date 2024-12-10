@@ -31,15 +31,10 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
     providedIn: 'root'
 })
 export class NodePermissionDialogService {
-
-    constructor(private dialog: MatDialog,
-                private nodePermissionService: NodePermissionService,
-                private contentService: ContentService) {
-    }
+    constructor(private dialog: MatDialog, private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
 
     /**
      * Opens a dialog to add permissions to a node.
-     *
      * @param node target node
      * @param roles settable roles for the node
      * @param title Dialog title
@@ -82,18 +77,19 @@ export class NodePermissionDialogService {
 
     /**
      * Opens a dialog to update permissions for a node.
-     *
      * @param nodeId ID of the target node
      * @param title Dialog title
      * @returns Node with updated permissions
      */
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<Node> {
-        return this.nodePermissionService.getNodeWithRoles(nodeId)
+        return this.nodePermissionService
+            .getNodeWithRoles(nodeId)
             .pipe(
-                switchMap(({node, roles}) => this.openAddPermissionDialog(node, roles, title)
-                    .pipe(
+                switchMap(({ node, roles }) =>
+                    this.openAddPermissionDialog(node, roles, title).pipe(
                         switchMap((selection) => this.nodePermissionService.updateNodePermissions(nodeId, selection))
-                    ))
+                    )
+                )
             );
     }
 }

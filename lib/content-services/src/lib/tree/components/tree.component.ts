@@ -169,7 +169,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Checks if node is LoadMoreNode node
-     *
      * @param _idx (unused)
      * @param node node to be checked
      * @returns `true` if there are more items to load, otherwise `false`
@@ -180,7 +179,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Checks if tree is empty
-     *
      * @returns boolean
      */
     public isEmpty(): boolean {
@@ -189,7 +187,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Returns action icon based on expanded/collapsed node state.
-     *
      * @param node node to be checked
      * @returns collapse or expand icon
      */
@@ -199,7 +196,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Refreshes the tree, root nodes are reloaded, tree selection is cleared.
-     *
      * @param skipCount Number of root nodes to skip.
      * @param maxItems Maximum number of nodes returned from Observable.
      * @param searchTerm Specifies if categories should be filtered out by name or not. If not specified then returns categories without filtering.
@@ -217,7 +213,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Collapses or expanding the node based on its current state
-     *
      * @param node node to be collapsed/expanded
      */
     public expandCollapseNode(node: T): void {
@@ -242,7 +237,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Loads more subnode for a given parent node
-     *
      * @param node parent node
      */
     public loadMoreSubnodes(node: T): void {
@@ -266,7 +260,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * When node is selected it selects all its descendants
-     *
      * @param node selected node
      */
     public onNodeSelected(node: T): void {
@@ -282,7 +275,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Checks if all descendants of a node are selected
-     *
      * @param node selected node
      * @returns boolean
      */
@@ -293,7 +285,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Checks if some descendants of a node are selected
-     *
      * @param node selected node
      * @returns boolean
      */

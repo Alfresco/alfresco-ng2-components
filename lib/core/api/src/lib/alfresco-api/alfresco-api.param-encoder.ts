@@ -21,7 +21,6 @@ import { HttpParameterCodec } from '@angular/common/http';
 // does not encode some special characters like + with is causing issues with the alfresco js API and returns 500 error
 
 export class AlfrescoApiParamEncoder implements HttpParameterCodec {
-
     encodeKey(key: string): string {
         return encodeURIComponent(key);
     }

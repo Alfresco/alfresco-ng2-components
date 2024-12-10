@@ -41,7 +41,6 @@ export class UsersApi extends BaseApi {
      * Execute an action for a specific user
      *
      * Typical action is updating/reset password
-     *
      * @param userId userId
      * @param actionRequest actionRequest
      * @returns Promise<{}>
@@ -63,7 +62,6 @@ export class UsersApi extends BaseApi {
 
     /**
      * Stream user profile picture
-     *
      * @param userId userId
      * @returns Promise<{}>
      */
@@ -73,7 +71,6 @@ export class UsersApi extends BaseApi {
 
     /**
      * Get a user
-     *
      * @param userId userId
      * @returns Promise<UserRepresentation>
      */
@@ -95,7 +92,6 @@ export class UsersApi extends BaseApi {
      * Query users
      *
      * A common use case is that a user wants to select another user (eg. when assigning a task) or group.
-     *
      * @param opts Optional parameters
      * @returns Promise<ResultListDataRepresentationLightUserRepresentation>
      */
@@ -121,7 +117,6 @@ export class UsersApi extends BaseApi {
 
     /**
      * Request a password reset
-     *
      * @param resetPassword resetPassword
      * @returns Promise<{}>
      */
@@ -136,7 +131,6 @@ export class UsersApi extends BaseApi {
 
     /**
      * Update a user
-     *
      * @param userId userId
      * @param userRequest userRequest
      * @returns Promise<UserRepresentation>

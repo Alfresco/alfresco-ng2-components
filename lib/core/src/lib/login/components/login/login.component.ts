@@ -204,7 +204,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Method called on submit form
-     *
      * @param values login form values
      */
     onSubmit(values: LoginFormValues): void {
@@ -231,7 +230,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * The method check the error in the form and push the error in the formError object
-     *
      * @param data form data
      */
     onValueChanged(data: any) {
@@ -284,7 +282,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Check and display the right error message in the UI
-     *
      * @param err error object
      */
     private displayErrorMessage(err: any): void {
@@ -301,7 +298,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Add a custom form error for a field
-     *
      * @param field field
      * @param msg error message
      */
@@ -311,7 +307,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Add a custom validation rule error for a field
-     *
      * @param field field
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg message
@@ -328,7 +323,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Display and hide the password value.
-     *
      * @param event input event
      */
     toggleShowPassword(event: Event) {
@@ -338,7 +332,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * The method return if a field is valid or not
-     *
      * @param field form field to check
      * @returns `true` if form field should display an error, otherwise `false`
      */
@@ -348,7 +341,6 @@ export class LoginComponent implements OnInit {
 
     /**
      * Trim username
-     *
      * @param event event
      */
     trimUsername(event: any) {

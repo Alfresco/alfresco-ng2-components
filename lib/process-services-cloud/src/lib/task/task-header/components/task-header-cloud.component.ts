@@ -298,7 +298,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
 
     /**
      * Save a task detail and update it after a successful response
-     *
      * @param updateNotification notification model
      */
     private updateTaskDetails(updateNotification: UpdateNotification) {
@@ -347,7 +346,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     /**
      * as per [ACA-3960] it required an empty array argument for now
      * Empty array will be replaced with candidateGroups in feature
-     *
      * @returns `true` if assignee property is clickable, otherwise `false`
      */
     isAssigneePropertyClickable(): boolean {

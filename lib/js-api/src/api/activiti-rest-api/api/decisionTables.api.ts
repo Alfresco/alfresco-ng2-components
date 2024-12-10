@@ -36,7 +36,6 @@ export interface GetDecisionTablesOpts {
 export class DecisionTablesApi extends BaseApi {
     /**
      * Get definition for a decision table
-     *
      * @param decisionTableId decisionTableId
      * @return Promise<JsonNode>
      */
@@ -55,7 +54,6 @@ export class DecisionTablesApi extends BaseApi {
 
     /**
      * Get a decision table
-     *
      * @param decisionTableId decisionTableId
      * @return Promise<RuntimeDecisionTableRepresentation>
      */
@@ -74,7 +72,6 @@ export class DecisionTablesApi extends BaseApi {
 
     /**
      * Query decision tables
-     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationRuntimeDecisionTableRepresentation>
      */

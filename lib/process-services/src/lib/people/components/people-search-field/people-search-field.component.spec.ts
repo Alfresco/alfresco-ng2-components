@@ -39,7 +39,7 @@ describe('PeopleSearchFieldComponent', () => {
     });
 
     it('should have the proper placeholder by default', () => {
-        const input = <HTMLInputElement> element.querySelector<HTMLElement>('[data-automation-id="adf-people-search-input"]');
+        const input = element.querySelector<HTMLElement>('[data-automation-id="adf-people-search-input"]') as HTMLInputElement;
         expect(input.placeholder).toBe('ADF_TASK_LIST.PEOPLE.SEARCH_USER');
     });
 
@@ -49,7 +49,7 @@ describe('PeopleSearchFieldComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const input = <HTMLInputElement> element.querySelector<HTMLElement>('[data-automation-id="adf-people-search-input"]');
+        const input = element.querySelector<HTMLElement>('[data-automation-id="adf-people-search-input"]') as HTMLInputElement;
         expect(input.placeholder).toBe('Arcadia Bay');
     });
 

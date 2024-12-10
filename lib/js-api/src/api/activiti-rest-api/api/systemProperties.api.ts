@@ -25,7 +25,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class SystemPropertiesApi extends BaseApi {
     /**
      * Get global date format
-     *
      * @param tenantId tenantId
      * @return Promise<GlobalDateFormatRepresentation>
      */
@@ -44,7 +43,6 @@ export class SystemPropertiesApi extends BaseApi {
 
     /**
      * Get password validation constraints
-     *
      * @param tenantId tenantId
      * @return Promise<PasswordValidationConstraints>
      */
@@ -65,7 +63,6 @@ export class SystemPropertiesApi extends BaseApi {
      * Retrieve system properties
      *
      * Typical value is AllowInvolveByEmail
-     *
      * @return Promise<SystemPropertiesRepresentation>
      */
     getProperties(): Promise<SystemPropertiesRepresentation> {
@@ -76,7 +73,6 @@ export class SystemPropertiesApi extends BaseApi {
 
     /**
      * Get involved users who can edit forms
-     *
      * @param tenantId tenantId
      * @return Promise<boolean>
      */

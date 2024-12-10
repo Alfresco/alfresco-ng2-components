@@ -35,7 +35,6 @@ export class AppDetailsCloudComponent {
 
   /**
    * Pass the selected app as next
-   *
    * @param app application model
    */
   onSelectApp(app: ApplicationInstanceModel): void {
@@ -44,7 +43,6 @@ export class AppDetailsCloudComponent {
 
   /**
    * Get application instance theme
-   *
    * @returns the name of the theme
    */
   getTheme(): string {
@@ -53,7 +51,6 @@ export class AppDetailsCloudComponent {
 
   /**
    * Get application instance icon
-   *
    * @returns the name of the icon
    */
   getIcon(): string {

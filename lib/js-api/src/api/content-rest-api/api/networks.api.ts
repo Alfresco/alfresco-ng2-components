@@ -28,7 +28,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 export class NetworksApi extends BaseApi {
     /**
      * Get a network
-     *
      * @param networkId The identifier of a network.
      * @param opts Optional parameters
      * @returns Promise<PersonNetworkEntry>
@@ -56,7 +55,6 @@ export class NetworksApi extends BaseApi {
      * Get network information
      *
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param networkId The identifier of a network.
      * @param opts Optional parameters
@@ -88,7 +86,6 @@ export class NetworksApi extends BaseApi {
      *
      * Gets a list of network memberships for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @returns Promise<PersonNetworkPaging>

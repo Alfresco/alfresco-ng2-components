@@ -48,7 +48,7 @@
                     <img [alt]="'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate" class="adf-empty-folder-image" [src]="emptyFolderImageUrl">
                 </div>
             </adf-empty-list>
-            <ng-content select="adf-custom-empty-content-template, empty-folder-content"></ng-content>
+            <ng-content select="adf-custom-empty-content-template, empty-folder-content" />
         </ng-template>
     </adf-no-content-template>
 
@@ -58,7 +58,7 @@
                 <mat-icon>error</mat-icon>
                 <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
             </div>
-            <ng-content select="adf-custom-no-permission-template, no-permission-content"></ng-content>
+            <ng-content select="adf-custom-no-permission-template, no-permission-content" />
         </ng-template>
     </adf-no-permission-template>
 
@@ -72,7 +72,7 @@
                     [color]="'primary'"
                     [mode]="'indeterminate'" />
             </div>
-            <ng-content select="adf-custom-loading-content-template"></ng-content>
+            <ng-content select="adf-custom-loading-content-template" />
         </ng-template>
     </adf-loading-content-template>
 

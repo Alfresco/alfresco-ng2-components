@@ -24,9 +24,7 @@ import { isAfter } from 'date-fns';
     providedIn: 'root'
 })
 export class LockService {
-
-    constructor(private authService: AuthenticationService) {
-    }
+    constructor(private authService: AuthenticationService) {}
 
     isLocked(node: Node): boolean {
         let isLocked = false;

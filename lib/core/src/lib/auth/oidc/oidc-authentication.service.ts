@@ -51,8 +51,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
      * This observable combines the authentication status and the discovery document load status
      * to decide if an SSO login is necessary. It emits `true` if the user is not authenticated
      * and the discovery document is loaded, otherwise it emits `false`.
-     *
-     * @type {Observable<boolean>}
      */
     shouldPerformSsoLogin$: Observable<boolean> = combineLatest([this.auth.authenticated$, this.auth.isDiscoveryDocumentLoaded$]).pipe(
         map(([authenticated, isDiscoveryDocumentLoaded]) => !authenticated && isDiscoveryDocumentLoaded)

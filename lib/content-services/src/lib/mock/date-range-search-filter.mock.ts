@@ -18,7 +18,7 @@
 import { SearchCategory } from '../search/models/search-category.interface';
 
 export const mockSearchFilterWithoutDisplayedLabelsByField: SearchCategory = {
-    id : 'test',
+    id: 'test',
     name: 'test',
     expanded: false,
     enabled: true,
@@ -33,7 +33,7 @@ export const mockSearchFilterWithoutDisplayedLabelsByField: SearchCategory = {
 };
 
 export const mockSearchFilterWithWrongDisplayedLabelsByField: SearchCategory = {
-    id : 'test',
+    id: 'test',
     name: 'test',
     expanded: false,
     enabled: true,
@@ -51,7 +51,7 @@ export const mockSearchFilterWithWrongDisplayedLabelsByField: SearchCategory = {
 };
 
 export const mockSearchFilterWithDisplayedLabelsByField: SearchCategory = {
-    id : 'test',
+    id: 'test',
     name: 'test',
     expanded: false,
     enabled: true,

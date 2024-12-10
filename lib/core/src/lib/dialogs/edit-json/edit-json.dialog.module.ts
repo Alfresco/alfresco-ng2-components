@@ -24,14 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 @NgModule({
     declarations: [EditJsonDialogComponent],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        MatDialogModule,
-        MatButtonModule
-    ],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatDialogModule, MatButtonModule],
     exports: [EditJsonDialogComponent]
 })
 export class EditJsonDialogModule {}

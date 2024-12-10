@@ -24,7 +24,6 @@ import { BaseApi } from '../../hxi-connector-api/api/base.api';
 export class SearchAiApi extends BaseApi {
     /**
      * Ask a question to the AI.
-     *
      * @param questions QuestionRequest array containing questions to ask.
      * @returns QuestionModel object containing information about questions.
      */
@@ -41,7 +40,6 @@ export class SearchAiApi extends BaseApi {
 
     /**
      * Get an answer to specific question.
-     *
      * @param questionId The ID of the question to get an answer for.
      * @returns AiAnswerEntry object containing the answer.
      */
@@ -53,7 +51,6 @@ export class SearchAiApi extends BaseApi {
 
     /**
      * Get the knowledge retrieval configuration.
-     *
      * @returns KnowledgeRetrievalConfigEntry object containing the configuration.
      */
     getConfig(): Promise<KnowledgeRetrievalConfigEntry> {
