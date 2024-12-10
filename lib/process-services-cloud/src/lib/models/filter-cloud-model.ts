@@ -188,6 +188,7 @@ export class TaskFilterCloudAdapter extends TaskListRequestModel {
             status: filter.statuses,
             completedBy: filter.completedByUsers,
             assignee: filter.assignees,
+            processInstanceId: filter.processInstanceIds,
             createdFrom: filter.createdFrom,
             createdTo: filter.createdTo,
             lastModifiedFrom: filter.lastModifiedFrom,
