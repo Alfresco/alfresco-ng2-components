@@ -66,11 +66,13 @@ describe('FormFieldComponent', () => {
 
         const widgetInstance = component.componentRef.instance;
         const updateFormControlState = spyOn(widgetInstance, 'updateReactiveFormControl');
+        const instanceFormValidation = spyOn(widgetInstance.field.form, 'validateForm');
 
         widgetInstance.formService.formRulesEvent.next();
         fixture.detectChanges();
 
         expect(updateFormControlState).toHaveBeenCalled();
+        expect(instanceFormValidation).toHaveBeenCalled();
     });
 
     it('should create custom component instance', () => {
