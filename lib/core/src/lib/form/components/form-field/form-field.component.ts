@@ -109,13 +109,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
         instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
-            if (
-                event.field.id !== instance.id &&
-                event.type === 'fieldValueChanged' &&
-                !isEqual(event.field.reactiveValue, instance.field.reactiveValue)
-            ) {
+            if (event.field.id !== instance.id) {
                 instance?.updateReactiveFormControl();
-                this.triggerFormFieldChanged(instance.field);
+
+                if (!isEqual(event.field.reactiveValue, instance.field.reactiveValue)) {
+                    this.triggerFormFieldChanged(instance.field);
+                }
             }
         });
     }
