@@ -109,6 +109,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
         instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             instance?.updateReactiveFormControl();
+            instance?.field?.form.validateForm(instance?.field);
         });
     }
 
