@@ -45,8 +45,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { CategoriesManagementComponent } from '../../../category';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
@@ -54,7 +52,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
 import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
-import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 
 const DEFAULT_SEPARATOR = ', ';
 
