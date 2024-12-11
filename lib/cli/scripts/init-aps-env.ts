@@ -121,7 +121,7 @@ export default async function main() {
                 logger.info('Something went wrong. Was not able to create the users');
             }
         } catch (error) {
-            logger.info(`Aps something went wrong. Tenant id ${tenantId}`);
+            logger.error(`Aps something went wrong. Tenant id ${tenantId}`, error);
             exit(1);
         }
     } else {
