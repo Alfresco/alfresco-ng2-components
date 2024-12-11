@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
@@ -37,6 +34,9 @@ import { PropertyDescriptorsService } from '../../services/property-descriptors.
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { SimpleChange } from '@angular/core';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -740,7 +740,7 @@ describe('ContentMetadataComponent', () => {
             const expectedProperties = [];
             component.expanded = true;
 
-            getGroupedPropertiesSpy.and.returnValue(of([{ properties: expectedProperties } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: expectedProperties }]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -754,7 +754,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
 
-            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [] } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [] }]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
