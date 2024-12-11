@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { FormCloudModule } from '../../form/form-cloud.module';
 import { TaskDirectiveModule } from '../directives/task-directive.module';
-
 import { TaskFormCloudComponent } from './components/task-form-cloud/task-form-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { ScreenCloudComponent } from '../../screen/components/screen-cloud/screen-cloud.component';

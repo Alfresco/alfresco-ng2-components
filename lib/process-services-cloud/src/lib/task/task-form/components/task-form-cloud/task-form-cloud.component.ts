@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { TaskDetailsCloudModel } from '../../../start-task/models/task-details-cloud.model';
-import { TaskCloudService } from '../../../services/task-cloud.service';
 import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
-import { AttachFileCloudWidgetComponent } from '../../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
-import { DropdownCloudWidgetComponent } from '../../../../form/components/widgets/dropdown/dropdown-cloud.widget';
-import { DateCloudWidgetComponent } from '../../../../form/components/widgets/date/date-cloud.widget';
-import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
+import { AttachFileCloudWidgetComponent } from '../../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
+import { DateCloudWidgetComponent } from '../../../../form/components/widgets/date/date-cloud.widget';
+import { DropdownCloudWidgetComponent } from '../../../../form/components/widgets/dropdown/dropdown-cloud.widget';
+import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
+import { TaskCloudService } from '../../../services/task-cloud.service';
+import { TaskDetailsCloudModel } from '../../../start-task/models/task-details-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -36,9 +36,11 @@ export class TaskFormCloudComponent implements OnInit {
     @Input()
     appName: string = '';
 
-    /**Candidates user and groups */
+    /**Candidates users*/
     @Input()
     candidateUsers: string[] = [];
+
+    /**Candidates groups */
     @Input()
     candidateGroups: string[] = [];
 
@@ -162,6 +164,10 @@ export class TaskFormCloudComponent implements OnInit {
         return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
+    canUnclaimTask(): boolean {
+        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
+    }
+
     hasCandidateUsers(): boolean {
         return this.candidateUsers.length !== 0;
     }
@@ -172,10 +178,6 @@ export class TaskFormCloudComponent implements OnInit {
 
     hasCandidateUsersOrGroups(): boolean {
         return this.hasCandidateUsers() || this.hasCandidateGroups();
-    }
-
-    canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     isReadOnly(): boolean {

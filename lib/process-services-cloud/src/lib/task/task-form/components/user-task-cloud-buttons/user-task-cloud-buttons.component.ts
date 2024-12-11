@@ -19,8 +19,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'adf-cloud-user-task-cloud-buttons',
-    templateUrl: './user-task-cloud-buttons.component.html',
-    styleUrls: ['./user-task-cloud-buttons.component.scss']
+    templateUrl: './user-task-cloud-buttons.component.html'
 })
 export class UserTaskCloudButtonsComponent {
     /** App id to fetch corresponding form and values. */
