@@ -32,7 +32,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';

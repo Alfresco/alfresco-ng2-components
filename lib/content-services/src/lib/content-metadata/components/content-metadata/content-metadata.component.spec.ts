@@ -23,43 +23,20 @@ import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AppConfigService, CardViewBaseItemModel, CardViewComponent, NotificationService, UpdateNotification } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import {
-    AppConfigService,
-    AuthModule,
-    CardViewBaseItemModel,
-    CardViewComponent,
-    NoopTranslateModule,
-    NotificationService,
-    UpdateNotification
-} from '@alfresco/adf-core';
-import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { SimpleChange } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { By } from '@angular/platform-browser';
 import { EMPTY, of, throwError } from 'rxjs';
-import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService } from '../../../category';
-import { CardViewContentUpdateService, NodesApiService } from '../../../common';
-import { TagsCreatorComponent, TagsCreatorMode, TagService } from '../../../tag';
+import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
+import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
-import { ContentMetadataService } from '../../services/content-metadata.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness } from '@angular/material/chips/testing';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
-import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
-import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { ContentMetadataComponent } from './content-metadata.component';
+import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;

@@ -41,7 +41,6 @@ import { CategoriesManagementMode } from '../../../category/categories-managemen
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -50,14 +49,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
-import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
-import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
-import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService } from '../../../category';
-import { AllowableOperationsEnum, CardViewContentUpdateService, ContentService, NodesApiService } from '../../../common';
-import { TagsCreatorComponent, TagsCreatorMode, TagService } from '../../../tag';
-import { CardViewGroup, ContentMetadataCustomPanel, ContentMetadataPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
-import { ContentMetadataService } from '../../services/content-metadata.service';
 import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
+import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
+import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 
 const DEFAULT_SEPARATOR = ', ';
 
