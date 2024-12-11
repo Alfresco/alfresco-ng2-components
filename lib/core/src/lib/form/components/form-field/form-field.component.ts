@@ -36,6 +36,7 @@ import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FieldStylePipe } from '../../pipes/field-style.pipe';
 import { FormFieldTypes } from '../widgets/core/form-field-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { isEqual } from 'lodash';
 
 declare const adf: any;
 
@@ -87,8 +88,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 const componentType = this.formRenderingService.resolveComponentType(originalField);
                 if (componentType) {
                     this.componentRef = this.container.createComponent(componentType);
+
                     const instance = this.componentRef.instance;
                     instance.field = this.field;
+
                     instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
                             this.visibilityService.refreshVisibility(field.form);
@@ -105,9 +108,15 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
-        instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            instance?.updateReactiveFormControl();
-            this.triggerFormFieldChanged(instance.field);
+        instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
+            if (
+                event.field.id !== instance.id &&
+                event.type === 'fieldValueChanged' &&
+                !isEqual(event.field.reactiveValue, instance.field.reactiveValue)
+            ) {
+                instance?.updateReactiveFormControl();
+                this.triggerFormFieldChanged(instance.field);
+            }
         });
     }
 

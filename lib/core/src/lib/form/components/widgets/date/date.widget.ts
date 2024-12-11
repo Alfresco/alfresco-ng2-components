@@ -88,6 +88,10 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         this.validateField();
     }
 
+    get reactiveValue(): Date {
+        return this.dateInputControl.value;
+    }
+
     private setFormControlValue(): void {
         this.dateInputControl.setValue(this.field.value, { emitEvent: false });
     }

@@ -20,4 +20,5 @@ import { FormService } from '../../services/form.service';
 export interface ReactiveFormWidget {
     updateReactiveFormControl(): void;
     formService: FormService;
+    reactiveValue: any;
 }

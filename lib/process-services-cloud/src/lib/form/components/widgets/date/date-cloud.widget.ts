@@ -71,6 +71,10 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
+    get reactiveValue(): Date {
+        return this.dateInputControl.value;
+    }
+
     public readonly formService = inject(FormService);
 
     private readonly destroyRef = inject(DestroyRef);

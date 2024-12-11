@@ -86,6 +86,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     list$ = new BehaviorSubject<FormFieldOption[]>([]);
     filter$ = new BehaviorSubject<string>('');
 
+    get reactiveValue(): FormFieldOption | FormFieldOption[] {
+        return this.dropdownControl.value;
+    }
+
     private readonly defaultVariableOptionId = 'id';
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
@@ -199,6 +203,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private updateFormControlState(): void {
         this.dropdownControl.setValidators(this.isRequired() ? [Validators.required] : []);
+
         this.field?.readOnly || this.readOnly
             ? this.dropdownControl.disable({ emitEvent: false })
             : this.dropdownControl.enable({ emitEvent: false });
