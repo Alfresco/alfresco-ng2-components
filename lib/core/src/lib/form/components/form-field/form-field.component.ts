@@ -87,8 +87,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 const componentType = this.formRenderingService.resolveComponentType(originalField);
                 if (componentType) {
                     this.componentRef = this.container.createComponent(componentType);
+
                     const instance = this.componentRef.instance;
                     instance.field = this.field;
+
                     instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
                             this.visibilityService.refreshVisibility(field.form);
@@ -107,7 +109,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
         instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             instance?.updateReactiveFormControl();
-            this.triggerFormFieldChanged(instance.field);
+            instance?.field?.form.validateForm(instance?.field);
         });
     }
 
