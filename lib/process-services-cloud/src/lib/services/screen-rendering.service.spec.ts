@@ -15,14 +15,18 @@
  * limitations under the License.
  */
 
-export * from './base-cloud.service';
-export * from './cloud-token.service';
-export * from './form-fields.interfaces';
-export * from './local-preference-cloud.service';
-export * from './notification-cloud.service';
-export * from './preference-cloud.interface';
-export * from './screen-rendering.service';
-export * from './task-list-cloud.service.interface';
-export * from './user-preference-cloud.service';
-export * from './variable-mapper.sevice';
-export * from './web-socket.service';
+import { TestBed } from '@angular/core/testing';
+import { ScreenRenderingService } from './screen-rendering.service';
+
+describe('ScreenRenderingService', () => {
+    let service: ScreenRenderingService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(ScreenRenderingService);
+    });
+
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+});

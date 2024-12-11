@@ -15,32 +15,30 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FORM_FIELD_VALIDATORS, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { FormCustomOutcomesComponent } from '@alfresco/adf-process-services-cloud';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
+import { DisplayModeService } from '../../../../form/services/display-mode.service';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TaskFormCloudComponent } from './task-form-cloud.component';
+import { TaskCloudService } from '../../../services/task-cloud.service';
 import {
-    TaskDetailsCloudModel,
     TASK_ASSIGNED_STATE,
     TASK_CLAIM_PERMISSION,
     TASK_CREATED_STATE,
     TASK_RELEASE_PERMISSION,
-    TASK_VIEW_PERMISSION
+    TASK_VIEW_PERMISSION,
+    TaskDetailsCloudModel
 } from '../../../start-task/models/task-details-cloud.model';
-import { TaskCloudService } from '../../../services/task-cloud.service';
-import { IdentityUserService } from '../../../../people/services/identity-user.service';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { DisplayModeService } from '../../../../form/services/display-mode.service';
-import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
 import { MockFormFieldValidator } from '../../mocks/task-form-cloud.mock';
+import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
+import { TaskFormCloudComponent } from './task-form-cloud.component';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
+    appVersion: 1,
     assignee: 'admin.adf',
     completedDate: null,
     createdDate: new Date(1555419255340),
@@ -55,21 +53,16 @@ const taskDetails: TaskDetailsCloudModel = {
 };
 
 describe('TaskFormCloudComponent', () => {
-    let loader: HarnessLoader;
     let taskCloudService: TaskCloudService;
     let identityUserService: IdentityUserService;
-
-    let getTaskSpy: jasmine.Spy;
     let getCurrentUserSpy: jasmine.Spy;
-    let debugElement: DebugElement;
-
     let component: TaskFormCloudComponent;
     let fixture: ComponentFixture<TaskFormCloudComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
-            declarations: [FormCloudComponent]
+            declarations: [FormCloudComponent, UserTaskCloudButtonsComponent, FormCustomOutcomesComponent]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;
         taskDetails.permissions = [TASK_VIEW_PERMISSION];
@@ -78,215 +71,127 @@ describe('TaskFormCloudComponent', () => {
         identityUserService = TestBed.inject(IdentityUserService);
         getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
         taskCloudService = TestBed.inject(TaskCloudService);
-        getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(taskDetails));
-        spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
-        spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of([]));
-
         fixture = TestBed.createComponent(TaskFormCloudComponent);
-        debugElement = fixture.debugElement;
         component = fixture.componentInstance;
-        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    describe('Complete button', () => {
-        beforeEach(() => {
-            component.taskId = 'task1';
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            fixture.detectChanges();
-        });
-
-        it('should show complete button when status is ASSIGNED', () => {
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-            expect(completeBtn.nativeElement).toBeDefined();
-            expect(completeBtn.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE');
-        });
-
-        it('should not show complete button when status is ASSIGNED but assigned to a different person', () => {
-            getCurrentUserSpy.and.returnValue({});
-            fixture.detectChanges();
-
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-            expect(completeBtn).toBeNull();
-        });
-
-        it('should not show complete button when showCompleteButton=false', () => {
-            component.showCompleteButton = false;
-            fixture.detectChanges();
-
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-            expect(completeBtn).toBeNull();
-        });
-    });
-
     describe('Claim/Unclaim buttons', () => {
         beforeEach(() => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
-            getTaskSpy.and.returnValue(of(taskDetails));
+            fixture.componentRef.setInput('taskDetails', taskDetails);
             component.taskId = 'task1';
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.showCancelButton = true;
             fixture.detectChanges();
         });
 
         it('should not show release button for standalone task', () => {
             taskDetails.permissions = [TASK_RELEASE_PERMISSION];
             taskDetails.standalone = true;
-            getTaskSpy.and.returnValue(of(taskDetails));
             fixture.detectChanges();
+            const canUnclaimTask = component.canUnclaimTask();
 
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-            expect(unclaimBtn).toBeNull();
+            expect(canUnclaimTask).toBe(false);
         });
 
         it('should not show claim button for standalone task', () => {
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
             taskDetails.standalone = true;
-            getTaskSpy.and.returnValue(of(taskDetails));
             fixture.detectChanges();
+            const canClaimTask = component.canClaimTask();
 
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            expect(claimBtn).toBeNull();
+            expect(canClaimTask).toBe(false);
         });
 
         it('should show release button when task is assigned to one of the candidate users', () => {
             taskDetails.permissions = [TASK_RELEASE_PERMISSION];
             fixture.detectChanges();
+            const canUnclaimTask = component.canUnclaimTask();
 
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-            expect(unclaimBtn.nativeElement).toBeDefined();
-            expect(unclaimBtn.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM');
+            expect(canUnclaimTask).toBe(true);
         });
 
         it('should not show unclaim button when status is ASSIGNED but assigned to different person', () => {
             getCurrentUserSpy.and.returnValue({});
             fixture.detectChanges();
+            const canUnclaimTask = component.canUnclaimTask();
 
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-            expect(unclaimBtn).toBeNull();
+            expect(canUnclaimTask).toBe(false);
         });
 
         it('should not show unclaim button when status is not ASSIGNED', () => {
             taskDetails.status = undefined;
             fixture.detectChanges();
+            const canUnclaimTask = component.canUnclaimTask();
 
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-            expect(unclaimBtn).toBeNull();
+            expect(canUnclaimTask).toBe(false);
         });
 
         it('should not show unclaim button when status is ASSIGNED and permissions not include RELEASE', () => {
             taskDetails.status = TASK_ASSIGNED_STATE;
             taskDetails.permissions = [TASK_VIEW_PERMISSION];
             fixture.detectChanges();
+            const canUnclaimTask = component.canUnclaimTask();
 
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-            expect(unclaimBtn).toBeNull();
+            expect(canUnclaimTask).toBe(false);
         });
 
         it('should show claim button when status is CREATED and permission includes CLAIM', () => {
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
             fixture.detectChanges();
+            const canClaimTask = component.canClaimTask();
 
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            expect(claimBtn.nativeElement).toBeDefined();
-            expect(claimBtn.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
+            expect(canClaimTask).toBe(true);
         });
 
         it('should not show claim button when status is not CREATED', () => {
             taskDetails.status = undefined;
             fixture.detectChanges();
+            const canClaimTask = component.canClaimTask();
 
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            expect(claimBtn).toBeNull();
+            expect(canClaimTask).toBe(false);
         });
 
         it('should not show claim button when status is CREATED and permission not includes CLAIM', () => {
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_VIEW_PERMISSION];
             fixture.detectChanges();
+            const canClaimTask = component.canClaimTask();
 
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            expect(claimBtn).toBeNull();
-        });
-    });
-
-    describe('Cancel button', () => {
-        it('should show cancel button by default', () => {
-            component.appName = 'app1';
-            component.taskId = 'task1';
-
-            fixture.detectChanges();
-
-            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-            expect(cancelBtn.nativeElement).toBeDefined();
-            expect(cancelBtn.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL');
-        });
-
-        it('should not show cancel button when showCancelButton=false', () => {
-            component.appName = 'app1';
-            component.taskId = 'task1';
-            component.showCancelButton = false;
-
-            fixture.detectChanges();
-
-            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-            expect(cancelBtn).toBeNull();
+            expect(canClaimTask).toBe(false);
         });
     });
 
     describe('Inputs', () => {
+        beforeEach(() => {
+            fixture.componentRef.setInput('taskDetails', taskDetails);
+        });
+
         it('should not show complete/claim/unclaim buttons when readOnly=true', () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             component.readOnly = true;
-
             fixture.detectChanges();
 
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-            expect(completeBtn).toBeNull();
+            const canShowCompleteBtn = component.canCompleteTask();
+            expect(canShowCompleteBtn).toBe(false);
 
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            expect(claimBtn).toBeNull();
+            const canClaimTask = component.canClaimTask();
+            expect(canClaimTask).toBe(false);
 
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-            expect(unclaimBtn).toBeNull();
-
-            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-            expect(cancelBtn.nativeElement).toBeDefined();
-            expect(cancelBtn.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL');
-        });
-
-        it('should load data when appName changes', () => {
-            component.taskId = 'task1';
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            expect(getTaskSpy).toHaveBeenCalled();
-        });
-
-        it('should load data when taskId changes', () => {
-            component.appName = 'app1';
-            component.ngOnChanges({ taskId: new SimpleChange(null, 'task1', false) });
-            expect(getTaskSpy).toHaveBeenCalled();
-        });
-
-        it('should not load data when appName changes and taskId is not defined', () => {
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            expect(getTaskSpy).not.toHaveBeenCalled();
-        });
-
-        it('should not load data when taskId changes and appName is not defined', () => {
-            component.ngOnChanges({ taskId: new SimpleChange(null, 'task1', false) });
-            expect(getTaskSpy).not.toHaveBeenCalled();
+            const canUnclaimTask = component.canUnclaimTask();
+            expect(canUnclaimTask).toBe(false);
         });
 
         it('should append additional field validators to the default ones when provided', () => {
             const mockFirstCustomFieldValidator = new MockFormFieldValidator();
             const mockSecondCustomFieldValidator = new MockFormFieldValidator();
-
-            component.fieldValidators = [mockFirstCustomFieldValidator, mockSecondCustomFieldValidator];
+            fixture.componentRef.setInput('fieldValidators', [mockFirstCustomFieldValidator, mockSecondCustomFieldValidator]);
             fixture.detectChanges();
 
             expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, mockFirstCustomFieldValidator, mockSecondCustomFieldValidator]);
@@ -301,6 +206,7 @@ describe('TaskFormCloudComponent', () => {
 
     describe('Events', () => {
         beforeEach(() => {
+            fixture.componentRef.setInput('taskDetails', taskDetails);
             component.appName = 'app1';
             component.taskId = 'task1';
             fixture.detectChanges();
@@ -308,30 +214,10 @@ describe('TaskFormCloudComponent', () => {
 
         it('should emit cancelClick when cancel button is clicked', async () => {
             spyOn(component.cancelClick, 'emit').and.stub();
-
+            component.onCancelClick();
             fixture.detectChanges();
-
-            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-            cancelBtn.triggerEventHandler('click', {});
-            fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(component.cancelClick.emit).toHaveBeenCalledOnceWith('task1');
-        });
-
-        it('should emit taskCompleted when task is completed', async () => {
-            spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
-            spyOn(component.taskCompleted, 'emit').and.stub();
-
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            fixture.detectChanges();
-
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-            completeBtn.triggerEventHandler('click', {});
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(component.taskCompleted.emit).toHaveBeenCalledOnceWith('task1');
         });
 
         it('should emit taskClaimed when task is claimed', async () => {
@@ -340,21 +226,14 @@ describe('TaskFormCloudComponent', () => {
             spyOn(component.taskClaimed, 'emit').and.stub();
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
-            getTaskSpy.and.returnValue(of(taskDetails));
-
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.onClaimTask();
             fixture.detectChanges();
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            claimBtn.triggerEventHandler('click', {});
-            fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(component.taskClaimed.emit).toHaveBeenCalledOnceWith('task1');
         });
 
         it('should emit error when error occurs', async () => {
             spyOn(component.error, 'emit').and.stub();
-
             component.onError({});
             fixture.detectChanges();
             await fixture.whenStable();
@@ -362,88 +241,15 @@ describe('TaskFormCloudComponent', () => {
             expect(component.error.emit).toHaveBeenCalled();
         });
 
-        it('should reload when task is completed', async () => {
-            spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
-            const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
-
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            fixture.detectChanges();
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-
-            completeBtn.nativeElement.click();
-            await fixture.whenStable();
-            expect(reloadSpy).toHaveBeenCalled();
-        });
-
-        it('should reload when task is claimed', async () => {
-            spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
-            spyOn(component, 'hasCandidateUsers').and.returnValue(true);
-            const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
-            taskDetails.permissions = [TASK_CLAIM_PERMISSION];
-            taskDetails.status = TASK_CREATED_STATE;
-            getTaskSpy.and.returnValue(of(taskDetails));
-
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            fixture.detectChanges();
-            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-
-            claimBtn.nativeElement.click();
-            await fixture.whenStable();
-            expect(reloadSpy).toHaveBeenCalled();
-        });
-
-        it('should emit taskUnclaimed when task is unclaimed', async () => {
-            spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({}));
-            const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
-            spyOn(component, 'hasCandidateUsers').and.returnValue(true);
-
-            taskDetails.status = TASK_ASSIGNED_STATE;
-            taskDetails.permissions = [TASK_RELEASE_PERMISSION];
-            getTaskSpy.and.returnValue(of(taskDetails));
-
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
-            fixture.detectChanges();
-            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-
-            unclaimBtn.nativeElement.click();
-            await fixture.whenStable();
-            expect(reloadSpy).toHaveBeenCalled();
-        });
-
-        it('should show loading template while task data is being loaded', async () => {
-            component.loading = true;
-            fixture.detectChanges();
-
-            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
-        });
-
-        it('should not show loading template while task data is not being loaded', async () => {
-            component.loading = false;
-            fixture.detectChanges();
-
-            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
-        });
-
         it('should emit an executeOutcome event when form outcome executed', () => {
             const executeOutcomeSpy: jasmine.Spy = spyOn(component.executeOutcome, 'emit');
-
             component.onFormExecuteOutcome(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
 
             expect(executeOutcomeSpy).toHaveBeenCalled();
         });
 
-        it('should emit onTaskLoaded on initial load of component', () => {
-            component.appName = '';
-            spyOn(component.onTaskLoaded, 'emit');
-
-            component.ngOnInit();
-            fixture.detectChanges();
-            expect(component.onTaskLoaded.emit).toHaveBeenCalledWith(taskDetails);
-        });
-
         it('should emit displayModeOn when display mode is turned on', async () => {
             spyOn(component.displayModeOn, 'emit').and.stub();
-
             component.onDisplayModeOn(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -453,7 +259,6 @@ describe('TaskFormCloudComponent', () => {
 
         it('should emit displayModeOff when display mode is turned on', async () => {
             spyOn(component.displayModeOff, 'emit').and.stub();
-
             component.onDisplayModeOff(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -462,45 +267,14 @@ describe('TaskFormCloudComponent', () => {
         });
     });
 
-    it('should display task name as title on no form template if showTitle is true', () => {
-        component.taskId = taskDetails.id;
-
-        fixture.detectChanges();
-        const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
-
-        expect(noFormTemplateTitle.nativeElement.innerText).toEqual('Task1');
-    });
-
-    it('should display default name as title on no form template if the task name empty/undefined', () => {
-        const mockTaskDetailsWithOutName = { id: 'mock-task-id', name: null, formKey: null };
-        getTaskSpy.and.returnValue(of(mockTaskDetailsWithOutName));
-        component.taskId = 'mock-task-id';
-
-        fixture.detectChanges();
-        const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
-
-        expect(noFormTemplateTitle.nativeElement.innerText).toEqual('FORM.FORM_RENDERER.NAMELESS_TASK');
-    });
-
-    it('should not display no form title if showTitle is set to false', () => {
-        component.taskId = taskDetails.id;
-        component.showTitle = false;
-
-        fixture.detectChanges();
-        const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
-
-        expect(noFormTemplateTitle).toBeNull();
-    });
-
     it('should call children cloud task form change display mode when changing the display mode', () => {
         const displayMode = 'displayMode';
         component.taskDetails = { ...taskDetails, formKey: 'some-form' };
-
         fixture.detectChanges();
 
         expect(component.adfCloudForm).toBeDefined();
-        const switchToDisplayModeSpy = spyOn(component.adfCloudForm, 'switchToDisplayMode');
 
+        const switchToDisplayModeSpy = spyOn(component.adfCloudForm, 'switchToDisplayMode');
         component.switchToDisplayMode(displayMode);
 
         expect(switchToDisplayModeSpy).toHaveBeenCalledOnceWith(displayMode);

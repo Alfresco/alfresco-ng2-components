@@ -15,14 +15,10 @@
  * limitations under the License.
  */
 
-export * from './base-cloud.service';
-export * from './cloud-token.service';
-export * from './form-fields.interfaces';
-export * from './local-preference-cloud.service';
-export * from './notification-cloud.service';
-export * from './preference-cloud.interface';
-export * from './screen-rendering.service';
-export * from './task-list-cloud.service.interface';
-export * from './user-preference-cloud.service';
-export * from './variable-mapper.sevice';
-export * from './web-socket.service';
+import { Injectable } from '@angular/core';
+import { DynamicComponentMapper } from '../../../../core/src/lib/common/services/dynamic-component-mapper.service';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ScreenRenderingService extends DynamicComponentMapper {}

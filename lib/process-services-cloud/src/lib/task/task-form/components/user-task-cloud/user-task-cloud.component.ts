@@ -120,6 +120,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     candidateUsers: string[] = [];
     candidateGroups: string[] = [];
     loading: boolean = false;
+    screenId: string;
     taskDetails: TaskDetailsCloudModel;
     taskType: TaskTypesType;
     taskTypeEnum = TaskTypes;
@@ -144,6 +145,8 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             this.taskType = this.taskTypeEnum.Form;
         } else if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
             this.taskType = this.taskTypeEnum.Screen;
+            const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
+            this.screenId = screenId;
         } else {
             this.taskType = this.taskTypeEnum.None;
         }

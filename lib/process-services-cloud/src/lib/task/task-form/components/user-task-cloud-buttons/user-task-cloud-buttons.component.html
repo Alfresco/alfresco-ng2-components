@@ -6,6 +6,7 @@
     {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
 </button>
 <button
+    class="adf-user-task-cloud-claim-btn"
     mat-button
     *ngIf="canClaimTask"
     adf-cloud-claim-task
@@ -16,6 +17,7 @@
     {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
 </button>
 <button
+    class="adf-user-task-cloud-unclaim-btn"
     mat-button
     *ngIf="canUnclaimTask"
     adf-cloud-unclaim-task

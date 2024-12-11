@@ -1,4 +1,4 @@
- <div class="adf-task-form-cloud-container">
+ <div class="adf-user-task-cloud-container">
     <div *ngIf="!loading; else loadingTemplate">
         <ng-container [ngSwitch]="taskType">
             <ng-container *ngSwitchCase="taskTypeEnum.Form">
@@ -24,7 +24,7 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.Screen">
-                <adf-cloud-screen-cloud [taskId]="taskId"></adf-cloud-screen-cloud>
+                <adf-cloud-screen-cloud [taskId]="taskId" [appName]="appName" [screenId]="screenId"></adf-cloud-screen-cloud>
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.None">
@@ -57,7 +57,7 @@
                             (error)="onError($event)"
                             color="primary"
                             id="adf-form-complete"
-                        >
+                            >
                             {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                         </button>
                     </mat-card-actions>

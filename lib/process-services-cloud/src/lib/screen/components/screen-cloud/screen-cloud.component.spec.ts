@@ -18,21 +18,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScreenCloudComponent } from './screen-cloud.component';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ScreenRenderingService } from '../../../services/public-api';
+import { By } from '@angular/platform-browser';
+
+@Component({
+    selector: 'adf-cloud-test-component',
+    template: `<div class="adf-cloud-test-container">test component</div>`,
+    imports: [CommonModule],
+    standalone: true
+})
+class TestComponent {}
 
 describe('ScreenCloudComponent', () => {
-    let component: ScreenCloudComponent;
     let fixture: ComponentFixture<ScreenCloudComponent>;
+    let screenRenderingService: ScreenRenderingService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ScreenCloudComponent]
+            imports: [ScreenCloudComponent, TestComponent]
         });
         fixture = TestBed.createComponent(ScreenCloudComponent);
-        component = fixture.componentInstance;
+        screenRenderingService = TestBed.inject(ScreenRenderingService);
+        screenRenderingService.register({ ['test']: () => TestComponent });
+        fixture.componentRef.setInput('screenId', 'test');
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+    it('should create custom component instance', () => {
+        const dynamicComponent = fixture.debugElement.query(By.css('.adf-cloud-test-container'));
+        expect(dynamicComponent).toBeTruthy();
     });
 });

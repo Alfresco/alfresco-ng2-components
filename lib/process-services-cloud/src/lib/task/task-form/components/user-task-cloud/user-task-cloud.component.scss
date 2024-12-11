@@ -1,6 +1,9 @@
-.adf-task-form-cloud-container {
-    width: 100%;
+.adf-user-task-cloud-container {
     height: 100%;
+
+    > div {
+        height: 100%;
+    }
 }
 
 .adf-user-task-cloud-spinner {

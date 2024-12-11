@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-// FormRenderingService,
-import { DynamicComponentModel, ScreenRenderingService } from '@alfresco/adf-core';
+import { DynamicComponentModel } from '@alfresco/adf-core';
+import { ScreenRenderingService } from '../../../services/public-api';
 import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, inject, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
@@ -24,8 +24,7 @@ import { Component, ComponentRef, inject, Input, OnInit, ViewChild, ViewContaine
     selector: 'adf-cloud-screen-cloud',
     standalone: true,
     imports: [CommonModule],
-    templateUrl: './screen-cloud.component.html',
-    styleUrls: ['./screen-cloud.component.scss']
+    template: '<div #container></div>'
 })
 export class ScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
@@ -33,19 +32,25 @@ export class ScreenCloudComponent implements OnInit {
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
+    /** Screen id to fetch corresponding screen widget. */
+    @Input()
+    screenId: string = '';
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
-    screenComponent: DynamicComponentModel = { type: 'screen-one' };
+    screenComponent: DynamicComponentModel;
     componentRef: ComponentRef<any>;
 
     private readonly screenRenderingService = inject(ScreenRenderingService);
 
     ngOnInit() {
-        const componentType = this.screenRenderingService.resolveComponentType(this.screenComponent);
-        this.componentRef = this.container.createComponent(componentType);
+        if (this.screenId) {
+            this.screenComponent = { type: this.screenId };
+            const componentType = this.screenRenderingService.resolveComponentType(this.screenComponent);
+            this.componentRef = this.container.createComponent(componentType);
+        }
     }
 }
