@@ -21,6 +21,7 @@ export const DEFAULT_APP_INSTANCE_ICON = 'favorite_border';
 export interface ApplicationInstanceModel {
     name?: string;
     displayName?: string;
+    canAccessAudit?: boolean;
     createdAt?: any;
     status?: string;
     theme?: string;
