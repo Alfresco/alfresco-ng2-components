@@ -18,6 +18,9 @@
 import { EventEmitter } from '@angular/core';
 
 export interface UserTaskCustomUi {
+    appName: string;
+    taskId: string;
+    screenId: string;
     error: EventEmitter<any>;
     cancelClick: EventEmitter<string>;
     taskClaimed: EventEmitter<string>;
