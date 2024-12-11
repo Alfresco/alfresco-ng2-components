@@ -10,26 +10,21 @@
             adf-auto-focus
             placeholder="{{ 'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate }}"
         />
-        <mat-error *ngIf="tagNameControl.invalid && tagNameControl.touched">{{ tagNameErrorMessageKey | translate }} </mat-error>
+        <mat-error *ngIf="tagNameControl.invalid && tagNameControl.touched">
+            {{ tagNameErrorMessageKey | translate }}
+        </mat-error>
     </div>
     <p class="adf-no-tags-message" *ngIf="showEmptyTagMessage">
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div class="adf-tags-list" [class.adf-tags-list-fixed]="!tagNameControlVisible" #tagsList>
-        <mat-chip-listbox *ngIf="tags.length > 0">
-            <mat-chip *ngFor="let tag of tags" [disableRipple]="true" [title]="tag" class="adf-tags-chip">
-                {{ tag }}
-                <button
-                    data-automation-id="remove-tag-button"
-                    mat-icon-button
-                    (click)="removeTag(tag)"
-                    [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                    [disabled]="disabledTagsRemoving"
-                    matChipRemove>
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-chip>
-        </mat-chip-listbox>
+        <ng-container *ngIf="tags?.length > 0">
+            <adf-dynamic-chip-list
+                class="adf-tags-chips-container"
+                [chips]="tagsToDisplay"
+                [disableDelete]="disabledTagsRemoving"
+                (removedChip)="removeTag($event)" />
+        </ng-container>
     </div>
 </div>
 <div class="adf-existing-tags-panel" *ngIf="existingTagsPanelVisible">
@@ -40,7 +35,7 @@
         role="button"
         tabindex="0"
         (keyup.enter)="addTag()"
-        [hidden]="tagNameControl.invalid || typing"
+        [hidden]="!tagNameControl.value || tagNameControl.invalid || typing"
     >
         {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
     </span>
@@ -49,7 +44,8 @@
     </p>
     <div class="adf-tags-list">
         <mat-list *ngIf="!spinnerVisible && existingTags" [disabled]="isOnlyCreateMode()">
-            <mat-list-item *ngFor="let tagRow of existingTags" class="adf-tag" (click)="addExistingTagToTagsToAssign(tagRow)">
+            <mat-list-item *ngFor="let tagRow of existingTags" class="adf-tag"
+                           (click)="addExistingTagToTagsToAssign(tagRow)">
                 {{ tagRow.entry.tag }}
             </mat-list-item>
             <p *ngIf="!existingTags?.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>

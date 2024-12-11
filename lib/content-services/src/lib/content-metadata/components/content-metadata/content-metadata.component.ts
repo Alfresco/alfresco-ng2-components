@@ -23,6 +23,8 @@ import {
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewItem,
+    Chip,
+    DynamicChipListComponent,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -39,17 +41,17 @@ import { CategoriesManagementMode } from '../../../category/categories-managemen
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
 import { CommonModule } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { CategoriesManagementComponent } from '../../../category';
-import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
+import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
+import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -74,7 +76,8 @@ enum DefaultPanels {
         DynamicExtensionComponent,
         MatProgressBarModule,
         TagsCreatorComponent,
-        CardViewComponent
+        CardViewComponent,
+        DynamicChipListComponent
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
@@ -153,6 +156,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
+    tagsToDisplay: Chip[];
     changedProperties = {};
     hasMetadataChanged = false;
     assignedCategories: Category[] = [];
@@ -213,6 +217,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     get assignedTags(): string[] {
         return this._assignedTags;
+    }
+
+    set tags(tags: string[]) {
+        this._tags = tags;
+        this.tagsToDisplay = this.tags.map((tag) => ({ id: tag, name: tag }));
     }
 
     get tags(): string[] {
@@ -309,7 +318,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
      * @param tags array of tags to register, they are not saved yet until we click save button.
      */
     storeTagsToAssign(tags: string[]) {
-        this._tags = tags;
+        this.tags = tags;
+        this._assignedTags = tags;
         this.hasMetadataChanged = true;
     }
 
@@ -512,8 +522,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     private loadTagsForNode(id: string) {
         this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
             this.assignedTagsEntries = tagPaging.list.entries;
-            this._tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
-            this._assignedTags = [...this._tags];
+            this.tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
+            this._assignedTags = [...this.tags];
         });
     }
 

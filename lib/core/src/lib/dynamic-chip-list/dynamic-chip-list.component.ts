@@ -65,6 +65,10 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     @Input()
     showDelete = true;
 
+    /** Disable delete button. */
+    @Input()
+    disableDelete = false;
+
     /** Should limit number of chips displayed. */
     @Input()
     limitChipsDisplayed = false;
@@ -101,8 +105,10 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
     private requestedDisplayingAllChips = false;
     private resizeObserver = new ResizeObserver(() => {
-        this.calculateChipsToDisplay();
-        this.changeDetectorRef.detectChanges();
+        if (this.initialLimitChipsDisplayed && this.chipsToDisplay.length) {
+            this.calculateChipsToDisplay();
+            this.changeDetectorRef.detectChanges();
+        }
     });
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
@@ -117,10 +123,8 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
             this.initialChips = this.chips;
             this.chipsToDisplay = this.initialChips;
             if (this.limitChipsDisplayed && this.chipsToDisplay.length) {
-                setTimeout(() => {
-                    this.calculateChipsToDisplay();
-                    this.changeDetectorRef.detectChanges();
-                });
+                this.calculateChipsToDisplay();
+                this.changeDetectorRef.detectChanges();
             }
         }
     }
@@ -229,6 +233,10 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
             }
         } else {
             this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+        }
+
+        if (!this.pagination) {
+            this.viewMoreButtonTop = null;
         }
     }
 }

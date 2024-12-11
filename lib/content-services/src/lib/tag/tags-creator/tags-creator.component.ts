@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { Chip, DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
 import { TagEntry, TagPaging } from '@alfresco/js-api';
 import {
     Component,
@@ -30,28 +31,26 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
-import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
-import { NotificationService } from '@alfresco/adf-core';
-import { TagsCreatorMode } from './tags-creator-mode';
-import { TagService } from '../services/tag.service';
 import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { AutoFocusDirective } from '../../directives';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatChipsModule } from '@angular/material/chips';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
+import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
+import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
+import { AutoFocusDirective } from '../../directives';
+import { TagService } from '../services/tag.service';
+import { TagsCreatorMode } from './tags-creator-mode';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
     duplicatedAddedTag?: boolean;
     emptyTag?: boolean;
-    required?: boolean;
     specialCharacters?: boolean;
 }
 
@@ -76,7 +75,8 @@ const DEFAULT_TAGS_SORTING = {
         MatButtonModule,
         MatIconModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        DynamicChipListComponent
     ],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
@@ -105,13 +105,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
     set tags(tags: string[]) {
         this._tags = [...tags];
+        this.tagsToDisplay = this.tags.map((tag) => ({ id: tag, name: tag }));
         this._initialExistingTags = null;
         this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
-        if (this.tagNameControl.errors?.required) {
-            this.tagNameControl.markAsUntouched();
-        }
     }
 
     get tags(): string[] {
@@ -130,9 +128,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             this._existingTagsPanelVisible = true;
             setTimeout(() => {
                 this.tagNameInputElement?.nativeElement?.scrollIntoView();
-                if (!this.tags.length) {
-                    this.tagNameInputElement?.nativeElement?.focus();
-                }
             });
         } else {
             this._existingTagsPanelVisible = false;
@@ -156,11 +151,12 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Output()
     tagsChange = new EventEmitter<string[]>();
 
+    tagsToDisplay: Chip[] = [];
+
     readonly nameErrorMessagesByErrors = new Map<keyof TagNameControlErrors, string>([
         ['duplicatedExistingTag', 'EXISTING_TAG'],
         ['duplicatedAddedTag', 'ALREADY_ADDED_TAG'],
         ['emptyTag', 'EMPTY_TAG'],
-        ['required', 'REQUIRED'],
         ['specialCharacters', 'SPECIAL_CHARACTERS']
     ]);
 
@@ -170,7 +166,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
         '',
-        [this.validateIfNotAlreadyAdded.bind(this), Validators.required, this.validateEmptyTag, this.validateSpecialCharacters],
+        [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyTag, this.validateSpecialCharacters],
         this.validateIfNotExistingTag.bind(this)
     );
     private _tagNameControlVisible = false;
@@ -276,7 +272,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     addTag(): void {
         if (!this._typing && !this.tagNameControl.invalid) {
-            this.tags.push(this.tagNameControl.value.trim());
+            this.tags = [...this.tags, this.tagNameControl.value.trim()];
             this.clearTagNameInput();
             this.checkScrollbarVisibility();
             this.tagsChange.emit(this.tags);
@@ -291,7 +287,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     removeTag(tag: string): void {
         this.removeTagFromArray(this.tags, tag);
-        this.tagNameControl.updateValueAndValidity({ emitEvent: false });
+        this.tags = [...this.tags];
+        this.tagNameControl.updateValueAndValidity();
         this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
         this.exactTagSet$.next();
         this.checkScrollbarVisibility();
@@ -308,6 +305,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             this.tags.push(selectedTag.entry.tag);
             this.removeTagFromArray(this.existingTags, selectedTag);
             this.tagNameControl.updateValueAndValidity();
+            this.tags = [...this.tags];
             this.exactTagSet$.next();
             this.tagsChange.emit(this.tags);
         }
@@ -337,8 +335,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     takeUntil(this.cancelExistingTagsLoading$),
                     finalize(() => (this._typing = false))
                 )
-                .subscribe(
-                    ({ exactResult, searchedResult }: { exactResult: TagEntry; searchedResult: TagPaging }) => {
+                .subscribe({
+                    next: ({ exactResult, searchedResult }: { exactResult: TagEntry; searchedResult: TagPaging }) => {
                         if (exactResult) {
                             this.existingExactTag = exactResult;
                             this.removeExactTagFromSearchedResult(searchedResult);
@@ -352,11 +350,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                         this.exactTagSet$.next();
                         this._spinnerVisible = false;
                     },
-                    () => {
+                    error: () => {
                         this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
                         this._spinnerVisible = false;
                     }
-                );
+                });
         } else {
             this.existingExactTag = null;
             this._spinnerVisible = false;
