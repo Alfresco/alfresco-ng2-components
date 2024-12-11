@@ -27,7 +27,7 @@
     <button
         data-automation-id="adf-dynamic-chip-list-view-more-button"
         mat-button
-        [hidden]="chipsToDisplay.length === 0 || !limitChipsDisplayed"
+        [hidden]="chipsToDisplay?.length === 0 || !limitChipsDisplayed"
         [style.left.px]="viewMoreButtonLeftOffset"
         [style.top.px]="!!pagination ? viewMoreButtonTop : ''"
         class="adf-dynamic-chip-list-view-more-button"
