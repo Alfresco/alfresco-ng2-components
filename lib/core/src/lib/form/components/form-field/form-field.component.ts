@@ -36,7 +36,6 @@ import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FieldStylePipe } from '../../pipes/field-style.pipe';
 import { FormFieldTypes } from '../widgets/core/form-field-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { isEqual } from 'lodash';
 
 declare const adf: any;
 
@@ -108,14 +107,8 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
-        instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
-            if (event.field.id !== instance.id) {
-                instance?.updateReactiveFormControl();
-
-                if (!isEqual(event.field.reactiveValue, instance.field.reactiveValue)) {
-                    this.triggerFormFieldChanged(instance.field);
-                }
-            }
+        instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            instance?.updateReactiveFormControl();
         });
     }
 

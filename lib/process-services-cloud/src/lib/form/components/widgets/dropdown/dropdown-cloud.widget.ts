@@ -86,10 +86,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     list$ = new BehaviorSubject<FormFieldOption[]>([]);
     filter$ = new BehaviorSubject<string>('');
 
-    get reactiveValue(): FormFieldOption | FormFieldOption[] {
-        return this.dropdownControl.value;
-    }
-
     private readonly defaultVariableOptionId = 'id';
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
