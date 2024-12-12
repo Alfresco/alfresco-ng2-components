@@ -27,7 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudModule } from '../task-list-cloud.module';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -94,7 +94,7 @@ describe('TaskListCloudComponent', () => {
         updatePreference: of({})
     });
 
-    const configureTestingModule = (providers: any[]) => {
+    const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
             providers: [
@@ -105,8 +105,7 @@ describe('TaskListCloudComponent', () => {
                 {
                     provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
                     useValue: preferencesService
-                },
-                ...providers
+                }
             ]
         });
         appConfig = TestBed.inject(AppConfigService);
@@ -134,6 +133,7 @@ describe('TaskListCloudComponent', () => {
             }
         });
 
+        component.searchApiMethod = searchApiMethod;
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
         loader = TestbedHarnessEnvironment.loader(fixture);
     };
@@ -142,9 +142,9 @@ describe('TaskListCloudComponent', () => {
         fixture.destroy();
     });
 
-    describe('TASK_SEARCH_API_METHOD_TOKEN injected with GET value', () => {
+    describe('searchApiMethod set to GET', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: TASK_SEARCH_API_METHOD_TOKEN, useValue: 'GET' }]);
+            configureTestingModule('GET');
         });
 
         it('should load spinner and show the content', async () => {
@@ -285,9 +285,9 @@ describe('TaskListCloudComponent', () => {
         });
     });
 
-    describe('TASK_SEARCH_API_METHOD_TOKEN injected with POST value', () => {
+    describe('searchApiMethod set to POST', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: TASK_SEARCH_API_METHOD_TOKEN, useValue: 'POST' }]);
+            configureTestingModule('POST');
             component.appName = 'mock-app-name';
         });
 
@@ -428,7 +428,7 @@ describe('TaskListCloudComponent', () => {
 
     describe('API agnostic', () => {
         beforeEach(() => {
-            configureTestingModule([]);
+            configureTestingModule('GET');
         });
 
         it('should be able to inject TaskListCloudService instance', () => {

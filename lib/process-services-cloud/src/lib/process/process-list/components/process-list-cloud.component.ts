@@ -23,7 +23,6 @@ import {
     Inject,
     Input,
     OnChanges,
-    Optional,
     Output,
     SimpleChanges,
     ViewChild,
@@ -51,10 +50,7 @@ import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../model
 import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from '../models/process-list-sorting.model';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import {
-    PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-    PROCESS_SEARCH_API_METHOD_TOKEN
-} from '../../../services/cloud-token.service';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
 import {
@@ -216,58 +212,62 @@ export class ProcessListCloudComponent
     @Input()
     isResizingEnabled: boolean = false;
 
+    /** From Activiti 8.7.0 forward, use 'POST' value and array inputs to enable advanced filtering. */
+    @Input()
+    searchApiMethod: 'GET' | 'POST' = 'GET';
+
     /**
      * Filter the processes. Display only processes with names matching any of the supplied strings.
-     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
      */
     @Input()
     names: string[] = [];
 
     /**
      * Filter the processes. Display only processes with instance Ids matching any of the supplied strings.
-     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
      */
     @Input()
     ids: string[] = [];
 
     /**
      * Filter the processes. Display only processes with parent Ids matching any of the supplied strings.
-     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
      */
     @Input()
     parentIds: string[] = [];
 
     /**
      * Filter the processes. Display only processes with definition names matching any of the supplied strings.
-     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
      */
     @Input()
     processDefinitionNames: string[] = [];
 
    /**
     * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    * This input will be used only if searchApiMethod input is provided with 'POST' value.
     */
     @Input()
     initiators: string[] = [];
 
    /**
     * Filter the processes. Display only processes present in any of the specified app versions.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    * This input will be used only if searchApiMethod input is provided with 'POST' value.
     */
     @Input()
     appVersions: string[] = [];
 
    /**
     * Filter the processes. Display only processes with provided statuses.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    * This input will be used only if searchApiMethod input is provided with 'POST' value.
     */
     @Input()
     statuses: string[] = [];
 
     /**
      * Filter the processes. Display only processes with specific process variables.
-     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
      */
     @Input()
     processVariables: ProcessVariableFilterModel[];
@@ -318,7 +318,6 @@ export class ProcessListCloudComponent
     private fetchProcessesTrigger$ = new Subject<void>();
 
     constructor(
-        @Inject(PROCESS_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         private processListCloudService: ProcessListCloudService,
         appConfigService: AppConfigService,
         private userPreferences: UserPreferencesService,
@@ -343,7 +342,7 @@ export class ProcessListCloudComponent
             tap(() => this.isLoading = true),
             filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
             switchMap(() => {
-                if (this.searchMethod === 'POST') {
+                if (this.searchApiMethod === 'POST') {
                     const requestNode = this.createProcessListRequestNode();
                     this.processListRequestNode = requestNode;
                     return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));

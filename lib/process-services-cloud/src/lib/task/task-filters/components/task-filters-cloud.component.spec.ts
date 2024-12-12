@@ -20,7 +20,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, throwError } from 'rxjs';
-import { TASK_FILTERS_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../mock/task-filters-cloud.mock';
@@ -45,10 +45,10 @@ describe('TaskFiltersCloudComponent', () => {
     let getTaskListFiltersSpy: jasmine.Spy;
     let getTaskListCounterSpy: jasmine.Spy;
 
-    const configureTestingModule = (providers: any[]) => {
+    const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }, ...providers]
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         taskListService = TestBed.inject(TaskListCloudService);
@@ -62,15 +62,17 @@ describe('TaskFiltersCloudComponent', () => {
         fixture = TestBed.createComponent(TaskFiltersCloudComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+
+        component.searchApiMethod = searchApiMethod;
     };
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    describe('TASK_SEARCH_API_METHOD_TOKEN injected with GET value', () => {
+    describe('searchApiMethod set to GET', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: TASK_SEARCH_API_METHOD_TOKEN, useValue: 'GET' }]);
+            configureTestingModule('GET');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -242,9 +244,9 @@ describe('TaskFiltersCloudComponent', () => {
         });
     });
 
-    describe('TASK_SEARCH_API_METHOD_TOKEN injected with POST value', () => {
+    describe('searchApiMethod set to POST', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: TASK_SEARCH_API_METHOD_TOKEN, useValue: 'POST' }]);
+            configureTestingModule('POST');
             component.showIcons = true;
             component.appName = 'my-app-1';
         });
@@ -360,7 +362,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     describe('API agnostic', () => {
         beforeEach(() => {
-            configureTestingModule([]);
+            configureTestingModule('GET');
         });
 
         it('should emit an error with a bad response', (done) => {

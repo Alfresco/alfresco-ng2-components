@@ -34,7 +34,6 @@ import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { debounceTime, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
-import { PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessFilterCloudAdapter } from '../../process-list/models/process-cloud-query-request.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -48,6 +47,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     /** (required) The application name */
     @Input()
     appName: string = '';
+
+    /** (optional) From Activiti 8.7.0 forward, use the 'POST' method to get the process count */
+    @Input()
+    searchApiMethod: 'GET' | 'POST' = 'GET';
 
     /** (optional) The filter to be selected by default */
     @Input()
@@ -90,7 +93,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
     private readonly processListCloudService = inject(ProcessListCloudService);
-    private readonly searchMethod = inject<'GET' | 'POST'>(PROCESS_SEARCH_API_METHOD_TOKEN, { optional: true });
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
@@ -322,7 +324,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {
-        return this.searchMethod === 'POST'
+        return this.searchApiMethod === 'POST'
             ? this.processListCloudService.getProcessListCounter(new ProcessFilterCloudAdapter(filter))
             : this.processListCloudService.getProcessCounter(filter.appName, filter.status)
     }
