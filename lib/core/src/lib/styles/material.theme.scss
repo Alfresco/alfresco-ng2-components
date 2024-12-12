@@ -82,4 +82,8 @@
             }
         }
     }
+
+    #{$mat-button-base} {
+        -webkit-font-smoothing: antialiased;
+    }
 }
