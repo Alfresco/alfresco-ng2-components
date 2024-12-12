@@ -35,7 +35,7 @@ import { of } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -76,10 +76,9 @@ describe('ProcessListCloudComponent', () => {
     const fakeCustomSchemaName = 'fakeCustomSchema';
     const schemaWithVariable = 'schemaWithVariableId';
 
-    const configureTestingModule = (providers: any[]) => {
+    const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            providers: providers
+            imports: [ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -118,6 +117,7 @@ describe('ProcessListCloudComponent', () => {
             }
         });
 
+        component.searchApiMethod = searchApiMethod;
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
         loader = TestbedHarnessEnvironment.loader(fixture);
     };
@@ -126,9 +126,9 @@ describe('ProcessListCloudComponent', () => {
         fixture.destroy();
     });
 
-    describe('PROCESS_SEARCH_API_METHOD_TOKEN injected with GET value', () => {
+    describe('searchApiMethod set to GET', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: PROCESS_SEARCH_API_METHOD_TOKEN, useValue: 'GET' }]);
+            configureTestingModule('GET');
         });
 
         it('should load spinner and show the content', async () => {
@@ -420,9 +420,9 @@ describe('ProcessListCloudComponent', () => {
         });
     });
 
-    describe('PROCESS_SEARCH_API_METHOD_TOKEN injected with POST value', () => {
+    describe('searchApiMethod set to POST', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: PROCESS_SEARCH_API_METHOD_TOKEN, useValue: 'POST' }]);
+            configureTestingModule('POST');
             component.appName = 'fake-app-name';
         });
 
@@ -698,7 +698,7 @@ describe('ProcessListCloudComponent', () => {
 
     describe('API agnostic', () => {
         beforeEach(() => {
-            configureTestingModule([]);
+            configureTestingModule('GET');
         });
 
         it('should use the default schemaColumn', () => {

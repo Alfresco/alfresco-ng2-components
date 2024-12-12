@@ -21,7 +21,7 @@ import { of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
-import { PROCESS_FILTERS_SERVICE_TOKEN, PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
@@ -44,7 +44,7 @@ describe('ProcessFiltersCloudComponent', () => {
     let getProcessFiltersSpy: jasmine.Spy;
     let getProcessNotificationSubscriptionSpy: jasmine.Spy;
 
-    const configureTestingModule = (providers: any[]) => {
+    const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule, NoopAnimationsModule, MatListModule],
             providers: [
@@ -56,12 +56,12 @@ describe('ProcessFiltersCloudComponent', () => {
                 }},
                 { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock },
                 NotificationCloudService,
-                ApolloModule,
-                ...providers
+                ApolloModule
             ]
         });
         fixture = TestBed.createComponent(ProcessFiltersCloudComponent);
         component = fixture.componentInstance;
+        component.searchApiMethod = searchApiMethod;
 
         processFilterService = TestBed.inject(ProcessFilterCloudService);
         getProcessFiltersSpy = spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
@@ -72,9 +72,9 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.destroy();
     });
 
-    describe('PROCESS_SEARCH_API_METHOD_TOKEN injected with GET value', () => {
+    describe('searchApiMethod set to GET', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: PROCESS_SEARCH_API_METHOD_TOKEN, useValue: 'GET' }]);
+            configureTestingModule('GET');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -229,9 +229,9 @@ describe('ProcessFiltersCloudComponent', () => {
         });
     });
 
-    describe('PROCESS_SEARCH_API_METHOD_TOKEN injected with POST value', () => {
+    describe('searchApiMethod set to POST', () => {
         beforeEach(() => {
-            configureTestingModule([{ provide: PROCESS_SEARCH_API_METHOD_TOKEN, useValue: 'POST' }]);
+            configureTestingModule('POST');
         });
 
         it('should attach specific icon for each filter if hasIcon is true', async () => {
@@ -388,7 +388,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     describe('API agnostic', () => {
         beforeEach(() => {
-            configureTestingModule([]);
+            configureTestingModule('GET');
         });
 
         it('should emit an error with a bad response', () => {
