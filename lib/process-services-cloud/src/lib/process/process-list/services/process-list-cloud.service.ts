@@ -133,6 +133,18 @@ export class ProcessListCloudService extends BaseCloudService {
             }
         }
 
+        /*
+         * Remove process variable filter keys with empty values from the query data.
+         */
+        if (queryData['processVariableFilters']) {
+            queryData['processVariableFilters'] = queryData['processVariableFilters'].filter(
+                (filter) => filter.value !== '' && filter.value !== null && filter.value !== undefined
+            );
+        }
+
+        /*
+         * Remove keys with empty values from the query data.
+         */
         Object.keys(queryData).forEach((key) => {
             const value = queryData[key];
             const isValueEmpty = !value;
@@ -141,6 +153,7 @@ export class ProcessListCloudService extends BaseCloudService {
                 delete queryData[key];
             }
         });
+
         return queryData;
     }
 
