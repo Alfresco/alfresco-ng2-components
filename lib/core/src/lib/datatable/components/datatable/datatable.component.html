@@ -48,7 +48,7 @@
                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
                 [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
-                [attr.aria-label]="col.title | translate"
+                [attr.aria-label]="(col.title | translate) + (col.subtitle ? ' ' + col.subtitle : '')"
                 (click)="onColumnHeaderClick(col, $event)"
                 (keyup.enter)="onColumnHeaderClick(col, $event)"
                 role="columnheader"
