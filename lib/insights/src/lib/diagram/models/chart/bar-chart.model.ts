@@ -53,8 +53,8 @@ export class BarChart extends Chart {
                 params.values.forEach((info: any) => {
                     info.forEach((value: any, index: any) => {
                         if (index % 2 === 0) {
-                            if (!this.labels.includes(value)) {
-                                this.labels.push(value);
+                            if (!this.labels.includes(value.toString())) {
+                                this.labels.push(value.toString());
                             }
                         } else {
                             dataValue.push(value);

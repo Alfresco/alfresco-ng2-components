@@ -19,8 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 
-declare let jasmine: any;
-
 describe('AnalyticsReportHeatMapComponent', () => {
     let component: AnalyticsReportHeatMapComponent;
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
@@ -53,14 +51,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
     });
 
     describe('Rendering tests: Heat Map', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should render the dropdown with the metric options', async () => {
             component.report = { totalCountsPercentages: { 'sid-fake-id': 10, 'fake-start-event': 30 } };
 
