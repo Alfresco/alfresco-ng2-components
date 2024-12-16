@@ -409,6 +409,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                     this.cardViewContentUpdateService.updateElement(this.targetProperty);
                     this.handleUpdateError(err);
                     this._saving = false;
+                    this.revertChanges();
                     this.loadProperties(this.node);
                     return of(null);
                 })

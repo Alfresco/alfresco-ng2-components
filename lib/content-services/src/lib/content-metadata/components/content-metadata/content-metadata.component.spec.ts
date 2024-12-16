@@ -389,6 +389,27 @@ describe('ContentMetadataComponent', () => {
             flush();
         }));
 
+        it('should revert changes on unsuccessful save', fakeAsync(() => {
+            component.readOnly = false;
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('error message')));
+            spyOn(component, 'revertChanges').and.callThrough();
+            updateService.update(property, 'new-value');
+            tick(600);
+
+            fixture.detectChanges();
+            toggleEditModeForGeneralInfo();
+            tick(100);
+            clickOnGeneralInfoSave();
+            tick(100);
+
+            expect(component.revertChanges).toHaveBeenCalled();
+            expect(component.changedProperties).toEqual({});
+            expect(component.hasMetadataChanged).toBeFalse();
+            discardPeriodicTasks();
+            flush();
+        }));
+
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
             component.readOnly = false;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
