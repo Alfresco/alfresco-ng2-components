@@ -10,7 +10,7 @@
         "createDefaultProgram": true
       },
       "rules": {
-        "jsdoc/newline-after-description": "warn",
+        "jsdoc/tag-lines": ["error", "any", {"startLines": 1}],
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/prefer-for-of": "off",

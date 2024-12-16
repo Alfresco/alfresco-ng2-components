@@ -22,7 +22,6 @@ import { PredictionPaging, ReviewStatus } from '../model';
 export class PredictionsApi extends BaseApi {
     /**
      * List of predictions for a node
-     *
      * @param nodeId The identifier of a node.
      * @returns Promise<PredictionPaging>
      */
@@ -42,7 +41,6 @@ export class PredictionsApi extends BaseApi {
 
     /**
      * Confirm or reject a prediction
-     *
      * @param predictionId The identifier of a prediction.
      * @param reviewStatus New status to apply for prediction. Can be either 'confirmed' or 'rejected'.
      * @returns Promise<void>

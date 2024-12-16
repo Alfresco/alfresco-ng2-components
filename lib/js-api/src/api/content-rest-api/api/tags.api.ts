@@ -29,7 +29,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 export class TagsApi extends BaseApi {
     /**
      * Create a tag for a node
-     *
      * @param nodeId The identifier of a node.
      * @param tagBodyCreate The new tag
      * @param opts Optional parameters
@@ -58,7 +57,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Delete a tag from a node
-     *
      * @param nodeId The identifier of a node.
      * @param tagId The identifier of a tag.
      * @returns Promise<{}>
@@ -80,7 +78,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Get a tag
-     *
      * @param tagId The identifier of a tag.
      * @param opts Optional parameters
      * @returns Promise<TagEntry>
@@ -106,7 +103,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * List tags
-     *
      * @param opts Optional parameters
      * @param opts.tag Name or pattern for which tag is returned. Example of pattern: *test* which returns tags like 'my test 1'
      * @param opts.matching Switches filtering to pattern mode instead of exact mode.
@@ -139,7 +135,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * List tags for a node
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<TagPaging>
@@ -167,7 +162,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Update a tag
-     *
      * @param tagId The identifier of a tag.
      * @param tagBodyUpdate The updated tag
      * @param opts Optional parameters
@@ -196,7 +190,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Deletes a tag by **tagId**. This will cause the tag to be removed from all nodes.
-     *
      * @param tagId The identifier of a tag.
      * @returns Promise<{}>
      */
@@ -215,7 +208,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Create specified by **tags** list of tags.
-     *
      * @param tags List of tags to create.
      * @returns Promise<TagEntry[]>
      */
@@ -230,7 +222,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Assign tags to node. If tag is new then tag is also created additionally, if tag already exists then it is just assigned.
-     *
      * @param nodeId Id of node to which tags should be assigned.
      * @param tags List of tags to create and assign or just assign if they already exist.
      * @returns Promise<TagPaging>
@@ -246,7 +237,6 @@ export class TagsApi extends BaseApi {
 
     /**
      * Assign tags to node. If tag is new then tag is also created additionally, if tag already exists then it is just assigned.
-     *
      * @param nodeId Id of node to which tags should be assigned.
      * @param tag List of tags to create and assign or just assign if they already exist.
      * @returns Promise<TagEntry>

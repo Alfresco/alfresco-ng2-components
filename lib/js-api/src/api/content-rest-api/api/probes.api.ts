@@ -32,7 +32,6 @@ export class ProbesApi extends BaseApi {
      * The readiness probe is normally only used to check repository startup.
      * The liveness probe should then be used to check the repository is still responding to requests.
      * **Note:** No authentication is required to call this endpoint.
-     *
      * @param probeId The name of the probe:
      * - -ready-
      * - -live-

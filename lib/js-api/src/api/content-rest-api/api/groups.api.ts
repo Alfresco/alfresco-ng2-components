@@ -75,7 +75,6 @@ export class GroupsApi extends BaseApi {
      * The group will be created in the **APP.DEFAULT** and **AUTH.ALF** zones.
      *
      * You must have admin rights to create a group.
-     *
      * @param groupBodyCreate The group to create.
      * @param opts Optional parameters
      * @returns Promise<GroupEntry>
@@ -104,7 +103,6 @@ export class GroupsApi extends BaseApi {
      * If the added group was previously a root group then it becomes a non-root group since it now has a parent.
      * It is an error to specify an **id** that does not exist.
      * You must have admin rights to create a group membership.
-     *
      * @param groupId The identifier of a group.
      * @param groupMembershipBodyCreate The group membership to add (person or sub-group).
      * @param opts Optional parameters
@@ -140,7 +138,6 @@ export class GroupsApi extends BaseApi {
      * In this case, removing a group member does not delete the person or sub-group itself.
      * If a removed sub-group no longer has any parent groups then it becomes a root group.
      * You must have admin rights to delete a group.
-     *
      * @param groupId The identifier of a group.
      * @param opts Optional parameters
      * @returns Promise
@@ -174,7 +171,6 @@ export class GroupsApi extends BaseApi {
      * Delete group member **groupMemberId** (person or sub-group) from group **groupId**.
      * Removing a group member does not delete the person or sub-group itself.\
      * If a removed sub-group no longer has any parent groups then it becomes a root group.
-     *
      * @param groupId The identifier of a group.
      * @param groupMemberId The identifier of a person or group.
      * @returns Promise<{}>
@@ -201,7 +197,6 @@ export class GroupsApi extends BaseApi {
      *
      * Get details for group **groupId**.
      * You can use the **include** parameter to return additional information.
-     *
      * @param groupId The identifier of a group.
      * @param opts Optional parameters
      * @returns Promise<GroupEntry>
@@ -241,7 +236,6 @@ export class GroupsApi extends BaseApi {
      * You can override the default by using the **orderBy** parameter. You can specify one of the following fields in the **orderBy** parameter:
      * - id
      * - displayName
-     *
      * @param groupId The identifier of a group.
      * @param opts Optional parameters
      * @returns Promise<GroupMemberPaging>
@@ -273,7 +267,6 @@ export class GroupsApi extends BaseApi {
      * List group memberships
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @param opts.skipCount The number of entities that exist in the collection before those included in this list.
@@ -327,7 +320,6 @@ export class GroupsApi extends BaseApi {
      * List groups
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-     *
      * @param opts Optional parameters
      * @returns Promise<GroupPaging>
      */
@@ -353,7 +345,6 @@ export class GroupsApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
      * You must have admin rights to update a group.
-     *
      * @param groupId The identifier of a group.
      * @param groupBodyUpdate The group information to update.
      * @param opts Optional parameters

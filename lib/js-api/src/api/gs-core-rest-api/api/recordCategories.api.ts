@@ -33,7 +33,6 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 export class RecordCategoriesApi extends BaseApi {
     /**
      * Create a record category or a record folder
-     *
      * @param recordCategoryId The identifier of a record category.
      * @param nodeBodyCreate The node information to create.
      * @param opts Optional parameters
@@ -71,7 +70,6 @@ export class RecordCategoriesApi extends BaseApi {
 
     /**
      * Delete a record category
-     *
      * @param recordCategoryId The identifier of a record category.
      * @returns Promise<{}>
      */
@@ -93,7 +91,6 @@ export class RecordCategoriesApi extends BaseApi {
      *
      * Mandatory fields and the record category's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param recordCategoryId The identifier of a record category.
      * @param opts Optional parameters
      * @param opts.relativePath Return information on children in the record category resolved by this path. The path is relative to **recordCategoryId**.
@@ -132,7 +129,6 @@ export class RecordCategoriesApi extends BaseApi {
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
      *
      * The list of child nodes includes primary children and secondary children, if there are any.
-     *
      * @param recordCategoryId The identifier of a record category.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list. Here are some examples:
@@ -180,7 +176,6 @@ export class RecordCategoriesApi extends BaseApi {
      *
      * **Note:** If you want to add or remove aspects, then you must use **GET /record-categories/{recordCategoryId}** first to get the complete set of *aspectNames*.
      * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-     *
      * @param recordCategoryId The identifier of a record category.
      * @param recordCategoryBodyUpdate The record category information to update.
      * @param opts Optional parameters

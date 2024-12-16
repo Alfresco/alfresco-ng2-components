@@ -254,6 +254,8 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * logout Alfresco API
+     *
+     * @returns A promise that returns {logout} if resolved and {error} if rejected.
      */
     async logout(): Promise<any> {
         if (this.isBPMProvider()) {

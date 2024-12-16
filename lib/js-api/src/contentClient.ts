@@ -44,7 +44,6 @@ export class ContentClient extends AlfrescoApiClient {
 
     /**
      * set the Authentications
-     *
      * @param authentications authentications
      */
     setAuthentications(authentications: Authentication): void {

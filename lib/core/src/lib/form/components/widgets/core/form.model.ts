@@ -146,8 +146,6 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Validates entire form and all form fields.
-     *
-     * @memberof FormModel
      */
     validateForm(): void {
         const validateFormEvent: any = new ValidateFormEvent(this);
@@ -173,7 +171,6 @@ export class FormModel implements ProcessFormModel {
      * Validates a specific form field, triggers form validation.
      *
      * @param field Form field to validate.
-     * @memberof FormModel
      */
     validateField(field: FormFieldModel): void {
         if (!field) {

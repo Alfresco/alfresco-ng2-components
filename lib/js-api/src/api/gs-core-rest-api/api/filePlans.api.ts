@@ -31,7 +31,6 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 export class FilePlansApi extends BaseApi {
     /**
      * Create record categories for a file plan
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param nodeBodyCreate The node information to create.
      * @param opts Optional parameters
@@ -73,7 +72,6 @@ export class FilePlansApi extends BaseApi {
      *
      * Mandatory fields and the file plan's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param opts Optional parameters
      * @returns Promise<FilePlanEntry>
@@ -103,7 +101,6 @@ export class FilePlansApi extends BaseApi {
      *
      * Minimal information for each child is returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param opts Optional parameters
      * @returns Promise<RecordCategoryPaging>
@@ -135,7 +132,6 @@ export class FilePlansApi extends BaseApi {
      * Update a file plan
      *
      * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param filePlanBodyUpdate The file plan information to update.
      * @param opts Optional parameters
