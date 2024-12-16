@@ -51,6 +51,15 @@ export class ScreenCloudComponent implements OnInit {
             this.screenComponent = { type: this.screenId };
             const componentType = this.screenRenderingService.resolveComponentType(this.screenComponent);
             this.componentRef = this.container.createComponent(componentType);
+            if (this.taskId) {
+                this.componentRef.setInput('taskId', this.taskId);
+            }
+            if (this.appName) {
+                this.componentRef.setInput('appName', this.appName);
+            }
+            if (this.screenId) {
+                this.componentRef.setInput('screenId', this.screenId);
+            }
         }
     }
 }
