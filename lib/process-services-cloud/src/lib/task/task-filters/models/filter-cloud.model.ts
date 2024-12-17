@@ -229,6 +229,9 @@ export interface ServiceTaskFilterCloudModel {
     activityName?: string;
     activityType?: string;
     completedDate?: Date;
+    completedDateType?: DateCloudFilterType;
+    completedFrom?: string;
+    completedTo?: string;
     elementId?: string;
     executionId?: string;
     processDefinitionId?: string;
@@ -240,6 +243,9 @@ export interface ServiceTaskFilterCloudModel {
     serviceName?: string;
     serviceVersion?: string;
     startedDate?: Date;
+    startedDateType?: DateCloudFilterType;
+    startedFrom?: string;
+    startedTo?: string;
 }
 
 export interface FilterParamsModel {
