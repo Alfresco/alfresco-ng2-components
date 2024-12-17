@@ -84,11 +84,13 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting,
-            id: this.queryParams?.serviceTaskId,
+            serviceTaskId: this.queryParams?.serviceTaskId,
             environmentId: this.queryParams?.environmentId,
             activityName: this.queryParams?.activityName,
             activityType: this.queryParams?.activityType,
             completedDate: this.queryParams?.completedDate,
+            completedFrom: this.queryParams?.completedFrom,
+            completedTo: this.queryParams?.completedTo,
             elementId: this.queryParams?.elementId,
             executionId: this.queryParams?.executionId,
             processDefinitionId: this.queryParams?.processDefinitionId,
@@ -99,6 +101,8 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
             serviceName: this.queryParams?.serviceName,
             serviceVersion: this.queryParams?.serviceVersion,
             startedDate: this.queryParams?.startedDate,
+            startedFrom: this.queryParams?.startedFrom,
+            startedTo: this.queryParams?.startedTo,
             status: this.queryParams?.status
         } as ServiceTaskQueryCloudRequestModel;
         return requestNode;
