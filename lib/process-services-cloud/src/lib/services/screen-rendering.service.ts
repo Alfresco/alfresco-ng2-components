@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { DynamicComponentMapper } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { DynamicComponentMapper } from '../../../../core/src/lib/common/services/dynamic-component-mapper.service';
 
 @Injectable({
     providedIn: 'root'

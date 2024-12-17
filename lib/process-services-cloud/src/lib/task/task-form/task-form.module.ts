@@ -22,12 +22,12 @@ import { FormCloudModule } from '../../form/form-cloud.module';
 import { TaskDirectiveModule } from '../directives/task-directive.module';
 import { TaskFormCloudComponent } from './components/task-form-cloud/task-form-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
-import { ScreenCloudComponent } from '../../screen/components/screen-cloud/screen-cloud.component';
+import { TaskScreenCloudComponent } from '../../screen/components/screen-cloud/screen-cloud.component';
 import { UserTaskCloudComponent } from './components/user-task-cloud/user-task-cloud.component';
 import { UserTaskCloudButtonsComponent } from './components/user-task-cloud-buttons/user-task-cloud-buttons.component';
 
 @NgModule({
-    imports: [CoreModule, CommonModule, MaterialModule, FormCloudModule, TaskDirectiveModule, ScreenCloudComponent],
+    imports: [CoreModule, CommonModule, MaterialModule, FormCloudModule, TaskDirectiveModule, TaskScreenCloudComponent],
     declarations: [TaskFormCloudComponent, UserTaskCloudComponent, UserTaskCloudButtonsComponent],
     exports: [TaskFormCloudComponent, UserTaskCloudComponent]
 })

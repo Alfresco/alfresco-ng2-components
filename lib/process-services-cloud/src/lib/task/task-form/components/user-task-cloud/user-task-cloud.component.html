@@ -7,24 +7,31 @@
                     [appName]="appName"
                     [candidateUsers]="candidateUsers"
                     [candidateGroups]="candidateGroups"
-                    [taskId]="taskId"
-                    [taskDetails]="taskDetails"
-                    [showValidationIcon]="showValidationIcon"
-                    [showTitle]="showTitle"
                     [displayModeConfigurations]="displayModeConfigurations"
                     [fieldValidators]="fieldValidators"
+                    [showValidationIcon]="showValidationIcon"
+                    [showTitle]="showTitle"
+                    [taskId]="taskId"
+                    [taskDetails]="taskDetails"
                     (cancelClick)="onCancelForm()"
-                    (formSaved)="onFormSaved()"
-                    (taskCompleted)="onCompleteTaskForm()"
-                    (taskUnclaimed)="onTaskUnclaimed()"
-                    (formContentClicked)="onFormContentClicked($event)"
                     (executeOutcome)="onExecuteOutcome($event)"
-                    (error)="onError($event)">
+                    (error)="onError($event)"
+                    (formSaved)="onFormSaved()"
+                    (formContentClicked)="onFormContentClicked($event)"
+                    (taskCompleted)="onCompleteTaskForm()"
+                    (taskClaimed)="onClaimTask()"
+                    (taskUnclaimed)="onTaskUnclaimed()"
+                >
                 </adf-cloud-task-form>
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.Screen">
-                <adf-cloud-screen-cloud [taskId]="taskId" [appName]="appName" [screenId]="screenId"></adf-cloud-screen-cloud>
+                <adf-cloud-task-screen
+                    [taskId]="taskId"
+                    [appName]="appName"
+                    [screenId]="screenId"
+                >
+                </adf-cloud-task-screen>
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.None">
@@ -48,8 +55,8 @@
                         <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
                         </ng-template>
                         <button
-                            mat-button
                             *ngIf="canCompleteTask()"
+                            mat-button
                             adf-cloud-complete-task
                             [appName]="appName"
                             [taskId]="taskId"
@@ -57,7 +64,7 @@
                             (error)="onError($event)"
                             color="primary"
                             id="adf-form-complete"
-                            >
+                        >
                             {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                         </button>
                     </mat-card-actions>
@@ -67,7 +74,6 @@
         </ng-container>
     </div>
 </div>
-
 
 <ng-template #loadingTemplate>
     <mat-spinner class="adf-user-task-cloud-spinner" />

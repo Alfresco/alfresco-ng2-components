@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { DynamicComponentModel } from '@alfresco/adf-core';
-import { ScreenRenderingService } from '../../../services/public-api';
 import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, inject, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ScreenRenderingService } from '../../../services/public-api';
 
 @Component({
-    selector: 'adf-cloud-screen-cloud',
+    selector: 'adf-cloud-task-screen',
     standalone: true,
     imports: [CommonModule],
     template: '<div #container></div>'
 })
-export class ScreenCloudComponent implements OnInit {
+export class TaskScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
     @Input() taskId: string;
     /** App id to fetch corresponding form and values. */
@@ -41,15 +40,13 @@ export class ScreenCloudComponent implements OnInit {
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
-    screenComponent: DynamicComponentModel;
     componentRef: ComponentRef<any>;
 
     private readonly screenRenderingService = inject(ScreenRenderingService);
 
     ngOnInit() {
         if (this.screenId) {
-            this.screenComponent = { type: this.screenId };
-            const componentType = this.screenRenderingService.resolveComponentType(this.screenComponent);
+            const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
             this.componentRef = this.container.createComponent(componentType);
             if (this.taskId) {
                 this.componentRef.setInput('taskId', this.taskId);

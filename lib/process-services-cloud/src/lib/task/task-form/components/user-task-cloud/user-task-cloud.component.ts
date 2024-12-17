@@ -128,6 +128,26 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     private taskCloudService: TaskCloudService = inject(TaskCloudService);
     private readonly destroyRef = inject(DestroyRef);
 
+    ngOnChanges(changes: SimpleChanges) {
+        const appName = changes['appName'];
+        if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
+            this.loadTask();
+            return;
+        }
+
+        const taskId = changes['taskId'];
+        if (taskId?.currentValue && this.appName) {
+            this.loadTask();
+            return;
+        }
+    }
+
+    ngOnInit() {
+        if (this.appName === '' && this.taskId) {
+            this.loadTask();
+        }
+    }
+
     canClaimTask(): boolean {
         return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
@@ -140,7 +160,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
-    getTaskType() {
+    getTaskType(): void {
         if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
             this.taskType = this.taskTypeEnum.Form;
         } else if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
@@ -164,52 +184,52 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         return this.hasCandidateUsers() || this.hasCandidateGroups();
     }
 
-    onCancelForm() {
+    onCancelForm(): void {
         this.cancelClick.emit();
     }
 
-    onCancelClick() {
+    onCancelClick(): void {
         this.cancelClick.emit(this.taskId);
     }
 
-    onClaimTask() {
+    onClaimTask(): void {
         this.loadTask();
         this.taskClaimed.emit(this.taskId);
     }
 
-    onCompleteTask() {
+    onCompleteTask(): void {
         this.loadTask();
         this.taskCompleted.emit(this.taskId);
     }
 
-    onCompleteTaskForm() {
+    onCompleteTaskForm(): void {
         this.taskCompleted.emit();
     }
 
-    onError(data: any) {
+    onError(data: any): void {
         this.error.emit(data);
     }
 
-    onExecuteOutcome(outcome: FormOutcomeEvent) {
+    onExecuteOutcome(outcome: FormOutcomeEvent): void {
         this.executeOutcome.emit(outcome);
     }
-    onFormContentClicked(content: ContentLinkModel) {
+    onFormContentClicked(content: ContentLinkModel): void {
         this.formContentClicked.emit(content);
     }
-    onFormSaved() {
+    onFormSaved(): void {
         this.formSaved.emit();
     }
 
-    onTaskUnclaimed() {
+    onTaskUnclaimed(): void {
         this.taskUnclaimed.emit();
     }
 
-    onUnclaimTask() {
+    onUnclaimTask(): void {
         this.loadTask();
         this.taskUnclaimed.emit(this.taskId);
     }
 
-    private loadTask() {
+    private loadTask(): void {
         this.loading = true;
         this.taskCloudService
             .getTaskById(this.appName, this.taskId)
@@ -225,29 +245,9 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups) => (this.candidateGroups = groups || []));
     }
 
-    public switchToDisplayMode(newDisplayMode?: string) {
+    public switchToDisplayMode(newDisplayMode?: string): void {
         if (this.adfCloudTaskForm) {
             this.adfCloudTaskForm.switchToDisplayMode(newDisplayMode);
-        }
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        const appName = changes['appName'];
-        if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
-            this.loadTask();
-            return;
-        }
-
-        const taskId = changes['taskId'];
-        if (taskId?.currentValue && this.appName) {
-            this.loadTask();
-            return;
-        }
-    }
-
-    ngOnInit() {
-        if (this.appName === '' && this.taskId) {
-            this.loadTask();
         }
     }
 }

@@ -1,25 +1,27 @@
-<div class="adf-task-form-cloud-container" >
-    <adf-cloud-form #adfCloudForm
-                    [appName]="appName"
-                    [appVersion]="taskDetails.appVersion"
-                    [taskId]="taskId"
-                    [showTitle]="showTitle"
-                    [processInstanceId]="taskDetails.processInstanceId"
-                    [readOnly]="isReadOnly()"
-                    [showRefreshButton]="showRefreshButton"
-                    [showValidationIcon]="showValidationIcon"
-                    [showCompleteButton]="canCompleteTask()"
-                    [showSaveButton]="canCompleteTask()"
-                    [displayModeConfigurations]="displayModeConfigurations"
-                    [fieldValidators]="fieldValidators"
-                    (formSaved)="onFormSaved($event)"
-                    (formCompleted)="onFormCompleted($event)"
-                    (formError)="onError($event)"
-                    (error)="onError($event)"
-                    (formContentClicked)="onFormContentClicked($event)"
-                    (executeOutcome)="onFormExecuteOutcome($event)"
-                    (displayModeOn)="onDisplayModeOn($event)"
-                    (displayModeOff)="onDisplayModeOff($event)">
+<div class="adf-task-form-cloud-container">
+    <adf-cloud-form
+        #adfCloudForm
+        [appName]="appName"
+        [appVersion]="taskDetails.appVersion"
+        [taskId]="taskId"
+        [showTitle]="showTitle"
+        [processInstanceId]="taskDetails.processInstanceId"
+        [readOnly]="isReadOnly()"
+        [showRefreshButton]="showRefreshButton"
+        [showValidationIcon]="showValidationIcon"
+        [showCompleteButton]="canCompleteTask()"
+        [showSaveButton]="canCompleteTask()"
+        [displayModeConfigurations]="displayModeConfigurations"
+        [fieldValidators]="fieldValidators"
+        (formSaved)="onFormSaved($event)"
+        (formCompleted)="onFormCompleted($event)"
+        (formError)="onError($event)"
+        (error)="onError($event)"
+        (formContentClicked)="onFormContentClicked($event)"
+        (executeOutcome)="onFormExecuteOutcome($event)"
+        (displayModeOn)="onDisplayModeOn($event)"
+        (displayModeOff)="onDisplayModeOff($event)"
+    >
         <adf-cloud-form-custom-outcomes>
             <adf-cloud-user-task-cloud-buttons
                 [appName]="appName"
@@ -30,7 +32,8 @@
                 (cancelClick)="onCancelClick()"
                 (claimTask)="onClaimTask()"
                 (unclaimTask)="onUnclaimTask()"
-                (error)="onError($event)">
+                (error)="onError($event)"
+            >
             </adf-cloud-user-task-cloud-buttons>
         </adf-cloud-form-custom-outcomes>
     </adf-cloud-form>

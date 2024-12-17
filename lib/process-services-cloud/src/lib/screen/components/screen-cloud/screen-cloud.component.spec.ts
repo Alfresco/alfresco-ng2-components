@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScreenCloudComponent } from './screen-cloud.component';
+import { TaskScreenCloudComponent } from './screen-cloud.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScreenRenderingService } from '../../../services/public-api';
@@ -31,15 +31,15 @@ import { By } from '@angular/platform-browser';
 })
 class TestComponent {}
 
-describe('ScreenCloudComponent', () => {
-    let fixture: ComponentFixture<ScreenCloudComponent>;
+describe('TaskScreenCloudComponent', () => {
+    let fixture: ComponentFixture<TaskScreenCloudComponent>;
     let screenRenderingService: ScreenRenderingService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ScreenCloudComponent, TestComponent]
+            imports: [TaskScreenCloudComponent, TestComponent]
         });
-        fixture = TestBed.createComponent(ScreenCloudComponent);
+        fixture = TestBed.createComponent(TaskScreenCloudComponent);
         screenRenderingService = TestBed.inject(ScreenRenderingService);
         screenRenderingService.register({ ['test']: () => TestComponent });
         fixture.componentRef.setInput('screenId', 'test');
