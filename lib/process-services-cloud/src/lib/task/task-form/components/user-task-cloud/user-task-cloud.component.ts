@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TaskDetailsCloudModel } from '../../../start-task/models/task-details-cloud.model';
-import { TaskFormCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.component';
 
 const TaskTypes = {
     Form: 'form',
