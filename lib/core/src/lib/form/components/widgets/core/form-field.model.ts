@@ -141,7 +141,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     get hasMultipleValues() {
-        return this.selectionType === 'multiple';
+        return this.selectionType === 'multiple' || this.params.multiple;
     }
 
     markAsInvalid() {
