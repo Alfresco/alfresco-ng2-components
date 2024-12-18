@@ -20,7 +20,7 @@ export class SizeDetails {
     sizeInBytes: string;
     calculatedAt: string;
     numberOfFiles: number;
-    status: string;
+    status: SizeDetails.StatusEnum;
     jobId: string;
 
     constructor(entry: SizeDetails) {
@@ -31,4 +31,12 @@ export class SizeDetails {
         this.status = entry.status;
         this.jobId = entry.jobId;
     }
+}
+export namespace SizeDetails {
+    export type StatusEnum = 'IN-PROGRESS' | 'COMPLETE' | 'NOT-INITIATED';
+    export const StatusEnum = {
+        IN_PROGRESS: 'IN-PROGRESS' as StatusEnum,
+        COMPLETE: 'COMPLETE' as StatusEnum,
+        NOT_INITIATED: 'NOT-INITIATED' as StatusEnum
+    };
 }

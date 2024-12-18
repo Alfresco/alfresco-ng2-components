@@ -971,7 +971,7 @@ export class NodesApi extends BaseApi {
      * @param nodeId Node Id
      * @returns The job id which can be used to track request status
      */
-    initialFolderSizeCalculation(nodeId: string): Promise<JobIdBodyEntry> {
+    initiateFolderSizeCalculation(nodeId: string): Promise<JobIdBodyEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
 
         const pathParams = {

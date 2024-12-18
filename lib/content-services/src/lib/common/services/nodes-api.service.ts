@@ -259,15 +259,17 @@ export class NodesApiService {
 
     /**
      * Initiate a new request to calculate folder size.
+     *
      * @param nodeId Node Id
      * @returns The job id which can be used to track request status
      */
     initiateFolderSizeCalculation(nodeId: string): Observable<JobIdBodyEntry> {
-        return from(this.nodesApi.initialFolderSizeCalculation(nodeId));
+        return from(this.nodesApi.initiateFolderSizeCalculation(nodeId));
     }
 
     /**
      * Gets the size of a folder.
+     *
      * @param nodeId Node Id
      * @param jobId Job Id
      * @returns Folder details
