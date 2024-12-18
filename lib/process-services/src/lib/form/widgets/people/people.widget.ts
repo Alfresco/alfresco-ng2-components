@@ -128,9 +128,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     isValidUser(users: LightUserRepresentation[], name: string): boolean {
         if (users) {
-            return !!users.find((user) => {
-                return this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
-            });
+            return !!users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase());
         }
         return false;
     }

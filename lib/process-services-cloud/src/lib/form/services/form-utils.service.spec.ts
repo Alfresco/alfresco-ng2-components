@@ -35,9 +35,7 @@ describe('FormUtilsService', () => {
      */
     function testRestUrlVariablesMap(restUrl: string, inputBody: { [key: string]: any }, expected: { [key: string]: any }) {
         const formModel = new FormModel({ variables });
-        spyOn(formModel, 'getProcessVariableValue').and.callFake((name) => {
-            return variables.find((variable) => variable.name === name)?.value;
-        });
+        spyOn(formModel, 'getProcessVariableValue').and.callFake((name) => variables.find((variable) => variable.name === name)?.value);
         const result = service.getRestUrlVariablesMap(formModel, restUrl, inputBody);
         expect(result).toEqual(expected);
     }

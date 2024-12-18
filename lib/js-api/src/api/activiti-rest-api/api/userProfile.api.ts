@@ -27,7 +27,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class UserProfileApi extends BaseApi {
     /**
      * Change user password
-     *
      * @param changePasswordRepresentation changePasswordRepresentation
      * @return Promise<{}>
      */
@@ -43,7 +42,6 @@ export class UserProfileApi extends BaseApi {
     /**
      * Retrieve user profile picture
      * Generally returns an image file
-     *
      * @return Promise<Blob>
      */
     getProfilePicture(): Promise<any> {
@@ -65,7 +63,6 @@ export class UserProfileApi extends BaseApi {
      * Get user profile
      * This operation returns account information for the current user.
      * This is useful to get the name, email, the groups that the user is part of, the user picture, etc.
-     *
      * @return Promise<UserRepresentation>
      */
     getProfile(): Promise<UserRepresentation> {
@@ -78,7 +75,6 @@ export class UserProfileApi extends BaseApi {
     /**
      * Update user profile.
      * Only a first name, last name, email and company can be updated
-     *
      * @param userRepresentation userRepresentation
      * @return Promise<UserRepresentation>
      */
@@ -94,7 +90,6 @@ export class UserProfileApi extends BaseApi {
 
     /**
      * Change user profile picture
-     *
      * @param file file
      * @return Promise<ImageUploadRepresentation>
      */

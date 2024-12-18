@@ -140,7 +140,6 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         this.onFormLoaded(this.form);
     }
 
-    /** @override */
     isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
         if (outcome?.isSystem && (outcome.name === FormOutcomeModel.SAVE_ACTION || outcome.name === FormOutcomeModel.COMPLETE_ACTION)) {
             return false;
@@ -150,12 +149,10 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         return super.isOutcomeButtonVisible(outcome, isFormReadOnly);
     }
 
-    /** @override */
     saveTaskForm() {
         // do nothing
     }
 
-    /** @override */
     onRefreshClicked() {
         if (this.processDefinitionId) {
             this.visibilityService.cleanProcessVariable();

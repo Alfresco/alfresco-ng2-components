@@ -95,7 +95,6 @@ export class CheckAllowableOperationDirective implements OnChanges {
     /**
      * Enables decorated element
      *
-     * @memberof CheckAllowableOperationDirective
      */
     enableElement(): void {
         this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
@@ -104,7 +103,6 @@ export class CheckAllowableOperationDirective implements OnChanges {
     /**
      * Disables decorated element
      *
-     * @memberof CheckAllowableOperationDirective
      */
     disableElement(): void {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');

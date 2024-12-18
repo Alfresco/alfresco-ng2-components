@@ -29,7 +29,6 @@ export class AuthenticationApi extends BaseApi {
      * Create ticket (login)
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param ticketBodyCreate The user credential.
      * @returns Promise<TicketEntry>
      */
@@ -45,7 +44,6 @@ export class AuthenticationApi extends BaseApi {
 
     /**
      * Get ticket (login)
-     *
      * @returns Promise<TicketEntry>
      */
     getTicket(): Promise<TicketEntry> {
@@ -59,7 +57,6 @@ export class AuthenticationApi extends BaseApi {
      * Delete ticket (logout)
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @returns Promise<{}>
      */
     deleteTicket(): Promise<void> {
@@ -77,7 +74,6 @@ export class AuthenticationApi extends BaseApi {
      * For example, you can pass the Authorization request header using Javascript:
      * Javascript
      * request.setRequestHeader (\"Authorization\", \"Basic \" + btoa(ticket));
-     *
      * @returns Promise<ValidTicketEntry>
      */
     validateTicket(): Promise<ValidTicketEntry> {

@@ -22,13 +22,11 @@ import { GsPagingQuery } from './types';
 
 /**
  * Security Marks API.
- *
  * @module SecurityMarksApi
  */
 export class SecurityMarksApi extends BaseApi {
     /**
      * Get security mark value
-     *
      * @param securityGroupId The key for the security group id.
      * @param opts Options
      * @returns Promise<SecurityMarkPaging>
@@ -49,7 +47,6 @@ export class SecurityMarksApi extends BaseApi {
 
     /**
      * Create security marks
-     *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkBody securityMarkBody[].
      * @returns Promise<SecurityMarkEntry|SecurityMarkPaging>
@@ -69,7 +66,6 @@ export class SecurityMarksApi extends BaseApi {
 
     /**
      * Get security mark value information
-     *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark id
      * @returns Promise<SecurityMarkEntry>
@@ -91,7 +87,6 @@ export class SecurityMarksApi extends BaseApi {
 
     /**
      * Updates Security Mark value
-     *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark is in use or not.
      * @param securityMarkBody securityMarkBody.
@@ -116,7 +111,6 @@ export class SecurityMarksApi extends BaseApi {
 
     /**
      * Delete security mark
-     *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark id.
      * @returns Promise<any>
