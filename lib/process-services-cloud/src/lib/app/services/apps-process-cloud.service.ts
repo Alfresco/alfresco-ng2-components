@@ -36,11 +36,11 @@ export class AppsProcessCloudService {
      * Gets a list of deployed apps for this user by status.
      *
      * @param status Required status value
-     * @param role to filter the apps
+     * @param roles to filter the apps
      * @returns The list of deployed apps
      */
-    getDeployedApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
-        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status, role);
+    getDeployedApplicationsByStatus(status: string, roles?: string | string[]): Observable<ApplicationInstanceModel[]> {
+        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status, roles);
     }
 
     hasDeployedApps(): boolean {
@@ -66,13 +66,13 @@ export class AppsProcessCloudService {
         }
     }
 
-    private getApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
+    private getApplicationsByStatus(status: string, roles?: string | string[]): Observable<ApplicationInstanceModel[]> {
         if (status === '') {
             return of([]);
         }
         const path = this.getApplicationUrl();
         const pathParams = {};
-        const queryParams = { status, roles: role, sort: 'name' };
+        const queryParams = { status, roles, sort: 'name' };
         const httpMethod = 'GET';
         const headerParams = {};
         const formParams = {};
