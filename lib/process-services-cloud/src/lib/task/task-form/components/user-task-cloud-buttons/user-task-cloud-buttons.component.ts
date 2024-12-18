@@ -19,6 +19,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'adf-cloud-user-task-cloud-buttons',
+    styles: ['button { margin-right: 8px; }'],
     templateUrl: './user-task-cloud-buttons.component.html'
 })
 export class UserTaskCloudButtonsComponent {
