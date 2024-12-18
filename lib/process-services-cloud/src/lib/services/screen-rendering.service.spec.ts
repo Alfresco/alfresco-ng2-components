@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-export * from './components/task-form-cloud/task-form-cloud.component';
-export * from './components/user-task-cloud/user-task-cloud.component';
+import { TestBed } from '@angular/core/testing';
+import { ScreenRenderingService } from './screen-rendering.service';
 
-export * from './task-form.module';
+describe('ScreenRenderingService', () => {
+    let service: ScreenRenderingService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(ScreenRenderingService);
+    });
+
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+});

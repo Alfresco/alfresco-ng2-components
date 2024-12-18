@@ -1,0 +1,32 @@
+<button
+    *ngIf="showCancelButton"
+    mat-button
+    id="adf-cloud-cancel-task"
+    (click)="onCancelClick()"
+>
+    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+</button>
+<button
+    *ngIf="canClaimTask"
+    adf-cloud-claim-task
+    class="adf-user-task-cloud-claim-btn"
+    mat-button
+    [appName]="appName"
+    [taskId]="taskId"
+    (success)="onClaimTask()"
+    (error)="onError($event)"
+>
+    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
+</button>
+<button
+    *ngIf="canUnclaimTask"
+    adf-cloud-unclaim-task
+    class="adf-user-task-cloud-unclaim-btn"
+    mat-button
+    [appName]="appName"
+    [taskId]="taskId"
+    (success)="onUnclaimTask()"
+    (error)="onError($event)"
+>
+    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
+</button>

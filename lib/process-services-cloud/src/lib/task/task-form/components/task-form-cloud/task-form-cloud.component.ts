@@ -15,28 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
-import { TaskCloudService } from '../../services/task-cloud.service';
 import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
-import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
-import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
-import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
-import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
-import { FormCloudComponent } from '../../../form/components/form-cloud.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
+import { AttachFileCloudWidgetComponent } from '../../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
+import { DateCloudWidgetComponent } from '../../../../form/components/widgets/date/date-cloud.widget';
+import { DropdownCloudWidgetComponent } from '../../../../form/components/widgets/dropdown/dropdown-cloud.widget';
+import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
+import { TaskCloudService } from '../../../services/task-cloud.service';
+import { TaskDetailsCloudModel } from '../../../start-task/models/task-details-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -44,10 +31,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./task-form-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskFormCloudComponent implements OnInit, OnChanges {
+export class TaskFormCloudComponent implements OnInit {
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
+
+    /**Candidates users*/
+    @Input()
+    candidateUsers: string[] = [];
+
+    /**Candidates groups */
+    @Input()
+    candidateGroups: string[] = [];
 
     /** Task id to fetch corresponding form and values. */
     @Input()
@@ -86,6 +81,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     /** FormFieldValidator allow to provide additional validators to the form field. */
     @Input()
     fieldValidators: FormFieldValidator[];
+
+    /** Task details. */
+    @Input()
+    taskDetails: TaskDetailsCloudModel;
 
     /** Emitted when the form is saved. */
     @Output()
@@ -126,12 +125,6 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     @Output()
     executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
-    /**
-     * Emitted when a task is loaded`.
-     */
-    @Output()
-    onTaskLoaded = new EventEmitter<TaskDetailsCloudModel>(); /* eslint-disable-line */
-
     /** Emitted when a display mode configuration is turned on. */
     @Output()
     displayModeOn = new EventEmitter<FormCloudDisplayModeConfiguration>();
@@ -143,14 +136,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     @ViewChild('adfCloudForm', { static: false })
     adfCloudForm: FormCloudComponent;
 
-    taskDetails: TaskDetailsCloudModel;
-
-    candidateUsers: string[] = [];
-    candidateGroups: string[] = [];
-
     loading: boolean = false;
-
-    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
@@ -160,44 +146,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.initFieldValidators();
-
-        if (this.appName === '' && this.taskId) {
-            this.loadTask();
-        }
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        const appName = changes['appName'];
-        if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
-            this.loadTask();
-            return;
-        }
-
-        const taskId = changes['taskId'];
-        if (taskId?.currentValue && this.appName) {
-            this.loadTask();
-            return;
-        }
     }
 
     private initFieldValidators() {
         this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
-    }
-
-    private loadTask() {
-        this.loading = true;
-        this.taskCloudService
-            .getTaskById(this.appName, this.taskId)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((details) => {
-                this.taskDetails = details;
-                this.loading = false;
-                this.onTaskLoaded.emit(this.taskDetails);
-            });
-
-        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users) => (this.candidateUsers = users || []));
-
-        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups) => (this.candidateGroups = groups || []));
     }
 
     hasForm(): boolean {
@@ -212,6 +164,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
         return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
+    canUnclaimTask(): boolean {
+        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
+    }
+
     hasCandidateUsers(): boolean {
         return this.candidateUsers.length !== 0;
     }
@@ -224,26 +180,19 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
         return this.hasCandidateUsers() || this.hasCandidateGroups();
     }
 
-    canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
-    }
-
     isReadOnly(): boolean {
         return this.readOnly || !this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     onCompleteTask() {
-        this.loadTask();
         this.taskCompleted.emit(this.taskId);
     }
 
     onClaimTask() {
-        this.loadTask();
         this.taskClaimed.emit(this.taskId);
     }
 
     onUnclaimTask() {
-        this.loadTask();
         this.taskUnclaimed.emit(this.taskId);
     }
 
