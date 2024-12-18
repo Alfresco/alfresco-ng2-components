@@ -21,8 +21,7 @@
                     (taskCompleted)="onCompleteTaskForm()"
                     (taskClaimed)="onClaimTask()"
                     (taskUnclaimed)="onTaskUnclaimed()"
-                >
-                </adf-cloud-task-form>
+                />
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.Screen">
@@ -30,8 +29,7 @@
                     [taskId]="taskId"
                     [appName]="appName"
                     [screenId]="screenId"
-                >
-                </adf-cloud-task-screen>
+                />
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.None">
@@ -90,5 +88,5 @@
         (claimTask)="onClaimTask()"
         (unclaimTask)="onUnclaimTask()"
         (error)="onError($event)"
-    ></adf-cloud-user-task-cloud-buttons>
+    />
 </ng-template>
