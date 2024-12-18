@@ -26,20 +26,28 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TranslationService } from '../../../translation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { clone } from 'lodash-es';
+import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 
 @Component({
     selector: 'adf-datatable-column-selector',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatDividerModule, ReactiveFormsModule, MatCheckboxModule],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        ColumnsSearchFilterPipe
+    ],
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit {
-    private translationService = inject(TranslationService);
-
     @Input()
     columns: DataColumn[] = [];
 
@@ -72,50 +80,16 @@ export class ColumnsSelectorComponent implements OnInit {
 
         this.searchInputControl.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef)).subscribe((searchQuery) => {
             this.searchQuery = searchQuery;
-            this.updateColumnItems();
         });
     }
 
-    private updateColumnItems(): void {
-        let columns = this.columns.map((column) => ({ ...column }));
-        columns = this.filterColumnItems(columns, this.searchQuery);
-        columns = this.sortColumns(columns);
-        this.columnItems = columns;
-    }
     closeMenu(): void {
         this.mainMenuTrigger.closeMenu();
     }
 
-    private filterString(value: string = '', filterBy: string = ''): string {
-        const testResult = filterBy ? value.toLowerCase().indexOf(filterBy.toLowerCase()) > -1 : true;
-        return testResult ? value : '';
-    }
-
-    private filterColumnItems(columns: DataColumn[], query: string): DataColumn[] {
-        const result = [];
-
-        for (const column of columns) {
-            if (!column.title) {
-                continue;
-            }
-
-            if (!query) {
-                result.push(column);
-                continue;
-            }
-
-            const title = this.translationService.instant(column.title);
-
-            if (this.filterString(title, query)) {
-                result.push(column);
-            }
-        }
-
-        return result;
-    }
-
-    changeColumnVisibility(column: DataColumn): void {
-        column.isHidden = !column.isHidden;
+    changeColumnVisibility(dataColumn: DataColumn): void {
+        const selectedColumn = this.columnItems.find((column) => column.id === dataColumn.id);
+        selectedColumn.isHidden = !selectedColumn.isHidden;
     }
 
     apply(): void {
@@ -129,6 +103,12 @@ export class ColumnsSelectorComponent implements OnInit {
             column.isHidden &&
             this.maxColumnsVisible >= this.columnItems.filter((dataColumn) => !dataColumn.isHidden).length
         );
+    }
+
+    private updateColumnItems(): void {
+        let columns = clone(this.columns);
+        columns = this.sortColumns(columns);
+        this.columnItems = columns;
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {

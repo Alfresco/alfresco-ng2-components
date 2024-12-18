@@ -37,7 +37,7 @@
     </div>
 
     <div class="adf-columns-selector-list-container">
-        <div *ngFor="let column of columnItems" class="adf-columns-selector-list-item">
+        <div *ngFor="let column of (columnItems | columnsSearchFilter: searchQuery)" class="adf-columns-selector-list-item">
             <mat-checkbox
                 color="primary"
                 class="adf-columns-selector-column-checkbox"
