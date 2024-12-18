@@ -1,0 +1,13 @@
+.adf-user-task-cloud-container {
+    height: 100%;
+
+    > div {
+        height: 100%;
+    }
+}
+
+.adf-user-task-cloud-spinner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
