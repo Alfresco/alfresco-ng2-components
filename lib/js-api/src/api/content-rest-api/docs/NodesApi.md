@@ -25,6 +25,8 @@ All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfres
 | [unlockNode](#unlockNode)                                           | **POST** /nodes/{nodeId}/unlock                         | Unlock a node                                         |
 | [updateNode](#updateNode)                                           | **PUT** /nodes/{nodeId}                                 | Update a node                                         |
 | [updateNodeContent](#updateNodeContent)                             | **PUT** /nodes/{nodeId}/content                         | Update node content                                   |
+| [initialFolderSizeCalculation](#initialFolderSizeCalculation)       | **POST** /nodes/{nodeId}/size-details                   | Initiate a new request to calculate folder size       |
+| [getFolderSizeInfo](#getFolderSizeInfo)                             | **GET** /nodes/{nodeId}/size-details/{jobId}            | Gets the details of a folder                          |
 
 ## copyNode
 
@@ -1196,6 +1198,67 @@ nodesApi.updateNodeContent(`<nodeId>`, contentBodyUpdate, opts).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 });
 ```
+## initialFolderSizeCalculation
+
+Initiate a new request to calculate folder size.
+
+> this endpoint is available in **Alfresco 7.1** and newer versions.
+
+Initiates a request to calculate the size of the node with identifier **nodeId**.
+
+**Parameters**
+
+| Name                  | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|-----------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **nodeId**            | string   | The identifier of a node.                                                                                                                                                                                                                                                                                                                                                                                                               |
+
+**Return type**: [JobIdBodyEntry](#JobIdBodyEntry)
+
+**Example**
+
+```javascript
+import {AlfrescoApi, NodesApi} from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const nodesApi = new NodesApi(alfrescoApi);
+const contentBodyUpdate = {};
+const opts = {};
+
+nodesApi.initiateFolderSizeCalculation(`<nodeId>`).then((data) => {
+    console.log('API called successfully. Returned data: ' + data);
+});
+```
+## getFolderSizeInfo
+
+Gets the size details of a folder
+
+> this endpoint is available in **Alfresco 7.1** and newer versions.
+
+Fetches the size details of folder with the identifier **nodeId**  
+
+**Parameters**
+
+| Name       | Type     | Description                                                                        |
+|------------|----------|------------------------------------------------------------------------------------|
+| **nodeId** | string   | The identifier of a node.                                                          |
+| **jobId**  | string   | The identifier for the job which is calculating the currently selected node's size  |
+
+**Return type**: [SizeDetailsEntry](#SizeDetailsEntry)
+
+**Example**
+
+```javascript
+import {AlfrescoApi, NodesApi} from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const nodesApi = new NodesApi(alfrescoApi);
+const contentBodyUpdate = {};
+const opts = {};
+
+nodesApi.getFolderSizeInfo(`<nodeId>`, `<jobId>`).then((data) => {
+    console.log('API called successfully. Returned data: ' + data);
+});
+```
 
 # Models
 
@@ -1409,6 +1472,39 @@ nodesApi.updateNodeContent(`<nodeId>`, contentBodyUpdate, opts).then((data) => {
 | isInheritanceEnabled | boolean                                     |
 | locallySet           | [PermissionElement[]](PermissionElement.md) |
 
+# JobIdBodyEntry
 
+**Properties**
 
+| Name      | Type                    |
+|-----------|-------------------------|
+| **entry** | [JobIdBody](#JobIdBody) |
 
+# JobIdBody
+
+**Properties**
+
+| Name      | Type   | Description                                                                           | Notes             |
+|-----------|--------|---------------------------------------------------------------------------------------|-------------------|
+| **jobId** | string | Id of the job that can be used to track the status of folder size calculation request | [default to null] |
+
+# SizeDetailsEntry
+
+**Properties**
+
+| Name      | Type                        |
+|-----------|-----------------------------|
+| **entry** | [SizeDetails](#SizeDetails) |
+
+# SizeDetails
+
+**Properties**
+
+| Name              | Type   | Description                                                                 | Notes            |
+|-------------------|--------|-----------------------------------------------------------------------------|------------------|
+| **id**            | string | Unique alphanumeric id unique to this response request                      | [default to null]|
+| **sizeInBytes**   | string | Size of the folder in bytes                                                 | [default to null]|
+| **calculatedAt**  | string | Timestamp of when the folder size was calculated                            | [default to null]| 
+| **numberOfFiles** | number | Number of files present within the folder                                   | [default to null]| 
+| **status**        | string | Status of the request. Can be 'NOT-INITIATED', 'IN-PROGRESS' or 'COMPLETED' | [default to null]|
+| **jobId**         | string | The job ID which was used to track down the folder details                  | [default to null]| 
