@@ -26,7 +26,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TranslationService } from '../../../translation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { clone } from 'lodash-es';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
@@ -49,8 +48,6 @@ import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
     encapsulation: ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit {
-    private translationService = inject(TranslationService);
-
     @Input()
     columns: DataColumn[] = [];
 
@@ -110,37 +107,8 @@ export class ColumnsSelectorComponent implements OnInit {
 
     private updateColumnItems(): void {
         let columns = clone(this.columns);
-        columns = this.filterColumnItems(columns, this.searchQuery);
         columns = this.sortColumns(columns);
         this.columnItems = columns;
-    }
-
-    private filterString(value: string = '', filterBy: string = ''): string {
-        const testResult = filterBy ? value.toLowerCase().indexOf(filterBy.toLowerCase()) > -1 : true;
-        return testResult ? value : '';
-    }
-
-    private filterColumnItems(columns: DataColumn[], query: string): DataColumn[] {
-        const result = [];
-
-        for (const column of columns) {
-            if (!column.title) {
-                continue;
-            }
-
-            if (!query) {
-                result.push(column);
-                continue;
-            }
-
-            const title = this.translationService.instant(column.title);
-
-            if (this.filterString(title, query)) {
-                result.push(column);
-            }
-        }
-
-        return result;
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {
