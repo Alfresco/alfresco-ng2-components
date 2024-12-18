@@ -84,7 +84,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting,
-            serviceTaskId: this.queryParams?.serviceTaskId,
+            id: this.queryParams?.serviceTaskId,
             environmentId: this.queryParams?.environmentId,
             activityName: this.queryParams?.activityName,
             activityType: this.queryParams?.activityType,
