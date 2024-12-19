@@ -142,7 +142,7 @@
     },
     "TAGS_CREATOR": {
       "EXISTING_TAGS": "Tag esistenti:",
-      "EXISTING_TAGS_SELECTION": "Selezionare un tag esistente:",
+      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
       "NO_TAGS_CREATED": "Nessun tag creato",
       "NO_EXISTING_TAGS": "Nessun tag esistente",
       "TITLE": "Crea tag",
@@ -152,7 +152,6 @@
         "EXISTING_TAG": "Tag già presente",
         "ALREADY_ADDED_TAG": "Il tag è già stato aggiunto",
         "EMPTY_TAG": "Il nome del tag non può contenere solo spazi",
-        "REQUIRED": "Il nome del tag è obbligatorio",
         "FETCH_TAGS": "Errore durante il recupero dei tag",
         "CREATE_TAGS": "Errore durante la creazione dei tag",
         "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
@@ -172,7 +171,7 @@
     "DELETE_CATEGORY": "Elimina categoria",
     "EXISTING_CATEGORIES": "Categorie esistenti:",
     "SELECT_EXISTING_CATEGORY": "Selezionare una categoria esistente:",
-    "NO_EXISTING_CATEGORIES": "Nessuna categoria esistente",
+    "NO_EXISTING_CATEGORIES": "No Existing Categories",
     "GENERIC_CREATE": "Creare: {{name}}",
     "NAME": "Nome categoria",
     "LOADING": "Caricamento in corso",
