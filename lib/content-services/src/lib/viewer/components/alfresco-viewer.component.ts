@@ -334,6 +334,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
         const fileExtension = this.viewUtilService.getFileExtension(versionData ? versionData.name : nodeData.name);
         this.fileName = versionData ? versionData.name : nodeData.name;
+        this.mimeType = mimeType;
         const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
         if (viewerType === 'unknown') {
@@ -348,13 +349,11 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
                 const nodeMimeType = nodeData?.content?.mimeType;
                 const renditionMimeType = nodeRendition.mimeType;
-                mimeType = renditionMimeType || nodeMimeType;
+                this.mimeType = renditionMimeType || nodeMimeType;
             }
         } else if (viewerType === 'media') {
             this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
         }
-
-        this.mimeType = mimeType;
         this.urlFileContent = urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '');
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
