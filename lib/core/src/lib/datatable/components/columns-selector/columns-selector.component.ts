@@ -27,7 +27,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { clone } from 'lodash-es';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 
 @Component({
@@ -106,7 +105,7 @@ export class ColumnsSelectorComponent implements OnInit {
     }
 
     private updateColumnItems(): void {
-        let columns = clone(this.columns);
+        let columns = this.columns.map((column) => ({ ...column }));
         columns = this.sortColumns(columns);
         this.columnItems = columns;
     }
