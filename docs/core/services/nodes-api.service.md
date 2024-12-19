@@ -89,6 +89,15 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string` - ID of the target node
     -   _options:_ `{ includeSource?: boolean; } & NodesIncludeQuery & ContentPagingQuery` - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold[]`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - List of assigned holds
+-   **initiateFolderSizeCalculation**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`JobIdBodyEntry`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#jobidbodyentry)`>`<br/>
+    Initiate a new request to calculate folder size.
+    -   _nodeId:_ `string` - ID of the target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`JobIdBodyEntry`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#jobidbodyentry)`>` - Job id which can be used to track request status
+-   **getFolderSizeInfo**(nodeId: `string`, jobId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SizeDetailsEntry`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#sizedetailsentry)`>`<br/>
+    Gets the size of a folder.
+    -   _nodeId:_ `string` - ID of the target node
+    -   _jobId:_ `string` - ID of the job started by the `initiateFolderSizeCalculation` request
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SizeDetailsEntry`](../../../lib/js-api/src/api/content-rest-api/docs/NodesApi.md#sizedetailsentry)`>` - Details of the folder
 
 ## Details
 
