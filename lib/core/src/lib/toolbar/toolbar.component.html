@@ -1,5 +1,5 @@
 <mat-toolbar class="adf-toolbar-container adf-toolbar-container-row" [color]="color">
     <span class="adf-toolbar-title" *ngIf="title">{{ title | translate }}</span>
-    <ng-content select="adf-toolbar-title"></ng-content>
-    <ng-content></ng-content>
+    <ng-content select="adf-toolbar-title" />
+    <ng-content />
 </mat-toolbar>

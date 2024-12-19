@@ -61,12 +61,10 @@ describe('Upload', () => {
 
             const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file).catch(
-                (error: any) => {
-                    assert.equal(error.status, 409);
-                    done();
-                }
-            );
+            uploadApi.uploadFile(file).catch((error: any) => {
+                assert.equal(error.status, 409);
+                done();
+            });
         });
 
         it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', async () => {

@@ -19,13 +19,11 @@ import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { AspectOrientedConfig, Property, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
 describe('AspectOrientedConfigService', () => {
-
     let configService: AspectOrientedConfigService;
 
     const createConfigService = (configObj: AspectOrientedConfig) => new AspectOrientedConfigService(configObj);
 
     describe('reorganiseByConfig', () => {
-
         interface TestCase {
             name: string;
             config: AspectOrientedConfig;
@@ -51,54 +49,58 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'One property from One group',
                 config: {
-                    berseria: [ 'property1' ]
-                },
-                expectations: [{
-                    title: 'Berseria',
-                    properties: [ property1 ]
-                }]
-            },
-            {
-                name: 'More properties from One group',
-                config: {
-                    berseria: [ 'property1', 'property2' ]
-                },
-                expectations: [{
-                    title: 'Berseria',
-                    properties: [ property1, property2 ]
-                }]
-            },
-            {
-                name: 'One-one properties from More group',
-                config: {
-                    berseria: [ 'property1' ],
-                    zestiria: [ 'property3' ]
+                    berseria: ['property1']
                 },
                 expectations: [
                     {
                         title: 'Berseria',
-                        properties: [ property1 ]
+                        properties: [property1]
+                    }
+                ]
+            },
+            {
+                name: 'More properties from One group',
+                config: {
+                    berseria: ['property1', 'property2']
+                },
+                expectations: [
+                    {
+                        title: 'Berseria',
+                        properties: [property1, property2]
+                    }
+                ]
+            },
+            {
+                name: 'One-one properties from More group',
+                config: {
+                    berseria: ['property1'],
+                    zestiria: ['property3']
+                },
+                expectations: [
+                    {
+                        title: 'Berseria',
+                        properties: [property1]
                     },
                     {
                         title: 'Zestiria',
-                        properties: [ property3 ]
+                        properties: [property3]
                     }
                 ]
             },
             {
                 name: 'More properties from More groups',
                 config: {
-                    zestiria: [ 'property4', 'property3' ],
-                    berseria: [ 'property2', 'property1' ]
+                    zestiria: ['property4', 'property3'],
+                    berseria: ['property2', 'property1']
                 },
                 expectations: [
                     {
                         title: 'Zestiria',
-                        properties: [ property4, property3 ]
+                        properties: [property4, property3]
                     },
                     {
                         title: 'Berseria',
-                        properties: [ property2, property1 ]
+                        properties: [property2, property1]
                     }
                 ]
             },
@@ -106,16 +108,16 @@ describe('AspectOrientedConfigService', () => {
                 name: 'Wildcard',
                 config: {
                     berseria: '*',
-                    zestiria: [ 'property4' ]
+                    zestiria: ['property4']
                 },
                 expectations: [
                     {
                         title: 'Berseria',
-                        properties: [ property1, property2 ]
+                        properties: [property1, property2]
                     },
                     {
                         title: 'Zestiria',
-                        properties: [ property4 ]
+                        properties: [property4]
                     }
                 ]
             },
@@ -124,29 +126,29 @@ describe('AspectOrientedConfigService', () => {
                 config: {
                     berseria: '*',
                     'not-existing-group': '*',
-                    zestiria: [ 'property4' ]
+                    zestiria: ['property4']
                 },
                 expectations: [
                     {
                         title: 'Berseria',
-                        properties: [ property1, property2 ]
+                        properties: [property1, property2]
                     },
                     {
                         title: 'Zestiria',
-                        properties: [ property4 ]
+                        properties: [property4]
                     }
                 ]
             },
             {
                 name: 'Not existing property',
                 config: {
-                    berseria: [ 'not-existing-property' ],
-                    zestiria: [ 'property4' ]
+                    berseria: ['not-existing-property'],
+                    zestiria: ['property4']
                 },
                 expectations: [
                     {
                         title: 'Zestiria',
-                        properties: [ property4 ]
+                        properties: [property4]
                     }
                 ]
             }
@@ -160,7 +162,7 @@ describe('AspectOrientedConfigService', () => {
 
                 expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
                 testCase.expectations.forEach((expectation, i) => {
-                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
+                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, "Group's title should match");
                     expect(organisedPropertyGroups[i].properties.length).toBe(
                         expectation.properties.length,
                         `Property count for '${organisedPropertyGroups[i].title}' group should match.`
@@ -194,11 +196,11 @@ describe('AspectOrientedConfigService', () => {
                 expectations: [
                     {
                         title: 'Berseria',
-                        properties: [ property1, property2 ]
+                        properties: [property1, property2]
                     },
                     {
                         title: 'Zestiria',
-                        properties: [ property3, property4 ]
+                        properties: [property3, property4]
                     }
                 ]
             };
@@ -208,7 +210,7 @@ describe('AspectOrientedConfigService', () => {
 
             expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
             testCase.expectations.forEach((expectation, i) => {
-                expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
+                expect(organisedPropertyGroups[i].title).toBe(expectation.title, "Group's title should match");
                 expect(organisedPropertyGroups[i].properties.length).toBe(
                     expectation.properties.length,
                     `Property count for '${organisedPropertyGroups[i].title}' group should match.`
@@ -231,11 +233,11 @@ describe('AspectOrientedConfigService', () => {
                 expectations: [
                     {
                         title: 'Berseria',
-                        properties: [ property1, property2 ]
+                        properties: [property1, property2]
                     },
                     {
                         title: 'Zestiria',
-                        properties: [ property3, property4 ]
+                        properties: [property3, property4]
                     }
                 ]
             };

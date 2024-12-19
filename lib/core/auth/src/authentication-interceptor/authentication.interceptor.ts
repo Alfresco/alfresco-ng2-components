@@ -36,42 +36,37 @@ export const SHOULD_ADD_AUTH_TOKEN = new HttpContextToken<boolean>(() => false);
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
+    constructor(private authService: Authentication) {}
 
-    constructor( private authService: Authentication) { }
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+        if (req.context.get(SHOULD_ADD_AUTH_TOKEN)) {
+            return this.authService.addTokenToHeader(req.url, req.headers).pipe(
+                mergeMap((headersWithBearer) => {
+                    const headerWithContentType = this.appendJsonContentType(headersWithBearer);
+                    const kcReq = req.clone({ headers: headerWithContentType });
+                    return next.handle(kcReq).pipe(catchError((error) => observableThrowError(error)));
+                })
+            );
+        }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler):
-      Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-
-      if (req.context.get(SHOULD_ADD_AUTH_TOKEN)) {
-          return this.authService.addTokenToHeader(req.url, req.headers).pipe(
-              mergeMap((headersWithBearer) => {
-                  const headerWithContentType = this.appendJsonContentType(headersWithBearer);
-                  const kcReq = req.clone({ headers: headerWithContentType});
-                  return next.handle(kcReq)
-                  .pipe(
-                      catchError((error) => observableThrowError(error))
-                  );
-              })
-          );
-      }
-
-      return next.handle(req).pipe(catchError((error) => observableThrowError(error)));
+        return next.handle(req).pipe(catchError((error) => observableThrowError(error)));
     }
 
     private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
+        // prevent adding any content type, to properly handle formData with boundary browser generated value,
+        // as adding any Content-Type its going to break the upload functionality
 
-      // prevent adding any content type, to properly handle formData with boundary browser generated value,
-      // as adding any Content-Type its going to break the upload functionality
+        if (headers.get('Content-Type') === 'multipart/form-data') {
+            return headers.delete('Content-Type');
+        }
 
-      if (headers.get('Content-Type') === 'multipart/form-data') {
-          return headers.delete('Content-Type');
-      }
+        if (!headers.get('Content-Type')) {
+            return headers.set('Content-Type', 'application/json;charset=UTF-8');
+        }
 
-      if (!headers.get('Content-Type')) {
-          return headers.set('Content-Type', 'application/json;charset=UTF-8');
-      }
-
-      return headers;
+        return headers;
     }
-
 }

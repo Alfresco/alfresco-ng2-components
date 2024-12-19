@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const mockNode: any = ({
+export const mockNode: any = {
     isFile: true,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
     modifiedAt: '2017-05-24T15:08:55.640Z',
@@ -31,10 +31,13 @@ export const mockNode: any = ({
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+        ]
     },
     isFolder: false,
     modifiedByUser: { id: 'admin', displayName: 'Administrator' },
@@ -42,7 +45,7 @@ export const mockNode: any = ({
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
     properties: { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
     allowableOperations: ['delete', 'update']
-});
+};
 
 export const mockFile = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
 
@@ -59,21 +62,13 @@ export const mockNewVersionUploaderData: any = {
                 modifiedAt: '2022-05-24T10:19:43.544Z',
                 nodeType: 'cm:content',
                 content: {
-                    mimeType:
-                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                     mimeTypeName: 'Microsoft Word 2007',
                     sizeInBytes: 11887,
                     encoding: 'UTF-8'
                 },
                 parentId: '422538ca-ea4b-4086-83f9-b36e4521ec7f',
-                aspectNames: [
-                    'rn:renditioned',
-                    'cm:versionable',
-                    'cm:titled',
-                    'cm:auditable',
-                    'cm:author',
-                    'cm:thumbnailModification'
-                ],
+                aspectNames: ['rn:renditioned', 'cm:versionable', 'cm:titled', 'cm:auditable', 'cm:author', 'cm:thumbnailModification'],
                 createdAt: '2022-05-24T07:26:44.429Z',
                 isFolder: false,
                 modifiedByUser: {
@@ -101,21 +96,13 @@ export const mockNewVersionUploaderData: any = {
         modifiedAt: '2022-05-24T07:26:45.337Z',
         nodeType: 'cm:content',
         content: {
-            mimeType:
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             mimeTypeName: 'Microsoft Word 2007',
             sizeInBytes: 11949,
             encoding: 'UTF-8'
         },
         parentId: '422538ca-ea4b-4086-83f9-b36e4521ec7f',
-        aspectNames: [
-            'rn:renditioned',
-            'cm:versionable',
-            'cm:titled',
-            'cm:auditable',
-            'cm:author',
-            'cm:thumbnailModification'
-        ],
+        aspectNames: ['rn:renditioned', 'cm:versionable', 'cm:titled', 'cm:auditable', 'cm:author', 'cm:thumbnailModification'],
         createdAt: '2022-05-24T07:26:44.429Z',
         path: {
             name: '/Company Home/User Homes/hruser',
@@ -155,13 +142,7 @@ export const mockNewVersionUploaderData: any = {
                     accessStatus: 'ALLOWED'
                 }
             ],
-            settable: [
-                'Contributor',
-                'Collaborator',
-                'Coordinator',
-                'Editor',
-                'Consumer'
-            ],
+            settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
             isInheritanceEnabled: true
         },
         modifiedByUser: {

@@ -25,12 +25,12 @@ import { TagService } from '../../tag/services/tag.service';
     providedIn: 'root'
 })
 export class NodeAspectService {
-
-    constructor(private nodesApiService: NodesApiService,
-                private dialogAspectListService: DialogAspectListService,
-                private cardViewContentUpdateService: CardViewContentUpdateService,
-                private tagService: TagService) {
-    }
+    constructor(
+        private nodesApiService: NodesApiService,
+        private dialogAspectListService: DialogAspectListService,
+        private cardViewContentUpdateService: CardViewContentUpdateService,
+        private tagService: TagService
+    ) {}
 
     updateNodeAspects(nodeId: string, selectorAutoFocusedOnClose?: string) {
         this.dialogAspectListService.openAspectListDialog(nodeId, selectorAutoFocusedOnClose).subscribe((aspectList) => {

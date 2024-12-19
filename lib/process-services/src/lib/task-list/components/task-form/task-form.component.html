@@ -17,8 +17,7 @@
     (error)='onError($event)'
     (executeOutcome)='onFormExecuteOutcome($event)'>
     <adf-form-custom-outcomes>
-        <ng-template [ngTemplateOutlet]="taskFormButtons">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="taskFormButtons" />
     </adf-form-custom-outcomes>
   </adf-form>
   <ng-template #withoutForm>
@@ -58,7 +57,7 @@
             </mat-card-content>
             <mat-card-actions align="end">
                 <div class="adf-task-form-actions">
-                    <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
+                    <ng-template [ngTemplateOutlet]="taskFormButtons" />
                     <button mat-button
                         *ngIf="!isCompletedTask()" id="adf-no-form-complete-button"
                         color="primary"

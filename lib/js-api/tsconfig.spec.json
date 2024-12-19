@@ -8,7 +8,7 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["ESNext", "dom"],
-    "types": ["mocha"]
+    "types": ["jest", "node"]
   },
   "exclude": [],
   "include": ["**/*"]

@@ -76,7 +76,7 @@ export class DynamicTableModel extends FormWidgetModel {
     private getColumns(field: FormFieldModel): DynamicTableColumn[] {
         if (field?.json) {
             let definitions = field.json.columnDefinitions;
-            if (!definitions && field.json.params && field.json.params.field) {
+            if (!definitions && field.json.params?.field) {
                 definitions = field.json.params.field.columnDefinitions;
             }
 

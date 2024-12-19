@@ -6,7 +6,7 @@
     <div class="adf-viewer-content"
          [cdkTrapFocus]="overlayMode"
          cdkTrapFocusAutoCapture>
-        <ng-content select="adf-viewer-toolbar"></ng-content>
+        <ng-content select="adf-viewer-toolbar" />
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
                 <adf-toolbar-title>
@@ -58,7 +58,7 @@
                     </button>
                 </div>
 
-                <ng-content select="adf-viewer-toolbar-actions"></ng-content>
+                <ng-content select="adf-viewer-toolbar-actions" />
 
                 <ng-container *ngIf="mnuOpenWith"
                               data-automation-id='adf-toolbar-custom-btn'>
@@ -71,13 +71,13 @@
                     </button>
                     <mat-menu #mnuOpenWith="matMenu"
                               [overlapTrigger]="false">
-                        <ng-content select="adf-viewer-open-with"></ng-content>
+                        <ng-content select="adf-viewer-open-with" />
                     </mat-menu>
                 </ng-container>
 
                 <adf-toolbar-divider />
 
-                <ng-content select="adf-viewer-toolbar-custom-actions"></ng-content>
+                <ng-content select="adf-viewer-toolbar-custom-actions" />
 
                 <button id="adf-viewer-fullscreen"
                         *ngIf="allowFullScreen"
@@ -115,7 +115,7 @@
                     </button>
                     <mat-menu #mnuMoreActions="matMenu"
                               [overlapTrigger]="false">
-                        <ng-content select="adf-viewer-more-actions"></ng-content>
+                        <ng-content select="adf-viewer-more-actions" />
                     </mat-menu>
                 </ng-container>
 
@@ -144,7 +144,7 @@
                         <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext" />
                     </ng-container>
                     <ng-content *ngIf="!sidebarRightTemplate"
-                                select="adf-viewer-sidebar"></ng-content>
+                                select="adf-viewer-sidebar" />
                 </div>
             </ng-container>
 
@@ -155,7 +155,7 @@
                         <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext" />
                     </ng-container>
                     <ng-content *ngIf="!sidebarLeftTemplate"
-                                select="adf-viewer-sidebar"></ng-content>
+                                select="adf-viewer-sidebar" />
                 </div>
             </ng-container>
 

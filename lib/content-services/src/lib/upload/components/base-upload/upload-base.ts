@@ -27,7 +27,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class UploadBase implements OnInit {
     protected uploadService = inject(UploadService);
-    protected translationService = inject(TranslationService);
+    protected translationService: TranslationService = inject(TranslationService);
     protected ngZone = inject(NgZone);
 
     /**
@@ -98,31 +98,26 @@ export abstract class UploadBase implements OnInit {
      * @param files files to upload
      */
     uploadFiles(files: File[]): void {
-        const filteredFiles: FileModel[] = files
-            .map<FileModel>((file: File) => this.createFileModel(file, this.rootFolderId, ((file as any).webkitRelativePath || '').replace(/\/[^/]*$/, '')));
+        const filteredFiles: FileModel[] = files.map<FileModel>((file: File) =>
+            this.createFileModel(file, this.rootFolderId, ((file).webkitRelativePath || '').replace(/\/[^/]*$/, ''))
+        );
 
         this.uploadQueue(filteredFiles);
     }
 
     uploadFilesInfo(files: FileInfo[]): void {
-        const filteredFiles: FileModel[] = files
-            .map<FileModel>((fileInfo: FileInfo) => this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder));
+        const filteredFiles: FileModel[] = files.map<FileModel>((fileInfo: FileInfo) =>
+            this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder)
+        );
 
         this.uploadQueue(filteredFiles);
     }
 
     private uploadQueue(files: FileModel[]) {
-        const filteredFiles = files
-            .filter(this.isFileAcceptable.bind(this))
-            .filter(this.isFileSizeAcceptable.bind(this));
+        const filteredFiles = files.filter(this.isFileAcceptable.bind(this)).filter(this.isFileSizeAcceptable.bind(this));
 
         this.ngZone.run(() => {
-            const event = new UploadFilesEvent(
-                [...filteredFiles],
-                this.uploadService,
-                this.success,
-                this.error
-            );
+            const event = new UploadFilesEvent([...filteredFiles], this.uploadService, this.success, this.error);
             this.beginUpload.emit(event);
 
             if (!event.defaultPrevented) {
@@ -145,9 +140,7 @@ export abstract class UploadBase implements OnInit {
             return true;
         }
 
-        const allowedExtensions = this.acceptedFilesType
-            .split(',')
-            .map((ext) => ext.trim().replace(/^\./, ''));
+        const allowedExtensions = this.acceptedFilesType.split(',').map((ext) => ext.trim().replace(/^\./, ''));
 
         return allowedExtensions.indexOf(file.extension) !== -1;
     }
@@ -162,14 +155,18 @@ export abstract class UploadBase implements OnInit {
      * @returns file model
      */
     protected createFileModel(file: File, parentId: string, path: string, id?: string): FileModel {
-        return new FileModel(file, {
-            comment: this.comment,
-            majorVersion: this.majorVersion,
-            newVersion: this.versioning,
-            parentId,
-            path,
-            nodeType: this.nodeType
-        }, id);
+        return new FileModel(
+            file,
+            {
+                comment: this.comment,
+                majorVersion: this.majorVersion,
+                newVersion: this.versioning,
+                parentId,
+                path,
+                nodeType: this.nodeType
+            },
+            id
+        );
     }
 
     protected isFileSizeAllowed(file: FileModel) {
@@ -201,15 +198,11 @@ export abstract class UploadBase implements OnInit {
         if (!this.isFileSizeAllowed(file)) {
             acceptableSize = false;
 
-            const message = this.translationService.instant(
-                'FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE',
-                { fileName: file.name }
-            );
+            const message = this.translationService.instant('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { fileName: file.name });
 
             this.error.emit(message);
         }
 
         return acceptableSize;
     }
-
 }

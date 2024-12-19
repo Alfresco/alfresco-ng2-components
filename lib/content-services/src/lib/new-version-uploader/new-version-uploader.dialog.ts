@@ -40,7 +40,10 @@ import { VersionListComponent } from '../version-manager/version-list.component'
     ],
     templateUrl: './new-version-uploader.dialog.html',
     styleUrls: ['./new-version-uploader.dialog.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'adf-new-version-uploader-dialog'
+    }
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
     /**
