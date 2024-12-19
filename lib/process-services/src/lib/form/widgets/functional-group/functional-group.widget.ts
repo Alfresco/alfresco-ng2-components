@@ -69,7 +69,6 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         tap((search: GroupModel | string) => {
             const isValid = typeof search !== 'string';
             const empty = search === '';
-            this.updateOption(isValid ? (search as GroupModel) : null);
             this.validateGroup(isValid, empty);
         }),
         debounceTime(300),
@@ -122,6 +121,8 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
                     this.field.value = this.selectedGroups;
                     this.searchTerm.setValue('');
                     this.input.nativeElement.value = '';
+                } else {
+                    return;
                 }
             } else {
                 this.field.value = [option];

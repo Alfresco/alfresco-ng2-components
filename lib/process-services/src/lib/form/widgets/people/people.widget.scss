@@ -7,6 +7,17 @@
         #{$mat-form-field-label} {
             top: 10px;
         }
+
+        .adf-people-widget-field {
+            .adf-people-widget-field-chip {
+                border: 1px solid var(--adf-chip-border-color);
+                border-radius: 10px;
+                background-color: var(--theme-primary-color-default-contrast);
+                height: auto;
+                word-break: break-word;
+                padding: 4px 0;
+            }
+        }
     }
 
     &-people-widget-list {
