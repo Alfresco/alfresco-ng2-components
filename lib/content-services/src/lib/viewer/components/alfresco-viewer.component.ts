@@ -211,6 +211,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     urlFileContent: string;
     fileName: string;
     mimeType: string;
+    nodeMimeType: string;
     nodeEntry: NodeEntry;
     tracks: Track[] = [];
     readOnly: boolean = true;
@@ -317,6 +318,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
         this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
         let mimeType: string;
+        let nodeMimeType: string;
         let urlFileContent: string;
 
         if (versionData?.content) {
@@ -324,6 +326,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         } else if (nodeData.content) {
             mimeType = nodeData.content.mimeType;
         }
+        nodeMimeType = mimeType;
 
         const currentFileVersion = this.nodeEntry?.entry?.properties?.['cm:versionLabel']
             ? encodeURI(this.nodeEntry?.entry?.properties['cm:versionLabel'])
@@ -333,7 +336,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         urlFileContent = urlFileContent + '&' + currentFileVersion;
 
         const fileExtension = this.viewUtilService.getFileExtension(versionData ? versionData.name : nodeData.name);
-        this.fileName = versionData ? versionData.name : nodeData.name;
         const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
         if (viewerType === 'unknown') {
@@ -346,7 +348,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             if (nodeRendition) {
                 urlFileContent = nodeRendition.url;
 
-                const nodeMimeType = nodeData?.content?.mimeType;
+                nodeMimeType = nodeData?.content?.mimeType;
                 const renditionMimeType = nodeRendition.mimeType;
                 mimeType = renditionMimeType || nodeMimeType;
             }
@@ -355,6 +357,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         }
 
         this.mimeType = mimeType;
+        this.nodeMimeType = nodeMimeType;
+        this.fileName = versionData ? versionData.name : nodeData.name;
         this.urlFileContent = urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '');
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;

@@ -466,7 +466,7 @@ describe('AlfrescoViewerComponent', () => {
     });
 
     describe('mimeType', () => {
-        it('should set mime type based on renditionMimeType rather then nodeData', async () => {
+        it('should set mime type based on renditionMimeType rather then nodeData and keep proper nodeMimeType', async () => {
             const defaultNode: Node = {
                 id: 'mock-id',
                 name: 'Mock Node',
@@ -499,6 +499,7 @@ describe('AlfrescoViewerComponent', () => {
 
             await fixture.whenStable();
             expect(component.mimeType).toEqual('application/pdf');
+            expect(component.nodeMimeType).toEqual('application/msWord');
         });
     });
 

@@ -244,6 +244,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     nodeId: string = null;
 
+    /** Original node mime type, should be provided when renditiona mime type is different. */
+    @Input()
+    nodeMimeType: string = undefined;
+
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */
@@ -303,7 +307,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        const { blobFile, urlFile, mimeType } = changes;
+        const { blobFile, urlFile, mimeType, nodeMimeType } = changes;
 
         if (blobFile?.currentValue) {
             this.mimeType = blobFile.currentValue.type;
@@ -314,8 +318,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             this.fileName ||= this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
         }
 
-        if (mimeType?.currentValue) {
+        if (mimeType?.currentValue && !nodeMimeType?.currentValue) {
             this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(mimeType.currentValue);
+        }
+
+        if (nodeMimeType?.currentValue) {
+            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(nodeMimeType.currentValue);
         }
     }
 
