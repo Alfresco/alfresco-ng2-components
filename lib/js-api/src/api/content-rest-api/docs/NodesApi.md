@@ -25,7 +25,7 @@ All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfres
 | [unlockNode](#unlockNode)                                           | **POST** /nodes/{nodeId}/unlock                         | Unlock a node                                         |
 | [updateNode](#updateNode)                                           | **PUT** /nodes/{nodeId}                                 | Update a node                                         |
 | [updateNodeContent](#updateNodeContent)                             | **PUT** /nodes/{nodeId}/content                         | Update node content                                   |
-| [initialFolderSizeCalculation](#initialFolderSizeCalculation)       | **POST** /nodes/{nodeId}/size-details                   | Initiate a new request to calculate folder size       |
+| [initiateFolderSizeCalculation](#initiateFolderSizeCalculation)       | **POST** /nodes/{nodeId}/size-details                   | Initiate a new request to calculate folder size       |
 | [getFolderSizeInfo](#getFolderSizeInfo)                             | **GET** /nodes/{nodeId}/size-details/{jobId}            | Gets the details of a folder                          |
 
 ## copyNode
@@ -1198,7 +1198,7 @@ nodesApi.updateNodeContent(`<nodeId>`, contentBodyUpdate, opts).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 });
 ```
-## initialFolderSizeCalculation
+## initiateFolderSizeCalculation
 
 Initiate a new request to calculate folder size.
 
@@ -1241,7 +1241,7 @@ Fetches the size details of folder with the identifier **nodeId**
 | Name       | Type     | Description                                                                        |
 |------------|----------|------------------------------------------------------------------------------------|
 | **nodeId** | string   | The identifier of a node.                                                          |
-| **jobId**  | string   | The identifier for the job which is calculating the currently selected node's size  |
+| **jobId**  | string   | The identifier for the job which is calculating the currently selected node's size |
 
 **Return type**: [SizeDetailsEntry](#SizeDetailsEntry)
 
