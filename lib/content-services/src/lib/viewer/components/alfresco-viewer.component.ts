@@ -336,7 +336,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         urlFileContent = urlFileContent + '&' + currentFileVersion;
 
         const fileExtension = this.viewUtilService.getFileExtension(versionData ? versionData.name : nodeData.name);
-        this.fileName = versionData ? versionData.name : nodeData.name;
         const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
         if (viewerType === 'unknown') {
@@ -359,6 +358,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
         this.mimeType = mimeType;
         this.nodeMimeType = nodeMimeType;
+        this.fileName = versionData ? versionData.name : nodeData.name;
         this.urlFileContent = urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '');
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
