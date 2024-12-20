@@ -33,10 +33,10 @@ export class SizeDetails {
     }
 }
 export namespace SizeDetails {
-    export type StatusEnum = 'IN-PROGRESS' | 'COMPLETE' | 'NOT-INITIATED';
+    export type StatusEnum = 'IN-PROGRESS' | 'COMPLETED' | 'NOT-INITIATED';
     export const StatusEnum = {
         IN_PROGRESS: 'IN-PROGRESS' as StatusEnum,
-        COMPLETE: 'COMPLETE' as StatusEnum,
+        COMPLETE: 'COMPLETED' as StatusEnum,
         NOT_INITIATED: 'NOT-INITIATED' as StatusEnum
     };
 }
