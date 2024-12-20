@@ -38,7 +38,6 @@ export class ModelService {
 
     /**
      * Create a Form.
-     *
      * @param formName Name of the new form
      * @returns The new form
      */
@@ -55,7 +54,6 @@ export class ModelService {
 
     /**
      * Gets all the forms.
-     *
      * @returns List of form models
      */
     getForms(): Observable<any> {
@@ -71,7 +69,6 @@ export class ModelService {
 
     /**
      * Creates a JSON array representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -81,7 +78,6 @@ export class ModelService {
 
     /**
      * Searches for a form by name.
-     *
      * @param name The form name to search for
      * @returns Form model(s) matching the search name
      */
@@ -98,7 +94,6 @@ export class ModelService {
 
     /**
      * Gets the form definition with a given name.
-     *
      * @param name The form name
      * @returns Form definition
      */
@@ -117,7 +112,6 @@ export class ModelService {
 
     /**
      * Gets the ID of a form.
-     *
      * @param form Object representing a form
      * @returns ID string
      */
@@ -132,7 +126,6 @@ export class ModelService {
     }
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */

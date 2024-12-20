@@ -26,7 +26,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SharedLinksApiService {
-
     error = new Subject<{ statusCode: number; message: string }>();
 
     private _sharedLinksApi: SharedlinksApi;
@@ -35,13 +34,10 @@ export class SharedLinksApiService {
         return this._sharedLinksApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     /**
      * Gets shared links available to the current user.
-     *
      * @param options Options supported by JS-API
      * @returns List of shared links
      */
@@ -54,38 +50,30 @@ export class SharedLinksApiService {
         const queryOptions = Object.assign({}, defaultOptions, options);
         const promise = this.sharedLinksApi.listSharedLinks(queryOptions);
 
-        return from(promise).pipe(
-            catchError((err) => of(err))
-        );
+        return from(promise).pipe(catchError((err) => of(err)));
     }
 
     /**
      * Creates a shared link available to the current user.
-     *
      * @param nodeId ID of the node to link to
      * @param sharedLinkWithExpirySettings shared link with nodeId and expiryDate
      * @param options Options supported by JS-API
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings? sharedLinkWithExpirySettings : { nodeId }, options);
+        const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings ? sharedLinkWithExpirySettings : { nodeId }, options);
 
-        return from(promise).pipe(
-            catchError((err) => of(err))
-        );
+        return from(promise).pipe(catchError((err) => of(err)));
     }
 
     /**
      * Deletes a shared link.
-     *
      * @param sharedId ID of the link to delete
      * @returns Null response notifying when the operation is complete
      */
     deleteSharedLink(sharedId: string): Observable<any | Error> {
         const promise = this.sharedLinksApi.deleteSharedLink(sharedId);
 
-        return from(promise).pipe(
-            catchError((err: Error) => of(err))
-        );
+        return from(promise).pipe(catchError((err: Error) => of(err)));
     }
 }

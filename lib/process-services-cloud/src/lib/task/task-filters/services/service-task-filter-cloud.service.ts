@@ -38,7 +38,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Creates and returns the default task filters for an app.
-     *
      * @param appName Name of the target app
      */
     private createDefaultFilters(appName: string): void {
@@ -62,7 +61,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Checks user preference are empty or not
-     *
      * @param preferences User preferences of the target app
      * @returns Boolean value if the preferences are not empty
      */
@@ -72,7 +70,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Checks for task filters in given user preferences
-     *
      * @param preferences User preferences of the target app
      * @param key Key of the task filters
      * @returns Boolean value if the preference has task filters
@@ -84,7 +81,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Calls create preference api to create task filters
-     *
      * @param appName Name of the target app
      * @param key Key of the task instance filters
      * @param filters Details of new task filter
@@ -96,7 +92,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Calls get preference api to get task filter by preference key
-     *
      * @param appName Name of the target app
      * @param key Key of the task filters
      * @returns Observable of task filters
@@ -107,7 +102,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Gets all task filters for a task app.
-     *
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
@@ -118,7 +112,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Gets a task filter.
-     *
      * @param appName Name of the target app
      * @param id ID of the task
      * @returns Details of the task filter
@@ -139,7 +132,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Adds a new task filter.
-     *
      * @param newFilter The new filter to add
      * @returns Observable of task instance filters with newly added filter
      */
@@ -167,7 +159,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Updates a task filter.
-     *
      * @param updatedFilter The filter to update
      * @returns Observable of task instance filters with updated filter
      */
@@ -192,7 +183,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Deletes a task filter
-     *
      * @param deletedFilter The filter to delete
      * @returns Observable of task instance filters without deleted filter
      */
@@ -215,7 +205,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Checks if given filter is a default filter
-     *
      * @param filterName Name of the target task filter
      * @returns Boolean value for whether the filter is a default filter
      */
@@ -226,7 +215,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Calls update preference api to update task filter
-     *
      * @param appName Name of the target app
      * @param key Key of the task filters
      * @param filters Details of update filter
@@ -238,7 +226,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Creates a uniq key with appName and username
-     *
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
@@ -248,7 +235,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Finds and returns the task filters from preferences
-     *
      * @returns Array of TaskFilterCloudModel
      * @param preferences preferences
      * @param key key
@@ -260,7 +246,6 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Creates and returns the default filters for a task app.
-     *
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */

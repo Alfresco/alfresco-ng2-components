@@ -16,7 +16,6 @@
  */
 
 export class FormEvent {
-
     private isDefaultPrevented: boolean = false;
 
     readonly form: any;

@@ -32,10 +32,7 @@ export default {
             imports: [LoginDialogComponent, RouterTestingModule]
         }),
         applicationConfig({
-            providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock },
-                importProvidersFrom(CoreStoryModule)
-            ]
+            providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }, importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {

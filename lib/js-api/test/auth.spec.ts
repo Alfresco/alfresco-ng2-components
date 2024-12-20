@@ -40,6 +40,11 @@ describe('Auth', () => {
             nodeMock = new NodeMock(ECM_HOST);
         });
 
+        afterEach(() => {
+            authResponseEcmMock.cleanAll();
+            nodeMock.cleanAll();
+        });
+
         describe('With Authentication', () => {
             let alfrescoJsApi: AlfrescoApi;
 
@@ -52,13 +57,11 @@ describe('Auth', () => {
             });
 
             describe('login', () => {
-                it('should return the Ticket if all is ok', (done) => {
+                it('should return the Ticket if all is ok', async () => {
                     authResponseEcmMock.get201Response();
 
-                    alfrescoJsApi.login('admin', 'admin').then((data: string) => {
-                        assert.equal(data, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                        done();
-                    });
+                    const data = await alfrescoJsApi.login('admin', 'admin');
+                    assert.equal(data, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
                 });
 
                 it('should return an error if wrong credential are used 403 the login fails', (done) => {
@@ -72,26 +75,22 @@ describe('Auth', () => {
             });
 
             describe('isLoggedIn', () => {
-                it('should return true if the api is logged in', (done) => {
+                it('should return true if the api is logged in', async () => {
                     authResponseEcmMock.get201Response();
 
-                    alfrescoJsApi.login('admin', 'admin').then(() => {
-                        assert.equal(alfrescoJsApi.isLoggedIn(), true);
-                        done();
-                    });
+                    await alfrescoJsApi.login('admin', 'admin');
+                    assert.equal(alfrescoJsApi.isLoggedIn(), true);
                 });
 
-                it('should return false if the api is logged out', (done) => {
+                it('should return false if the api is logged out', async () => {
                     authResponseEcmMock.get201Response();
 
                     alfrescoJsApi.login('admin', 'admin').catch(NOOP);
 
                     authResponseEcmMock.get204ResponseLogout();
 
-                    alfrescoJsApi.logout().then(() => {
-                        assert.equal(alfrescoJsApi.isLoggedIn(), false);
-                        done();
-                    });
+                    await alfrescoJsApi.logout();
+                    assert.equal(alfrescoJsApi.isLoggedIn(), false);
                 });
             });
 

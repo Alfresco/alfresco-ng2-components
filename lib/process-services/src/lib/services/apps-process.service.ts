@@ -35,7 +35,6 @@ export class AppsProcessService {
 
     /**
      * Gets a list of deployed apps for this user.
-     *
      * @returns The list of deployed apps
      */
     getDeployedApplications(): Observable<AppDefinitionRepresentation[]> {
@@ -44,7 +43,6 @@ export class AppsProcessService {
 
     /**
      * Gets a list of deployed apps for this user, where the app name is `name`.
-     *
      * @param name Name of the app
      * @returns The list of deployed apps
      */

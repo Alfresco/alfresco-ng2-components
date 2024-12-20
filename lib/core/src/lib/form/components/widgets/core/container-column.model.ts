@@ -18,7 +18,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 export class ContainerColumnModel {
-
     size: number = 12;
     fields: any[] = [];
     colspan: number = 1;

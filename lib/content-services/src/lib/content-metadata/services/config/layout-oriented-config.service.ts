@@ -25,8 +25,7 @@ import {
 import { getProperty } from './property-group-reader';
 
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
-
-    constructor(private config: any) { }
+    constructor(private config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         if (this.isIncludeAllEnabled()) {
@@ -41,9 +40,9 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         const organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
             const flattenedItems = this.flattenItems(layoutBlock.items);
             const properties = flattenedItems.reduce((props, explodedItem) => {
-                const isProperty = typeof explodedItem.property  === 'object';
+                const isProperty = typeof explodedItem.property === 'object';
                 const propertyName = isProperty ? explodedItem.property.name : explodedItem.property;
-                let  property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
+                let property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
                 if (isProperty) {
                     property = this.setPropertyTitle(property, explodedItem.property);
                 }
@@ -61,15 +60,14 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     }
 
     public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        return Object.keys(propertyGroups)
-            .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName];
-                const properties = propertyGroup.properties;
+        return Object.keys(propertyGroups).map((groupName) => {
+            const propertyGroup = propertyGroups[groupName];
+            const properties = propertyGroup.properties;
 
-                return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
-                });
+            return Object.assign({}, propertyGroup, {
+                properties: Object.keys(properties).map((propertyName) => properties[propertyName])
             });
+        });
     }
 
     public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
@@ -88,16 +86,14 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     }
 
     public isIncludeAllEnabled() {
-        const includeAllProperty = this.config
-            .map((config) => config.includeAll)
-            .find((includeAll) => includeAll !== undefined);
+        const includeAllProperty = this.config.map((config) => config.includeAll).find((includeAll) => includeAll !== undefined);
 
         return includeAllProperty !== undefined ? includeAllProperty : false;
     }
 
     private setEditableProperty(propertyGroup: Property | Property[], itemConfig): Property | Property[] {
         if (Array.isArray(propertyGroup)) {
-            propertyGroup.map((property) => property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true);
+            propertyGroup.forEach((property) => (property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true));
         } else {
             propertyGroup.editable = itemConfig.editable !== undefined ? itemConfig.editable : true;
         }
@@ -107,7 +103,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
     private setPropertyTitle(item: Property | Property[], property: Property): Property | Property[] {
         if (!Array.isArray(item)) {
-            return { ...item, ...(item.name === property.name && !!property.title) && { title: property.title } };
+            return { ...item, ...(item.name === property.name && !!property.title && { title: property.title }) };
         }
         return item;
     }

@@ -38,7 +38,6 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
 
     /**
      * Allows to deactivate route when there is no unsaved changes, otherwise displays dialog to confirm discarding changes.
-     *
      * @returns boolean | Observable<boolean> true when there is no unsaved changes or changes can be discarded, false otherwise.
      */
     canDeactivate(): boolean | Observable<boolean> {

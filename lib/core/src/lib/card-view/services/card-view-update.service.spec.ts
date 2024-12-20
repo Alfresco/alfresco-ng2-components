@@ -20,9 +20,7 @@ import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { CardViewUpdateService, transformKeyToObject } from './card-view-update.service';
 
 describe('CardViewUpdateService', () => {
-
     describe('transformKeyToObject', () => {
-
         it('should return the proper constructed value object for "dotless" keys', () => {
             const valueObject = transformKeyToObject('property-key', 'property-value');
 
@@ -47,7 +45,6 @@ describe('CardViewUpdateService', () => {
     });
 
     describe('Service', () => {
-
         let cardViewUpdateService: CardViewUpdateService;
         const property: CardViewBaseItemModel = {
             label: 'property-label',
@@ -63,23 +60,17 @@ describe('CardViewUpdateService', () => {
         });
 
         it('should send updated message with proper parameters', fakeAsync(() => {
-
-            cardViewUpdateService.itemUpdated$.subscribe(
-                ( { target, changed } ) => {
-                    expect(target).toBe(property);
-                    expect(changed).toEqual({ 'property-key': 'changed-property-value' });
-                }
-            );
+            cardViewUpdateService.itemUpdated$.subscribe(({ target, changed }) => {
+                expect(target).toBe(property);
+                expect(changed).toEqual({ 'property-key': 'changed-property-value' });
+            });
             cardViewUpdateService.update(property, 'changed-property-value');
         }));
 
         it('should send clicked message with proper parameters', fakeAsync(() => {
-
-            cardViewUpdateService.itemClicked$.subscribe(
-                ( { target } ) => {
-                    expect(target).toBe(property);
-                }
-            );
+            cardViewUpdateService.itemClicked$.subscribe(({ target }) => {
+                expect(target).toBe(property);
+            });
             cardViewUpdateService.clicked(property);
         }));
     });

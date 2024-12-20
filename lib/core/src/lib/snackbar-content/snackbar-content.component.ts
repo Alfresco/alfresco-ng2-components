@@ -28,12 +28,9 @@ import { SnackBarData } from './snack-bar-data';
     }
 })
 export class SnackbarContentComponent {
-    constructor(
-        public snackBarRef: MatSnackBarRef<SnackbarContentComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
-    ) {
+    constructor(public snackBarRef: MatSnackBarRef<SnackbarContentComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData) {
         if (!data) {
-            this.data = {message: ''};
+            this.data = { message: '' };
         }
     }
 

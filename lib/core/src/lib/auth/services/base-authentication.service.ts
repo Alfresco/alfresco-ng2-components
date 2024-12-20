@@ -59,7 +59,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     /**
      * Adds the auth token to an HTTP header using the 'bearer' scheme.
-     *
      * @param requestUrl the request url
      * @param headersArg Header that will receive the token
      * @returns The new header with the token added
@@ -88,7 +87,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     /**
      * Does the provider support BPM?
-     *
      * @returns True if supported, false otherwise
      */
     isBPMProvider(): boolean {
@@ -102,7 +100,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     /**
      * Does the provider support both ECM and BPM?
-     *
      * @returns True if both are supported, false otherwise
      */
     isALLProvider(): boolean {
@@ -117,7 +114,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     /**
      * Prints an error message in the console browser
-     *
      * @param error Error message
      * @returns Object representing the error message
      */
