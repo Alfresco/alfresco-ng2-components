@@ -67,12 +67,12 @@ export class AuthGuardService {
                 provider: this.getProvider(),
                 url
             });
-
+            this.basicAlfrescoAuthService.onLogout.next(true);
             urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
             return this.navigate(urlToRedirect);
         } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
             const shouldPerformSsoLogin = await new Promise((resolve) => {
-                this.oidcAuthenticationService.shouldPerformSsoLogin$.subscribe(value => resolve(value));
+                this.oidcAuthenticationService.shouldPerformSsoLogin$.subscribe((value) => resolve(value));
             });
             if (shouldPerformSsoLogin) {
                 this.oidcAuthenticationService.ssoLogin(url);
