@@ -142,7 +142,7 @@
     },
     "TAGS_CREATOR": {
       "EXISTING_TAGS": "Istniejące znaczniki:",
-      "EXISTING_TAGS_SELECTION": "Wybierz istniejący znacznik:",
+      "EXISTING_TAGS_SELECTION": "Select an existing Tag:",
       "NO_TAGS_CREATED": "Nie utworzono znaczników",
       "NO_EXISTING_TAGS": "Brak istniejących znaczników",
       "TITLE": "Utwórz znaczniki",
@@ -152,7 +152,6 @@
         "EXISTING_TAG": "Znacznik już istnieje.",
         "ALREADY_ADDED_TAG": "Znacznik został już dodany",
         "EMPTY_TAG": "Znacznik nie może zawierać spacji",
-        "REQUIRED": "Nazwa znacznika jest wymagana",
         "FETCH_TAGS": "Błąd podczas pobierania znaczników",
         "CREATE_TAGS": "Błąd podczas tworzenia znaczników",
         "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
@@ -172,7 +171,7 @@
     "DELETE_CATEGORY": "Usuń kategorię",
     "EXISTING_CATEGORIES": "Istniejące kategorie:",
     "SELECT_EXISTING_CATEGORY": "Wybierz istniejącą kategorię:",
-    "NO_EXISTING_CATEGORIES": "Brak istniejących kategorii",
+    "NO_EXISTING_CATEGORIES": "No Existing Categories",
     "GENERIC_CREATE": "Utwórz: {{name}}",
     "NAME": "Nazwa kategorii",
     "LOADING": "Wczytywanie",
