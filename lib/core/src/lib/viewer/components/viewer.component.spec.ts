@@ -35,6 +35,7 @@ import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-si
 import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
 import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
 import { ViewerComponent } from './viewer.component';
+import { ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -49,6 +50,7 @@ describe('ViewerComponent', () => {
     let dialog: MatDialog;
     let viewUtilService: ViewUtilService;
     let appConfigService: AppConfigService;
+    let thumbnailService: ThumbnailService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -72,6 +74,7 @@ describe('ViewerComponent', () => {
         dialog = TestBed.inject(MatDialog);
         viewUtilService = TestBed.inject(ViewUtilService);
         appConfigService = TestBed.inject(AppConfigService);
+        thumbnailService = TestBed.inject(ThumbnailService);
         component.fileName = 'test-file.pdf';
 
         appConfigService.config = {
@@ -96,6 +99,27 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(mockSimpleChanges);
 
             expect(component.mimeType).toBe('image/png');
+        });
+
+        it('should set mimeTypeIconUrl when mimeType changes and no nodeMimeType is provided', () => {
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('image/png');
+            const mockSimpleChanges: any = { mimeType: { currentValue: 'image/png' }, nodeMimeType: undefined };
+
+            component.ngOnChanges(mockSimpleChanges);
+
+            expect(thumbnailService.getMimeTypeIcon).toHaveBeenCalledWith('image/png');
+            expect(component.mimeTypeIconUrl).toBe('image/png');
+        });
+
+        it('should set mimeTypeIconUrl when nodeMimeType changes', () => {
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('application/pdf');
+            const mockSimpleChanges: any = { mimeType: { currentValue: 'image/png' }, nodeMimeType: { currentValue: 'application/pdf' } };
+
+            component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();
+
+            expect(thumbnailService.getMimeTypeIcon).toHaveBeenCalledWith('application/pdf');
+            expect(component.mimeTypeIconUrl).toBe('application/pdf');
         });
     });
 
