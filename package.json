@@ -176,7 +176,7 @@
     "tsconfig-paths": "^4.1.1",
     "typescript": "5.1.6",
     "webdriver-manager": "12.1.9",
-    "webpack": "5.94.0",
+    "webpack": "5.97.1",
     "webpack-cli": "^5.1.4"
   },
   "license": "Apache-2.0",
