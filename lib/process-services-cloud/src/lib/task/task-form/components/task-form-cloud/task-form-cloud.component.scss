@@ -1,6 +1,8 @@
 @import 'styles/mat-selectors';
 
 .adf-task-form-cloud-container {
+    height: 100%;
+
     .adf-task-form {
         &-container {
             overflow: hidden;
