@@ -966,7 +966,7 @@ export class NodesApi extends BaseApi {
     /**
      * Initiate a new request to calculate folder size.
      *
-     * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
+     * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
      *
      * @param nodeId Node Id
      * @returns The job id which can be used to track request status
@@ -988,7 +988,7 @@ export class NodesApi extends BaseApi {
     /**
      * Gets the size of a folder.
      *
-     * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
+     * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
      *
      * @param nodeId Node Id
      * @param jobId Job Id

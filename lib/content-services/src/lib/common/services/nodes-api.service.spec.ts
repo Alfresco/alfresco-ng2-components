@@ -17,10 +17,12 @@
 
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AlfrescoApiService, AlfrescoApiServiceMock, NodesApiService } from '@alfresco/adf-content-services';
 import { CoreTestingModule, RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, firstValueFrom, of } from 'rxjs';
 import { JobIdBodyEntry, SizeDetails, SizeDetailsEntry } from '@alfresco/js-api';
+import { NodesApiService } from './nodes-api.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 const fakeInitiateFolderSizeResponse: JobIdBodyEntry = {
     entry: {

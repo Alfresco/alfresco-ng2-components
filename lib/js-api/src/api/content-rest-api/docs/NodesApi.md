@@ -1200,9 +1200,9 @@ nodesApi.updateNodeContent(`<nodeId>`, contentBodyUpdate, opts).then((data) => {
 ```
 ## initiateFolderSizeCalculation
 
-Initiate a new request to calculate folder size.
+Initiates a new request to calculate folder size.
 
-> this endpoint is available in **Alfresco 7.1** and newer versions.
+> this endpoint is available in **Alfresco 25.1.0** and newer versions.
 
 Initiates a request to calculate the size of the node with identifier **nodeId**.
 
@@ -1232,7 +1232,7 @@ nodesApi.initiateFolderSizeCalculation(`<nodeId>`).then((data) => {
 
 Gets the size details of a folder
 
-> this endpoint is available in **Alfresco 7.1** and newer versions.
+> this endpoint is available in **Alfresco 25.1.0** and newer versions.
 
 Fetches the size details of folder with the identifier **nodeId**  
 
