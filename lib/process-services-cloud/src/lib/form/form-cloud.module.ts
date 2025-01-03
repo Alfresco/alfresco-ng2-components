@@ -32,7 +32,6 @@ import {
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
-
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
@@ -42,7 +41,7 @@ import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-but
 import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table-cloud.component';
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
-import { RichTextEditorModule } from '../rich-text-editor';
+import { RichTextEditorComponent } from '../rich-text-editor';
 import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
@@ -59,7 +58,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         ContentNodeSelectorModule,
         PeopleCloudModule,
         GroupCloudModule,
-        RichTextEditorModule,
+        RichTextEditorComponent,
         ...TOOLBAR_DIRECTIVES,
         A11yModule,
         FormatSpacePipe,
