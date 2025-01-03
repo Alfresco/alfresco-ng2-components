@@ -16,8 +16,8 @@
  */
 
 import { NgModule } from '@angular/core';
-import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
-import { AppListCloudComponent } from './components/app-list-cloud.component';
+import { AppDetailsCloudComponent } from './components/app-details-cloud/app-details-cloud.component';
+import { AppListCloudComponent } from './components/app-list-cloud/app-list-cloud.component';
 
 @NgModule({
     imports: [AppListCloudComponent, AppDetailsCloudComponent],

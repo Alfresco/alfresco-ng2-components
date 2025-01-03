@@ -16,44 +16,42 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
-import { AppListCloudComponent } from './app-list-cloud.component';
+import { AppDetailsCloudComponent } from './app-details-cloud.component';
+import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
+import { fakeApplicationInstance } from '../../mock/app-model.mock';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: AppListCloudComponent,
-    title: 'Process Services Cloud/App List Cloud/App List Cloud',
+    component: AppDetailsCloudComponent,
+    title: 'Process Services Cloud/App List Cloud/App Details Cloud',
     decorators: [
         moduleMetadata({
-            imports: [AppListCloudComponent]
+            imports: [AppDetailsCloudComponent]
         }),
         applicationConfig({
             providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
-        layoutType: {
-            control: 'radio',
-            options: ['GRID', 'LIST'],
-            description: 'Defines the layout of the apps.',
+        applicationInstance: {
+            control: 'object',
             table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'GRID' }
+                type: { summary: 'ApplicationInstanceModel' }
             }
         },
-        appClick: {
-            action: 'appClick',
+        selectedApp: {
+            action: 'selectedApp',
             description: 'Emitted when an app entry is clicked.',
             table: { category: 'Actions' }
         }
     },
     args: {
-        layoutType: 'GRID'
+        applicationInstance: fakeApplicationInstance[0]
     }
-} as Meta<AppListCloudComponent>;
+} as Meta<AppDetailsCloudComponent>;
 
-const template: StoryFn<AppListCloudComponent> = (args) => ({
+const template: StoryFn<AppDetailsCloudComponent> = (args) => ({
     props: args
 });
 
-export const AppListCloud = template.bind({});
+export const AppDetailsCloud = template.bind({});

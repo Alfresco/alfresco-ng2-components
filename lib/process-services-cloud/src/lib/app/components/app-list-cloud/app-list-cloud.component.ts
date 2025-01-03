@@ -18,12 +18,12 @@
 import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
-import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { AppsProcessCloudService } from '../../services/apps-process-cloud.service';
+import { ApplicationInstanceModel } from '../../models/application-instance.model';
 import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppDetailsCloudComponent } from './app-details-cloud.component';
+import { AppDetailsCloudComponent } from '../app-details-cloud/app-details-cloud.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
