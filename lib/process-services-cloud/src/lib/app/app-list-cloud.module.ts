@@ -19,8 +19,11 @@ import { NgModule } from '@angular/core';
 import { AppDetailsCloudComponent } from './components/app-details-cloud/app-details-cloud.component';
 import { AppListCloudComponent } from './components/app-list-cloud/app-list-cloud.component';
 
+export const APP_LIST_CLOUD_DIRECTIVES = [AppListCloudComponent, AppDetailsCloudComponent] as const;
+
+/** @deprecated use `...APP_LIST_CLOUD_DIRECTIVES` instead */
 @NgModule({
-    imports: [AppListCloudComponent, AppDetailsCloudComponent],
-    exports: [AppListCloudComponent, AppDetailsCloudComponent]
+    imports: [...APP_LIST_CLOUD_DIRECTIVES],
+    exports: [...APP_LIST_CLOUD_DIRECTIVES]
 })
 export class AppListCloudModule {}

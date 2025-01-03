@@ -17,7 +17,7 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
-import { AppListCloudModule } from './app/app-list-cloud.module';
+import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
@@ -40,7 +40,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
 @NgModule({
     imports: [
         CoreModule,
-        AppListCloudModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
@@ -53,7 +53,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
     ],
     providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')],
     exports: [
-        AppListCloudModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
