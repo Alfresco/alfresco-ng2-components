@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { catchError } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { AppDetailsCloudComponent } from './app-details-cloud.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatLineModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export const LAYOUT_LIST: string = 'LIST';
 export const LAYOUT_GRID: string = 'GRID';
@@ -28,6 +35,17 @@ export const DEPLOYED_STATUS: string = 'DEPLOYED';
 
 @Component({
     selector: 'adf-cloud-app-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        AppDetailsCloudComponent,
+        MatIconModule,
+        MatLineModule,
+        MatListModule,
+        EmptyContentComponent,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './app-list-cloud.component.html',
     styleUrls: ['./app-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -23,6 +23,8 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent, LAYOUT_GRID, LAYOUT_LIST } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { MatIconModule } from '@angular/material/icon';
+import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
 
 describe('AppListCloudComponent', () => {
     let component: AppListCloudComponent;
@@ -40,6 +42,8 @@ describe('AppListCloudComponent', () => {
     };
 
     @Component({
+        standalone: true,
+        imports: [MatIconModule, CustomEmptyContentTemplateDirective, AppListCloudComponent],
         template: `
             <adf-cloud-app-list>
                 <adf-custom-empty-content-template>
@@ -53,8 +57,7 @@ describe('AppListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomEmptyAppListCloudTemplateComponent]
+            imports: [ProcessServiceCloudTestingModule, AppListCloudComponent, CustomEmptyAppListCloudTemplateComponent]
         });
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;

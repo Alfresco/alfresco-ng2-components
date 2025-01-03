@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { AppListCloudModule } from '../app-list-cloud.module';
 import { DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
 
 describe('AppDetailsCloudComponent', () => {
@@ -29,7 +28,7 @@ describe('AppDetailsCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, AppListCloudModule]
+            imports: [ProcessServiceCloudTestingModule, AppDetailsCloudComponent]
         });
         fixture = TestBed.createComponent(AppDetailsCloudComponent);
         component = fixture.componentInstance;

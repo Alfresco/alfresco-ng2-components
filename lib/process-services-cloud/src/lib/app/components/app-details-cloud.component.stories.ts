@@ -18,7 +18,6 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
-import { AppListCloudModule } from '../app-list-cloud.module';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { importProvidersFrom } from '@angular/core';
 
@@ -27,7 +26,7 @@ export default {
     title: 'Process Services Cloud/App List Cloud/App Details Cloud',
     decorators: [
         moduleMetadata({
-            imports: [AppListCloudModule]
+            imports: [AppDetailsCloudComponent]
         }),
         applicationConfig({
             providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
