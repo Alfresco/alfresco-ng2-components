@@ -27,6 +27,8 @@ import { By } from '@angular/platform-browser';
 describe('CompleteTaskDirective', () => {
     @Component({
         selector: 'adf-cloud-test-component',
+        standalone: true,
+        imports: [CompleteTaskDirective],
         template: `<button
             adf-cloud-complete-task
             [taskId]="taskMock"
@@ -56,8 +58,7 @@ describe('CompleteTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [TestComponent]
+            imports: [ProcessServiceCloudTestingModule, TestComponent]
         });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
@@ -105,6 +106,8 @@ describe('CompleteTaskDirective', () => {
 describe('Complete Task Directive validation errors', () => {
     @Component({
         selector: 'adf-cloud-no-fields-validation-component',
+        standalone: true,
+        imports: [CompleteTaskDirective],
         template: '<button adf-cloud-complete-task (success)="onCompleteTask($event)"></button>'
     })
     class TestMissingInputDirectiveComponent {
@@ -122,6 +125,8 @@ describe('Complete Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-no-taskid-validation-component',
+        standalone: true,
+        imports: [CompleteTaskDirective],
         template: '<button adf-cloud-complete-task [appName]="appName" (success)="onCompleteTask($event)"></button>'
     })
     class TestMissingTaskIdDirectiveComponent {
@@ -137,7 +142,9 @@ describe('Complete Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-undefined-appname-component',
-        template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameUndefined" (success)="onCompleteTask($event)"></button>'
+        standalone: true,
+        imports: [CompleteTaskDirective],
+        template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="undefined" (success)="onCompleteTask($event)"></button>'
     })
     class TestInvalidAppNameUndefinedDirectiveComponent {
         appName = 'simple-app';
@@ -153,7 +160,9 @@ describe('Complete Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-null-appname-component',
-        template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameNull" (success)="onCompleteTask($event)"></button>'
+        standalone: true,
+        imports: [CompleteTaskDirective],
+        template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="null" (success)="onCompleteTask($event)"></button>'
     })
     class TestInvalidAppNameNullDirectiveComponent {
         appName = 'simple-app';
@@ -171,8 +180,8 @@ describe('Complete Task Directive validation errors', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [
+            imports: [
+                ProcessServiceCloudTestingModule,
                 TestMissingTaskIdDirectiveComponent,
                 TestInvalidAppNameUndefinedDirectiveComponent,
                 TestInvalidAppNameNullDirectiveComponent,

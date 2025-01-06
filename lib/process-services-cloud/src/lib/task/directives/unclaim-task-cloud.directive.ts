@@ -20,10 +20,10 @@ import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-unclaim-task]'
+    selector: '[adf-cloud-unclaim-task]',
+    standalone: true
 })
 export class UnClaimTaskCloudDirective implements OnInit {
-
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
@@ -42,17 +42,13 @@ export class UnClaimTaskCloudDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(
-        private readonly el: ElementRef,
-        private readonly renderer: Renderer2,
-        private taskListService: TaskCloudService) { }
+    constructor(private readonly el: ElementRef, private readonly renderer: Renderer2, private taskListService: TaskCloudService) {}
 
     ngOnInit() {
         this.validateInputs();
     }
 
     validateInputs() {
-
         if (!this.isTaskValid()) {
             this.invalidParams.push('taskId');
         }
