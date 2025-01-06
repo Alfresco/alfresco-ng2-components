@@ -509,7 +509,6 @@ Status: Experimental | [Source](<>) |
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Group initial pipe](process-services-cloud/pipes/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
-| [Process name cloud pipe](process-services-cloud/pipes/process-name-cloud.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services-cloud/src/lib/pipes/process-name-cloud.pipe.ts) |
 
 ### Services
 

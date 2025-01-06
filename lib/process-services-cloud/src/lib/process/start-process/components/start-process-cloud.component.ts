@@ -29,16 +29,17 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-
 import {
     ContentLinkModel,
     FORM_FIELD_VALIDATORS,
     FormFieldValidator,
     FormModel,
+    InplaceFormInputComponent,
+    LocalizedDatePipe,
     TranslationService
 } from '@alfresco/adf-core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { catchError, debounceTime } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -47,15 +48,41 @@ import { StartProcessCloudService } from '../services/start-process-cloud.servic
 import { forkJoin, of } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
-import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { getTime } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FormCloudModule } from '../../../form/form-cloud.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
+const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
+const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
 
 @Component({
     selector: 'adf-cloud-start-process',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        MatButtonModule,
+        FormCloudModule,
+        InplaceFormInputComponent,
+        MatIconModule,
+        MatInputModule,
+        MatOptionModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule
+    ],
     templateUrl: './start-process-cloud.component.html',
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -140,7 +167,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     resolvedValues?: TaskVariableCloud[];
     customOutcome: string;
 
-
     isProcessStarting = false;
     isFormCloudLoaded = false;
     isFormCloudLoading = false;
@@ -162,7 +188,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly startProcessCloudService = inject(StartProcessCloudService);
-    private readonly processNameCloudPipe = inject(ProcessNameCloudPipe);
+    private readonly localizedDatePipe = inject(LocalizedDatePipe);
 
     get isProcessFormValid(): boolean {
         if (this.hasForm && this.isFormCloudLoaded) {
@@ -500,9 +526,23 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     setDefaultProcessName(processDefinitionName: string): void {
         const processInstanceDetails: ProcessInstanceCloud = { processDefinitionName };
-        const defaultProcessName = this.processNameCloudPipe.transform(this.name, processInstanceDetails);
+        const defaultProcessName = this.getDefaultProcessName(this.name, processInstanceDetails);
         this.processInstanceName.setValue(defaultProcessName);
         this.processInstanceName.markAsDirty();
         this.processInstanceName.markAsTouched();
+    }
+
+    getDefaultProcessName(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
+        let processName = processNameFormat;
+        if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
+            const presentDateTime = getTime(new Date());
+            processName = processName.replace(DATE_TIME_IDENTIFIER_REG_EXP, this.localizedDatePipe.transform(presentDateTime, 'medium'));
+        }
+
+        if (processName.match(PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+            const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
+            processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
+        }
+        return processName;
     }
 }
