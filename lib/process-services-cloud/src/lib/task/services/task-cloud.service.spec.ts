@@ -25,10 +25,17 @@ import {
     emptyOwnerTaskDetailsCloudMock
 } from '../task-header/mocks/task-details-cloud.mock';
 import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-response.mock';
-import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+
+const cloudMockUser = {
+    id: 'fake-id-1',
+    username: 'AssignedTaskUser',
+    firstName: 'first-name-1',
+    lastName: 'last-name-1',
+    email: 'abc@xyz.com'
+};
 
 describe('Task Cloud Service', () => {
     let service: TaskCloudService;
