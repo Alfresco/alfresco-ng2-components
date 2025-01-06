@@ -24,6 +24,5 @@ export * from './directives/public-api';
 export * from './models/public-api';
 
 export * from './services/task-cloud.service';
-export * from './services/start-task-cloud.service';
 
 export * from './task-cloud.module';

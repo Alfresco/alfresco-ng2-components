@@ -15,11 +15,6 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line no-shadow
-export enum ClaimTaskEnum {
-    claim = 'claim',
-    unclaim = 'unclaim'
-}
 export interface TaskPriorityOption {
     label: string;
     key: string;
