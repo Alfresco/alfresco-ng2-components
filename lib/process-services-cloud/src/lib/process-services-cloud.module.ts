@@ -33,7 +33,6 @@ import {
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
-import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
 import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorComponent } from './rich-text-editor';
 
@@ -47,7 +46,6 @@ import { RichTextEditorComponent } from './rich-text-editor';
         PeopleCloudModule,
         FormCloudModule,
         TaskFormModule,
-        ProcessServicesCloudPipeModule,
         ApolloModule,
         RichTextEditorComponent
     ],
@@ -60,7 +58,6 @@ import { RichTextEditorComponent } from './rich-text-editor';
         FormCloudModule,
         TaskFormModule,
         PeopleCloudModule,
-        ProcessServicesCloudPipeModule,
         RichTextEditorComponent
     ]
 })
