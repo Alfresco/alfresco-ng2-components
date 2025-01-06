@@ -29,9 +29,17 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, LocalizedDatePipe, TranslationService } from '@alfresco/adf-core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+    ContentLinkModel,
+    FORM_FIELD_VALIDATORS,
+    FormFieldValidator,
+    FormModel,
+    InplaceFormInputComponent,
+    LocalizedDatePipe,
+    TranslationService
+} from '@alfresco/adf-core';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { catchError, debounceTime } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -43,6 +51,15 @@ import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.mode
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { getTime } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FormCloudModule } from '../../../form/form-cloud.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -51,6 +68,21 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 
 @Component({
     selector: 'adf-cloud-start-process',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        MatButtonModule,
+        FormCloudModule,
+        InplaceFormInputComponent,
+        MatIconModule,
+        MatInputModule,
+        MatOptionModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule
+    ],
     templateUrl: './start-process-cloud.component.html',
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
