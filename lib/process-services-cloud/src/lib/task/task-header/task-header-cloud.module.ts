@@ -22,16 +22,8 @@ import { CoreModule } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './components/task-header-cloud.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule.forChild()
-    ],
-    declarations: [
-        TaskHeaderCloudComponent
-    ],
-    exports: [
-        TaskHeaderCloudComponent
-    ]
+    imports: [CommonModule, MaterialModule, CoreModule],
+    declarations: [TaskHeaderCloudComponent],
+    exports: [TaskHeaderCloudComponent]
 })
-export class TaskHeaderCloudModule { }
+export class TaskHeaderCloudModule {}
