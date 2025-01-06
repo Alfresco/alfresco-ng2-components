@@ -15,20 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
     AppConfigService,
     CardViewBaseItemModel,
+    CardViewComponent,
     CardViewDateItemModel,
     CardViewItem,
     CardViewTextItemModel,
@@ -37,9 +28,13 @@ import {
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatCardModule } from '@angular/material/card';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-cloud-process-header',
+    standalone: true,
+    imports: [CardViewComponent, MatCardModule, NgIf],
     templateUrl: './process-header-cloud.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./process-header-cloud.component.scss'],
@@ -75,7 +70,9 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
         this.dateFormat = this.appConfig.get('adf-cloud-process-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
 
-        this.processCloudService.dataChangesDetected.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((processDetails) => this.onLoaded(processDetails));
+        this.processCloudService.dataChangesDetected
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((processDetails) => this.onLoaded(processDetails));
     }
 
     ngOnChanges() {

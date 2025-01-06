@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
-import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { processInstanceDetailsCloudMock } from '../../mock/process-instance-details-cloud.mock';
 
@@ -33,7 +32,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessHeaderCloudModule]
+            imports: [ProcessServiceCloudTestingModule, ProcessHeaderCloudComponent]
         });
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;
