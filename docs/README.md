@@ -499,7 +499,6 @@ Status: Experimental | [Source](<>) |
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Cancel Process Directive](process-services-cloud/directives/cancel-process.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Cancels a process | [Source](../lib/process-services-cloud/src/lib/process/directives/cancel-process.directive.ts) |
 | [Claim Task Cloud Directive](process-services-cloud/directives/claim-task-cloud.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/claim-task-cloud.directive.ts) |
 | [Complete Task Directive](process-services-cloud/directives/complete-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Completes a task. | [Source](../lib/process-services-cloud/src/lib/task/directives/complete-task.directive.ts) |
 | [Unclaim Task Cloud Directive](process-services-cloud/directives/unclaim-task-cloud.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/unclaim-task-cloud.directive.ts) |
