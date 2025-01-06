@@ -24,7 +24,7 @@ import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
-import { AppListCloudModule } from './../../app/app-list-cloud.module';
+import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
 import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 
@@ -35,7 +35,7 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         HttpClientModule,
         CommonModule,
         MaterialModule,
-        AppListCloudModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
         CoreModule,
         ProcessCommonModule,
         PeopleCloudModule
@@ -43,4 +43,4 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
 })
-export class ProcessFiltersCloudModule { }
+export class ProcessFiltersCloudModule {}

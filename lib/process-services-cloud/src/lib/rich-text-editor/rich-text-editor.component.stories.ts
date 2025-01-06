@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { RichTextEditorModule } from './rich-text-editor.module';
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../testing/process-services-cloud-story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
@@ -26,7 +25,7 @@ export default {
     title: 'Process Services Cloud/Rich Text Editor',
     decorators: [
         moduleMetadata({
-            imports: [RichTextEditorModule]
+            imports: [RichTextEditorComponent]
         }),
         applicationConfig({
             providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]

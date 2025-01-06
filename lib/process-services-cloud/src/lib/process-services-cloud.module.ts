@@ -17,7 +17,7 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
-import { AppListCloudModule } from './app/app-list-cloud.module';
+import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
@@ -35,12 +35,12 @@ import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
 import { ApolloModule } from 'apollo-angular';
-import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
+import { RichTextEditorComponent } from './rich-text-editor';
 
 @NgModule({
     imports: [
         CoreModule,
-        AppListCloudModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
@@ -49,13 +49,11 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         TaskFormModule,
         ProcessServicesCloudPipeModule,
         ApolloModule,
-        RichTextEditorModule
+        RichTextEditorComponent
     ],
-    providers: [
-        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
-    ],
+    providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')],
     exports: [
-        AppListCloudModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
@@ -63,7 +61,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         TaskFormModule,
         PeopleCloudModule,
         ProcessServicesCloudPipeModule,
-        RichTextEditorModule
+        RichTextEditorComponent
     ]
 })
 export class ProcessServicesCloudModule {
