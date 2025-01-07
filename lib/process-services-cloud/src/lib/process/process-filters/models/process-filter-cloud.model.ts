@@ -58,7 +58,7 @@ export class ProcessFilterCloudModel {
     appVersions: string[] | null;
     statuses: string[] | null;
 
-    processVariableFilters?: ProcessVariableFilterModel[]
+    processVariableFilters?: ProcessVariableFilterModel[];
 
     private dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string;
@@ -108,13 +108,13 @@ export class ProcessFilterCloudModel {
             this._suspendedFrom = obj._suspendedFrom || null;
             this._suspendedTo = obj._suspendedTo || null;
 
-            this.processDefinitionNames = obj.processDefinitionNames || null;
-            this.processNames = obj.processNames || null;
-            this.processInstanceIds = obj.processInstanceIds || null;
-            this.parentIds = obj.parentIds || null;
-            this.initiators = obj.initiators || null;
-            this.appVersions = obj.appVersions || null;
-            this.statuses = obj.statuses || null;
+            this.processDefinitionNames = obj.processDefinitionNames || obj.processDefinitionName ? [obj.processDefinitionName] : null;
+            this.processNames = obj.processNames || obj.processName ? [obj.processName] : null;
+            this.processInstanceIds = obj.processInstanceIds || obj.processInstanceId ? [obj.processInstanceId] : null;
+            this.parentIds = obj.parentIds || obj.parentId ? [obj.parentId] : null;
+            this.initiators = obj.initiators || obj.initiator ? [obj.initiator] : null;
+            this.appVersions = obj.appVersions || obj.appVersion ? [`${obj.appVersion}`] : null;
+            this.statuses = obj.statuses || obj.status ? [obj.status] : null;
             this.processVariableFilters = obj.processVariableFilters ?? [];
         }
     }
