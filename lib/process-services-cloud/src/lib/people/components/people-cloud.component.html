@@ -26,6 +26,7 @@
             </mat-chip-row>
             <input matInput
                    #chipInput
+                   [disabled]="isReadonly() || isValidationLoading()"
                    [formControl]="searchUserCtrl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"
