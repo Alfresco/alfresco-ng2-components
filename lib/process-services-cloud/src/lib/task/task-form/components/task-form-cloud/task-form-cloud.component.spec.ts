@@ -70,8 +70,8 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [FormCloudComponent, UserTaskCloudButtonsComponent, FormCustomOutcomesComponent]
+            imports: [ProcessServiceCloudTestingModule, FormCustomOutcomesComponent],
+            declarations: [FormCloudComponent, UserTaskCloudButtonsComponent]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;
         taskDetails.permissions = [TASK_VIEW_PERMISSION];

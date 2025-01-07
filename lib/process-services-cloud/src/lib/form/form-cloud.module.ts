@@ -49,7 +49,8 @@ export const FORM_CLOUD_DIRECTIVES = [
     PropertiesViewerWidgetComponent,
     DisplayRichTextWidgetComponent,
     FileViewerWidgetComponent,
-    FilePropertiesTableCloudComponent
+    FilePropertiesTableCloudComponent,
+    FormCustomOutcomesComponent
 ] as const;
 
 @NgModule({
@@ -74,7 +75,6 @@ export const FORM_CLOUD_DIRECTIVES = [
         FormCloudComponent,
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
-        FormCustomOutcomesComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
@@ -85,7 +85,6 @@ export const FORM_CLOUD_DIRECTIVES = [
         FormCloudComponent,
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
-        FormCustomOutcomesComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
