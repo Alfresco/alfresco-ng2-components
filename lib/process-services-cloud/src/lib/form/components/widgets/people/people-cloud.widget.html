@@ -1,5 +1,7 @@
 <div class="adf-dropdown-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly" [class.adf-left-label-input-container]="field.leftLabels">
+     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-readonly]="field.readOnly"
+     [class.adf-left-label-input-container]="field.leftLabels">
      <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
     </div>
@@ -18,11 +20,16 @@
             (blur)="markAsTouched()"
             [attr.title]="field.tooltip"
         >
-            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id" label>{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+            <label class="adf-label"
+                   *ngIf="!field.leftLabels"
+                   [attr.for]="field.id" label
+            >{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         </adf-cloud-people>
         <error-widget [error]="field.validationSummary" />
-        <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired() && isTouched()"
-                    required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+        <error-widget
+            class="adf-dropdown-required-message"
+            *ngIf="isInvalidFieldRequired() && isTouched()"
+            required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
     </div>
 </div>
 
