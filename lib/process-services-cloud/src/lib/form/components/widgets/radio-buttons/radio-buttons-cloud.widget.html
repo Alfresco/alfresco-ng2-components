@@ -1,8 +1,14 @@
 <div class="adf-radio-buttons-widget-cloud {{field.className}}"
     [class.adf-readonly]="field.readOnly" [id]="field.id">
     <div [ngClass]="(field.alignmentType === 'vertical') ? 'adf-radio-button-container': 'adf-radio-button-container-horizontal'">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-        <mat-radio-group [ngClass]="(field.alignmentType === 'vertical') ? 'adf-radio-group': 'adf-radio-group-horizontal'" class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
+        <label class="adf-label"
+               [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+        </label>
+        <mat-radio-group
+            [ngClass]="(field.alignmentType === 'vertical') ? 'adf-radio-group': 'adf-radio-group-horizontal'"
+            class="adf-radio-group"
+            [(ngModel)]="field.value"
+            [disabled]="field.readOnly">
             <mat-radio-button
                 [title]="field.tooltip"
                 [id]="field.id + '-' + opt.id"

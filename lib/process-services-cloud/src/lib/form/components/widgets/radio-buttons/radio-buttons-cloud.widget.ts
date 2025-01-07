@@ -18,14 +18,19 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { ErrorMessageModel, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorMessageModel, ErrorWidgetComponent, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormUtilsService } from '../../../services/form-utils.service';
+import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, ErrorWidgetComponent, MatRadioModule, TranslateModule, FormsModule],
     templateUrl: './radio-buttons-cloud.widget.html',
     styleUrls: ['./radio-buttons-cloud.widget.scss'],
     host: {
@@ -69,7 +74,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
             .getRestWidgetData(this.field.form.id, this.field.id, body)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
-                (result: FormFieldOption[]) => {
+                (result) => {
                     this.field.options = result;
                     this.field.updateForm();
                 },
