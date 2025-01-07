@@ -23,7 +23,7 @@ import { TaskScreenCloudComponent } from '../../screen/components/screen-cloud/s
 import { UserTaskCloudComponent } from './components/user-task-cloud/user-task-cloud.component';
 import { UserTaskCloudButtonsComponent } from './components/user-task-cloud-buttons/user-task-cloud-buttons.component';
 
-/** @deprecated */
+/** @deprecated use standalone component imports instead */
 @NgModule({
     imports: [
         ...FORM_CLOUD_DIRECTIVES,
