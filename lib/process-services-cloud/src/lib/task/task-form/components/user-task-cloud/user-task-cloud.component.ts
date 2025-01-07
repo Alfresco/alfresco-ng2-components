@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
-import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
+import { ContentLinkModel, EmptyContentComponent, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TaskDetailsCloudModel } from '../../../start-task/models/task-details-cloud.model';
 import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.component';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
+import { CompleteTaskDirective } from '../../../directives/complete-task.directive';
 
 const TaskTypes = {
     Form: 'form',
@@ -33,6 +41,19 @@ type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
 
 @Component({
     selector: 'adf-cloud-user-task',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatProgressSpinnerModule,
+        UserTaskCloudButtonsComponent,
+        TranslateModule,
+        MatButtonModule,
+        MatCardModule,
+        EmptyContentComponent,
+        TaskScreenCloudComponent,
+        TaskFormCloudComponent,
+        CompleteTaskDirective
+    ],
     templateUrl: './user-task-cloud.component.html',
     styleUrls: ['./user-task-cloud.component.scss']
 })

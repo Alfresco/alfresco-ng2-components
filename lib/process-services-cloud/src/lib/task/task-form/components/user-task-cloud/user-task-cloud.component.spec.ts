@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { NoopTranslateModule } from '@alfresco/adf-core';
 import {
     TASK_ASSIGNED_STATE,
     TASK_CLAIM_PERMISSION,
@@ -64,8 +63,7 @@ describe('UserTaskCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, ProcessServiceCloudTestingModule],
-            declarations: [UserTaskCloudComponent, TaskFormCloudComponent]
+            imports: [ProcessServiceCloudTestingModule, UserTaskCloudComponent, TaskFormCloudComponent]
         });
         fixture = TestBed.createComponent(UserTaskCloudComponent);
         component = fixture.componentInstance;
