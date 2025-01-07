@@ -34,7 +34,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
     template: `<div>adf-cloud-overlay-test</div>`
 })
 class SpinnerTestComponent {
-    destroyRef = inject(DestroyRef)
+    destroyRef = inject(DestroyRef);
 }
 
 describe('FormCloudSpinnerService', () => {
@@ -47,10 +47,10 @@ describe('FormCloudSpinnerService', () => {
     const showSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: true, message: 'LOAD_SPINNER_MESSAGE' });
     const hideSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: false });
 
-
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [FormSpinnerComponent, SpinnerTestComponent],
+            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot(), FormSpinnerComponent],
+            declarations: [SpinnerTestComponent],
             providers: [
                 FormCloudSpinnerService,
                 {
@@ -59,15 +59,14 @@ describe('FormCloudSpinnerService', () => {
                         toggleFormSpinner: new Subject()
                     }
                 }
-            ],
-            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot()]
+            ]
         });
 
         fixture = TestBed.createComponent(SpinnerTestComponent);
         rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         spinnerService = TestBed.inject(FormCloudSpinnerService);
         formService = TestBed.inject(FormService);
-        destroyRef = fixture.componentInstance.destroyRef
+        destroyRef = fixture.componentInstance.destroyRef;
     });
 
     it('should toggle spinner', async () => {

@@ -47,6 +47,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
 import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
 
+export const FORM_CLOUD_DIRECTIVES = [AlfrescoViewerComponent, RichTextEditorComponent, FormSpinnerComponent] as const;
+
 @NgModule({
     imports: [
         CommonModule,
@@ -58,14 +60,13 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         ContentNodeSelectorModule,
         PeopleCloudModule,
         GroupCloudModule,
-        RichTextEditorComponent,
         ...TOOLBAR_DIRECTIVES,
         A11yModule,
         FormatSpacePipe,
-        AlfrescoViewerComponent,
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
-        FormStylePipe
+        FormStylePipe,
+        ...FORM_CLOUD_DIRECTIVES
     ],
     declarations: [
         FormCloudComponent,
@@ -80,10 +81,10 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         PropertiesViewerWidgetComponent,
         FilePropertiesTableCloudComponent,
         FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent,
-        FormSpinnerComponent
+        DisplayRichTextWidgetComponent
     ],
     exports: [
+        ...FORM_CLOUD_DIRECTIVES,
         FormCloudComponent,
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
