@@ -53,7 +53,8 @@ export const FORM_CLOUD_DIRECTIVES = [
     FormCustomOutcomesComponent,
     FormDefinitionSelectorCloudComponent,
     RadioButtonsCloudWidgetComponent,
-    AttachFileCloudWidgetComponent
+    AttachFileCloudWidgetComponent,
+    UploadCloudWidgetComponent
 ] as const;
 
 @NgModule({
@@ -74,8 +75,8 @@ export const FORM_CLOUD_DIRECTIVES = [
         ...CONTENT_METADATA_DIRECTIVES,
         ...FORM_CLOUD_DIRECTIVES
     ],
-    declarations: [FormCloudComponent, UploadCloudWidgetComponent, PeopleCloudWidgetComponent, GroupCloudWidgetComponent],
-    exports: [...FORM_CLOUD_DIRECTIVES, FormCloudComponent, UploadCloudWidgetComponent, PeopleCloudWidgetComponent, GroupCloudWidgetComponent],
+    declarations: [FormCloudComponent, PeopleCloudWidgetComponent, GroupCloudWidgetComponent],
+    exports: [...FORM_CLOUD_DIRECTIVES, FormCloudComponent, PeopleCloudWidgetComponent, GroupCloudWidgetComponent],
     providers: [FormCloudSpinnerService] // move to standalone form-cloud.component
 })
 export class FormCloudModule {}

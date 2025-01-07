@@ -17,11 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
     FormService,
-    ThumbnailService,
-    NotificationService,
     FormValues,
     ContentLinkModel,
     AppConfigService,
@@ -31,7 +29,6 @@ import {
 } from '@alfresco/adf-core';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
-import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from '../upload/upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import {
@@ -74,6 +71,12 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
+    private contentNodeSelectorService = inject(ContentCloudNodeSelectorService);
+    private appConfigService = inject(AppConfigService);
+    private apiService = inject(AlfrescoApiService);
+    private contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
+    private newVersionUploaderService = inject(NewVersionUploaderService);
+
     typeId = 'AttachFileCloudWidgetComponent';
     rootNodeId = ALIAS_USER_FOLDER;
     selectedNode: Node;
@@ -89,18 +92,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
     displayedColumns = ['icon', 'fileName', 'action'];
 
-    constructor(
-        formService: FormService,
-        thumbnails: ThumbnailService,
-        processCloudContentService: ProcessCloudContentService,
-        notificationService: NotificationService,
-        private contentNodeSelectorService: ContentCloudNodeSelectorService,
-        private appConfigService: AppConfigService,
-        private apiService: AlfrescoApiService,
-        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
-        private newVersionUploaderService: NewVersionUploaderService
-    ) {
-        super(formService, thumbnails, processCloudContentService, notificationService);
+    constructor(formService: FormService) {
+        super(formService);
     }
 
     ngOnInit() {
