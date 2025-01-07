@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FORM_FIELD_VALIDATORS, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { FORM_FIELD_VALIDATORS, FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { FormCustomOutcomesComponent } from '@alfresco/adf-process-services-cloud';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
@@ -32,7 +32,6 @@ import {
     TASK_VIEW_PERMISSION,
     TaskDetailsCloudModel
 } from '../../../start-task/models/task-details-cloud.model';
-import { MockFormFieldValidator } from '../../mocks/task-form-cloud.mock';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 
@@ -51,6 +50,16 @@ const taskDetails: TaskDetailsCloudModel = {
     status: TASK_ASSIGNED_STATE,
     permissions: [TASK_VIEW_PERMISSION]
 };
+
+class MockFormFieldValidator implements FormFieldValidator {
+    isSupported(_field: FormFieldModel): boolean {
+        return true;
+    }
+
+    validate(_field: FormFieldModel): boolean {
+        return true;
+    }
+}
 
 describe('TaskFormCloudComponent', () => {
     let taskCloudService: TaskCloudService;

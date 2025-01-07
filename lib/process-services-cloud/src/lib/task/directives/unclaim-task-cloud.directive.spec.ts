@@ -27,6 +27,8 @@ import { By } from '@angular/platform-browser';
 describe('UnClaimTaskCloudDirective', () => {
     @Component({
         selector: 'adf-cloud-test-component',
+        standalone: true,
+        imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [taskId]="taskIdMock" [appName]="appName" (error)="onError($event)"></button>'
     })
     class TestComponent {
@@ -46,8 +48,7 @@ describe('UnClaimTaskCloudDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [TestComponent]
+            imports: [ProcessServiceCloudTestingModule, TestComponent]
         });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
@@ -95,6 +96,8 @@ describe('UnClaimTaskCloudDirective', () => {
 describe('UnClaim Task Directive validation errors', () => {
     @Component({
         selector: 'adf-cloud-claim-no-fields-validation-component',
+        standalone: true,
+        imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task></button>'
     })
     class ClaimTestMissingInputDirectiveComponent {
@@ -108,6 +111,8 @@ describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-no-taskid-validation-component',
+        standalone: true,
+        imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [appName]="appName"></button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {
@@ -119,6 +124,8 @@ describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-undefined-appname-component',
+        standalone: true,
+        imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
     class ClaimTestInvalidAppNameUndefinedDirectiveComponent {
@@ -131,6 +138,8 @@ describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-null-appname-component',
+        standalone: true,
+        imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })
     class ClaimTestInvalidAppNameNullDirectiveComponent {
@@ -145,8 +154,8 @@ describe('UnClaim Task Directive validation errors', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [
+            imports: [
+                ProcessServiceCloudTestingModule,
                 ClaimTestMissingTaskIdDirectiveComponent,
                 ClaimTestInvalidAppNameUndefinedDirectiveComponent,
                 ClaimTestInvalidAppNameNullDirectiveComponent,

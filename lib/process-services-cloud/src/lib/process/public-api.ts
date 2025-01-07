@@ -19,7 +19,6 @@ export * from './process-list/public-api';
 export * from './process-filters/public-api';
 export * from './start-process/public-api';
 export * from './process-header/public-api';
-export * from './directives/public-api';
 export * from './services/process-cloud.service';
 
 export * from './process-cloud.module';

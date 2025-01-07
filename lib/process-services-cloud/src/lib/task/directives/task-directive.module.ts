@@ -20,16 +20,11 @@ import { CompleteTaskDirective } from './complete-task.directive';
 import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
 import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
 
+export const TASK_DIRECTIVES = [CompleteTaskDirective, ClaimTaskCloudDirective, UnClaimTaskCloudDirective] as const;
+
+/** @deprecated */
 @NgModule({
-    declarations: [
-        CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
-    ],
-    exports: [
-        CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
-    ]
+    imports: [...TASK_DIRECTIVES],
+    exports: [...TASK_DIRECTIVES]
 })
-export class TaskDirectiveModule { }
+export class TaskDirectiveModule {}
