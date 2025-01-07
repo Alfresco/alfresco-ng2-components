@@ -47,3 +47,4 @@ export * from './form-field-variable-options';
 export * from './widget-schema.model';
 export * from './theme.model';
 export * from './predefined-theme';
+export * from './displayable-cm-properties.model';

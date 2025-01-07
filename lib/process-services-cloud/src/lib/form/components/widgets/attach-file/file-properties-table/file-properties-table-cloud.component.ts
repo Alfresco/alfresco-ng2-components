@@ -18,10 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { LocalizedDatePipe, ThumbnailService, UploadDirective } from '@alfresco/adf-core';
+import { LocalizedDatePipe, ThumbnailService, UploadDirective, DisplayableCMProperties } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
-import { DisplayableCMProperties } from '../../../../../../../core/src/lib/form/components/widgets/core/displayable-cm-properties.model';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,7 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatLineModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 
-export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
+const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
     selector: 'adf-cloud-file-properties-table',

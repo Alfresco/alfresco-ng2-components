@@ -26,12 +26,13 @@ import {
     ContentLinkModel,
     AppConfigService,
     UploadWidgetContentLinkModel,
-    DestinationFolderPath
+    DestinationFolderPath,
+    ErrorWidgetComponent
 } from '@alfresco/adf-core';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
-import { UploadCloudWidgetComponent } from './upload-cloud.widget';
+import { UploadCloudWidgetComponent } from '../upload/upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import {
     AlfrescoApiService,
@@ -41,15 +42,22 @@ import {
     NewVersionUploaderService,
     VersionManagerUploadData
 } from '@alfresco/adf-content-services';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { FilePropertiesTableCloudComponent } from './file-properties-table/file-properties-table-cloud.component';
+import { MatButtonModule } from '@angular/material/button';
 
-export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
-export const ALIAS_ROOT_FOLDER = '-root-';
-export const ALIAS_USER_FOLDER = '-my-';
-export const APP_NAME = '-appname-';
-export const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
+const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
+const ALIAS_ROOT_FOLDER = '-root-';
+const ALIAS_USER_FOLDER = '-my-';
+const APP_NAME = '-appname-';
+const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, ErrorWidgetComponent, TranslateModule, MatIconModule, FilePropertiesTableCloudComponent, MatButtonModule],
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],
     host: {

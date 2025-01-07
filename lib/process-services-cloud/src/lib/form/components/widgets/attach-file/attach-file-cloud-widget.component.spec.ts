@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget.component';
@@ -61,7 +60,7 @@ import {
     processVariables
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { CUSTOM_ELEMENTS_SCHEMA, Injector, runInInjectionContext } from '@angular/core';
+import { Injector, runInInjectionContext } from '@angular/core';
 import {
     ContentModule,
     ContentNodeSelectorPanelService,
@@ -150,8 +149,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot(), AttachFileCloudWidgetComponent]
         });
         notificationService = TestBed.inject(NotificationService);
         downloadService = TestBed.inject(DownloadService);

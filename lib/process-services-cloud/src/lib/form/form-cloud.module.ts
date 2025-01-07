@@ -27,13 +27,13 @@ import { CONTENT_METADATA_DIRECTIVES, CONTENT_UPLOAD_DIRECTIVES, ContentNodeSele
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
-import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
+import { UploadCloudWidgetComponent } from './components/widgets/upload/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
 import { PropertiesViewerWidgetComponent } from './components/widgets/properties-viewer/properties-viewer.widget';
 import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
-import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table-cloud.component';
+import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table/file-properties-table-cloud.component';
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorComponent } from '../rich-text-editor';
@@ -52,7 +52,8 @@ export const FORM_CLOUD_DIRECTIVES = [
     FilePropertiesTableCloudComponent,
     FormCustomOutcomesComponent,
     FormDefinitionSelectorCloudComponent,
-    RadioButtonsCloudWidgetComponent
+    RadioButtonsCloudWidgetComponent,
+    AttachFileCloudWidgetComponent
 ] as const;
 
 @NgModule({
@@ -68,26 +69,13 @@ export const FORM_CLOUD_DIRECTIVES = [
         GroupCloudModule,
         ...TOOLBAR_DIRECTIVES,
         A11yModule,
-        FormatSpacePipe,
+        FormatSpacePipe, // remove after form-cloud.component is refactored
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         ...FORM_CLOUD_DIRECTIVES
     ],
-    declarations: [
-        FormCloudComponent,
-        UploadCloudWidgetComponent,
-        AttachFileCloudWidgetComponent,
-        PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
-    ],
-    exports: [
-        ...FORM_CLOUD_DIRECTIVES,
-        FormCloudComponent,
-        UploadCloudWidgetComponent,
-        AttachFileCloudWidgetComponent,
-        PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
-    ],
-    providers: [FormCloudSpinnerService]
+    declarations: [FormCloudComponent, UploadCloudWidgetComponent, PeopleCloudWidgetComponent, GroupCloudWidgetComponent],
+    exports: [...FORM_CLOUD_DIRECTIVES, FormCloudComponent, UploadCloudWidgetComponent, PeopleCloudWidgetComponent, GroupCloudWidgetComponent],
+    providers: [FormCloudSpinnerService] // move to standalone form-cloud.component
 })
 export class FormCloudModule {}
