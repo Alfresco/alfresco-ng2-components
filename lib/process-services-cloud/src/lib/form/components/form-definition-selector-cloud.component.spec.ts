@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
 import { of } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
@@ -33,8 +32,7 @@ describe('FormDefinitionCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessServiceCloudTestingModule, FormDefinitionSelectorCloudComponent]
         });
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
         service = TestBed.inject(FormDefinitionSelectorCloudService);

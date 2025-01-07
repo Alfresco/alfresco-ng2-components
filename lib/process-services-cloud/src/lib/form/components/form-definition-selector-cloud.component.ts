@@ -18,17 +18,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-cloud-form-definition-selector',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatSelectModule],
     templateUrl: './form-definition-selector-cloud.component.html',
     styleUrls: ['./form-definition-selector-cloud.component.scss']
 })
-
 export class FormDefinitionSelectorCloudComponent implements OnInit {
-
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
     appName: string = '';
@@ -39,8 +41,7 @@ export class FormDefinitionSelectorCloudComponent implements OnInit {
 
     forms$: Observable<FormRepresentation[]>;
 
-    constructor(private formDefinitionCloudService: FormDefinitionSelectorCloudService) {
-    }
+    constructor(private formDefinitionCloudService: FormDefinitionSelectorCloudService) {}
 
     ngOnInit(): void {
         this.forms$ = this.formDefinitionCloudService.getStandAloneTaskForms(this.appName);
@@ -49,5 +50,4 @@ export class FormDefinitionSelectorCloudComponent implements OnInit {
     onSelect(event: MatSelectChange) {
         this.selectForm.emit(event.value);
     }
-
 }
