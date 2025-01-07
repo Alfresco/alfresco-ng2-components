@@ -85,6 +85,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
         FormCloudComponent,
         FormCustomOutcomesComponent
     ],
+    providers: [LocalizedDatePipe],
     templateUrl: './start-process-cloud.component.html',
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -46,6 +46,7 @@ const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
         MatLineModule,
         MatListModule
     ],
+    providers: [LocalizedDatePipe],
     templateUrl: './file-properties-table-cloud.component.html',
     styleUrls: ['./file-properties-table-cloud.component.scss']
 })
