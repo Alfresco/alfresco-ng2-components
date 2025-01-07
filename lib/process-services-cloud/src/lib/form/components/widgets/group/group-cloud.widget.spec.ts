@@ -19,7 +19,6 @@ import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel } from '@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
@@ -32,9 +31,7 @@ describe('GroupCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [GroupCloudWidgetComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessServiceCloudTestingModule, GroupCloudWidgetComponent]
         });
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
