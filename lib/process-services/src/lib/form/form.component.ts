@@ -79,10 +79,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
     protected nodeService = inject(NodesApiService);
     private cdRef = inject(ChangeDetectorRef);
 
-    /** Underlying form model instance. */
-    @Input()
-    form: FormModel;
-
     /** Task id to fetch corresponding form and values. */
     @Input()
     taskId: string;

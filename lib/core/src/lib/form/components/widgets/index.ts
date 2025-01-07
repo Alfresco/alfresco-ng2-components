@@ -57,7 +57,7 @@ export * from './text/text-mask.component';
 export * from './display-text';
 export * from './header';
 
-export const WIDGET_DIRECTIVES: any[] = [
+export const WIDGET_DIRECTIVES = [
     UnknownWidgetComponent,
     TextWidgetComponent,
     NumberWidgetComponent,
@@ -72,6 +72,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     DateTimeWidgetComponent,
     JsonWidgetComponent,
     BaseViewerWidgetComponent
-];
+] as const;
 
-export const MASK_DIRECTIVE: any[] = [InputMaskDirective];
+export const MASK_DIRECTIVE = [InputMaskDirective] as const;

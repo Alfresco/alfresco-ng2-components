@@ -16,13 +16,16 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { PresetConfig, NodesApiService } from '@alfresco/adf-content-services';
+import { PresetConfig, NodesApiService, ContentMetadataComponent } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'adf-properties-viewer-wrapper',
+    standalone: true,
+    imports: [MatProgressSpinnerModule, ContentMetadataComponent],
     templateUrl: './properties-viewer-wrapper.component.html',
     encapsulation: ViewEncapsulation.None
 })
