@@ -56,7 +56,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(public formService: FormService) {
+    constructor(formService: FormService) {
         super(formService);
     }
 
@@ -72,16 +72,16 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
         this.formCloudService
             .getRestWidgetData(this.field.form.id, this.field.id, body)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                (result) => {
+            .subscribe({
+                next: (result) => {
                     this.field.options = result;
                     this.field.updateForm();
                 },
-                (err) => {
+                error: (err) => {
                     this.resetRestApiOptions();
                     this.handleError(err);
                 }
-            );
+            });
     }
 
     onOptionClick(optionSelected: any) {

@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, FormatSpacePipe, TOOLBAR_DIRECTIVES } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -37,7 +37,6 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorComponent } from '../rich-text-editor';
-import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
 import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
@@ -56,7 +55,8 @@ export const FORM_CLOUD_DIRECTIVES = [
     AttachFileCloudWidgetComponent,
     UploadCloudWidgetComponent,
     PeopleCloudWidgetComponent,
-    GroupCloudWidgetComponent
+    GroupCloudWidgetComponent,
+    FormCloudComponent
 ] as const;
 
 @NgModule({
@@ -70,15 +70,11 @@ export const FORM_CLOUD_DIRECTIVES = [
         ContentNodeSelectorModule,
         PeopleCloudModule,
         GroupCloudModule,
-        ...TOOLBAR_DIRECTIVES,
-        A11yModule,
-        FormatSpacePipe, // remove after form-cloud.component is refactored
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         ...FORM_CLOUD_DIRECTIVES
     ],
-    declarations: [FormCloudComponent],
-    exports: [...FORM_CLOUD_DIRECTIVES, FormCloudComponent],
+    exports: [...FORM_CLOUD_DIRECTIVES],
     providers: [FormCloudSpinnerService] // move to standalone form-cloud.component
 })
 export class FormCloudModule {}

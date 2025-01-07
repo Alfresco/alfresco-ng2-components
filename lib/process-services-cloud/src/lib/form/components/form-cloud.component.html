@@ -72,10 +72,7 @@
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content class="adf-form-container-card-content">
-                        <adf-form-renderer
-                            [formDefinition]="form"
-                            [readOnly]="readOnly"
-                        />
+                        <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
                     </mat-card-content>
                     <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
                         <ng-content select="adf-cloud-form-custom-outcomes"></ng-content>

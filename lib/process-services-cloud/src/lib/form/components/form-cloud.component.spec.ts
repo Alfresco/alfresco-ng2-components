@@ -98,7 +98,7 @@ describe('FormCloudComponent', () => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
         const widgetType = resolver(null);
 
-        const factoryResolver: ComponentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
+        const factoryResolver = TestBed.inject(ComponentFactoryResolver);
         const factory = factoryResolver.resolveComponentFactory(widgetType);
         const componentRef = factory.create(injector);
 
@@ -107,7 +107,7 @@ describe('FormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule, FormCloudComponent],
             providers: [
                 {
                     provide: VersionCompatibilityService,

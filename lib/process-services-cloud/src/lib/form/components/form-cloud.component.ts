@@ -34,6 +34,7 @@ import {
     ConfirmDialogComponent,
     ContentLinkModel,
     FORM_FIELD_VALIDATORS,
+    FormatSpacePipe,
     FormBaseComponent,
     FormEvent,
     FormFieldModel,
@@ -41,8 +42,11 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
+    FormRendererComponent,
     FormService,
     FormValues,
+    ToolbarComponent,
+    ToolbarDividerComponent,
     UploadWidgetContentLinkModel,
     WidgetVisibilityService
 } from '@alfresco/adf-core';
@@ -55,9 +59,28 @@ import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../s
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-cloud-form',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormatSpacePipe,
+        MatButtonModule,
+        MatCardModule,
+        FormRendererComponent,
+        MatIconModule,
+        ToolbarDividerComponent,
+        ToolbarComponent,
+        A11yModule
+    ],
     templateUrl: './form-cloud.component.html',
     styleUrls: ['./form-cloud.component.scss']
 })
