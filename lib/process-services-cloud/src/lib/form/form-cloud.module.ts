@@ -52,7 +52,8 @@ export const FORM_CLOUD_DIRECTIVES = [
     RichTextEditorComponent,
     FormSpinnerComponent,
     PropertiesViewerWrapperComponent,
-    PropertiesViewerWidgetComponent
+    PropertiesViewerWidgetComponent,
+    DisplayRichTextWidgetComponent
 ] as const;
 
 @NgModule({
@@ -83,8 +84,7 @@ export const FORM_CLOUD_DIRECTIVES = [
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         FilePropertiesTableCloudComponent,
-        FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent
+        FileViewerWidgetComponent
     ],
     exports: [
         ...FORM_CLOUD_DIRECTIVES,
@@ -96,8 +96,7 @@ export const FORM_CLOUD_DIRECTIVES = [
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
-        FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent
+        FileViewerWidgetComponent
     ],
     providers: [FormCloudSpinnerService]
 })

@@ -40,10 +40,6 @@ describe('ProgressComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     it('should default to bar variant and indeterminate mode', () => {
         expect(component.variant).toBe('bar');
         expect(component.mode).toBe('indeterminate');

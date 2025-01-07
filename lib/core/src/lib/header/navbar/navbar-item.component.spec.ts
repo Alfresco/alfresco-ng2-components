@@ -38,10 +38,6 @@ describe('NavbarItemComponent', () => {
         button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     it('should display label', () => {
         fixture.detectChanges();
         expect(button.textContent).toContain('Test Label');

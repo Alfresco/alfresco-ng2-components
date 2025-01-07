@@ -34,10 +34,6 @@ describe('AvatarComponent', () => {
 
     const getAvatarImageElement = (): HTMLImageElement => fixture.nativeElement.querySelector('.adf-avatar__image');
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     it('should display initials when src is not provided', () => {
         component.src = '';
         fixture.detectChanges();
