@@ -32,7 +32,8 @@ import {
     WidgetVisibilityService,
     provideTranslations,
     AuthModule,
-    FormFieldEvent
+    FormFieldEvent,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -46,7 +47,6 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
-import { FormCloudModule } from '../form-cloud.module';
 import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
@@ -1539,7 +1539,7 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), FormCloudModule],
+            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule, CoreModule.forRoot(), FormCloudComponent],
             providers: [
                 provideTranslations('app', 'resources'),
                 {

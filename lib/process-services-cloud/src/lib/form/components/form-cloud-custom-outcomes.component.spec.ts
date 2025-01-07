@@ -21,14 +21,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudComponent } from './form-cloud.component';
-import { MatButtonModule } from '@angular/material/button';
 import { FormCustomOutcomesComponent } from './form-cloud-custom-outcomes.component';
-import { FormCloudModule } from '../form-cloud.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
     standalone: true,
-    imports: [FormCloudModule, MatButtonModule, FormCustomOutcomesComponent],
+    imports: [FormCustomOutcomesComponent, FormCloudComponent, MatButtonModule],
     template: `<adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>
             <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">CUSTOM-BUTTON-1</button>

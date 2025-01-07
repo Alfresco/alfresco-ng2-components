@@ -61,15 +61,9 @@ import {
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { Injector, runInInjectionContext } from '@angular/core';
-import {
-    ContentModule,
-    ContentNodeSelectorPanelService,
-    NewVersionUploaderDataAction,
-    NewVersionUploaderService
-} from '@alfresco/adf-content-services';
+import { ContentNodeSelectorPanelService, NewVersionUploaderDataAction, NewVersionUploaderService } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import { FormCloudModule } from '../../../form-cloud.module';
 
 const mockNodeToBeVersioned: any = {
     isFile: true,
@@ -149,7 +143,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot(), AttachFileCloudWidgetComponent]
+            imports: [ProcessServiceCloudTestingModule, AttachFileCloudWidgetComponent]
         });
         notificationService = TestBed.inject(NotificationService);
         downloadService = TestBed.inject(DownloadService);

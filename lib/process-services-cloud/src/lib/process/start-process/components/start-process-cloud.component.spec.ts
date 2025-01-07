@@ -22,14 +22,6 @@ import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
 import { StartProcessCloudComponent } from './start-process-cloud.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule, MatCommonModule, MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     fakeProcessDefinitions,
     fakeStartForm,
@@ -88,20 +80,7 @@ describe('StartProcessCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessServiceCloudTestingModule,
-                FormsModule,
-                MatCommonModule,
-                ReactiveFormsModule,
-                MatCardModule,
-                MatIconModule,
-                MatAutocompleteModule,
-                MatOptionModule,
-                MatButtonModule,
-                MatFormFieldModule,
-                MatInputModule,
-                MatRippleModule
-            ]
+            imports: [ProcessServiceCloudTestingModule, StartProcessCloudComponent]
         });
         processService = TestBed.inject(StartProcessCloudService);
         formCloudService = TestBed.inject(FormCloudService);

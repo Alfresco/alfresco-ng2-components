@@ -27,8 +27,8 @@ import { UserTaskCloudComponent } from './components/user-task-cloud/user-task-c
 import { UserTaskCloudButtonsComponent } from './components/user-task-cloud-buttons/user-task-cloud-buttons.component';
 
 @NgModule({
-    imports: [CoreModule, CommonModule, MaterialModule, FormCloudModule, ...TASK_DIRECTIVES, TaskScreenCloudComponent],
-    declarations: [TaskFormCloudComponent, UserTaskCloudComponent, UserTaskCloudButtonsComponent],
+    imports: [CoreModule, CommonModule, MaterialModule, FormCloudModule, ...TASK_DIRECTIVES, TaskScreenCloudComponent, UserTaskCloudButtonsComponent],
+    declarations: [TaskFormCloudComponent, UserTaskCloudComponent],
     exports: [TaskFormCloudComponent, UserTaskCloudComponent]
 })
 export class TaskFormModule {}
