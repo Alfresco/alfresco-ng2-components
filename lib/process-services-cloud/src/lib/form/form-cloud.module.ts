@@ -16,14 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import { CONTENT_METADATA_DIRECTIVES, CONTENT_UPLOAD_DIRECTIVES, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
@@ -37,9 +33,7 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorComponent } from '../rich-text-editor';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
-import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
 
 export const FORM_CLOUD_DIRECTIVES = [
     RichTextEditorComponent,
@@ -60,21 +54,7 @@ export const FORM_CLOUD_DIRECTIVES = [
 ] as const;
 
 @NgModule({
-    imports: [
-        CommonModule,
-        OverlayModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule,
-        ContentNodeSelectorModule,
-        PeopleCloudModule,
-        GroupCloudModule,
-        ...CONTENT_UPLOAD_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES,
-        ...FORM_CLOUD_DIRECTIVES
-    ],
-    exports: [...FORM_CLOUD_DIRECTIVES],
-    providers: [FormCloudSpinnerService] // move to standalone form-cloud.component
+    imports: [CoreModule, PeopleCloudModule, GroupCloudModule, ...FORM_CLOUD_DIRECTIVES],
+    exports: [...FORM_CLOUD_DIRECTIVES]
 })
 export class FormCloudModule {}

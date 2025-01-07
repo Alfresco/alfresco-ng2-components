@@ -81,6 +81,7 @@ import { A11yModule } from '@angular/cdk/a11y';
         ToolbarComponent,
         A11yModule
     ],
+    providers: [FormCloudSpinnerService],
     templateUrl: './form-cloud.component.html',
     styleUrls: ['./form-cloud.component.scss']
 })
