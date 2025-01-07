@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormModel, FormService, FormFieldModel } from '@alfresco/adf-core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormFieldModel, FormModel, FormService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -44,10 +42,8 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot()],
-            declarations: [FileViewerWidgetComponent],
-            providers: [{ provide: FormService, useValue: formServiceStub }],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopTranslateModule, NoopAuthModule, FileViewerWidgetComponent],
+            providers: [{ provide: FormService, useValue: formServiceStub }]
         });
 
         formServiceStub = TestBed.inject(FormService);
@@ -55,27 +51,21 @@ describe('FileViewerWidgetComponent', () => {
         widget = fixture.componentInstance;
     });
 
-    it('should set the file id corretly when the field value is an array', (done) => {
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: [fakePngAnswer] });
-        widget.field = fakeField;
+    it('should set the file id corretly when the field value is an array', async () => {
+        widget.field = new FormFieldModel(fakeForm, { id: 'fakeField', value: [fakePngAnswer] });
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            expect(widget.field.value).toBe('1933');
-            done();
-        });
+        expect(widget.field.value).toBe('1933');
     });
 
-    it('should set the file id corretly when the field value is a string', (done) => {
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
-        widget.field = fakeField;
+    it('should set the file id corretly when the field value is a string', async () => {
+        widget.field = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            expect(widget.field.value).toBe('fakeValue');
-            done();
-        });
+        expect(widget.field.value).toBe('fakeValue');
     });
 });

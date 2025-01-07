@@ -23,12 +23,7 @@ import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import {
-    AlfrescoViewerComponent,
-    CONTENT_METADATA_DIRECTIVES,
-    CONTENT_UPLOAD_DIRECTIVES,
-    ContentNodeSelectorModule
-} from '@alfresco/adf-content-services';
+import { CONTENT_METADATA_DIRECTIVES, CONTENT_UPLOAD_DIRECTIVES, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
@@ -48,12 +43,12 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
 import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
 
 export const FORM_CLOUD_DIRECTIVES = [
-    AlfrescoViewerComponent,
     RichTextEditorComponent,
     FormSpinnerComponent,
     PropertiesViewerWrapperComponent,
     PropertiesViewerWidgetComponent,
-    DisplayRichTextWidgetComponent
+    DisplayRichTextWidgetComponent,
+    FileViewerWidgetComponent
 ] as const;
 
 @NgModule({
@@ -83,8 +78,7 @@ export const FORM_CLOUD_DIRECTIVES = [
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
-        FilePropertiesTableCloudComponent,
-        FileViewerWidgetComponent
+        FilePropertiesTableCloudComponent
     ],
     exports: [
         ...FORM_CLOUD_DIRECTIVES,
@@ -95,8 +89,7 @@ export const FORM_CLOUD_DIRECTIVES = [
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent,
-        FileViewerWidgetComponent
+        GroupCloudWidgetComponent
     ],
     providers: [FormCloudSpinnerService]
 })
