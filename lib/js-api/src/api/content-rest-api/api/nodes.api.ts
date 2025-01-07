@@ -964,7 +964,7 @@ export class NodesApi extends BaseApi {
     }
 
     /**
-     * Initiate a new request to calculate folder size.*
+     * Initiate a new request to calculate folder size.
      *
      * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
      * @param nodeId Node Id
