@@ -150,4 +150,59 @@ describe('Node', () => {
             );
         });
     });
+
+    describe('FolderInformation', () => {
+        it('should return jobId on initiateFolderSizeCalculation API call if everything is ok', (done) => {
+            nodeMock.post200ResponseInitiateFolderSizeCalculation();
+
+            nodesApi.initiateFolderSizeCalculation('b4cff62a-664d-4d45-9302-98723eac1319').then((response) => {
+                assert.equal(response.entry.jobId, '5ade426e-8a04-4d50-9e42-6e8a041d50f3');
+                done();
+            });
+        });
+
+        it('should return 404 error on initiateFolderSizeCalculation API call if nodeId is not found', (done) => {
+            nodeMock.post404NodeIdNotFound();
+
+            nodesApi.initiateFolderSizeCalculation('b4cff62a-664d-4d45-9302-98723eac1319').then(
+                () => {},
+                (err) => {
+                    const { error } = JSON.parse(err.response.text);
+                    assert.equal(error.statusCode, 404);
+                    assert.equal(error.errorKey, 'framework.exception.EntityNotFound');
+                    assert.equal(error.briefSummary, '11207522 The entity with id: b4cff62a-664d-4d45-9302-98723eac1319 was not found');
+                    done();
+                }
+            );
+        });
+
+        it('should return size details on getFolderSizeInfo API call if everything is ok', (done) => {
+            nodeMock.get200ResponseGetFolderSizeInfo();
+
+            nodesApi.getFolderSizeInfo('b4cff62a-664d-4d45-9302-98723eac1319', '5ade426e-8a04-4d50-9e42-6e8a041d50f3').then((response) => {
+                assert.equal(response.entry.id, '32e522f1-1f28-4ea3-a522-f11f284ea397');
+                assert.equal(response.entry.jobId, '5ade426e-8a04-4d50-9e42-6e8a041d50f3');
+                assert.equal(response.entry.sizeInBytes, 2689);
+                assert.equal(response.entry.numberOfFiles, 100);
+                assert.equal(response.entry.calculatedAt, '2024-12-20T12:02:23.989+0000');
+                assert.equal(response.entry.status, 'COMPLETED');
+                done();
+            });
+        });
+
+        it('should return 404 error on getFolderSizeInfo API call if jobId is not found', (done) => {
+            nodeMock.get404JobIdNotFound();
+
+            nodesApi.getFolderSizeInfo('b4cff62a-664d-4d45-9302-98723eac1319', '5ade426e-8a04-4d50-9e42-6e8a041d50f3').then(
+                () => {},
+                (err) => {
+                    const { error } = JSON.parse(err.response.text);
+                    assert.equal(error.statusCode, 404);
+                    assert.equal(error.errorKey, 'jobId does not exist');
+                    assert.equal(error.briefSummary, '11207212 jobId does not exist');
+                    done();
+                }
+            );
+        });
+    });
 });

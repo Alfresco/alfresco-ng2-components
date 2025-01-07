@@ -28,7 +28,9 @@ import {
     NodeBodyMove,
     NodeBodyUpdate,
     NodeChildAssociationPaging,
-    NodeEntry
+    NodeEntry,
+    SizeDetailsEntry,
+    JobIdBodyEntry
 } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
@@ -958,6 +960,52 @@ export class NodesApi extends BaseApi {
             path: '/nodes/{nodeId}/request-direct-access-url',
             pathParams,
             returnType: DirectAccessUrlEntry
+        });
+    }
+
+    /**
+     * Initiate a new request to calculate folder size.
+     *
+     * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
+     * @param nodeId Node Id
+     * @returns The job id which can be used to track request status
+     */
+    initiateFolderSizeCalculation(nodeId: string): Promise<JobIdBodyEntry> {
+        throwIfNotDefined(nodeId, 'nodeId');
+
+        const pathParams = {
+            nodeId
+        };
+
+        return this.post({
+            path: '/nodes/{nodeId}/size-details',
+            pathParams,
+            returnType: JobIdBodyEntry
+        });
+    }
+
+    /**
+     * Gets the size of a folder.
+     *
+     * **Note:** this endpoint is available in Alfresco 25.1.0 and newer versions.
+     * @param nodeId Node Id
+     * @param jobId Job Id
+     * @returns Folder details
+     */
+
+    getFolderSizeInfo(nodeId: string, jobId: string): Promise<SizeDetailsEntry> {
+        throwIfNotDefined(nodeId, 'nodeId');
+        throwIfNotDefined(jobId, 'jobId');
+
+        const pathParams = {
+            nodeId,
+            jobId
+        };
+
+        return this.get({
+            path: 'nodes/{nodeId}/size-details/{jobId}',
+            pathParams,
+            returnType: SizeDetailsEntry
         });
     }
 }

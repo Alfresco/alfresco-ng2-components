@@ -16,7 +16,18 @@
  */
 
 import { UserPreferencesService } from '@alfresco/adf-core';
-import { ContentPagingQuery, Node, NodeAssignedHold, NodeEntry, NodePaging, NodesApi, NodesIncludeQuery, TrashcanApi } from '@alfresco/js-api';
+import {
+    ContentPagingQuery,
+    Node,
+    NodeAssignedHold,
+    NodeEntry,
+    NodePaging,
+    NodesApi,
+    NodesIncludeQuery,
+    TrashcanApi,
+    SizeDetailsEntry,
+    JobIdBodyEntry
+} from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -244,6 +255,27 @@ export class NodesApiService {
         }
 
         return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
+    }
+
+    /**
+     * Initiate a new request to calculate folder size.
+     *
+     * @param nodeId Node Id
+     * @returns The job id which can be used to track request status
+     */
+    initiateFolderSizeCalculation(nodeId: string): Observable<JobIdBodyEntry> {
+        return from(this.nodesApi.initiateFolderSizeCalculation(nodeId));
+    }
+
+    /**
+     * Gets the size of a folder.
+     *
+     * @param nodeId Node Id
+     * @param jobId Job Id
+     * @returns Folder details
+     */
+    getFolderSizeInfo(nodeId: string, jobId: string): Observable<SizeDetailsEntry> {
+        return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
     }
 
     private randomNodeName(): string {

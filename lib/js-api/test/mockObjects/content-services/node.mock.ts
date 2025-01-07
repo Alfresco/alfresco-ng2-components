@@ -230,4 +230,63 @@ export class NodeMock extends BaseMock {
                 }
             });
     }
+
+    post200ResponseInitiateFolderSizeCalculation(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details')
+            .reply(200, {
+                entry: {
+                    jobId: '5ade426e-8a04-4d50-9e42-6e8a041d50f3'
+                }
+            });
+    }
+
+    post404NodeIdNotFound(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details')
+            .reply(404, {
+                error: {
+                    errorKey: 'framework.exception.EntityNotFound',
+                    statusCode: 404,
+                    briefSummary: '11207522 The entity with id: b4cff62a-664d-4d45-9302-98723eac1319 was not found',
+                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions',
+                    descriptionURL: 'https://api-explorer.alfresco.com',
+                    logId: 'fafaf3c9-4e23-412b-baf3-c94e23912be5'
+                }
+            });
+    }
+
+    get200ResponseGetFolderSizeInfo(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .get(
+                '/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details/5ade426e-8a04-4d50-9e42-6e8a041d50f3'
+            )
+            .reply(200, {
+                entry: {
+                    numberOfFiles: 100,
+                    jobId: '5ade426e-8a04-4d50-9e42-6e8a041d50f3',
+                    sizeInBytes: 2689,
+                    id: '32e522f1-1f28-4ea3-a522-f11f284ea397',
+                    calculatedAt: '2024-12-20T12:02:23.989+0000',
+                    status: 'COMPLETED'
+                }
+            });
+    }
+
+    get404JobIdNotFound(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .get(
+                '/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details/5ade426e-8a04-4d50-9e42-6e8a041d50f3'
+            )
+            .reply(404, {
+                error: {
+                    errorKey: 'jobId does not exist',
+                    statusCode: 404,
+                    briefSummary: '11207212 jobId does not exist',
+                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions',
+                    descriptionURL: 'https://api-explorer.alfresco.com',
+                    logId: 'a98180c0-b1c0-48cb-8180-c0b1c0f8cba8'
+                }
+            });
+    }
 }
