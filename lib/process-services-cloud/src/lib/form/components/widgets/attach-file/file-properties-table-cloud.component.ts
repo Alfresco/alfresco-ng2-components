@@ -17,19 +17,43 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LocalizedDatePipe, ThumbnailService } from '@alfresco/adf-core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { LocalizedDatePipe, ThumbnailService, UploadDirective } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
+import { DisplayableCMProperties } from '../../../../../../../core/src/lib/form/components/widgets/core/displayable-cm-properties.model';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatLineModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
     selector: 'adf-cloud-file-properties-table',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatIconModule,
+        TranslateModule,
+        MatMenuModule,
+        UploadDirective,
+        MatButtonModule,
+        MatTableModule,
+        MatLineModule,
+        MatListModule
+    ],
     templateUrl: './file-properties-table-cloud.component.html',
     styleUrls: ['./file-properties-table-cloud.component.scss']
 })
 export class FilePropertiesTableCloudComponent {
+    private localizedDatePipe = inject(LocalizedDatePipe);
+    private thumbnailService = inject(ThumbnailService);
+
     @Input()
     uploadedFiles;
 
@@ -61,12 +85,10 @@ export class FilePropertiesTableCloudComponent {
     uploadNewFileVersion = new EventEmitter<NewVersionUploaderDialogData>();
 
     @Output()
-    contentModelFileHandler: EventEmitter<any> = new EventEmitter<Node>();
+    contentModelFileHandler = new EventEmitter<Node>();
 
     @Output()
-    removeAttachFile: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
+    removeAttachFile = new EventEmitter<Node>();
 
     onRowClicked(file?: Node) {
         this.rowClick.emit(file);
@@ -90,11 +112,11 @@ export class FilePropertiesTableCloudComponent {
         this.uploadNewFileVersion.emit(newVersionUploaderDialogData);
     }
 
-    contentModelFormFileHandler(file?: any) {
+    contentModelFormFileHandler(file?: Node) {
         this.contentModelFileHandler.emit(file);
     }
 
-    onRemoveAttachFile(file: any) {
+    onRemoveAttachFile(file: Node) {
         this.removeAttachFile.emit(file);
     }
 
@@ -102,17 +124,15 @@ export class FilePropertiesTableCloudComponent {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    getColumnValue(file, displayableCMProperty): string {
-        if (!file.properties[displayableCMProperty.prefixedName]) {
-            const fieldProperty = this.field.params.displayableCMProperties?.find((property) => property.name === displayableCMProperty.name);
-            return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, fieldProperty.defaultValue) : '--';
+    getColumnValue(file, prop: DisplayableCMProperties): string {
+        if (!file.properties[prop.prefixedName]) {
+            const fieldProperty = this.field.params.displayableCMProperties?.find((property) => property.name === prop.name);
+            return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(prop.dataType, fieldProperty.defaultValue) : '--';
         }
-        return file.properties[displayableCMProperty.prefixedName]
-            ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, file.properties[displayableCMProperty.prefixedName])
-            : '--';
+        return file.properties[prop.prefixedName] ? this.checkDateTypeAndTransform(prop.dataType, file.properties[prop.prefixedName]) : '--';
     }
 
-    checkDateTypeAndTransform(dataType, value): string {
+    private checkDateTypeAndTransform(dataType: string, value: any): string {
         if (dataType === 'd:date') {
             return this.localizedDatePipe.transform(value);
         } else if (dataType === 'd:datetime') {

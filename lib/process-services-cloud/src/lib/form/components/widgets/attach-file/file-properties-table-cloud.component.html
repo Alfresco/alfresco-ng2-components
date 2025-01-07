@@ -29,16 +29,12 @@
             </td>
         </ng-container>
 
-        <ng-container *ngFor="let columnName of field?.params?.displayableCMProperties"
-                      [matColumnDef]="columnName.name">
-            <th mat-header-cell *matHeaderCellDef>{{
-                    columnName.title ? columnName.title : columnName.name | titlecase
-                }}
-            </th>
+        <ng-container *ngFor="let prop of field?.params?.displayableCMProperties" [matColumnDef]="prop.name">
+            <th mat-header-cell *matHeaderCellDef>{{prop.title ? prop.title : prop.name | titlecase }}</th>
             <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let row">
-                <span matLine id="{{'fileProperty-'+row?.id+'-'+columnName?.name}}" role="button" tabindex="0"
+                <span matLine id="{{'fileProperty-'+row?.id+'-'+prop?.name}}" role="button" tabindex="0"
                       (keyup.enter)="onRowClicked(row)"
-                      (click)="onRowClicked(row)">{{ getColumnValue(row, columnName) }}</span>
+                      (click)="onRowClicked(row)">{{ getColumnValue(row, prop) }}</span>
             </td>
         </ng-container>
 
@@ -89,6 +85,5 @@
         </ng-container>
         <tr mat-header-row class="adf-file-properties-table-header-row" *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
     </table>
 </div>
