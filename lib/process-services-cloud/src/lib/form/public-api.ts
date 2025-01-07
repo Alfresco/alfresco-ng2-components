@@ -36,7 +36,8 @@ export * from './components/widgets/file-viewer/file-viewer.widget';
 export * from './components/widgets/display-rich-text/display-rich-text.widget';
 
 // widgets with schema
-export * from './components/widgets/radio-buttons';
+export * from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
+export * from './components/widgets/radio-buttons/radio-buttons-cloud.schema';
 
 export * from './services/content-cloud-node-selector.service';
 export * from './services/form-cloud.service';

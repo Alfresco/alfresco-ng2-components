@@ -47,17 +47,16 @@ import { FormsModule } from '@angular/forms';
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {
+    private formCloudService = inject(FormCloudService);
+    private translateService = inject(TranslateService);
+    private formUtilsService = inject(FormUtilsService);
+
     typeId = 'RadioButtonsCloudWidgetComponent';
     restApiError: ErrorMessageModel;
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        public formService: FormService,
-        private readonly formCloudService: FormCloudService,
-        private readonly translateService: TranslateService,
-        private readonly formUtilsService: FormUtilsService
-    ) {
+    constructor(public formService: FormService) {
         super(formService);
     }
 
