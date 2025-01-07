@@ -15,10 +15,16 @@
         }
     }
 
+    &-label {
+        white-space: normal;
+        height: 100%;
+    }
+
     &-attach-widget__menu-upload {
         display: flex;
         align-items: center;
         margin-right: 8px;
+        word-break: normal;
 
         .adf-attach-widget__menu-upload__button {
             line-height: 28px;
@@ -54,12 +60,14 @@
         margin-bottom: 12px;
 
         .adf-label {
-            width: 32px;
+            width: 100%;
             font-size: var(--theme-caption-font-size);
             line-height: var(--theme-headline-line-height);
             text-align: left;
-            white-space: nowrap;
+            white-space: normal;
             margin-left: 8px;
+            padding-right: 8px;
+            height: 100%;
         }
     }
 
