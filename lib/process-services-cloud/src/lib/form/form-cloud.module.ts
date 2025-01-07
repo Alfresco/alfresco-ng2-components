@@ -16,7 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@alfresco/adf-core';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
@@ -24,8 +23,6 @@ import { GroupCloudWidgetComponent } from './components/widgets/group/group-clou
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
 import { UploadCloudWidgetComponent } from './components/widgets/upload/upload-cloud.widget';
-import { PeopleCloudModule } from '../people/people-cloud.module';
-import { GroupCloudModule } from '../group/group-cloud.module';
 import { PropertiesViewerWidgetComponent } from './components/widgets/properties-viewer/properties-viewer.widget';
 import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
@@ -53,8 +50,9 @@ export const FORM_CLOUD_DIRECTIVES = [
     FormCloudComponent
 ] as const;
 
+/** @deprecated use ...FORM_CLOUD_DIRECTIVES instead */
 @NgModule({
-    imports: [CoreModule, PeopleCloudModule, GroupCloudModule, ...FORM_CLOUD_DIRECTIVES],
+    imports: [...FORM_CLOUD_DIRECTIVES],
     exports: [...FORM_CLOUD_DIRECTIVES]
 })
 export class FormCloudModule {}
