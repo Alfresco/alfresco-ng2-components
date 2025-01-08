@@ -108,15 +108,54 @@ export class ProcessFilterCloudModel {
             this._suspendedFrom = obj._suspendedFrom || null;
             this._suspendedTo = obj._suspendedTo || null;
 
-            this.processDefinitionNames = obj.processDefinitionNames || obj.processDefinitionName ? [obj.processDefinitionName] : null;
-            this.processNames = obj.processNames || obj.processName ? [obj.processName] : null;
-            this.processInstanceIds = obj.processInstanceIds || obj.processInstanceId ? [obj.processInstanceId] : null;
-            this.parentIds = obj.parentIds || obj.parentId ? [obj.parentId] : null;
-            this.initiators = obj.initiators || obj.initiator ? [obj.initiator] : null;
-            this.appVersions = obj.appVersions || obj.appVersion ? [`${obj.appVersion}`] : null;
-            this.statuses = obj.statuses || obj.status ? [obj.status] : null;
-            this.processVariableFilters = obj.processVariableFilters ?? [];
+            this.initArrayProperties(obj);
         }
+    }
+
+    private initArrayProperties(obj) {
+        if (obj.processDefinitionNames) {
+            this.processDefinitionNames = obj.processDefinitionNames;
+        } else {
+            this.processDefinitionNames = obj.processDefinitionName ? [obj.processDefinitionName] : null;
+        }
+
+        if (obj.processNames) {
+            this.processNames = obj.processNames;
+        } else {
+            this.processNames = obj.processName ? [obj.processName] : null;
+        }
+
+        if (obj.processInstanceIds) {
+            this.processInstanceIds = obj.processInstanceIds;
+        } else {
+            this.processInstanceIds = obj.processInstanceId ? [obj.processInstanceId] : null;
+        }
+
+        if (obj.parentIds) {
+            this.parentIds = obj.parentIds;
+        } else {
+            this.parentIds = obj.parentId ? [obj.parentId] : null;
+        }
+
+        if (obj.initiators) {
+            this.initiators = obj.initiators;
+        } else {
+            this.initiators = obj.initiator ? [obj.initiator] : null;
+        }
+
+        if (obj.appVersions) {
+            this.appVersions = obj.appVersions;
+        } else {
+            this.appVersions = obj.appVersion ? [`${obj.appVersion}`] : null;
+        }
+
+        if (obj.statuses) {
+            this.statuses = obj.statuses;
+        } else {
+            this.statuses = obj.status ? [obj.status] : null;
+        }
+
+        this.processVariableFilters = obj.processVariableFilters ?? [];
     }
 
     set completedFrom(completedFrom: string) {

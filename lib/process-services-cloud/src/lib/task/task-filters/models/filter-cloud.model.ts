@@ -123,18 +123,72 @@ export class TaskFilterCloudModel {
             this.candidateGroups = obj.candidateGroups || null;
             this.showCounter = obj.showCounter || false;
 
-            this.taskNames = obj.taskNames || obj.taskName ? [obj.taskName] : null;
-            this.statuses = obj.statuses || obj.status ? [obj.status] : null;
-            this.assignees = obj.assignees || obj.assignee ? [obj.assignee] : null;
-            this.processNames = obj.processNames || obj.processName ? [obj.processName] : null;
-            this.processDefinitionNames = obj.processDefinitionNames || obj.processDefinitionName ? [obj.processDefinitionName] : null;
-            this.taskIds = obj.taskIds || obj.taskId ? [obj.taskId] : null;
-            this.parentTaskIds = obj.parentTaskIds || obj.parentTaskId ? [obj.parentTaskId] : null;
-            this.processInstanceIds = obj.processInstanceIds || obj.processInstanceId ? [obj.processInstanceId] : null;
-            this.priorities = obj.priorities || obj.priority ? [obj.priority] : null;
-            this.completedByUsers = obj.completedByUsers || obj.completedBy ? [obj.completedBy] : null;
-            this.processVariableFilters = obj.processVariableFilters ?? [];
+            this.initArrayProperties(obj);
         }
+    }
+
+    private initArrayProperties(obj) {
+        if (obj.taskNames) {
+            this.taskNames = obj.taskNames;
+        } else {
+            this.taskNames = obj.taskName ? [obj.taskName] : null;
+        }
+
+        if (obj.statuses) {
+            this.statuses = obj.statuses;
+        } else {
+            this.statuses = obj.status ? [obj.status] : null;
+        }
+
+        if (obj.assignees) {
+            this.assignees = obj.assignees;
+        } else {
+            this.assignees = obj.assignee ? [obj.assignee] : null;
+        }
+
+        if (obj.processNames) {
+            this.processNames = obj.processNames;
+        } else {
+            this.processNames = obj.processName ? [obj.processName] : null;
+        }
+
+        if (obj.processDefinitionNames) {
+            this.processDefinitionNames = obj.processDefinitionNames;
+        } else {
+            this.processDefinitionNames = obj.processDefinitionName ? [obj.processDefinitionName] : null;
+        }
+
+        if (obj.taskIds) {
+            this.taskIds = obj.taskIds;
+        } else {
+            this.taskIds = obj.taskId ? [obj.taskId] : null;
+        }
+
+        if (obj.parentTaskIds) {
+            this.parentTaskIds = obj.parentTaskIds;
+        } else {
+            this.parentTaskIds = obj.parentTaskId ? [obj.parentTaskId] : null;
+        }
+
+        if (obj.processInstanceIds) {
+            this.processInstanceIds = obj.processInstanceIds;
+        } else {
+            this.processInstanceIds = obj.processInstanceId ? [obj.processInstanceId] : null;
+        }
+
+        if (obj.priorities) {
+            this.priorities = obj.priorities;
+        } else {
+            this.priorities = obj.priority ? [obj.priority] : null;
+        }
+
+        if (obj.completedByUsers) {
+            this.completedByUsers = obj.completedByUsers;
+        } else {
+            this.completedByUsers = obj.completedBy ? [obj.completedBy] : null;
+        }
+
+        this.processVariableFilters = obj.processVariableFilters ?? [];
     }
 
     set dueDateFrom(dueDateFrom: string) {
