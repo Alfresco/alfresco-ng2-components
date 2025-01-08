@@ -16,43 +16,25 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { TaskFiltersCloudComponent } from './components/task-filters/task-filters-cloud.component';
-import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
 import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter/edit-service-task-filter-cloud.component';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { APP_LIST_CLOUD_DIRECTIVES } from '../../app/app-list-cloud.module';
-import { GroupCloudComponent } from '../../group/components/group-cloud.component';
-import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
-import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
 
+export const TASK_FILTERS_CLOUD_DIRECTIVES = [
+    TaskFilterDialogCloudComponent,
+    TaskFiltersCloudComponent,
+    ServiceTaskFiltersCloudComponent,
+    EditTaskFilterCloudComponent,
+    TaskAssignmentFilterCloudComponent,
+    EditServiceTaskFilterCloudComponent
+] as const;
+
+/** @deprecated use ...TASK_FILTERS_CLOUD_DIRECTIVES instead */
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CommonModule,
-        MaterialModule,
-        ...APP_LIST_CLOUD_DIRECTIVES,
-        CoreModule,
-        GroupCloudComponent,
-        DateRangeFilterComponent,
-        PeopleCloudComponent,
-        MatProgressSpinnerModule,
-        TaskFilterDialogCloudComponent,
-        TaskFiltersCloudComponent,
-        ServiceTaskFiltersCloudComponent,
-        EditTaskFilterCloudComponent,
-        TaskAssignmentFilterCloudComponent,
-        EditServiceTaskFilterCloudComponent
-    ],
-    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
+    imports: [...TASK_FILTERS_CLOUD_DIRECTIVES],
+    exports: [...TASK_FILTERS_CLOUD_DIRECTIVES]
 })
 export class TaskFiltersCloudModule {}

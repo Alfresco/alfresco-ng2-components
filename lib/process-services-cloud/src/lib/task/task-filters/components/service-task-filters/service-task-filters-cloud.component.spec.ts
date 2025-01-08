@@ -22,7 +22,6 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.ser
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { fakeGlobalServiceFilters } from '../../mock/task-filters-cloud.mock';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { ServiceTaskFiltersCloudComponent } from './service-task-filters-cloud.component';
@@ -36,7 +35,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, ServiceTaskFiltersCloudComponent],
+            imports: [ProcessServiceCloudTestingModule, ServiceTaskFiltersCloudComponent],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);
