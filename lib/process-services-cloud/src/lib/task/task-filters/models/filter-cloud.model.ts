@@ -122,16 +122,17 @@ export class TaskFilterCloudModel {
             this.createdTo = obj._createdTo || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.showCounter = obj.showCounter || false;
-            this.taskNames = obj.taskNames || null;
-            this.statuses = obj.statuses || null;
-            this.assignees = obj.assignees || null;
-            this.processNames = obj.processNames || null;
-            this.processDefinitionNames = obj.processDefinitionNames || null;
-            this.taskIds = obj.taskIds || null;
-            this.parentTaskIds = obj.parentTaskIds || null;
-            this.processInstanceIds = obj.processInstanceIds || null;
-            this.priorities = obj.priorities || null;
-            this.completedByUsers = obj.completedByUsers || null;
+
+            this.taskNames = obj.taskNames || obj.taskName ? [obj.taskName] : null;
+            this.statuses = obj.statuses || obj.status ? [obj.status] : null;
+            this.assignees = obj.assignees || obj.assignee ? [obj.assignee] : null;
+            this.processNames = obj.processNames || obj.processName ? [obj.processName] : null;
+            this.processDefinitionNames = obj.processDefinitionNames || obj.processDefinitionName ? [obj.processDefinitionName] : null;
+            this.taskIds = obj.taskIds || obj.taskId ? [obj.taskId] : null;
+            this.parentTaskIds = obj.parentTaskIds || obj.parentTaskId ? [obj.parentTaskId] : null;
+            this.processInstanceIds = obj.processInstanceIds || obj.processInstanceId ? [obj.processInstanceId] : null;
+            this.priorities = obj.priorities || obj.priority ? [obj.priority] : null;
+            this.completedByUsers = obj.completedByUsers || obj.completedBy ? [obj.completedBy] : null;
             this.processVariableFilters = obj.processVariableFilters ?? [];
         }
     }
