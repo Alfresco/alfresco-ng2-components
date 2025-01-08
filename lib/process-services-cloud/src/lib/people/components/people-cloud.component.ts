@@ -22,7 +22,6 @@ import {
     DestroyRef,
     ElementRef,
     EventEmitter,
-    Inject,
     inject,
     Input,
     OnChanges,
@@ -38,8 +37,6 @@ import { FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 import { MatFormFieldAppearance, MatFormFieldModule, SubscriptSizing } from '@angular/material/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
@@ -69,7 +66,7 @@ import { IdentityUserService } from '../services/identity-user.service';
         MatChipsModule,
         MatInputModule
     ],
-    providers: [FullNamePipe, { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }],
+    providers: [FullNamePipe],
     templateUrl: './people-cloud.component.html',
     styleUrls: ['./people-cloud.component.scss'],
     animations: [
@@ -220,10 +217,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        @Inject(IDENTITY_USER_SERVICE_TOKEN)
-        private identityUserService: IdentityUserServiceInterface
-    ) {}
+    constructor(private identityUserService: IdentityUserService) {}
 
     ngOnInit(): void {
         this.initSearch();

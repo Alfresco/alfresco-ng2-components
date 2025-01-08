@@ -20,7 +20,6 @@ import {
     DestroyRef,
     ElementRef,
     EventEmitter,
-    Inject,
     inject,
     Input,
     OnChanges,
@@ -36,8 +35,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
-import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
-import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -67,7 +64,6 @@ import { IdentityGroupService } from '../services/identity-group.service';
         MatInputModule,
         MatChipsModule
     ],
-    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
     templateUrl: './group-cloud.component.html',
     styleUrls: ['./group-cloud.component.scss'],
     animations: [
@@ -166,10 +162,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        @Inject(IDENTITY_GROUP_SERVICE_TOKEN)
-        private identityGroupService: IdentityGroupServiceInterface
-    ) {}
+    constructor(private identityGroupService: IdentityGroupService) {}
 
     ngOnInit(): void {
         this.initSearch();

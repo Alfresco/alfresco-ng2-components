@@ -22,21 +22,20 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
 
 describe('PeopleCloudComponent', () => {
     let loader: HarnessLoader;
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
-    let identityUserService: IdentityUserServiceInterface;
+    let identityUserService: IdentityUserService;
     let searchSpy: jasmine.Spy;
 
     /**
@@ -88,7 +87,7 @@ describe('PeopleCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        identityUserService = fixture.debugElement.injector.get(IDENTITY_USER_SERVICE_TOKEN);
+        identityUserService = fixture.debugElement.injector.get(IdentityUserService);
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
