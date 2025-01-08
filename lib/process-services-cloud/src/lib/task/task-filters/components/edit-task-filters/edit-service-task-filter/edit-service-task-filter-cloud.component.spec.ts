@@ -54,7 +54,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, MatIconTestingModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, MatIconTestingModule, EditServiceTaskFilterCloudComponent],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditServiceTaskFilterCloudComponent);

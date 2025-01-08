@@ -84,7 +84,7 @@
                             >{{taskFilterProperty.label | translate}}</mat-checkbox>
                         </div>
 
-                        <adf-cloud-date-range-filter #dateRange
+                        <adf-cloud-date-range-filter
                             *ngIf="taskFilterProperty.type === 'date-range'"
                             [processFilterProperty]="taskFilterProperty"
                             [options]="taskFilterProperty.dateFilterOptions"

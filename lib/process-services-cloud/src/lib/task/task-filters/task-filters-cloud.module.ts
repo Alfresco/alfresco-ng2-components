@@ -50,9 +50,9 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         TaskFiltersCloudComponent,
         ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
-        TaskAssignmentFilterCloudComponent
+        TaskAssignmentFilterCloudComponent,
+        EditServiceTaskFilterCloudComponent
     ],
-    declarations: [EditServiceTaskFilterCloudComponent],
     exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
 })
 export class TaskFiltersCloudModule {}
