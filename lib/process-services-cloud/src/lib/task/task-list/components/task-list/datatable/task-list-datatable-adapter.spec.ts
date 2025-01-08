@@ -16,11 +16,11 @@
  */
 
 import { DataColumn, DataRow, getDataColumnMock } from '@alfresco/adf-core';
-import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../../../models/data-column-custom-data';
 import { TasksListDatatableAdapter } from './task-list-datatable-adapter';
-import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
-import { getTaskCloudModelMock } from '../../../mock/task-cloud-model.mock';
-import { getProcessInstanceVariableMock } from '../../../mock/process-instance-variable.mock';
+import { TaskInstanceCloudListViewModel } from '../../../models/task-cloud-view.model';
+import { getTaskCloudModelMock } from '../../../../../mock/task-cloud-model.mock';
+import { getProcessInstanceVariableMock } from '../../../../../mock/process-instance-variable.mock';
 
 describe('TasksListDatatableAdapter', () => {
     it('should get proepr type for column', () => {

@@ -43,7 +43,6 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
@@ -53,13 +52,42 @@ import { PreferenceCloudServiceInterface } from '../../../services/preference-cl
 import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+const taskPresetsCloudDefaultModel = {
+    default: [
+        {
+            id: 'name',
+            key: 'name',
+            type: 'text',
+            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
+            sortable: true
+        },
+        {
+            id: 'created',
+            key: 'created',
+            type: 'text',
+            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED',
+            cssClass: 'hidden',
+            sortable: true
+        },
+        {
+            id: 'assignee',
+            key: 'assignee',
+            type: 'text',
+            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
+            cssClass: 'hidden',
+            sortable: true
+        }
+    ]
+};
+
+/* eslint-disable @typescript-eslint/brace-style */
+
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
-// eslint-disable-next-line @typescript-eslint/brace-style
-    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
-
+    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit
+{
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 

@@ -16,8 +16,8 @@
  */
 
 import { DataColumn, DataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
-import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
+import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../../../models/data-column-custom-data';
+import { TaskInstanceCloudListViewModel } from '../../../models/task-cloud-view.model';
 
 export class TasksListDatatableAdapter extends ObjectDataTableAdapter {
     constructor(data: TaskInstanceCloudListViewModel[], schema: DataColumn<ProcessListDataColumnCustomData>[]) {

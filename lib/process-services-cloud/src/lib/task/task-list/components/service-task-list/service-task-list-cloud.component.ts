@@ -16,22 +16,46 @@
  */
 
 import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
-import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
-import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
-import { TaskCloudService } from '../../services/task-cloud.service';
+import {
+    AppConfigService,
+    ColumnsSelectorComponent,
+    DataTableComponent,
+    EmptyContentComponent,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    NoContentTemplateDirective,
+    UserPreferencesService
+} from '@alfresco/adf-core';
+import { ServiceTaskQueryCloudRequestModel } from '../../models/service-task-cloud.model';
+import { BaseTaskListCloudComponent } from '../base-task-list-cloud.component';
+import { ServiceTaskListCloudService } from '../../services/service-task-list-cloud.service';
+import { TaskCloudService } from '../../../services/task-cloud.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
+import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/public-api';
 import { map } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-service-task-list',
-    templateUrl: './base-task-list-cloud.component.html',
-    styleUrls: ['./base-task-list-cloud.component.scss'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        ColumnsSelectorComponent,
+        MainMenuDataTableTemplateDirective,
+        TranslateModule,
+        EmptyContentComponent,
+        NoContentTemplateDirective,
+        MatProgressSpinnerModule,
+        LoadingContentTemplateDirective,
+        DataTableComponent
+    ],
+    templateUrl: './service-task-list-cloud.component.html',
+    styleUrls: ['./service-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {

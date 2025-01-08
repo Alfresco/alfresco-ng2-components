@@ -16,31 +16,55 @@
  */
 
 import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
-import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
-import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import {
+    AppConfigService,
+    ColumnsSelectorComponent,
+    DataTableComponent,
+    EmptyContentComponent,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    NoContentTemplateDirective,
+    UserPreferencesService
+} from '@alfresco/adf-core';
+import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../../models/filter-cloud-model';
+import { BaseTaskListCloudComponent } from '../base-task-list-cloud.component';
+import { TaskCloudService } from '../../../services/task-cloud.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
+import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
+import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
-import { VariableMapperService } from '../../../services/variable-mapper.sevice';
-import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
-import { TaskCloudModel } from '../../../models/task-cloud.model';
+import { VariableMapperService } from '../../../../services/variable-mapper.sevice';
+import { ProcessListDataColumnCustomData } from '../../../../models/data-column-custom-data';
+import { TaskCloudModel } from '../../../../models/task-cloud.model';
 import { PaginatedEntries } from '@alfresco/js-api';
-import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
-import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
+import { TaskInstanceCloudListViewModel } from '../../models/task-cloud-view.model';
+import { TasksListDatatableAdapter } from './datatable/task-list-datatable-adapter';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TaskListRequestSortingModel } from '../../../models/task-list-sorting.model';
-import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
+import { TaskListRequestSortingModel } from '../../../../models/task-list-sorting.model';
+import { ProcessVariableFilterModel } from '../../../../models/process-variable-filter.model';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-task-list',
-    templateUrl: './base-task-list-cloud.component.html',
-    styleUrls: ['./base-task-list-cloud.component.scss'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        ColumnsSelectorComponent,
+        MainMenuDataTableTemplateDirective,
+        TranslateModule,
+        EmptyContentComponent,
+        NoContentTemplateDirective,
+        MatProgressSpinnerModule,
+        LoadingContentTemplateDirective,
+        DataTableComponent
+    ],
+    templateUrl: './task-list-cloud.component.html',
+    styleUrls: ['./task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {
