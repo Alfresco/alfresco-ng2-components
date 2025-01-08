@@ -26,7 +26,7 @@ import { EditProcessFilterCloudComponent } from './components/edit-process-filte
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
 import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
 import { ProcessCommonModule } from '../../common/process-common.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
+import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 
 @NgModule({
     imports: [
@@ -38,7 +38,7 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         ...APP_LIST_CLOUD_DIRECTIVES,
         CoreModule,
         ProcessCommonModule,
-        PeopleCloudModule
+        PeopleCloudComponent
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]

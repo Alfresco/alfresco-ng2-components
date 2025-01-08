@@ -114,7 +114,8 @@ describe('EditProcessFilterCloudComponent', () => {
                 MatInputModule,
                 ReactiveFormsModule,
                 MatChipsModule,
-                MatProgressBarModule
+                MatProgressBarModule,
+                PeopleCloudComponent
             ],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
@@ -124,7 +125,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
                 { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserServiceMock }
             ],
-            declarations: [PeopleCloudComponent, DateRangeFilterComponent]
+            declarations: [DateRangeFilterComponent]
         });
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;

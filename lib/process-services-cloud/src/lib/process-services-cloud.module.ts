@@ -30,11 +30,11 @@ import {
     PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
     TASK_LIST_PREFERENCES_SERVICE_TOKEN
 } from './services/public-api';
-import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorComponent } from './rich-text-editor';
 import { GroupCloudComponent } from './group/components/group-cloud.component';
+import { PeopleCloudComponent } from './people/components/people-cloud.component';
 
 @NgModule({
     imports: [
@@ -43,7 +43,7 @@ import { GroupCloudComponent } from './group/components/group-cloud.component';
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudComponent,
-        PeopleCloudModule,
+        PeopleCloudComponent,
         ...FORM_CLOUD_DIRECTIVES,
         TaskFormModule,
         ApolloModule,
@@ -57,7 +57,7 @@ import { GroupCloudComponent } from './group/components/group-cloud.component';
         GroupCloudComponent,
         ...FORM_CLOUD_DIRECTIVES,
         TaskFormModule,
-        PeopleCloudModule,
+        PeopleCloudComponent,
         RichTextEditorComponent
     ]
 })

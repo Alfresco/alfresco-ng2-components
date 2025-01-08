@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import {
     AfterViewInit,
     Component,
@@ -34,17 +34,42 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { FullNamePipe } from '@alfresco/adf-core';
+import { FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
-import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-field';
+import { MatFormFieldAppearance, MatFormFieldModule, SubscriptSizing } from '@angular/material/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
+import { IdentityUserService } from '../services/identity-user.service';
 
 @Component({
     selector: 'adf-cloud-people',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        InitialUsernamePipe,
+        FullNamePipe,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+        MatInputModule
+    ],
+    providers: [FullNamePipe, { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }],
     templateUrl: './people-cloud.component.html',
     styleUrls: ['./people-cloud.component.scss'],
     animations: [
@@ -53,7 +78,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
             transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
         ])
     ],
-    providers: [FullNamePipe],
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {

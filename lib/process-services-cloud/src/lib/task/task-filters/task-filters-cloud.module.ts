@@ -23,7 +23,6 @@ import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { ProcessCommonModule } from '../../common/process-common.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
 import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter/edit-service-task-filter-cloud.component';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
@@ -32,6 +31,7 @@ import { TaskAssignmentFilterCloudComponent } from './components/task-assignment
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { APP_LIST_CLOUD_DIRECTIVES } from '../../app/app-list-cloud.module';
 import { GroupCloudComponent } from '../../group/components/group-cloud.component';
+import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 
 @NgModule({
     imports: [
@@ -44,7 +44,7 @@ import { GroupCloudComponent } from '../../group/components/group-cloud.componen
         CoreModule,
         GroupCloudComponent,
         ProcessCommonModule,
-        PeopleCloudModule,
+        PeopleCloudComponent,
         MatProgressSpinnerModule,
         TaskFilterDialogCloudComponent,
         TaskFiltersCloudComponent
