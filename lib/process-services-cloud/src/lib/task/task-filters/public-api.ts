@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-export * from './components/task-filters-cloud.component';
-export * from './components/service-task-filters-cloud.component';
-export * from './components/edit-task-filters/edit-task-filter-cloud.component';
-export * from './components/edit-task-filters/edit-service-task-filter-cloud.component';
+export * from './components/task-filters/task-filters-cloud.component';
+export * from './components/service-task-filters/service-task-filters-cloud.component';
+export * from './components/edit-task-filters/edit-task-filter/edit-task-filter-cloud.component';
+export * from './components/edit-task-filters/edit-service-task-filter/edit-service-task-filter-cloud.component';
 
 export * from './models/filter-cloud.model';
 

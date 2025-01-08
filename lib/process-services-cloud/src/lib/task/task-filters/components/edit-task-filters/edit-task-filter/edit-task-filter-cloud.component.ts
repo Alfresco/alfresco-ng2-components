@@ -18,22 +18,17 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import {
-    TaskFilterAction,
-    TaskFilterCloudModel,
-    TaskFilterProperties,
-    TaskStatusFilter
-} from '../../models/filter-cloud.model';
-import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
-import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
-import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
+import { TaskFilterAction, TaskFilterCloudModel, TaskFilterProperties, TaskStatusFilter } from '../../../models/filter-cloud.model';
+import { TaskFilterCloudService } from '../../../services/task-filter-cloud.service';
+import { DateCloudFilterType } from '../../../../../models/date-cloud-filter.model';
+import { BaseEditTaskFilterCloudComponent, DropdownOption } from '../base-edit-task-filter-cloud.component';
 import { set } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
-    templateUrl: './base-edit-task-filter-cloud.component.html',
-    styleUrls: ['./base-edit-task-filter-cloud.component.scss'],
+    templateUrl: './edit-task-filter-cloud.component.html',
+    styleUrls: ['./edit-task-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
@@ -51,21 +46,14 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     }
 
     protected getTaskFilterById(appName: string, id: string) {
-        return this.taskFilterCloudService
-            .getTaskFilterById(appName, id)
-            .pipe(
-                map(response => new TaskFilterCloudModel(response))
-            );
+        return this.taskFilterCloudService.getTaskFilterById(appName, id).pipe(map((response) => new TaskFilterCloudModel(response)));
     }
 
     createAndFilterProperties() {
         const result = super.createAndFilterProperties();
 
         if (this.hasLastModifiedProperty()) {
-            return [
-                ...result,
-                ...this.createLastModifiedProperty()
-            ];
+            return [...result, ...this.createLastModifiedProperty()];
         }
 
         return result;
@@ -81,14 +69,11 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
         if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
-            const lastModifiedToFilterValue = set(
-                new Date(formValues.lastModifiedTo),
-                {
-                    hours: 23,
-                    minutes: 59,
-                    seconds: 59
-                }
-            );
+            const lastModifiedToFilterValue = set(new Date(formValues.lastModifiedTo), {
+                hours: 23,
+                minutes: 59,
+                seconds: 59
+            });
             formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString();
         }
     }
@@ -102,9 +87,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     }
 
     protected addFilter(filterToAdd: TaskFilterCloudModel): Observable<any> {
-        return this.taskFilterCloudService
-            .addFilter(filterToAdd)
-            .pipe(takeUntilDestroyed(this.destroyRef));
+        return this.taskFilterCloudService.addFilter(filterToAdd).pipe(takeUntilDestroyed(this.destroyRef));
     }
 
     isDisabledForDefaultFilters(action: TaskFilterAction): boolean {
@@ -250,7 +233,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
                 type: 'date-range',
                 key: 'dueDateRange',
-                attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo'},
+                attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo' },
                 value: {
                     dueDateType: this.taskFilter.dueDateType || null,
                     _dueDateFrom: this.taskFilter.dueDateFrom || null,
@@ -268,7 +251,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
                 key: 'completedDateRange',
-                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
+                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo' },
                 value: {
                     completedDateType: this.taskFilter.completedDateType || null,
                     _completedFrom: this.taskFilter.completedFrom || null,
@@ -279,7 +262,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
                 type: 'date-range',
                 key: 'createdDateRange',
-                attributes: { dateType: 'createdDateType', from: '_createdFrom', to: '_createdTo'},
+                attributes: { dateType: 'createdDateType', from: '_createdFrom', to: '_createdTo' },
                 value: {
                     createdDateType: this.taskFilter.createdDateType || null,
                     _createdFrom: this.taskFilter.createdFrom || null,
@@ -297,7 +280,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
                 type: 'assignment',
                 key: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'},
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' },
                 value: {
                     assignedUsers: this.taskFilter.assignedUsers || [],
                     candidateGroups: this.taskFilter.candidateGroups || []

@@ -15,27 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    inject,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
-import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
-import { ServiceTaskFilterCloudService } from '../services/service-task-filter-cloud.service';
+import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
+import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
+import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
-    templateUrl: './base-task-filters-cloud.component.html',
-    styleUrls: ['./base-task-filters-cloud.component.scss'],
+    templateUrl: './service-task-filters-cloud.component.html',
+    styleUrls: ['./service-task-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {

@@ -17,15 +17,15 @@
 
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServiceTaskFilterCloudModel, TaskFilterAction, TaskFilterProperties } from '../../models/filter-cloud.model';
-import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
-import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
+import { ServiceTaskFilterCloudModel, TaskFilterAction, TaskFilterProperties } from '../../../models/filter-cloud.model';
+import { ServiceTaskFilterCloudService } from '../../../services/service-task-filter-cloud.service';
+import { BaseEditTaskFilterCloudComponent, DropdownOption } from '../base-edit-task-filter-cloud.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
-    templateUrl: './base-edit-task-filter-cloud.component.html',
-    styleUrls: ['./base-edit-task-filter-cloud.component.scss'],
+    templateUrl: './edit-service-task-filter-cloud.component.html',
+    styleUrls: ['./edit-service-task-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<ServiceTaskFilterCloudModel> {
@@ -62,9 +62,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
     }
 
     protected addFilter(filterToAdd: ServiceTaskFilterCloudModel): Observable<any> {
-        return this.serviceTaskFilterCloudService
-            .addFilter(filterToAdd)
-            .pipe(takeUntilDestroyed(this.destroyRef));
+        return this.serviceTaskFilterCloudService.addFilter(filterToAdd).pipe(takeUntilDestroyed(this.destroyRef));
     }
 
     isDisabledForDefaultFilters(action: TaskFilterAction): boolean {

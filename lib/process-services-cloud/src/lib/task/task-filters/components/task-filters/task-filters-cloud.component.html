@@ -1,0 +1,35 @@
+<mat-action-list class="adf-task-filters" *ngIf="filters$ | async as filterList; else loading">
+        <button
+            *ngFor="let filter of filterList"
+            mat-list-item
+            (click)="onFilterClick(filter)"
+            [attr.aria-label]="filter.name | translate"
+            [id]="filter.id"
+            [attr.data-automation-id]="filter.key + '_filter'"
+            [class.adf-active]="currentFilter === filter">
+            <div class="adf-task-filters__entry">
+                <div class="adf-task-filters__entry-label">
+                    <adf-icon data-automation-id="adf-filter-icon"
+                        *ngIf="showIcons"
+                        [value]="filter.icon"
+                    />
+                    <span data-automation-id="adf-filter-label">
+                        {{ filter.name | translate }}
+                    </span>
+                </div>
+                <span *ngIf="counters[filter.key]"
+                    [attr.data-automation-id]="filter.key + '_filter-counter'"
+                    class="adf-task-filters__entry-counter"
+                    [class.adf-active]="wasFilterUpdated(filter.key)">
+                    {{ counters[filter.key] }}
+                </span>
+            </div>
+        </button>
+    </mat-action-list>
+<ng-template #loading>
+    <ng-container>
+        <div class="adf-app-list-spinner">
+            <mat-spinner />
+        </div>
+    </ng-container>
+</ng-template>

@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-08
 ---
 
-# [Task Filters Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts "Defined in task-filters-cloud.component.ts")
+# [Task Filters Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters/task-filters-cloud.component.ts "Defined in task-filters-cloud.component.ts")
 
 Shows all available filters.
 

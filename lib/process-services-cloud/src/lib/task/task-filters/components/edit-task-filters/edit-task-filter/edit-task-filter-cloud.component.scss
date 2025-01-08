@@ -1,0 +1,97 @@
+@import 'styles/flex';
+
+.adf-edit-task-filter-checkbox {
+    font-size: var(--theme-subheading-2-font-size);
+    padding-top: 10px;
+    text-align: center;
+    flex: 1 23%;
+}
+
+.adf-edit-task-filter-date-error-container {
+    position: absolute;
+    height: 20px;
+    margin-top: 12px;
+    width: 100%;
+
+    & > div {
+        display: flex;
+        flex-flow: row;
+        justify-content: flex-start;
+    }
+
+    .adf-error-text {
+        padding-right: 8px;
+        height: 16px;
+        font-size: 10px;
+        line-height: 1.33;
+        color: var(--theme-warn-color);
+        width: auto;
+    }
+
+    .adf-error-icon {
+        font-size: 16px;
+        color: var(--theme-warn-color);
+    }
+}
+
+.adf-edit-task-filter-dateRange mat-grid-list {
+    width: 450px;
+}
+
+.adf {
+    &-cloud-edit-task-filter-loading-margin {
+        margin-left: calc((100% - 100px) / 2);
+        margin-right: calc((100% - 100px) / 2);
+    }
+
+    &-edit-task-filter-form {
+        flex-flow: row wrap;
+        display: flex;
+        place-content: center flex-start;
+        align-items: center;
+
+        :not(:last-child) {
+            margin-right: 10px;
+        }
+
+        mat-form-field,
+        adf-cloud-people,
+        adf-cloud-task-assignment-filter {
+            flex: 1 1 23%;
+        }
+
+        @include layout-bp(lt-sm) {
+            flex-flow: column;
+
+            :not(:last-child) {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
+    }
+
+    &-edit-task-filter {
+        &-header {
+            height: var(--adf-edit-task-and-service-filter-header-height);
+
+            &__title {
+                color: var(--adf-edit-task-and-service-filter-header-title-color);
+            }
+
+            &__description {
+                color: var(--adf-edit-task-and-service-filter-header-description-color);
+                place-content: center space-between;
+            }
+        }
+
+        &-content {
+            &__text-label {
+                color: var(--adf-edit-task-and-service-filter-content-text-label-color);
+            }
+
+            &__select-label {
+                color: var(--adf-edit-task-and-service-filter-content-select-label-color);
+            }
+        }
+    }
+}

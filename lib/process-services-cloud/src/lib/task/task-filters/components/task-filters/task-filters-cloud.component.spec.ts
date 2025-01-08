@@ -20,18 +20,18 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, throwError } from 'rxjs';
-import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../mock/task-filters-cloud.mock';
-import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
+import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
+import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
+import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
-import { TaskListCloudService } from '../../task-list/services/task-list-cloud.service';
+import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatActionListItemHarness } from '@angular/material/list/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
+import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;

@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2023-04-03
 ---
 
-# [Edit Task Filter Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filters/edit-task-filter-cloud.component.ts "Defined in edit-task-filter-cloud.component.ts")
+# Edit Task Filter Cloud component
 
 Edits task filter details.
 
@@ -41,20 +41,20 @@ Edits task filter details.
 
 ### Properties
 
-| Name               | Type                                                                                                                 | Default value | Description                                |
-|--------------------|----------------------------------------------------------------------------------------------------------------------|---------------|--------------------------------------------|
-| actions            | `string[]`                                                                                                           |               | List of task filter actions.               |
-| appName            | `string`                                                                                                             | ""            | (required) Name of the app.                |
-| environmentList    | [`Environment`](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts)`[]`           | \[]           | List of environments.                      |
-| filterProperties   | `string[]`                                                                                                           | \[]           | List of task filter properties to display. |
-| id                 | `string`                                                                                                             |               | (required) ID of the task filter.          |
-| processInstanceId  | `string`                                                                                                             |               | processInstanceId of the task filter.      |
-| role               | `string`                                                                                                             | ""            | user role.                                 |
-| showFilterActions  | `boolean`                                                                                                            | true          | Toggles the filter actions.                |
-| showTaskFilterName | `boolean`                                                                                                            | true          | Toggles display of task filter name        |
-| showTitle          | `boolean`                                                                                                            | true          | Toggles the title.                         |
-| sortProperties     | `string[]`                                                                                                           | \[]           | List of sort properties to display.        |
-| taskFilter         | [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts) |               | Task Filter to use.                        |
+| Name               | Type                   | Default value | Description                                |
+|--------------------|------------------------|---------------|--------------------------------------------|
+| actions            | `string[]`             |               | List of task filter actions.               |
+| appName            | `string`               | ""            | (required) Name of the app.                |
+| environmentList    | `Environment[]`        | \[]           | List of environments.                      |
+| filterProperties   | `string[]`             | \[]           | List of task filter properties to display. |
+| id                 | `string`               |               | (required) ID of the task filter.          |
+| processInstanceId  | `string`               |               | processInstanceId of the task filter.      |
+| role               | `string`               | ""            | user role.                                 |
+| showFilterActions  | `boolean`              | true          | Toggles the filter actions.                |
+| showTaskFilterName | `boolean`              | true          | Toggles display of task filter name        |
+| showTitle          | `boolean`              | true          | Toggles the title.                         |
+| sortProperties     | `string[]`             | \[]           | List of sort properties to display.        |
+| taskFilter         | `TaskFilterCloudModel` |               | Task Filter to use.                        |
 
 ### Events
 
@@ -86,14 +86,14 @@ given below:
 |---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **_appName_**             | Name of the app                                                                                                                                                        |
 | **_status_**              | Execution state of the task.                                                                                                                                           |
-| **_assignee_**            | [`User`](lib/core/src/lib/pipes/user-initial.pipe.ts) the task is assigned to                                                                                          |
+| **_assignee_**            | `User` the task is assigned to                                                                                                                                         |
 | **_taskName_**            | Name of the task                                                                                                                                                       |
 | **_taskId_**              | ID of the task                                                                                                                                                         |
 | **_parentTaskId_**        | ID of the task's parent task                                                                                                                                           |
 | **_priority_**            | Task priority                                                                                                                                                          |
 | **_createdDate_**         | Date the task was created                                                                                                                                              |
 | **_standalone_**          | Standalone status of the task                                                                                                                                          |
-| **_owner_**               | [`User`](lib/core/src/lib/pipes/user-initial.pipe.ts) ID of the task's owner                                                                                           |
+| **_owner_**               | `User` ID of the task's owner                                                                                                                                          |
 | **_processDefinitionId_** | Process definition ID                                                                                                                                                  |
 | **_processInstanceId_**   | Process instance ID                                                                                                                                                    |
 | **_lastModified_**        | Date the task was last modified. If lastModified defined the component will show the range **_lastModifiedFrom_**, **_lastModifiedTo_**                                |

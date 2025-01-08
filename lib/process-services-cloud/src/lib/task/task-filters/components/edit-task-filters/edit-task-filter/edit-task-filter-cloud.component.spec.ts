@@ -20,20 +20,20 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
-import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
-import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
-import { fakeApplicationInstance } from '../../../../app/mock/app-model.mock';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
+import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../../../services/local-preference-cloud.service';
+import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
+import { AppsProcessCloudService } from '../../../../../app/services/apps-process-cloud.service';
+import { fakeApplicationInstance } from '../../../../../app/mock/app-model.mock';
+import { TaskFiltersCloudModule } from '../../../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
-import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
-import { TaskCloudService } from '../../../services/task-cloud.service';
-import { fakeFilter } from '../../mock/task-filters-cloud.mock';
-import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
-import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../models/filter-cloud.model';
-import { PeopleCloudModule } from '../../../../people/people-cloud.module';
-import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
+import { TaskFilterCloudService } from '../../../services/task-filter-cloud.service';
+import { TaskCloudService } from '../../../../services/task-cloud.service';
+import { fakeFilter } from '../../../mock/task-filters-cloud.mock';
+import { DateCloudFilterType } from '../../../../../models/date-cloud-filter.model';
+import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../../models/filter-cloud.model';
+import { PeopleCloudModule } from '../../../../../people/people-cloud.module';
+import { ProcessDefinitionCloud } from '../../../../../models/process-definition-cloud.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import {
     mockAlfrescoApi,
@@ -46,11 +46,11 @@ import {
     mockTaskFilterIdChange,
     mockTaskFilterResponse,
     mockTaskFilterResponseWithProcessInstanceIdNull
-} from '../../mock/edit-task-filter-cloud.mock';
-import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
-import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
+} from '../../../mock/edit-task-filter-cloud.mock';
+import { mockFoodUsers } from '../../../../../people/mock/people-cloud.mock';
+import { mockFoodGroups } from '../../../../../group/mock/group-cloud.mock';
 import { SimpleChanges } from '@angular/core';
-import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
+import { TaskFilterDialogCloudComponent } from '../../task-filter-dialog/task-filter-dialog-cloud.component';
 import { set } from 'date-fns';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
