@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 
 describe('TaskFilterDialogCloudComponent', () => {
@@ -36,7 +35,7 @@ describe('TaskFilterDialogCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, TaskFilterDialogCloudComponent],
+            imports: [ProcessServiceCloudTestingModule, TaskFilterDialogCloudComponent],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: mockDialogData }

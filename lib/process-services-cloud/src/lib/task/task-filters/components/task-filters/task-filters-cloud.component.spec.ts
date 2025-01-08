@@ -25,7 +25,6 @@ import { LocalPreferenceCloudService } from '../../../../services/local-preferen
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -47,7 +46,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, TaskFiltersCloudComponent],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudComponent],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
