@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-07-13
 ---
 
-# [Identity Group service](../../../lib/process-services-cloud/src/lib/group/services/identity-group.service.ts "Defined in identity-group.service.ts")
+# Identity Group service
 
 Performs CRUD operations on identity groups.
 
@@ -13,11 +13,10 @@ Performs CRUD operations on identity groups.
 
 ### Methods
 
--   **search**(name: `string`, filters?: [`IdentityGroupFilterInterface`](../../../lib/process-services-cloud/src/lib/group/services/identity-group-filter.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`[]>`<br/>
-
+-   **search**(name: `string`, filters?: `IdentityGroupFilterInterface`)): `Observable<IdentityGroupModel[]>`
     -   _name:_ `string`  - 
-    -   _filters:_ [`IdentityGroupFilterInterface`](../../../lib/process-services-cloud/src/lib/group/services/identity-group-filter.interface.ts)  - (Optional) 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`[]>` -
+    -   _filters:_ `IdentityGroupFilterInterface  - (Optional) 
+    -   **Returns** `Observable<IdentityGroupModel[]>` -
 
 ## See also
 

@@ -18,10 +18,14 @@
 import { Injectable } from '@angular/core';
 import { AppConfigService, OAuth2Service } from '@alfresco/adf-core';
 import { EMPTY, Observable } from 'rxjs';
-import { IdentityGroupFilterInterface } from './identity-group-filter.interface';
 import { IdentityGroupModel } from '../models/identity-group.model';
 
 const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
+
+export interface IdentityGroupFilterInterface {
+    roles?: string[];
+    withinApplication?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService {
