@@ -96,7 +96,7 @@ describe('TaskListCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule, TaskListCloudComponent],
             providers: [
                 {
                     provide: TASK_LIST_CLOUD_TOKEN,
