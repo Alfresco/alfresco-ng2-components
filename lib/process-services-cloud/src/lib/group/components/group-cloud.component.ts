@@ -30,7 +30,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -39,9 +39,35 @@ import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
 import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { IdentityGroupService } from '../services/identity-group.service';
 
 @Component({
     selector: 'adf-cloud-group',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatChipsModule
+    ],
+    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
     templateUrl: './group-cloud.component.html',
     styleUrls: ['./group-cloud.component.scss'],
     animations: [

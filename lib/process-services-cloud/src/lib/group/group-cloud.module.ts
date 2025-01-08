@@ -16,19 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
-import { MaterialModule } from '../material.module';
 import { GroupCloudComponent } from './components/group-cloud.component';
-import { IDENTITY_GROUP_SERVICE_TOKEN } from './services/identity-group-service.token';
-import { IdentityGroupService } from './services/identity-group.service';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
+/** @deprecated use GroupCloudComponent instead */
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, MatProgressBarModule],
-    declarations: [GroupCloudComponent],
-    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
+    imports: [GroupCloudComponent],
     exports: [GroupCloudComponent]
 })
 export class GroupCloudModule {}

@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { DebugElement, SimpleChange } from '@angular/core';
@@ -72,7 +71,7 @@ describe('GroupCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, GroupCloudModule]
+            imports: [CoreTestingModule, GroupCloudComponent]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;

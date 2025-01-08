@@ -20,7 +20,6 @@ import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
-import { GroupCloudModule } from './group/group-cloud.module';
 import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
 import {
@@ -35,6 +34,7 @@ import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorComponent } from './rich-text-editor';
+import { GroupCloudComponent } from './group/components/group-cloud.component';
 
 @NgModule({
     imports: [
@@ -42,7 +42,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
         ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule,
+        GroupCloudComponent,
         PeopleCloudModule,
         ...FORM_CLOUD_DIRECTIVES,
         TaskFormModule,
@@ -54,7 +54,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
         ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule,
+        GroupCloudComponent,
         ...FORM_CLOUD_DIRECTIVES,
         TaskFormModule,
         PeopleCloudModule,
