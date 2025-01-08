@@ -58,7 +58,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, GroupCloudComponent, TaskFiltersCloudModule]
+            imports: [ProcessServiceCloudTestingModule, GroupCloudComponent, TaskFiltersCloudModule, TaskAssignmentFilterCloudComponent]
         });
     });
 

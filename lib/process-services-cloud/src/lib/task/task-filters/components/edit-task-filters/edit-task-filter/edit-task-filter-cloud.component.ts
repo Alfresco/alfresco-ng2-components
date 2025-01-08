@@ -24,9 +24,44 @@ import { DateCloudFilterType } from '../../../../../models/date-cloud-filter.mod
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from '../base-edit-task-filter-cloud.component';
 import { set } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
+import { IconComponent } from '@alfresco/adf-core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DateRangeFilterComponent } from '../../../../../common/date-range-filter/date-range-filter.component';
+import { PeopleCloudComponent } from '../../../../../people/components/people-cloud.component';
+import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter/task-assignment-filter.component';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatExpansionModule,
+        MatButtonModule,
+        IconComponent,
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatIconModule,
+        MatCheckboxModule,
+        DateRangeFilterComponent,
+        PeopleCloudComponent,
+        TaskAssignmentFilterCloudComponent
+    ],
     templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

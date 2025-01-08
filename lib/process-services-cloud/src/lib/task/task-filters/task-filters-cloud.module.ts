@@ -48,9 +48,11 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         MatProgressSpinnerModule,
         TaskFilterDialogCloudComponent,
         TaskFiltersCloudComponent,
-        ServiceTaskFiltersCloudComponent
+        ServiceTaskFiltersCloudComponent,
+        EditTaskFilterCloudComponent,
+        TaskAssignmentFilterCloudComponent
     ],
-    declarations: [EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent, TaskAssignmentFilterCloudComponent],
+    declarations: [EditServiceTaskFilterCloudComponent],
     exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
 })
 export class TaskFiltersCloudModule {}
