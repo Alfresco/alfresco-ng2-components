@@ -19,9 +19,14 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, JwtHelperService, OAuth2Service } from '@alfresco/adf-core';
 import { EMPTY, Observable } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityUserFilterInterface } from './identity-user-filter.interface';
 
 const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
+
+export interface IdentityUserFilterInterface {
+    roles?: string[];
+    withinApplication?: string;
+    groups?: string[];
+}
 
 @Injectable({
     providedIn: 'root'

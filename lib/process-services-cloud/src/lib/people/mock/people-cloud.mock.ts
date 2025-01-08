@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, EMPTY, of } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityUserFilterInterface } from '../services/identity-user-filter.interface';
 import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
 
 export const mockYorkshirePudding: IdentityUserModel = {
@@ -58,7 +57,7 @@ export class IdentityUserServiceMock extends IdentityUserService {
         return mockKielbasaSausage;
     }
 
-    search(name: string, _filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
+    search(name: string): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         }
