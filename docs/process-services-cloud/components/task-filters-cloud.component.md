@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-08
 ---
 
-# [Task Filters Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters/task-filters-cloud.component.ts "Defined in task-filters-cloud.component.ts")
+# Task Filters Cloud component
 
 Shows all available filters.
 
@@ -39,13 +39,13 @@ Shows all available filters.
 
 ### Events
 
-| Name                 | Type                                  | Description                                                             |
-|----------------------|---------------------------------------|-------------------------------------------------------------------------|
-| error                | `EventEmitter<any>`                   | Emitted when an error occurs during loading.                            |
-| filterClicked        | `EventEmitter<TaskFilterCloudModel>`  | Emitted when a filter is being clicked from the UI.                     |
-| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>`  | Emitted when filter counters are updated.                               |
-| filterSelected       | `EventEmitter`<TaskFilterCloudModel>` | Emitted when a filter is being selected based on the filterParam input. |
-| success              | `EventEmitter<any>`                   | Emitted when the list is loaded.                                        |
+| Name                 | Type                                 | Description                                                             |
+|----------------------|--------------------------------------|-------------------------------------------------------------------------|
+| error                | `EventEmitter<any>`                  | Emitted when an error occurs during loading.                            |
+| filterClicked        | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being clicked from the UI.                     |
+| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>` | Emitted when filter counters are updated.                               |
+| filterSelected       | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being selected based on the filterParam input. |
+| success              | `EventEmitter<any>`                  | Emitted when the list is loaded.                                        |
 
 ## Details
 
@@ -80,9 +80,7 @@ If you want to disable notification bubbles as task filters change you can chang
 
 ```json
 {
-    ...
     "notifications": true
-    ...
 }
 ```
 
