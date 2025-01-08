@@ -47,7 +47,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, TaskFiltersCloudComponent],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);

@@ -19,7 +19,7 @@ import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, Simp
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
-import { AppConfigService, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, IconComponent, TranslationService } from '@alfresco/adf-core';
 import { debounceTime, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
@@ -27,9 +27,15 @@ import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.mode
 import { TaskListCloudService } from '../../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-task-filters',
+    standalone: true,
+    imports: [CommonModule, MatProgressSpinnerModule, TranslateModule, IconComponent, MatListModule],
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['./task-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
