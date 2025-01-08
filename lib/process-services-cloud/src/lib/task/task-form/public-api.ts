@@ -17,5 +17,5 @@
 
 export * from './components/task-form-cloud/task-form-cloud.component';
 export * from './components/user-task-cloud/user-task-cloud.component';
-
+export * from './components/user-task-cloud-buttons/user-task-cloud-buttons.component';
 export * from './task-form.module';
