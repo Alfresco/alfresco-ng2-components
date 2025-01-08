@@ -36,7 +36,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, ServiceTaskFiltersCloudComponent],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);

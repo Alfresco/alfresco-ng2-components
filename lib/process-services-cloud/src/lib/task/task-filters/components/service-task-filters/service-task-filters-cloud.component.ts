@@ -20,11 +20,17 @@ import { Observable } from 'rxjs';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
-import { TranslationService } from '@alfresco/adf-core';
+import { IconComponent, TranslationService } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatListModule, IconComponent, MatProgressSpinnerModule],
     templateUrl: './service-task-filters-cloud.component.html',
     styleUrls: ['./service-task-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
