@@ -97,8 +97,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     getFilters(appName: string): void {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
-        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
-            (res) => {
+        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+            next: (res) => {
                 this.resetFilter();
                 this.filters = res || [];
                 this.initFilterCounters();
@@ -106,10 +106,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.updateFilterCounters();
                 this.success.emit(res);
             },
-            (err: any) => {
+            error: (err) => {
                 this.error.emit(err);
             }
-        );
+        });
     }
 
     /**
@@ -160,8 +160,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.taskFilterCloudService
                 .getTaskNotificationSubscription(this.appName)
                 .pipe(debounceTime(1000))
-                .subscribe((result: TaskCloudEngineEvent[]) => {
-                    result.map((taskEvent: TaskCloudEngineEvent) => {
+                .subscribe((result) => {
+                    result.forEach((taskEvent) => {
                         this.checkFilterCounter(taskEvent.entity);
                     });
 
@@ -172,7 +172,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     checkFilterCounter(filterNotification: TaskDetailsCloudModel) {
-        this.filters.map((filter) => {
+        this.filters.forEach((filter) => {
             if (this.isFilterPresent(filter, filterNotification)) {
                 this.addToUpdatedCounters(filter.key);
             }
@@ -234,6 +234,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     /**
+     * @deprecated unused method
      * Select as default task filter the first in the list
      */
     public selectDefaultTaskFilter() {
