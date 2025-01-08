@@ -123,7 +123,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 { provide: DateAdapter, useClass: DateFnsAdapter },
                 { provide: NotificationCloudService, useValue: { makeGQLQuery: () => of([]) } },
                 { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-                { provide: IdentityUserService, useExisting: IdentityUserServiceMock }
+                { provide: IdentityUserService, useClass: IdentityUserServiceMock }
             ],
             declarations: [DateRangeFilterComponent]
         });
