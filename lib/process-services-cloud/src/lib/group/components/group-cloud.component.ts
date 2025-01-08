@@ -470,4 +470,13 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     getValidationMinLength(): string {
         return this.searchGroupsControl.errors.minlength.requiredLength;
     }
+
+    getGroupNameInitials(group: IdentityGroupModel): string {
+        let result = '';
+        if (group) {
+            const groupName = group.name;
+            result = (groupName ? groupName[0] : '').toUpperCase();
+        }
+        return result;
+    }
 }

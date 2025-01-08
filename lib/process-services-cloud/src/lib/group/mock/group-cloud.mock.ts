@@ -21,15 +21,10 @@ import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupFilterInterface } from '../services/identity-group-filter.interface';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
 
-export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine'};
-export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken'};
+export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine' };
+export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken' };
 
-export const mockFoodGroups = [ mockVegetableAubergine, mockMeatChicken ];
-
-export const mockSearchGroupEmptyFilters: IdentityGroupFilterInterface = {
-    roles: [],
-    withinApplication: ''
-};
+export const mockFoodGroups = [mockVegetableAubergine, mockMeatChicken];
 
 @Injectable({
     providedIn: 'root'
@@ -40,8 +35,6 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
             return EMPTY;
         }
 
-        return of(mockFoodGroups.filter(group =>
-            group.name.toUpperCase().includes(name.toUpperCase())
-        ));
+        return of(mockFoodGroups.filter((group) => group.name.toUpperCase().includes(name.toUpperCase())));
     }
 }

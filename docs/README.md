@@ -502,12 +502,6 @@ Status: Experimental | [Source](<>) |
 | [Complete Task Directive](process-services-cloud/directives/complete-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Completes a task. | [Source](../lib/process-services-cloud/src/lib/task/directives/complete-task.directive.ts) |
 | [Unclaim Task Cloud Directive](process-services-cloud/directives/unclaim-task-cloud.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/unclaim-task-cloud.directive.ts) |
 
-### Pipes
-
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [Group initial pipe](process-services-cloud/pipes/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
-
 ### Services
 
 | Name | Description | Source link |
