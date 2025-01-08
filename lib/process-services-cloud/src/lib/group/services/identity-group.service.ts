@@ -18,21 +18,16 @@
 import { Injectable } from '@angular/core';
 import { AppConfigService, OAuth2Service } from '@alfresco/adf-core';
 import { EMPTY, Observable } from 'rxjs';
-import { IdentityGroupServiceInterface } from './identity-group.service.interface';
 import { IdentityGroupFilterInterface } from './identity-group-filter.interface';
 import { IdentityGroupModel } from '../models/identity-group.model';
 
 const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
 
 @Injectable({ providedIn: 'root' })
-export class IdentityGroupService implements IdentityGroupServiceInterface {
+export class IdentityGroupService {
+    queryParams: { search: string; application?: string; roles?: string[] };
 
-    queryParams: { search: string; application?: string; roles?: string [] };
-
-    constructor(
-        private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService
-    ) {}
+    constructor(private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     public search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {
@@ -52,13 +47,13 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
         return this.invokeIdentityGroupApi();
     }
 
-    private searchGroupsWithGlobalRoles(name: string, roles: string []): Observable<IdentityGroupModel[]> {
+    private searchGroupsWithGlobalRoles(name: string, roles: string[]): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles);
 
         return this.invokeIdentityGroupApi();
     }
 
-    private searchGroupsWithinApp(name: string, applicationName: string, roles?: string []): Observable<IdentityGroupModel[]> {
+    private searchGroupsWithinApp(name: string, applicationName: string, roles?: string[]): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles, applicationName);
 
         return this.invokeIdentityGroupApi();
@@ -69,13 +64,13 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
-    private buildQueryParam(name: string, roles?: string [], applicationName?: string) {
+    private buildQueryParam(name: string, roles?: string[], applicationName?: string) {
         this.queryParams = { search: name };
         this.addOptionalValueToQueryParam('application', applicationName);
         this.addOptionalCommaValueToQueryParam('role', roles);
     }
 
-    private addOptionalCommaValueToQueryParam(key: string, values: string []) {
+    private addOptionalCommaValueToQueryParam(key: string, values: string[]) {
         if (values?.length > 0) {
             const valuesNotEmpty = this.filterOutEmptyValue(values);
             if (valuesNotEmpty?.length > 0) {
@@ -90,8 +85,8 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
         }
     }
 
-    private filterOutEmptyValue(roles: string []): string [] {
-        return roles.filter( role => role.trim() ? true : false);
+    private filterOutEmptyValue(roles: string[]): string[] {
+        return roles.filter((role) => (role.trim() ? true : false));
     }
 
     private get identityHost(): string {

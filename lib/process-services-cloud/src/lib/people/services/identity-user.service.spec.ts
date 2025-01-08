@@ -20,7 +20,13 @@ import { IdentityUserService } from './identity-user.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { mockFoodUsers } from '../mock/people-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { mockHttpErrorResponse } from '../../group/mock/identity-group.service.mock';
+import { HttpErrorResponse } from '@angular/common/http';
+
+const mockHttpErrorResponse = new HttpErrorResponse({
+    error: 'Mock Error',
+    status: 404,
+    statusText: 'Not Found'
+});
 
 describe('IdentityUserService', () => {
     let service: IdentityUserService;
