@@ -21,10 +21,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudComponent } from './form-cloud.component';
+import { FormCustomOutcomesComponent } from './form-cloud-custom-outcomes.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
-    template: ` <adf-cloud-form #adfCloudForm>
+    standalone: true,
+    imports: [FormCustomOutcomesComponent, FormCloudComponent, MatButtonModule],
+    template: `<adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>
             <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">CUSTOM-BUTTON-1</button>
             <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">CUSTOM-BUTTON-2</button>
@@ -36,7 +40,6 @@ class FormCloudWithCustomOutComesComponent {
     adfCloudForm: FormCloudComponent;
 
     onCustomButtonOneClick() {}
-
     onCustomButtonTwoClick() {}
 }
 
@@ -47,8 +50,7 @@ describe('FormCloudWithCustomOutComesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [FormCloudWithCustomOutComesComponent]
+            imports: [ProcessServiceCloudTestingModule, FormCloudWithCustomOutComesComponent]
         });
         fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;
@@ -58,8 +60,7 @@ describe('FormCloudWithCustomOutComesComponent', () => {
             outcomes: [{ id: 'outcome-1', name: 'outcome 1' }]
         };
 
-        const form = new FormModel(formRepresentation);
-        customComponent.adfCloudForm.form = form;
+        customComponent.adfCloudForm.form = new FormModel(formRepresentation);
         fixture.detectChanges();
     });
 

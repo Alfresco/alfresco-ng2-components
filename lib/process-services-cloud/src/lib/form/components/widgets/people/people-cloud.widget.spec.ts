@@ -18,7 +18,6 @@
 import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
@@ -35,9 +34,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [PeopleCloudWidgetComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessServiceCloudTestingModule, PeopleCloudWidgetComponent]
         });
         identityUserService = TestBed.inject(IdentityUserService);
         fixture = TestBed.createComponent(PeopleCloudWidgetComponent);

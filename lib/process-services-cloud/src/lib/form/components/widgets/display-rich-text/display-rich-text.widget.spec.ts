@@ -81,17 +81,12 @@ describe('DisplayRichTextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, DisplayRichTextWidgetComponent]
         });
         fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;
         debugEl = fixture.debugElement;
         widget.field = fakeFormField;
-    });
-
-    it('should create', () => {
-        fixture.detectChanges();
-        expect(widget).toBeTruthy();
     });
 
     it('should parse editorjs data to html', async () => {

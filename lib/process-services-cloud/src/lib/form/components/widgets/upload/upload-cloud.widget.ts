@@ -17,17 +17,25 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { WidgetComponent, FormService, ThumbnailService, NotificationService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, ThumbnailService, NotificationService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { VersionManagerUploadData } from '@alfresco/adf-content-services';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatLineModule } from '@angular/material/core';
 
 @Component({
     selector: 'upload-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, MatIconModule, MatButtonModule, MatListModule, MatLineModule],
     templateUrl: './upload-cloud.widget.html',
     styleUrls: ['./upload-cloud.widget.scss'],
     host: {
@@ -44,6 +52,10 @@ import { VersionManagerUploadData } from '@alfresco/adf-content-services';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadCloudWidgetComponent extends WidgetComponent implements OnInit {
+    protected thumbnailService = inject(ThumbnailService);
+    protected processCloudContentService = inject(ProcessCloudContentService);
+    protected notificationService = inject(NotificationService);
+
     hasFile: boolean;
     displayText: string;
     multipleOption: string = '';
@@ -55,12 +67,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(
-        formService: FormService,
-        private thumbnailService: ThumbnailService,
-        protected processCloudContentService: ProcessCloudContentService,
-        protected notificationService: NotificationService
-    ) {
+    constructor(formService: FormService) {
         super(formService);
     }
 
@@ -101,16 +108,16 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         if (files && files.length > 0) {
             from(files)
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
-                .subscribe(
-                    (res) => {
+                .subscribe({
+                    next: (res) => {
                         filesSaved.push(res);
                     },
-                    (error) => this.widgetError.emit(`Error uploading file. See console output for more details. ${error}`),
-                    () => {
+                    error: (error) => this.widgetError.emit(`Error uploading file. See console output for more details. ${error}`),
+                    complete: () => {
                         this.fixIncompatibilityFromPreviousAndNewForm(filesSaved);
                         this.hasFile = true;
                     }
-                );
+                });
         }
     }
 

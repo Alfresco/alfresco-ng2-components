@@ -21,7 +21,7 @@ import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
-import { FormCloudModule } from './form/form-cloud.module';
+import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
 import {
     LocalPreferenceCloudService,
@@ -44,7 +44,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
         TaskCloudModule,
         GroupCloudModule,
         PeopleCloudModule,
-        FormCloudModule,
+        ...FORM_CLOUD_DIRECTIVES,
         TaskFormModule,
         ApolloModule,
         RichTextEditorComponent
@@ -55,7 +55,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
-        FormCloudModule,
+        ...FORM_CLOUD_DIRECTIVES,
         TaskFormModule,
         PeopleCloudModule,
         RichTextEditorComponent

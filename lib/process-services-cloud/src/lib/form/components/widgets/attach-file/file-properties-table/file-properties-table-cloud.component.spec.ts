@@ -17,21 +17,18 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 
 describe('FilePropertiesTableCloudComponent', () => {
     let widget: FilePropertiesTableCloudComponent;
     let fixture: ComponentFixture<FilePropertiesTableCloudComponent>;
 
-    beforeEach(async () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatTableModule, MatIconModule],
-            declarations: [FilePropertiesTableCloudComponent]
-        }).compileComponents();
+            imports: [ProcessServiceCloudTestingModule, FilePropertiesTableCloudComponent]
+        });
     });
 
     beforeEach(() => {

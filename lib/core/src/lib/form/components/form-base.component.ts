@@ -24,6 +24,8 @@ import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOu
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class FormBaseComponent {
+    protected _form: FormModel;
+
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
@@ -96,7 +98,27 @@ export abstract class FormBaseComponent {
     @Output()
     error = new EventEmitter<any>();
 
-    form: FormModel;
+    /**
+     * Custom style that is backed by the form.theme.
+     */
+    formStyle: string = '';
+
+    get form(): FormModel {
+        return this._form;
+    }
+
+    /** Underlying form model instance. */
+    @Input()
+    set form(form: FormModel) {
+        this._form = form;
+
+        if (form) {
+            const theme = form.theme?.form;
+            this.formStyle = theme ? this.flattenStyles(theme) : '';
+        } else {
+            this.formStyle = '';
+        }
+    }
 
     getParsedFormDefinition(): FormBaseComponent {
         return this;
@@ -226,4 +248,10 @@ export abstract class FormBaseComponent {
     protected abstract storeFormAsMetadata(): void;
 
     protected abstract onExecuteOutcome(outcome: FormOutcomeModel): boolean;
+
+    private flattenStyles(styles: { [key: string]: string }): string {
+        return Object.entries(styles)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(';');
+    }
 }

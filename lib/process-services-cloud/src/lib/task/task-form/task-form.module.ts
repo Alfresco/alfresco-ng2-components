@@ -16,19 +16,23 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../material.module';
-import { FormCloudModule } from '../../form/form-cloud.module';
+import { FORM_CLOUD_DIRECTIVES } from '../../form/form-cloud.module';
 import { TASK_DIRECTIVES } from '../directives/task-directive.module';
 import { TaskFormCloudComponent } from './components/task-form-cloud/task-form-cloud.component';
-import { CoreModule } from '@alfresco/adf-core';
 import { TaskScreenCloudComponent } from '../../screen/components/screen-cloud/screen-cloud.component';
 import { UserTaskCloudComponent } from './components/user-task-cloud/user-task-cloud.component';
 import { UserTaskCloudButtonsComponent } from './components/user-task-cloud-buttons/user-task-cloud-buttons.component';
 
+/** @deprecated use standalone component imports instead */
 @NgModule({
-    imports: [CoreModule, CommonModule, MaterialModule, FormCloudModule, ...TASK_DIRECTIVES, TaskScreenCloudComponent],
-    declarations: [TaskFormCloudComponent, UserTaskCloudComponent, UserTaskCloudButtonsComponent],
+    imports: [
+        ...FORM_CLOUD_DIRECTIVES,
+        ...TASK_DIRECTIVES,
+        TaskScreenCloudComponent,
+        UserTaskCloudButtonsComponent,
+        TaskFormCloudComponent,
+        UserTaskCloudComponent
+    ],
     exports: [TaskFormCloudComponent, UserTaskCloudComponent]
 })
 export class TaskFormModule {}

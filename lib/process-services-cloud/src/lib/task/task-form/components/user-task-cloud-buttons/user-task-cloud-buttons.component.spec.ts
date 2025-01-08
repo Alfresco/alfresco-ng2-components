@@ -20,7 +20,6 @@ import { UserTaskCloudButtonsComponent } from './user-task-cloud-buttons.compone
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
@@ -36,8 +35,7 @@ describe('UserTaskCloudButtonsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, ProcessServiceCloudTestingModule],
-            declarations: [UserTaskCloudButtonsComponent]
+            imports: [ProcessServiceCloudTestingModule, UserTaskCloudButtonsComponent]
         });
         fixture = TestBed.createComponent(UserTaskCloudButtonsComponent);
         debugElement = fixture.debugElement;

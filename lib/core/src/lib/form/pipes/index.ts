@@ -16,4 +16,3 @@
  */
 
 export * from './field-style.pipe';
-export * from './form-style.pipe';

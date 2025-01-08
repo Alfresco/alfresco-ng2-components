@@ -18,14 +18,19 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { ErrorMessageModel, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorMessageModel, ErrorWidgetComponent, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormUtilsService } from '../../../services/form-utils.service';
+import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, ErrorWidgetComponent, MatRadioModule, TranslateModule, FormsModule],
     templateUrl: './radio-buttons-cloud.widget.html',
     styleUrls: ['./radio-buttons-cloud.widget.scss'],
     host: {
@@ -42,17 +47,16 @@ import { FormUtilsService } from '../../../services/form-utils.service';
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {
+    private formCloudService = inject(FormCloudService);
+    private translateService = inject(TranslateService);
+    private formUtilsService = inject(FormUtilsService);
+
     typeId = 'RadioButtonsCloudWidgetComponent';
     restApiError: ErrorMessageModel;
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        public formService: FormService,
-        private readonly formCloudService: FormCloudService,
-        private readonly translateService: TranslateService,
-        private readonly formUtilsService: FormUtilsService
-    ) {
+    constructor(formService: FormService) {
         super(formService);
     }
 
@@ -68,16 +72,16 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
         this.formCloudService
             .getRestWidgetData(this.field.form.id, this.field.id, body)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                (result: FormFieldOption[]) => {
+            .subscribe({
+                next: (result) => {
                     this.field.options = result;
                     this.field.updateForm();
                 },
-                (err) => {
+                error: (err) => {
                     this.resetRestApiOptions();
                     this.handleError(err);
                 }
-            );
+            });
     }
 
     onOptionClick(optionSelected: any) {

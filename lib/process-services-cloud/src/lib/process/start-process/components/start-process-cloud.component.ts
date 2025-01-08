@@ -56,10 +56,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { FormCloudModule } from '../../../form/form-cloud.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
+import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -75,14 +76,16 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
         MatProgressSpinnerModule,
         MatCardModule,
         MatButtonModule,
-        FormCloudModule,
         InplaceFormInputComponent,
         MatIconModule,
         MatInputModule,
         MatOptionModule,
         MatAutocompleteModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormCloudComponent,
+        FormCustomOutcomesComponent
     ],
+    providers: [LocalizedDatePipe],
     templateUrl: './start-process-cloud.component.html',
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -16,18 +16,23 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'people-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudModule],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -43,6 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit {
+    private identityUserService = inject(IdentityUserService);
 
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;
@@ -56,7 +62,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(formService: FormService, private identityUserService: IdentityUserService) {
+    constructor(formService: FormService) {
         super(formService);
     }
 
@@ -70,7 +76,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.validate = this.field.readOnly ? false : true;
         }
 
-        this.search = new UntypedFormControl({value: '', disabled: this.field.readOnly}, []);
+        this.search = new UntypedFormControl({ value: '', disabled: this.field.readOnly }, []);
 
         this.search.statusChanges
             .pipe(
@@ -94,7 +100,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
 
         if (this.field.selectLoggedUser && !this.field.value) {
             const userInfo = this.identityUserService.getCurrentUserInfo();
-            this.preSelectUsers = [ userInfo ];
+            this.preSelectUsers = [userInfo];
             this.onChangedUser(this.preSelectUsers);
         }
     }

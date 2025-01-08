@@ -16,17 +16,22 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupCloudModule } from '../../../../group/group-cloud.module';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'group-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, GroupCloudModule],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -42,7 +47,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
-
     typeId = 'GroupCloudWidgetComponent';
     roles: string[];
     mode: ComponentSelectionMode;
@@ -65,9 +69,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.preSelectGroup = this.field.value ? this.field.value : [];
             this.validate = this.field.readOnly ? false : true;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        this.search =  new UntypedFormControl({value: '', disabled: this.field.readOnly}, []),
-
+        this.search = new UntypedFormControl({ value: '', disabled: this.field.readOnly }, []);
         this.search.statusChanges
             .pipe(
                 filter((value: string) => value === 'INVALID'),

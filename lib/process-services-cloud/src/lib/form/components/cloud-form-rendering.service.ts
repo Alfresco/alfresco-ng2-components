@@ -36,18 +36,21 @@ export class CloudFormRenderingService extends FormRenderingService {
     constructor() {
         super();
 
-        this.register({
-            [FormFieldTypes.UPLOAD]: () => AttachFileCloudWidgetComponent,
-            [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent,
-            [FormFieldTypes.DATE]: () => DateCloudWidgetComponent,
-            [FormFieldTypes.PEOPLE]: () => PeopleCloudWidgetComponent,
-            [FormFieldTypes.FUNCTIONAL_GROUP]: () => GroupCloudWidgetComponent,
-            [FormFieldTypes.PROPERTIES_VIEWER]: () => PropertiesViewerWidgetComponent,
-            [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsCloudWidgetComponent,
-            [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent,
-            [FormFieldTypes.DISPLAY_RICH_TEXT]: () => DisplayRichTextWidgetComponent,
-            [FormFieldTypes.DATA_TABLE]: () => DataTableWidgetComponent,
-            [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY]: () => DisplayExternalPropertyWidgetComponent
-        }, true);
+        this.register(
+            {
+                [FormFieldTypes.UPLOAD]: () => AttachFileCloudWidgetComponent,
+                [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent,
+                [FormFieldTypes.DATE]: () => DateCloudWidgetComponent,
+                [FormFieldTypes.PEOPLE]: () => PeopleCloudWidgetComponent,
+                [FormFieldTypes.FUNCTIONAL_GROUP]: () => GroupCloudWidgetComponent,
+                [FormFieldTypes.PROPERTIES_VIEWER]: () => PropertiesViewerWidgetComponent,
+                [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsCloudWidgetComponent,
+                [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent,
+                [FormFieldTypes.DISPLAY_RICH_TEXT]: () => DisplayRichTextWidgetComponent,
+                [FormFieldTypes.DATA_TABLE]: () => DataTableWidgetComponent,
+                [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY]: () => DisplayExternalPropertyWidgetComponent
+            },
+            true
+        );
     }
 }
