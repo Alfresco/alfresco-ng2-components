@@ -45,14 +45,14 @@ import { APP_LIST_CLOUD_DIRECTIVES } from '../../app/app-list-cloud.module';
         GroupCloudModule,
         ProcessCommonModule,
         PeopleCloudModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        TaskFilterDialogCloudComponent
     ],
     declarations: [
         TaskFiltersCloudComponent,
         ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
         EditServiceTaskFilterCloudComponent,
-        TaskFilterDialogCloudComponent,
         TaskAssignmentFilterCloudComponent
     ],
     exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]

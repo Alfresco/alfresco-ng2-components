@@ -36,7 +36,7 @@ describe('TaskFilterDialogCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, TaskFilterDialogCloudComponent],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
