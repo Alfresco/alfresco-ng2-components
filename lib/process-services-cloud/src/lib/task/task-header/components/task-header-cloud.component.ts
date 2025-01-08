@@ -33,7 +33,7 @@ import {
     TranslationService,
     UpdateNotification
 } from '@alfresco/adf-core';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';

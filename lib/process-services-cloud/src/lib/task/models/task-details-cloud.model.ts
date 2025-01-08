@@ -51,12 +51,7 @@ export interface StartTaskCloudResponseModel {
     entry: TaskDetailsCloudModel;
 }
 
-export type TaskStatus =
-    'COMPLETED' |
-    'CREATED' |
-    'ASSIGNED' |
-    'SUSPENDED' |
-    'CANCELLED';
+export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED';
 
 export const TASK_COMPLETED_STATE: TaskStatus = 'COMPLETED';
 export const TASK_CREATED_STATE: TaskStatus = 'CREATED';
@@ -64,11 +59,7 @@ export const TASK_ASSIGNED_STATE: TaskStatus = 'ASSIGNED';
 export const TASK_SUSPENDED_STATE: TaskStatus = 'SUSPENDED';
 export const TASK_CANCELLED_STATE: TaskStatus = 'CANCELLED';
 
-export type TaskPermissions =
-    'VIEW' |
-    'CLAIM' |
-    'RELEASE' |
-    'UPDATE';
+export type TaskPermissions = 'VIEW' | 'CLAIM' | 'RELEASE' | 'UPDATE';
 
 export const TASK_CLAIM_PERMISSION: TaskPermissions = 'CLAIM';
 export const TASK_RELEASE_PERMISSION: TaskPermissions = 'RELEASE';

@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { debounceTime, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { TaskListCloudService } from '../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';

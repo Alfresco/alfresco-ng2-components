@@ -26,7 +26,7 @@ class MyComponent {
 
 ### Methods
 
--   **completeTaskForm**(appName: `string`, taskId: `string`, processInstanceId: `string`, formId: `string`, formValues: [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts), outcome: `string`, version: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+-   **completeTaskForm**(appName: `string`, taskId: `string`, processInstanceId: `string`, formId: `string`, formValues: [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts), outcome: `string`, version: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>`<br/>
     Completes a task form.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the target task
@@ -35,7 +35,7 @@ class MyComponent {
     -   _formValues:_ [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) values object
     -   _outcome:_ `string`  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) outcome
     -   _version:_ `number`  - of the form
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Updated task details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>` - Updated task details
 -   **createTemporaryRawRelatedContent**(file: `any`, nodeId: `string`, contentHost: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
 
     -   _file:_ `any`  - 
@@ -61,11 +61,11 @@ class MyComponent {
     -   _body:_ `any`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormFieldOption`](../../../lib/core/src/lib/form/components/widgets/core/form-field-option.ts)`[]>` - 
 
--   **getTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+-   **getTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>`<br/>
     Gets details of a task
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the target task
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>` - Details of the task
 -   **getTaskForm**(appName: `string`, taskId: `string`, version?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets the form definition of a task.
     -   _appName:_ `string`  - Name of the app
@@ -83,14 +83,14 @@ class MyComponent {
     -   _data:_ [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]`  - (Optional) Values for the form's fields
     -   _readOnly:_ `boolean`  - Toggles whether or not the form should be read-only
     -   **Returns** [`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts) - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) created from the JSON specification
--   **saveTaskForm**(appName: `string`, taskId: `string`, processInstanceId: `string`, formId: `string`, values: [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+-   **saveTaskForm**(appName: `string`, taskId: `string`, processInstanceId: `string`, formId: `string`, values: [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>`<br/>
     Saves a task form.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the target task
     -   _processInstanceId:_ `string`  - ID of processInstance
     -   _formId:_ `string`  - ID of the form to save
     -   _values:_ [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) values object
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Updated task details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>` - Updated task details
 
 ## See also
 

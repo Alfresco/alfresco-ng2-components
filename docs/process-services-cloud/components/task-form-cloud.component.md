@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2019-04-17
 ---
 
-# [Task form cloud component](../../../lib/process-services-cloud/src/lib/task/task-form/components/task-form-cloud.component.ts "Defined in task-form-cloud.component.ts")
+# Task Form Component
 
-Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts) for a task.
+Shows a form for a task.
 
 Shows Cancel, Save, Complete, Claim and Release buttons. Cancel, Save and Complete buttons are always present. Claim and Release buttons are present according to user's permissions and task's condition (Claimed, Completed etc).
 
@@ -33,34 +33,34 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | App id to fetch corresponding form and values. |
-| readOnly | `boolean` | false | Toggle readonly state of the task. |
-| showCancelButton | `boolean` | true | Toggle rendering of the `Cancel` button. |
-| showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` button. |
-| showRefreshButton | `boolean` | false | Toggle rendering of the `Refresh` button. |
-| showTitle | `boolean` | true | Toggle rendering of the form title. |
-| showValidationIcon | `boolean` | true | Toggle rendering of the `Validation` icon. |
-| taskId | `string` |  | Task id to fetch corresponding form and values. |
-| displayModeConfigurations | [`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`[]` |  | The available display configurations for the form |
+| Name                      | Type                                  | Default value | Description                                       |
+|---------------------------|---------------------------------------|---------------|---------------------------------------------------|
+| appName                   | `string`                              | ""            | App id to fetch corresponding form and values.    |
+| readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                |
+| showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.          |
+| showCompleteButton        | `boolean`                             | true          | Toggle rendering of the `Complete` button.        |
+| showRefreshButton         | `boolean`                             | false         | Toggle rendering of the `Refresh` button.         |
+| showTitle                 | `boolean`                             | true          | Toggle rendering of the form title.               |
+| showValidationIcon        | `boolean`                             | true          | Toggle rendering of the `Validation` icon.        |
+| taskId                    | `string`                              |               | Task id to fetch corresponding form and values.   |
+| displayModeConfigurations | `FormCloudDisplayModeConfiguration[]` |               | The available display configurations for the form |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| cancelClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the cancel button is clicked. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
-| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/src/lib/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/src/lib/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is saved. |
-| onTaskLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` | Emitted when a task is loaded\`. |
-| taskClaimed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is claimed. |
-| taskCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is completed. |
-| taskUnclaimed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is unclaimed. |
-| displayModeOn | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned on. |
-| displayModeOff | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned off. |
+| Name               | Type                                              | Description                                                                                            |
+|--------------------|---------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| cancelClick        | `EventEmitter<string>`                            | Emitted when the cancel button is clicked.                                                             |
+| error              | `EventEmitter<any>`                               | Emitted when any error occurs.                                                                         |
+| executeOutcome     | `EventEmitter<FormOutcomeEvent>`                  | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formCompleted      | `EventEmitter<FormModel>`                         | Emitted when the form is submitted with the `Complete` outcome.                                        |
+| formContentClicked | `EventEmitter<ContentLinkModel>`                  | Emitted when form content is clicked.                                                                  |
+| formSaved          | `EventEmitter<FormModel>`                         | Emitted when the form is saved.                                                                        |
+| onTaskLoaded       | `EventEmitter<TaskDetailsCloudModel>`             | Emitted when a task is loaded.                                                                         |
+| taskClaimed        | `EventEmitter<string>`                            | Emitted when the task is claimed.                                                                      |
+| taskCompleted      | `EventEmitter<string>`                            | Emitted when the task is completed.                                                                    |
+| taskUnclaimed      | `EventEmitter<string>`                            | Emitted when the task is unclaimed.                                                                    |
+| displayModeOn      | `EventEmitter<FormCloudDisplayModeConfiguration>` | Emitted when a display mode configuration is turned on.                                                |
+| displayModeOff     | `EventEmitter<FormCloudDisplayModeConfiguration>` | Emitted when a display mode configuration is turned off.                                               |
 
 #### Enabling fullscreen display for the form of the task
 

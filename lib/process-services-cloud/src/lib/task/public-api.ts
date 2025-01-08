@@ -17,7 +17,8 @@
 
 export * from './task-list/public-api';
 export * from './task-filters/public-api';
-export * from './start-task/public-api';
+export * from './models/task-details-cloud.model';
+export * from './models/start-task-cloud-request.model';
 export * from './task-header/public-api';
 export * from './task-form/public-api';
 export * from './directives/public-api';

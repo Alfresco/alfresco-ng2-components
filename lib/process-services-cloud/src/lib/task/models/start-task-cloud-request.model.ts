@@ -16,7 +16,6 @@
  */
 
 export class StartTaskCloudRequestModel {
-
     name: string;
     description: string;
     assignee: string;

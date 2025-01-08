@@ -26,9 +26,9 @@ import {
     TASK_CLAIM_PERMISSION,
     TASK_CREATED_STATE,
     TASK_RELEASE_PERMISSION
-} from '../start-task/models/task-details-cloud.model';
+} from '../models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
-import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
+import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';

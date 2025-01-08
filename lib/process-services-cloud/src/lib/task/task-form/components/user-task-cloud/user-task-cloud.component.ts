@@ -20,7 +20,7 @@ import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
 import { TaskCloudService } from '../../../services/task-cloud.service';
-import { TaskDetailsCloudModel } from '../../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
 import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';

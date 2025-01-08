@@ -19,10 +19,10 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, CardViewArrayItem } from '@alfresco/adf-core';
 import { from, Observable, of, Subject, throwError } from 'rxjs';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
-import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task-details-cloud.model';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
-import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
+import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TaskCloudServiceInterface } from '../services/task-cloud.service.interface';
 
 @Injectable({

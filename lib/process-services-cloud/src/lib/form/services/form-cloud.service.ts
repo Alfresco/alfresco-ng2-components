@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { FormValues, FormModel, FormFieldOption } from '@alfresco/adf-core';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
-import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
 import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
@@ -31,16 +31,13 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
     providedIn: 'root'
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
-
     private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
-    constructor(
-        adfHttpClient: AdfHttpClient
-    ) {
+    constructor(adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
@@ -54,20 +51,22 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      */
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
-            switchMap(task => this.getForm(appName, task.formKey, version).pipe(
-                map((form: FormContent) => {
-                    const flattenForm = {
-                        ...form.formRepresentation,
-                        ...form.formRepresentation.formDefinition,
-                        taskId: task.id,
-                        taskName: task.name,
-                        processDefinitionId: task.processDefinitionId,
-                        processInstanceId: task.processInstanceId
-                    };
-                    delete flattenForm.formDefinition;
-                    return flattenForm;
-                })
-            ))
+            switchMap((task) =>
+                this.getForm(appName, task.formKey, version).pipe(
+                    map((form: FormContent) => {
+                        const flattenForm = {
+                            ...form.formRepresentation,
+                            ...form.formRepresentation.formDefinition,
+                            taskId: task.id,
+                            taskName: task.name,
+                            processDefinitionId: task.processDefinitionId,
+                            processInstanceId: task.processInstanceId
+                        };
+                        delete flattenForm.formDefinition;
+                        return flattenForm;
+                    })
+                )
+            )
         );
     }
 
@@ -89,26 +88,15 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             processInstanceId
         };
 
-        return this.post(apiUrl, saveFormRepresentation).pipe(
-            map((res: any) => res.entry)
-        );
+        return this.post(apiUrl, saveFormRepresentation).pipe(map((res: any) => res.entry));
     }
 
     createTemporaryRawRelatedContent(file: any, nodeId: string, contentHost: string): Observable<any> {
-
         const changedConfig = this.apiService.lastConfig;
         changedConfig.provider = 'ALL';
         changedConfig.hostEcm = contentHost.replace('/alfresco', '');
         this.apiService.getInstance().setConfig(changedConfig);
-        return from(this.uploadApi.uploadFile(
-            file,
-            '',
-            nodeId,
-            null,
-            { overwrite: true }
-        )).pipe(
-            map((res: any) => res.entry)
-        );
+        return from(this.uploadApi.uploadFile(file, '', nodeId, null, { overwrite: true })).pipe(map((res: any) => res.entry));
     }
 
     /**
@@ -123,7 +111,15 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @param version of the form
      * @returns Updated task details
      */
-    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
+    completeTaskForm(
+        appName: string,
+        taskId: string,
+        processInstanceId: string,
+        formId: string,
+        formValues: FormValues,
+        outcome: string,
+        version: number
+    ): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
         const completeFormRepresentation = {
             values: formValues,
@@ -135,9 +131,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             completeFormRepresentation.outcome = outcome;
         }
 
-        return this.post(apiUrl, completeFormRepresentation).pipe(
-            map((res: any) => res.entry)
-        );
+        return this.post(apiUrl, completeFormRepresentation).pipe(map((res: any) => res.entry));
     }
 
     /**
@@ -150,9 +144,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
-        return this.get(apiUrl).pipe(
-            map((res: any) => res.entry)
-        );
+        return this.get(apiUrl).pipe(map((res: any) => res.entry));
     }
 
     /**
@@ -170,10 +162,12 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this.get(apiUrl, { maxItems, skipCount }).pipe(
             expand((res: any) => {
                 skipCount += maxItems;
-                return res.list.pagination.hasMoreItems ? this.get(apiUrl, {
-                    maxItems,
-                    skipCount
-                }) : EMPTY;
+                return res.list.pagination.hasMoreItems
+                    ? this.get(apiUrl, {
+                          maxItems,
+                          skipCount
+                      })
+                    : EMPTY;
             }),
             map((res: any) => res.list.entries.map((variable) => new TaskVariableCloud(variable.entry))),
             reduce((acc, res) => acc.concat(res), [])
@@ -221,7 +215,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             delete flattenForm.formDefinition;
 
             const formValues: FormValues = {};
-            (data || []).forEach(variable => {
+            (data || []).forEach((variable) => {
                 formValues[variable.name] = variable.value;
             });
 
