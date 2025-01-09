@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export type ProcessFilterOperators = 'eq' | 'like' | 'gt' | 'gte' | 'lt' | 'lte';
+export type ProcessFilterOperators = 'eq' | 'ne' | 'like' | 'gt' | 'gte' | 'lt' | 'lte';
 
 export interface ProcessVariableFilterModel {
     processDefinitionKey: string;
