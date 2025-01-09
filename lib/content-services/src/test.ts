@@ -26,4 +26,4 @@ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDyn
 });
 
 declare const pdfjsLib: any;
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'base/pdfjs-dist/build/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'base/pdfjs-dist/legacy/build/pdf.worker.min.mjs';
