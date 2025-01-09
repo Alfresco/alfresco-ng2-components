@@ -26,10 +26,13 @@
 
             <ng-container *ngSwitchCase="taskTypeEnum.Screen">
                 <adf-cloud-task-screen
-                    [taskId]="taskId"
                     [appName]="appName"
                     [screenId]="screenId"
-                />
+                    [taskId]="taskId"
+                >
+                    <ng-template [ngTemplateOutlet]="taskFormCloudButtons" buttons>
+                    </ng-template>
+                </adf-cloud-task-screen>
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.None">

@@ -18,12 +18,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, inject, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/public-api';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-cloud-task-screen',
     standalone: true,
-    imports: [CommonModule],
-    template: '<div #container></div>'
+    imports: [CommonModule, MatCardModule],
+    templateUrl: './screen-cloud.component.html'
 })
 export class TaskScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
