@@ -37,7 +37,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
+import { AnnotationMode, OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
@@ -246,7 +246,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 container,
                 viewer,
                 renderingQueue: this.renderingQueueServices,
-                eventBus: this.eventBus
+                eventBus: this.eventBus,
+                annotationMode: AnnotationMode.DISABLE
             });
 
             // cspell: disable-next

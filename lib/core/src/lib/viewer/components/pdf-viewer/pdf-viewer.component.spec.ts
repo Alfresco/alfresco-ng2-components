@@ -159,6 +159,15 @@ describe('Test PdfViewer component', () => {
             document.body.removeChild(elementUrlTestComponent);
         });
 
+        it('should init the viewer with annotation mode disabled', (done) => {
+            fixtureUrlTestComponent.detectChanges();
+
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationMode).toBe(6);
+                done();
+            });
+        }, 55000);
+
         it('should Total number of pages be loaded', (done) => {
             fixtureUrlTestComponent.detectChanges();
 
