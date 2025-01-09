@@ -29,6 +29,11 @@
                     [appName]="appName"
                     [screenId]="screenId"
                     [taskId]="taskId"
+                    [taskName]="taskDetails.name"
+                    [processInstanceID]="taskDetails.processInstanceId"
+                    (error)="onError($event)"
+                    (taskCompleted)="onCompleteTask()"
+                    (taskSaved)="onFormSaved()"
                 >
                     <ng-template [ngTemplateOutlet]="taskFormCloudButtons" buttons>
                     </ng-template>
