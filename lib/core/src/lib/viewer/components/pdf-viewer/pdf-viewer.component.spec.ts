@@ -28,6 +28,7 @@ import { CoreTestingModule } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PdfViewerComponent } from './pdf-viewer.component';
+import { AnnotationMode } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
 
@@ -163,7 +164,7 @@ describe('Test PdfViewer component', () => {
             fixtureUrlTestComponent.detectChanges();
 
             fixtureUrlTestComponent.whenStable().then(() => {
-                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationMode).toBe(6);
+                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationMode).toBe(AnnotationMode.DISABLE);
                 done();
             });
         }, 55000);
