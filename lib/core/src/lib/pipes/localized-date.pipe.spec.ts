@@ -65,4 +65,20 @@ describe('LocalizedDatePipe', () => {
         const format = 'longDate';
         expect(pipe.transform(date, format, locale)).toBe('3 juillet 1990');
     });
+
+    it("should return the previous day's date when local timezone has a negative offset", () => {
+        const date = new Date('2025-01-09T00:00:00.000Z');
+        const locale = 'en-US';
+        const format = 'mediumDate';
+        const timezone = 'UTC-6';
+        expect(pipe.transform(date, format, locale, timezone)).toBe('Jan 8, 2025');
+    });
+
+    it('should return the provided date when local timezone is set to UTC', () => {
+        const date = new Date('2025-01-09T00:00:00.000Z');
+        const locale = 'en-US';
+        const format = 'mediumDate';
+        const timezone = 'UTC';
+        expect(pipe.transform(date, format, locale, timezone)).toBe('Jan 9, 2025');
+    });
 });
