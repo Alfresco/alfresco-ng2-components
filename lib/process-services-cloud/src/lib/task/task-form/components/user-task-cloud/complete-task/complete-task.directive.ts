@@ -16,7 +16,7 @@
  */
 
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
-import { TaskCloudService } from '../services/task-cloud.service';
+import { TaskCloudService } from '../../../../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector

@@ -16,15 +16,14 @@
  */
 
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
-import { IdentityUserService } from '../../people/services/identity-user.service';
-import { TaskCloudService } from '../services/task-cloud.service';
+import { TaskCloudService } from '../../../../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-claim-task]',
+    selector: '[adf-cloud-unclaim-task]',
     standalone: true
 })
-export class ClaimTaskCloudDirective implements OnInit {
+export class UnClaimTaskCloudDirective implements OnInit {
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
@@ -43,12 +42,7 @@ export class ClaimTaskCloudDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(
-        private readonly el: ElementRef,
-        private readonly renderer: Renderer2,
-        private taskListService: TaskCloudService,
-        private identityUserService: IdentityUserService
-    ) {}
+    constructor(private readonly el: ElementRef, private readonly renderer: Renderer2, private taskListService: TaskCloudService) {}
 
     ngOnInit() {
         this.validateInputs();
@@ -77,20 +71,9 @@ export class ClaimTaskCloudDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
-            await this.claimTask();
-        } catch (error) {
-            this.error.emit(error);
-        }
-    }
-
-    private async claimTask() {
-        const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
-        try {
             this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');
-            const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
-            if (result) {
-                this.success.emit(result);
-            }
+            await this.taskListService.unclaimTask(this.appName, this.taskId).toPromise();
+            this.success.emit(this.taskId);
         } catch (error) {
             this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
             this.error.emit(error);

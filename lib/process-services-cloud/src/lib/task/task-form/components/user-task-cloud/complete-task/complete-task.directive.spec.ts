@@ -19,9 +19,9 @@ import { Component, ViewChild, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
-import { TaskCloudService } from '../services/task-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { taskCompleteCloudMock } from '../../../../task-header/mocks/fake-complete-task.mock';
+import { TaskCloudService } from '../../../../services/task-cloud.service';
+import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { By } from '@angular/platform-browser';
 
 describe('CompleteTaskDirective', () => {

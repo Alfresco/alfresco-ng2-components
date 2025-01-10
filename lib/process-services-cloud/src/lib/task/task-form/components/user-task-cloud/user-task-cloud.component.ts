@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
-import { CompleteTaskDirective } from '../../../directives/complete-task.directive';
+import { CompleteTaskDirective } from './complete-task/complete-task.directive';
 
 const TaskTypes = {
     Form: 'form',
