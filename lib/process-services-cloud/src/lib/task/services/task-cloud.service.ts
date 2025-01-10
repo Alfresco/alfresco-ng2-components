@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -31,17 +31,19 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
-import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskCloudService extends BaseCloudService implements TaskCloudServiceInterface {
+export class TaskCloudService extends BaseCloudService {
+    private translateService = inject(TranslationService);
+    private identityUserService = inject(IdentityUserService);
+
     dataChangesDetected$ = new Subject();
 
-    constructor(private translateService: TranslationService, private identityUserService: IdentityUserService, adfHttpClient: AdfHttpClient) {
+    constructor(adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
@@ -293,7 +295,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
         return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
     }
 
-    private isAssignedToMe(assignee: string): boolean {
+    protected isAssignedToMe(assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return assignee === currentUser;
     }
