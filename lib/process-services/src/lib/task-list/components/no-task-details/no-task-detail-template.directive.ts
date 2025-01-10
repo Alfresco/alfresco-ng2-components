@@ -19,6 +19,7 @@ import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 /**
+ * @deprecated no longer used anywhere, and can be safely removed
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({

@@ -58,6 +58,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+/** @deprecated no longer used anywhere, and can be safely removed */
 @Component({
     selector: 'adf-task-details',
     standalone: true,
