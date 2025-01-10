@@ -22,6 +22,7 @@ Converts a date to a given format and locale.
 |--------|--------|---------------|-------------------------------------------------------------------------------------------------------------------------|
 | format | string | 'medium'      | A format to apply to the date value. [Date Pipe Formats.](https://angular.io/api/common/DatePipe#custom-format-options) |
 | locale | string | 'en-US'       | A locale id for the locale format rules to use.                                                                         |
+| timezone | string |   |(optional) A timezone offset (such as `'+0430'`), or a standard UTC/GMT            |
 
 ## Details
 
@@ -59,3 +60,30 @@ You can overwrite the default values of this pipe by adding these properties to 
 | defaultLocale         | string | The locale id to apply                  |
 
 This configuration overwrites the values in the [localized date pipe](../../core/pipes/localized-date.pipe.md) as well as other components to have more consistency across your app. However, you can still overwrite these values any time by using the pipe in your code.
+
+
+### Eliminates timezone-specific shifts
+
+When timezone is set to UTC, it eliminates timezone-specific shifts, meaning the date will be displayed in Coordinated Universal Time (UTC) regardless of the local timezone.
+
+Given the date `2025-01-09T00:00:00.000+0000`, if the local timezone has a negative offset like -6 hours, the local time would be `2025-01-08T18:00:00.000-0600`. Without setting the timezone to UTC, the pipe would display the date as `January 8th, 2025`, because the local time is still on the previous day.
+
+By setting the timezone to `UTC` in the pipe, the date will be displayed as `January 9th, 2025`, because it ignores the local timezone offset and uses the UTC time instead.
+
+Usage example:
+
+```HTML
+<!-- Local timezone with -6 offset -->
+<div>
+    Created date: {{ '2025-01-09T00:00:00.000+0000' | adfLocalizedDate: 'mediumDate' }}
+    <!-- Output: Jan 8, 2025 (if local timezone is -6) -->
+</div>
+
+<!-- Setting timezone to UTC -->
+<div>
+    Created date: {{ '2025-01-09T00:00:00.000+0000' | adfLocalizedDate: 'mediumDate' : '' : 'UTC' }}
+    <!-- Output: Jan 9, 2025 (UTC) -->
+</div>
+```
+
+By specifying `UTC` as the timezone, the pipe ensures that the date is displayed consistently in UTC, eliminating any discrepancies caused by local timezone offsets.
