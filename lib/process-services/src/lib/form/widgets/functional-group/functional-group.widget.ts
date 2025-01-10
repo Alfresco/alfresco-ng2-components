@@ -73,13 +73,13 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }),
         debounceTime(300),
         switchMap((searchTerm) => {
-            if (typeof searchTerm !== 'string') {
+            if (typeof searchTerm !== 'string' || searchTerm.length < this.minTermLength) {
                 return of([]);
             }
             return this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId).pipe(catchError(() => of([])));
         })
     );
-    selectedGroups = [];
+    selectedGroups: GroupModel[] = [];
     multiSelect = false;
 
     @ViewChild('inputValue', { static: true })
@@ -117,20 +117,20 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         if (option) {
             if (this.multiSelect) {
                 if (!this.isGroupAlreadySelected(option)) {
-                    this.selectedGroups.push(option);
                     this.field.value = this.selectedGroups;
-                    this.searchTerm.setValue('');
-                    this.input.nativeElement.value = '';
                 } else {
                     return;
                 }
             } else {
                 this.field.value = [option];
             }
+            this.selectedGroups.push(option);
         } else {
             this.field.value = null;
         }
 
+        this.searchTerm.setValue('');
+        this.input.nativeElement.value = '';
         this.field.updateForm();
     }
 
@@ -156,7 +156,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         return '';
     }
 
-    onRemove(group: any) {
+    onRemove(group: GroupModel): void {
         const index = this.selectedGroups.indexOf(group);
         if (index >= 0) {
             this.selectedGroups.splice(index, 1);
@@ -164,12 +164,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }
     }
 
-    isGroupAlreadySelected(group: any): boolean {
-        if (this.selectedGroups?.length > 0) {
-            const result = this.selectedGroups.find((selectedGroup) => selectedGroup.id === group.id);
-
-            return !!result;
-        }
-        return false;
+    isGroupAlreadySelected(group: GroupModel): boolean {
+        return this.selectedGroups?.some((selectedGroup) => selectedGroup.id === group.id);
     }
 }
