@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, ComponentRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/public-api';
 import { MatCardModule } from '@angular/material/card';
 import { UserTaskCustomUi } from './screen-cloud.interface';
@@ -59,6 +59,8 @@ export class TaskScreenCloudComponent implements OnInit {
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
+
+    private destroyRef = inject(DestroyRef);
     componentRef: ComponentRef<UserTaskCustomUi>;
 
     private readonly screenRenderingService = inject(ScreenRenderingService);
@@ -96,13 +98,13 @@ export class TaskScreenCloudComponent implements OnInit {
 
     subscribeToOutputs() {
         if (this.componentRef.instance?.taskSaved) {
-            this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed()).subscribe(() => this.taskSaved.emit());
+            this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
         }
         if (this.componentRef.instance?.taskCompleted) {
-            this.componentRef.instance.taskCompleted.pipe(takeUntilDestroyed()).subscribe(() => this.taskCompleted.emit());
+            this.componentRef.instance.taskCompleted.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskCompleted.emit());
         }
         if (this.componentRef.instance?.error) {
-            this.componentRef.instance.error.pipe(takeUntilDestroyed()).subscribe((data) => this.error.emit(data));
+            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
         }
     }
 }
