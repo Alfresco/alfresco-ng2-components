@@ -16,12 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { TaskScreenCloudComponent } from './screen-cloud.component';
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScreenRenderingService } from '../../../services/public-api';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { ScreenRenderingService } from '../../../services/public-api';
+import { TaskScreenCloudComponent } from './screen-cloud.component';
 
 @Component({
     selector: 'adf-cloud-test-component',
@@ -31,15 +30,27 @@ import { By } from '@angular/platform-browser';
 })
 class TestComponent {}
 
+@Component({
+    selector: 'adf-cloud-test-actions-component',
+    template: `<adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'">
+        <div buttons class="adf-cloud-test-buttons">
+            <button>Test</button>
+        </div>
+    </adf-cloud-task-screen> `,
+    imports: [CommonModule, TaskScreenCloudComponent],
+    standalone: true
+})
+class TestWrapperComponent {}
+
 describe('TaskScreenCloudComponent', () => {
-    let fixture: ComponentFixture<TaskScreenCloudComponent>;
+    let fixture: ComponentFixture<TestWrapperComponent>;
     let screenRenderingService: ScreenRenderingService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TaskScreenCloudComponent, TestComponent]
+            imports: [TaskScreenCloudComponent, TestComponent, TestWrapperComponent]
         });
-        fixture = TestBed.createComponent(TaskScreenCloudComponent);
+        fixture = TestBed.createComponent(TestWrapperComponent);
         screenRenderingService = TestBed.inject(ScreenRenderingService);
         screenRenderingService.register({ ['test']: () => TestComponent });
         fixture.componentRef.setInput('screenId', 'test');
@@ -49,5 +60,10 @@ describe('TaskScreenCloudComponent', () => {
     it('should create custom component instance', () => {
         const dynamicComponent = fixture.debugElement.query(By.css('.adf-cloud-test-container'));
         expect(dynamicComponent).toBeTruthy();
+    });
+
+    it('should project content into component', async () => {
+        const projectedContent = fixture.debugElement.query(By.css('.adf-cloud-test-buttons'));
+        expect(projectedContent).toBeTruthy();
     });
 });
