@@ -49,8 +49,14 @@ import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.mod
 import { map, take } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+// eslint-disable-next-line no-shadow
+export enum TasksListCloudPreferences {
+    columnOrder = 'tasks-list-cloud-columns-order',
+    columnsVisibility = 'tasks-list-cloud-columns-visibility',
+    columnsWidths = 'tasks-list-cloud-columns-widths'
+}
 
 const taskPresetsCloudDefaultModel = {
     default: [
