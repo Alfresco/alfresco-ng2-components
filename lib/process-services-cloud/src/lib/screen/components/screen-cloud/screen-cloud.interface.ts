@@ -18,7 +18,7 @@
 import { EventEmitter } from '@angular/core';
 
 export interface UserTaskCustomUi {
-    processInstanceID: string;
+    processInstanceId: string;
     taskName: string;
     appName: string;
     taskId: string;

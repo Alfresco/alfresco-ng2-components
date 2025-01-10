@@ -38,7 +38,7 @@ export class TaskScreenCloudComponent implements OnInit {
     @Input()
     screenId: string = '';
     @Input()
-    processInstanceID: string = '';
+    processInstanceId: string = '';
     @Input()
     taskName: string = '';
     /** Toggle readonly state of the task. */
@@ -77,19 +77,19 @@ export class TaskScreenCloudComponent implements OnInit {
     }
 
     setInputsForDynamicComponent(): void {
-        if (this.taskId) {
+        if (this.taskId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskId')) {
             this.componentRef.setInput('taskId', this.taskId);
         }
-        if (this.appName) {
+        if (this.appName && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'appName')) {
             this.componentRef.setInput('appName', this.appName);
         }
-        if (this.screenId) {
+        if (this.screenId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'screenId')) {
             this.componentRef.setInput('screenId', this.screenId);
         }
-        if (this.processInstanceID) {
-            this.componentRef.setInput('processInstanceID', this.processInstanceID);
+        if (this.processInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'processInstanceId')) {
+            this.componentRef.setInput('processInstanceId', this.processInstanceId);
         }
-        if (this.taskName) {
+        if (this.taskName && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskName')) {
             this.componentRef.setInput('taskName', this.taskName);
         }
     }
