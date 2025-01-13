@@ -234,7 +234,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
             }
 
-            if (FormFieldTypes.isContainerType(this.type)) {
+            if (FormFieldTypes.isContainerType(this.type) || FormFieldTypes.isSectionType(this.type)) {
                 this.containerFactory(json, form);
             }
         }
@@ -292,7 +292,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (json.fields) {
             for (const currentField in json.fields) {
                 if (Object.prototype.hasOwnProperty.call(json.fields, currentField)) {
-                    const col = new ContainerColumnModel();
+                    const col = new ContainerColumnModel(); // TODO: Make sure this model is suitable for the section
 
                     col.fields = (json.fields[currentField] || []).map((field) => new FormFieldModel(form, field));
                     col.rowspan = json.fields[currentField].length;

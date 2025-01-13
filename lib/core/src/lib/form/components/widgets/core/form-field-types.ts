@@ -20,6 +20,7 @@
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
+    static SECTION: string = 'section';
     static DYNAMIC_TABLE: string = 'dynamic-table';
     static TEXT: string = 'text';
     static STRING: string = 'string';
@@ -58,11 +59,11 @@ export class FormFieldTypes {
 
     static CONSTANT_VALUE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
-    static isReadOnlyType(type: string) {
+    static isReadOnlyType(type: string): boolean {
         return FormFieldTypes.READONLY_TYPES.includes(type);
     }
 
-    static isValidatableType(type: string) {
+    static isValidatableType(type: string): boolean {
         return FormFieldTypes.VALIDATABLE_TYPES.includes(type);
     }
 
@@ -70,11 +71,15 @@ export class FormFieldTypes {
         return FormFieldTypes.REACTIVE_TYPES.includes(type);
     }
 
-    static isConstantValueType(type: string) {
+    static isConstantValueType(type: string): boolean {
         return FormFieldTypes.CONSTANT_VALUE_TYPES.includes(type);
     }
 
-    static isContainerType(type: string) {
+    static isContainerType(type: string): boolean {
         return type === FormFieldTypes.CONTAINER || type === FormFieldTypes.GROUP;
+    }
+
+    static isSectionType(type: string): boolean {
+        return type === FormFieldTypes.SECTION;
     }
 }

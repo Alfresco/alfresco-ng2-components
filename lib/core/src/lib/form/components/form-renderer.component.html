@@ -40,7 +40,12 @@
                          *ngFor="let column of currentRootElement?.columns"
                          [style.width.%]="getColumnWith(currentRootElement)">
                         <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
-                            <adf-form-field *ngIf="field" [field]="field" />
+                            <ng-container *ngIf="field.type === 'container-section'; else formField">
+                                to be implemented
+                            </ng-container>
+                            <ng-template #formField>
+                                <adf-form-field [field]="field"></adf-form-field>
+                            </ng-template>
                         </div>
                     </div>
                 </section>
