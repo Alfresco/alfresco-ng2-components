@@ -77,6 +77,7 @@ describe('StartProcessComponent', () => {
 
     /**
      * Change application id
+     *
      * @param appId application id
      */
     function changeAppId(appId: number) {

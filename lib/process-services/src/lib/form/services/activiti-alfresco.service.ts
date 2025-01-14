@@ -53,6 +53,7 @@ export class ActivitiContentService {
 
     /**
      * Returns a list of child nodes below the specified folder
+     *
      * @param accountId account id
      * @param folderId folder id
      * @returns list of external content instances
@@ -67,6 +68,7 @@ export class ActivitiContentService {
 
     /**
      * Returns a list of all the repositories configured
+     *
      * @param tenantId tenant id
      * @param includeAccount include accounts
      * @returns list of endpoints
@@ -84,6 +86,7 @@ export class ActivitiContentService {
 
     /**
      * Returns a list of child nodes below the specified folder
+     *
      * @param accountId account id
      * @param node node details
      * @param siteId site id

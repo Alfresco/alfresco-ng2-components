@@ -40,6 +40,7 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Search users by value
+     *
      * @param value value
      */
     async function searchUsers(value: string) {
@@ -50,6 +51,7 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Search users and blur the input
+     *
      * @param value value
      */
     async function searchUsersAndBlur(value: string) {
@@ -61,6 +63,7 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Get users list UI
+     *
      * @returns list of debug elements
      */
     function getUsersListUI(): DebugElement[] {
@@ -69,6 +72,7 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Get the first user from the list
+     *
      * @returns native element
      */
     function getFirstUserFromListUI(): Element {

@@ -1358,6 +1358,7 @@ describe('FormCloudComponent', () => {
 
         /**
          * Helper function for loading the form in the tests
+         *
          * @param form The form model to be loaded
          */
         async function loadForm(form?: any): Promise<void> {

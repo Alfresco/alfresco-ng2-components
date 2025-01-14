@@ -39,6 +39,7 @@ export class ProcessFilterService {
 
     /**
      * Gets all filters defined for a Process App.
+     *
      * @param appId ID of the target app
      * @returns Array of filter details
      */
@@ -58,6 +59,7 @@ export class ProcessFilterService {
 
     /**
      * Retrieves the process filter by ID.
+     *
      * @param filterId ID of the filter
      * @param appId ID of the target app
      * @returns Details of the filter
@@ -68,6 +70,7 @@ export class ProcessFilterService {
 
     /**
      * Retrieves the process filter by name.
+     *
      * @param filterName Name of the filter
      * @param appId ID of the target app
      * @returns Details of the filter
@@ -78,6 +81,7 @@ export class ProcessFilterService {
 
     /**
      * Creates and returns the default filters for an app.
+     *
      * @param appId ID of the target app
      * @returns Default filters just created
      */
@@ -113,6 +117,7 @@ export class ProcessFilterService {
 
     /**
      * Checks if a filter with the given name already exists in the list of filters.
+     *
      * @param filters - An array of objects representing the existing filters.
      * @param filterName - The name of the filter to check for existence.
      * @returns - True if a filter with the specified name already exists, false otherwise.
@@ -123,6 +128,7 @@ export class ProcessFilterService {
 
     /**
      * Creates and returns a filter that matches "running" process instances.
+     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns Filter just created
@@ -140,6 +146,7 @@ export class ProcessFilterService {
 
     /**
      * Adds a filter.
+     *
      * @param filter The filter to add
      * @returns The filter just added
      */
@@ -149,6 +156,7 @@ export class ProcessFilterService {
 
     /**
      * Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
+     *
      * @param appId ID of the target app
      * @returns List of filter details
      */

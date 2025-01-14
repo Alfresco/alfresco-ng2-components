@@ -73,6 +73,7 @@ export class TimeSyncService {
 
     /**
      * Checks if the local time is out of sync with the server time.
+     *
      * @param maxAllowedClockSkewInSec - The maximum allowed clock skew in seconds.
      * @returns An Observable that emits a boolean indicating whether the local time is out of sync.
      */

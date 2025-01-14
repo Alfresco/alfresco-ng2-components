@@ -54,6 +54,7 @@ export class PeopleProcessService {
 
     /**
      * Gets information about the current user.
+     *
      * @returns User information object
      */
     getCurrentUserInfo(): Observable<UserRepresentation> {
@@ -62,6 +63,7 @@ export class PeopleProcessService {
 
     /**
      * Gets the current user's profile image as a URL.
+     *
      * @returns URL string
      */
     getCurrentUserProfileImage(): string {
@@ -70,6 +72,7 @@ export class PeopleProcessService {
 
     /**
      * Gets a list of groups in a workflow.
+     *
      * @param filter Filter to select specific groups
      * @param groupId Group ID for the search
      * @returns Array of groups
@@ -84,6 +87,7 @@ export class PeopleProcessService {
 
     /**
      * Gets information about users across all tasks.
+     *
      * @param taskId ID of the task
      * @param searchWord Filter text to search for
      * @param groupId group id
@@ -96,6 +100,7 @@ export class PeopleProcessService {
     }
     /**
      * Gets the profile picture URL for the specified user.
+     *
      * @param userId The target user
      * @returns Profile picture URL
      */
@@ -105,6 +110,7 @@ export class PeopleProcessService {
 
     /**
      * Sets a user to be involved with a task.
+     *
      * @param taskId ID of the target task
      * @param idToInvolve ID of the user to involve
      * @returns Empty response when the update completes
@@ -115,6 +121,7 @@ export class PeopleProcessService {
 
     /**
      * Removes a user who is currently involved with a task.
+     *
      * @param taskId ID of the target task
      * @param idToRemove ID of the user to remove
      * @returns Empty response when the update completes

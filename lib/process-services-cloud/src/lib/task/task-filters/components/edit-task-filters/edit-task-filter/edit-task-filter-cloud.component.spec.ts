@@ -139,6 +139,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         /**
          * resolve filter instance input element
+         *
          * @returns native element
          */
         function getProcessInstanceIdInputElement() {

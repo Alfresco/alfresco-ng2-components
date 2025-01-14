@@ -27,6 +27,7 @@ import { isValid, Locale, parse } from 'date-fns';
  *
  * Automatically switches locales based on user preferences.
  * Supports custom display format.
+ *
  * @example
  *
  * Add the following to the component `providers` section

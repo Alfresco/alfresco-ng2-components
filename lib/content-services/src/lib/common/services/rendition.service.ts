@@ -253,6 +253,7 @@ export class RenditionService {
      * This method takes a url to trigger the print dialog against, and the type of artifact that it
      * is.
      * This URL should be one that can be rendered in the browser, for example PDF, Image, or Text
+     *
      * @param url url to print
      * @param type type of the rendition
      */
@@ -277,6 +278,7 @@ export class RenditionService {
      * These are: images, PDF files, or PDF rendition of files.
      * We also force PDF rendition for TEXT type objects, otherwise the default URL is to download.
      * TODO there are different TEXT type objects, (HTML, plaintext, xml, etc. we should determine how these are handled)
+     *
      * @param objectId object it
      * @param mimeType mime type
      */

@@ -63,6 +63,7 @@ export class NodesApiService {
 
     /**
      * Gets the stored information about a node.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns Node information
@@ -81,6 +82,7 @@ export class NodesApiService {
 
     /**
      * Gets the items contained in a folder node.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns List of child items from the folder
@@ -98,6 +100,7 @@ export class NodesApiService {
 
     /**
      * Creates a new document node inside a folder.
+     *
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new node
      * @param options Optional parameters supported by JS-API
@@ -112,6 +115,7 @@ export class NodesApiService {
 
     /**
      * Creates a new folder node inside a parent folder.
+     *
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new folder
      * @param options Optional parameters supported by JS-API
@@ -124,6 +128,7 @@ export class NodesApiService {
 
     /**
      * Updates the information about a node.
+     *
      * @param nodeId ID of the target node
      * @param nodeBody New data for the node
      * @param options Optional parameters supported by JS-API
@@ -143,6 +148,7 @@ export class NodesApiService {
 
     /**
      * Moves a node to the trashcan.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns Empty result that notifies when the deletion is complete
@@ -153,6 +159,7 @@ export class NodesApiService {
 
     /**
      * Restores a node previously moved to the trashcan.
+     *
      * @param nodeId ID of the node to restore
      * @returns Details of the restored node
      */
@@ -165,6 +172,7 @@ export class NodesApiService {
 
     /**
      * Get the metadata and the nodeType for a nodeId cleaned by the prefix.
+     *
      * @param nodeId ID of the target node
      * @returns Node metadata
      */
@@ -174,6 +182,7 @@ export class NodesApiService {
 
     /**
      * Gets the list of holds assigned to the node.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @param options.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
@@ -200,6 +209,7 @@ export class NodesApiService {
 
     /**
      * Gets content for the given node.
+     *
      * @param nodeId ID of the target node
      * @returns Content data
      */
@@ -209,6 +219,7 @@ export class NodesApiService {
 
     /**
      * Create a new Node inside `-root-` folder
+     *
      * @param name Node name
      * @param nodeType Node type
      * @param properties Node body properties
@@ -227,6 +238,7 @@ export class NodesApiService {
 
     /**
      * Create a new Node from form metadata.
+     *
      * @param nodeType Node type
      * @param nameSpace Namespace for properties
      * @param data Property data to store in the node under namespace

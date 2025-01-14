@@ -41,6 +41,7 @@ export class ShellModule {
 
 /**
  * Resolve module for routes
+ *
  * @param routes route configuration
  * @returns module with providers
  */
@@ -59,6 +60,7 @@ function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
 
 /**
  * Resolve a module for the route configuration
+ *
  * @param config route configuration
  * @returns module with providers
  */

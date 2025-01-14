@@ -44,6 +44,7 @@ export class RenderingQueueServices {
 
     /**
      * Set the instance of the PDF Viewer
+     *
      * @param pdfViewer viewer instance
      */
     setViewer(pdfViewer): void {
@@ -52,6 +53,7 @@ export class RenderingQueueServices {
 
     /**
      * Sets the instance of the PDF Thumbnail Viewer
+     *
      * @param pdfThumbnailViewer viewer instance
      */
     setThumbnailViewer(pdfThumbnailViewer): void {
@@ -60,6 +62,7 @@ export class RenderingQueueServices {
 
     /**
      * Check if the view has highest rendering priority
+     *
      * @param view view to render
      * @returns `true` if the view has higher priority, otherwise `false`
      */
@@ -137,6 +140,7 @@ export class RenderingQueueServices {
 
     /**
      * Checks if the view rendering is finished
+     *
      * @param view the View instance to check
      * @returns `true` if rendering is finished, otherwise `false`
      */
@@ -148,6 +152,7 @@ export class RenderingQueueServices {
      * Render a page or thumbnail view. This calls the appropriate function
      * based on the views state. If the view is already rendered it will return
      * false.
+     *
      * @param view View instance to render
      * @returns the rendered state of the view
      */

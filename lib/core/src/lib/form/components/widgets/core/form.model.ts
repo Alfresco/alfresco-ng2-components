@@ -171,6 +171,7 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Validates a specific form field, triggers form validation.
+     *
      * @param field Form field to validate.
      */
     validateField(field: FormFieldModel): void {
@@ -255,6 +256,7 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Returns a form variable that matches the identifier.
+     *
      * @param identifier The `name` or `id` value.
      * @returns form variable model
      */
@@ -268,6 +270,7 @@ export class FormModel implements ProcessFormModel {
     /**
      * Returns a value of the form variable that matches the identifier.
      * Provides additional conversion of types (date, boolean).
+     *
      * @param identifier The `name` or `id` value
      * @returns form variable value
      */
@@ -285,6 +288,7 @@ export class FormModel implements ProcessFormModel {
      * Returns a process variable value.
      * When mapping a process variable with a form variable the mapping
      * is already resolved by the rest API with the name of variables.formVariableName
+     *
      * @param name Variable name
      * @returns process variable value
      */

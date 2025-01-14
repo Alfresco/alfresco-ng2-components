@@ -48,6 +48,7 @@ export class DocumentActionsService {
 
     /**
      * Gets the handler for an action.
+     *
      * @param key Identifier of the action
      * @returns The handler for the action
      */
@@ -61,6 +62,7 @@ export class DocumentActionsService {
 
     /**
      * Sets a new handler for an action.
+     *
      * @param key Identifier of the action
      * @param handler Handler for the action
      * @returns False if the key was an empty/null string, true otherwise
@@ -76,6 +78,7 @@ export class DocumentActionsService {
 
     /**
      * Checks if actions can be executed for an item.
+     *
      * @param nodeEntry Item to receive an action
      * @returns True if the action can be executed on this item, false otherwise
      */

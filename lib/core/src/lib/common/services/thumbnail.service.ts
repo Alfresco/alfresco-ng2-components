@@ -172,6 +172,7 @@ export class ThumbnailService {
 
     /**
      * Gets a thumbnail URL for a MIME type.
+     *
      * @param mimeType MIME type for the thumbnail
      * @returns URL string
      */
@@ -182,6 +183,7 @@ export class ThumbnailService {
 
     /**
      * Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
+     *
      * @returns URL string
      */
     getDefaultMimeTypeIcon(): string {

@@ -171,6 +171,7 @@ export abstract class FormBaseComponent {
 
     /**
      * Invoked when user clicks outcome button.
+     *
      * @param outcome Form outcome model
      * @returns `true` if outcome button was clicked, otherwise `false`
      */

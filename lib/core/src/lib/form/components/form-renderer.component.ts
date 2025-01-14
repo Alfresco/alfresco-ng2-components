@@ -105,6 +105,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     /**
      * Serializes column fields
+     *
      * @param content container model
      * @returns a list of form field models
      */
@@ -141,6 +142,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     /**
      * Calculate the column width based on the numberOfColumns and current field's colspan property
+     *
      * @param container container model
      * @returns the column width for the given model
      */

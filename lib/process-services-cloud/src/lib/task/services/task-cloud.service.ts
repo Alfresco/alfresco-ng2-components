@@ -49,6 +49,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Complete a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to complete
      * @returns Details of the task that was completed
@@ -66,6 +67,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Validate if a task can be completed.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
@@ -75,6 +77,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Validate if a task is editable.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task is editable
      */
@@ -97,6 +100,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Validate if a task can be claimed.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
@@ -106,6 +110,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Validate if a task can be unclaimed.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
@@ -121,6 +126,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Claims a task for an assignee.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to claim
      * @param assignee User to assign the task to
@@ -143,6 +149,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Un-claims a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to unclaim
      * @returns Details of the task that was unclaimed
@@ -164,6 +171,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Gets details of a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task whose details you want
      * @returns Task details
@@ -180,6 +188,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Creates a new standalone task.
+     *
      * @param startTaskRequest request model
      * @param appName application name
      * @returns Details of the newly created task
@@ -193,6 +202,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Updates the details (name, description, due date) for a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to update
      * @param payload Data to update the task
@@ -211,6 +221,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Gets candidate users of the task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task
      * @returns Candidate users
@@ -226,6 +237,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Gets candidate groups of the task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task
      * @returns Candidate groups
@@ -241,6 +253,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Gets the process definitions associated with an app.
+     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
@@ -256,6 +269,7 @@ export class TaskCloudService extends BaseCloudService {
 
     /**
      * Updates the task assignee.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to update assignee
      * @param assignee assignee to update current user task assignee

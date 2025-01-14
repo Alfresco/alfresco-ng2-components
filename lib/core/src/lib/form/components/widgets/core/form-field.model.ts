@@ -551,6 +551,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     /**
      * Check if the field type is invalid, requires a type to be a `container`
+     *
      * @param type field type
      * @returns `true` if type is a `container`, otherwise `false`
      */

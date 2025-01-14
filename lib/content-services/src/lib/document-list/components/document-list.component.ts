@@ -748,6 +748,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /**
      * Invoked when executing content action for a document or folder.
+     *
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */

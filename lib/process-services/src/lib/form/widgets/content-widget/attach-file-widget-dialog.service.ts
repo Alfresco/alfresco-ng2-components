@@ -40,6 +40,7 @@ export class AttachFileWidgetDialogService {
 
     /**
      * Opens a dialog to choose a file to upload.
+     *
      * @param repository Alfresco endpoint that represents the content service
      * @param currentFolderId Upload file from specific folder
      * @param accountIdentifier account identifier

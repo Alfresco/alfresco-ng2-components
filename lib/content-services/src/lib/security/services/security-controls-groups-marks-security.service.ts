@@ -79,6 +79,7 @@ export class SecurityControlsService {
 
     /**
      * Get All security groups
+     *
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
      * @param include Additional information about the security group
@@ -112,6 +113,7 @@ export class SecurityControlsService {
 
     /**
      * Create security group
+     *
      * @param input securityGroupBody.
      * @returns Observable<SecurityGroupEntry>
      */
@@ -130,6 +132,7 @@ export class SecurityControlsService {
 
     /**
      * Create security marks
+     *
      * @param securityGroupId The key for the security group id.
      * @param input securityMarkBody[].
      * @returns Promise<SecurityMarkPaging | SecurityMarkEntry>
@@ -153,6 +156,7 @@ export class SecurityControlsService {
     /**
      * Get security mark value
      * Gets the value for a selected **securityGroupId**.
+     *
      * @param securityGroupId The key for the security group id.
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @returns Promise<SecurityControlsMarkResponse>
@@ -179,6 +183,7 @@ export class SecurityControlsService {
 
     /**
      * Update a security groups information
+     *
      * @param securityGroupId The Key of Security Group id for which info is required
      * @param input SecurityGroupBody
      * @param opts additional information about the security group
@@ -210,6 +215,7 @@ export class SecurityControlsService {
 
     /**
      * Updates Security Mark value
+     *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark is in use or not.
      * @param input securityMarkBody.
@@ -236,6 +242,7 @@ export class SecurityControlsService {
 
     /**
      * Delete security group
+     *
      * @param securityGroupId The key for the security group id.
      * @returns Observable<void>
      */
@@ -248,6 +255,7 @@ export class SecurityControlsService {
 
     /**
      * Delete security mark
+     *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark id.
      * @returns Promise<SecurityMarkEntry>
@@ -270,6 +278,7 @@ export class SecurityControlsService {
 
     /**
      * Get the authority clearances for a single user/group
+     *
      * @param authorityName The name for the authority for which the clearance is to be fetched. Can be left blank in which case it will fetch it for all users with pagination
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
@@ -292,6 +301,7 @@ export class SecurityControlsService {
 
     /**
      * Updates the authority clearance.
+     *
      * @param authorityName The name for the authority for which the clearance is to be updated
      * @param securityMarksList NodeSecurityMarkBody[]
      * @returns Observable<SecurityMarkEntry | SecurityMarkPaging>

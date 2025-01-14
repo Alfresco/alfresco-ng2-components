@@ -91,6 +91,7 @@ export class UserPreferencesService {
 
     /**
      * Sets up a callback to notify when a property has changed.
+     *
      * @param property The property to watch
      * @returns Notification callback
      */
@@ -103,6 +104,7 @@ export class UserPreferencesService {
 
     /**
      * Gets a preference property.
+     *
      * @param property Name of the property
      * @param defaultValue Default to return if the property is not found
      * @returns Preference property
@@ -118,6 +120,7 @@ export class UserPreferencesService {
 
     /**
      * Sets a preference property.
+     *
      * @param property Name of the property
      * @param value New value for the property
      */
@@ -132,6 +135,7 @@ export class UserPreferencesService {
 
     /**
      * Sets a preference property.
+     *
      * @param property Name of the property
      * @param value New value for the property
      */
@@ -145,6 +149,7 @@ export class UserPreferencesService {
 
     /**
      * Check if an item is present in the storage
+     *
      * @param property Name of the property
      * @returns True if the item is present, false otherwise
      */
@@ -157,6 +162,7 @@ export class UserPreferencesService {
 
     /**
      * Gets the active storage prefix for preferences.
+     *
      * @returns Storage prefix
      */
     getStoragePrefix(): string {
@@ -165,6 +171,7 @@ export class UserPreferencesService {
 
     /**
      * Sets the active storage prefix for preferences.
+     *
      * @param value Name of the prefix
      */
     setStoragePrefix(value: string | null) {
@@ -174,6 +181,7 @@ export class UserPreferencesService {
 
     /**
      * Gets the full property key with prefix.
+     *
      * @param property The property name
      * @returns Property key
      */
@@ -183,6 +191,7 @@ export class UserPreferencesService {
 
     /**
      * Gets an array containing the available page sizes.
+     *
      * @returns Array of page size values
      */
     get supportedPageSizes(): number[] {
@@ -216,6 +225,7 @@ export class UserPreferencesService {
 
     /**
      * Current locale setting.
+     *
      * @returns locale name
      */
     get locale(): string {
@@ -228,6 +238,7 @@ export class UserPreferencesService {
 
     /**
      * Gets the default locale.
+     *
      * @returns Default locale language code
      */
     getDefaultLocale(): string {

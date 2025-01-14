@@ -28,6 +28,7 @@ describe('FormUtilsService', () => {
 
     /**
      * Test the getRestUrlVariablesMap method
+     *
      * @param restUrl The rest URL for getRestUrlVariablesMap
      * @param inputBody The input body for getRestUrlVariablesMap
      * @param expected The expected result of getRestUrlVariablesMap

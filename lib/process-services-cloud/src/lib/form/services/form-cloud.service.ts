@@ -50,6 +50,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets the form definition of a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param version Version of the form
@@ -78,6 +79,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Saves a task form.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param processInstanceId ID of processInstance
@@ -106,6 +108,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Completes a task form.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param processInstanceId ID of processInstance
@@ -140,6 +143,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets details of a task
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Details of the task
@@ -152,6 +156,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets the variables of a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Task variables
@@ -178,6 +183,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets a form definition.
+     *
      * @param appName Name of the app
      * @param formKey key of the target task
      * @param version Version of the form
@@ -201,6 +207,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Parses JSON data to create a corresponding form.
+     *
      * @param json JSON data to create the form
      * @param data Values for the form's fields
      * @param readOnly Toggles whether or not the form should be read-only

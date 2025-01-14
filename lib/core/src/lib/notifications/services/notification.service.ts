@@ -38,6 +38,7 @@ export class NotificationService {
 
     /**
      * Opens a SnackBar notification to show a message.
+     *
      * @param message The message (or resource key) to show.
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @param interpolateArgs The interpolation parameters to add for the translation
@@ -53,6 +54,7 @@ export class NotificationService {
 
     /**
      * Opens a SnackBar notification with a message and a response button.
+     *
      * @param message The message (or resource key) to show.
      * @param action Caption for the response button
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
@@ -70,6 +72,7 @@ export class NotificationService {
 
     /**
      * Rase error message
+     *
      * @param message Text message or translation key for the message.
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
@@ -92,6 +95,7 @@ export class NotificationService {
 
     /**
      * Rase info message
+     *
      * @param message Text message or translation key for the message.
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
@@ -114,6 +118,7 @@ export class NotificationService {
 
     /**
      * Rase warning message
+     *
      * @param message Text message or translation key for the message.
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
@@ -143,6 +148,7 @@ export class NotificationService {
 
     /**
      * Push new notification to Notification History
+     *
      * @param notification - Notification model to be pushed.
      */
     pushToNotificationHistory(notification: NotificationModel) {

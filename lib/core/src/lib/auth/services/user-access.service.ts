@@ -67,6 +67,7 @@ export class UserAccessService {
 
     /**
      * Checks for global roles access.
+     *
      * @param rolesToCheck List of the roles to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
@@ -90,6 +91,7 @@ export class UserAccessService {
 
     /**
      * Checks for global roles access.
+     *
      * @param appName The app name
      * @param rolesToCheck List of the roles to check
      * @returns True if it contains at least one of the given roles, false otherwise
