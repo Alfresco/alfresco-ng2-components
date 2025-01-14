@@ -20,7 +20,6 @@ import { UnclaimTaskDirective } from './components/task-form/unclaim-task.direct
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { AttachFormComponent } from './components/attach-form/attach-form.component';
 import { ChecklistComponent } from './components/checklist/checklist.component';
-import { TaskAuditDirective } from './components/task-audit/task-audit.directive';
 import { TaskFiltersComponent } from './components/task-filters/task-filters.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
@@ -36,7 +35,6 @@ export * from './components/task-form/task-form.component';
 export * from './components/task-form/claim-task.directive';
 export * from './components/task-form/unclaim-task.directive';
 export * from './components/task-details/task-details.component';
-export * from './components/task-audit/task-audit.directive';
 export * from './components/start-task/start-task.component';
 export * from './components/task-standalone/task-standalone.component';
 export * from './components/attach-form/attach-form.component';
@@ -62,6 +60,5 @@ export const TASK_LIST_DIRECTIVES = [
     StartTaskComponent,
     TaskStandaloneComponent,
     ClaimTaskDirective,
-    UnclaimTaskDirective,
-    TaskAuditDirective
+    UnclaimTaskDirective
 ] as const;
