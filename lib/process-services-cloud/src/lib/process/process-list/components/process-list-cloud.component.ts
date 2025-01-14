@@ -30,6 +30,7 @@ import {
 } from '@angular/core';
 import {
     AppConfigService,
+    ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     DataCellEvent,
@@ -38,6 +39,10 @@ import {
     DataRowEvent,
     DataTableComponent,
     DataTableSchema,
+    EmptyContentComponent,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    NoContentTemplateDirective,
     PaginatedComponent,
     PaginationModel,
     UserPreferencesService,
@@ -53,26 +58,40 @@ import { PreferenceCloudServiceInterface } from '../../../services/preference-cl
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
-import {
-    PROCESS_LIST_CUSTOM_VARIABLE_COLUMN,
-    ProcessListDataColumnCustomData
-} from '../../../models/data-column-custom-data';
+import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN, ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
+/* eslint-disable @typescript-eslint/brace-style */
+
 @Component({
     selector: 'adf-cloud-process-list',
+    standalone: true,
+    imports: [
+        DataTableComponent,
+        MatProgressSpinnerModule,
+        TranslateModule,
+        ColumnsSelectorComponent,
+        MainMenuDataTableTemplateDirective,
+        EmptyContentComponent,
+        NoContentTemplateDirective,
+        LoadingContentTemplateDirective,
+        NgIf
+    ],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
-    implements OnChanges, AfterContentInit, PaginatedComponent {
-
+    implements OnChanges, AfterContentInit, PaginatedComponent
+{
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -244,24 +263,24 @@ export class ProcessListCloudComponent
     @Input()
     processDefinitionNames: string[] = [];
 
-   /**
-    * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
-    * This input will be used only if searchApiMethod input is provided with 'POST' value.
-    */
+    /**
+     * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
+     */
     @Input()
     initiators: string[] = [];
 
-   /**
-    * Filter the processes. Display only processes present in any of the specified app versions.
-    * This input will be used only if searchApiMethod input is provided with 'POST' value.
-    */
+    /**
+     * Filter the processes. Display only processes present in any of the specified app versions.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
+     */
     @Input()
     appVersions: string[] = [];
 
-   /**
-    * Filter the processes. Display only processes with provided statuses.
-    * This input will be used only if searchApiMethod input is provided with 'POST' value.
-    */
+    /**
+     * Filter the processes. Display only processes with provided statuses.
+     * This input will be used only if searchApiMethod input is provided with 'POST' value.
+     */
     @Input()
     statuses: string[] = [];
 
@@ -278,7 +297,7 @@ export class ProcessListCloudComponent
 
     /** Emitted when rows are selected/unselected. */
     @Output()
-    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
+    rowsSelected = new EventEmitter<any[]>();
 
     /** Emitted before the context menu is displayed for a row. */
     @Output()
@@ -294,11 +313,11 @@ export class ProcessListCloudComponent
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
@@ -335,40 +354,39 @@ export class ProcessListCloudComponent
             totalItems: 0
         });
 
-        combineLatest([
-            this.isColumnSchemaCreated$,
-            this.fetchProcessesTrigger$
-        ]).pipe(
-            tap(() => this.isLoading = true),
-            filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
-            switchMap(() => {
-                if (this.searchApiMethod === 'POST') {
-                    const requestNode = this.createProcessListRequestNode();
-                    this.processListRequestNode = requestNode;
-                    return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));
-                } else {
-                    const requestNode = this.createRequestNode();
-                    this.requestNode = requestNode;
-                    return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
+        combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
+            .pipe(
+                tap(() => (this.isLoading = true)),
+                filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
+                switchMap(() => {
+                    if (this.searchApiMethod === 'POST') {
+                        const requestNode = this.createProcessListRequestNode();
+                        this.processListRequestNode = requestNode;
+                        return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));
+                    } else {
+                        const requestNode = this.createRequestNode();
+                        this.requestNode = requestNode;
+                        return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
+                    }
+                }),
+                takeUntilDestroyed()
+            )
+            .subscribe({
+                next: (processes) => {
+                    this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
+
+                    this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
+
+                    this.success.emit(processes);
+                    this.isLoading = false;
+                    this.pagination.next(processes.list.pagination);
+                },
+                error: (error) => {
+                    console.error(error);
+                    this.error.emit(error);
+                    this.isLoading = false;
                 }
-            }),
-            takeUntilDestroyed()
-        ).subscribe({
-            next: (processes) => {
-                this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
-
-                this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
-
-                this.success.emit(processes);
-                this.isLoading = false;
-                this.pagination.next(processes.list.pagination);
-            },
-            error: (error) => {
-                console.error(error);
-                this.error.emit(error);
-                this.isLoading = false;
-            }
-        });
+            });
     }
 
     ngAfterContentInit() {
@@ -428,7 +446,6 @@ export class ProcessListCloudComponent
             this.rows = [];
         }
     }
-
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
         for (const property in changes) {
@@ -613,7 +630,7 @@ export class ProcessListCloudComponent
                 }
             });
         } else {
-            return new ProcessListRequestSortingModel({orderBy, direction, isFieldProcessVariable: false});
+            return new ProcessListRequestSortingModel({ orderBy, direction, isFieldProcessVariable: false });
         }
     }
 
