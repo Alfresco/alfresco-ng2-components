@@ -19,7 +19,6 @@ import { NgModule } from '@angular/core';
 import { ProcessFiltersCloudComponent } from './components/process-filters/process-filters-cloud.component';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog/process-filter-dialog-cloud.component';
-import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
 
 export const PROCESS_FILTERS_CLOUD_DIRECTIVES = [
     ProcessFiltersCloudComponent,
@@ -29,7 +28,7 @@ export const PROCESS_FILTERS_CLOUD_DIRECTIVES = [
 
 /** @deprecated use standalone components or PROCESS_FILTERS_CLOUD_DIRECTIVES instead */
 @NgModule({
-    imports: [...APP_LIST_CLOUD_DIRECTIVES, ...PROCESS_FILTERS_CLOUD_DIRECTIVES],
+    imports: [...PROCESS_FILTERS_CLOUD_DIRECTIVES],
     exports: [...PROCESS_FILTERS_CLOUD_DIRECTIVES]
 })
 export class ProcessFiltersCloudModule {}

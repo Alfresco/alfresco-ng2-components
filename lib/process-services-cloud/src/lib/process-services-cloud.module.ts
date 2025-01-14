@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
+import { FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
@@ -31,35 +31,22 @@ import {
     TASK_LIST_PREFERENCES_SERVICE_TOKEN
 } from './services/public-api';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
-import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorComponent } from './rich-text-editor';
 import { GroupCloudComponent } from './group/components/group-cloud.component';
 import { PeopleCloudComponent } from './people/components/people-cloud.component';
 
+export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [
+    ...APP_LIST_CLOUD_DIRECTIVES,
+    ...FORM_CLOUD_DIRECTIVES,
+    ...TASK_FORM_CLOUD_DIRECTIVES,
+    PeopleCloudComponent,
+    RichTextEditorComponent
+] as const;
+
 @NgModule({
-    imports: [
-        CoreModule,
-        ...APP_LIST_CLOUD_DIRECTIVES,
-        ProcessCloudModule,
-        TaskCloudModule,
-        GroupCloudComponent,
-        PeopleCloudComponent,
-        ...FORM_CLOUD_DIRECTIVES,
-        ...TASK_FORM_CLOUD_DIRECTIVES,
-        ApolloModule,
-        RichTextEditorComponent
-    ],
+    imports: [ProcessCloudModule, TaskCloudModule, GroupCloudComponent, ...PROCESS_SERVICES_CLOUD_DIRECTIVES],
     providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')],
-    exports: [
-        ...APP_LIST_CLOUD_DIRECTIVES,
-        ProcessCloudModule,
-        TaskCloudModule,
-        GroupCloudComponent,
-        ...FORM_CLOUD_DIRECTIVES,
-        ...TASK_FORM_CLOUD_DIRECTIVES,
-        PeopleCloudComponent,
-        RichTextEditorComponent
-    ]
+    exports: [ProcessCloudModule, TaskCloudModule, GroupCloudComponent, ...PROCESS_SERVICES_CLOUD_DIRECTIVES]
 })
 export class ProcessServicesCloudModule {
     static forRoot(

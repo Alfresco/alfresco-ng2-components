@@ -24,6 +24,7 @@ import { LocalPreferenceCloudService } from '../../services/local-preference-clo
 
 export const TASK_LIST_CLOUD_DIRECTIVES = [TaskListCloudComponent, ServiceTaskListCloudComponent] as const;
 
+/** @deprecated use standalone components or TASK_LIST_CLOUD_DIRECTIVES instead */
 @NgModule({
     imports: [...TASK_LIST_CLOUD_DIRECTIVES],
     exports: [...TASK_LIST_CLOUD_DIRECTIVES],

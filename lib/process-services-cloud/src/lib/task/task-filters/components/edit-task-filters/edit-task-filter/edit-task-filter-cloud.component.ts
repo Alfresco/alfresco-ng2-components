@@ -40,6 +40,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DateRangeFilterComponent } from '../../../../../common/date-range-filter/date-range-filter.component';
 import { PeopleCloudComponent } from '../../../../../people/components/people-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter/task-assignment-filter.component';
+import { ApolloModule } from 'apollo-angular';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
@@ -60,7 +61,8 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
         MatCheckboxModule,
         DateRangeFilterComponent,
         PeopleCloudComponent,
-        TaskAssignmentFilterCloudComponent
+        TaskAssignmentFilterCloudComponent,
+        ApolloModule
     ],
     templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss'],
