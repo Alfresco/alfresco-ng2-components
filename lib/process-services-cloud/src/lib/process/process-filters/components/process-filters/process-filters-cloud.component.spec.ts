@@ -26,10 +26,8 @@ import { LocalPreferenceCloudService } from '../../../../services/local-preferen
 import { mockProcessFilters } from '../../mock/process-filters-cloud.mock';
 import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
-import { NotificationCloudService } from '../../../../services/notification-cloud.service';
 import { ApolloModule } from 'apollo-angular';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material/list';
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
@@ -46,7 +44,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatListModule],
+            imports: [NoopTranslateModule, NoopAnimationsModule, ProcessFiltersCloudComponent],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
@@ -58,7 +56,6 @@ describe('ProcessFiltersCloudComponent', () => {
                     }
                 },
                 { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock },
-                NotificationCloudService,
                 ApolloModule
             ]
         });

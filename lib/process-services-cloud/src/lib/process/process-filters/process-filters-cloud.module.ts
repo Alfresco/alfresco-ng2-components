@@ -16,39 +16,20 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProcessFiltersCloudComponent } from './components/process-filters/process-filters-cloud.component';
-import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog/process-filter-dialog-cloud.component';
 import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
-import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
-import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
 
 export const PROCESS_FILTERS_CLOUD_DIRECTIVES = [
-    // ProcessFiltersCloudComponent,
+    ProcessFiltersCloudComponent,
     EditProcessFilterCloudComponent,
     ProcessFilterDialogCloudComponent
 ] as const;
 
 /** @deprecated use standalone components or PROCESS_FILTERS_CLOUD_DIRECTIVES instead */
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CommonModule,
-        MaterialModule,
-        ...APP_LIST_CLOUD_DIRECTIVES,
-        CoreModule,
-        DateRangeFilterComponent,
-        PeopleCloudComponent,
-        ...PROCESS_FILTERS_CLOUD_DIRECTIVES
-    ],
-    declarations: [ProcessFiltersCloudComponent],
-    exports: [ProcessFiltersCloudComponent, ...PROCESS_FILTERS_CLOUD_DIRECTIVES]
+    imports: [...APP_LIST_CLOUD_DIRECTIVES, ...PROCESS_FILTERS_CLOUD_DIRECTIVES],
+    exports: [...PROCESS_FILTERS_CLOUD_DIRECTIVES]
 })
 export class ProcessFiltersCloudModule {}
