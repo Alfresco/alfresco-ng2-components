@@ -8,7 +8,12 @@
                     <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showFilterActions" class="adf-cloud-edit-process-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
-                            <button *ngFor="let filterAction of processFilterActions" mat-icon-button [title]="filterAction.tooltip | translate" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="isDisabledAction(filterAction)" (click)="executeFilterActions($event, filterAction)">
+                            <button *ngFor="let filterAction of processFilterActions"
+                                    mat-icon-button
+                                    [title]="filterAction.tooltip | translate"
+                                    [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
+                                    [disabled]="isDisabledAction(filterAction)"
+                                    (click)="executeFilterActions($event, filterAction)">
                                 <adf-icon [value]="filterAction.icon" />
                             </button>
                         </ng-container>
@@ -72,14 +77,16 @@
                                 [matDatepicker]="dateController"
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                        <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key" />
-                        <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key" />
-                        <div class="adf-edit-process-filter-date-error-container">
-                            <div *ngIf="hasError(processFilterProperty)">
-                                <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
-                                <mat-icon class="adf-error-icon">warning</mat-icon>
+                            <mat-datepicker-toggle
+                                matSuffix [for]="dateController"
+                               [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key" />
+                            <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key" />
+                            <div class="adf-edit-process-filter-date-error-container">
+                                <div *ngIf="hasError(processFilterProperty)">
+                                    <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
+                                    <mat-icon class="adf-error-icon">warning</mat-icon>
+                                </div>
                             </div>
-                        </div>
                         </mat-form-field>
 
                         <adf-cloud-date-range-filter *ngIf="processFilterProperty.type === 'date-range'"

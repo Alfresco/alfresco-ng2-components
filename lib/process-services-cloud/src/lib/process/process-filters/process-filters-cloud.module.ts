@@ -38,9 +38,11 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         ...APP_LIST_CLOUD_DIRECTIVES,
         CoreModule,
         DateRangeFilterComponent,
-        PeopleCloudComponent
+        PeopleCloudComponent,
+        //
+        EditProcessFilterCloudComponent
     ],
-    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
+    declarations: [ProcessFiltersCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
 })
 export class ProcessFiltersCloudModule {}

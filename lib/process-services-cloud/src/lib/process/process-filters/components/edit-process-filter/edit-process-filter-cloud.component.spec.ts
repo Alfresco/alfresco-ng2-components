@@ -16,36 +16,26 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { ADF_DATE_FORMATS, FullNamePipe, NoopAuthModule, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, NoopAuthModule, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { MatSelectModule } from '@angular/material/select';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { endOfDay, format, isValid, startOfDay, subYears } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { of } from 'rxjs';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
-import { DateRangeFilterComponent } from '../../../../common/date-range-filter/date-range-filter.component';
 import { fakeEnvironmentList } from '../../../../common/mock/environment.mock';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
-import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 import { IdentityUserServiceMock } from '../../../../people/mock/people-cloud.mock';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
@@ -106,17 +96,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 MatDialogModule,
                 NoopTranslateModule,
                 NoopAnimationsModule,
-                MatSelectModule,
-                MatDatepickerModule,
-                MatAutocompleteModule,
-                FullNamePipe,
-                MatFormFieldModule,
-                MatInputModule,
-                ReactiveFormsModule,
-                MatChipsModule,
-                MatProgressBarModule,
-                PeopleCloudComponent,
-                DateRangeFilterComponent
+                EditProcessFilterCloudComponent
             ],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
