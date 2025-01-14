@@ -526,7 +526,7 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             }
             default:
-                if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {
+                if (this.shouldUpdateFormValues(this.type)) {
                     this.form.values[this.id] = this.value;
                 }
         }
@@ -555,6 +555,10 @@ export class FormFieldModel extends FormWidgetModel {
 
     isEmptyValueOption(option: FormFieldOption): boolean {
         return this.hasEmptyValue && option?.id === this.defaultEmptyOptionId;
+    }
+
+    private shouldUpdateFormValues(type) {
+        return !FormFieldTypes.isReadOnlyType(type) && !this.isInvalidFieldType(type) && !FormFieldTypes.isSectionType(type);
     }
 
     private addOptions(options: FormFieldOption[]) {

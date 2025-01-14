@@ -869,6 +869,16 @@ describe('FormFieldModel', () => {
         expect(field.numberOfColumns).toBe(999);
     });
 
+    it('should calculate the columns in case of section type', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            type: FormFieldTypes.SECTION,
+            numberOfColumns: 123
+        });
+
+        expect(field.numberOfColumns).toBe(123);
+    });
+
     it('should instantiate FormField when has no variable', () => {
         const form = new FormModel({});
         form.json = {
@@ -890,7 +900,22 @@ describe('FormFieldModel', () => {
             readOnly: true
         });
         field.updateForm();
-        expect(form.values['header_field']).not.toBeDefined();
+        expect(form.values['header_field']).toBeUndefined();
+    });
+
+    it('section field type should not appear into form values', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'SectionFieldtype',
+            id: 'section_field',
+            name: 'section',
+            type: FormFieldTypes.SECTION,
+            value: '',
+            required: false,
+            readOnly: true
+        });
+        field.updateForm();
+        expect(form.values['section_field']).toBeUndefined();
     });
 
     describe('dropdown field', () => {
