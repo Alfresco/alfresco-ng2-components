@@ -18,8 +18,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { ProcessFiltersCloudModule } from '../../process-filters-cloud.module';
 
 describe('ProcessFilterDialogCloudComponent', () => {
     let component: ProcessFilterDialogCloudComponent;

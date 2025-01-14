@@ -21,21 +21,21 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import {
     ProcessFilterAction,
     ProcessFilterCloudModel,
     ProcessFilterOptions,
     ProcessFilterProperties,
     ProcessSortFilterProperty
-} from '../models/process-filter-cloud.model';
+} from '../../models/process-filter-cloud.model';
 import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
-import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
-import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { ProcessCloudService } from '../../services/process-cloud.service';
-import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
-import { IdentityUserModel } from '../../../people/models/identity-user.model';
-import { Environment } from '../../../common/interface/environment.interface';
+import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
+import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
+import { ProcessCloudService } from '../../../services/process-cloud.service';
+import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
+import { IdentityUserModel } from '../../../../people/models/identity-user.model';
+import { Environment } from '../../../../common/interface/environment.interface';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

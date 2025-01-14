@@ -40,27 +40,27 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { endOfDay, format, isValid, startOfDay, subYears } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { of } from 'rxjs';
-import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { DateRangeFilterComponent } from '../../../common/date-range-filter/date-range-filter.component';
-import { fakeEnvironmentList } from '../../../common/mock/environment.mock';
-import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
-import { IdentityUserServiceMock } from '../../../people/mock/people-cloud.mock';
-import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { NotificationCloudService } from '../../../services/notification-cloud.service';
-import { ProcessCloudService } from '../../services/process-cloud.service';
-import { mockAppVersions } from '../mock/process-filters-cloud.mock';
-import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
-import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from './../../../app/mock/app-model.mock';
+import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
+import { DateRangeFilterComponent } from '../../../../common/date-range-filter/date-range-filter.component';
+import { fakeEnvironmentList } from '../../../../common/mock/environment.mock';
+import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
+import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
+import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
+import { IdentityUserServiceMock } from '../../../../people/mock/people-cloud.mock';
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
+import { NotificationCloudService } from '../../../../services/notification-cloud.service';
+import { ProcessCloudService } from '../../../services/process-cloud.service';
+import { mockAppVersions } from '../../mock/process-filters-cloud.mock';
+import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
+import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
+import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../../../../app/mock/app-model.mock';
 import {
     EditProcessFilterCloudComponent,
     PROCESS_FILTER_ACTION_RESTORE,
     PROCESS_FILTER_ACTION_SAVE_DEFAULT
 } from './edit-process-filter-cloud.component';
-import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
+import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
 import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
 
 describe('EditProcessFilterCloudComponent', () => {

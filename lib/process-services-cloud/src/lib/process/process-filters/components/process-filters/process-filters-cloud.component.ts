@@ -15,26 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
-import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
+import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
-import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
+import { FilterParamsModel } from '../../../../task/task-filters/models/filter-cloud.model';
 import { debounceTime, tap } from 'rxjs/operators';
-import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
-import { ProcessFilterCloudAdapter } from '../../process-list/models/process-cloud-query-request.model';
+import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
+import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -326,6 +315,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     private fetchProcessFilterCounter(filter: ProcessFilterCloudModel): Observable<number> {
         return this.searchApiMethod === 'POST'
             ? this.processListCloudService.getProcessListCounter(new ProcessFilterCloudAdapter(filter))
-            : this.processListCloudService.getProcessCounter(filter.appName, filter.status)
+            : this.processListCloudService.getProcessCounter(filter.appName, filter.status);
     }
 }

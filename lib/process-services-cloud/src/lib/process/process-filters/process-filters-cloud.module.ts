@@ -18,12 +18,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
+import { ProcessFiltersCloudComponent } from './components/process-filters/process-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
-import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
-import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
+import { EditProcessFilterCloudComponent } from './components/edit-process-filter/edit-process-filter-cloud.component';
+import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog/process-filter-dialog-cloud.component';
 import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
 import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
