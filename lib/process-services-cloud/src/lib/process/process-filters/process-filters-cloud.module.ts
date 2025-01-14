@@ -28,6 +28,13 @@ import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
 import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
 
+export const PROCESS_FILTERS_CLOUD_DIRECTIVES = [
+    // ProcessFiltersCloudComponent,
+    EditProcessFilterCloudComponent,
+    ProcessFilterDialogCloudComponent
+] as const;
+
+/** @deprecated use standalone components or PROCESS_FILTERS_CLOUD_DIRECTIVES instead */
 @NgModule({
     imports: [
         FormsModule,
@@ -39,10 +46,9 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         CoreModule,
         DateRangeFilterComponent,
         PeopleCloudComponent,
-        //
-        EditProcessFilterCloudComponent
+        ...PROCESS_FILTERS_CLOUD_DIRECTIVES
     ],
-    declarations: [ProcessFiltersCloudComponent, ProcessFilterDialogCloudComponent],
-    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
+    declarations: [ProcessFiltersCloudComponent],
+    exports: [ProcessFiltersCloudComponent, ...PROCESS_FILTERS_CLOUD_DIRECTIVES]
 })
 export class ProcessFiltersCloudModule {}
