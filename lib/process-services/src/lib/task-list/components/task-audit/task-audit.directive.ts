@@ -24,6 +24,7 @@ import { TaskListService } from '../../services/tasklist.service';
 const JSON_FORMAT: string = 'json';
 const PDF_FORMAT: string = 'pdf';
 
+/** @deprecated no longer used anywhere, and can be safely removed */
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'button[adf-task-audit]',

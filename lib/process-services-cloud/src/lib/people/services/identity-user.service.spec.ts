@@ -18,18 +18,15 @@
 import { TestBed } from '@angular/core/testing';
 import { IdentityUserService } from './identity-user.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import {
-    mockSearchUserByApp,
-    mockSearchUserByAppAndGroups,
-    mockSearchUserByGroups,
-    mockSearchUserByGroupsAndRoles,
-    mockSearchUserByGroupsAndRolesAndApp,
-    mockSearchUserByRoles,
-    mockSearchUserByRolesAndApp
-} from '../mock/identity-user.service.mock';
 import { mockFoodUsers } from '../mock/people-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { mockHttpErrorResponse } from '../../group/mock/identity-group.service.mock';
+import { HttpErrorResponse } from '@angular/common/http';
+
+const mockHttpErrorResponse = new HttpErrorResponse({
+    error: 'Mock Error',
+    status: 404,
+    statusText: 'Not Found'
+});
 
 describe('IdentityUserService', () => {
     let service: IdentityUserService;
@@ -83,154 +80,214 @@ describe('IdentityUserService', () => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchUserByRoles).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(searchSpy).toHaveBeenCalled();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2'
+            service
+                .search('fake', {
+                    roles: ['fake-role-1', 'fake-role-2'],
+                    groups: [],
+                    withinApplication: ''
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        role: 'fake-role-1,fake-role-2'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should not fetch users by roles if error occurred', (done) => {
             requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
-            service.search('fake', mockSearchUserByRoles).subscribe(
-                () => {
-                    fail('expected an error, not users');
-                },
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                    done();
-                }
-            );
+            service
+                .search('fake', {
+                    roles: ['fake-role-1', 'fake-role-2'],
+                    groups: [],
+                    withinApplication: ''
+                })
+                .subscribe(
+                    () => {
+                        fail('expected an error, not users');
+                    },
+                    (error) => {
+                        expect(error.status).toEqual(404);
+                        expect(error.statusText).toEqual('Not Found');
+                        expect(error.error).toEqual('Mock Error');
+                        done();
+                    }
+                );
         });
 
         it('should fetch users by groups', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchUserByGroups).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(searchSpy).toHaveBeenCalled();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    group: 'fake-group-1,fake-group-2'
+            service
+                .search('fake', {
+                    roles: [],
+                    groups: ['fake-group-1', 'fake-group-2'],
+                    withinApplication: ''
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        group: 'fake-group-1,fake-group-2'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should fetch users by roles with groups', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchUserByGroupsAndRoles).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(searchSpy).toHaveBeenCalled();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2',
-                    group: 'fake-group-1,fake-group-2'
+            service
+                .search('fake', {
+                    roles: ['fake-role-1', 'fake-role-2'],
+                    groups: ['fake-group-1', 'fake-group-2'],
+                    withinApplication: ''
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        role: 'fake-role-1,fake-role-2',
+                        group: 'fake-group-1,fake-group-2'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should fetch users by roles with groups and appName', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchUserByGroupsAndRolesAndApp).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(searchSpy).toHaveBeenCalled();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2',
-                    application: 'fake-app-name',
-                    group: 'fake-group-1,fake-group-2'
+            service
+                .search('fake', {
+                    roles: ['fake-role-1', 'fake-role-2'],
+                    groups: ['fake-group-1', 'fake-group-2'],
+                    withinApplication: 'fake-app-name'
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        role: 'fake-role-1,fake-role-2',
+                        application: 'fake-app-name',
+                        group: 'fake-group-1,fake-group-2'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should not fetch users by groups if error occurred', (done) => {
             requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
-            service.search('fake', mockSearchUserByGroups).subscribe(
-                () => {
-                    fail('expected an error, not users');
-                },
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                    done();
-                }
-            );
+            service
+                .search('fake', {
+                    roles: [],
+                    groups: ['fake-group-1', 'fake-group-2'],
+                    withinApplication: ''
+                })
+                .subscribe(
+                    () => {
+                        fail('expected an error, not users');
+                    },
+                    (error) => {
+                        expect(error.status).toEqual(404);
+                        expect(error.statusText).toEqual('Not Found');
+                        expect(error.error).toEqual('Mock Error');
+                        done();
+                    }
+                );
         });
 
         it('should fetch users within app', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
 
-            service.search('fake', mockSearchUserByApp).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name'
+            service
+                .search('fake', {
+                    roles: [],
+                    groups: [],
+                    withinApplication: 'fake-app-name'
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        application: 'fake-app-name'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should fetch users within app with roles', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
 
-            service.search('fake', mockSearchUserByRolesAndApp).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name',
-                    role: 'fake-role-1,fake-role-2'
+            service
+                .search('fake', {
+                    roles: ['fake-role-1', 'fake-role-2'],
+                    groups: [],
+                    withinApplication: 'fake-app-name'
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        application: 'fake-app-name',
+                        role: 'fake-role-1,fake-role-2'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should fetch users within app with groups', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchUserByAppAndGroups).subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(searchSpy).toHaveBeenCalled();
-                expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name',
-                    group: 'fake-group-1,fake-group-2'
+            service
+                .search('fake', {
+                    roles: [],
+                    groups: ['fake-group-1', 'fake-group-2'],
+                    withinApplication: 'fake-app-name'
+                })
+                .subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        application: 'fake-app-name',
+                        group: 'fake-group-1,fake-group-2'
+                    });
+                    done();
                 });
-                done();
-            });
         });
 
         it('should not fetch users within app if error occurred', (done) => {
             requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
-            service.search('fake', mockSearchUserByApp).subscribe(
-                () => {
-                    fail('expected an error, not users');
-                },
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                    done();
-                }
-            );
+            service
+                .search('fake', {
+                    roles: [],
+                    groups: [],
+                    withinApplication: 'fake-app-name'
+                })
+                .subscribe(
+                    () => {
+                        fail('expected an error, not users');
+                    },
+                    (error) => {
+                        expect(error.status).toEqual(404);
+                        expect(error.statusText).toEqual('Not Found');
+                        expect(error.error).toEqual('Mock Error');
+                        done();
+                    }
+                );
         });
     });
 });

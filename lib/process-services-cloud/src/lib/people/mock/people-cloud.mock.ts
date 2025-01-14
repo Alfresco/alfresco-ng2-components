@@ -18,12 +18,29 @@
 import { Injectable } from '@angular/core';
 import { Observable, EMPTY, of } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityUserFilterInterface } from '../services/identity-user-filter.interface';
-import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
+import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
 
-export const mockYorkshirePudding: IdentityUserModel = { id: 'yorkshire', username: 'Yorkshire Pudding', firstName: 'Yorkshire', lastName: 'Pudding', email: 'pudding@food.com' };
-export const mockShepherdsPie: IdentityUserModel = { id: 'shepherds', username: 'Shepherds Pie', firstName: 'Shepherds', lastName: 'Pie', email: 'shepherds@food.com'};
-export const mockKielbasaSausage: IdentityUserModel = { id: 'kielbasa', username: 'Kielbasa Sausage', firstName: 'Kielbasa', lastName: 'Sausage', email: 'sausage@food.com' };
+export const mockYorkshirePudding: IdentityUserModel = {
+    id: 'yorkshire',
+    username: 'Yorkshire Pudding',
+    firstName: 'Yorkshire',
+    lastName: 'Pudding',
+    email: 'pudding@food.com'
+};
+export const mockShepherdsPie: IdentityUserModel = {
+    id: 'shepherds',
+    username: 'Shepherds Pie',
+    firstName: 'Shepherds',
+    lastName: 'Pie',
+    email: 'shepherds@food.com'
+};
+export const mockKielbasaSausage: IdentityUserModel = {
+    id: 'kielbasa',
+    username: 'Kielbasa Sausage',
+    firstName: 'Kielbasa',
+    lastName: 'Sausage',
+    email: 'sausage@food.com'
+};
 
 export const mockFoodUsers: IdentityUserModel[] = [mockYorkshirePudding, mockShepherdsPie, mockKielbasaSausage];
 
@@ -32,24 +49,19 @@ export const mockPreselectedFoodUsers = [
     { ...mockKielbasaSausage, readonly: false }
 ];
 
-@Injectable({
-    providedIn: 'root'
-})
-export class IdentityUserServiceMock implements IdentityUserServiceInterface {
-
+@Injectable()
+export class IdentityUserServiceMock extends IdentityUserService {
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
     getCurrentUserInfo(): IdentityUserModel {
         return mockKielbasaSausage;
     }
 
-    search(name: string, _filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
+    search(name: string): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         }
 
-        return of(mockFoodUsers.filter(group =>
-            group.username.toUpperCase().includes(name.toUpperCase())
-        ));
+        return of(mockFoodUsers.filter((group) => group.username.toUpperCase().includes(name.toUpperCase())));
     }
 }

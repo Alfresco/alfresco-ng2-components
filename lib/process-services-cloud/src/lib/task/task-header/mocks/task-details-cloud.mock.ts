@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../models/task-details-cloud.model';
 
 export const taskDetailsWithParentTaskIdMock: TaskDetailsCloudModel = {
     appName: 'task-app',
@@ -160,30 +160,6 @@ export const completedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     lastModifiedTo: null,
     lastModifiedFrom: null,
     standalone: false
-};
-
-export const cancelledTaskDetailsCloudMock: TaskDetailsCloudModel = {
-    appName: 'mock-app-name',
-    appVersion: 1,
-    id: 'mock-task-id',
-    assignee: 'CancelledTaskAssignee',
-    name: 'This is a new task',
-    description: 'This is the description ',
-    createdDate: new Date(1545048055900),
-    dueDate: new Date(1545091200000),
-    claimedDate: null,
-    priority: 5,
-    category: null,
-    processDefinitionId: null,
-    processInstanceId: null,
-    status: 'CANCELLED',
-    owner: 'ownerUser',
-    parentTaskId: null,
-    formKey: null,
-    lastModified: new Date(1545048055900),
-    lastModifiedTo: null,
-    lastModifiedFrom: null,
-    standalone: true
 };
 
 export const suspendedTaskDetailsCloudMock: TaskDetailsCloudModel = {

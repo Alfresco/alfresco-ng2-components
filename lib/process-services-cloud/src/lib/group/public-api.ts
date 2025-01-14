@@ -16,8 +16,6 @@
  */
 
 export * from './components/group-cloud.component';
-export * from './pipe/group-initial.pipe';
 export * from './models/identity-group.model';
 export * from './group-cloud.module';
 export * from './services/identity-group.service';
-export * from './services/identity-group-service.token';

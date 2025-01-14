@@ -19,8 +19,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { UnClaimTaskCloudDirective } from '../../../directives/unclaim-task-cloud.directive';
-import { ClaimTaskCloudDirective } from '../../../directives/claim-task-cloud.directive';
+import { UnClaimTaskCloudDirective } from './unclaim-task/unclaim-task-cloud.directive';
+import { ClaimTaskCloudDirective } from './claim-task/claim-task-cloud.directive';
 
 @Component({
     selector: 'adf-cloud-user-task-cloud-buttons',

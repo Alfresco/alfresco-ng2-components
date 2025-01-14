@@ -17,7 +17,6 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { PeopleCloudComponent } from './people-cloud.component';
-import { PeopleCloudModule } from '../people-cloud.module';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { IdentityUserService } from '../services/identity-user.service';
 import { IdentityUserServiceMock, mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding } from '../mock/people-cloud.mock';
@@ -28,13 +27,10 @@ export default {
     title: 'Process Services Cloud/People Cloud/People Cloud',
     decorators: [
         moduleMetadata({
-            imports: [PeopleCloudModule]
+            imports: [PeopleCloudComponent]
         }),
         applicationConfig({
-            providers: [
-                { provide: IdentityUserService, useClass: IdentityUserServiceMock },
-                importProvidersFrom(ProcessServicesCloudStoryModule)
-            ]
+            providers: [{ provide: IdentityUserService, useClass: IdentityUserServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
@@ -119,7 +115,7 @@ export default {
             description: 'FormControl to list of users.',
             table: {
                 type: { summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
+                defaultValue: { summary: "new FormControl({ value: '', disabled: false })" },
                 category: 'Form Controls'
             }
         },
@@ -128,7 +124,7 @@ export default {
             description: 'FormControl to search the user.',
             table: {
                 type: { summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
+                defaultValue: { summary: "new FormControl({ value: '', disabled: false })" },
                 category: 'Form Controls'
             }
         },
@@ -173,7 +169,7 @@ export default {
     }
 } as Meta<PeopleCloudComponent>;
 
-const template: StoryFn<PeopleCloudComponent> = args => ({
+const template: StoryFn<PeopleCloudComponent> = (args) => ({
     props: args
 });
 

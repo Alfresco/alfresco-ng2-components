@@ -43,7 +43,7 @@
                         class="adf-cloud-group-row"
                         id="adf-group-{{i}}"
                         data-automation-id="adf-cloud-group-row">
-                        <button class="adf-group-short-name" mat-fab>{{group | groupNameInitial }}</button>
+                        <button class="adf-group-short-name" mat-fab>{{getGroupNameInitials(group)}}</button>
                         <span>{{group.name}}</span>
                     </div>
                 </mat-option>

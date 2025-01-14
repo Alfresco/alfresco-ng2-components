@@ -19,25 +19,23 @@ import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { PeopleCloudModule } from '../people-cloud.module';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
 
 describe('PeopleCloudComponent', () => {
     let loader: HarnessLoader;
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
-    let identityUserService: IdentityUserServiceInterface;
+    let identityUserService: IdentityUserService;
     let searchSpy: jasmine.Spy;
 
     /**
@@ -83,13 +81,13 @@ describe('PeopleCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
+            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudComponent]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        identityUserService = TestBed.inject(IDENTITY_USER_SERVICE_TOKEN);
+        identityUserService = fixture.debugElement.injector.get(IdentityUserService);
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 

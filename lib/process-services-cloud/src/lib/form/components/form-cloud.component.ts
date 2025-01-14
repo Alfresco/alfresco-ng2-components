@@ -52,7 +52,7 @@ import {
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
-import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
 import { MatDialog } from '@angular/material/dialog';
 import { v4 as uuidGeneration } from 'uuid';
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';

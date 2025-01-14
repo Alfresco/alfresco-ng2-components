@@ -47,7 +47,6 @@ import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
 import { IdentityUserServiceMock } from '../../../people/mock/people-cloud.mock';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../../../people/services/identity-user-service.token';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
@@ -62,6 +61,7 @@ import {
     PROCESS_FILTER_ACTION_SAVE_DEFAULT
 } from './edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
+import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
 
 describe('EditProcessFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -114,7 +114,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 MatInputModule,
                 ReactiveFormsModule,
                 MatChipsModule,
-                MatProgressBarModule
+                MatProgressBarModule,
+                PeopleCloudComponent,
+                DateRangeFilterComponent
             ],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
@@ -122,9 +124,8 @@ describe('EditProcessFilterCloudComponent', () => {
                 { provide: DateAdapter, useClass: DateFnsAdapter },
                 { provide: NotificationCloudService, useValue: { makeGQLQuery: () => of([]) } },
                 { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-                { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserServiceMock }
-            ],
-            declarations: [PeopleCloudComponent, DateRangeFilterComponent]
+                { provide: IdentityUserService, useClass: IdentityUserServiceMock }
+            ]
         });
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;

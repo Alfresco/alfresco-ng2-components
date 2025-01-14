@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskDetailsCloudModel } from '../task/start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../task/models/task-details-cloud.model';
 
 export interface TaskCloudEngineEvent {
     eventType: string;

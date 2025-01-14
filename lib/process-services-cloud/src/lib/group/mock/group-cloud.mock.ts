@@ -18,30 +18,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, EMPTY, of } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
-import { IdentityGroupFilterInterface } from '../services/identity-group-filter.interface';
-import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
+import { IdentityGroupService } from '@alfresco/adf-process-services-cloud';
 
-export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine'};
-export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken'};
+export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine' };
+export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken' };
 
-export const mockFoodGroups = [ mockVegetableAubergine, mockMeatChicken ];
+export const mockFoodGroups = [mockVegetableAubergine, mockMeatChicken];
 
-export const mockSearchGroupEmptyFilters: IdentityGroupFilterInterface = {
-    roles: [],
-    withinApplication: ''
-};
-
-@Injectable({
-    providedIn: 'root'
-})
-export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
-    search(name: string, _filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
+@Injectable()
+export class IdentityGroupServiceMock extends IdentityGroupService {
+    search(name: string): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         }
 
-        return of(mockFoodGroups.filter(group =>
-            group.name.toUpperCase().includes(name.toUpperCase())
-        ));
+        return of(mockFoodGroups.filter((group) => group.name.toUpperCase().includes(name.toUpperCase())));
     }
 }

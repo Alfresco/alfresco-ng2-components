@@ -16,13 +16,17 @@
  */
 
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 interface DateRangeFormProps {
     from: FormControl<Date>;
@@ -31,6 +35,8 @@ interface DateRangeFormProps {
 
 @Component({
     selector: 'adf-cloud-date-range-filter',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatDatepickerModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule],
     styleUrls: ['./date-range-filter.component.scss'],
     templateUrl: './date-range-filter.component.html',
     providers: [

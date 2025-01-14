@@ -16,23 +16,23 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, CardViewArrayItem } from '@alfresco/adf-core';
+import { CardViewArrayItem } from '@alfresco/adf-core';
 import { from, Observable, of, Subject, throwError } from 'rxjs';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
-import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task-details-cloud.model';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
-import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
-import { TaskCloudServiceInterface } from '../services/task-cloud.service.interface';
+import { TaskCloudService } from '@alfresco/adf-process-services-cloud';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class TaskCloudServiceMock implements TaskCloudServiceInterface {
+@Injectable()
+export class TaskCloudServiceMock extends TaskCloudService {
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
 
-    constructor(private appConfigService: AppConfigService) {}
+    constructor(adfHttpClient: AdfHttpClient) {
+        super(adfHttpClient);
+    }
 
     getTaskById(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
@@ -80,7 +80,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return isClickable;
     }
 
-    updateTask(_appName: string, taskId: string, _payload: any): Observable<TaskDetailsCloudModel> {
+    updateTask(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
     }
 
@@ -92,12 +92,8 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return taskDetails && taskDetails.status === TASK_CREATED_STATE;
     }
 
-    private isAssignedToMe(assignee: string): boolean {
-        if (assignee === this.currentUserMock) {
-            return true;
-        }
-
-        return false;
+    protected isAssignedToMe(assignee: string): boolean {
+        return assignee === this.currentUserMock;
     }
 
     completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
@@ -106,7 +102,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            return throwError('AppName/TaskId not configured');
+            return throwError(() => new Error('AppName/TaskId not configured'));
         }
     }
 
@@ -115,13 +111,13 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
     }
 
-    claimTask(appName: string, taskId: string, _assignee: string): Observable<TaskDetailsCloudModel> {
+    claimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             window.alert('Claim task mock');
 
             return from([]);
         } else {
-            return throwError('AppName/TaskId not configured');
+            return throwError(() => new Error('AppName/TaskId not configured'));
         }
     }
 
@@ -131,11 +127,11 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            return throwError('AppName/TaskId not configured');
+            return throwError(() => new Error('AppName/TaskId not configured'));
         }
     }
 
-    createNewTask(_startTaskRequest: StartTaskCloudRequestModel, _appName: string): Observable<TaskDetailsCloudModel> {
+    createNewTask(): Observable<TaskDetailsCloudModel> {
         window.alert('Create new task mock');
 
         return from([]);
@@ -147,17 +143,17 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            return throwError('AppName not configured');
+            return throwError(() => new Error('AppName not configured'));
         }
     }
 
-    assign(appName: string, taskId: string, _assignee: string): Observable<TaskDetailsCloudModel> {
+    assign(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
             window.alert('Assign mock');
 
             return from([]);
         } else {
-            return throwError('AppName/TaskId not configured');
+            return throwError(() => new Error('AppName/TaskId not configured'));
         }
     }
 }

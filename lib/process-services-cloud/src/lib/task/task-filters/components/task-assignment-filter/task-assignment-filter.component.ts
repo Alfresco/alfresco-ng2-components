@@ -16,21 +16,26 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { AssignmentType, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { DropdownOption } from '../edit-task-filters/base-edit-task-filter-cloud.component';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
+import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
 @Component({
     selector: 'adf-cloud-task-assignment-filter',
+    standalone: true,
+    imports: [CommonModule, GroupCloudComponent, TranslateModule, MatSelectModule, FormsModule, PeopleCloudComponent],
     templateUrl: './task-assignment-filter.component.html',
     styleUrls: ['./task-assignment-filter.component.scss']
 })
 export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
-
     @Input() appName: string;
 
     @Input() taskFilterProperty: TaskFilterProperties;

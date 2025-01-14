@@ -23,12 +23,10 @@ import { ApplicationVersionModel } from '../../models/application-version.model'
 import { processInstancePlaceholdersCloudMock, processInstanceDetailsCloudMock } from './process-instance-details-cloud.mock';
 import { fakeProcessDefinitions } from '../start-process/mock/start-process.component.mock';
 import { mockAppVersions } from '../process-filters/mock/process-filters-cloud.mock';
-import { ProcessCloudInterface } from '../services/process-cloud.interface';
+import { ProcessCloudService } from '@alfresco/adf-process-services-cloud';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class ProcessCloudServiceMock implements ProcessCloudInterface {
+@Injectable()
+export class ProcessCloudServiceMock extends ProcessCloudService {
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
 
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {

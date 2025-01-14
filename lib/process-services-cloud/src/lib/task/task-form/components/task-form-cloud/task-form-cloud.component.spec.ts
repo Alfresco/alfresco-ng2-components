@@ -31,7 +31,7 @@ import {
     TASK_RELEASE_PERMISSION,
     TASK_VIEW_PERMISSION,
     TaskDetailsCloudModel
-} from '../../../start-task/models/task-details-cloud.model';
+} from '../../../models/task-details-cloud.model';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 

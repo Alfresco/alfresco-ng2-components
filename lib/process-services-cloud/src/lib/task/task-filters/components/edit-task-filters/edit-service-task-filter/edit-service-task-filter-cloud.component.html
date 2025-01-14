@@ -1,0 +1,117 @@
+<mat-accordion [hideToggle]="isLoading" class="adf-edit-task-filter">
+    <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
+        <mat-expansion-panel-header *ngIf="taskFilter" id="adf-edit-task-filter-expansion-header" class="adf-edit-task-filter-header">
+            <ng-container *ngIf="!isLoading; else loadingTemplate">
+                <mat-panel-title *ngIf="showTaskFilterName" id="adf-edit-task-filter-title-id" class="adf-edit-task-filter-header__title"
+                    >{{taskFilter.name | translate}}</mat-panel-title>
+                <mat-panel-description class="adf-edit-task-filter-header__description" id="adf-edit-task-filter-sub-title-id">
+                    <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
+                    <div *ngIf="showFilterActions" class="adf-cloud-edit-task-filter-actions">
+                        <ng-container *ngIf="toggleFilterActions">
+                            <button *ngFor="let filterAction of taskFilterActions"
+                                    mat-icon-button
+                                    [title]="filterAction.tooltip | translate"
+                                    [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
+                                    [disabled]="isDisabledAction(filterAction)"
+                                    (click)="executeFilterActions(filterAction)">
+                                <adf-icon [value]="filterAction.icon" />
+                            </button>
+                        </ng-container>
+                    </div>
+                </mat-panel-description>
+            </ng-container>
+            <ng-template #loadingTemplate>
+                <div class="adf-cloud-edit-task-filter-loading-margin">
+                    <mat-progress-spinner mode="indeterminate" [diameter]="30" />
+                </div>
+            </ng-template>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="!isLoading;">
+            <form *ngIf="editTaskFilterForm" [formGroup]="editTaskFilterForm" class="adf-edit-task-filter-content">
+                <div class="adf-edit-task-filter-form">
+                    <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
+                        <mat-form-field [floatLabel]="'auto'"
+                            *ngIf="taskFilterProperty.type === 'select'"
+                            [attr.data-automation-id]="taskFilterProperty.key">
+                            <mat-label class="adf-edit-task-filter-content__select-label">{{taskFilterProperty.label | translate}}</mat-label>
+                            <mat-select
+                                [formControlName]="taskFilterProperty.key"
+                                [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"
+                                (selectionChange)="onStatusChange($event)">
+                                    <mat-option *ngFor="let propertyOption of taskFilterProperty.options"
+                                        [value]="propertyOption.value"
+                                        [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
+                                        {{ propertyOption.label | translate }}
+                                    </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field [floatLabel]="'auto'"
+                            *ngIf="taskFilterProperty.type === 'text'"
+                            [attr.data-automation-id]="taskFilterProperty.key">
+                            <mat-label class="adf-edit-task-filter-content__text-label">{{taskFilterProperty.label | translate}}</mat-label>
+                            <input matInput
+                                   [formControlName]="taskFilterProperty.key"
+                                   type="text"
+                                   [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
+                        </mat-form-field>
+                        <mat-form-field [floatLabel]="'auto'"
+                                        *ngIf="taskFilterProperty.type === 'date'"
+                                        [attr.data-automation-id]="taskFilterProperty.key">
+                            <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
+                            <input matInput
+                                   (keyup)="onDateChanged($any($event).target.value, taskFilterProperty)"
+                                   (dateChange)="onDateChanged($event.value, taskFilterProperty)"
+                                   [matDatepicker]="dateController"
+                                   [placeholder]="taskFilterProperty.label | translate"
+                                   [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
+                            <mat-datepicker-toggle matSuffix
+                                                   [for]="dateController"
+                                                   [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key" />
+                            <mat-datepicker #dateController
+                                            [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key" />
+                            <div class="adf-edit-task-filter-date-error-container">
+                                <div *ngIf="hasError(taskFilterProperty)">
+                                    <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
+                                    <mat-icon class="adf-error-icon">warning</mat-icon>
+                                </div>
+                            </div>
+                        </mat-form-field>
+                        <div class="adf-edit-task-filter-checkbox"
+                             *ngIf="taskFilterProperty.type === 'checkbox'">
+                            <mat-checkbox color="primary"
+                                          [formControlName]="taskFilterProperty.key"
+                                          [attr.data-automation-id]="taskFilterProperty.key"
+                            >{{taskFilterProperty.label | translate}}</mat-checkbox>
+                        </div>
+
+                        <adf-cloud-date-range-filter
+                            *ngIf="taskFilterProperty.type === 'date-range'"
+                            [processFilterProperty]="taskFilterProperty"
+                            [options]="taskFilterProperty.dateFilterOptions"
+                            (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"
+                            (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)" />
+                        <adf-cloud-people
+                            class="{{ 'adf-edit-task-filter-' + taskFilterProperty.key }}"
+                            *ngIf="taskFilterProperty.type === 'people'"
+                            [preSelectUsers]="taskFilterProperty.value"
+                            [title]="taskFilterProperty.label"
+                            [validate]="true"
+                            [appName]="appName"
+                            [mode]="taskFilterProperty.selectionMode"
+                            (changedUsers)="onChangedUser($event, taskFilterProperty)" />
+
+                        <adf-cloud-task-assignment-filter
+                            *ngIf="taskFilterProperty.type === 'assignment'"
+                            [taskFilterProperty]="taskFilterProperty"
+                            [status]="selectedStatus"
+                            [appName]="appName"
+                            (assignedUsersChange)="onAssignedUsersChange($event)"
+                            (assignedGroupsChange)="onAssignedGroupsChange($event)"
+                            (assignmentTypeChange)="onAssignmentTypeChange($event)" />
+
+                    </ng-container>
+                </div>
+            </form>
+        </ng-container>
+    </mat-expansion-panel>
+</mat-accordion>

@@ -25,14 +25,14 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { PeopleCloudModule } from '../../../../people/people-cloud.module';
+import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'people-cloud-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudModule],
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudComponent],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',
