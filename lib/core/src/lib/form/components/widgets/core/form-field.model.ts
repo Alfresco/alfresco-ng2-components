@@ -557,7 +557,7 @@ export class FormFieldModel extends FormWidgetModel {
         return this.hasEmptyValue && option?.id === this.defaultEmptyOptionId;
     }
 
-    private shouldUpdateFormValues(type) {
+    private shouldUpdateFormValues(type): boolean {
         return !FormFieldTypes.isReadOnlyType(type) && !this.isInvalidFieldType(type) && !FormFieldTypes.isSectionType(type);
     }
 

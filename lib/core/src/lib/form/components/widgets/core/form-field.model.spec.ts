@@ -900,6 +900,7 @@ describe('FormFieldModel', () => {
             readOnly: true
         });
         field.updateForm();
+
         expect(form.values['header_field']).toBeUndefined();
     });
 
@@ -915,6 +916,7 @@ describe('FormFieldModel', () => {
             readOnly: true
         });
         field.updateForm();
+
         expect(form.values['section_field']).toBeUndefined();
     });
 
