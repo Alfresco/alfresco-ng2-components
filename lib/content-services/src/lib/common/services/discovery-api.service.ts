@@ -52,6 +52,7 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Content Services.
+     *
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
@@ -63,6 +64,7 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Process Services.
+     *
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {

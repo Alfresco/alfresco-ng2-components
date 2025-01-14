@@ -90,6 +90,7 @@ export class UploadService {
 
     /**
      * Returns the number of concurrent threads for uploading.
+     *
      * @returns Number of concurrent threads (default 1)
      */
     getThreadsCount(): number {
@@ -98,6 +99,7 @@ export class UploadService {
 
     /**
      * Checks whether the service still has files uploading or awaiting upload.
+     *
      * @returns True if files in the queue are still uploading, false otherwise
      */
     isUploading(): boolean {
@@ -116,6 +118,7 @@ export class UploadService {
 
     /**
      * Gets the file Queue
+     *
      * @returns Array of files that form the queue
      */
     getQueue(): FileModel[] {
@@ -124,6 +127,7 @@ export class UploadService {
 
     /**
      * Adds files to the uploading queue to be uploaded
+     *
      * @param files One or more separate parameters or an array of files to queue
      * @returns Array of files that were not blocked from upload by the ignore list
      */
@@ -136,6 +140,7 @@ export class UploadService {
 
     /**
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
+     *
      * @param successEmitter Emitter to invoke on file success status change
      * @param errorEmitter Emitter to invoke on file error status change
      */
@@ -167,6 +172,7 @@ export class UploadService {
      * Cancels uploading of files.
      * If the file is smaller than 1 MB the file will be uploaded and then the node deleted
      * to prevent having files that were aborted but still uploaded.
+     *
      * @param files One or more separate parameters or an array of files specifying uploads to cancel
      */
     cancelUpload(...files: FileModel[]) {
@@ -200,6 +206,7 @@ export class UploadService {
 
     /**
      * Gets an upload promise for a file.
+     *
      * @param file The target file
      * @returns Promise that is resolved if the upload is successful or error otherwise
      */

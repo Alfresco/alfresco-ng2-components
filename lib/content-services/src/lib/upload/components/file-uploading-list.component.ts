@@ -44,6 +44,7 @@ export class FileUploadingListComponent {
 
     /**
      * Cancel file upload
+     *
      * @param file File model to cancel upload for.
      */
     cancelFile(file: FileModel): void {
@@ -56,6 +57,7 @@ export class FileUploadingListComponent {
 
     /**
      * Remove uploaded file
+     *
      * @param file File model to remove upload for.
      */
     removeFile(file: FileModel): void {
@@ -84,6 +86,7 @@ export class FileUploadingListComponent {
 
     /**
      * Checks if all the files are uploaded false if there is at least one file in Progress | Starting | Pending
+     *
      * @returns `true` if upload is complete, otherwise `false`
      */
     isUploadCompleted(): boolean {
@@ -98,6 +101,7 @@ export class FileUploadingListComponent {
 
     /**
      * Check if all the files are Cancelled | Aborted | Error. false if there is at least one file in uploading states
+     *
      * @returns `true` if upload is cancelled, otherwise `false`
      */
     isUploadCancelled(): boolean {

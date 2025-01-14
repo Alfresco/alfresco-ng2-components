@@ -54,6 +54,7 @@ export class ContentNodeDialogService {
     /**
      * Opens a file browser at a chosen folder location.
      * shows files and folders in the dialog search result.
+     *
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected file(s)
      */
@@ -65,6 +66,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a lock node dialog.
+     *
      * @param contentEntry Node to lock
      * @returns Error/status message (if any)
      */
@@ -92,6 +94,7 @@ export class ContentNodeDialogService {
     /**
      * Opens a file browser at a chosen site location.
      * shows files and folders in the dialog search result.
+     *
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogBySite(): Observable<Node[]> {
@@ -103,6 +106,7 @@ export class ContentNodeDialogService {
     /**
      * Opens a file browser at a default myFile location.
      * shows files and folders in the dialog search result.
+     *
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogByDefaultLocation(): Observable<Node[]> {
@@ -111,6 +115,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a folder browser at a chosen site location.
+     *
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogBySite(): Observable<Node[]> {
@@ -119,6 +124,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a folder browser at a chosen folder location.
+     *
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected folder(s)
      */
@@ -130,6 +136,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a dialog to copy or move an item to a new location.
+     *
      * @param action Name of the action (eg, "Copy" or "Move") to show in the title
      * @param contentEntry Item to be copied or moved
      * @param permission Permission for the operation
@@ -164,6 +171,7 @@ export class ContentNodeDialogService {
 
     /**
      * Gets the translation of the dialog title.
+     *
      * @param action Name of the action to display in the dialog title
      * @param name Name of the item on which the action is being performed
      * @returns Translated version of the title
@@ -174,6 +182,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a dialog to choose folders to upload.
+     *
      * @param action Name of the action to show in the title
      * @param contentEntry  Item to upload
      * @returns Information about the chosen folder(s)
@@ -200,6 +209,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a dialog to choose a file to upload.
+     *
      * @param action Name of the action to show in the title
      * @param contentEntry Item to upload
      * @param showFilesInResult Show files in dialog search result

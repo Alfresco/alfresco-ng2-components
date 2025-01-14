@@ -67,6 +67,7 @@ export class ProcessAuth {
 
     /**
      * login Activiti API
+     *
      * @param username Username to login
      * @param password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -123,6 +124,7 @@ export class ProcessAuth {
 
     /**
      * logout Alfresco API
+     *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
     async logout(): Promise<any> {
@@ -164,6 +166,7 @@ export class ProcessAuth {
 
     /**
      * Set the current Ticket
+     *
      * @param ticket a string representing the ticket
      */
     setTicket(ticket: string) {

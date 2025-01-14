@@ -62,6 +62,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
 
     /**
      * Check if route has more than one element (means: we are not in the root directory)
+     *
      * @returns `true` if there are previous nodes, otherwise `false`
      */
     hasPreviousNodes(): boolean {

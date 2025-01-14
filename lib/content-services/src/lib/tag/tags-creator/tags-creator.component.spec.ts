@@ -72,6 +72,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * Get name input element
+     *
      * @returns native element
      */
     function getNameInput(): HTMLInputElement {
@@ -80,6 +81,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * Get the create tag label
+     *
      * @returns native element
      */
     function getCreateTagLabel(): HTMLSpanElement {
@@ -88,6 +90,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * Get remove tag buttons
+     *
      * @returns list of native elements
      */
     function getRemoveTagButtons(): HTMLButtonElement[] {
@@ -97,6 +100,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * Get newly added tags
+     *
      * @returns list of tags
      */
     async function getAddedTags(): Promise<string[]> {
@@ -110,6 +114,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * Adds tag to the added list
+     *
      * @param tagName tag name
      * @param addUsingEnter use Enter when adding
      * @param typingTimeout typing timeout in milliseconds (default 300)
@@ -129,6 +134,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * type a new tag
+     *
      * @param tagName tag name
      * @param timeout typing timeout in milliseconds (default 300)
      */
@@ -146,6 +152,7 @@ describe('TagsCreatorComponent', () => {
 
     /**
      * Get the existing tags label
+     *
      * @returns label
      */
     function getExistingTagsLabel(): string {
@@ -306,6 +313,7 @@ describe('TagsCreatorComponent', () => {
         describe('Errors', () => {
             /**
              * Get first error
+             *
              * @returns error text
              */
             function getFirstError(): string {
@@ -420,6 +428,7 @@ describe('TagsCreatorComponent', () => {
     describe('Existing tags panel', () => {
         /**
          * Get the existing tags panel
+         *
          * @returns debug element
          */
         function getPanel(): DebugElement {
@@ -509,6 +518,7 @@ describe('TagsCreatorComponent', () => {
         describe('Existing tags', () => {
             /**
              * Get the existing tags
+             *
              * @returns list of tags
              */
             function getExistingTags(): string[] {
@@ -702,6 +712,7 @@ describe('TagsCreatorComponent', () => {
         describe('Spinner', () => {
             /**
              * Get the material progress spinner
+             *
              * @returns debug element
              */
             async function getSpinner(): Promise<MatProgressSpinnerHarness> {

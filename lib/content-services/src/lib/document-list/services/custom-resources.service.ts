@@ -89,6 +89,7 @@ export class CustomResourcesService {
 
     /**
      * Gets files recently accessed by a user.
+     *
      * @param personId ID of the user
      * @param pagination Specifies how to paginate the results
      * @param filters Specifies additional filters to apply (joined with **AND**)
@@ -175,6 +176,7 @@ export class CustomResourcesService {
 
     /**
      * Gets favorite files for the current user.
+     *
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @param where A string to restrict the returned objects by using a predicate
@@ -229,6 +231,7 @@ export class CustomResourcesService {
 
     /**
      * Gets sites that the current user is a member of.
+     *
      * @param pagination Specifies how to paginate the results
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
@@ -270,6 +273,7 @@ export class CustomResourcesService {
 
     /**
      * Gets all sites in the repository.
+     *
      * @param pagination Specifies how to paginate the results
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
@@ -302,6 +306,7 @@ export class CustomResourcesService {
 
     /**
      * Gets all items currently in the trash.
+     *
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @returns List of deleted items
@@ -320,6 +325,7 @@ export class CustomResourcesService {
 
     /**
      * Gets shared links for the current user.
+     *
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @param where A string to restrict the returned objects by using a predicate
@@ -340,6 +346,7 @@ export class CustomResourcesService {
 
     /**
      * Is the folder ID one of the well-known aliases?
+     *
      * @param folderId Folder ID name to check
      * @returns True if the ID is a well-known name, false otherwise
      */
@@ -356,6 +363,7 @@ export class CustomResourcesService {
 
     /**
      * Is the folder ID a "-my", "-root-", or "-shared-" alias?
+     *
      * @param folderId Folder ID name to check
      * @returns True if the ID is one of the supported sources, false otherwise
      */
@@ -372,6 +380,7 @@ export class CustomResourcesService {
 
     /**
      * Gets a folder's contents.
+     *
      * @param nodeId ID of the target folder node
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
@@ -398,6 +407,7 @@ export class CustomResourcesService {
 
     /**
      * Gets the contents of one of the well-known aliases in the form of node ID strings.
+     *
      * @param nodeId ID of the target folder node
      * @param pagination Specifies how to paginate the results
      * @returns List of node IDs
@@ -417,6 +427,7 @@ export class CustomResourcesService {
 
     /**
      * Chooses the correct ID for a node entry.
+     *
      * @param node Node object
      * @param nodeId ID of the node object
      * @returns ID value
@@ -435,6 +446,7 @@ export class CustomResourcesService {
 
     /**
      * Does the well-known alias have a corresponding node ID?
+     *
      * @param nodeId Node to check
      * @returns True if the alias has a corresponding node ID, false otherwise
      */

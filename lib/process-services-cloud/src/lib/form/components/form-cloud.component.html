@@ -1,6 +1,5 @@
 <div *ngIf="!hasForm()">
-    <ng-content select="[empty-form]">
-    </ng-content>
+    <ng-content select="[empty-form]" />
 </div>
 
 <div
@@ -75,7 +74,7 @@
                         <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
                     </mat-card-content>
                     <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
-                        <ng-content select="adf-cloud-form-custom-outcomes"></ng-content>
+                        <ng-content select="adf-cloud-form-custom-outcomes" />
                         <ng-container *ngFor="let outcome of form.outcomes">
                             <button
                                 *ngIf="outcome.isVisible"

@@ -125,6 +125,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appId
+     *
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
@@ -157,6 +158,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appName
+     *
      * @param appName application name
      */
     getFiltersByAppName(appName: string): void {
@@ -173,6 +175,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Pass the selected filter as next
+     *
      * @param filterModel filter model
      */
     selectFilter(filterModel: ProcessInstanceFilterRepresentation) {
@@ -183,6 +186,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select the first filter of a list if present
+     *
      * @param filterParam filter parameter
      */
     selectProcessFilter(filterParam: UserProcessInstanceFilterRepresentation): void {
@@ -203,6 +207,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select the Running filter
+     *
      * @deprecated in 3.9.0, Use the filterParam Input() with a running filter instance instead
      */
     selectRunningFilter() {
@@ -211,6 +216,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Get the current task
+     *
      * @returns process instance filter
      */
     getCurrentFilter(): ProcessInstanceFilterRepresentation {
@@ -219,6 +225,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Check if the filter list is empty
+     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
@@ -227,6 +234,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Get the material icons equivalent of the glyphicon icon
+     *
      * @param icon glyphicon name
      * @returns material icons equivalent of the icon
      */

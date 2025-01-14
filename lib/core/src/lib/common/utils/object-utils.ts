@@ -19,6 +19,7 @@ export class ObjectUtils {
     /**
      * Gets a value from an object by composed key
      * ObjectUtils.getValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
+     *
      * @param target target object
      * @param key object property key
      * @returns object property value

@@ -67,6 +67,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Load the filter list filtered by appName
+     *
      * @param appName application name
      */
     getFilters(appName: string): void {
@@ -87,6 +88,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Select filter
+     *
      * @param paramFilter filter model
      */
     selectFilter(paramFilter: FilterParamsModel) {
@@ -121,6 +123,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Selects and emits the clicked filter.
+     *
      * @param filter filter to select
      */
     onFilterClick(filter: FilterParamsModel) {
@@ -143,6 +146,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Check if the filter list is empty
+     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
