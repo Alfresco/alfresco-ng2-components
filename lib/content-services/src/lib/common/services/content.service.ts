@@ -48,6 +48,7 @@ export class ContentService {
 
     /**
      * Gets a content URL for the given node.
+     *
      * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
@@ -75,6 +76,7 @@ export class ContentService {
 
     /**
      * Checks if the user has permission on that node
+     *
      * @param node Node to check permissions
      * @param permission Required permission type
      * @param userId Optional current user id will be taken by default
@@ -108,6 +110,7 @@ export class ContentService {
 
     /**
      * Checks if the user has permissions on that node
+     *
      * @param node Node to check allowableOperations
      * @param allowableOperation Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      * @returns True if the user has the required permissions, false otherwise

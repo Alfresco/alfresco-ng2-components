@@ -53,6 +53,7 @@ export class CategoryService {
 
     /**
      * Get subcategories of a given parent category
+     *
      * @param parentCategoryId The identifier of a parent category.
      * @param skipCount Number of top categories to skip.
      * @param maxItems Maximum number of subcategories returned from Observable.
@@ -64,6 +65,7 @@ export class CategoryService {
 
     /**
      * Get a category by ID
+     *
      * @param categoryId The identifier of a category.
      * @param opts Optional parameters.
      * @param opts.fields A list of field names.
@@ -78,6 +80,7 @@ export class CategoryService {
 
     /**
      * Creates subcategories under category with provided categoryId
+     *
      * @param parentCategoryId The identifier of a parent category.
      * @param payload List of categories to be created.
      * @returns Observable<CategoryPaging | CategoryEntry>
@@ -88,6 +91,7 @@ export class CategoryService {
 
     /**
      * Updates category
+     *
      * @param categoryId The identifier of a category.
      * @param payload Updated category body
      * @returns Observable<CategoryEntry>
@@ -98,6 +102,7 @@ export class CategoryService {
 
     /**
      * Deletes category
+     *
      * @param categoryId The identifier of a category.
      * @returns Observable<void>
      */
@@ -107,6 +112,7 @@ export class CategoryService {
 
     /**
      * Searches categories by their name.
+     *
      * @param name Value for name which should be used during searching categories.
      * @param skipCount Specify how many first results should be skipped. Default 0.
      * @param maxItems Specify max number of returned categories. Default is specified by UserPreferencesService.
@@ -131,6 +137,7 @@ export class CategoryService {
 
     /**
      * List of categories that node is assigned to
+     *
      * @param nodeId The identifier of a node.
      * @returns Observable<CategoryPaging> Categories that node is assigned to
      */
@@ -140,6 +147,7 @@ export class CategoryService {
 
     /**
      * Unlink category from a node
+     *
      * @param nodeId The identifier of a node.
      * @param categoryId The identifier of a category.
      * @returns Observable<void>
@@ -150,6 +158,7 @@ export class CategoryService {
 
     /**
      * Link node to a category
+     *
      * @param nodeId The identifier of a node.
      * @param categoryLinkBodyCreate Array of a categories that node will be linked to.
      * @returns Observable<CategoryEntry>
@@ -160,6 +169,7 @@ export class CategoryService {
 
     /**
      * Checks if categories plugin is enabled.
+     *
      * @returns boolean true if categories plugin is enabled, false otherwise.
      */
     areCategoriesEnabled(): boolean {

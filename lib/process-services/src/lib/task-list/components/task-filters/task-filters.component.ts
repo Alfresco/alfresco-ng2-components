@@ -127,6 +127,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appId
+     *
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
@@ -149,6 +150,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appName
+     *
      * @param appName application name
      */
     getFiltersByAppName(appName: string): void {
@@ -164,6 +166,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Create default filters by appId
+     *
      * @param appId application id
      */
     private createFiltersByAppId(appId?: number): void {
@@ -182,6 +185,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Pass the selected filter as next
+     *
      * @param newFilter new filter model
      */
     public selectFilter(newFilter: UserTaskFilterRepresentation): void {
@@ -202,6 +206,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Selects and emits the clicked filter.
+     *
      * @param filterParams filter parameters model
      */
     onFilterClick(filterParams: UserTaskFilterRepresentation) {
@@ -211,6 +216,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select filter with task
+     *
      * @param taskId task id
      */
     selectFilterWithTask(taskId: string): void {
@@ -233,6 +239,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Get the current filter
+     *
      * @returns filter model
      */
     getCurrentFilter(): UserTaskFilterRepresentation {
@@ -241,6 +248,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Check if the filter list is empty
+     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
@@ -249,6 +257,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Get the material icons equivalent of the glyphicon icon
+     *
      * @param icon glyphicon name
      * @returns material icons equivalent of the icon
      */

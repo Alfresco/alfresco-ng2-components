@@ -155,6 +155,7 @@ describe('ContentMetadataComponent', () => {
 
     /**
      * Get metadata categories
+     *
      * @returns list of native elements
      */
     function getCategories(): HTMLParagraphElement[] {
@@ -163,6 +164,7 @@ describe('ContentMetadataComponent', () => {
 
     /**
      * Get a categories management component
+     *
      * @returns angular component
      */
     function getCategoriesManagementComponent(): CategoriesManagementComponent {

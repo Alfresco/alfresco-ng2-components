@@ -274,6 +274,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
 
     /**
      * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
+     *
      * @param contentTypes a contentType array
      * @returns  The chosen content type, preferring JSON.
      */
@@ -298,6 +299,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
      * <li>application/json; charset=UTF8</li>
      * <li>APPLICATION/JSON</li>
      * </ul>
+     *
      * @param contentType The MIME content type to check.
      * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
      */
@@ -342,6 +344,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
 
     /**
      * Deserialize an HTTP response body into a value of the specified type.
+     *
      * @param response response object
      * @param returnType return type
      * @returns deserialized object

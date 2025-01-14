@@ -20,6 +20,7 @@ import { SearchRequest } from '@alfresco/js-api';
 export interface SearchConfigurationInterface {
     /**
      * Generates a query object with custom search parameters.
+     *
      * @param searchTerm Term text to search for
      * @param maxResults Maximum number of search results to show in a page
      * @param skipCount The offset of the start of the page within the results list

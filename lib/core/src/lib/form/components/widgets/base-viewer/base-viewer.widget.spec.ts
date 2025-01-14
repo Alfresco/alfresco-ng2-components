@@ -68,6 +68,7 @@ describe('BaseViewerWidgetComponent', () => {
 
 /**
  * Assert the field value
+ *
  * @param value field value
  * @param expectedFileId field id
  * @param fakeForm form model

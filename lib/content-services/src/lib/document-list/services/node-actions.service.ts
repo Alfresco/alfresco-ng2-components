@@ -52,6 +52,7 @@ export class NodeActionsService {
 
     /**
      * Copy content node
+     *
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
      * @returns operation result
@@ -62,6 +63,7 @@ export class NodeActionsService {
 
     /**
      * Copy folder node
+     *
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
      * @returns operation result
@@ -72,6 +74,7 @@ export class NodeActionsService {
 
     /**
      * Move content node
+     *
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
      * @returns operation result
@@ -82,6 +85,7 @@ export class NodeActionsService {
 
     /**
      * Move folder node
+     *
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
      * @returns operation result
@@ -92,6 +96,7 @@ export class NodeActionsService {
 
     /**
      * General method for performing the given operation (copy|move)
+     *
      * @param action the action to perform (copy|move)
      * @param type type of the content (content|folder)
      * @param contentEntry the contentEntry which has to have the action performed on

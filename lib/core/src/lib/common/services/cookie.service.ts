@@ -36,6 +36,7 @@ export class CookieService {
 
     /**
      * Checks if cookies are enabled.
+     *
      * @returns True if enabled, false otherwise
      */
     isEnabled(): boolean {
@@ -44,6 +45,7 @@ export class CookieService {
 
     /**
      * Retrieves a cookie by its key.
+     *
      * @param key Key to identify the cookie
      * @returns The cookie data or null if it is not found
      */
@@ -55,6 +57,7 @@ export class CookieService {
 
     /**
      * Sets a cookie.
+     *
      * @param key Key to identify the cookie
      * @param data Data value to set for the cookie
      * @param expiration Expiration date of the data
@@ -66,6 +69,7 @@ export class CookieService {
 
     /**
      * Delete a cookie Key.
+     *
      * @param key Key to identify the cookie
      * @param path "Pathname" to store the cookie
      */

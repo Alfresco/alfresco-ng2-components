@@ -191,6 +191,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     /**
      * Extract files from the DataTransfer object used to hold the data that is being dragged during a drag and drop operation.
+     *
      * @param dataTransfer DataTransfer object
      * @returns a list of file info objects
      */
@@ -251,6 +252,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     /**
      * Invoked when user selects files or folders by means of File Dialog
+     *
      * @param event DOM event
      */
     onSelectFiles(event: any): void {

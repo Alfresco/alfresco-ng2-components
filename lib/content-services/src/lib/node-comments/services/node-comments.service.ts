@@ -37,6 +37,7 @@ export class NodeCommentsService implements CommentsService {
 
     /**
      * Gets all comments that have been added to a task.
+     *
      * @param id ID of the target task
      * @returns Details for each comment
      */
@@ -56,6 +57,7 @@ export class NodeCommentsService implements CommentsService {
 
     /**
      * Adds a comment to a task.
+     *
      * @param id ID of the target task
      * @param message Text for the comment
      * @returns Details about the comment

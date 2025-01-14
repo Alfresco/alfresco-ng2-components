@@ -42,6 +42,7 @@ export class NewVersionUploaderService {
      * - a side by side comparison between the current target node (type, name, icon) and the new file that should update it's version
      * - the new version's minor/major changes and the optional comment of a node and the ability to upload a new file version
      * - if data.showVersionsOnly is set to true, displays the version history of a node, with the ability to restore, delete and view version of the current node
+     *
      * @param data data to pass to MatDialog
      * @param config allow to override default MatDialogConfig
      * @param selectorAutoFocusedOnClose element's selector which should be autofocused after closing modal

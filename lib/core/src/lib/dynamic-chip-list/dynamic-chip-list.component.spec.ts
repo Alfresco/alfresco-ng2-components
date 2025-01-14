@@ -46,6 +46,7 @@ describe('DynamicChipListComponent', () => {
 
     /**
      * Find 'More' button
+     *
      * @returns native element
      */
     function findViewMoreButton(): HTMLButtonElement {
@@ -54,6 +55,7 @@ describe('DynamicChipListComponent', () => {
 
     /**
      * Get the chips
+     *
      * @returns native element list
      */
     function findChips(): NodeListOf<Element> {
@@ -174,6 +176,7 @@ describe('DynamicChipListComponent', () => {
 
         /**
          * Render chips
+         *
          * @param chipsToRender chips to render
          */
         async function renderChips(chipsToRender?: Chip[]) {
