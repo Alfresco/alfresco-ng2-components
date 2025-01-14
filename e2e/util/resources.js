@@ -143,7 +143,7 @@ const RESOURCES = {
                 dateTime_id: 'dateandtime',
                 checkbox_id: 'checkbox',
                 dropdown_id: 'dropdown',
-                drofpdown_value: "mat-select[id='dropdown'] span span",
+                dropdown_value: "mat-select[id='dropdown'] span span",
                 radioButtons_id: 'radiobuttons',
                 dynamicTable_id: 'dynamictable'
             }
