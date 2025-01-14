@@ -17,12 +17,14 @@
 
 import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
 import {
+    AdfDateFnsAdapter,
     AppConfigService,
     ColumnsSelectorComponent,
     DataTableComponent,
     EmptyContentComponent,
     LoadingContentTemplateDirective,
     MainMenuDataTableTemplateDirective,
+    MOMENT_DATE_FORMATS,
     NoContentTemplateDirective,
     UserPreferencesService
 } from '@alfresco/adf-core';
@@ -46,6 +48,7 @@ import { ProcessVariableFilterModel } from '../../../../models/process-variable-
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -62,6 +65,10 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
         MatProgressSpinnerModule,
         LoadingContentTemplateDirective,
         DataTableComponent
+    ],
+    providers: [
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
     ],
     templateUrl: './task-list-cloud.component.html',
     styleUrls: ['./task-list-cloud.component.scss'],
