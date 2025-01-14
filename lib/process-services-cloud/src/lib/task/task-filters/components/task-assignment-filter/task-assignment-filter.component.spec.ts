@@ -38,6 +38,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     /**
      * select the assignment type
+     *
      * @param type type to select
      */
     function selectAssignmentType(type: AssignmentType) {

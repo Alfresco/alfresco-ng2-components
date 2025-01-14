@@ -23,6 +23,7 @@ import { DummyFeaturesService } from '../services/dummy-features.service';
 
 /**
  * Provides the dummy feature flags.
+ *
  * @returns Environment Providers for Feature Flags.
  */
 export function provideDummyFeatureFlags() {

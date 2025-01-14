@@ -20,6 +20,7 @@ import { StorageService } from '../common/services/storage.service';
 
 /**
  * Loads application config file
+ *
  * @param appConfigService configuration service
  * @param storageService storage service
  * @returns a factory to load application config

@@ -66,6 +66,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /**
      * Method called when files is dropped in the drag and drop area.
+     *
      * @param event DOM event.
      */
     onDropFiles(event: any): void {
@@ -110,6 +111,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /**
      * Change the style of the drag area when a file drag in.
+     *
      * @param event - DOM event.
      */
     onDragEnter(event: DragEvent): void {
@@ -126,6 +128,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /**
      * Change the style of the drag area when a file drag out.
+     *
      * @param event - DOM event.
      */
     onDragLeave(event: Event): void {
@@ -137,6 +140,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /**
      * Change the style of the drag area when a file is over the drag area.
+     *
      * @param event drag event
      */
     onDragOver(event: DragEvent): void {
@@ -153,6 +157,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /**
      * Prevent default and stop propagation of the DOM event.
+     *
      * @param event DOM event
      */
     preventDefault(event: Event): void {

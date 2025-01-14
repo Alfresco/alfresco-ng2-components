@@ -37,6 +37,7 @@ export class CommentProcessService implements CommentsService {
 
     /**
      * Gets all comments that have been added to a process instance.
+     *
      * @param id ID of the target process instance
      * @returns Details for each comment
      */
@@ -58,6 +59,7 @@ export class CommentProcessService implements CommentsService {
 
     /**
      * Adds a comment to a process instance.
+     *
      * @param id ID of the target process instance
      * @param message Text for the comment
      * @returns Details of the comment added

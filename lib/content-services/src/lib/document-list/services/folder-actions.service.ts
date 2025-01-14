@@ -46,6 +46,7 @@ export class FolderActionsService {
 
     /**
      * Gets the handler function for an action.
+     *
      * @param key Identifier for the action
      * @returns The handler function
      */
@@ -59,6 +60,7 @@ export class FolderActionsService {
 
     /**
      * Sets a new handler function for an action.
+     *
      * @param key Identifier for the action
      * @param handler The new handler function
      * @returns True if the key was a valid action identifier, false otherwise
@@ -74,6 +76,7 @@ export class FolderActionsService {
 
     /**
      * Checks if an action is available for a particular item.
+     *
      * @param nodeEntry Item to check
      * @returns True if the action is available, false otherwise
      */

@@ -316,6 +316,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     /**
      * Register all tags which should be assigned to node. Please note that they are just in "register" state and are not yet saved
      * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     *
      * @param tags array of tags to register, they are not saved yet until we click save button.
      */
     storeTagsToAssign(tags: string[]) {
@@ -327,6 +328,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     /**
      * Store all categories that node should be assigned to. Please note that they are just in "stored" state and are not yet saved
      * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     *
      * @param categoriesToAssign array of categories to store.
      */
     storeCategoriesToAssign(categoriesToAssign: Category[]) {

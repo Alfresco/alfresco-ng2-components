@@ -52,6 +52,7 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
 
     /**
      * Updates the cardview items property
+     *
      * @param notification notification value
      */
     updateElement(notification: CardViewBaseItemModel) {

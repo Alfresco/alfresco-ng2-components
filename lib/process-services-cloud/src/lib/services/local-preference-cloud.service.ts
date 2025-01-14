@@ -22,11 +22,11 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
-
-  constructor(private storage: StorageService) { }
+    constructor(private storage: StorageService) {}
 
     /**
      * Gets local preferences
+     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @returns List of local preferences
@@ -35,17 +35,16 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
-        return of(
-            {
-                list: {
-                    entries: []
-                }
+        return of({
+            list: {
+                entries: []
             }
-        );
+        });
     }
 
     /**
      * Gets local preference.
+     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @returns Observable of local preference
@@ -56,6 +55,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Creates local preference.
+     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @param newPreference Details of new local preference
@@ -70,6 +70,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Updates local preference.
+     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @param updatedPreference Details of updated preference
@@ -84,6 +85,7 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Deletes local preference by given preference key.
+     *
      * @param key Key of the target preference
      * @param preferences Details of updated preferences
      * @returns Observable of preferences without deleted preference

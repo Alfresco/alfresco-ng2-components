@@ -38,6 +38,7 @@ export class SharedLinksApiService {
 
     /**
      * Gets shared links available to the current user.
+     *
      * @param options Options supported by JS-API
      * @returns List of shared links
      */
@@ -55,6 +56,7 @@ export class SharedLinksApiService {
 
     /**
      * Creates a shared link available to the current user.
+     *
      * @param nodeId ID of the node to link to
      * @param sharedLinkWithExpirySettings shared link with nodeId and expiryDate
      * @param options Options supported by JS-API
@@ -68,6 +70,7 @@ export class SharedLinksApiService {
 
     /**
      * Deletes a shared link.
+     *
      * @param sharedId ID of the link to delete
      * @returns Null response notifying when the operation is complete
      */

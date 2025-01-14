@@ -53,6 +53,7 @@ export class GroupService {
 
     /**
      * Returns group for specified id.
+     *
      * @param id id of group to return.
      * @param opts additional query parameters
      * @returns Observable<GroupEntry> group for specified id.
@@ -68,6 +69,7 @@ export class GroupService {
 
     /**
      * Updates specified group.
+     *
      * @param group group to update.
      * @param opts additional query parameters
      * @returns Observable<GroupEntry> updated group.

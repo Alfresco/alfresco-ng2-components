@@ -35,6 +35,7 @@ export class ContentVersionService {
 
     /**
      * Get content URL for the given nodeId and specific version.
+     *
      * @param nodeId The ID of the node
      * @param versionId The ID of the version
      * @param attachment Retrieve content as an attachment for download

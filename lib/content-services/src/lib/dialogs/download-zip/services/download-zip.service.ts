@@ -34,6 +34,7 @@ export class DownloadZipService {
 
     /**
      * Creates a new download.
+     *
      * @param payload Object containing the node IDs of the items to add to the ZIP file
      * @returns Status object for the download
      */
@@ -43,6 +44,7 @@ export class DownloadZipService {
 
     /**
      * Gets status information for a download node.
+     *
      * @param downloadId ID of the download node
      * @returns Status object for the download
      */
@@ -52,6 +54,7 @@ export class DownloadZipService {
 
     /**
      * Cancels a download.
+     *
      * @param downloadId ID of the target download node
      */
     cancelDownload(downloadId: string) {

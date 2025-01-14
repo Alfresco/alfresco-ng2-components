@@ -39,6 +39,7 @@ export class AgentService {
 
     /**
      * Gets all agents from cache. If cache is empty, fetches agents from backend.
+     *
      * @returns Agent[] list containing agents.
      */
     getAgents(): Observable<Agent[]> {

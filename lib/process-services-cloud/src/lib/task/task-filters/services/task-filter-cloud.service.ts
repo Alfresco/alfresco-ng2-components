@@ -65,6 +65,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Creates and returns the default task filters for an app.
+     *
      * @param appName Name of the target app
      */
     private createDefaultFilters(appName: string): void {
@@ -89,6 +90,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Checks user preference are empty or not
+     *
      * @param preferences User preferences of the target app
      * @returns Boolean value if the preferences are not empty
      */
@@ -98,6 +100,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Checks for task filters in given user preferences
+     *
      * @param preferences User preferences of the target app
      * @param key Key of the task filters
      * @returns Boolean value if the preference has task filters
@@ -109,6 +112,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Calls create preference api to create task filters
+     *
      * @param appName Name of the target app
      * @param key Key of the task instance filters
      * @param filters Details of new task filter
@@ -120,6 +124,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Calls get preference api to get task filter by preference key
+     *
      * @param appName Name of the target app
      * @param key Key of the task filters
      * @returns Observable of task filters
@@ -130,6 +135,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Gets all task filters for a task app.
+     *
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
@@ -140,6 +146,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Gets a task filter.
+     *
      * @param appName Name of the target app
      * @param id ID of the task
      * @returns Details of the task filter
@@ -160,6 +167,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Adds a new task filter.
+     *
      * @param newFilter The new filter to add
      * @returns Observable of task instance filters with newly added filter
      */
@@ -187,6 +195,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Updates a task filter.
+     *
      * @param updatedFilter The filter to update
      * @returns Observable of task instance filters with updated filter
      */
@@ -211,6 +220,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Deletes a task filter
+     *
      * @param deletedFilter The filter to delete
      * @returns Observable of task instance filters without deleted filter
      */
@@ -233,6 +243,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Checks if given filter is a default filter
+     *
      * @param filterName Name of the target task filter
      * @returns Boolean value for whether the filter is a default filter
      */
@@ -243,6 +254,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Finds a task using an object with optional query properties.
+     *
      * @returns Task information
      * @param taskFilter task filter model
      */
@@ -279,6 +291,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Calls update preference api to update task filter
+     *
      * @param appName Name of the target app
      * @param key Key of the task filters
      * @param filters Details of update filter
@@ -290,6 +303,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Creates a uniq key with appName and username
+     *
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
@@ -299,6 +313,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Finds and returns the task filters from preferences
+     *
      * @returns Array of TaskFilterCloudModel
      * @param preferences preferences
      * @param key key
@@ -310,6 +325,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Creates and returns the default filters for a task app.
+     *
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
@@ -358,6 +374,7 @@ export class TaskFilterCloudService extends BaseCloudService {
 
     /**
      * Refresh filter key
+     *
      * @param filterKey  Key of the filter
      */
     refreshFilter(filterKey: string): void {
@@ -370,6 +387,7 @@ export class TaskFilterCloudService extends BaseCloudService {
      * If the new property is not found, it is created and assigned the value constructed from the old property.
      * The filters are then updated in the preferences and returned.
      * Old properties are left untouched for purposes like feature toggling.
+     *
      * @param appName Name of the target app.
      * @param key Key of the task filters.
      * @param filters Array of task filters to be checked for backward compatibility.

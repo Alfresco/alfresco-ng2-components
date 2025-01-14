@@ -34,6 +34,7 @@ export interface QueryParams {
 export class StartProcessCloudService extends BaseCloudService {
     /**
      * Gets the process definitions associated with an app.
+     *
      * @param appName Name of the target app
      * @param queryParams optional query parameters
      * @returns Array of process definitions
@@ -52,6 +53,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Starts a process based on a process definition, name, form values or variables.
+     *
      * @param appName name of the Application
      * @param payload Details of the process (definition key, name, variables, etc)
      * @returns Details of the process instance just started
@@ -72,6 +74,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Update an existing process instance
+     *
      * @param appName name of the Application
      * @param processInstanceId process instance to update
      * @param payload Details of the process (definition key, name, variables, etc)
@@ -86,6 +89,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Delete an existing process instance
+     *
      * @param appName Application name
      * @param processInstanceId the identifier of the process instance to update
      * @returns Observable<void>
@@ -98,6 +102,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the static values mapped to the start form of a process definition.
+     *
      * @param appName Name of the app
      * @param processDefinitionId ID of the target process definition
      * @returns Static mappings for the start event
@@ -117,6 +122,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the constants mapped to the start form of a process definition.
+     *
      * @param appName Name of the app
      * @param processDefinitionId ID of the target process definition
      * @returns Constants values for the start event

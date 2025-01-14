@@ -49,6 +49,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Get the input element
+     *
      * @returns native element
      */
     function getInput(): HTMLInputElement {
@@ -57,6 +58,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Enter the new input value
+     *
      * @param value value to input
      */
     function enterNewInputValue(value: string) {
@@ -69,6 +71,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Add new option
+     *
      * @param value value to input
      */
     function addNewOption(value: string) {
@@ -81,6 +84,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Get material chip list
+     *
      * @returns list of chips
      */
     async function getChipList(): Promise<MatChipHarness[]> {
@@ -90,6 +94,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Get chip value by specific index
+     *
      * @param index index of the chip
      * @returns chip value
      */
@@ -100,6 +105,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Get material option elements
+     *
      * @returns list of debug elements
      */
     async function getOptionElements(): Promise<MatOptionHarness[]> {
@@ -109,6 +115,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Get added options for auto-complete
+     *
      * @returns list of debug elements
      */
     function getAddedOptionElements(): DebugElement[] {
