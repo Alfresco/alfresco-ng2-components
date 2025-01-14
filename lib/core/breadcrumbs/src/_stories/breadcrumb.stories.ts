@@ -32,6 +32,7 @@ type StoryWithoutFunction<T> = NonFunctionProperties<StoryFn<T>>;
 
 /**
  * Copy storybook story
+ *
  * @param story story
  * @param annotations annotations
  * @returns a copy of the story

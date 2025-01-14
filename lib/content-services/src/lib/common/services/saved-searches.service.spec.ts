@@ -39,6 +39,7 @@ describe('SavedSearchesService', () => {
 
     /**
      * Creates a stub with Promise returning a Blob
+     *
      * @returns Promise with Blob
      */
     function createBlob() {

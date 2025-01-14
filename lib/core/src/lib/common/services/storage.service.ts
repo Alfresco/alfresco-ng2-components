@@ -39,6 +39,7 @@ export class StorageService {
 
     /**
      * Gets an item.
+     *
      * @param key Key to identify the item
      * @returns The item (if any) retrieved by the key
      */
@@ -52,6 +53,7 @@ export class StorageService {
 
     /**
      * Stores an item
+     *
      * @param key Key to identify the item
      * @param data Data to store
      */
@@ -74,6 +76,7 @@ export class StorageService {
 
     /**
      * Removes a single item.
+     *
      * @param key Key to identify the item
      */
     removeItem(key: string) {
@@ -86,6 +89,7 @@ export class StorageService {
 
     /**
      * Is any item currently stored under `key`?
+     *
      * @param key Key identifying item to check
      * @returns True if key retrieves an item, false otherwise
      */
