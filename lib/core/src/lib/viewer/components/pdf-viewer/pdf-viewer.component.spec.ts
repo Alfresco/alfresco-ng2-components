@@ -253,32 +253,34 @@ describe('Test PdfViewer component', () => {
         }, 55000);
 
         describe('Zoom', () => {
-            it('should zoom in increment the scale value', fakeAsync(() => {
+            it('should zoom in increment the scale value', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
-                tick(250);
-
                 const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 zoomInButton.click();
+                fixtureUrlTestComponent.detectChanges();
+
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore < currentZoom).toBe(true);
-            }), 55000);
+                done();
+            }, 55000);
 
-            it('should zoom out decrement the scale value', fakeAsync(() => {
+            it('should zoom out decrement the scale value', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
                 const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
-                tick(250);
-
                 const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 zoomOutButton.click();
+                fixtureUrlTestComponent.detectChanges();
+
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore > currentZoom).toBe(true);
-            }), 55000);
+                done();
+            }, 55000);
 
             it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
