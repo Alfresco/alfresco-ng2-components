@@ -28,6 +28,7 @@ import { CoreTestingModule } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PdfViewerComponent } from './pdf-viewer.component';
+import { AnnotationMode } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
 
@@ -159,6 +160,15 @@ describe('Test PdfViewer component', () => {
             document.body.removeChild(elementUrlTestComponent);
         });
 
+        it('should init the viewer with annotation mode disabled', (done) => {
+            fixtureUrlTestComponent.detectChanges();
+
+            fixtureUrlTestComponent.whenStable().then(() => {
+                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationEditorMode).toBe(AnnotationMode.DISABLE);
+                done();
+            });
+        }, 55000);
+
         it('should Total number of pages be loaded', (done) => {
             fixtureUrlTestComponent.detectChanges();
 
@@ -243,32 +253,34 @@ describe('Test PdfViewer component', () => {
         }, 55000);
 
         describe('Zoom', () => {
-            it('should zoom in increment the scale value', fakeAsync(() => {
+            it('should zoom in increment the scale value', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
-                tick(250);
-
                 const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 zoomInButton.click();
+                fixtureUrlTestComponent.detectChanges();
+
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore < currentZoom).toBe(true);
-            }), 55000);
+                done();
+            }, 55000);
 
-            it('should zoom out decrement the scale value', fakeAsync(() => {
+            it('should zoom out decrement the scale value', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
                 const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
-                tick(250);
-
                 const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 zoomOutButton.click();
+                fixtureUrlTestComponent.detectChanges();
+
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore > currentZoom).toBe(true);
-            }), 55000);
+                done();
+            }, 55000);
 
             it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
