@@ -164,7 +164,7 @@ describe('Test PdfViewer component', () => {
             fixtureUrlTestComponent.detectChanges();
 
             fixtureUrlTestComponent.whenStable().then(() => {
-                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationMode).toBe(AnnotationMode.DISABLE);
+                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationEditorMode).toBe(AnnotationMode.DISABLE);
                 done();
             });
         }, 55000);
