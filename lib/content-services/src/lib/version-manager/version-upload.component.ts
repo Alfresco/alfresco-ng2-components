@@ -57,7 +57,7 @@ export class VersionUploadComponent implements OnInit {
     minorVersion = '1.1';
 
     /** The target node. */
-    @Input()
+    @Input({ required: true })
     node: Node;
 
     /** New file for updating current version. */

@@ -40,7 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     /** The ID of the process instance to display tasks for. */
-    @Input()
+    @Input({ required: true })
     processInstanceDetails: ProcessInstanceRepresentation;
 
     /**

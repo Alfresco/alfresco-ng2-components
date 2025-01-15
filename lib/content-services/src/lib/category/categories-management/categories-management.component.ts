@@ -137,7 +137,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * In ASSIGN mode we can only assign/unassign categories from existing list.
      * In CRUD mode we can create categories.
      */
-    @Input()
+    @Input({ required: true })
     managementMode: CategoriesManagementMode;
 
     /** ID of a parent category. New categories will be created under this parent */
@@ -180,7 +180,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             )
             .subscribe((name: string) => this.onNameControlValueChange(name));
 
-        this.categoryNameControl.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.setCategoryNameControlErrorMessageKey());
+        this.categoryNameControl.statusChanges
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.setCategoryNameControlErrorMessageKey());
 
         this.setCategoryNameControlErrorMessageKey();
 

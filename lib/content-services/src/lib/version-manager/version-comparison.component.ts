@@ -31,11 +31,11 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class VersionComparisonComponent {
     /** Target node. */
-    @Input()
+    @Input({ required: true })
     node: Node;
 
     /** New file for updating current version. */
-    @Input()
+    @Input({ required: true })
     newFileVersion: File;
 
     constructor(public thumbnailService: ThumbnailService) {}

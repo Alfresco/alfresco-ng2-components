@@ -86,7 +86,7 @@ enum DefaultPanels {
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
     /** (required) The node entity to fetch metadata about */
-    @Input()
+    @Input({ required: true })
     node: Node;
 
     /** Toggles whether to display empty values in the card view */
@@ -105,7 +105,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     multi = false;
 
     /** Name or configuration of the metadata preset, which defines aspects and their properties */
-    @Input()
+    @Input({ required: true })
     preset: string | PresetConfig;
 
     /** Toggles whether the metadata properties should be shown */

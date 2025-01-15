@@ -30,7 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterCardComponent {
-    @Input()
+    @Input({ required: true })
     category: SearchCategory;
 
     @ViewChild(SearchWidgetContainerComponent, { static: false })

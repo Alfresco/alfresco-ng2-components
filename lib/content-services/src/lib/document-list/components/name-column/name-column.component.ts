@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    DestroyRef,
-    ElementRef,
-    inject,
-    Input,
-    OnInit,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -62,7 +53,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
 })
 export class NameColumnComponent implements OnInit {
-    @Input()
+    @Input({ required: true })
     context: any;
 
     @Input()
@@ -110,5 +101,4 @@ export class NameColumnComponent implements OnInit {
             })
         );
     }
-
 }

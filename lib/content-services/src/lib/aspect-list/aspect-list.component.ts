@@ -39,7 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AspectListComponent implements OnInit {
     /** Node Id of the node that we want to update */
-    @Input()
+    @Input({ required: true })
     nodeId: string = '';
 
     /** List of aspects' ids which should not be displayed. */

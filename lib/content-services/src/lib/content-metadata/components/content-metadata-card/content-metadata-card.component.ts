@@ -40,7 +40,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ContentMetadataCardComponent implements OnChanges {
     /** (required) The node entity to fetch metadata about */
-    @Input()
+    @Input({ required: true })
     node: Node;
 
     /**
@@ -68,7 +68,7 @@ export class ContentMetadataCardComponent implements OnChanges {
      * Name or configuration of the metadata preset, which defines aspects
      * and their properties.
      */
-    @Input()
+    @Input({ required: true })
     preset: string | PresetConfig;
 
     /**

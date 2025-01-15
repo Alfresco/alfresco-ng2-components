@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { map } from 'rxjs/operators';
@@ -44,7 +44,7 @@ export class PeopleSearchComponent implements OnInit {
     actionLabel?: string;
 
     /** Parameters for displaying the list. */
-    @Input()
+    @Input({ required: true })
     results: Observable<LightUserRepresentation[]>;
 
     /** Emitted when a search is performed with a new keyword. */

@@ -44,7 +44,7 @@ import { ProcessCommentsComponent } from '../../../process-comments';
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {
     /** (required) The numeric ID of the process instance to display. */
-    @Input()
+    @Input({ required: true })
     processInstanceId: string;
 
     @ViewChild('processInstanceHeader')

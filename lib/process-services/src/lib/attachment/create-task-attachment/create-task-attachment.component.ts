@@ -34,7 +34,7 @@ export class AttachmentComponent implements OnChanges {
     private processContentService = inject(ProcessContentService);
 
     /** (required) The numeric ID of the task to display. */
-    @Input()
+    @Input({ required: true })
     taskId: string;
 
     /**

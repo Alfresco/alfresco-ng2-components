@@ -16,7 +16,7 @@
  */
 
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
@@ -36,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class TreeViewComponent implements OnChanges {
     /** Identifier of the node to display. */
-    @Input()
+    @Input({ required: true })
     nodeId: string;
 
     /** Emitted when a node in the tree view is clicked. */

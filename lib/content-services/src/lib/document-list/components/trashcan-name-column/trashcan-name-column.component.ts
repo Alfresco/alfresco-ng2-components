@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { CommonModule } from '@angular/common';
@@ -38,7 +38,7 @@ import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
     host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
 })
 export class TrashcanNameColumnComponent implements OnInit {
-    @Input()
+    @Input({ required: true })
     context: any;
 
     isLibrary = false;

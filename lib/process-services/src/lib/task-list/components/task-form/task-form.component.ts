@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import {
-    FormModel,
     ContentLinkModel,
-    FormFieldValidator,
-    FormOutcomeEvent,
-    TranslationService,
+    EmptyContentComponent,
     FormFieldModel,
-    EmptyContentComponent
+    FormFieldValidator,
+    FormModel,
+    FormOutcomeEvent,
+    TranslationService
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
@@ -61,7 +61,7 @@ import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
 })
 export class TaskFormComponent implements OnInit, OnChanges {
     /** (**required**) The id of the task whose details we are asking for. */
-    @Input()
+    @Input({ required: true })
     taskId: string;
 
     /** Toggles rendering of the form title. */

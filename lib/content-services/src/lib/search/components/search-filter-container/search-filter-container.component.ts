@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { DataColumn, IconComponent, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
@@ -57,7 +48,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 })
 export class SearchFilterContainerComponent implements OnInit {
     /** The column the filter will be applied on. */
-    @Input()
+    @Input({ required: true })
     col: DataColumn;
 
     /** The column the filter will be applied on. */

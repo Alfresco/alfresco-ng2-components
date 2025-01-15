@@ -88,7 +88,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * In Create mode we can't select existing tags, we can only create them.
      * In Create and Assign mode we can both - create tags and select existing tags.
      */
-    @Input()
+    @Input({ required: true })
     mode: TagsCreatorMode;
 
     /**

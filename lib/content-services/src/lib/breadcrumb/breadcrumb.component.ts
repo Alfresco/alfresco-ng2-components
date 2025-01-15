@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
@@ -46,7 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
     /** Active node, builds UI based on folderNode.path.elements collection. */
-    @Input()
+    @Input({ required: true })
     folderNode: Node = null;
 
     /**

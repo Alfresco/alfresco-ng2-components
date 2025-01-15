@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../../models/application-instance.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,7 +31,7 @@ import { MatCardModule } from '@angular/material/card';
     encapsulation: ViewEncapsulation.None
 })
 export class AppDetailsCloudComponent {
-    @Input()
+    @Input({ required: true })
     applicationInstance: ApplicationInstanceModel;
 
     @Output()

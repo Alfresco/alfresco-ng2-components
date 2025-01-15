@@ -52,7 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class PermissionListComponent implements OnInit {
     /** ID of the node whose permissions you want to show. */
-    @Input()
+    @Input({ required: true })
     nodeId: string;
 
     /** Emitted when the permission is updated. */

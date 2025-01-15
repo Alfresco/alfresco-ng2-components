@@ -36,7 +36,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-library-status-column adf-datatable-content-cell' }
 })
 export class LibraryStatusColumnComponent implements OnInit {
-    @Input()
+    @Input({ required: true })
     context: any;
 
     displayText$ = new BehaviorSubject<string>('');
@@ -82,5 +82,4 @@ export class LibraryStatusColumnComponent implements OnInit {
             }
         }
     }
-
 }

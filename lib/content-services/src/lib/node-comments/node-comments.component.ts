@@ -34,7 +34,7 @@ import { NodeCommentsService } from './services/node-comments.service';
 })
 export class NodeCommentsComponent {
     /** nodeId of the document that has comments */
-    @Input()
+    @Input({ required: true })
     nodeId: string;
 
     /** make the comments component readOnly */
