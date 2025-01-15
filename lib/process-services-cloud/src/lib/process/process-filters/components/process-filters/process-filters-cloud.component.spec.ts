@@ -18,18 +18,16 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
+import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
-import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
+import { mockProcessFilters } from '../../mock/process-filters-cloud.mock';
 import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
-import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
-import { NotificationCloudService } from '../../../services/notification-cloud.service';
+import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ApolloModule } from 'apollo-angular';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material/list';
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
@@ -46,16 +44,18 @@ describe('ProcessFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatListModule],
+            imports: [NoopTranslateModule, NoopAnimationsModule, ProcessFiltersCloudComponent],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: ProcessListCloudService, useValue: {
-                    getProcessCounter: () => of(10),
-                    getProcessListCounter: () => of(10)
-                }},
+                {
+                    provide: ProcessListCloudService,
+                    useValue: {
+                        getProcessCounter: () => of(10),
+                        getProcessListCounter: () => of(10)
+                    }
+                },
                 { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock },
-                NotificationCloudService,
                 ApolloModule
             ]
         });

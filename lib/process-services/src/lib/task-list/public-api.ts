@@ -20,8 +20,6 @@ import { UnclaimTaskDirective } from './components/task-form/unclaim-task.direct
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { AttachFormComponent } from './components/attach-form/attach-form.component';
 import { ChecklistComponent } from './components/checklist/checklist.component';
-import { NoTaskDetailsTemplateDirective } from './components/no-task-details/no-task-detail-template.directive';
-import { TaskAuditDirective } from './components/task-audit/task-audit.directive';
 import { TaskFiltersComponent } from './components/task-filters/task-filters.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
@@ -32,13 +30,11 @@ import { TaskStandaloneComponent } from './components/task-standalone/task-stand
 export * from './components/task-list/task-list.component';
 export * from './components/checklist/checklist.component';
 export * from './components/task-header/task-header.component';
-export * from './components/no-task-details/no-task-detail-template.directive';
 export * from './components/task-filters/task-filters.component';
 export * from './components/task-form/task-form.component';
 export * from './components/task-form/claim-task.directive';
 export * from './components/task-form/unclaim-task.directive';
 export * from './components/task-details/task-details.component';
-export * from './components/task-audit/task-audit.directive';
 export * from './components/start-task/start-task.component';
 export * from './components/task-standalone/task-standalone.component';
 export * from './components/attach-form/attach-form.component';
@@ -64,7 +60,5 @@ export const TASK_LIST_DIRECTIVES = [
     StartTaskComponent,
     TaskStandaloneComponent,
     ClaimTaskDirective,
-    UnclaimTaskDirective,
-    NoTaskDetailsTemplateDirective,
-    TaskAuditDirective
+    UnclaimTaskDirective
 ] as const;

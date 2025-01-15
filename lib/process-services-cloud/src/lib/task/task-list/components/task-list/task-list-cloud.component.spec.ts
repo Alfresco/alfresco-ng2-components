@@ -18,7 +18,17 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow, User, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataRowEvent,
+    ObjectDataRow,
+    User,
+    DataColumn,
+    ColumnsSelectorComponent,
+    DataColumnListComponent,
+    DataColumnComponent,
+    CustomEmptyContentTemplateDirective
+} from '@alfresco/adf-core';
 import { TaskListCloudService } from '../../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../../mock/fake-task-response.mock';
@@ -35,6 +45,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
+    standalone: true,
+    imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
     template: ` <adf-cloud-task-list #taskListCloud>
         <data-columns>
             <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3" />
@@ -60,7 +72,10 @@ class CustomTaskListComponent {
         return `${person.firstName} ${person.lastName}`;
     }
 }
+
 @Component({
+    standalone: true,
+    imports: [CustomEmptyContentTemplateDirective, TaskListCloudComponent],
     template: `
         <adf-cloud-task-list>
             <adf-custom-empty-content-template>
@@ -70,7 +85,10 @@ class CustomTaskListComponent {
     `
 })
 class EmptyTemplateComponent {}
+
 @Component({
+    standalone: true,
+    imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
     template: ` <adf-cloud-task-list>
         <data-columns>
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID" />
@@ -655,8 +673,7 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));

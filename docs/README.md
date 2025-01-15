@@ -445,7 +445,6 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Claim Task Directive](process-services/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/claim-task.directive.ts) |
 | [Process Audit Directive](process-services/directives/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/process-list/components/process-audit/process-audit.directive.ts) |
-| [Task Audit Directive](process-services/directives/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/task-list/components/task-audit/task-audit.directive.ts) |
 | [Unclaim Task Directive](process-services/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/unclaim-task.directive.ts) |
 
 ### Services
@@ -475,7 +474,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [App List Cloud Component](process-services-cloud/components/app-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
-| [Edit Process Filter Cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows/edits process filter details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
+| [Edit Process Filter Cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows/edits process filter details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter/edit-process-filter-cloud.component.ts) |
 | [Edit Task Filter Cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits task filter details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filters/edit-task-filter-cloud.component.ts) |
 | [Form cloud custom outcomes component](process-services-cloud/components/form-cloud-custom-outcome.component.md) | Supplies custom outcome buttons to be included in Form cloud component. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud-custom-outcomes.component.ts) |
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
@@ -485,7 +484,7 @@ for more information about installing and using the source code.
 
 Added: v3.0.0
 Status: Experimental | [Source](<>) |
-| [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
+| [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters/process-filters-cloud.component.ts) |
 | [Process Header Cloud Component](process-services-cloud/components/process-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a process instance. | [Source](../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts) |
 | [Process Instance List Cloud component](process-services-cloud/components/process-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
 | [Start Process Cloud Component](process-services-cloud/components/start-process-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |

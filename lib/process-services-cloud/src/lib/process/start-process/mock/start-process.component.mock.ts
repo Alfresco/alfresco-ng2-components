@@ -59,17 +59,6 @@ export const fakeProcessWithFormInstance: ProcessInstanceCloud = {
     processDefinitionName: 'my-process'
 };
 
-export const fakeCreatedProcessInstance: ProcessInstanceCloud = {
-    appName: 'simple-app',
-    id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',
-    name: 'My Process Name',
-    startDate: null,
-    initiator: 'usermock',
-    status: 'CREATED',
-    processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
-    processDefinitionKey: 'BasicProcess'
-};
-
 export const fakeProcessDefinitions: ProcessDefinitionCloud[] = [
     new ProcessDefinitionCloud({
         appName: 'myApp',

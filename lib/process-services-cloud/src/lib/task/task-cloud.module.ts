@@ -21,6 +21,7 @@ import { TASK_FILTERS_CLOUD_DIRECTIVES } from './task-filters/task-filters-cloud
 import { TASK_FORM_CLOUD_DIRECTIVES } from './task-form/task-form.module';
 import { TaskHeaderCloudComponent } from './task-header/components/task-header-cloud.component';
 
+/** @deprecated use standalone component imports instead */
 @NgModule({
     imports: [TaskListCloudModule, ...TASK_FILTERS_CLOUD_DIRECTIVES, TaskHeaderCloudComponent, ...TASK_FORM_CLOUD_DIRECTIVES],
     exports: [TaskListCloudModule, ...TASK_FILTERS_CLOUD_DIRECTIVES, TaskHeaderCloudComponent, ...TASK_FORM_CLOUD_DIRECTIVES]

@@ -23,28 +23,113 @@ import {
     ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
     DataColumn,
+    DataColumnComponent,
+    DataColumnListComponent,
     DataRowEvent,
     getDataColumnMock,
+    ObjectDataColumn,
     ObjectDataRow,
     User
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
-import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
-import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
+import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN, ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
+const fakeCustomSchema = [
+    new ObjectDataColumn<ProcessListDataColumnCustomData>({
+        key: 'fakeName',
+        type: 'text',
+        title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+        sortable: true
+    }),
+    new ObjectDataColumn<ProcessListDataColumnCustomData>({
+        key: 'fakeTaskName',
+        type: 'text',
+        title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+        sortable: true
+    })
+];
+
+const fakeProcessCloudList = {
+    list: {
+        entries: [
+            {
+                entry: {
+                    appName: 'easy-peasy-japanesey',
+                    appVersion: 1,
+                    id: '69eddfa7-d781-11e8-ae24-0a58646001fa',
+                    name: 'starring',
+                    processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
+                    processDefinitionKey: 'BasicProcess',
+                    initiator: 'devopsuser',
+                    startDate: 1540381146275,
+                    businessKey: 'MyBusinessKey',
+                    status: 'RUNNING',
+                    lastModified: 1540381146276,
+                    lastModifiedTo: null,
+                    lastModifiedFrom: null,
+                    variables: [{ id: 'variableId', value: 'variableValue' }]
+                }
+            },
+            {
+                entry: {
+                    appName: 'easy-peasy-japanesey',
+                    appVersion: 1,
+                    id: '8b3f625f-d781-11e8-ae24-0a58646001fa',
+                    name: null,
+                    processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
+                    processDefinitionKey: 'BasicProcess',
+                    initiator: 'devopsuser',
+                    startDate: 1540381202174,
+                    businessKey: 'MyBusinessKey',
+                    status: 'RUNNING',
+                    lastModified: 1540381202174,
+                    lastModifiedTo: null,
+                    lastModifiedFrom: null
+                }
+            },
+            {
+                entry: {
+                    appName: 'easy-peasy-japanesey',
+                    appVersion: 2,
+                    id: '87c12637-d783-11e8-ae24-0a58646001fa',
+                    name: null,
+                    processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
+                    processDefinitionKey: 'BasicProcess',
+                    initiator: 'superadminuser',
+                    startDate: 1540382055307,
+                    businessKey: 'MyBusinessKey',
+                    status: 'RUNNING',
+                    lastModified: 1540382055308,
+                    lastModifiedTo: null,
+                    lastModifiedFrom: null
+                }
+            }
+        ],
+        pagination: {
+            skipCount: 0,
+            maxItems: 100,
+            count: 3,
+            hasMoreItems: false,
+            totalItems: 3
+        }
+    }
+};
+
 @Component({
+    standalone: true,
+    imports: [DataColumnComponent, DataColumnListComponent, ProcessListCloudComponent],
     template: ` <adf-cloud-process-list #processListCloud>
         <data-columns>
             <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3" />
@@ -66,6 +151,62 @@ class CustomTaskListComponent {
     }
 }
 
+const processListSchemaMock = {
+    presets: {
+        default: [
+            {
+                key: 'id',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.ID'
+            },
+            {
+                key: 'name',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME'
+            },
+            {
+                key: 'status',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS'
+            },
+            {
+                key: 'startDate',
+                type: 'date',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',
+                format: 'timeAgo'
+            },
+            {
+                key: 'appName',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.APP_NAME'
+            },
+            {
+                key: 'businessKey',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.BUSINESS_KEY'
+            },
+            {
+                key: 'initiator',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.INITIATOR'
+            },
+            {
+                key: 'lastModified',
+                type: 'date',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.LAST_MODIFIED'
+            },
+            {
+                key: 'processDefinitionId',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_ID'
+            },
+            {
+                key: 'processDefinitionKey',
+                title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_KEY'
+            }
+        ].map((column: { key: string; type: string; title: string; sortable: boolean; format: string }) => {
+            column.sortable = true;
+            if (!column.type) {
+                column.type = 'text';
+            }
+            return column;
+        })
+    }
+};
+
 describe('ProcessListCloudComponent', () => {
     let loader: HarnessLoader;
     let component: ProcessListCloudComponent;
@@ -78,7 +219,7 @@ describe('ProcessListCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule, ProcessListCloudComponent]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -904,8 +1045,7 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomTaskListComponent]
+            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
         fixtureCustom.detectChanges();
@@ -928,6 +1068,8 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     @Component({
+        standalone: true,
+        imports: [CustomEmptyContentTemplateDirective, ProcessListCloudComponent],
         template: `
             <adf-cloud-process-list #processListCloud>
                 <adf-custom-empty-content-template>
@@ -949,9 +1091,14 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatProgressSpinnerModule, CustomEmptyContentTemplateDirective],
-            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
+            imports: [
+                ProcessServiceCloudTestingModule,
+                MatProgressSpinnerModule,
+                CustomEmptyContentTemplateDirective,
+                ProcessListCloudComponent,
+                EmptyTemplateComponent
+            ],
+            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();

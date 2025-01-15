@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2023-04-03
 ---
 
-# [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
+# Edit Process Filter Cloud component
 
 Shows/edits process filter details.
 
@@ -41,27 +41,27 @@ Shows/edits process filter details.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| actions | `string[]` | DEFAULT_ACTIONS | List of sort actions. |
-| appName | `string` | "" | The name of the application. |
-| environmentId | `string` |  | [Environment](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts) ID of the application. |
-| environmentList | [`Environment`](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts)`[]` | \[] | List of environments. |
-| filterProperties | `string[]` |  | List of process filter properties to display |
-| id | `string` |  | Id of the process instance filter. |
-| role | `string` | "" | roles to filter the apps |
-| showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
-| showProcessFilterName | `boolean` | true | Toggles the appearance of the process filter name . |
-| showTitle | `boolean` | true | Toggles editing of the process filter title. |
-| sortProperties | `string[]` |  | List of sort properties to display. |
-| processFilter | [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts) |  | Process filter |
+| Name                  | Type                      | Default value   | Description                                         |
+|-----------------------|---------------------------|-----------------|-----------------------------------------------------|
+| actions               | `string[]`                | DEFAULT_ACTIONS | List of sort actions.                               |
+| appName               | `string`                  | ""              | The name of the application.                        |
+| environmentId         | `string`                  |                 | Environment ID of the application.                  |
+| environmentList       | `Environment[]`           | \[]             | List of environments.                               |
+| filterProperties      | `string[]`                |                 | List of process filter properties to display        |
+| id                    | `string`                  |                 | Id of the process instance filter.                  |
+| role                  | `string`                  | ""              | roles to filter the apps                            |
+| showFilterActions     | `boolean`                 | true            | Toggles editing of process filter actions.          |
+| showProcessFilterName | `boolean`                 | true            | Toggles the appearance of the process filter name . |
+| showTitle             | `boolean`                 | true            | Toggles editing of the process filter title.        |
+| sortProperties        | `string[]`                |                 | List of sort properties to display.                 |
+| processFilter         | `ProcessFilterCloudModel` |                 | Process filter                                      |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
+| Name         | Type                                    | Description                                                   |
+|--------------|-----------------------------------------|---------------------------------------------------------------|
+| action       | `EventEmitter<ProcessFilterAction>`     | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
+| filterChange | `EventEmitter<ProcessFilterCloudModel>` | Emitted when a process instance filter property changes.      |
 
 ## Details
 
@@ -72,8 +72,8 @@ Use the `appName` and `id` properties to choose which process filter to edit:
 ```html
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
-    [appName]="appName">
-</adf-cloud-edit-process-filter>
+    [appName]="appName"
+/>
 ```
 
 ### Filter properties
@@ -82,18 +82,18 @@ You can supply various _filter properties_ to edit. These will determine
 which processes are found by a filter. The full set of properties is
 given below:
 
-| Name | Description |
-| ---- | ----------- |
-| **_appName_** | Name of the app |
-| **_id_** | Process instance ID |
-| **_name_** | Process name. |
-| **_initiator_** | ID of the user who initiated the process |
-| **_status_** | Execution status of the process. |
-| **_processDefinitionId_** | Process definition ID |
-| **_processDefinitionKey_** | Process definition key |
-| **_lastModified_** | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_** |
-| **_sort_** | Field on which the filter results will be sorted. Can be "id", "name", "status", "startDate". |
-| **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
+| Name                       | Description                                                                                                                                |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **_appName_**              | Name of the app                                                                                                                            |
+| **_id_**                   | Process instance ID                                                                                                                        |
+| **_name_**                 | Process name.                                                                                                                              |
+| **_initiator_**            | ID of the user who initiated the process                                                                                                   |
+| **_status_**               | Execution status of the process.                                                                                                           |
+| **_processDefinitionId_**  | Process definition ID                                                                                                                      |
+| **_processDefinitionKey_** | Process definition key                                                                                                                     |
+| **_lastModified_**         | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_** |
+| **_sort_**                 | Field on which the filter results will be sorted. Can be "id", "name", "status", "startDate".                                              |
+| **_order_**                | Sort ordering of the filter results (this doesn't participate in the filtering itself)                                                     |
 
 By default, the **_status_**, **_sort_** and **_order_** properties are
 displayed in the editor. However, you can also choose which properties
@@ -118,14 +118,15 @@ export class SomeComponent implements OnInit {
     onAction($event: ProcessFilterAction) {
         console.log('Clicked action: ', $event);
     }
+}
 ```
 
 ```html
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
     [appName]="applicationName"
-    [filterProperties]="filterProperties">
-</adf-cloud-edit-process-filter>
+    [filterProperties]="filterProperties"
+/>
 ```
 
 With this configuration, only the four listed properties will be shown.
@@ -146,7 +147,8 @@ export class SomeComponent implements OnInit {
 
     sortProperties: string[] = [
         "startDate",
-        "lastModified"];
+        "lastModified"
+    ];
 
     onFilterChange(filter: ProcessFilterCloudModel) {
         console.log('On filter change: ', filter);
@@ -155,14 +157,15 @@ export class SomeComponent implements OnInit {
     onAction($event: ProcessFilterAction) {
         console.log('Clicked action: ', $event);
     }
+}
 ```
 
 ```html
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
     [appName]="applicationName"
-    [sortProperties]="sortProperties">
-</adf-cloud-edit-process-filter>
+    [sortProperties]="sortProperties"
+/>
 ```
 
 With this configuration, only the two listed sort properties will be shown.
@@ -171,11 +174,11 @@ With this configuration, only the two listed sort properties will be shown.
 
 You can supply various _actions_ to apply on process filter.
 
-| Name | Description |
-| ---- | ----------- |
-| **_save_** | Save process filter. |
+| Name         | Description                   |
+|--------------|-------------------------------|
+| **_save_**   | Save process filter.          |
 | **_saveAs_** | Creates a new process filter. |
-| **_delete_** | Delete process filter. |
+| **_delete_** | Delete process filter.        |
 
 By default, the **_save_**, **_saveAs_** and **_delete_** actions are
 displayed in the editor. However, you can also choose which actions to
@@ -194,14 +197,15 @@ export class SomeComponent implements OnInit {
     onAction($event: ProcessFilterAction) {
         console.log('Clicked action: ', $event);
     }
+}
 ```
 
 ```html
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
     [appName]="applicationName"
-    [actions]="actions">
-</adf-cloud-edit-process-filter>
+    [actions]="actions"
+/>
 ```
 
 With this configuration, only the two actions will be shown.
@@ -211,7 +215,6 @@ With this configuration, only the two actions will be shown.
 Users can save a filter if they make any changes to it in an application using the **Save** icon. How it is saved is dictated by the Activiti version used:
 
 -   An Activiti 7 community version stores saved filters in the local browser storage. This restricts a user's custom filters to that single session.
-
 -   An Activiti Enterprise version uses the preference service to store saved filters. This allows for user's custom filters to be available between sessions and between devices.
 
 ## See also

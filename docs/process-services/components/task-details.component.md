@@ -53,24 +53,3 @@ Shows the details of the task ID passed in as input.
 | taskCreated        | `EventEmitter<TaskRepresentation>` | Emitted when a checklist task is created.                                                              |
 | taskDeleted        | `EventEmitter<string>`             | Emitted when a checklist task is deleted.                                                              |
 | unClaimedTask      | `EventEmitter<string>`             | Emitted when a task is unclaimed.                                                                      |
-
-## Details
-
-### Custom 'empty Task Details' template
-
-By default, the [Task Details component](task-details.component.md) shows "No Tasks" message when there are
-no details. You can change this by adding a custom HTML template as in the following
-example:
-
-```html
-<adf-task-details [taskId]="taskId">
-    <adf-no-task-details-template>
-        <ng-template>
-             <h1>Sorry, no tasks here</h1>
-             <img src="example.jpg" alt="example">
-        </ng-template>
-    </adf-no-task-details-template>
-</adf-task-details>    
-```
-
-Note that you can use any HTML content in the template, including other Angular components.
