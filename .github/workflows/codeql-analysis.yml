@@ -31,9 +31,12 @@ jobs:
       id: check
       run: |
         changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+        echo "Changed files: $changed_files"
         if echo "$changed_files" | grep -qvE '^(e2e/resources/|docs/)'; then
+          echo "CodeQL will run"
           echo "::set-output name=skip_codeql::true"
         else
+          echo "CodeQL will be skipped"
           echo "::set-output name=skip_codeql::false"
         fi
 
