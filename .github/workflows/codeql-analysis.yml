@@ -36,15 +36,17 @@ jobs:
           echo "CodeQL will run"
           echo "::set-output name=skip_codeql::true"
           echo "skip_codeql=false" >> $GITHUB_ENV
+          echo "skip_codeql=false" >> $GITHUB_OUTPUT
         else
           echo "CodeQL will be skipped"
           echo "::set-output name=skip_codeql::false"
           echo "skip_codeql=true" >> $GITHUB_ENV
+          echo "skip_codeql=true" >> $GITHUB_OUTPUT
         fi
 
   analyze:
     needs: check-paths
-    if: env.skip_codeql == 'false'
+    if: needs.check-paths.outputs.skip_codeql == 'false'
     runs-on: ubuntu-latest
 
     steps:
