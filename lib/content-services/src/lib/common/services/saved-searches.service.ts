@@ -232,7 +232,10 @@ export class SavedSearchesService {
     }
 
     private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
-        return blob.text().then((content) => (content ? JSON.parse(content) : []));
+        return blob
+            .text()
+            .then((content) => (content ? JSON.parse(content) : []))
+            .catch(() => []);
     }
 
     private getLocalStorageKey(): string {
