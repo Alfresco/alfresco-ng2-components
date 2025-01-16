@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AvatarComponent } from '@alfresco/adf-core';
+import { AvatarComponent, UnitTestingUtils } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('AvatarComponent', () => {
@@ -32,12 +32,13 @@ describe('AvatarComponent', () => {
         fixture.detectChanges();
     });
 
-    const getAvatarImageElement = (): HTMLImageElement => fixture.nativeElement.querySelector('.adf-avatar__image');
+    const getAvatarImageElement = (): HTMLImageElement => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-avatar__image').nativeElement;
+    const getAvatarInitialsElement = (): HTMLDivElement => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-avatar__initials').nativeElement;
 
     it('should display initials when src is not provided', () => {
         component.src = '';
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__initials');
+        const avatarElement = getAvatarInitialsElement();
         expect(avatarElement.textContent).toContain(component.initials);
     });
 
@@ -49,14 +50,14 @@ describe('AvatarComponent', () => {
 
     it('should use default initials when not provided', () => {
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__initials');
+        const avatarElement = getAvatarInitialsElement();
         expect(avatarElement.textContent).toContain('U');
     });
 
     it('should use custom initials', () => {
         component.initials = 'DV';
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__initials');
+        const avatarElement = getAvatarInitialsElement();
         expect(avatarElement.textContent).toContain('DV');
     });
 

@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
@@ -27,9 +26,9 @@ import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -52,19 +51,20 @@ describe('CardViewComponent', () => {
         fixture.destroy();
     });
 
+    const getPropertyLabel = (): string => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label');
+    const getPropertyValue = (): string => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-property-value').nativeElement.value;
+    const getPropertyValueText = (): string => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-value');
+    const getPropertyValueByDataAutomationId = (dataAutomationId: string): string =>
+        UnitTestingUtils.getByDataAutomationId(fixture.debugElement, dataAutomationId).nativeElement.value;
+
     it('should render the label and value', async () => {
         component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-        expect(labelValue).not.toBeNull();
-        expect(labelValue.nativeElement.innerText).toBe('My label');
-
-        const value = fixture.debugElement.query(By.css('.adf-property-value'));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.value).toBe('My value');
+        expect(getPropertyLabel()).toBe('My label');
+        expect(getPropertyValue()).toBe('My value');
     });
 
     it('should pass through editable property to the items', () => {
@@ -80,8 +80,7 @@ describe('CardViewComponent', () => {
 
         fixture.detectChanges();
 
-        const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-some-key"]`));
-        expect(datePicker).not.toBeNull('Datepicker should be in DOM');
+        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'datepicker-some-key')).not.toBeNull('Datepicker should be in DOM');
     });
 
     it('should render the date in the correct format', async () => {
@@ -97,13 +96,8 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-        expect(labelValue).not.toBeNull();
-        expect(labelValue.nativeElement.innerText).toBe('My date label');
-
-        const value = fixture.debugElement.query(By.css('.adf-property-value'));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText).toBe('6/14/17, 12:00 AM');
+        expect(getPropertyLabel()).toBe('My date label');
+        expect(getPropertyValueText()).toBe('6/14/17, 12:00 AM');
     });
 
     it('should render the default value if the value is empty, not editable and displayEmpty is true', async () => {
@@ -122,13 +116,8 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-        expect(labelValue).not.toBeNull();
-        expect(labelValue.nativeElement.innerText).toBe('My default label');
-
-        const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.value).toBe('default value');
+        expect(getPropertyLabel()).toBe('My default label');
+        expect(getPropertyValueByDataAutomationId('card-textitem-value-some-key')).toBe('default value');
     });
 
     it('should render the default value if the value is empty and is editable', async () => {
@@ -147,13 +136,8 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-        expect(labelValue).not.toBeNull();
-        expect(labelValue.nativeElement.innerText).toBe('My default label');
-
-        const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.value).toBe('default value');
+        expect(getPropertyLabel()).toBe('My default label');
+        expect(getPropertyValueByDataAutomationId('card-textitem-value-some-key')).toBe('default value');
     });
 
     it('should render the select element with the None option when not set in the properties', async () => {
@@ -177,10 +161,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const select = await loader.getHarness(MatSelectHarness);
-        await select.open();
-
-        const currentOptions = await select.getOptions();
+        const currentOptions = await UnitTestingUtils.getMatSelectOptions(loader);
         expect(currentOptions.length).toBe(3);
         expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
         expect(await currentOptions[1].getText()).toContain(options[0].label);
@@ -209,10 +190,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const select = await loader.getHarness(MatSelectHarness);
-        await select.open();
-
-        const currentOptions = await select.getOptions();
+        const currentOptions = await UnitTestingUtils.getMatSelectOptions(loader);
         expect(currentOptions.length).toBe(3);
         expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
         expect(await currentOptions[1].getText()).toContain(options[0].label);
@@ -241,10 +219,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const select = await loader.getHarness(MatSelectHarness);
-        await select.open();
-
-        const currentOptions = await select.getOptions();
+        const currentOptions = await UnitTestingUtils.getMatSelectOptions(loader);
         expect(currentOptions.length).toBe(2);
         expect(await currentOptions[0].getText()).toContain(options[0].label);
         expect(await currentOptions[1].getText()).toContain(options[1].label);
@@ -276,7 +251,7 @@ describe('CardViewComponent', () => {
      * @returns the dispatcher component instance
      */
     function getCardViewItemDispatcherComponent(): CardViewItemDispatcherComponent {
-        const cardViewItemDispatcherDebugElement = fixture.debugElement.query(By.directive(CardViewItemDispatcherComponent));
+        const cardViewItemDispatcherDebugElement = UnitTestingUtils.getByDirective(fixture.debugElement, CardViewItemDispatcherComponent);
         return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
     }
 });

@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockFeatureFlags } from '../mocks/features-service-mock.factory';
 import { FeaturesDirective } from './features.directive';
-import { By } from '@angular/platform-browser';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 @Component({
     template: `
@@ -71,11 +71,12 @@ describe('FeaturesDirective', () => {
     });
 
     it('should render the element with enabled features', () => {
-        expect(enabledFixture.debugElement.query(By.css('#underFeatureFlag'))).toBeDefined();
-        expect(enabledFixture.debugElement.query(By.css('#underFeatureFlag')).nativeElement).toBeDefined();
+        const enabledFixtureElement = UnitTestingUtils.getByCSS(enabledFixture.debugElement, '#underFeatureFlag');
+        expect(enabledFixtureElement).toBeDefined();
+        expect(enabledFixtureElement.nativeElement).toBeDefined();
     });
 
     it('should not render the element with disabled features', () => {
-        expect(disabledFixture.debugElement.query(By.css('#underFeatureFlag'))).toBeNull();
+        expect(UnitTestingUtils.getByCSS(disabledFixture.debugElement, '#underFeatureFlag')).toBeNull();
     });
 });

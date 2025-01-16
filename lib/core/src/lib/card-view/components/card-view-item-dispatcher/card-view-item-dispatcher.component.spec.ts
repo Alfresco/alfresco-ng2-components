@@ -19,10 +19,10 @@
 
 import { Component, Input, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 @Component({
     selector: 'whatever-you-want-to-have',
@@ -79,7 +79,7 @@ describe('CardViewItemDispatcherComponent', () => {
 
     describe('Sub-component creation', () => {
         it('should load the CardViewShinyCustomElementItemComponent', () => {
-            const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
+            const innerElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'found-me');
             expect(innerElement).not.toBeNull();
         });
 
@@ -89,13 +89,13 @@ describe('CardViewItemDispatcherComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const shinyCustomElementItemComponent = fixture.debugElement.queryAll(By.css('whatever-you-want-to-have'));
+            const shinyCustomElementItemComponent = UnitTestingUtils.getAllByCSS(fixture.debugElement, 'whatever-you-want-to-have');
 
             expect(shinyCustomElementItemComponent.length).toEqual(1);
         });
 
         it('should pass through the property, editable and displayEmpty parameters', () => {
-            const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
+            const shinyCustomElementItemComponent = UnitTestingUtils.getByCSS(fixture.debugElement, 'whatever-you-want-to-have').componentInstance;
 
             expect(shinyCustomElementItemComponent.property).toBe(component.property);
             expect(shinyCustomElementItemComponent.editable).toBe(component.editable);
@@ -121,7 +121,7 @@ describe('CardViewItemDispatcherComponent', () => {
                 displayLabelForChips: new SimpleChange(false, expectedDisplayLabel, false)
             });
 
-            const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
+            const shinyCustomElementItemComponent = UnitTestingUtils.getByCSS(fixture.debugElement, 'whatever-you-want-to-have').componentInstance;
             expect(shinyCustomElementItemComponent.property).toBe(expectedProperty);
             expect(shinyCustomElementItemComponent.editable).toBe(expectedEditable);
             expect(shinyCustomElementItemComponent.displayEmpty).toBe(expectedDisplayEmpty);
@@ -147,7 +147,7 @@ describe('CardViewItemDispatcherComponent', () => {
         ];
 
         beforeEach(() => {
-            shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
+            shinyCustomElementItemComponent = UnitTestingUtils.getByCSS(fixture.debugElement, 'whatever-you-want-to-have').componentInstance;
         });
 
         it('should call through the life-cycle methods', () => {
