@@ -35,7 +35,7 @@ export class DataColumnComponent implements OnInit {
      * Data source key. Can be either a column/property key like `title`
      * or a property path like `createdBy.name`.
      */
-    @Input()
+    @Input({ required: true })
     key: string;
 
     /** You can specify any custom data which can be used by any specific feature */

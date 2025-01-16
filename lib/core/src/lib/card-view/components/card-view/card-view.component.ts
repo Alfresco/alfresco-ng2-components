@@ -31,7 +31,7 @@ import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/ca
 })
 export class CardViewComponent {
     /** (**required**) Items to show in the card view. */
-    @Input()
+    @Input({ required: true })
     properties: CardViewItem[];
 
     /** Toggles whether or not the items can be edited. */

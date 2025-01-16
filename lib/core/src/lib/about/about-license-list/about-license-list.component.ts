@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { LicenseData } from '../interfaces';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -46,6 +46,6 @@ export class AboutLicenseListComponent {
 
     displayedColumns = this.columns.map((x) => x.columnDef);
 
-    @Input()
+    @Input({ required: true })
     data: LicenseData[] = [];
 }

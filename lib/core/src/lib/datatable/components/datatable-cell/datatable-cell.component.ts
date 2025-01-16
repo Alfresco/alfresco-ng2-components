@@ -54,15 +54,15 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
 })
 export class DataTableCellComponent implements OnInit {
     /** Data table adapter instance. */
-    @Input()
+    @Input({ required: true })
     data: DataTableAdapter;
 
     /** Data that defines the column. */
-    @Input()
+    @Input({ required: true })
     column: DataColumn;
 
     /** Data that defines the row. */
-    @Input()
+    @Input({ required: true })
     row: DataRow;
 
     /** Enables/disables a Clipboard directive to allow copying of the cell's content. */

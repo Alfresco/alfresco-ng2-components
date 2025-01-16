@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ExtensionRef } from '@alfresco/adf-extensions';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -45,6 +45,6 @@ export class AboutExtensionListComponent {
 
     displayedColumns = this.columns.map((x) => x.columnDef);
 
-    @Input()
+    @Input({ required: true })
     data: Array<ExtensionRef> = [];
 }

@@ -58,7 +58,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     pagination: Pagination;
 
     /** List of chips to display. */
-    @Input()
+    @Input({ required: true })
     chips: Chip[];
 
     /** Show delete button. */

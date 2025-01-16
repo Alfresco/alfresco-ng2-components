@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
@@ -35,7 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CommentListComponent {
     /** The comments data used to populate the list. */
-    @Input()
+    @Input({ required: true })
     comments: CommentModel[];
 
     /** Emitted when the user clicks on one of the comment rows. */
