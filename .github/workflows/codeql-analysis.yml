@@ -2,13 +2,13 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [develop, master]
+    branches: [develop, master, testing_CodeQL_passed_if_change_in_ignored_paths]
     paths-ignore:
     - 'e2e/resources/**'
     - 'docs/**'
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [develop]
+    branches: [develop, testing_CodeQL_passed_if_change_in_ignored_paths]
     paths-ignore:
     - 'e2e/resources/**'
     - 'docs/**'
