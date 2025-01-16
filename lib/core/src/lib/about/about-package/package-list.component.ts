@@ -48,7 +48,7 @@ export class PackageListComponent implements OnInit {
 
     displayedColumns = this.columns.map((x) => x.columnDef);
 
-    @Input({ required: true })
+    @Input()
     data: Array<PackageInfo> = [];
 
     ngOnInit() {
