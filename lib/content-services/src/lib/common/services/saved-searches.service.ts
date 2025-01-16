@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodesApi, NodeEntry } from '@alfresco/js-api';
+import { NodesApi, NodeEntry, PreferencesApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
@@ -27,21 +27,25 @@ import { AuthenticationService } from '@alfresco/adf-core';
     providedIn: 'root'
 })
 export class SavedSearchesService {
+    private savedSearchFileNodeId: string;
     private _nodesApi: NodesApi;
+    private _preferencesApi: PreferencesApi;
+
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    readonly savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
+    get preferencesApi(): PreferencesApi {
+        this._preferencesApi = this._preferencesApi ?? new PreferencesApi(this.apiService.getInstance());
+        return this._preferencesApi;
+    }
 
-    private savedSearchFileNodeId: string;
-    private currentUserLocalStorageKey: string;
-    private createFileAttempt = false;
+    readonly savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
 
     constructor(private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {}
 
-    innit(): void {
+    init(): void {
         this.fetchSavedSearches();
     }
 
@@ -51,20 +55,26 @@ export class SavedSearchesService {
      * @returns SavedSearch list containing user saved searches
      */
     getSavedSearches(): Observable<SavedSearch[]> {
-        return this.getSavedSearchesNodeId().pipe(
-            concatMap(() =>
-                from(this.nodesApi.getNodeContent(this.savedSearchFileNodeId).then((content) => this.mapFileContentToSavedSearches(content))).pipe(
-                    catchError((error) => {
-                        if (!this.createFileAttempt) {
-                            this.createFileAttempt = true;
-                            localStorage.removeItem(this.getLocalStorageKey());
-                            return this.getSavedSearches();
-                        }
-                        return throwError(() => error);
-                    })
-                )
-            )
-        );
+        const savedSearchesMigrated = localStorage.getItem(this.getLocalStorageKey()) ?? '';
+        if (savedSearchesMigrated === 'true') {
+            return from(this.preferencesApi.getPreference('-me-', 'saved-searches')).pipe(
+                map((preference) => JSON.parse(preference.entry.value)),
+                catchError(() => of([]))
+            );
+        } else {
+            return this.getSavedSearchesNodeId().pipe(
+                concatMap(() => {
+                    if (this.savedSearchFileNodeId !== '') {
+                        return this.migrateSavedSearches();
+                    } else {
+                        return from(this.preferencesApi.getPreference('-me-', 'saved-searches')).pipe(
+                            map((preference) => JSON.parse(preference.entry.value)),
+                            catchError(() => of([]))
+                        );
+                    }
+                })
+            );
+        }
     }
 
     /**
@@ -94,7 +104,8 @@ export class SavedSearchesService {
                     order: index
                 }));
 
-                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSavedSearches))).pipe(
+                return from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSavedSearches))).pipe(
+                    map((preference) => JSON.parse(preference.entry.value)),
                     tap(() => this.savedSearches$.next(updatedSavedSearches))
                 );
             }),
@@ -123,7 +134,9 @@ export class SavedSearchesService {
                 this.savedSearches$.next(updatedSearches);
             }),
             switchMap((updatedSearches: SavedSearch[]) =>
-                from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)))
+                from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
+                    map((preference) => JSON.parse(preference.entry.value))
+                )
             ),
             catchError((error) => {
                 this.savedSearches$.next(previousSavedSearches);
@@ -154,7 +167,9 @@ export class SavedSearchesService {
                 this.savedSearches$.next(updatedSearches);
             }),
             switchMap((updatedSearches: SavedSearch[]) =>
-                from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)))
+                from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
+                    map((preference) => JSON.parse(preference.entry.value))
+                )
             ),
             catchError((error) => {
                 this.savedSearches$.next(previousSavedSearchesOrder);
@@ -185,7 +200,9 @@ export class SavedSearchesService {
                 }),
                 tap((savedSearches: SavedSearch[]) => this.savedSearches$.next(savedSearches)),
                 switchMap((updatedSearches: SavedSearch[]) =>
-                    from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)))
+                    from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
+                        map((preference) => JSON.parse(preference.entry.value))
+                    )
                 ),
                 catchError((error) => {
                     this.savedSearches$.next(previousSavedSearchesOrder);
@@ -196,44 +213,22 @@ export class SavedSearchesService {
     }
 
     private getSavedSearchesNodeId(): Observable<string> {
-        const localStorageKey = this.getLocalStorageKey();
-        if (this.currentUserLocalStorageKey && this.currentUserLocalStorageKey !== localStorageKey) {
-            this.savedSearches$.next([]);
-        }
-        this.currentUserLocalStorageKey = localStorageKey;
-        let savedSearchesNodeId = localStorage.getItem(this.currentUserLocalStorageKey) ?? '';
-        if (savedSearchesNodeId === '') {
-            return from(this.nodesApi.getNode('-my-', { relativePath: 'config.json' })).pipe(
-                first(),
-                concatMap((configNode) => {
-                    savedSearchesNodeId = configNode.entry.id;
-                    localStorage.setItem(this.currentUserLocalStorageKey, savedSearchesNodeId);
-                    this.savedSearchFileNodeId = savedSearchesNodeId;
-                    return savedSearchesNodeId;
-                }),
-                catchError((error) => {
-                    const errorStatusCode = JSON.parse(error.message).error.statusCode;
-                    if (errorStatusCode === 404) {
-                        return this.createSavedSearchesNode('-my-').pipe(
-                            first(),
-                            map((node) => {
-                                localStorage.setItem(this.currentUserLocalStorageKey, node.entry.id);
-                                return node.entry.id;
-                            })
-                        );
-                    } else {
-                        return throwError(() => error);
-                    }
-                })
-            );
-        } else {
-            this.savedSearchFileNodeId = savedSearchesNodeId;
-            return of(savedSearchesNodeId);
-        }
-    }
-
-    private createSavedSearchesNode(parentNodeId: string): Observable<NodeEntry> {
-        return from(this.nodesApi.createNode(parentNodeId, { name: 'config.json', nodeType: 'cm:content' }));
+        return from(this.nodesApi.getNode('-my-', { relativePath: 'config.json' })).pipe(
+            first(),
+            concatMap((configNode) => {
+                this.savedSearchFileNodeId = configNode.entry.id;
+                return configNode.entry.id;
+            }),
+            catchError((error) => {
+                const errorStatusCode = JSON.parse(error.message).error.statusCode;
+                if (errorStatusCode === 404) {
+                    localStorage.setItem(this.getLocalStorageKey(), 'true');
+                    return '';
+                } else {
+                    return throwError(() => error);
+                }
+            })
+        );
     }
 
     private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
@@ -241,12 +236,22 @@ export class SavedSearchesService {
     }
 
     private getLocalStorageKey(): string {
-        return `saved-searches-node-id__${this.authService.getUsername()}`;
+        return `saved-searches-${this.authService.getUsername()}-migrated`;
     }
 
     private fetchSavedSearches(): void {
         this.getSavedSearches()
             .pipe(take(1))
             .subscribe((searches) => this.savedSearches$.next(searches));
+    }
+
+    private migrateSavedSearches(): Observable<SavedSearch[]> {
+        return from(this.nodesApi.getNodeContent(this.savedSearchFileNodeId).then((content) => this.mapFileContentToSavedSearches(content))).pipe(
+            tap((savedSearches) => {
+                this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(savedSearches));
+                localStorage.setItem(this.getLocalStorageKey(), 'true');
+                this.nodesApi.deleteNode(this.savedSearchFileNodeId, { permanent: true });
+            })
+        );
     }
 }
