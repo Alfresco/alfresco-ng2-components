@@ -35,14 +35,16 @@ jobs:
         if echo "$changed_files" | grep -qvE '^(e2e/resources/|docs/)'; then
           echo "CodeQL will run"
           echo "::set-output name=skip_codeql::true"
+          echo "skip_codeql=false" >> $GITHUB_ENV
         else
           echo "CodeQL will be skipped"
           echo "::set-output name=skip_codeql::false"
+          echo "skip_codeql=true" >> $GITHUB_ENV
         fi
 
   analyze:
     needs: check-paths
-    if: needs.check-paths.outputs.skip_codeql == 'false'
+    if: env.skip_codeql == 'false'
     runs-on: ubuntu-latest
 
     steps:
