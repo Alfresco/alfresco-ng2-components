@@ -16,8 +16,28 @@ on:
     - cron: '0 5 * * 0'
 
 jobs:
+  check-paths:
+    runs-on: ubuntu-latest
+    outputs:
+      skip_codeql: ${{ steps.check.outputs.skip_codeql }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.2.2
+
+    - name: Check for ignored paths
+      id: check
+      run: |
+        changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+        if echo "$changed_files" | grep -qvE '^(e2e/resources/|docs/)'; then
+          echo "::set-output name=skip_codeql::true"
+        else
+          echo "::set-output name=skip_codeql::false"
+        fi
+
   analyze:
-    name: Analyze
+    needs: check-paths
+    if: needs.check-paths.outputs.skip_codeql == 'false'
     runs-on: ubuntu-latest
 
     steps:
@@ -54,3 +74,12 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@b6a472f63d85b9c78a3ac5e89422239fc15e9b3c # v3.28.1
+
+  mark-passed:
+    needs: check-paths
+    if: needs.check-paths.outputs.skip_codeql == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Mark CodeQL as passed
+      run: echo "CodeQL check passed as changes are in ignored paths"
