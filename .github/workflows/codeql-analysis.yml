@@ -24,6 +24,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4.2.2
+      with:
+        fetch-depth: 0
 
     - name: Check for ignored paths
       id: check
@@ -74,12 +76,3 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@b6a472f63d85b9c78a3ac5e89422239fc15e9b3c # v3.28.1
-
-  mark-passed:
-    needs: check-paths
-    if: needs.check-paths.outputs.skip_codeql == 'true'
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Mark CodeQL as passed
-      run: echo "CodeQL check passed as changes are in ignored paths"
