@@ -31,7 +31,7 @@ import { DataRow } from '../../data/data-row.model';
     }
 })
 export class DataTableRowComponent implements FocusableOption {
-    @Input({ required: true }) row: DataRow;
+    @Input() row: DataRow;
 
     @Input() disabled = false;
 
