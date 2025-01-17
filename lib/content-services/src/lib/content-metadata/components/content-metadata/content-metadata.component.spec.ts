@@ -309,7 +309,6 @@ describe('ContentMetadataComponent', () => {
                 component.hasMetadataChanged = false;
                 fixture.detectChanges();
                 toggleEditModeForGroup();
-                fixture.detectChanges();
                 expect(getGroupSaveButton().disabled).toBeTrue();
             });
 
@@ -318,7 +317,6 @@ describe('ContentMetadataComponent', () => {
                 component.invalidProperties = ['invalidPropertyKey'];
                 fixture.detectChanges();
                 toggleEditModeForGroup();
-                fixture.detectChanges();
                 expect(getGroupSaveButton().disabled).toBeTrue();
             });
 
@@ -333,7 +331,7 @@ describe('ContentMetadataComponent', () => {
 
         describe('Save button - Basic Properties', () => {
             beforeEach(fakeAsync(() => {
-                spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]) as any);
+                spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
                 component.ngOnInit();
                 component.readOnly = false;
             }));
@@ -353,10 +351,9 @@ describe('ContentMetadataComponent', () => {
                 expect(findSaveGeneralInfoButton().disabled).toBeFalse();
             }));
 
-            it('should enable the save button if metadata has changed and there are invalid properties', fakeAsync(() => {
+            it('should disable the save button if there are invalid properties', fakeAsync(() => {
                 component.hasMetadataChanged = true;
                 component.invalidProperties = ['invalidPropertyKey'];
-                component.readOnly = false;
                 fixture.detectChanges();
                 toggleEditModeForGeneralInfo();
                 expect(findSaveGeneralInfoButton().disabled).toBeTrue();
