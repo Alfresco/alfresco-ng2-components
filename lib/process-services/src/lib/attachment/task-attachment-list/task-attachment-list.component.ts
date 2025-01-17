@@ -16,20 +16,20 @@
  */
 
 import {
-    ThumbnailService,
-    EmptyListComponent,
-    DownloadService,
-    DataTableComponent,
-    EmptyListHeaderDirective,
-    DataColumnListComponent,
     DataColumnComponent,
+    DataColumnListComponent,
+    DataTableComponent,
+    DownloadService,
+    EmptyListComponent,
+    EmptyListHeaderDirective,
     LoadingContentTemplateDirective,
-    NoContentTemplateDirective
+    NoContentTemplateDirective,
+    ThumbnailService
 } from '@alfresco/adf-core';
 import {
     AfterContentInit,
-    ContentChild,
     Component,
+    ContentChild,
     EventEmitter,
     Input,
     NgZone,
@@ -68,7 +68,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     emptyTemplate: EmptyListComponent;
 
     /** (**required**) The ID of the task to display. */
-    @Input()
+    @Input({ required: true })
     taskId: string;
 
     /** Disable/Enable read only mode for attachment list. */

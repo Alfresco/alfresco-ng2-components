@@ -34,7 +34,7 @@ export class CreateProcessAttachmentComponent implements OnChanges {
     private processContentService = inject(ProcessContentService);
 
     /** (required) The ID of the process instance to display. */
-    @Input()
+    @Input({ required: true })
     processInstanceId: string;
 
     /**

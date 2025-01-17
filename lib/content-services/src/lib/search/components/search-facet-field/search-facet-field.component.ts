@@ -45,8 +45,8 @@ export class SearchFacetFieldComponent implements FacetWidget {
     private searchFacetFiltersService = inject(SearchFacetFiltersService);
     private translationService = inject(TranslationService);
 
-    @Input()
-    field!: FacetField;
+    @Input({ required: true })
+    field: FacetField;
 
     displayValue$: Subject<string> = new Subject<string>();
 

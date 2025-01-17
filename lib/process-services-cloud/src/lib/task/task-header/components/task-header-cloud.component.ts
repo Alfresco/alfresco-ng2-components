@@ -50,11 +50,11 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     /** (Required) The name of the application. */
-    @Input()
+    @Input({ required: true })
     appName: string = '';
 
     /** (Required) The id of the task. */
-    @Input()
+    @Input({ required: true })
     taskId: string;
 
     /** Show/Hide the task title */

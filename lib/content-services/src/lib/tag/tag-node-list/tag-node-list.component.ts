@@ -35,7 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class TagNodeListComponent implements OnChanges, OnInit {
     /** The identifier of a node. */
-    @Input()
+    @Input({ required: true })
     nodeId: string;
 
     /** Show delete button */

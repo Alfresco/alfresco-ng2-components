@@ -68,7 +68,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     @Input()
     showDebugButton: boolean = false;
 
-    @Input()
+    @Input({ required: true })
     formDefinition: FormModel;
 
     @Input()

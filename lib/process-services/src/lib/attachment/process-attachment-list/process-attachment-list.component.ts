@@ -27,8 +27,8 @@ import {
 } from '@alfresco/adf-core';
 import {
     AfterContentInit,
-    ContentChild,
     Component,
+    ContentChild,
     EventEmitter,
     Input,
     NgZone,
@@ -65,7 +65,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     emptyTemplate: EmptyListComponent;
 
     /** (**required**) The ID of the process instance to display. */
-    @Input()
+    @Input({ required: true })
     processInstanceId: string;
 
     /** Disable/Enable read-only mode for attachment list. */

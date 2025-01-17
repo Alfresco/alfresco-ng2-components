@@ -15,26 +15,13 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    Inject,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Inject, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DataSorting, HeaderFilterTemplateDirective, PaginationModel } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../../search/services/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/models/filter-search.interface';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 import { CommonModule } from '@angular/common';
-import {
-    SearchFilterContainerComponent
-} from '../../../search/components/search-filter-container/search-filter-container.component';
+import { SearchFilterContainerComponent } from '../../../search/components/search-filter-container/search-filter-container.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -49,7 +36,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     value: any = {};
 
     /** The id of the current folder of the document list. */
-    @Input()
+    @Input({ required: true })
     currentFolderId: string;
 
     /** Emitted when a filter value is selected */
@@ -57,7 +44,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     filterSelection: EventEmitter<FilterSearch[]> = new EventEmitter();
 
     isFilterServiceActive: boolean;
-    
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {

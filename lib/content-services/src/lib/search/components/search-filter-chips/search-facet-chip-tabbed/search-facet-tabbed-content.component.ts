@@ -41,7 +41,7 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
     private translationService = inject(TranslationService);
     private searchFacetFiltersService = inject(SearchFacetFiltersService);
 
-    @Input()
+    @Input({ required: true })
     tabbedFacet: TabbedFacetField;
 
     @Input()

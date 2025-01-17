@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { PackageInfo } from '../interfaces';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';

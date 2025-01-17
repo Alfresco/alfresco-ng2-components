@@ -111,7 +111,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     restrictRootToCurrentFolderId: boolean = false;
 
     /** Node ID of the folder currently listed. */
-    @Input()
+    @Input({ required: true })
     currentFolderId: string = null;
 
     /**

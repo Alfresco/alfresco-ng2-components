@@ -19,6 +19,7 @@ import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
 import { CommentProcessService } from './services/comment-process.service';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 @Component({
     selector: 'adf-process-instance-comments',
     standalone: true,
@@ -35,7 +36,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProcessCommentsComponent {
     /** (**required**) The numeric ID of the process instance to display comments for. */
-    @Input()
+    @Input({ required: true })
     processInstanceId: string;
 
     /** Should the comments be read-only? */

@@ -38,7 +38,7 @@ import { FormComponent } from '../../../form';
 })
 export class AttachFormComponent implements OnInit, OnChanges {
     /** Id of the task. */
-    @Input()
+    @Input({ required: true })
     taskId: any;
 
     /** Identifier of the form to attach. */

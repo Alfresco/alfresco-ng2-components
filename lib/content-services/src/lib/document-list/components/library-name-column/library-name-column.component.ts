@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    DestroyRef,
-    ElementRef,
-    inject,
-    Input,
-    OnInit,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -64,7 +55,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     }
 })
 export class LibraryNameColumnComponent implements OnInit {
-    @Input()
+    @Input({ required: true })
     context: any;
 
     displayTooltip$ = new BehaviorSubject<string>('');
@@ -129,5 +120,4 @@ export class LibraryNameColumnComponent implements OnInit {
 
         return isDuplicate ? `${title} (${id})` : `${title}`;
     }
-
 }

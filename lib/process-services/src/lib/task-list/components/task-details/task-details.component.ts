@@ -96,7 +96,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     taskFormComponent: TaskFormComponent;
 
     /** (**required**) The id of the task whose details we are asking for. */
-    @Input()
+    @Input({ required: true })
     taskId: string;
 
     /** Automatically renders the next task when the current one is completed. */

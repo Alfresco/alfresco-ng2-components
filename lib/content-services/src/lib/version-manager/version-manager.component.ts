@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ContentService } from '../common/services/content.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../common/events/file.event';
@@ -46,7 +46,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class VersionManagerComponent implements OnInit {
     /** Target node to manage version history. */
-    @Input()
+    @Input({ required: true })
     node: Node;
 
     /** New file for updating current version. */

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
@@ -49,6 +49,6 @@ export class ModuleListComponent {
 
     displayedColumns = this.columns.map((x) => x.columnDef);
 
-    @Input()
+    @Input({ required: true })
     data: Array<ModuleInfo> = [];
 }

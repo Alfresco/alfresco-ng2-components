@@ -30,6 +30,6 @@ import { MatInputModule } from '@angular/material/input';
     encapsulation: ViewEncapsulation.None
 })
 export class InplaceFormInputComponent {
-    @Input()
+    @Input({ required: true })
     control: UntypedFormControl;
 }

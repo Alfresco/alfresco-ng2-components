@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, DestroyRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import {
-    CardViewDateItemModel,
-    CardViewMapItemModel,
-    CardViewTextItemModel,
-    CardViewBaseItemModel,
-    TranslationService,
     AppConfigService,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    CardViewDateItemModel,
     CardViewIntItemModel,
     CardViewItemLengthValidator,
-    CardViewComponent,
-    CardViewUpdateService,
+    CardViewMapItemModel,
     CardViewSelectItemModel,
-    CardViewSelectItemOption
+    CardViewSelectItemOption,
+    CardViewTextItemModel,
+    CardViewUpdateService,
+    TranslationService
 } from '@alfresco/adf-core';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskDescriptionValidator } from '../../validators/task-description.validator';
@@ -57,7 +57,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     formName: string = null;
 
     /** (required) Details related to the task. */
-    @Input()
+    @Input({ required: true })
     taskDetails: TaskRepresentation;
 
     /** Toggles display of the claim/release button. */

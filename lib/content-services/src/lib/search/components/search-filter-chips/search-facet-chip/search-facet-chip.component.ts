@@ -45,7 +45,7 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {
-    @Input()
+    @Input({ required: true })
     field: FacetField;
 
     @ViewChild('menuContainer', { static: false })

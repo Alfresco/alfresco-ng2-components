@@ -48,7 +48,7 @@ import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.componen
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
-    @Input() pdfViewer: any;
+    @Input({ required: true }) pdfViewer: any;
 
     @Output()
     close = new EventEmitter<void>();

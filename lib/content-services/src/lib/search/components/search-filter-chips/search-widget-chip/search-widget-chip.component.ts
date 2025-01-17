@@ -52,7 +52,7 @@ import { first } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchWidgetChipComponent implements AfterViewInit {
-    @Input()
+    @Input({ required: true })
     category: SearchCategory;
 
     @ViewChild('menuContainer', { static: false })

@@ -39,7 +39,7 @@ import { TranslateModule } from '@ngx-translate/core';
  */
 export class AddPermissionComponent implements OnInit {
     /** ID of the target node. */
-    @Input()
+    @Input({ required: true })
     nodeId: string;
 
     /** Emitted when the node is updated successfully. */

@@ -17,12 +17,12 @@
 
 import {
     AppConfigService,
+    CardViewBaseItemModel,
+    CardViewComponent,
     CardViewDateItemModel,
     CardViewItem,
-    CardViewBaseItemModel,
     CardViewTextItemModel,
-    TranslationService,
-    CardViewComponent
+    TranslationService
 } from '@alfresco/adf-core';
 import { Component, Input, OnChanges } from '@angular/core';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
@@ -38,7 +38,7 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class ProcessInstanceHeaderComponent implements OnChanges {
     /** (**required**) Full details of the process instance to display information about. */
-    @Input()
+    @Input({ required: true })
     processInstance: ProcessInstanceRepresentation;
 
     properties: CardViewItem[];

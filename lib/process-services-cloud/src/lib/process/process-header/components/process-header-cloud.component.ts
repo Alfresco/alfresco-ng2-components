@@ -42,11 +42,11 @@ import { NgIf } from '@angular/common';
 })
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
     /** (Required) The name of the application. */
-    @Input()
+    @Input({ required: true })
     appName: string = '';
 
     /** (Required) The id of the process instance. */
-    @Input()
+    @Input({ required: true })
     processInstanceId: string;
 
     /** Gets emitted each time a new process instance details are loaded. */

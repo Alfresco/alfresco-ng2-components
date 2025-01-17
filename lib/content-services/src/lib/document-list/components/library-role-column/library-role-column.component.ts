@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnInit,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
@@ -46,7 +38,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-library-role-column adf-datatable-content-cell' }
 })
 export class LibraryRoleColumnComponent implements OnInit {
-    @Input()
+    @Input({ required: true })
     context: any;
 
     displayText$ = new BehaviorSubject<string>('');

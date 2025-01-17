@@ -50,7 +50,7 @@ export class ColumnsSelectorComponent implements OnInit {
     @Input()
     columns: DataColumn[] = [];
 
-    @Input()
+    @Input({ required: true })
     mainMenuTrigger: MatMenuTrigger;
 
     @Input()

@@ -16,17 +16,7 @@
  */
 
 import { TranslationService } from '@alfresco/adf-core';
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagPaging } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -55,7 +45,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class TagActionsComponent implements OnChanges, OnInit {
     /** The identifier of a node. */
-    @Input()
+    @Input({ required: true })
     nodeId: string;
 
     /** Emitted when a tag is added successfully. */

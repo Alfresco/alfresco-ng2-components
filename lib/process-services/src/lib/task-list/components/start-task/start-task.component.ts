@@ -22,14 +22,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { Form } from '../../models/form.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { defaultIfEmpty, switchMap } from 'rxjs/operators';
-import {
-    AbstractControl,
-    ReactiveFormsModule,
-    UntypedFormBuilder,
-    UntypedFormControl,
-    UntypedFormGroup,
-    Validators
-} from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { isValid } from 'date-fns';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -73,7 +66,7 @@ const MAX_LENGTH = 255;
 })
 export class StartTaskComponent implements OnInit {
     /** (required) The id of the app. */
-    @Input()
+    @Input({ required: true })
     appId: number;
 
     /** Default Task Name. */

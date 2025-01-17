@@ -60,7 +60,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
     encapsulation: ViewEncapsulation.None
 })
 export class PermissionContainerComponent implements OnChanges {
-    @Input()
+    @Input({ required: true })
     node: Node;
 
     @Input()
