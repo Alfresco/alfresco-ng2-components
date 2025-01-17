@@ -17,30 +17,46 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ScreenRenderingService } from '../../../services/public-api';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
 
 @Component({
     selector: 'adf-cloud-test-component',
-    template: `<div class="adf-cloud-test-container">test component</div>`,
+    template: `
+        <div class="adf-cloud-test-container">
+            test component
+            <div class="adf-cloud-test-container-taskId">{{ taskId }}</div>
+            <button class="adf-cloud-test-container-complete-btn" (click)="onComplete()">complete</button>
+        </div>
+    `,
     imports: [CommonModule],
     standalone: true
 })
-class TestComponent {}
+class TestComponent {
+    @Input() taskId = '';
+    @Output() taskCompleted = new EventEmitter();
+    onComplete() {
+        this.taskCompleted.emit();
+    }
+}
 
 @Component({
     selector: 'adf-cloud-test-actions-component',
-    template: `<adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'">
-        <div buttons class="adf-cloud-test-buttons">
-            <button>Test</button>
-        </div>
-    </adf-cloud-task-screen> `,
+    template: `
+        <adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'" (taskCompleted)="onTaskCompleted()">
+            <div buttons class="adf-cloud-test-buttons">
+                <button>Test</button>
+            </div>
+        </adf-cloud-task-screen>
+    `,
     imports: [CommonModule, TaskScreenCloudComponent],
     standalone: true
 })
-class TestWrapperComponent {}
+class TestWrapperComponent {
+    onTaskCompleted() {}
+}
 
 describe('TaskScreenCloudComponent', () => {
     let fixture: ComponentFixture<TestWrapperComponent>;
@@ -65,5 +81,20 @@ describe('TaskScreenCloudComponent', () => {
     it('should project content into component', async () => {
         const projectedContent = fixture.debugElement.query(By.css('.adf-cloud-test-buttons'));
         expect(projectedContent).toBeTruthy();
+    });
+
+    it('should set input property for dynamic component', () => {
+        const inputValueFromDynamicComponent = fixture.debugElement.query(By.css('.adf-cloud-test-container-taskId'));
+        expect((inputValueFromDynamicComponent.nativeElement as HTMLElement).textContent).toBe('1');
+    });
+
+    it('should subscribe to the output of dynamic component', () => {
+        const onTaskCompletedSpy = spyOn(fixture.componentInstance, 'onTaskCompleted');
+        const btnComplete = fixture.debugElement.query(By.css('.adf-cloud-test-container-complete-btn'));
+
+        expect(btnComplete).toBeDefined();
+
+        (btnComplete.nativeElement as HTMLButtonElement).click();
+        expect(onTaskCompletedSpy).toHaveBeenCalled();
     });
 });
