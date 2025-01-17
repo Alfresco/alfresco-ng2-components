@@ -38,7 +38,7 @@
                         (click)="saveChanges($event)"
                         color="primary"
                         data-automation-id="save-general-info-metadata"
-                        [disabled]="!hasMetadataChanged">
+                        [disabled]="!hasMetadataChanged || invalidProperties.length > 0">
                         <mat-icon>check</mat-icon>
                     </button>
                 </div>
@@ -235,7 +235,7 @@
                                 (click)="saveChanges($event)"
                                 color="primary"
                                 data-automation-id="save-metadata"
-                                [disabled]="!hasMetadataChanged">
+                                [disabled]="!hasMetadataChanged || invalidProperties.length > 0">
                                 <mat-icon>check</mat-icon>
                             </button>
                         </div>

@@ -31,6 +31,7 @@ export abstract class CardViewBaseItemModel<T = any> {
     data?: any;
     type?: string;
     multivalued?: boolean;
+    isValidValue?: boolean;
 
     constructor(props: CardViewItemProperties) {
         this.label = props.label || '';
@@ -44,6 +45,7 @@ export abstract class CardViewBaseItemModel<T = any> {
         this.validators = props.validators || [];
         this.data = props.data || null;
         this.multivalued = !!props.multivalued;
+        // this.isVal = undefined;
 
         if (props?.constraints?.length ?? 0) {
             for (const constraint of props.constraints) {

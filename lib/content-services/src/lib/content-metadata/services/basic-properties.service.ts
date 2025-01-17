@@ -17,13 +17,7 @@
 
 import { inject, Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import {
-    CardViewDateItemModel,
-    CardViewItemMatchValidator,
-    CardViewTextItemModel,
-    FileSizePipe,
-    TranslationService
-} from '@alfresco/adf-core';
+import { CardViewDateItemModel, CardViewItemMatchValidator, CardViewTextItemModel, FileSizePipe, TranslationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -44,9 +38,7 @@ export class BasicPropertiesService {
                 value: node.name,
                 key: 'properties.cm:name',
                 editable: true,
-                validators: [
-                    new CardViewItemMatchValidator('[\\/\\*\\\\"\\\\:]')
-                ]
+                validators: [new CardViewItemMatchValidator('[\\/\\*\\\\"\\\\:|?<>]')]
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.TITLE',

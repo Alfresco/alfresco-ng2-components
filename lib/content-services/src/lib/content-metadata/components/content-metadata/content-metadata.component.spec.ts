@@ -114,7 +114,8 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const clickOnGroupSave = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement.click();
+    const getGroupSaveButton = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement;
+    const clickOnGroupSaveButton = () => getGroupSaveButton().click();
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
@@ -288,6 +289,118 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
+        describe('Save button - Grouped Properties', () => {
+            beforeEach(() => {
+                getGroupedPropertiesSpy.and.returnValue(
+                    of([
+                        {
+                            editable: true,
+                            title: 'test',
+                            properties: []
+                        }
+                    ])
+                );
+
+                component.ngOnInit();
+                component.readOnly = false;
+            });
+
+            it('should disable the save button if metadata has not changed', () => {
+                component.hasMetadataChanged = false;
+                fixture.detectChanges();
+                toggleEditModeForGroup();
+                fixture.detectChanges();
+                expect(getGroupSaveButton().disabled).toBeTrue();
+            });
+
+            it('should disable the save button if there are invalid properties', () => {
+                component.hasMetadataChanged = true;
+                component.invalidProperties = ['invalidPropertyKey'];
+                fixture.detectChanges();
+                toggleEditModeForGroup();
+                fixture.detectChanges();
+                expect(getGroupSaveButton().disabled).toBeTrue();
+            });
+
+            it('should enable the save button if metadata has changed and there are no invalid properties', () => {
+                component.hasMetadataChanged = true;
+                component.invalidProperties = [];
+                fixture.detectChanges();
+                toggleEditModeForGroup();
+                expect(getGroupSaveButton().disabled).toBeFalse();
+            });
+        });
+
+        describe('Save button - Basic Properties', () => {
+            beforeEach(fakeAsync(() => {
+                spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]) as any);
+                component.ngOnInit();
+                component.readOnly = false;
+            }));
+
+            it('should disable the save button if metadata has not changed', fakeAsync(() => {
+                component.hasMetadataChanged = false;
+                fixture.detectChanges();
+                toggleEditModeForGeneralInfo();
+                expect(findSaveGeneralInfoButton().disabled).toBeTrue();
+            }));
+
+            it('should enable the save button if metadata has changed and there are no invalid properties', fakeAsync(() => {
+                component.hasMetadataChanged = true;
+                component.invalidProperties = [];
+                fixture.detectChanges();
+                toggleEditModeForGeneralInfo();
+                expect(findSaveGeneralInfoButton().disabled).toBeFalse();
+            }));
+
+            it('should enable the save button if metadata has changed and there are invalid properties', fakeAsync(() => {
+                component.hasMetadataChanged = true;
+                component.invalidProperties = ['invalidPropertyKey'];
+                component.readOnly = false;
+                fixture.detectChanges();
+                toggleEditModeForGeneralInfo();
+                expect(findSaveGeneralInfoButton().disabled).toBeTrue();
+            }));
+        });
+
+        describe('updateInvalidProperties', () => {
+            it('should add the property key to invalidProperties if isValidValue is false and key is not present', fakeAsync(() => {
+                const property = { key: 'properties.property-key', value: 'original-value', isValidValue: false } as CardViewBaseItemModel;
+                component.invalidProperties = [];
+                updateService.update(property, 'updated-value');
+                tick(500);
+                fixture.detectChanges();
+                expect(component.invalidProperties).toContain(property.key);
+            }));
+
+            it('should not add the property key to invalidProperties if isValidValue is false and key is already present', fakeAsync(() => {
+                const property = { key: 'properties.property-key', value: 'original-value', isValidValue: false } as CardViewBaseItemModel;
+                component.invalidProperties = [property.key];
+                updateService.update(property, 'updated-value');
+                tick(500);
+                fixture.detectChanges();
+                expect(component.invalidProperties).toEqual([property.key]);
+            }));
+
+            it('should remove the property key from invalidProperties if isValidValue is true and key is present', fakeAsync(() => {
+                const property = { key: 'properties.property-key', value: 'original-value', isValidValue: true } as CardViewBaseItemModel;
+                component.invalidProperties = [property.key];
+                updateService.update(property, 'updated-value');
+                tick(500);
+                fixture.detectChanges();
+                expect(component.invalidProperties).not.toContain(property.key);
+            }));
+
+            it('should not change invalidProperties if isValidValue is true and key is not present', fakeAsync(() => {
+                const property = { key: 'properties.property-key', value: 'original-value', isValidValue: true } as CardViewBaseItemModel;
+                component.invalidProperties = [];
+                updateService.update(property, property.key);
+                tick(500);
+                fixture.detectChanges();
+                expect(component.invalidProperties).toEqual([]);
+            }));
+        });
+
         it('should save changedProperties on save click', fakeAsync(() => {
             getGroupedPropertiesSpy.and.returnValue(
                 of([
@@ -309,7 +422,7 @@ describe('ContentMetadataComponent', () => {
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
             toggleEditModeForGroup();
 
-            clickOnGroupSave();
+            clickOnGroupSaveButton();
             expect(nodesApiService.updateNode).toHaveBeenCalled();
             expect(component.node).toEqual(expectedNode);
         }));

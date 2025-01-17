@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -91,7 +82,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     errors: CardViewItemValidator[];
     templateType: string;
     textInput = new UntypedFormControl();
-    
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
@@ -158,9 +149,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.resetErrorMessages();
             if (this.property.isValid(this.editedValue)) {
                 this.property.value = this.prepareValueForUpload(this.property, this.editedValue);
-                this.cardViewUpdateService.update({ ...this.property } as CardViewTextItemModel, this.property.value);
+                this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value);
             } else {
                 this.errors = this.property.getValidationErrors(this.editedValue);
+                this.cardViewUpdateService.update({ ...this.property, isValidValue: false } as CardViewTextItemModel, this.editedValue);
             }
         }
     }

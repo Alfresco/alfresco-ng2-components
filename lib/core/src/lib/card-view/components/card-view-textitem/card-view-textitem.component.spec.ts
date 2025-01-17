@@ -501,7 +501,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
+                target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedText
                 }
@@ -577,11 +577,11 @@ describe('CardViewTextItemComponent', () => {
             updateTextField(component.property.key, 'updated-value');
             await fixture.whenStable();
 
-            const property = { ...component.property };
+            const property = { ...component.property, isValidValue: true };
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
         });
 
-        it('should NOT trigger the update event if the editedValue is invalid', async () => {
+        it('should trigger the update event if the editedValue is NOT valid', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
             component.property.isValid = () => false;
@@ -589,7 +589,8 @@ describe('CardViewTextItemComponent', () => {
             updateTextField(component.property.key, '@invalid-value');
             await fixture.whenStable();
 
-            expect(cardViewUpdateService.update).not.toHaveBeenCalled();
+            const property = { ...component.property, isValidValue: false };
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, '@invalid-value');
         });
 
         it('should trigger the update event if the editedValue is valid', async () => {
@@ -663,7 +664,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
+                target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedText
                 }
@@ -711,7 +712,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
+                target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedText
                 }
@@ -827,7 +828,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
+                target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedNumber.toString()
                 }
@@ -887,7 +888,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
+                target: { ...component.property, isValidValue: true },
                 changed: {
                     textkey: expectedNumber.toString()
                 }

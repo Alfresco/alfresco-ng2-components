@@ -164,6 +164,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
     editing = false;
+    invalidProperties: string[] = [];
     editedPanelTitle = '';
     currentPanel: ContentMetadataPanel = {
         expanded: false,
@@ -194,6 +195,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
             .subscribe((updatedNode: UpdateNotification) => {
                 this.hasMetadataChanged = true;
                 this.targetProperty = updatedNode.target;
+                this.updateInvalidProperties();
                 this.updateChanges(updatedNode.changed);
             });
 
@@ -548,5 +550,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
             }
         }
         return observables;
+    }
+
+    private updateInvalidProperties() {
+        if (this.targetProperty?.isValidValue === false) {
+            if (!this.invalidProperties.includes(this.targetProperty.key)) {
+                this.invalidProperties.push(this.targetProperty.key);
+            }
+        } else if (this.targetProperty?.isValidValue === true) {
+            const index = this.invalidProperties.indexOf(this.targetProperty.key);
+            if (index > -1) {
+                this.invalidProperties.splice(index, 1);
+            }
+        }
     }
 }
