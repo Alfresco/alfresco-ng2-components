@@ -90,7 +90,6 @@ describe('SavedSearchesService', () => {
     it('should automatically migrate saved searches if config.json file exists', (done) => {
         spyOn(localStorage, 'setItem');
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
-        service.init();
 
         service.getSavedSearches().subscribe((searches) => {
             expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-', { relativePath: 'config.json' });
@@ -133,25 +132,19 @@ describe('SavedSearchesService', () => {
 
     it('should emit updated saved searches after saving a new search', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
-        spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
+        spyOn(localStorage, 'getItem').and.callFake(() => 'true');
+        // spyOn(service, 'getSavedSearches').and.callFake(() => of([]));
         const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
         service.init();
 
-        let emissionCount = 0;
-
-        service.savedSearches$.subscribe((searches) => {
-            emissionCount++;
-            if (emissionCount === 1) {
-                expect(searches.length).toBe(2);
-            }
-            if (emissionCount === 2) {
+        service.saveSearch(newSearch).subscribe(() => {
+            service.savedSearches$.subscribe((searches) => {
                 expect(searches.length).toBe(3);
                 expect(searches[2].name).toBe('Search 2');
+                expect(service.preferencesApi.updatePreference).toHaveBeenCalledWith('-me-', 'saved-searches', jasmine.any(String));
                 done();
-            }
+            });
         });
-
-        service.saveSearch(newSearch).subscribe();
     });
 
     it('should edit a search', (done) => {

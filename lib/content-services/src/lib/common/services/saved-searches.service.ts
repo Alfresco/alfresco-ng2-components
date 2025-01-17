@@ -63,6 +63,7 @@ export class SavedSearchesService {
             );
         } else {
             return this.getSavedSearchesNodeId().pipe(
+                take(1),
                 concatMap(() => {
                     if (this.savedSearchFileNodeId !== '') {
                         return this.migrateSavedSearches();
