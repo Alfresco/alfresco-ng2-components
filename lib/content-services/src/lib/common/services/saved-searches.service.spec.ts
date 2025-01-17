@@ -133,7 +133,6 @@ describe('SavedSearchesService', () => {
     it('should emit updated saved searches after saving a new search', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => 'true');
-        // spyOn(service, 'getSavedSearches').and.callFake(() => of([]));
         const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
         service.init();
 
