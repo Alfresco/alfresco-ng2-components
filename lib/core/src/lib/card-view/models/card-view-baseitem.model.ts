@@ -45,7 +45,6 @@ export abstract class CardViewBaseItemModel<T = any> {
         this.validators = props.validators || [];
         this.data = props.data || null;
         this.multivalued = !!props.multivalued;
-        // this.isVal = undefined;
 
         if (props?.constraints?.length ?? 0) {
             for (const constraint of props.constraints) {
