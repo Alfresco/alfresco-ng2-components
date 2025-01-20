@@ -1,7 +1,7 @@
 
 # Saved Searches Service
 
-Manages operations related to saving and retrieving user-defined searches.
+Manages operations related to saving and retrieving user-defined searches in the Alfresco Process Services (APS) environment.
 
 ## Class members
 
@@ -14,7 +14,7 @@ Manages operations related to saving and retrieving user-defined searches.
 
 #### getSavedSearches(): [`Observable`](https://rxjs.dev/api/index/class/Observable)`<SavedSearch[]>`
 
-Fetches the file with list of saved searches either from a locally cached node ID or by querying the ACS server. Then it reads the file and maps JSON objects into SavedSearches
+Fetches the file with list of saved searches either from a locally cached node ID or by querying the APS server. Then it reads the file and maps JSON objects into SavedSearches
 
 - **Returns**:
     - [`Observable`](https://rxjs.dev/api/index/class/Observable)`<SavedSearch[]>` - An observable that emits the list of saved searches.
@@ -51,3 +51,14 @@ this.savedSearchService.saveSearch(newSearch).subscribe((response) => {
     console.log('Saved new search:', response);
 });
 ```
+
+#### Creating Saved Searches Node
+
+When the saved searches file does not exist, it will be created:
+
+```typescript
+this.savedSearchService.createSavedSearchesNode('parent-node-id').subscribe((node) => {
+    console.log('Created config.json node:', node);
+});
+```
+
