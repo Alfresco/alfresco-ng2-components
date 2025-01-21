@@ -2,13 +2,13 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [develop, master]
+    branches: [develop, master, testing_CodeQL_passed_if_change_in_ignored_paths]
     paths-ignore:
     - 'e2e/resources/**'
     - 'docs/**'
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [develop]
+    branches: [develop, testing_CodeQL_passed_if_change_in_ignored_paths]
     paths-ignore:
     - 'e2e/resources/**'
     - 'docs/**'
@@ -16,8 +16,37 @@ on:
     - cron: '0 5 * * 0'
 
 jobs:
+  check-paths:
+    runs-on: ubuntu-latest
+    outputs:
+      skip_codeql: ${{ steps.check.outputs.skip_codeql }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.2.2
+      with:
+        fetch-depth: 0
+
+    - name: Check for ignored paths
+      id: check
+      run: |
+        changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+        echo "Changed files: $changed_files"
+        if echo "$changed_files" | grep -qvE '^(e2e/resources/|docs/)'; then
+          echo "CodeQL will run"
+          echo "::set-output name=skip_codeql::true"
+          echo "skip_codeql=false" >> $GITHUB_ENV
+          echo "skip_codeql=false" >> $GITHUB_OUTPUT
+        else
+          echo "CodeQL will be skipped"
+          echo "::set-output name=skip_codeql::false"
+          echo "skip_codeql=true" >> $GITHUB_ENV
+          echo "skip_codeql=true" >> $GITHUB_OUTPUT
+        fi
+
   analyze:
-    name: Analyze
+    needs: check-paths
+    if: needs.check-paths.outputs.skip_codeql == 'false'
     runs-on: ubuntu-latest
 
     steps:
