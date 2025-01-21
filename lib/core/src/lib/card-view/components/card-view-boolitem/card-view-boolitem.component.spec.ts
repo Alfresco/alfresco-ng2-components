@@ -201,7 +201,7 @@ describe('CardViewBoolItemComponent', () => {
                 done();
             });
 
-            UnitTestingUtils.performClickWithDataAutomationId(fixture.debugElement, 'card-boolean-label-boolKey');
+            UnitTestingUtils.clickByDataAutomationId(fixture.debugElement, 'card-boolean-label-boolKey');
         });
     });
 });

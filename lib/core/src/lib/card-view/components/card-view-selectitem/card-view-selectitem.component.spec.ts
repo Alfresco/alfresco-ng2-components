@@ -16,19 +16,17 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { of } from 'rxjs';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { CardViewUpdateService, NoopTranslateModule } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { CardViewUpdateService } from '../../services/card-view-update.service';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -84,9 +82,7 @@ describe('CardViewSelectItemComponent', () => {
                 editable: false
             });
             fixture.detectChanges();
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('Select box label');
+            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label')).toBe('Select box label');
         });
 
         it('should render readOnly value is editable property is FALSE', () => {
@@ -98,8 +94,8 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const readOnly = fixture.debugElement.query(By.css('[data-automation-class="read-only-value"]'));
-            const selectBox = fixture.debugElement.query(By.css('[data-automation-class="select-box"]'));
+            const readOnly = UnitTestingUtils.getByDataAutomationClass(fixture.debugElement, 'read-only-value');
+            const selectBox = UnitTestingUtils.getByDataAutomationClass(fixture.debugElement, 'select-box');
 
             expect(readOnly).not.toBeNull();
             expect(selectBox).toBeNull();
@@ -118,10 +114,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(component.value).toEqual('two');
             expect(component.isEditable).toBe(true);
 
-            const select = await loader.getHarness(MatSelectHarness);
-            await select.open();
-
-            const options = await select.getOptions();
+            const options = await UnitTestingUtils.getMatSelectOptions(loader);
             expect(options.length).toEqual(4);
             await options[1].click();
 
@@ -141,10 +134,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(component.value).toEqual(2);
             expect(component.isEditable).toBe(true);
 
-            const select = await loader.getHarness(MatSelectHarness);
-            await select.open();
-
-            const options = await select.getOptions();
+            const options = await UnitTestingUtils.getMatSelectOptions(loader);
 
             expect(options.length).toEqual(4);
             await options[1].click();
@@ -164,10 +154,8 @@ describe('CardViewSelectItemComponent', () => {
 
             expect(component.isEditable).toBe(true);
 
-            const select = await loader.getHarness(MatSelectHarness);
-            await select.open();
+            const options = await UnitTestingUtils.getMatSelectOptions(loader);
 
-            const options = await select.getOptions();
             expect(await options[0].getText()).toBe('CORE.CARDVIEW.NONE');
         });
 
@@ -176,7 +164,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            expect(await loader.hasHarness(MatSelectHarness)).toBe(true);
+            expect(await UnitTestingUtils.checkIfMatSelectExists(loader)).toBe(true);
         });
 
         it('should not have label twice', async () => {
@@ -184,7 +172,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const field = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-property-value' }));
+            const field = await UnitTestingUtils.getMatFormFieldByCSS(loader, '.adf-property-value');
 
             expect(await field.hasLabel()).toBeFalse();
         });
@@ -204,17 +192,11 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const select = await loader.getHarness(MatSelectHarness);
-            await select.open();
-
-            let options = await select.getOptions();
+            let options = await UnitTestingUtils.getMatSelectOptions(loader);
             expect(options.length).toBe(3);
 
-            const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input input'));
-            filterInput.nativeElement.value = mockData[0].label;
-            filterInput.nativeElement.dispatchEvent(new Event('input'));
-
-            options = await select.getOptions();
+            UnitTestingUtils.fillInputByCSS(fixture.debugElement, '.adf-select-filter-input input', mockData[0].label);
+            options = await UnitTestingUtils.getMatSelectOptions(loader, true);
             expect(options.length).toBe(1);
             expect(await options[0].getText()).toEqual(mockData[0].label);
         });
@@ -232,11 +214,9 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const select = await loader.getHarness(MatSelectHarness);
-            await select.open();
-
-            const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input'));
-            expect(filterInput).toBe(null);
+            await UnitTestingUtils.openMatSelect(loader);
+            const filterInput = UnitTestingUtils.getInputByCSS(fixture.debugElement, '.adf-select-filter-input input');
+            expect(filterInput).toBeUndefined();
         });
 
         it('should show filter if options are greater then limit', async () => {
@@ -252,10 +232,9 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const select = await loader.getHarness(MatSelectHarness);
-            await select.open();
+            await UnitTestingUtils.openMatSelect(loader);
 
-            const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input'));
+            const filterInput = UnitTestingUtils.getInputByCSS(fixture.debugElement, '.adf-select-filter-input input');
             expect(filterInput).not.toBe(null);
         });
     });
@@ -339,11 +318,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            const autocomplete = await loader.getHarness(MatAutocompleteHarness);
-            await autocomplete.enterText('Op');
-            fixture.detectChanges();
-
-            const options = await autocomplete.getOptions();
+            const options = await UnitTestingUtils.typeAndGetOptionsForMatAutoComplete(loader, fixture, 'Op');
             expect(options.length).toBe(2);
             expect(await options[0].getText()).toContain('Option 1');
             expect(await options[1].getText()).toContain('Option 2');

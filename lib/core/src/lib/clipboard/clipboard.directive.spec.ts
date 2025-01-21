@@ -20,12 +20,15 @@ import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testin
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../testing/noop-translate.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
+import { HarnessLoader, TestKey } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
     selector: 'adf-test-component',
     template: `
-        <button clipboard-notification="copy success" [adf-clipboard] [target]="ref">copy</button>
+        <button mat-button clipboard-notification="copy success" [adf-clipboard] [target]="ref">copy</button>
 
         <input #ref />
     `
@@ -35,6 +38,7 @@ class TestTargetClipboardComponent {}
 describe('ClipboardDirective', () => {
     let fixture: ComponentFixture<TestTargetClipboardComponent>;
     let clipboardService: ClipboardService;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -43,21 +47,22 @@ describe('ClipboardDirective', () => {
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         fixture.detectChanges();
     });
 
-    it('should notify copy target value on button click event', () => {
+    it('should notify copy target value on button click event', async () => {
         spyOn(clipboardService, 'copyToClipboard');
-        fixture.nativeElement.querySelector('input').value = 'some value';
-        fixture.nativeElement.querySelector('button').dispatchEvent(new MouseEvent('click'));
+        UnitTestingUtils.fillInputByCSS(fixture.debugElement, 'input', 'some value');
+        await UnitTestingUtils.clickMatButton(loader);
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
 
-    it('should notify copy target value on keydown event', () => {
+    it('should notify copy target value on keydown event', async () => {
         spyOn(clipboardService, 'copyToClipboard');
-        fixture.nativeElement.querySelector('input').value = 'some value';
-        fixture.nativeElement.querySelector('button').dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter', key: 'Enter' }));
+        UnitTestingUtils.fillInputByCSS(fixture.debugElement, 'input', 'some value');
+        await UnitTestingUtils.sendKeysToMatButton(loader, [TestKey.ENTER]);
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
@@ -77,7 +82,6 @@ describe('CopyClipboardDirective', () => {
     }
 
     let fixture: ComponentFixture<TestCopyClipboardComponent>;
-    let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -85,53 +89,44 @@ describe('CopyClipboardDirective', () => {
             declarations: [TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
-        element = fixture.debugElement.nativeElement;
         fixture.detectChanges();
     });
 
     it('should show tooltip when hover element', () => {
-        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
-        spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+        UnitTestingUtils.hoverOverByCSS(fixture.debugElement, 'span');
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-copy-tooltip')).not.toBeNull();
     });
 
     it('should not show tooltip when element it is not hovered', () => {
-        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
-        spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+        UnitTestingUtils.hoverOverByCSS(fixture.debugElement, 'span');
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-copy-tooltip')).not.toBeNull();
 
-        spanHTMLElement.dispatchEvent(new Event('mouseleave'));
+        UnitTestingUtils.mouseLeaveByCSS(fixture.debugElement, 'span');
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-copy-tooltip')).toBeNull();
     });
 
     it('should copy the content of element when click it', fakeAsync(() => {
-        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
-        fixture.detectChanges();
         spyOn(navigator.clipboard, 'writeText');
-        spanHTMLElement.dispatchEvent(new Event('click'));
+        UnitTestingUtils.clickByCSS(fixture.debugElement, 'span');
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
     }));
 
     it('should copy the content of element on keydown event', fakeAsync(() => {
-        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
-        fixture.detectChanges();
         spyOn(navigator.clipboard, 'writeText');
-        spanHTMLElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter', key: 'Enter' }));
+        UnitTestingUtils.keyBoardEventByCSS(fixture.debugElement, 'span', 'keydown', 'Enter', 'Enter');
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
     }));
 
     it('should not copy the content of element when click it', fakeAsync(() => {
-        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
-        fixture.detectChanges();
         spyOn(navigator.clipboard, 'writeText');
-        spanHTMLElement.dispatchEvent(new Event('mouseleave'));
+        UnitTestingUtils.mouseLeaveByCSS(fixture.debugElement, 'span');
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).not.toHaveBeenCalled();

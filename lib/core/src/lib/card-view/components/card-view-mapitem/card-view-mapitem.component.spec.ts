@@ -111,6 +111,6 @@ describe('CardViewMapItemComponent', () => {
             done();
         });
 
-        UnitTestingUtils.performClickWithCSS(debug, '.adf-mapitem-clickable-value');
+        UnitTestingUtils.clickByCSS(debug, '.adf-mapitem-clickable-value');
     });
 });

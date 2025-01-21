@@ -211,7 +211,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        UnitTestingUtils.performDoubleClickWithDataAutomationId(fixture.debugElement, `card-dateitem-${component.property.key}`);
+        UnitTestingUtils.doubleClickByDataAutomationId(fixture.debugElement, `card-dateitem-${component.property.key}`);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');

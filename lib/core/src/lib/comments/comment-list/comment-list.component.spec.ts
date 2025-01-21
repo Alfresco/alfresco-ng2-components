@@ -18,16 +18,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
-import { By } from '@angular/platform-browser';
 import { commentUserNoPictureDefined, commentUserPictureDefined, mockCommentOne, testUser } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
-    let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,7 +41,6 @@ describe('CommentListComponent', () => {
         fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
 
-        element = fixture.nativeElement;
         fixture.detectChanges();
     });
 
@@ -62,15 +60,14 @@ describe('CommentListComponent', () => {
 
         fixture.detectChanges();
 
-        const comment = fixture.debugElement.query(By.css('.adf-comment-list-item'));
-        comment.triggerEventHandler('click', null);
+        UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-comment-list-item');
     });
 
     it('should not show comment list if no input is given', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('adf-datatable')).toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-datatable')).toBeNull();
     });
 
     it('should show comment message when input is given', async () => {
@@ -79,10 +76,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
+        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-message');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(mockCommentOne.message);
-        expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
+        expect(elements[0].nativeElement.innerText).toBe(mockCommentOne.message);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-message:empty')).toBeNull();
     });
 
     it('should show comment user when input is given', async () => {
@@ -91,10 +88,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-name');
+        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-user-name');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(mockCommentOne.userDisplayName);
-        expect(fixture.nativeElement.querySelector('.adf-comment-user-name:empty')).toBeNull();
+        expect(elements[0].nativeElement.innerText).toBe(mockCommentOne.userDisplayName);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-user-name:empty')).toBeNull();
     });
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async () => {
@@ -106,8 +103,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        element = fixture.nativeElement.querySelector('.adf-comment-message-time');
-        expect(element.innerText).toContain('less than a minute ago');
+        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message-time')).toContain('less than a minute ago');
     });
 
     it('comment date time should start with Yesterday when comment date is yesterday', async () => {
@@ -118,8 +114,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        element = fixture.nativeElement.querySelector('.adf-comment-message-time');
-        expect(element.innerText).toContain('1 day ago');
+        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message-time')).toContain('1 day ago');
     });
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async () => {
@@ -130,9 +125,9 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        element = fixture.nativeElement.querySelector('.adf-comment-message-time');
-        expect(element.innerText).not.toContain('Today');
-        expect(element.innerText).not.toContain('Yesterday');
+        const msgTime = UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message-time');
+        expect(msgTime).not.toContain('Today');
+        expect(msgTime).not.toContain('Yesterday');
     });
 
     it('should show user icon when input is given', async () => {
@@ -141,10 +136,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-img-container');
+        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-img-container');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toContain(mockCommentOne.userInitials);
-        expect(fixture.nativeElement.querySelector('.adf-comment-img-container:empty')).toBeNull();
+        expect(elements[0].nativeElement.innerText).toContain(mockCommentOne.userInitials);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-img-container:empty')).toBeNull();
     });
 
     it('should return picture when is a user with a picture', async () => {
@@ -153,7 +148,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
+        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-people-img');
         expect(elements.length).toBe(1);
     });
 
@@ -163,7 +158,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
+        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-user-icon');
         expect(elements.length).toBe(1);
     });
 });
