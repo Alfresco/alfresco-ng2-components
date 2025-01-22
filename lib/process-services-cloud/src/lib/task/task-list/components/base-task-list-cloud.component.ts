@@ -15,19 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterContentInit,
-    ContentChild,
-    DestroyRef,
-    Directive,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges
-} from '@angular/core';
+import { ContentChild, DestroyRef, Directive, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {
     AppConfigService,
     CustomEmptyContentTemplateDirective,
@@ -90,10 +78,7 @@ const taskPresetsCloudDefaultModel = {
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseTaskListCloudComponent<T = unknown>
-    extends DataTableSchema<T>
-    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit
-{
+export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableSchema<T> implements OnChanges, PaginatedComponent, OnInit {
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -274,10 +259,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
                     this.isLoadingPreferences$.next(false);
                 }
             );
-    }
-
-    ngAfterContentInit(): void {
-        this.retrieveTasksPreferences();
     }
 
     isListEmpty(): boolean {
