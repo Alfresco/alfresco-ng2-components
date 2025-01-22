@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/public-api';
 import { MatCardModule } from '@angular/material/card';
-import { UserTaskCustomUi } from './screen-cloud.interface';
+import { UserTaskCustomUi } from '../../models/screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -34,6 +34,12 @@ export class TaskScreenCloudComponent implements OnInit {
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
+    @Input()
+    canClaimTask: boolean;
+    @Input()
+    canUnclaimTask: boolean;
+    @Input()
+    showCancelButton: boolean;
     /** Screen id to fetch corresponding screen widget. */
     @Input()
     screenId: string = '';
@@ -56,6 +62,18 @@ export class TaskScreenCloudComponent implements OnInit {
     /** Emitted when there is an error. */
     @Output()
     error = new EventEmitter<any>();
+
+    /** Emitted when the task is cancelled. */
+    @Output()
+    cancelTask = new EventEmitter<any>();
+
+    /** Emitted when the task is claimed. */
+    @Output()
+    claimTask = new EventEmitter<any>();
+
+    /** Emitted when the task is unclaimed. */
+    @Output()
+    unclaimTask = new EventEmitter<any>();
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
@@ -94,6 +112,15 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.taskName && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskName')) {
             this.componentRef.setInput('taskName', this.taskName);
         }
+        if (this.canClaimTask && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'canClaimTask')) {
+            this.componentRef.setInput('canClaimTask', this.canClaimTask);
+        }
+        if (this.canUnclaimTask && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'canUnclaimTask')) {
+            this.componentRef.setInput('canUnclaimTask', this.canUnclaimTask);
+        }
+        if (this.showCancelButton && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showCancelButton')) {
+            this.componentRef.setInput('showCancelButton', this.showCancelButton);
+        }
     }
 
     subscribeToOutputs() {
@@ -105,6 +132,16 @@ export class TaskScreenCloudComponent implements OnInit {
         }
         if (this.componentRef.instance?.error) {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
+        }
+
+        if (this.componentRef.instance?.claimTask) {
+            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
+        }
+        if (this.componentRef.instance?.unclaimTask) {
+            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.unclaimTask.emit(data));
+        }
+        if (this.componentRef.instance?.cancelTask) {
+            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
         }
     }
 }
