@@ -30,6 +30,7 @@ export * from './services/url.service';
 
 export * from './models/log-levels.model';
 export * from './models/user-info-mode.enum';
+export * from './models/default-languages.model';
 
 export * from './interface/search-component.interface';
 
