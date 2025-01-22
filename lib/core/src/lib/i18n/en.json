@@ -306,6 +306,7 @@
     "HEADER": "Comments ({{ count }})",
     "CREATED_BY_HEADER": "Created by",
     "MESSAGE_HEADER": "Message",
+    "EMPTY_ERROR": "Comment can't be empty",
     "DIALOG": {
       "TITLE": "New comment",
       "LABELS": {

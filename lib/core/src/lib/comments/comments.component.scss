@@ -12,10 +12,18 @@ adf-comments {
 
             #{$mat-form-field} {
                 width: 100%;
-            }
 
-            #{$mat-form-field-subscript-wrapper} {
-                display: none;
+                &#{$mat-form-field-invalid} {
+                    #{$mat-input-element} {
+                        &::placeholder {
+                            color: var(--theme-warn-color);
+                        }
+
+                        &:focus::placeholder {
+                            color: var(--theme-warn-color);
+                        }
+                    }
+                }
             }
 
             #{$mat-form-field-wrapper} {
@@ -30,6 +38,12 @@ adf-comments {
                     &:focus::placeholder {
                         color: var(--theme-primary-color);
                         -webkit-font-smoothing: subpixel-antialiased;
+                    }
+
+                    &::placeholder {
+                        &::after {
+                            content: '*';
+                        }
                     }
                 }
             }
