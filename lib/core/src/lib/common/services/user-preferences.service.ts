@@ -247,12 +247,15 @@ export class UserPreferencesService {
 
     private getLanguageByKey(key: string): LanguageItem {
         const defaultLanguage = { key: 'en' } as LanguageItem;
+        let language: LanguageItem;
 
         const customLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         if (customLanguages && Array.isArray(customLanguages)) {
-            return customLanguages.find((language) => key.includes(language.key)) || defaultLanguage;
-        } else {
-            return DEFAULT_LANGUAGE_LIST.find((language) => language.key === key) ?? defaultLanguage;
+            language = customLanguages.find((language) => key.includes(language.key));
         }
+        if (!language) {
+            language = DEFAULT_LANGUAGE_LIST.find((language) => language.key === key) ?? defaultLanguage;
+        }
+        return language;
     }
 }
