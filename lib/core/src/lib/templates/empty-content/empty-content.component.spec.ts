@@ -17,11 +17,11 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { EmptyContentComponent } from './empty-content.component';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component',
@@ -53,7 +53,7 @@ describe('EmptyContentComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title = fixture.debugElement.query(By.css('.adf-empty-content__title'));
+        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-content__title');
         expect(title).toBeDefined();
         expect(title.nativeElement.textContent).toContain('CUSTOM_TITLE');
     });
@@ -73,8 +73,8 @@ describe('EmptyContentComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title = fixture.debugElement.query(By.css('.adf-empty-content__title'));
-        const subtitle = fixture.debugElement.query(By.css('.adf-empty-content__subtitle'));
+        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-content__title');
+        const subtitle = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-content__subtitle');
 
         expect(title).toBeDefined();
         expect(title.nativeElement.textContent).toContain('ENG_CUSTOM_TITLE');
@@ -84,7 +84,7 @@ describe('EmptyContentComponent', () => {
     });
 
     it('should render multiple subtitle elements', () => {
-        const subTitles = fixture.debugElement.queryAll(By.css('.adf-empty-content__text'));
+        const subTitles = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-empty-content__text');
 
         expect(subTitles.length).toBe(3);
         expect(subTitles[0].nativeElement.textContent).toContain('SUBTITLE-1');

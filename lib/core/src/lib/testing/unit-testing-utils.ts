@@ -28,6 +28,10 @@ import { MatErrorHarness, MatFormFieldHarness } from '@angular/material/form-fie
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { ComponentFixture } from '@angular/core/testing';
+import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
+import { MatToolbarHarness } from '@angular/material/toolbar/testing';
+import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
+import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
 
 export class UnitTestingUtils {
     static getByCSS(debugElement: DebugElement, selector: string): DebugElement {
@@ -425,5 +429,37 @@ export class UnitTestingUtils {
 
     static async getMatErrorByDataAutomationId(loader: HarnessLoader, dataAutomationId: string): Promise<MatErrorHarness> {
         return loader.getHarness(MatErrorHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    /** MatTabGroup related methods */
+
+    static async getSelectedTabFromMatTabGroup(loader: HarnessLoader): Promise<MatTabHarness> {
+        const tabs = await loader.getHarness(MatTabGroupHarness);
+        return tabs.getSelectedTab();
+    }
+
+    static async getSelectedTabLabelFromMatTabGroup(loader: HarnessLoader): Promise<string> {
+        const tab = await this.getSelectedTabFromMatTabGroup(loader);
+        return tab.getLabel();
+    }
+
+    /** MatToolbar related methods */
+
+    static async getMatToolbarHost(loader: HarnessLoader): Promise<TestElement> {
+        const toolbar = await loader.getHarness(MatToolbarHarness);
+        return toolbar.host();
+    }
+
+    /** MatSnackbar related methods */
+
+    static async checkIfMatSnackbarExists(loader: HarnessLoader): Promise<boolean> {
+        return loader.hasHarness(MatSnackBarHarness);
+    }
+
+    /** MatProgressBar related methods */
+
+    static async getMatProgressBarHost(loader: HarnessLoader): Promise<TestElement> {
+        const progress = await loader.getHarness(MatProgressBarHarness);
+        return progress.host();
     }
 }

@@ -22,9 +22,9 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('SidebarActionMenuComponent', () => {
-    let element: HTMLElement;
     let component: SidebarActionMenuComponent;
     let fixture: ComponentFixture<SidebarActionMenuComponent>;
 
@@ -33,7 +33,6 @@ describe('SidebarActionMenuComponent', () => {
             imports: [CoreTestingModule, SidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
     });
 
@@ -45,7 +44,7 @@ describe('SidebarActionMenuComponent', () => {
         component.title = 'Fake-Title';
         component.expanded = true;
         fixture.detectChanges();
-        const title = element.querySelector('.adf-sidebar-action-menu-text');
+        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sidebar-action-menu-text').nativeElement;
         fixture.detectChanges();
         expect(title.textContent).toBe('Fake-Title');
     });
@@ -81,7 +80,6 @@ class CustomSidebarActionMenuComponent {
 describe('Custom SidebarActionMenuComponent', () => {
     let fixture: ComponentFixture<CustomSidebarActionMenuComponent>;
     let component: CustomSidebarActionMenuComponent;
-    let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -90,43 +88,38 @@ describe('Custom SidebarActionMenuComponent', () => {
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
     });
 
     it('should defined adf-sidebar-action-menu', () => {
         fixture.detectChanges();
-        element = fixture.nativeElement.querySelector('adf-sidebar-action-menu');
-        expect(element).toBeDefined();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-sidebar-action-menu')).toBeDefined();
     });
 
     it('should display the title', () => {
         component.title = 'FakeTitle';
         fixture.detectChanges();
-        const title = element.querySelector('.adf-sidebar-action-menu-text');
+        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sidebar-action-menu-text').nativeElement;
         fixture.detectChanges();
         expect(title.textContent).toBe('FakeTitle');
     });
 
     it('should render the adf-sidebar-menu-options', async () => {
         fixture.detectChanges();
-        const actionButton = fixture.nativeElement.querySelector('.adf-sidebar-action-menu-button');
-        const options = fixture.nativeElement.querySelectorAll('.adf-sidebar-action-menu-options');
-        actionButton.click();
+        const options = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-sidebar-action-menu-options');
+        UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-sidebar-action-menu-button');
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(actionButton).not.toBeNull();
-        expect(actionButton).toBeDefined();
         expect(options).toBeDefined();
-        expect(actionButton.innerText.trim()).toBe('Fake titlearrow_drop_down');
+        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-sidebar-action-menu-button').trim()).toBe('Fake titlearrow_drop_down');
     });
 
     it('should show icon on icon menu', () => {
         component.title = 'FakeTitle';
         component.expanded = false;
         fixture.detectChanges();
-        const actionIcon = fixture.nativeElement.querySelector('.adf-sidebar-action-menu-icon');
+        const actionIcon = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sidebar-action-menu-icon').nativeElement;
         expect(actionIcon).not.toBeNull();
         expect(actionIcon).toBeDefined();
         expect(actionIcon.innerText.trim()).toBe('queue');

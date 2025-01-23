@@ -16,9 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
@@ -83,7 +82,7 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.style.height = '700px';
         fixture.nativeElement.style.overflow = 'scroll';
 
-        const content = fixture.debugElement.query(By.css('.adf-pdf-thumbnails__content')).nativeElement;
+        const content = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-pdf-thumbnails__content').nativeElement;
 
         content.style.height = '2000px';
         content.style.position = 'unset';

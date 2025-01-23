@@ -18,11 +18,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderLayoutComponent } from './header.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatToolbarHarness } from '@angular/material/toolbar/testing';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('HeaderLayoutComponent', () => {
     let loader: HarnessLoader;
@@ -44,24 +43,21 @@ describe('HeaderLayoutComponent', () => {
         });
 
         it('title element should been displayed', () => {
-            const titleElement = fixture.debugElement.query(By.css('.adf-app-title'));
-            expect(titleElement === null).toBeFalsy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-app-title')).toBeDefined();
         });
 
         it('should show TEST TITLE', () => {
             component.title = 'TEST TITLE';
             fixture.detectChanges();
 
-            const titleElement = fixture.nativeElement.querySelector('.adf-app-title');
-            expect(titleElement.innerText).toEqual('TEST TITLE');
+            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-app-title')).toEqual('TEST TITLE');
         });
 
         it('color attribute should be present on toolbar', async () => {
             component.color = 'primary';
             fixture.detectChanges();
 
-            const toolbar = await loader.getHarness(MatToolbarHarness);
-            const host = await toolbar.host();
+            const host = await UnitTestingUtils.getMatToolbarHost(loader);
 
             expect(await host.getAttribute('ng-reflect-color')).toBe('primary');
         });
@@ -70,17 +66,17 @@ describe('HeaderLayoutComponent', () => {
             component.color = '#42f57e';
             fixture.detectChanges();
 
-            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
-            const toolbar = await toolbarHarness.host();
-            expect(await toolbar.getCssValue('background-color')).toBe('rgb(66, 245, 126)');
+            const host = await UnitTestingUtils.getMatToolbarHost(loader);
+
+            expect(await host.getCssValue('background-color')).toBe('rgb(66, 245, 126)');
         });
 
         it('should background image be set to none if is not provided', async () => {
             fixture.detectChanges();
 
-            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
-            const toolbar = await toolbarHarness.host();
-            expect(await toolbar.getCssValue('background-image')).toEqual('none');
+            const host = await UnitTestingUtils.getMatToolbarHost(loader);
+
+            expect(await host.getCssValue('background-image')).toEqual('none');
         });
 
         it('should background image be set to none if is provided as empty string', async () => {
@@ -88,25 +84,25 @@ describe('HeaderLayoutComponent', () => {
 
             fixture.detectChanges();
 
-            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
-            const toolbar = await toolbarHarness.host();
-            expect(await toolbar.getCssValue('background-image')).toEqual('none');
+            const host = await UnitTestingUtils.getMatToolbarHost(loader);
+
+            expect(await host.getCssValue('background-image')).toEqual('none');
         });
 
         it('should change background image when provided', async () => {
             component.backgroundImage = '/assets/someImage.png';
             fixture.detectChanges();
 
-            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
-            const toolbar = await toolbarHarness.host();
-            expect(await toolbar.getCssValue('background-image')).toContain('/assets/someImage.png');
+            const host = await UnitTestingUtils.getMatToolbarHost(loader);
+
+            expect(await host.getCssValue('background-image')).toContain('/assets/someImage.png');
         });
 
         it('should display the img element with the expected src if a logo path is set', () => {
             component.logo = 'logo.png';
             fixture.detectChanges();
 
-            const logo = fixture.nativeElement.querySelector('.adf-app-logo');
+            const logo = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-app-logo').nativeElement;
             const src = logo.getAttribute('src');
             expect(src).toEqual('logo.png');
         });
@@ -115,7 +111,7 @@ describe('HeaderLayoutComponent', () => {
             component.redirectUrl = '/customHomePage';
             fixture.detectChanges();
 
-            const logoAnchor = fixture.nativeElement.querySelector('a');
+            const logoAnchor = UnitTestingUtils.getByCSS(fixture.debugElement, 'a').nativeElement;
             expect(/\/customHomePage$/.test(logoAnchor.href)).toEqual(true);
         });
 
@@ -123,7 +119,7 @@ describe('HeaderLayoutComponent', () => {
             component.tooltip = 'logo title';
             fixture.detectChanges();
 
-            const logoAnchor = fixture.nativeElement.querySelector('a');
+            const logoAnchor = UnitTestingUtils.getByCSS(fixture.debugElement, 'a').nativeElement;
             expect(logoAnchor.title).toEqual('logo title');
         });
 
@@ -131,9 +127,8 @@ describe('HeaderLayoutComponent', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
             spyOn(component.clicked, 'emit');
-            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
 
-            button.dispatchEvent(new Event('click'));
+            UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-menu-icon');
             fixture.detectChanges();
             expect(component.clicked.emit).toHaveBeenCalledWith(true);
         });
@@ -142,23 +137,22 @@ describe('HeaderLayoutComponent', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
 
-            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
-            expect(button === null).toBeFalsy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-menu-icon')).toBeDefined();
         });
 
         it('if showSidenavToggle is false the button menu should not be displayed', () => {
             component.showSidenavToggle = false;
             fixture.detectChanges();
 
-            const button = fixture.nativeElement.querySelector('.adf-menu-icon');
-            expect(button === null).toBeTruthy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-menu-icon')).toBeNull();
         });
 
         it('if expandedSidenav is false aria expanded should be false too', () => {
             component.expandedSidenav = false;
             fixture.detectChanges();
 
-            const nodeAttributes = fixture.debugElement.nativeElement.querySelector('#adf-sidebar-toggle-start').attributes as NamedNodeMap;
+            const nodeAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-start').nativeElement
+                .attributes as NamedNodeMap;
             expect(nodeAttributes.getNamedItem('aria-expanded').value).toEqual('false');
         });
 
@@ -166,7 +160,8 @@ describe('HeaderLayoutComponent', () => {
             component.expandedSidenav = true;
             fixture.detectChanges();
 
-            const nodeAttributes = fixture.debugElement.nativeElement.querySelector('#adf-sidebar-toggle-start').attributes as NamedNodeMap;
+            const nodeAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-start').nativeElement
+                .attributes as NamedNodeMap;
             expect(nodeAttributes.getNamedItem('aria-expanded').value).toEqual('true');
         });
 
@@ -174,7 +169,7 @@ describe('HeaderLayoutComponent', () => {
             component.expandedSidenav = false;
             fixture.detectChanges();
 
-            const button = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
+            const button = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-start').nativeElement;
             button.click();
 
             fixture.detectChanges();
@@ -194,45 +189,37 @@ describe('HeaderLayoutComponent', () => {
             component.position = 'end';
             fixture.detectChanges();
 
-            const buttonStart = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
-            const buttonEnd = fixture.nativeElement.querySelector('#adf-sidebar-toggle-end');
-            expect(buttonStart === null).toBeTruthy();
-            expect(buttonEnd === null).toBeFalsy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-start')).toBeNull();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-end')).toBeDefined();
         });
 
         it('if position is start the button menu should be at the start', () => {
             component.position = 'start';
             fixture.detectChanges();
 
-            const buttonStart = fixture.nativeElement.querySelector('#adf-sidebar-toggle-start');
-            const buttonEnd = fixture.nativeElement.querySelector('#adf-sidebar-toggle-end');
-            expect(buttonStart === null).toBeFalsy();
-            expect(buttonEnd === null).toBeTruthy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-start')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-sidebar-toggle-end')).toBeNull();
         });
 
         it('should display the logo image when the input is set to true [showLogo=true]', () => {
             component.showLogo = true;
             fixture.detectChanges();
 
-            const logo = fixture.debugElement.query(By.css('.adf-app-logo'));
-
-            expect(logo.nativeElement).not.toBeNull();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-app-logo')).not.toBeNull();
         });
 
         it('should NOT display the logo image when the input is set to false [showLogo=false]', () => {
             component.showLogo = false;
             fixture.detectChanges();
 
-            const logo = fixture.debugElement.query(By.css('.adf-app-logo'));
-
-            expect(logo).toBeNull();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-app-logo')).toBeNull();
         });
 
         it('should display the default toggle icon', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
 
-            const toggleIcon = fixture.debugElement.query(By.css('.adf-menu-icon'));
+            const toggleIcon = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-menu-icon');
 
             expect(toggleIcon.nativeElement.textContent.trim()).toBe('menu');
         });
@@ -242,7 +229,7 @@ describe('HeaderLayoutComponent', () => {
             component.toggleIcon = 'apps';
             fixture.detectChanges();
 
-            const toggleIcon = fixture.debugElement.query(By.css('.adf-menu-icon'));
+            const toggleIcon = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-menu-icon');
 
             expect(toggleIcon.nativeElement.textContent.trim()).toBe('apps');
         });
@@ -269,8 +256,7 @@ describe('HeaderLayoutComponent', () => {
         it('should project the provided nodes into the component', () => {
             const hostFixture = TestBed.createComponent(HeaderLayoutTesterComponent);
             hostFixture.detectChanges();
-            const innerText = hostFixture.nativeElement.querySelector('p').innerText;
-            expect(innerText).toEqual('Test text');
+            expect(UnitTestingUtils.getInnerTextByCSS(hostFixture.debugElement, 'p')).toEqual('Test text');
         });
     });
 });

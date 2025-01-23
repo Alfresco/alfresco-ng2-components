@@ -17,7 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarComponent } from './toolbar.component';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../testing/noop-translate.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('ToolbarComponent', () => {
     let fixture: ComponentFixture<ToolbarComponent>;
@@ -36,7 +37,7 @@ describe('ToolbarComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title: HTMLSpanElement = fixture.nativeElement.querySelector('.adf-toolbar-title');
+        const title: HTMLSpanElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-toolbar-title').nativeElement;
         expect(title.innerHTML).toBe('test-title');
     });
 });

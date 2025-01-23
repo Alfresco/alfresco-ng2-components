@@ -18,14 +18,13 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
 describe('Text View component', () => {
     let component: TxtViewerComponent;
     let fixture: ComponentFixture<TxtViewerComponent>;
-    let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -36,7 +35,6 @@ describe('Text View component', () => {
         const httpClient = TestBed.inject(HttpClient);
         spyOn(httpClient, 'get').and.returnValue(of('example'));
 
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
     });
 
@@ -51,7 +49,7 @@ describe('Text View component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
         });
 
         it('Should text container be present with Blob file', async () => {
@@ -64,7 +62,7 @@ describe('Text View component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
         });
     });
 });

@@ -18,17 +18,15 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTabGroupHarness } from '@angular/material/tabs/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopTranslateModule } from '../testing/noop-translate.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('InfoDrawerComponent', () => {
-    let element: HTMLElement;
     let component: InfoDrawerComponent;
     let fixture: ComponentFixture<InfoDrawerComponent>;
 
@@ -38,12 +36,11 @@ describe('InfoDrawerComponent', () => {
         });
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
     });
 
     it('should define InfoDrawerTabLayout', () => {
-        const infoDrawerTabLayout = element.querySelector('adf-info-drawer-layout');
+        const infoDrawerTabLayout = UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-info-drawer-layout');
         expect(infoDrawerTabLayout).toBeDefined();
     });
 
@@ -57,7 +54,7 @@ describe('InfoDrawerComponent', () => {
     it('should render the title', () => {
         component.title = 'FakeTitle';
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = UnitTestingUtils.getAllByCSS(fixture.debugElement, '[info-drawer-title]');
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('FakeTitle');
     });
@@ -102,7 +99,7 @@ describe('Custom InfoDrawer', () => {
     let component: CustomInfoDrawerComponent;
     let loader: HarnessLoader;
 
-    const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+    const getNodeIcon = () => UnitTestingUtils.getAllByCSS(fixture.debugElement, '[info-drawer-node-icon]');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -121,36 +118,30 @@ describe('Custom InfoDrawer', () => {
 
     it('should render the title', () => {
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = UnitTestingUtils.getAllByCSS(fixture.debugElement, '[info-drawer-title]');
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
     });
 
     it('should select the tab 1 (index 0) as default', async () => {
         fixture.detectChanges();
-        const tabs = await loader.getHarness(MatTabGroupHarness);
-        const selectedTab = await tabs.getSelectedTab();
 
-        expect(await selectedTab.getLabel()).toEqual('Tab1');
+        expect(await UnitTestingUtils.getSelectedTabLabelFromMatTabGroup(loader)).toEqual('Tab1');
     });
 
     it('should select the tab 2 (index 1)', async () => {
         component.tabIndex = 1;
         fixture.detectChanges();
-        const tabs = await loader.getHarness(MatTabGroupHarness);
-        const selectedTab = await tabs.getSelectedTab();
 
-        expect(await selectedTab.getLabel()).toEqual('Tab2');
+        expect(await UnitTestingUtils.getSelectedTabLabelFromMatTabGroup(loader)).toEqual('Tab2');
     });
 
     it('should render a tab with icon', async () => {
         component.tabIndex = 2;
         fixture.detectChanges();
-        const tabs = await loader.getHarness(MatTabGroupHarness);
-        const selectedTab = await tabs.getSelectedTab();
 
-        expect(await selectedTab.getLabel()).toContain('Tab3');
-        expect(await selectedTab.getLabel()).toContain('tab-icon');
+        expect(await UnitTestingUtils.getSelectedTabLabelFromMatTabGroup(loader)).toContain('Tab3');
+        expect(await UnitTestingUtils.getSelectedTabLabelFromMatTabGroup(loader)).toContain('tab-icon');
     });
 
     it('should render a icon with title', () => {
@@ -176,7 +167,7 @@ class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
 describe('Header visibility InfoDrawer', () => {
     let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
     let component: VisibilityInfoDrawerComponent;
-    const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+    const getNodeIcon = () => UnitTestingUtils.getAllByCSS(fixture.debugElement, '[info-drawer-node-icon]');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -190,7 +181,7 @@ describe('Header visibility InfoDrawer', () => {
     it('should show info drawer header by default', () => {
         component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = UnitTestingUtils.getAllByCSS(fixture.debugElement, '[info-drawer-title]');
         const icon = getNodeIcon();
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
         expect(title.length).toBe(1);
@@ -203,7 +194,7 @@ describe('Header visibility InfoDrawer', () => {
     it('should not show info drawer header with icon when showHeader is false', () => {
         component.showHeader = false;
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = UnitTestingUtils.getAllByCSS(fixture.debugElement, '[info-drawer-title]');
         const icon = getNodeIcon();
         expect(title.length).toBe(0);
         expect(icon.length).toBe(0);

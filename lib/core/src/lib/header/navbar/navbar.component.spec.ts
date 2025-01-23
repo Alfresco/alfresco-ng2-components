@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -42,7 +43,7 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = fixture.nativeElement.querySelectorAll('.adf-navbar-item-btn');
+        const renderedItems = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-navbar-item-btn');
         expect(renderedItems.length).toBe(testItems.length);
     });
 
@@ -53,7 +54,7 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = fixture.nativeElement.querySelectorAll('.adf-navbar-item-btn');
+        const renderedItems = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-navbar-item-btn').map((item) => item.nativeElement);
         testItems.forEach((item, index) => {
             expect(renderedItems[index].textContent).toContain(item.label);
             expect(renderedItems[index].getAttribute('ng-reflect-router-link')).toContain(item.routerLink);

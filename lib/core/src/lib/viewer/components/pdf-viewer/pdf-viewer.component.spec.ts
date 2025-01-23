@@ -24,7 +24,7 @@ import { of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
 import { EventMock } from '../../../mock';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PdfViewerComponent } from './pdf-viewer.component';
@@ -109,7 +109,6 @@ class BlobTestComponent {
 describe('Test PdfViewer component', () => {
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
-    let element: HTMLElement;
     let change: any;
     let dialog: MatDialog;
 
@@ -129,9 +128,7 @@ describe('Test PdfViewer component', () => {
         fixture = TestBed.createComponent(PdfViewerComponent);
         dialog = TestBed.inject(MatDialog);
 
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
-
         component.showToolbar = true;
         component.inputPage('1');
 
@@ -179,8 +176,7 @@ describe('Test PdfViewer component', () => {
         }, 55000);
 
         it('should nextPage move to the next page', (done) => {
-            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
-            nextPageButton.click();
+            UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-next-page-button');
 
             fixtureUrlTestComponent.detectChanges();
 
@@ -218,12 +214,9 @@ describe('Test PdfViewer component', () => {
         }, 55000);
 
         it('should previous page move to the previous page', (done) => {
-            const previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
-            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
-
-            nextPageButton.click();
-            nextPageButton.click();
-            previousPageButton.click();
+            UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-next-page-button');
+            UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-next-page-button');
+            UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-previous-page-button');
             fixtureUrlTestComponent.detectChanges();
 
             fixtureUrlTestComponent.whenStable().then(() => {
@@ -256,10 +249,8 @@ describe('Test PdfViewer component', () => {
             it('should zoom in increment the scale value', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
-                const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
-
                 const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
-                zoomInButton.click();
+                UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-zoom-in-button');
                 fixtureUrlTestComponent.detectChanges();
 
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
@@ -270,10 +261,9 @@ describe('Test PdfViewer component', () => {
 
             it('should zoom out decrement the scale value', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
-                const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
                 const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
-                zoomOutButton.click();
+                UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-zoom-out-button');
                 fixtureUrlTestComponent.detectChanges();
 
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
@@ -284,17 +274,14 @@ describe('Test PdfViewer component', () => {
 
             it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
-
-                const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
-
                 tick(250);
 
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('init');
-                itPage.click();
+                UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-scale-page-button');
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
-                itPage.click();
+                UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-scale-page-button');
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                itPage.click();
+                UnitTestingUtils.clickByCSS(fixtureUrlTestComponent.debugElement, '#viewer-scale-page-button');
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
             }), 55000);
         });
@@ -322,14 +309,14 @@ describe('Test PdfViewer component', () => {
             }, 55000);
 
             it('should open thumbnails panel', (done) => {
-                expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.adf-pdf-viewer__thumbnails')).toBeNull();
 
                 componentUrlTestComponent.pdfViewerComponent.toggleThumbnails();
 
                 fixtureUrlTestComponent.detectChanges();
 
                 fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).not.toBeNull();
+                    expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.adf-pdf-viewer__thumbnails')).not.toBeNull();
                     done();
                 });
             }, 55000);
@@ -391,7 +378,7 @@ describe('Test PdfViewer component', () => {
     });
 
     it('should Loader be present', () => {
-        expect(element.querySelector('.adf-loader-container')).not.toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-loader-container')).not.toBeNull();
     });
 
     describe('Zoom customization', () => {
@@ -541,8 +528,8 @@ describe('Test PdfViewer component', () => {
             fixtureUrlTestComponent.detectChanges();
 
             fixtureUrlTestComponent.whenStable().then(() => {
-                expect(elementUrlTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
-                expect(elementUrlTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.adf-pdfViewer')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.adf-viewer-pdf-viewer')).not.toBeNull();
                 done();
             });
         }, 55000);
@@ -551,11 +538,11 @@ describe('Test PdfViewer component', () => {
             fixtureUrlTestComponent.detectChanges();
             fixtureUrlTestComponent.whenStable().then(() => {
                 /* cspell:disable-next-line */
-                expect(elementUrlTestComponent.querySelector('.viewer-pagenumber-input')).toBeDefined();
-                expect(elementUrlTestComponent.querySelector('.viewer-total-pages')).toBeDefined();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.viewer-pagenumber-input')).toBeDefined();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.viewer-total-pages')).toBeDefined();
 
-                expect(elementUrlTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
-                expect(elementUrlTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '#viewer-previous-page-button')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '#viewer-next-page-button')).not.toBeNull();
                 done();
             });
         }, 55000);
@@ -565,8 +552,8 @@ describe('Test PdfViewer component', () => {
 
             fixtureUrlTestComponent.detectChanges();
             fixtureUrlTestComponent.whenStable().then(() => {
-                expect(elementUrlTestComponent.querySelector('.viewer-toolbar-command')).toBeNull();
-                expect(elementUrlTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.viewer-toolbar-command')).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureUrlTestComponent.debugElement, '.viewer-toolbar-pagination')).toBeNull();
                 done();
             });
         }, 55000);
@@ -593,8 +580,8 @@ describe('Test PdfViewer component', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
-                expect(elementBlobTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
-                expect(elementBlobTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '.adf-pdfViewer')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '.adf-viewer-pdf-viewer')).not.toBeNull();
             });
         });
 
@@ -602,8 +589,8 @@ describe('Test PdfViewer component', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
-                expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
-                expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '#viewer-previous-page-button')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '#viewer-next-page-button')).not.toBeNull();
                 done();
             });
         }, 55000);
@@ -613,11 +600,11 @@ describe('Test PdfViewer component', () => {
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 /* cspell:disable-next-line */
-                expect(elementBlobTestComponent.querySelector('.adf-viewer-pagenumber-input')).toBeDefined();
-                expect(elementBlobTestComponent.querySelector('.adf-viewer-total-pages')).toBeDefined();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '.adf-viewer-pagenumber-input')).toBeDefined();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '.adf-viewer-total-pages')).toBeDefined();
 
-                expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
-                expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '#viewer-previous-page-button')).not.toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '#viewer-next-page-button')).not.toBeNull();
                 done();
             });
         }, 55000);
@@ -628,8 +615,8 @@ describe('Test PdfViewer component', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
-                expect(elementBlobTestComponent.querySelector('.viewer-toolbar-command')).toBeNull();
-                expect(elementBlobTestComponent.querySelector('.viewer-toolbar-pagination')).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '.viewer-toolbar-command')).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixtureBlobTestComponent.debugElement, '.viewer-toolbar-pagination')).toBeNull();
                 done();
             });
         }, 55000);

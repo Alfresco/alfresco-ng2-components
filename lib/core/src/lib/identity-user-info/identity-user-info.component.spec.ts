@@ -19,13 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
-import { By } from '@angular/platform-browser';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('IdentityUserInfoComponent', () => {
     let component: IdentityUserInfoComponent;
     let fixture: ComponentFixture<IdentityUserInfoComponent>;
-    let element: HTMLElement;
 
     const identityUserMock = {
         firstName: 'fake-identity-first-name',
@@ -55,7 +54,6 @@ describe('IdentityUserInfoComponent', () => {
         });
         fixture = TestBed.createComponent(IdentityUserInfoComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
 
         spyOn(window, 'requestAnimationFrame').and.returnValue(1);
     });
@@ -65,15 +63,15 @@ describe('IdentityUserInfoComponent', () => {
     });
 
     it('should not show any image if the user is not logged in', () => {
-        expect(element.querySelector('#userinfo_container')).toBeDefined();
-        expect(element.querySelector('#logged-user-img')).toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).toBeDefined();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#logged-user-img')).toBeNull();
     });
 
     it('should NOT have users immediately after ngOnInit', () => {
-        expect(element.querySelector('#userinfo_container')).toBeDefined();
-        expect(element.querySelector('#ecm_username')).toBeNull();
-        expect(element.querySelector('#bpm_username')).toBeNull();
-        expect(element.querySelector('#user-profile-lists')).toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).toBeDefined();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#ecm_username')).toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#bpm_username')).toBeNull();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#user-profile-lists')).toBeNull();
     });
 
     describe('when identity user is logged in', () => {
@@ -84,21 +82,21 @@ describe('IdentityUserInfoComponent', () => {
 
         it('should show the identity user initials', async () => {
             await whenFixtureReady();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="user-initials-image"]')?.textContent).toContain('ff');
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).toBeDefined();
+            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'user-initials-image')?.nativeElement?.textContent).toContain('ff');
         });
 
         it('should show full name next to the user image', async () => {
             await whenFixtureReady();
 
-            const imageButton = element.querySelector<HTMLButtonElement>('#identity-user-image');
+            const imageButton: HTMLButtonElement = fixture.nativeElement.querySelector('#identity-user-image');
             imageButton?.click();
 
             fixture.detectChanges();
 
-            expect(element.querySelector('#userinfo_container')).not.toBeNull();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).not.toBeNull();
 
-            const identityUserName = fixture.debugElement.query(By.css('#identity-username'));
+            const identityUserName = UnitTestingUtils.getByCSS(fixture.debugElement, '#identity-username');
             expect(identityUserName).toBeDefined();
             expect(identityUserName).not.toBeNull();
             expect(identityUserName.nativeElement.textContent).toContain('fake-identity-first-name fake-identity-last-name');
@@ -108,35 +106,35 @@ describe('IdentityUserInfoComponent', () => {
             component.identityUser = identityUserWithOutFirstNameMock;
             await whenFixtureReady();
 
-            const fullNameElement = element.querySelector('#adf-userinfo-identity-name-display');
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#adf-userinfo-identity-name-display')).not.toBeNull();
-            expect(fullNameElement?.textContent).toContain('fake-identity-last-name');
-            expect(fullNameElement?.textContent).not.toContain('fake-identity-first-name');
+            const fullNameElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-userinfo-identity-name-display');
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-userinfo-identity-name-display')).not.toBeNull();
+            expect(fullNameElement?.nativeElement?.textContent).toContain('fake-identity-last-name');
+            expect(fullNameElement?.nativeElement?.textContent).not.toContain('fake-identity-first-name');
         });
 
         it('should not show first name if it is null string', async () => {
             component.identityUser = identityUserWithOutFirstNameMock;
             await whenFixtureReady();
 
-            const fullNameElement = element.querySelector('#adf-userinfo-identity-name-display');
+            const fullNameElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-userinfo-identity-name-display');
             fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).toBeDefined();
             expect(fullNameElement).toBeDefined();
-            expect(fullNameElement?.textContent).toContain('fake-identity-last-name');
-            expect(fullNameElement?.textContent).not.toContain('null');
+            expect(fullNameElement?.nativeElement?.textContent).toContain('fake-identity-last-name');
+            expect(fullNameElement?.nativeElement?.textContent).not.toContain('null');
         });
 
         it('should not show last name if it is null string', async () => {
             component.identityUser = identityUserWithOutLastNameMock;
             await whenFixtureReady();
 
-            const fullNameElement = element.querySelector('#adf-userinfo-identity-name-display');
+            const fullNameElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-userinfo-identity-name-display');
             fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#userinfo_container')).toBeDefined();
             expect(fullNameElement).toBeDefined();
-            expect(fullNameElement?.textContent).toContain('fake-identity-first-name');
-            expect(fullNameElement?.textContent).not.toContain('null');
+            expect(fullNameElement?.nativeElement?.textContent).toContain('fake-identity-first-name');
+            expect(fullNameElement?.nativeElement?.textContent).not.toContain('null');
         });
     });
 });

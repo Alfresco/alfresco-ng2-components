@@ -18,13 +18,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
+import { UnitTestingUtils } from '../testing';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
 
-    const getLogoImgElement = () => fixture.nativeElement.querySelector('.adf-toolbar-logo');
-    const getTitleElement = () => fixture.nativeElement.querySelector('.adf-toolbar-title');
+    const getLogoImgElement = () => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-toolbar-logo')?.nativeElement;
+    const getTitleElement = () => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-toolbar-title')?.nativeElement;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
