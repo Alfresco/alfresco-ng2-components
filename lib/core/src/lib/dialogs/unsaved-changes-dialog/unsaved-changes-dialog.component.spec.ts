@@ -17,10 +17,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigValues, CoreTestingModule, UnsavedChangesDialogComponent, UserPreferencesService } from '@alfresco/adf-core';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('UnsavedChangesDialog', () => {
     let fixture: ComponentFixture<UnsavedChangesDialogComponent>;
@@ -41,13 +41,16 @@ describe('UnsavedChangesDialog', () => {
         userPreferencesService = TestBed.inject(UserPreferencesService);
         fixture = TestBed.createComponent(UnsavedChangesDialogComponent);
         fixture.detectChanges();
-        savePreferenceCheckbox = fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-content-checkbox"]'));
+        savePreferenceCheckbox = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-unsaved-changes-dialog-content-checkbox');
     };
 
     const getElements = (): { header: HTMLElement; content: HTMLElement; discardChangesButton: HTMLElement } => {
-        const header = fixture.nativeElement.querySelector('.adf-unsaved-changes-dialog-header');
-        const content = fixture.nativeElement.querySelector('.adf-unsaved-changes-dialog-content');
-        const discardChangesButton = fixture.nativeElement.querySelector('.adf-unsaved-changes-dialog-actions-discard-changes-button');
+        const header = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-unsaved-changes-dialog-header').nativeElement;
+        const content = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-unsaved-changes-dialog-content').nativeElement;
+        const discardChangesButton = UnitTestingUtils.getByCSS(
+            fixture.debugElement,
+            '.adf-unsaved-changes-dialog-actions-discard-changes-button'
+        ).nativeElement;
         return { header, content, discardChangesButton };
     };
 
@@ -65,15 +68,15 @@ describe('UnsavedChangesDialog', () => {
 
         it('should have assigned dialog close button with true as result', () => {
             expect(
-                fixture.debugElement
-                    .query(By.css('[data-automation-id="adf-unsaved-changes-dialog-discard-changes-button"]'))
-                    .injector.get(MatDialogClose).dialogResult
+                UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-unsaved-changes-dialog-discard-changes-button').injector.get(
+                    MatDialogClose
+                ).dialogResult
             ).toBeTrue();
         });
 
         it('should have assigned dialog close button with false as result', () => {
             expect(
-                fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-cancel-button"]')).injector.get(MatDialogClose)
+                UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-unsaved-changes-dialog-cancel-button').injector.get(MatDialogClose)
                     .dialogResult
             ).toBeFalse();
         });

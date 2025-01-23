@@ -17,12 +17,11 @@
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DIALOG_COMPONENT_DATA, DialogComponent } from './dialog.component';
 import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
-import { CoreTestingModule } from '../../testing';
-import { Component, DebugElement, inject } from '@angular/core';
+import { CoreTestingModule, UnitTestingUtils } from '../../testing';
+import { Component, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -67,10 +66,10 @@ describe('DialogComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
 
-        confirmButton = fixture.nativeElement.querySelector('[data-automation-id="adf-dialog-actions-confirm"]');
-        closeButton = fixture.nativeElement.querySelector('[data-automation-id="adf-dialog-close-button"]');
-        cancelButton = fixture.nativeElement.querySelector('[data-automation-id="adf-dialog-actions-cancel"]');
-        dialogContainer = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-dialog-container"]');
+        confirmButton = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-dialog-actions-confirm').nativeElement;
+        closeButton = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-dialog-close-button')?.nativeElement;
+        cancelButton = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-dialog-actions-cancel')?.nativeElement;
+        dialogContainer = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-dialog-container').nativeElement;
     };
 
     describe('when init with default data', () => {
@@ -80,9 +79,9 @@ describe('DialogComponent', () => {
 
         it('should have default template elements', () => {
             expect(dialogContainer).toBeDefined();
-            expect(fixture.nativeElement.querySelector('.adf-dialog-header')).toBeDefined();
-            expect(fixture.nativeElement.querySelector('.adf-dialog-content')).toBeDefined();
-            expect(fixture.nativeElement.querySelector('.adf-dialog-actions')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-dialog-header')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-dialog-content')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-dialog-actions')).toBeDefined();
         });
 
         it('should have default values for the dialog', () => {
@@ -173,11 +172,11 @@ describe('DialogComponent', () => {
         });
 
         it('should hide close button', () => {
-            expect(closeButton).toBeNull();
+            expect(closeButton).toBeUndefined();
         });
 
         it('should hide close button', () => {
-            expect(cancelButton).toBeNull();
+            expect(cancelButton).toBeUndefined();
         });
     });
 
@@ -195,11 +194,8 @@ describe('DialogComponent', () => {
         });
 
         it('should not have header and actions border', () => {
-            const headerBorder = fixture.nativeElement.querySelector('.adf-alert .adf-dialog-header::after');
-            const actionsBorder = fixture.nativeElement.querySelector('.adf-alert .adf-dialog-actions::after');
-
-            expect(headerBorder).toBeDefined();
-            expect(actionsBorder).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-alert .adf-dialog-header::after')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-alert .adf-dialog-actions::after')).toBeDefined();
         });
     });
 
@@ -217,11 +213,8 @@ describe('DialogComponent', () => {
         });
 
         it('should not have header and actions border', () => {
-            const headerBorder = fixture.nativeElement.querySelector('.adf-alert .adf-dialog-header::after');
-            const actionsBorder = fixture.nativeElement.querySelector('.adf-alert .adf-dialog-actions::after');
-
-            expect(headerBorder).toBeDefined();
-            expect(actionsBorder).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-alert .adf-dialog-header::after')).toBeDefined();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-alert .adf-dialog-actions::after')).toBeDefined();
         });
     });
 
@@ -240,17 +233,12 @@ describe('DialogComponent', () => {
             });
 
             it('should not have header and actions border', () => {
-                const headerBorder = fixture.nativeElement.querySelector('.adf-alert .adf-dialog-header::after');
-                const actionsBorder = fixture.nativeElement.querySelector('.adf-alert .adf-dialog-actions::after');
-
-                expect(headerBorder).toBeNull();
-                expect(actionsBorder).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-alert .adf-dialog-header::after')).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-alert .adf-dialog-actions::after')).toBeNull();
             });
 
             it('should not center header content', () => {
-                const header = fixture.nativeElement.querySelector('.adf-centered-header');
-
-                expect(header).toBeNull();
+                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-centered-header')).toBeNull();
             });
         });
 
@@ -264,15 +252,11 @@ describe('DialogComponent', () => {
             });
 
             it('should have icon element', () => {
-                const headerIcon = fixture.nativeElement.querySelector('.adf-dialog-header-icon');
-
-                expect(headerIcon).toBeDefined();
+                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-dialog-header-icon')).toBeDefined();
             });
 
             it('should center header content', () => {
-                const header = fixture.nativeElement.querySelector('.adf-centered-header');
-
-                expect(header).toBeDefined();
+                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-centered-header')).toBeDefined();
             });
         });
     });
@@ -289,7 +273,7 @@ describe('DialogComponent', () => {
         });
 
         it('should generate component with injectoted data', () => {
-            const debugElement: DebugElement = fixture.debugElement.query(By.directive(DummyComponent));
+            const debugElement = UnitTestingUtils.getByDirective(fixture.debugElement, DummyComponent);
             const dummyComponentInstance = debugElement.componentInstance;
 
             expect(dummyComponentInstance).toBeTruthy();

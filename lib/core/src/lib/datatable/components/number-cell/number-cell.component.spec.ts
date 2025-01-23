@@ -22,6 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('NumberCellComponent', () => {
     let component: NumberCellComponent;
@@ -32,10 +33,10 @@ describe('NumberCellComponent', () => {
         component.decimalConfig = decimalConfig;
 
         fixture.detectChanges();
-        const displayedNumber = fixture.nativeElement.querySelector('span');
+        const displayedNumber = UnitTestingUtils.getByCSS(fixture.debugElement, 'span');
 
         expect(displayedNumber).toBeTruthy();
-        expect(displayedNumber.textContent.trim()).toBe(expectedResult);
+        expect(displayedNumber.nativeElement.textContent.trim()).toBe(expectedResult);
     };
 
     beforeEach(() => {
@@ -78,9 +79,9 @@ describe('NumberCellComponent locale', () => {
         component.decimalConfig = { locale: 'pl-PL' };
 
         fixture.detectChanges();
-        const displayedNumber = fixture.nativeElement.querySelector('span');
+        const displayedNumber = UnitTestingUtils.getByCSS(fixture.debugElement, 'span');
 
         expect(displayedNumber).toBeTruthy();
-        expect(displayedNumber.textContent.trim()).toBe('123,45');
+        expect(displayedNumber.nativeElement.textContent.trim()).toBe('123,45');
     });
 });

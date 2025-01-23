@@ -18,19 +18,18 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputHarness } from '@angular/material/input/testing';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;
     let widget: MultilineTextWidgetComponentComponent;
     let fixture: ComponentFixture<MultilineTextWidgetComponentComponent>;
-    let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,7 +37,6 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
-        element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
@@ -52,10 +50,10 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
+            const host = await UnitTestingUtils.getMatInputHost(loader);
+            await host.hover();
 
-            const tooltip = await (await input.host()).getAttribute('title');
+            const tooltip = await host.getAttribute('title');
             expect(tooltip).toBe('my custom tooltip');
         });
     });
@@ -70,15 +68,14 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
 
-            await (await input.host()).blur();
-            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+            await UnitTestingUtils.blurMatInput(loader);
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            const asterisk = element.querySelector('.adf-asterisk');
+            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');

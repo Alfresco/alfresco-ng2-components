@@ -19,6 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BooleanCellComponent } from './boolean-cell.component';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;
@@ -37,7 +38,7 @@ describe('BooleanCellComponent', () => {
         });
         fixture = TestBed.createComponent(BooleanCellComponent);
         component = fixture.componentInstance;
-        valueEl = fixture.nativeElement.querySelector('span');
+        valueEl = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement;
     });
 
     describe('Initialization', () => {

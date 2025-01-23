@@ -22,6 +22,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { DataTableService } from '../../services/datatable.service';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('DataTableCellComponent', () => {
     let component: DataTableCellComponent;
@@ -36,14 +37,14 @@ describe('DataTableCellComponent', () => {
     };
 
     const checkDisplayedText = (expectedText: string) => {
-        const displayedText = fixture.nativeElement.querySelector('span').textContent.trim();
+        const displayedText = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement.textContent.trim();
 
         expect(displayedText).toBeTruthy();
         expect(displayedText).toBe(expectedText);
     };
 
     const checkDisplayedTooltip = (expectedTooltip: string) => {
-        const displayedTooltip = fixture.nativeElement.querySelector('span').title;
+        const displayedTooltip = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement.title;
 
         expect(displayedTooltip).toBeTruthy();
         expect(displayedTooltip).toBe(expectedTooltip);

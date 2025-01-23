@@ -17,9 +17,9 @@
 
 import { Component, ViewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { HighlightTransformService } from '../common/services/highlight-transform.service';
 import { HighlightDirective } from './highlight.directive';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 /* spellchecker: disable */
 @Component({
@@ -57,7 +57,7 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.last.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement = fixture.debugElement.query(By.css('#innerDiv21'));
+        const containerElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv21');
         expect(containerElement).not.toBeNull();
         expect(containerElement.nativeElement.innerHTML).toBe('Lorem ipsum <span class="adf-highlight">salana-eyong-aysis</span> dolor sit amet');
     });
@@ -66,8 +66,8 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement1 = fixture.debugElement.query(By.css('#innerDiv11'));
-        const containerElement2 = fixture.debugElement.query(By.css('#innerDiv14'));
+        const containerElement1 = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv11');
+        const containerElement2 = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv14');
         expect(containerElement1).not.toBeNull();
         expect(containerElement2).not.toBeNull();
         expect(containerElement1.nativeElement.innerHTML).toBe(
@@ -82,7 +82,7 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement1 = fixture.debugElement.query(By.css('#innerDiv12'));
+        const containerElement1 = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv12');
         expect(containerElement1).not.toBeNull();
         expect(containerElement1.nativeElement.innerHTML).toBe('Lorem ipsum salana-eyong-aysis dolor sit amet');
     });
@@ -93,7 +93,7 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement = fixture.debugElement.query(By.css('#innerDiv11'));
+        const containerElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv11');
         expect(containerElement).not.toBeNull();
         expect(containerElement.nativeElement.innerHTML).not.toContain('Modified text');
     });

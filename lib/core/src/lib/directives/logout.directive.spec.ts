@@ -22,7 +22,8 @@ import { of, throwError } from 'rxjs';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogoutDirective } from './logout.directive';
-import { NoopAuthModule } from '@alfresco/adf-core';
+import { NoopAuthModule } from '../testing/noop-auth.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('LogoutDirective', () => {
     describe('No input', () => {
@@ -58,8 +59,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            const button = fixture.nativeElement.querySelector('button');
-            button.click();
+            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/login']);
@@ -71,8 +71,7 @@ describe('LogoutDirective', () => {
             appConfig.config['loginRoute'] = 'fake-base-logout';
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            const button = fixture.nativeElement.querySelector('button');
-            button.click();
+            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['fake-base-logout']);
@@ -83,8 +82,7 @@ describe('LogoutDirective', () => {
             spyOn(authService, 'isOauth').and.returnValue(true);
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            const button = fixture.nativeElement.querySelector('button');
-            button.click();
+            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).not.toHaveBeenCalled();
@@ -94,8 +92,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(throwError('err'));
 
-            const button = fixture.nativeElement.querySelector('button');
-            button.click();
+            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/login']);
@@ -132,8 +129,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            const button = fixture.nativeElement.querySelector('button');
-            button.click();
+            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/myCustomUri']);
@@ -169,8 +165,8 @@ describe('LogoutDirective', () => {
         it('should not redirect if enableRedirect is false', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
-            const button = fixture.nativeElement.querySelector('button');
-            button.click();
+
+            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).not.toHaveBeenCalled();

@@ -23,7 +23,8 @@ import { AppConfigService } from '../../../app-config';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 let component: DateCellComponent;
 let appConfigService: AppConfigService;
@@ -46,14 +47,14 @@ const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, t
 };
 
 const checkDisplayedDate = (expectedDate: string) => {
-    const displayedDate = fixture.nativeElement.querySelector('span').textContent.trim();
+    const displayedDate = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement.textContent.trim();
 
     expect(displayedDate).toBeTruthy();
     expect(displayedDate).toBe(expectedDate);
 };
 
 const checkDisplayedTooltip = (expectedTooltip: string) => {
-    const displayedTooltip = fixture.nativeElement.querySelector('span').title;
+    const displayedTooltip = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement.title;
 
     expect(displayedTooltip).toBeTruthy();
     expect(displayedTooltip).toBe(expectedTooltip);

@@ -21,7 +21,7 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { JsonCellComponent } from './json-cell.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('JsonCellComponent', () => {
     let loader: HarnessLoader;
@@ -73,8 +73,7 @@ describe('JsonCellComponent', () => {
     it('should render json button inside cell', async () => {
         fixture.detectChanges();
 
-        const buttonExists = await loader.hasHarness(MatButtonHarness);
-        expect(buttonExists).toBe(true);
+        expect(await UnitTestingUtils.checkIfMatButtonExists(loader)).toBe(true);
     });
 
     it('should not setup cell when has no data', () => {

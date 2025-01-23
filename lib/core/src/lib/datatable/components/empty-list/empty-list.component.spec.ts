@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmptyListComponent } from './empty-list.component';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('EmptyListComponentComponent', () => {
     let fixture: ComponentFixture<EmptyListComponent>;
@@ -36,6 +37,6 @@ describe('EmptyListComponentComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('.adf-empty-list_template')).toBeDefined();
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-list_template')).toBeDefined();
     });
 });

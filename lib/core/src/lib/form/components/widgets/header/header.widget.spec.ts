@@ -20,7 +20,7 @@ import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { HeaderWidgetComponent } from './header.widget';
-import { NoopTranslateModule } from '../../../../testing';
+import { NoopTranslateModule, UnitTestingUtils } from '../../../../testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HeaderWidgetComponent', () => {
@@ -61,8 +61,10 @@ describe('HeaderWidgetComponent', () => {
     it('should render header widget template when type is group', () => {
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.adf-container-widget-header')).not.toBe(null);
-        expect(fixture.nativeElement.querySelector('#container-header-label-test-id').textContent.trim()).toEqual('test-name');
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header')).not.toBe(null);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#container-header-label-test-id').nativeElement.textContent.trim()).toEqual(
+            'test-name'
+        );
     });
 
     it('should NOT render header widget template when type is different then group', () => {
@@ -70,13 +72,13 @@ describe('HeaderWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.adf-container-widget-header')).toBe(null);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header')).toBe(null);
     });
 
     it('should display header text when hideHeader is set to false', () => {
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.adf-container-widget-header__text')).not.toBe(null);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header__text')).not.toBe(null);
     });
 
     it('should NOT display header text when hideHeader is set to true', () => {
@@ -84,7 +86,7 @@ describe('HeaderWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.adf-container-widget-header__text')).toBe(null);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header__text')).toBe(null);
     });
 
     it('should display expander when allowCollapse is set to true', () => {
@@ -92,13 +94,13 @@ describe('HeaderWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.mdl-button--icon')).not.toBe(null);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.mdl-button--icon')).not.toBe(null);
     });
 
     it('should NOT display expander when allowCollapse is set to false', () => {
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.mdl-button--icon')).toBe(null);
+        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.mdl-button--icon')).toBe(null);
     });
 
     it('should call onExpanderClicked method when expander is clicked', () => {
@@ -107,8 +109,7 @@ describe('HeaderWidgetComponent', () => {
 
         spyOn(component, 'onExpanderClicked');
 
-        const expander = fixture.nativeElement.querySelector('.mdl-button--icon');
-        expander.click();
+        UnitTestingUtils.clickByCSS(fixture.debugElement, '.mdl-button--icon');
 
         expect(component.onExpanderClicked).toHaveBeenCalledWith(component.element);
     });
@@ -118,8 +119,7 @@ describe('HeaderWidgetComponent', () => {
 
         spyOn(component, 'onExpanderClicked');
 
-        const headerText = fixture.nativeElement.querySelector('#container-header-label-test-id');
-        headerText.click();
+        UnitTestingUtils.clickByCSS(fixture.debugElement, '#container-header-label-test-id');
 
         expect(component.onExpanderClicked).toHaveBeenCalledWith(component.element);
     });

@@ -18,9 +18,9 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
-import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
@@ -67,25 +67,25 @@ describe('Confirm Dialog Component', () => {
         });
 
         it('should render the title', () => {
-            const titleElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-title"]'));
+            const titleElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-title');
             expect(titleElement).not.toBeNull();
             expect(titleElement.nativeElement.innerText).toBe('Fake Title');
         });
 
         it('should render the message', () => {
-            const messageElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-base-message"]'));
+            const messageElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-base-message');
             expect(messageElement).not.toBeNull();
             expect(messageElement.nativeElement.innerText).toBe('Base Message');
         });
 
         it('should render the YES label', () => {
-            const messageElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-confirmation"]'));
+            const messageElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-confirmation');
             expect(messageElement).not.toBeNull();
             expect(messageElement.nativeElement.innerText).toBe('TAKE THIS');
         });
 
         it('should render the NO label', () => {
-            const messageElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-reject"]'));
+            const messageElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-reject');
             expect(messageElement).not.toBeNull();
             expect(messageElement.nativeElement.innerText).toBe('MAYBE NO');
         });
@@ -98,25 +98,25 @@ describe('Confirm Dialog Component', () => {
         });
 
         it('should render the title', () => {
-            const titleElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-title"]'));
+            const titleElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-title');
             expect(titleElement).not.toBeNull();
             expect(titleElement.nativeElement.innerText).toBe('Fake Title');
         });
 
         it('should render the custom html', () => {
-            const customElement = fixture.nativeElement.querySelector('[data-automation-id="adf-confirm-dialog-custom-content"] div');
+            const customElement = UnitTestingUtils.getByCSS(fixture.debugElement, '[data-automation-id="adf-confirm-dialog-custom-content"] div');
             expect(customElement).not.toBeNull();
-            expect(customElement.innerText).toBe('I am about to do to you what Limp Bizkit did to music in the late ’90s.');
+            expect(customElement.nativeElement.innerText).toBe('I am about to do to you what Limp Bizkit did to music in the late ’90s.');
         });
 
         it('should render the YES label', () => {
-            const messageElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-confirmation"]'));
+            const messageElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-confirmation');
             expect(messageElement).not.toBeNull();
             expect(messageElement.nativeElement.innerText).toBe('TAKE THIS');
         });
 
         it('should render the NO label', () => {
-            const messageElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-reject"]'));
+            const messageElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-reject');
             expect(messageElement).not.toBeNull();
             expect(messageElement.nativeElement.innerText).toBe('MAYBE NO');
         });
@@ -126,14 +126,14 @@ describe('Confirm Dialog Component', () => {
         it('should NOT render the thirdOption if is thirdOptionLabel is not passed', () => {
             component.thirdOptionLabel = undefined;
             fixture.detectChanges();
-            const thirdOptionElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]'));
+            const thirdOptionElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-confirm-all');
             expect(thirdOptionElement).toBeFalsy();
         });
 
         it('should render the thirdOption if thirdOptionLabel is passed', () => {
             component.thirdOptionLabel = 'Yes All';
             fixture.detectChanges();
-            const thirdOptionElement = fixture.debugElement.query(By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]'));
+            const thirdOptionElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-confirm-dialog-confirm-all');
             expect(thirdOptionElement).not.toBeNull();
             expect(thirdOptionElement.nativeElement.innerText.toUpperCase()).toBe('YES ALL');
         });

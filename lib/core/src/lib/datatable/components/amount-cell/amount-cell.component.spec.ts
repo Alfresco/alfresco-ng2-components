@@ -22,6 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('AmountCellComponent', () => {
     let component: AmountCellComponent;
@@ -32,10 +33,10 @@ describe('AmountCellComponent', () => {
         component.currencyConfig = currencyConfig;
 
         fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
+        const displayedAmount = UnitTestingUtils.getByCSS(fixture.debugElement, 'span');
 
         expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toBe(expectedResult);
+        expect(displayedAmount.nativeElement.textContent.trim()).toBe(expectedResult);
     };
 
     beforeEach(() => {
@@ -88,9 +89,9 @@ describe('AmountCellComponent locale', () => {
         component.currencyConfig = { code: 'PLN', display: 'symbol', locale: 'pl-PL' };
 
         fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
+        const displayedAmount = UnitTestingUtils.getByCSS(fixture.debugElement, 'span');
 
         expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toMatch(/123,45\s?zł/);
+        expect(displayedAmount.nativeElement.textContent.trim()).toMatch(/123,45\s?zł/);
     });
 });

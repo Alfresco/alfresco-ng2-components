@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HarnessLoader, TestKey } from '@angular/cdk/testing';
+import { HarnessLoader, TestElement, TestKey } from '@angular/cdk/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MatSelectHarness } from '@angular/material/select/testing';
@@ -78,13 +78,28 @@ export class UnitTestingUtils {
         element.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
     }
 
+    static blurByCSS(debugElement: DebugElement, selector: string): void {
+        const element = UnitTestingUtils.getByCSS(debugElement, selector);
+        element.triggerEventHandler('blur', new FocusEvent('blur'));
+    }
+
     static hoverOverByCSS(debugElement: DebugElement, selector: string): void {
         const element = UnitTestingUtils.getByCSS(debugElement, selector);
         element.triggerEventHandler('mouseenter', new MouseEvent('mouseenter'));
     }
 
+    static hoverOverByDataAutomationId(debugElement: DebugElement, dataAutomationId: string): void {
+        const element = UnitTestingUtils.getByDataAutomationId(debugElement, dataAutomationId);
+        element.triggerEventHandler('mouseenter', new MouseEvent('mouseenter'));
+    }
+
     static mouseLeaveByCSS(debugElement: DebugElement, selector: string): void {
         const element = UnitTestingUtils.getByCSS(debugElement, selector);
+        element.triggerEventHandler('mouseleave', new MouseEvent('mouseleave'));
+    }
+
+    static mouseLeaveByDataAutomationId(debugElement: DebugElement, dataAutomationId: string): void {
+        const element = UnitTestingUtils.getByDataAutomationId(debugElement, dataAutomationId);
         element.triggerEventHandler('mouseleave', new MouseEvent('mouseleave'));
     }
 
@@ -134,6 +149,10 @@ export class UnitTestingUtils {
         return loader.getHarness(MatButtonHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
     }
 
+    static async checkIfMatButtonExists(loader: HarnessLoader): Promise<boolean> {
+        return loader.hasHarness(MatButtonHarness);
+    }
+
     static async checkIfMatButtonExistsWithDataAutomationId(loader: HarnessLoader, dataAutomationId: string): Promise<boolean> {
         return loader.hasHarness(MatButtonHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
     }
@@ -161,11 +180,43 @@ export class UnitTestingUtils {
 
     /** MatCheckbox related methods */
 
+    static async getMatCheckbox(loader: HarnessLoader): Promise<MatCheckboxHarness> {
+        return loader.getHarness(MatCheckboxHarness);
+    }
+
     static async getMatCheckboxByDataAutomationId(loader: HarnessLoader, dataAutomationId: string): Promise<MatCheckboxHarness> {
         return loader.getHarness(MatCheckboxHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
     }
 
+    static async getMatCheckboxHost(loader: HarnessLoader): Promise<TestElement> {
+        const checkbox = await this.getMatCheckbox(loader);
+        return checkbox.host();
+    }
+
+    static async getAllMatCheckboxes(loader: HarnessLoader): Promise<MatCheckboxHarness[]> {
+        return loader.getAllHarnesses(MatCheckboxHarness);
+    }
+
+    static async checkIfMatCheckboxIsChecked(loader: HarnessLoader): Promise<boolean> {
+        const checkbox = await this.getMatCheckbox(loader);
+        return checkbox.isChecked();
+    }
+
+    static async checkIfMatCheckboxesHaveClass(loader: HarnessLoader, className: string): Promise<boolean> {
+        const checkboxes = await this.getAllMatCheckboxes(loader);
+        return checkboxes.every(async (checkbox) => (await checkbox.host()).hasClass(className));
+    }
+
+    static async hoverOverMatCheckbox(loader: HarnessLoader): Promise<void> {
+        const host = await this.getMatCheckboxHost(loader);
+        await host.hover();
+    }
+
     /** MatIcon related methods */
+
+    static async getMatIconOrNull(loader: HarnessLoader): Promise<MatIconHarness> {
+        return loader.getHarnessOrNull(MatIconHarness);
+    }
 
     static async getMatIconWithAncestorByDataAutomationId(loader: HarnessLoader, dataAutomationId: string): Promise<MatIconHarness> {
         return loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
@@ -201,6 +252,11 @@ export class UnitTestingUtils {
             await select.open();
         }
         return select.getOptions();
+    }
+
+    static async getMatSelectHost(loader: HarnessLoader): Promise<TestElement> {
+        const select = await loader.getHarness(MatSelectHarness);
+        return select.host();
     }
 
     static async checkIfMatSelectExists(loader: HarnessLoader): Promise<boolean> {
@@ -252,6 +308,10 @@ export class UnitTestingUtils {
 
     /** MatFromField related methods */
 
+    static async getMatFormField(loader: HarnessLoader): Promise<MatFormFieldHarness> {
+        return loader.getHarness(MatFormFieldHarness);
+    }
+
     static async getMatFormFieldByCSS(loader: HarnessLoader, selector: string): Promise<MatFormFieldHarness> {
         return loader.getHarness(MatFormFieldHarness.with({ selector }));
     }
@@ -270,12 +330,35 @@ export class UnitTestingUtils {
         return loader.getHarness(MatInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
     }
 
+    static async getMatInputByPlaceholder(loader: HarnessLoader, placeholder: string): Promise<MatInputHarness> {
+        return loader.getHarness(MatInputHarness.with({ placeholder }));
+    }
+
+    static async getMatInputHost(loader: HarnessLoader): Promise<TestElement> {
+        const input = await this.getMatInput(loader);
+        return input.host();
+    }
+
+    static async checkIfMatInputExists(loader: HarnessLoader): Promise<boolean> {
+        return loader.hasHarness(MatInputHarness);
+    }
+
     static async checkIfMatInputExistsWithCSS(loader: HarnessLoader, selector: string): Promise<boolean> {
         return loader.hasHarness(MatInputHarness.with({ selector }));
     }
 
     static async checkIfMatInputExistsWithDataAutomationId(loader: HarnessLoader, dataAutomationId: string): Promise<boolean> {
         return loader.hasHarness(MatInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
+    static async checkIfMatInputExistsWithPlaceholder(loader: HarnessLoader, placeholder: string): Promise<boolean> {
+        return loader.hasHarness(MatInputHarness.with({ placeholder }));
+    }
+
+    static async clickMatInput(loader: HarnessLoader): Promise<void> {
+        const input = await this.getMatInput(loader);
+        const host = await input.host();
+        await host.click();
     }
 
     static async fillMatInput(loader: HarnessLoader, value: string): Promise<void> {
@@ -294,9 +377,30 @@ export class UnitTestingUtils {
         await (await input.host()).dispatchEvent('input');
     }
 
+    static async focusMatInput(loader: HarnessLoader): Promise<void> {
+        const input = await this.getMatInput(loader);
+        await input.focus();
+    }
+
+    static async blurMatInput(loader: HarnessLoader): Promise<void> {
+        const input = await this.getMatInput(loader);
+        await input.blur();
+    }
+
+    static async getMatInputValue(loader: HarnessLoader): Promise<string> {
+        const input = await this.getMatInput(loader);
+        return input.getValue();
+    }
+
     static async getMatInputValueByDataAutomationId(loader: HarnessLoader, dataAutomationId: string): Promise<string> {
         const input = await this.getMatInputByDataAutomationId(loader, dataAutomationId);
         return input.getValue();
+    }
+
+    static async sendKeysToMatInput(loader: HarnessLoader, keys: string[] | TestKey[]): Promise<void> {
+        const input = await this.getMatInput(loader);
+        const host = await input.host();
+        await host.sendKeys(...keys);
     }
 
     /** MatAutoComplete related methods */

@@ -22,7 +22,7 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     template: ` <mat-select adf-infinite-select-scroll (scrollEnd)="load()">
@@ -69,9 +69,7 @@ describe('InfiniteSelectScrollDirective', () => {
     }));
 
     it('should call an action on scrollEnd event', async () => {
-        const select = await loader.getHarness(MatSelectHarness);
-        const panel = await select.host();
-
+        const panel = await UnitTestingUtils.getMatSelectHost(loader);
         await panel.dispatchEvent('scrollEnd');
 
         expect(component.options.length).toBe(60);

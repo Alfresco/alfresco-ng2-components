@@ -20,8 +20,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { CoreTestingModule } from '../../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
 
@@ -29,7 +28,6 @@ describe('NumberWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: NumberWidgetComponent;
     let fixture: ComponentFixture<NumberWidgetComponent>;
-    let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,7 +35,6 @@ describe('NumberWidgetComponent', () => {
         });
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;
-        element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
@@ -51,10 +48,10 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
+            const host = await UnitTestingUtils.getMatInputHost(loader);
+            await host.hover();
 
-            const tooltip = await (await input.host()).getAttribute('title');
+            const tooltip = await host.getAttribute('title');
             expect(tooltip).toBe('my custom tooltip');
         });
     });
@@ -69,16 +66,15 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
 
-            await (await input.host()).blur();
+            await UnitTestingUtils.blurMatInput(loader);
 
-            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            const asterisk = element.querySelector('.adf-asterisk');
+            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -99,10 +95,10 @@ describe('NumberWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
             expect(widgetContainer).not.toBeNull();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
+            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
             expect(adfLeftLabel).not.toBeNull();
         });
 
@@ -119,10 +115,10 @@ describe('NumberWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
+            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
 
@@ -139,10 +135,10 @@ describe('NumberWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
+            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
     });
