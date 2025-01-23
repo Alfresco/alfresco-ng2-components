@@ -36,7 +36,8 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
             <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="2" />
             <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden" />
         </data-columns>
-    </adf-cloud-service-task-list>`
+    </adf-cloud-service-task-list>`,
+    standalone: false
 })
 class CustomTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent)
@@ -49,7 +50,8 @@ class CustomTaskListComponent {
                 <p id="custom-id"></p>
             </adf-custom-empty-content-template>
         </adf-cloud-service-task-list>
-    `
+    `,
+    standalone: false
 })
 class EmptyTemplateComponent {}
 @Component({
@@ -58,7 +60,8 @@ class EmptyTemplateComponent {}
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID" />
             <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" />
         </data-columns>
-    </adf-cloud-service-task-list>`
+    </adf-cloud-service-task-list>`,
+    standalone: false
 })
 class CustomCopyContentTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent, { static: true })

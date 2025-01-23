@@ -31,7 +31,6 @@ import { DiagramServiceTaskComponent } from './diagram-service-task.component';
 
 @Component({
     selector: 'diagram-container-service-task',
-    standalone: true,
     imports: [
         CommonModule,
         DiagramSendTaskComponent,

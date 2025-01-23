@@ -27,7 +27,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-text-editor',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatInputModule],
     templateUrl: './text.editor.html',
     styleUrls: ['./text.editor.scss']

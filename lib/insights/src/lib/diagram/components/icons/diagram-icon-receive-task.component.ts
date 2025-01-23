@@ -23,7 +23,6 @@ import { RaphaelIconReceiveDirective } from '../raphael/icons/raphael-icon-recei
 
 @Component({
     selector: 'diagram-icon-receive-task',
-    standalone: true,
     imports: [RaphaelIconReceiveDirective],
     templateUrl: './diagram-icon-receive-task.component.html'
 })

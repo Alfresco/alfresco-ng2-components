@@ -24,7 +24,6 @@ import { ClaimTaskDirective } from '@alfresco/adf-process-services';
 
 describe('ClaimTaskDirective', () => {
     @Component({
-        standalone: true,
         imports: [ClaimTaskDirective],
         selector: 'adf-claim-test-component',
         template: '<button adf-claim-task [taskId]="taskId" (success)="onClaim($event)">Claim</button>'
@@ -76,7 +75,6 @@ describe('ClaimTaskDirective', () => {
 
 describe('Claim Task Directive validation errors', () => {
     @Component({
-        standalone: true,
         imports: [ClaimTaskDirective],
         selector: 'adf-claim-no-fields-validation-component',
         template: '<button adf-claim-task></button>'
@@ -84,7 +82,6 @@ describe('Claim Task Directive validation errors', () => {
     class ClaimTestMissingInputDirectiveComponent {}
 
     @Component({
-        standalone: true,
         imports: [ClaimTaskDirective],
         selector: 'adf-claim-no-taskid-validation-component',
         template: '<button adf-claim-task [taskId]=""></button>'

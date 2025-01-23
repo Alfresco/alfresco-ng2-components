@@ -22,7 +22,6 @@ import { DiagramIconAlfrescoPublishTaskComponent } from '../icons/diagram-icon-a
 
 @Component({
     selector: 'adf-diagram-publish-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconAlfrescoPublishTaskComponent],
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })

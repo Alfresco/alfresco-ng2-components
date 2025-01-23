@@ -44,7 +44,6 @@ import { ApolloModule } from 'apollo-angular';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

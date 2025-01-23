@@ -30,7 +30,6 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
 
 @Component({
     selector: 'adf-search-facet-chip-tabbed',
-    standalone: true,
     imports: [
         CommonModule,
         MatChipsModule,

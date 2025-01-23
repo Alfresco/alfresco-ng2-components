@@ -23,7 +23,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 @Component({
     selector: 'adf-layout-container',
-    standalone: true,
     imports: [CommonModule, MatSidenavModule],
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],

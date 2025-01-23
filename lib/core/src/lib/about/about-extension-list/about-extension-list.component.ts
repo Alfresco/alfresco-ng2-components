@@ -26,7 +26,6 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './about-extension-list.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [CommonModule, MatTableModule, TranslateModule]
 })
 export class AboutExtensionListComponent {

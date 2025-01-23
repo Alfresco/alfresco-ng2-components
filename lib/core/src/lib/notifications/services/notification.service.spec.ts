@@ -29,7 +29,8 @@ import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 @Component({
     template: '',
-    providers: [NotificationService]
+    providers: [NotificationService],
+    standalone: false
 })
 class ProvidesNotificationServiceComponent {
     constructor(public notificationService: NotificationService) {}

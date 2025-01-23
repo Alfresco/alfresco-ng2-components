@@ -29,7 +29,6 @@ import { CommentListComponent } from './comment-list';
 
 @Component({
     selector: 'adf-comments',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, CommentListComponent],
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.scss'],

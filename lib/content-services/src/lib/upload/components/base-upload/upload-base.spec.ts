@@ -27,7 +27,8 @@ import { FileUploadErrorEvent } from '../../../common/events/file.event';
 
 @Component({
     selector: 'adf-upload-button-test',
-    template: 'test component'
+    template: 'test component',
+    standalone: false
 })
 export class UploadTestComponent extends UploadBase {}
 

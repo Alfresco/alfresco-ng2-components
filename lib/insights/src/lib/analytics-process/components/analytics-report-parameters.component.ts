@@ -108,7 +108,6 @@ export interface ReportFormValues {
 
 @Component({
     selector: 'adf-analytics-report-parameters',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

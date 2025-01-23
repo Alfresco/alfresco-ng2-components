@@ -31,7 +31,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-facet-tabbed-content',
-    standalone: true,
     imports: [CommonModule, SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
     templateUrl: './search-facet-tabbed-content.component.html',
     encapsulation: ViewEncapsulation.None

@@ -23,7 +23,6 @@ import { RaphaelIconMessageDirective } from '../raphael/icons/raphael-icon-messa
 
 @Component({
     selector: 'diagram-icon-message',
-    standalone: true,
     imports: [RaphaelIconMessageDirective],
     templateUrl: './diagram-icon-message.component.html'
 })

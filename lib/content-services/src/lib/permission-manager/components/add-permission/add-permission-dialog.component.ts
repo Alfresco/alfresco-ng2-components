@@ -32,7 +32,6 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
 
 @Component({
     selector: 'adf-add-permission-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

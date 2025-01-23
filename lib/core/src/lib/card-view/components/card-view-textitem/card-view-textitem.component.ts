@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -53,7 +44,6 @@ const templateTypes = {
 
 @Component({
     selector: 'adf-card-view-textitem',
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,
@@ -91,7 +81,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     errors: CardViewItemValidator[];
     templateType: string;
     textInput = new UntypedFormControl();
-    
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {

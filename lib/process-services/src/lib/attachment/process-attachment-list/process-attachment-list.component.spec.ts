@@ -240,7 +240,6 @@ describe('ProcessAttachmentListComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [EmptyListHeaderDirective, EmptyListComponent, ProcessAttachmentListComponent],
     template: `
         <adf-process-attachment-list>

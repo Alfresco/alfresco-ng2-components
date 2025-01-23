@@ -41,7 +41,6 @@ interface SharedDialogFormProps {
 
 @Component({
     selector: 'adf-share-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

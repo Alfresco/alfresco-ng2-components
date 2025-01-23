@@ -21,7 +21,6 @@ import { ViewerToolbarComponent } from '../viewer-toolbar.component';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
-    standalone: true,
     imports: [ViewerComponent, ViewerToolbarComponent],
     template: `
         <adf-viewer>

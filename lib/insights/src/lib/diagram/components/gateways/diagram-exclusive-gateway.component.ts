@@ -25,7 +25,6 @@ import { RaphaelCrossDirective } from '../raphael/raphael-cross.component';
 
 @Component({
     selector: 'diagram-exclusive-gateway',
-    standalone: true,
     imports: [DiagramGatewayComponent, RaphaelCrossDirective],
     templateUrl: './diagram-exclusive-gateway.component.html'
 })

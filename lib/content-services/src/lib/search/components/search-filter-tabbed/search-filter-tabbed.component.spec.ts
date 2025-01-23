@@ -31,7 +31,6 @@ import { NoopTranslateModule } from '@alfresco/adf-core';
             <div *adf-search-filter-tab="'Tab 3'">Tab 3 content</div>
         </adf-search-filter-tabbed>
     `,
-    standalone: true,
     imports: [SearchFilterTabbedComponent, SearchFilterTabDirective]
 })
 class SearchFilterTabbedTestComponent {}

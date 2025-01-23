@@ -25,7 +25,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-event-subprocess',
-    standalone: true,
     imports: [RaphaelRectDirective, DiagramTooltipComponent],
     templateUrl: './diagram-event-subprocess.component.html'
 })

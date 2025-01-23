@@ -23,7 +23,6 @@ import { ViewerOpenWithComponent } from '../viewer-open-with.component';
 
 @Component({
     selector: 'adf-viewer-container-open-with',
-    standalone: true,
     imports: [ViewerComponent, MatIconModule, MatMenuModule, ViewerOpenWithComponent],
     template: `
         <adf-viewer>

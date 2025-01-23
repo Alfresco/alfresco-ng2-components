@@ -30,7 +30,6 @@ import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-widget-chip',
-    standalone: true,
     imports: [
         CommonModule,
         MatChipsModule,

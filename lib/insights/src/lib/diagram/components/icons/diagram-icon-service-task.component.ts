@@ -23,7 +23,6 @@ import { RaphaelIconServiceDirective } from '../raphael/icons/raphael-icon-servi
 
 @Component({
     selector: 'diagram-icon-service-task',
-    standalone: true,
     imports: [RaphaelIconServiceDirective],
     templateUrl: './diagram-icon-service-task.component.html'
 })

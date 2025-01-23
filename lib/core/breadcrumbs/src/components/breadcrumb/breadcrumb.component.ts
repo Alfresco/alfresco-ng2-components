@@ -40,7 +40,6 @@ import { BreadcrumbFocusDirective } from '../../directives/breadcrumb-focus.dire
 import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.component';
 
 @Component({
-    standalone: true,
     selector: 'adf-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],

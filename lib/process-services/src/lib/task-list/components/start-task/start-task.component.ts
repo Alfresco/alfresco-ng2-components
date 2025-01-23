@@ -42,7 +42,6 @@ const MAX_LENGTH = 255;
 
 @Component({
     selector: 'adf-start-task',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

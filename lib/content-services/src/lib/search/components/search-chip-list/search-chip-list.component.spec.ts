@@ -27,7 +27,6 @@ import { SearchChipListComponent } from './search-chip-list.component';
 
 @Component({
     selector: 'adf-test-component',
-    standalone: true,
     imports: [SearchChipListComponent],
     template: ` <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="allowClear" /> `
 })

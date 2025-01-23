@@ -23,7 +23,6 @@ import { RaphaelIconBusinessRuleDirective } from '../raphael/icons/raphael-icon-
 
 @Component({
     selector: 'diagram-icon-business-rule-task',
-    standalone: true,
     imports: [RaphaelIconBusinessRuleDirective],
     templateUrl: './diagram-icon-business-rule-task.component.html'
 })

@@ -23,7 +23,6 @@ import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/ca
 
 @Component({
     selector: 'adf-card-view',
-    standalone: true,
     imports: [CommonModule, CardViewItemDispatcherComponent],
     templateUrl: './card-view.component.html',
     styleUrls: ['./card-view.component.scss'],

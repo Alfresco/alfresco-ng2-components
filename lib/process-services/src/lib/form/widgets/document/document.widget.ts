@@ -22,7 +22,6 @@ import { ContentWidgetComponent } from './content.widget';
 
 @Component({
     selector: 'adf-form-document-widget',
-    standalone: true,
     imports: [CommonModule, ContentWidgetComponent],
     templateUrl: './document.widget.html',
     host: {

@@ -22,7 +22,6 @@ import { Track } from '../../models/viewer.model';
 
 @Component({
     selector: 'adf-media-player',
-    standalone: true,
     templateUrl: './media-player.component.html',
     styleUrls: ['./media-player.component.scss'],
     host: { class: 'adf-media-player' },

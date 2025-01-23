@@ -27,7 +27,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'base-viewer-widget',
-    standalone: true,
     templateUrl: './base-viewer.widget.html',
     styleUrls: ['./base-viewer.widget.scss'],
     host: {

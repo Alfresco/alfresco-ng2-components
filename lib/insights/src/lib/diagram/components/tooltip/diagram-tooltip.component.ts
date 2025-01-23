@@ -26,7 +26,6 @@ const IS_ACTIVE_CLASS = 'adf-is-active';
 
 @Component({
     selector: 'diagram-tooltip',
-    standalone: true,
     templateUrl: './diagram-tooltip.component.html',
     imports: [NgIf, NgForOf],
     styleUrls: ['./diagram-tooltip.component.scss']

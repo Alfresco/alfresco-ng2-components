@@ -21,7 +21,6 @@ import { ViewerSidebarComponent } from '../viewer-sidebar.component';
 
 @Component({
     selector: 'adf-viewer-container-sidebar',
-    standalone: true,
     imports: [ViewerComponent, ViewerSidebarComponent],
     template: `
         <adf-viewer>

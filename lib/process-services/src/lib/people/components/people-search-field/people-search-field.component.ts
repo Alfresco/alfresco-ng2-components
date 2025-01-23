@@ -31,7 +31,6 @@ import { PeopleListComponent } from '../people-list/people-list.component';
 
 @Component({
     selector: 'adf-people-search-field',
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,

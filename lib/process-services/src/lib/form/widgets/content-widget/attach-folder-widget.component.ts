@@ -29,7 +29,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'attach-folder-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatIconModule, MatLineModule, MatButtonModule, ErrorWidgetComponent],
     templateUrl: './attach-folder-widget.component.html',
     styleUrls: ['./attach-folder-widget.component.scss'],

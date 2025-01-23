@@ -29,7 +29,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatListModule, IconComponent, MatProgressSpinnerModule],
     templateUrl: './service-task-filters-cloud.component.html',
     styleUrls: ['./service-task-filters-cloud.component.scss'],

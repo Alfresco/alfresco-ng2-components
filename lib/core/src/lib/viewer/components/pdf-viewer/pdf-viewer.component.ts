@@ -53,7 +53,6 @@ export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height'
 
 @Component({
     selector: 'adf-pdf-viewer',
-    standalone: true,
     templateUrl: './pdf-viewer.component.html',
     styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     providers: [RenderingQueueServices],

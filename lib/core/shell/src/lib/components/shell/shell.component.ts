@@ -23,18 +23,12 @@ import { Observable } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Directionality } from '@angular/cdk/bidi';
-import {
-    SHELL_APP_SERVICE,
-    SHELL_NAVBAR_MAX_WIDTH,
-    SHELL_NAVBAR_MIN_WIDTH,
-    ShellAppService
-} from '../../services/shell-app.service';
+import { SHELL_APP_SERVICE, SHELL_NAVBAR_MAX_WIDTH, SHELL_NAVBAR_MIN_WIDTH, ShellAppService } from '../../services/shell-app.service';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-shell',
-    standalone: true,
     imports: [CommonModule, SidenavLayoutModule, RouterModule, DynamicExtensionComponent],
     templateUrl: './shell.component.html',
     styleUrls: ['./shell.component.scss'],

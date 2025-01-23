@@ -23,7 +23,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-pdf-thumb',
-    standalone: true,
     templateUrl: './pdf-viewer-thumb.component.html',
     encapsulation: ViewEncapsulation.None,
     imports: [AsyncPipe, TranslateModule, NgIf],

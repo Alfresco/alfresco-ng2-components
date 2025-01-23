@@ -38,7 +38,6 @@ describe('AppsListComponent', () => {
     let getAppsSpy: jasmine.Spy;
 
     @Component({
-        standalone: true,
         imports: [CustomEmptyContentTemplateDirective, AppsListComponent],
         template: `
             <adf-apps>

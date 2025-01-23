@@ -29,7 +29,6 @@ import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
 
 @Component({
     selector: 'adf-file-uploading-list-row',
-    standalone: true,
     imports: [
         CommonModule,
         MatIconModule,

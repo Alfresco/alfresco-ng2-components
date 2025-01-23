@@ -30,7 +30,6 @@ export const LAYOUT_GRID = 'GRID';
 
 @Component({
     selector: 'adf-analytics-report-list',
-    standalone: true,
     imports: [CommonModule, MatListModule, MatIconModule, MatCardModule],
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.scss'],

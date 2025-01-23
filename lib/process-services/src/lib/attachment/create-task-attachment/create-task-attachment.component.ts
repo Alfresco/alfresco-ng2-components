@@ -25,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-create-task-attachment',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, UploadDirective, MatIconModule],
     styleUrls: ['./create-task-attachment.component.scss'],
     templateUrl: './create-task-attachment.component.html'

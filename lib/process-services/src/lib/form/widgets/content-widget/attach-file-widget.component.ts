@@ -18,21 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    AppConfigService,
-    AppConfigValues,
-    DownloadService,
-    ErrorWidgetComponent,
-    FormService,
-    ThumbnailService
-} from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
 import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
-import {
-    AlfrescoEndpointRepresentation,
-    Node,
-    NodeChildAssociation,
-    RelatedContentRepresentation
-} from '@alfresco/js-api';
+import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, zip } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -50,7 +38,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'attach-widget',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,
@@ -292,16 +279,12 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             );
     }
 
-
     private updateNodesParams(): void {
-        this.router.navigate(
-            [],
-            {
-                relativeTo: this.activatedRoute,
-                queryParams: { nodes: this.tempFilesList.map(file => file.id).join(',') },
-                queryParamsHandling: 'merge'
-            }
-        );
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { nodes: this.tempFilesList.map((file) => file.id).join(',') },
+            queryParamsHandling: 'merge'
+        });
     }
 
     private getDomainHost(urlToCheck: string): string {

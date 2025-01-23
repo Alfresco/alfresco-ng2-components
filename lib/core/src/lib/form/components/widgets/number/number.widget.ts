@@ -30,7 +30,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'number-widget',
-    standalone: true,
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],
     host: {

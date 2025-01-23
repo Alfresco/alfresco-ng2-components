@@ -23,7 +23,6 @@ import { RaphaelTextDirective } from '../raphael/raphael-text.component';
 
 @Component({
     selector: 'diagram-lane',
-    standalone: true,
     imports: [RaphaelRectDirective, RaphaelTextDirective],
     templateUrl: './diagram-lane.component.html'
 })

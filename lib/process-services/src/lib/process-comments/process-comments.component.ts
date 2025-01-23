@@ -22,8 +22,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-process-instance-comments',
-    standalone: true,
-
     imports: [CommonModule, CommentsComponent],
     providers: [
         {

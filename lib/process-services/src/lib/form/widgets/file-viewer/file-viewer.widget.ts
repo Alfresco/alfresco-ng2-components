@@ -25,7 +25,6 @@ import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'file-viewer-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, AlfrescoViewerComponent, ErrorWidgetComponent],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],

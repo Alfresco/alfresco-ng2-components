@@ -23,7 +23,6 @@ import { RaphaelIconAlfrescoPublishDirective } from '../raphael/icons/raphael-ic
 
 @Component({
     selector: 'diagram-icon-alfresco-publish-task',
-    standalone: true,
     imports: [RaphaelIconAlfrescoPublishDirective],
     templateUrl: './diagram-icon-alfresco-publish-task.component.html'
 })

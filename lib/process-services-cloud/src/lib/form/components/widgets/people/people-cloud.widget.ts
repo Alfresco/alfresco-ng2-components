@@ -31,7 +31,6 @@ import { PeopleCloudComponent } from '../../../../people/components/people-cloud
 
 @Component({
     selector: 'people-cloud-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudComponent],
     templateUrl: './people-cloud.widget.html',
     host: {

@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-tooltip-card-component',
-    standalone: true,
     imports: [CommonModule],
     templateUrl: './tooltip-card.component.html',
     styleUrls: ['./tooltip-card.component.scss'],

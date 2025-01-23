@@ -24,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'file-viewer-widget',
-    standalone: true,
     imports: [ErrorWidgetComponent, AlfrescoViewerComponent, TranslateModule],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],

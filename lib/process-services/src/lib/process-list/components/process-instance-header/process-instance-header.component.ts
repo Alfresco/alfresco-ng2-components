@@ -31,7 +31,6 @@ import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-process-instance-header',
-    standalone: true,
     imports: [CommonModule, MatCardModule, CardViewComponent],
     templateUrl: './process-instance-header.component.html',
     styleUrls: ['./process-instance-header.component.css']

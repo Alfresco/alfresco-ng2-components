@@ -31,7 +31,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
     selector: 'adf-cloud-overlay-test',
-    template: `<div>adf-cloud-overlay-test</div>`
+    template: `<div>adf-cloud-overlay-test</div>`,
+    standalone: false
 })
 class SpinnerTestComponent {
     destroyRef = inject(DestroyRef);

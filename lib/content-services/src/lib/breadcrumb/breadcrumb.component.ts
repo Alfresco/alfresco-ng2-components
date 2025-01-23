@@ -26,7 +26,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-breadcrumb',
-    standalone: true,
     imports: [CommonModule, MatIconModule, TranslateModule, MatSelectModule],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],

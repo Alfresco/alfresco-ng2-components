@@ -30,16 +30,7 @@ import {
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-    Component,
-    CUSTOM_ELEMENTS_SCHEMA,
-    Injector,
-    QueryList,
-    runInInjectionContext,
-    SimpleChange,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -1139,7 +1130,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
         runInInjectionContext(injector, () => {
             documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
-        })
+        });
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
     });
@@ -1160,7 +1151,7 @@ describe('DocumentList', () => {
     it('should empty folder NOT show the pagination', () => {
         runInInjectionContext(injector, () => {
             documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
-        })
+        });
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
@@ -1888,7 +1879,6 @@ describe('DocumentList', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
     template: `
         <adf-document-list #customDocumentList>

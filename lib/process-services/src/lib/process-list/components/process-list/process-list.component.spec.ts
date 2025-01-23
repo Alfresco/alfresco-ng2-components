@@ -465,7 +465,6 @@ describe('ProcessInstanceListComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [ProcessInstanceListComponent, DataColumnListComponent, DataColumnComponent, FullNamePipe],
     template: ` <adf-process-instance-list #processListComponentInstance>
         <data-columns>
@@ -508,7 +507,6 @@ describe('CustomProcessListComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [CustomEmptyContentTemplateDirective, ProcessInstanceListComponent],
     template: `
         <adf-process-instance-list [appId]="1">
@@ -551,7 +549,6 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [ProcessInstanceListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-process-instance-list
         [appId]="appId"

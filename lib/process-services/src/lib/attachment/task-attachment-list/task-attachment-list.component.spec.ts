@@ -287,7 +287,8 @@ describe('TaskAttachmentList', () => {
                 <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
             </adf-empty-list>
         </adf-task-attachment-list>
-    `
+    `,
+    standalone: false
 })
 class CustomEmptyTemplateComponent {}
 

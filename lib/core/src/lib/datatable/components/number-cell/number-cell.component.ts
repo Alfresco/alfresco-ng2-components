@@ -21,7 +21,6 @@ import { DecimalConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    standalone: true,
     imports: [CommonModule],
     selector: 'adf-number-cell',
     templateUrl: './number-cell.component.html',

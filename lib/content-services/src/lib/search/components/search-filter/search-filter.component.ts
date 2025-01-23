@@ -31,7 +31,6 @@ import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
 
 @Component({
     selector: 'adf-search-filter',
-    standalone: true,
     imports: [
         CommonModule,
         MatExpansionModule,

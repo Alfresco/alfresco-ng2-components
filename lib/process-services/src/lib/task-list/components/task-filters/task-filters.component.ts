@@ -31,7 +31,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-filters',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],

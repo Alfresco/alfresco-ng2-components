@@ -32,7 +32,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-folder-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

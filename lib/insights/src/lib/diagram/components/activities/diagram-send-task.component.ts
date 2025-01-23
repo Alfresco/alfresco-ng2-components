@@ -24,7 +24,6 @@ import { DiagramIconSendTaskComponent } from '../icons/diagram-icon-send-task.co
 
 @Component({
     selector: 'diagram-send-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconSendTaskComponent],
     templateUrl: './diagram-send-task.component.html'
 })

@@ -51,7 +51,6 @@ import { IdentityUserService } from '../services/identity-user.service';
 
 @Component({
     selector: 'adf-cloud-people',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

@@ -24,7 +24,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'display-text-widget',
-    standalone: true,
     templateUrl: './display-text.widget.html',
     styleUrls: ['./display-text.widget.scss'],
     host: {

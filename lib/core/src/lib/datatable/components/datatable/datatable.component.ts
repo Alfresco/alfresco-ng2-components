@@ -92,7 +92,6 @@ export enum ShowHeaderMode {
 
 @Component({
     selector: 'adf-datatable',
-    standalone: true,
     imports: [
         CommonModule,
         DataTableRowComponent,

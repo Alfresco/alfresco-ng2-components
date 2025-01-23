@@ -36,7 +36,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-tag-node-actions-list',
-    standalone: true,
     imports: [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatButtonModule],
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],

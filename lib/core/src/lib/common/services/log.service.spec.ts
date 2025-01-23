@@ -25,7 +25,8 @@ import { LogService } from './log.service';
 
 @Component({
     template: '',
-    providers: [LogService]
+    providers: [LogService],
+    standalone: false
 })
 class ProvidesLogComponent {
     constructor(public logService: LogService) {}

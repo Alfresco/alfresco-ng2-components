@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
@@ -43,7 +33,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-notification-history',
-    standalone: true,
     templateUrl: 'notification-history.component.html',
     styleUrls: ['./notification-history.component.scss'],
     imports: [

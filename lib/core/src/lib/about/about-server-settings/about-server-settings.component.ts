@@ -26,7 +26,6 @@ import { MatCardModule } from '@angular/material/card';
     templateUrl: './about-server-settings.component.html',
     styleUrls: ['./about-server-settings.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {

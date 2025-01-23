@@ -39,7 +39,8 @@ import { ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-dialog-dummy',
-    template: ``
+    template: ``,
+    standalone: false
 })
 class DummyDialogComponent {}
 

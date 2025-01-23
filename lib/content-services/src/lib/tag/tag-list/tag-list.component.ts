@@ -30,7 +30,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
  */
 @Component({
     selector: 'adf-tag-list',
-    standalone: true,
     imports: [CommonModule, MatChipsModule, MatButtonModule, MatIconModule],
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],

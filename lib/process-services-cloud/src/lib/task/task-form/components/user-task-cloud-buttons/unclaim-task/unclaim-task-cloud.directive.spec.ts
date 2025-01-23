@@ -27,7 +27,6 @@ import { By } from '@angular/platform-browser';
 describe('UnClaimTaskCloudDirective', () => {
     @Component({
         selector: 'adf-cloud-test-component',
-        standalone: true,
         imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [taskId]="taskIdMock" [appName]="appName" (error)="onError($event)"></button>'
     })
@@ -96,7 +95,6 @@ describe('UnClaimTaskCloudDirective', () => {
 describe('UnClaim Task Directive validation errors', () => {
     @Component({
         selector: 'adf-cloud-claim-no-fields-validation-component',
-        standalone: true,
         imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task></button>'
     })
@@ -111,7 +109,6 @@ describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-no-taskid-validation-component',
-        standalone: true,
         imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [appName]="appName"></button>'
     })
@@ -124,7 +121,6 @@ describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-undefined-appname-component',
-        standalone: true,
         imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
@@ -138,7 +134,6 @@ describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-null-appname-component',
-        standalone: true,
         imports: [UnClaimTaskCloudDirective],
         template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })

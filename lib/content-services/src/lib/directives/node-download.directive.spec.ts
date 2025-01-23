@@ -26,7 +26,6 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 @Component({
-    standalone: true,
     imports: [NodeDownloadDirective],
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
 })

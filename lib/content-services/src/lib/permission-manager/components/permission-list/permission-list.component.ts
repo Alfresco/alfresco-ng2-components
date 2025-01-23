@@ -34,7 +34,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-permission-list',
-    standalone: true,
     imports: [
         CommonModule,
         MatCardModule,

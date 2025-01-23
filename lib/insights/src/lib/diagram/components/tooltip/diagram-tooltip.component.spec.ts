@@ -22,7 +22,8 @@ import { DiagramTooltipComponent } from './diagram-tooltip.component';
 
 @Component({
     template: ` <div id="diagram-element-id">Hover me</div>
-        <diagram-tooltip [data]="data" />`
+        <diagram-tooltip [data]="data" />`,
+    standalone: false
 })
 class TestHostComponent {
     data = {

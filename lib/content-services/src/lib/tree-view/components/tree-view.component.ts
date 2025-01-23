@@ -29,7 +29,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-tree-view-list',
-    standalone: true,
     imports: [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslateModule],
     templateUrl: './tree-view.component.html',
     styleUrls: ['./tree-view.component.scss']

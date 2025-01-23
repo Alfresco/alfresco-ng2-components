@@ -29,7 +29,6 @@ import { ProcessCommentsComponent } from '../../../process-comments';
 
 @Component({
     selector: 'adf-process-instance-details',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

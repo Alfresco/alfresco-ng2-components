@@ -27,7 +27,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-content',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatCardModule, MatIconModule, MatButtonModule],
     templateUrl: './content.widget.html',
     styleUrls: ['./content.widget.scss'],

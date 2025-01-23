@@ -30,7 +30,6 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
 
 @Component({
     selector: 'group-cloud-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, ErrorWidgetComponent, GroupCloudComponent],
     templateUrl: './group-cloud.widget.html',
     host: {

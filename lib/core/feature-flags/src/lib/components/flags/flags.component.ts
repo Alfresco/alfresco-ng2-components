@@ -41,7 +41,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-feature-flags-overrides',
-    standalone: true,
     imports: [
         FlagsOverrideComponent,
         CommonModule,

@@ -22,7 +22,6 @@ import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from
 
 @Component({
     selector: 'adf-form-list',
-    standalone: true,
     imports: [CommonModule, DataTableComponent, DataColumnListComponent, DataColumnComponent],
     templateUrl: './form-list.component.html',
     encapsulation: ViewEncapsulation.None

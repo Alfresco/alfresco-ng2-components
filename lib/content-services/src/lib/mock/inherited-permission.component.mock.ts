@@ -19,10 +19,10 @@ import { Component } from '@angular/core';
 
 @Component({
     template: `
-    <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId"
-            (updated)="onUpdate($event)"> PERMISSION </button>
+        <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId" (updated)="onUpdate($event)">PERMISSION</button>
         <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
-    `
+    `,
+    standalone: false
 })
 export class SimpleInheritedPermissionTestComponent {
     message: string = '';

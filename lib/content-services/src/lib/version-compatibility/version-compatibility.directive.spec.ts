@@ -34,7 +34,8 @@ import { VersionCompatibilityDirective } from '@alfresco/adf-content-services';
         <div *adf-acs-version="'6.1.5'" class="visible-content-1">My visible content 1</div>
         <div *adf-acs-version="'6.1'" class="visible-content-2">My visible content 2</div>
         <div *adf-acs-version="'6'" class="visible-content-3">My visible content 3</div>
-    `
+    `,
+    standalone: false
 })
 class TestComponent {}
 

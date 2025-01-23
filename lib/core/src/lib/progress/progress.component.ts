@@ -27,7 +27,6 @@ export type ProgressColor = ThemePalette;
 
 @Component({
     selector: 'adf-progress',
-    standalone: true,
     imports: [CommonModule, MatProgressBarModule, MatProgressSpinnerModule],
     templateUrl: './progress.component.html',
     encapsulation: ViewEncapsulation.None

@@ -55,7 +55,6 @@ export const HIDE_FILTER_LIMIT = 5;
     templateUrl: './dropdown-cloud.widget.html',
     styleUrls: ['./dropdown-cloud.widget.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [
         NgIf,
         NgFor,

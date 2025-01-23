@@ -30,7 +30,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-process-instance-filters',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
     templateUrl: './process-filters.component.html',
     styleUrls: ['./process-filters.component.scss'],

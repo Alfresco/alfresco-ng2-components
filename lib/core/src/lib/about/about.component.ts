@@ -25,7 +25,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     templateUrl: './about.component.html',
     styleUrls: ['about.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [CommonModule, MatExpansionModule]
 })
 export class AboutComponent {

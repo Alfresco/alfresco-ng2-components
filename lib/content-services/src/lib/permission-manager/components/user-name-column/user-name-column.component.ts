@@ -24,7 +24,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-user-name-column',
-    standalone: true,
     imports: [CommonModule],
     template: `
         <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
