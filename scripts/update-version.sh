@@ -181,3 +181,4 @@ fi
 
 # bump root package.json
 npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
+
