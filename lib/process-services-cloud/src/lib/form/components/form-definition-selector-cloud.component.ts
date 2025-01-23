@@ -25,7 +25,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-cloud-form-definition-selector',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatSelectModule],
     templateUrl: './form-definition-selector-cloud.component.html',
     styleUrls: ['./form-definition-selector-cloud.component.scss']

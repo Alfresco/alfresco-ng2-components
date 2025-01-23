@@ -22,7 +22,6 @@ import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
 
 @Component({
     selector: 'adf-navbar',
-    standalone: true,
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
     encapsulation: ViewEncapsulation.None,

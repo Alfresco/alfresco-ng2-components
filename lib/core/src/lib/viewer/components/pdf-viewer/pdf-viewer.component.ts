@@ -57,7 +57,6 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
 
 @Component({
     selector: 'adf-pdf-viewer',
-    standalone: true,
     templateUrl: './pdf-viewer.component.html',
     styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     providers: [RenderingQueueServices],

@@ -24,7 +24,6 @@ import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-language-menu',
-    standalone: true,
     imports: [CommonModule, MatMenuModule],
     template: `
         <button mat-menu-item *ngFor="let language of languages$ | async" [attr.lang]="language.key" (click)="changeLanguage(language)">

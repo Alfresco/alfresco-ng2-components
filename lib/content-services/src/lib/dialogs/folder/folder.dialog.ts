@@ -33,7 +33,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-folder-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

@@ -24,7 +24,6 @@ import { DiagramLanesComponent } from './diagram-lanes.component';
 
 @Component({
     selector: 'diagram-pools',
-    standalone: true,
     imports: [NgIf, NgForOf, DiagramPoolComponent, DiagramLanesComponent],
     templateUrl: './diagram-pools.component.html'
 })

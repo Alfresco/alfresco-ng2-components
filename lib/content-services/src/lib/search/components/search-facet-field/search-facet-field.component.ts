@@ -34,7 +34,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-search-facet-field',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatCheckboxModule],
     templateUrl: './search-facet-field.component.html',
     styleUrls: ['./search-facet-field.component.scss'],

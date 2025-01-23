@@ -36,7 +36,6 @@ import { AppConfigValues } from '../../app-config';
  * If data.descriptionText is provided, it will be displayed as dialog content.
  */
 @Component({
-    standalone: true,
     selector: 'adf-unsaved-changes-dialog',
     encapsulation: ViewEncapsulation.None,
     templateUrl: './unsaved-changes-dialog.component.html',

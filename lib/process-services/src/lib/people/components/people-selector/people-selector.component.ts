@@ -32,7 +32,6 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
 
 @Component({
     selector: 'adf-people-selector',
-    standalone: true,
     imports: [CommonModule, PeopleSearchFieldComponent, MatButtonModule, MatIconModule],
     templateUrl: './people-selector.component.html',
     styleUrls: ['./people-selector.component.scss'],

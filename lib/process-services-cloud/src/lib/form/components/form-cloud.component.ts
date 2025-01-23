@@ -73,7 +73,6 @@ export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldVal
 
 @Component({
     selector: 'adf-cloud-form',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

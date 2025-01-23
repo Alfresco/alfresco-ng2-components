@@ -29,7 +29,6 @@ describe('LogoutDirective', () => {
     describe('No input', () => {
         @Component({
             selector: 'adf-test-component',
-            standalone: true,
             imports: [LogoutDirective],
             template: '<button adf-logout></button>'
         })
@@ -104,7 +103,6 @@ describe('LogoutDirective', () => {
     describe('redirectUri', () => {
         @Component({
             selector: 'adf-test-component',
-            standalone: true,
             imports: [LogoutDirective],
             template: '<button adf-logout redirectUri="/myCustomUri"></button>'
         })
@@ -143,7 +141,6 @@ describe('LogoutDirective', () => {
     describe('enableRedirect', () => {
         @Component({
             selector: 'adf-test-component',
-            standalone: true,
             imports: [LogoutDirective],
             template: '<button adf-logout [enableRedirect]="false"></button>'
         })

@@ -35,7 +35,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-datetime-editor',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, FormsModule],
     templateUrl: './datetime.editor.html',
     providers: [

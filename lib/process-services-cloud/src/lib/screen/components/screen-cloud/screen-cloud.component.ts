@@ -24,7 +24,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-task-screen',
-    standalone: true,
     imports: [CommonModule, MatCardModule],
     templateUrl: './screen-cloud.component.html'
 })

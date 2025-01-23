@@ -21,7 +21,6 @@ import { IconComponent } from '../../icon';
 
 @Component({
     selector: 'adf-empty-content',
-    standalone: true,
     imports: [TranslateModule, IconComponent],
     templateUrl: './empty-content.component.html',
     styleUrls: ['./empty-content.component.scss'],

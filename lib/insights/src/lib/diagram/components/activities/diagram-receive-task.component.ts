@@ -24,7 +24,6 @@ import { DiagramIconReceiveTaskComponent } from '../icons/diagram-icon-receive-t
 
 @Component({
     selector: 'diagram-receive-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconReceiveTaskComponent],
     templateUrl: './diagram-receive-task.component.html'
 })

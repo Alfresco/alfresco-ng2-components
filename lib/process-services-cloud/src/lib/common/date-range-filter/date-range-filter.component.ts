@@ -35,7 +35,6 @@ interface DateRangeFormProps {
 
 @Component({
     selector: 'adf-cloud-date-range-filter',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatDatepickerModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule],
     styleUrls: ['./date-range-filter.component.scss'],
     templateUrl: './date-range-filter.component.html',

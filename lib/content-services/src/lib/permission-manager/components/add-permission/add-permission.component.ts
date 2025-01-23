@@ -28,7 +28,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-add-permission',
-    standalone: true,
     imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslateModule],
     templateUrl: './add-permission.component.html',
     styleUrls: ['./add-permission.component.scss'],

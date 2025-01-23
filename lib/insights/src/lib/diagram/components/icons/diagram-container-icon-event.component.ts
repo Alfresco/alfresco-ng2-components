@@ -27,7 +27,6 @@ import { DiagramIconMessageComponent } from './diagram-icon-message.component';
 
 @Component({
     selector: 'diagram-container-icon-event',
-    standalone: true,
     imports: [CommonModule, DiagramIconTimerComponent, DiagramIconErrorComponent, DiagramIconSignalComponent, DiagramIconMessageComponent],
     templateUrl: './diagram-container-icon-event.component.html'
 })

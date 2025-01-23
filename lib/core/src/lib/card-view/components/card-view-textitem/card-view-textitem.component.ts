@@ -44,7 +44,6 @@ const templateTypes = {
 
 @Component({
     selector: 'adf-card-view-textitem',
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,

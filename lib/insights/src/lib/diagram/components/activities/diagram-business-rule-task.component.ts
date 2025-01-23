@@ -24,7 +24,6 @@ import { DiagramIconBusinessRuleTaskComponent } from '../icons/diagram-icon-busi
 
 @Component({
     selector: 'diagram-business-rule-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconBusinessRuleTaskComponent],
     templateUrl: './diagram-business-rule-task.component.html'
 })

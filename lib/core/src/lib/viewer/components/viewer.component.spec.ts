@@ -38,7 +38,8 @@ import { ThumbnailService } from '../../common/services/thumbnail.service';
 
 @Component({
     selector: 'adf-dialog-dummy',
-    template: ``
+    template: ``,
+    standalone: false
 })
 class DummyDialogComponent {}
 

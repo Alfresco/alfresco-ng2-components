@@ -72,7 +72,6 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
 
 @Component({
     selector: 'adf-cloud-process-list',
-    standalone: true,
     imports: [
         DataTableComponent,
         MatProgressSpinnerModule,

@@ -26,7 +26,6 @@ import { MatTableModule } from '@angular/material/table';
     templateUrl: './about-status-list.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatTableModule]
 })
 export class AboutStatusListComponent {

@@ -34,7 +34,6 @@ type ViewerType = 'media' | 'image' | 'pdf' | 'external' | 'text' | 'custom' | '
 
 @Component({
     selector: 'adf-viewer-render',
-    standalone: true,
     templateUrl: './viewer-render.component.html',
     styleUrls: ['./viewer-render.component.scss'],
     host: { class: 'adf-viewer-render' },

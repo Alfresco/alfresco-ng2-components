@@ -57,7 +57,8 @@ describe('FormComponent', () => {
 
     @Component({
         selector: 'adf-custom-widget',
-        template: '<div></div>'
+        template: '<div></div>',
+        standalone: false
     })
     // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
@@ -986,7 +987,6 @@ describe('FormComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [FormCustomOutcomesComponent, MatButtonModule, FormComponent],
     selector: 'adf-form-with-custom-outcomes',
     template: ` <adf-form #adfForm>

@@ -30,7 +30,6 @@ import { AboutStatusListComponent } from '../about-status-list/about-status-list
     templateUrl: './about-repository-info.component.html',
     styleUrls: ['./about-repository-info.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [CommonModule, TranslateModule, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
 })
 export class AboutRepositoryInfoComponent implements OnInit {

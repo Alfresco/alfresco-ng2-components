@@ -106,7 +106,6 @@ export const noResult = {
         </adf-search>
         <span id="component-result-message">{{ message }}</span>
     `,
-    standalone: true,
     imports: [SearchModule, CommonModule]
 })
 export class SimpleSearchTestComponent {

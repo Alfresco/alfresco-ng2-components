@@ -24,7 +24,6 @@ import { DiagramIconManualTaskComponent } from '../icons/diagram-icon-manual-tas
 
 @Component({
     selector: 'diagram-manual-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconManualTaskComponent],
     templateUrl: './diagram-manual-task.component.html'
 })

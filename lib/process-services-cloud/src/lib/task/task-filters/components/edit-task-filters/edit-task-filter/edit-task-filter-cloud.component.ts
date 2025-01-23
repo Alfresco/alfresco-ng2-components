@@ -43,7 +43,6 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

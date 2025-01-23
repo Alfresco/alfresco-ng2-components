@@ -20,7 +20,6 @@ import { FlagsComponent } from './flags/flags.component';
 
 @Component({
     selector: 'adf-feature-flags-wrapper',
-    standalone: true,
     imports: [FlagsComponent],
     template: `
         <div class="adf-feature-flags-wrapper">

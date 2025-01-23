@@ -24,7 +24,6 @@ import { DiagramIconScriptTaskComponent } from '../icons/diagram-icon-script-tas
 
 @Component({
     selector: 'diagram-script-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconScriptTaskComponent],
     templateUrl: './diagram-script-task.component.html'
 })

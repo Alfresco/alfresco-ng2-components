@@ -26,7 +26,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-task',
-    standalone: true,
     imports: [RaphaelRectDirective, RaphaelMultilineTextDirective, DiagramTooltipComponent],
     templateUrl: './diagram-task.component.html'
 })

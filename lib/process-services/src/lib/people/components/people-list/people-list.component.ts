@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-people-list',
-    standalone: true,
     imports: [CommonModule, DataTableComponent],
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss']

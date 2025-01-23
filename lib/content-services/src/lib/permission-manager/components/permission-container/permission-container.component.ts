@@ -38,7 +38,6 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
 
 @Component({
     selector: 'adf-permission-container',
-    standalone: true,
     imports: [
         CommonModule,
         DataTableComponent,

@@ -30,7 +30,6 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component-for-sidenav',
-    standalone: true,
     imports: [SidenavLayoutComponent, SidenavLayoutHeaderDirective, SidenavLayoutNavigationDirective, SidenavLayoutContentDirective],
     template: ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
         <adf-sidenav-layout-header>

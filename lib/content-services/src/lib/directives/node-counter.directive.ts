@@ -44,7 +44,6 @@ export class NodeCounterDirective implements OnInit, OnChanges {
 }
 
 @Component({
-    standalone: true,
     imports: [TranslateModule],
     selector: 'adf-node-counter',
     template: ` <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate : { count: counter } }}</div> `

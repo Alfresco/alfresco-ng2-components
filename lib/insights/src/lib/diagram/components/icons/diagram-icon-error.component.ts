@@ -23,7 +23,6 @@ import { RaphaelIconErrorDirective } from '../raphael/icons/raphael-icon-error.c
 
 @Component({
     selector: 'diagram-icon-error',
-    standalone: true,
     imports: [RaphaelIconErrorDirective],
     templateUrl: './diagram-icon-error.component.html'
 })

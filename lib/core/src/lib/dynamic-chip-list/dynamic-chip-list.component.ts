@@ -45,7 +45,6 @@ import { Chip } from './chip';
  */
 @Component({
     selector: 'adf-dynamic-chip-list',
-    standalone: true,
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
     imports: [MatChipsModule, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],

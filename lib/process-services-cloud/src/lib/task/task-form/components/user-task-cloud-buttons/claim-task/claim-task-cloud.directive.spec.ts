@@ -27,7 +27,6 @@ import { By } from '@angular/platform-browser';
 describe('ClaimTaskCloudDirective', () => {
     @Component({
         selector: 'adf-cloud-claim-test-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
         template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock" (error)="onError($event)"></button>'
     })
@@ -97,7 +96,6 @@ describe('ClaimTaskCloudDirective', () => {
 describe('Claim Task Directive validation errors', () => {
     @Component({
         selector: 'adf-cloud-claim-no-fields-validation-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
         template: '<button adf-cloud-claim-task></button>'
     })
@@ -112,7 +110,6 @@ describe('Claim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-no-taskid-validation-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
         template: '<button adf-cloud-claim-task [appName]="appName"></button>'
     })
@@ -125,7 +122,6 @@ describe('Claim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-undefined-appname-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
         template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
@@ -139,7 +135,6 @@ describe('Claim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-null-appname-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
         template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })

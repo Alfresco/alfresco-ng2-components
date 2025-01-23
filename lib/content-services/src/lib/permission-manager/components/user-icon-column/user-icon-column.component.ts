@@ -25,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-user-icon-column',
-    standalone: true,
     imports: [CommonModule, MatIconModule, InitialUsernamePipe],
     template: `
         <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'" *ngIf="!isSelected">

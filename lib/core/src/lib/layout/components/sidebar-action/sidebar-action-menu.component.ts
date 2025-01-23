@@ -22,7 +22,6 @@ import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-sidebar-action-menu',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatMenuModule],
     templateUrl: './sidebar-action-menu.component.html',
     styleUrls: ['./sidebar-action-menu.component.scss'],

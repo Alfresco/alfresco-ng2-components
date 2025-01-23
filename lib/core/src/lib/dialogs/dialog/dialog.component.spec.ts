@@ -25,7 +25,8 @@ import { Component, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-dummy-component'
+    selector: 'adf-dummy-component',
+    standalone: false
 })
 class DummyComponent {
     data = inject(DIALOG_COMPONENT_DATA);

@@ -43,7 +43,6 @@ type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
 
 @Component({
     selector: 'adf-cloud-user-task',
-    standalone: true,
     imports: [
         CommonModule,
         MatProgressSpinnerModule,

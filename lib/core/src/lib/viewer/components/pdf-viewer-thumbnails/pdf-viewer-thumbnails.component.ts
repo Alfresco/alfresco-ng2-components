@@ -40,7 +40,6 @@ import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.componen
 
 @Component({
     selector: 'adf-pdf-thumbnails',
-    standalone: true,
     templateUrl: './pdf-viewer-thumbnails.component.html',
     styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
     host: { class: 'adf-pdf-thumbnails' },

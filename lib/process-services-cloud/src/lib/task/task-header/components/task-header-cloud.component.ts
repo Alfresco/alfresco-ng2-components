@@ -42,7 +42,6 @@ import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-cloud-task-header',
-    standalone: true,
     imports: [CommonModule, MatProgressSpinnerModule, CardViewComponent, MatCardModule],
     templateUrl: './task-header-cloud.component.html',
     styleUrls: ['./task-header-cloud.component.scss'],
