@@ -189,6 +189,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
         describe('Save & Delete buttons', () => {
             it('should disable save and delete button for default task filters', async () => {
+                component.taskFilter = undefined;
                 getTaskFilterSpy.and.returnValue(
                     of({
                         name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ALL_SERVICE_TASKS',
