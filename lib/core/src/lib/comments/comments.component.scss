@@ -39,12 +39,6 @@ adf-comments {
                         color: var(--theme-primary-color);
                         -webkit-font-smoothing: subpixel-antialiased;
                     }
-
-                    &::placeholder {
-                        &::after {
-                            content: '*';
-                        }
-                    }
                 }
             }
 

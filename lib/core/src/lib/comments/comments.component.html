@@ -23,7 +23,7 @@
                     data-automation-id="comments-input-add"
                     color="primary"
                     (click)="addComment()"
-                    [disabled]="emptyComment"
+                    [disabled]="commentControl.invalid"
                 >
                     {{ 'COMMENTS.ADD' | translate }}
                 </button>

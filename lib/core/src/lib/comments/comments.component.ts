@@ -16,7 +16,7 @@
  */
 
 import { CommentModel } from '../models/comment.model';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { CommonModule } from '@angular/common';
@@ -26,7 +26,6 @@ import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommentListComponent } from './comment-list';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-comments',
@@ -45,7 +44,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./comments.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class CommentsComponent implements OnChanges, OnInit {
+export class CommentsComponent implements OnChanges {
     /** The numeric ID of the task. */
     @Input()
     id: string;
@@ -62,13 +61,7 @@ export class CommentsComponent implements OnChanges, OnInit {
     beingAdded: boolean = false;
 
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
-    private destroyRef = inject(DestroyRef);
-    private _emptyComment = true;
-    private _commentControl: FormControl<string> = new FormControl('', [this.validateEmptyComment]);
-
-    get emptyComment(): boolean {
-        return this._emptyComment;
-    }
+    private _commentControl = new FormControl('', [this.validateEmptyComment]);
 
     get commentControl(): FormControl<string> {
         return this._commentControl;
@@ -84,10 +77,6 @@ export class CommentsComponent implements OnChanges, OnInit {
         } else {
             this.resetComments();
         }
-    }
-
-    ngOnInit(): void {
-        this._commentControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((comment) => (this._emptyComment = !comment?.trim()));
     }
 
     loadComments() {
