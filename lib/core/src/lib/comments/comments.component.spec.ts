@@ -25,6 +25,8 @@ import { CommentsService } from './interfaces/comments-service.interface';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
+import { By } from '@angular/platform-browser';
+import { MatError } from '@angular/material/form-field';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -156,6 +158,11 @@ describe('CommentsComponent', () => {
     });
 
     describe('Add comment', () => {
+        const getError = (): string => fixture.debugElement.query(By.directive(MatError))?.nativeElement?.textContent;
+
+        const getAddCommentButton = (): HTMLButtonElement =>
+            fixture.debugElement.query(By.css('[data-automation-id=comments-input-add]')).nativeElement;
+
         beforeEach(() => {
             component.id = '123';
             fixture.detectChanges();
@@ -255,9 +262,85 @@ describe('CommentsComponent', () => {
         });
 
         it('should not add comment if message is empty', () => {
-            component.message = '';
+            component.commentControl.setValue('');
             component.addComment();
             expect(addCommentSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not display error message initially', () => {
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should display error message when comment is empty and was touched', () => {
+            component.commentControl.setValue('');
+            component.commentControl.markAsTouched();
+
+            fixture.detectChanges();
+            expect(getError()).toBe('COMMENTS.EMPTY_ERROR');
+        });
+
+        it('should display error message when comment has only spaces and was touched', () => {
+            component.commentControl.setValue('    ');
+            component.commentControl.markAsTouched();
+
+            fixture.detectChanges();
+            expect(getError()).toBe('COMMENTS.EMPTY_ERROR');
+        });
+
+        it('should not display error message when comment is empty but was not touched', () => {
+            component.commentControl.setValue('');
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should not display error message when comment has only spaces but was not touched', () => {
+            component.commentControl.setValue('    ');
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should not display error message when comment is not empty and was touched', () => {
+            component.commentControl.setValue('Some comment');
+            component.commentControl.markAsTouched();
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should not display error message when comment is not empty and was not touched', () => {
+            component.commentControl.setValue('Some comment');
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should disable add button initially', () => {
+            expect(getAddCommentButton().disabled).toBeTrue();
+        });
+
+        it('should disable add button when comment is empty', () => {
+            component.commentControl.setValue('Some comment');
+            component.commentControl.setValue('');
+
+            fixture.detectChanges();
+            expect(getAddCommentButton().disabled).toBeTrue();
+        });
+
+        it('should disable add button when comment has only spaces', () => {
+            component.commentControl.setValue('Some comment');
+            component.commentControl.setValue('    ');
+
+            fixture.detectChanges();
+            expect(getAddCommentButton().disabled).toBeTrue();
+        });
+
+        it('should enable add button when comment is not empty', () => {
+            component.commentControl.setValue('Some comment');
+
+            fixture.detectChanges();
+            expect(getAddCommentButton().disabled).toBeFalse();
         });
     });
 });
