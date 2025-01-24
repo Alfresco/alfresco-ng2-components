@@ -299,6 +299,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         describe('Save & Delete buttons', () => {
             it('should disable save and delete button for default task filters', async () => {
+                component.taskFilter = undefined;
                 getTaskFilterSpy.and.returnValue(of(mockDefaultTaskFilter));
 
                 component.ngOnChanges({ id: mockTaskFilterIdChange });
