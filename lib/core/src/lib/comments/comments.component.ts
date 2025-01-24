@@ -61,7 +61,8 @@ export class CommentsComponent implements OnChanges {
     beingAdded: boolean = false;
 
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
-    private _commentControl = new FormControl('', [this.validateEmptyComment]);
+
+    private readonly _commentControl = new FormControl('', [this.validateEmptyComment]);
 
     get commentControl(): FormControl<string> {
         return this._commentControl;
