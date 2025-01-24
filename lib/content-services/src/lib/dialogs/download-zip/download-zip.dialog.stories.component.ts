@@ -23,7 +23,8 @@ import { FileDownloadStatus } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-download-zip-dialog-storybook',
-    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`
+    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`,
+    standalone: false
 })
 export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     @Input()

@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { FormWidgetModel } from './form-widget.model';
 
 export class TabModel extends FormWidgetModel {
-
     title: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel;

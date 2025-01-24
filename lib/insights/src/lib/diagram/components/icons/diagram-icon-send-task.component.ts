@@ -24,7 +24,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-icon-send-task',
-    standalone: true,
     imports: [RaphaelIconSendDirective, DiagramTooltipComponent],
     templateUrl: './diagram-icon-send-task.component.html'
 })

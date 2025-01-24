@@ -30,7 +30,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-date-editor',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, FormsModule],
     templateUrl: './date.editor.html',
     providers: [

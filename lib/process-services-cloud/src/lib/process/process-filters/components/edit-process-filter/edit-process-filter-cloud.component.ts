@@ -80,7 +80,6 @@ interface ProcessFilterFormProps {
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
-    standalone: true,
     imports: [
         IconComponent,
         MatProgressSpinnerModule,

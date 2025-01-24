@@ -23,7 +23,6 @@ import { RaphaelIconSignalDirective } from '../raphael/icons/raphael-icon-signal
 
 @Component({
     selector: 'diagram-icon-signal',
-    standalone: true,
     imports: [RaphaelIconSignalDirective],
     templateUrl: './diagram-icon-signal.component.html'
 })

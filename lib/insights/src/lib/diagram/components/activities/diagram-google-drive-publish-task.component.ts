@@ -24,7 +24,6 @@ import { DiagramIconGoogleDrivePublishTaskComponent } from '../icons/diagram-ico
 
 @Component({
     selector: 'diagram-google-drive-publish-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconGoogleDrivePublishTaskComponent],
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })

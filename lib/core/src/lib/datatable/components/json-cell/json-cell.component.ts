@@ -24,7 +24,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-json-cell',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatDialogModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

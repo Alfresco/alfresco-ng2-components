@@ -27,7 +27,6 @@ import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
 @Component({
     selector: 'adf-upload-drag-area',
-    standalone: true,
     imports: [FileDraggableDirective],
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.scss'],

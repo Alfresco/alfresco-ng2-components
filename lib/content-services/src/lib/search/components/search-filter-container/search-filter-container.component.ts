@@ -31,7 +31,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
     selector: 'adf-search-filter-container',
-    standalone: true,
     imports: [
         CommonModule,
         MatButtonModule,

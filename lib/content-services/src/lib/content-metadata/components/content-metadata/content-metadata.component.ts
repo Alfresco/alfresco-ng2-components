@@ -63,7 +63,6 @@ enum DefaultPanels {
 
 @Component({
     selector: 'adf-content-metadata',
-    standalone: true,
     imports: [
         CommonModule,
         MatExpansionModule,

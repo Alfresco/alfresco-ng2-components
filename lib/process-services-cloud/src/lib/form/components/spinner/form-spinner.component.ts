@@ -20,7 +20,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    standalone: true,
     imports: [TranslateModule, MatProgressSpinnerModule],
     templateUrl: './form-spinner.component.html',
     styleUrls: ['./form-spinner.component.scss']

@@ -24,7 +24,6 @@ import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-cloud-app-details',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatIconModule, MatCardModule],
     templateUrl: './app-details-cloud.component.html',
     styleUrls: ['./app-details-cloud.component.scss'],

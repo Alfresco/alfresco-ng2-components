@@ -99,8 +99,7 @@
                     <mat-menu #menu="matMenu">
                         <ng-template
                             [ngTemplateOutlet]="nodeActionsMenuTemplate"
-                            [ngTemplateOutletContext]="{ node: node }">
-                        </ng-template>
+                            [ngTemplateOutletContext]="{ node: node }" />
                     </mat-menu>
                 </div>
             </mat-tree-node>
@@ -109,8 +108,7 @@
 </ng-container>
 
 <ng-template #emptyContent>
-    <ng-template [ngTemplateOutlet]="emptyContentTemplate">
-    </ng-template>
+    <ng-template [ngTemplateOutlet]="emptyContentTemplate" />
 </ng-template>
 
 <ng-template #loadingSpinner>

@@ -25,7 +25,6 @@ import { NodeSharedDirective } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-node-share-test-component',
-    standalone: true,
     imports: [NodeSharedDirective],
     template: `
         <button

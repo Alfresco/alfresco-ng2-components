@@ -30,7 +30,6 @@ import { FormCustomOutcomesComponent } from '../../../../form/components/form-cl
 
 @Component({
     selector: 'adf-cloud-task-form',
-    standalone: true,
     imports: [CommonModule, UserTaskCloudButtonsComponent, FormCustomOutcomesComponent, FormCloudComponent],
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss'],

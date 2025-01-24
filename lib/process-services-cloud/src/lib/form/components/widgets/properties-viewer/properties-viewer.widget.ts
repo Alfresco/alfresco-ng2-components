@@ -26,7 +26,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-properties-viewer-widget',
-    standalone: true,
     imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslateModule],
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],

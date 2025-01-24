@@ -37,7 +37,6 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
     selector: 'adf-search-date-range',
-    standalone: true,
     imports: [
         CommonModule,
         MatRadioModule,

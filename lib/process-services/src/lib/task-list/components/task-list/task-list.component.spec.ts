@@ -647,7 +647,6 @@ describe('TaskListComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
     template: ` <adf-tasklist #taskList>
         <data-columns>
@@ -694,7 +693,6 @@ describe('CustomTaskListComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [CustomEmptyContentTemplateDirective, TaskListComponent],
     template: `
         <adf-tasklist [appId]="1">
@@ -738,7 +736,6 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>

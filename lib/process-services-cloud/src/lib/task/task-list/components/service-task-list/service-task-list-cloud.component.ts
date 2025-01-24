@@ -42,7 +42,6 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-service-task-list',
-    standalone: true,
     imports: [
         CommonModule,
         ColumnsSelectorComponent,

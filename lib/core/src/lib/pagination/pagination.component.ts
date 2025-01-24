@@ -57,7 +57,6 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatMenuModule]
 })
 export class PaginationComponent implements OnInit, PaginationComponentInterface {

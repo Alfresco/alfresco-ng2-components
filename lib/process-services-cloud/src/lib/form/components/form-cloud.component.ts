@@ -68,7 +68,6 @@ import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-cloud-form',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

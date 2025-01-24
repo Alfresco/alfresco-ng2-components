@@ -2,7 +2,8 @@
 @import '../theming';
 @import './all-theme';
 @include mat.all-component-typographies;
-@include mat.core;
+@include mat.elevation-classes;
+@include mat.app-background;
 
 $primary: mat.define-palette($alfresco-bpm-green);
 $accent: mat.define-palette($alfresco-accent-orange);
@@ -11,7 +12,7 @@ $theme: mat.define-light-theme(
     (
         color: (
             primary: $primary,
-            accent: $accent,
+            accent: $accent
         ),
         typography: $alfresco-typography
     )

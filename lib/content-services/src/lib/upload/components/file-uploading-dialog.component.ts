@@ -48,7 +48,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.scss'],

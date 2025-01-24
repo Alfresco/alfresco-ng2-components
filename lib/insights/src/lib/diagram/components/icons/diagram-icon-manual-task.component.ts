@@ -23,7 +23,6 @@ import { RaphaelIconManualDirective } from '../raphael/icons/raphael-icon-manual
 
 @Component({
     selector: 'diagram-icon-manual-task',
-    standalone: true,
     imports: [RaphaelIconManualDirective],
     templateUrl: './diagram-icon-manual-task.component.html'
 })

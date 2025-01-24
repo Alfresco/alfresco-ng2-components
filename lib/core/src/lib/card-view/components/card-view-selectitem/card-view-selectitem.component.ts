@@ -34,7 +34,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-card-view-selectitem',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

@@ -17,13 +17,7 @@
 
 import { Component, DestroyRef, inject, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import {
-    EmptyListComponent,
-    NotificationService,
-    ToolbarComponent,
-    ToolbarTitleComponent,
-    TranslationService
-} from '@alfresco/adf-core';
+import { EmptyListComponent, NotificationService, ToolbarComponent, ToolbarTitleComponent, TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentService } from '../common/services/content.service';
@@ -47,7 +41,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-content-node-selector',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,
@@ -70,7 +63,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit {
-
     title: string;
     action: NodeAction;
     buttonActionName: string;

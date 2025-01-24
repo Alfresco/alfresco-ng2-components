@@ -27,7 +27,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-amount-editor',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatInputModule],
     templateUrl: './amount.editor.html',
     styleUrls: ['./amount.editor.scss']

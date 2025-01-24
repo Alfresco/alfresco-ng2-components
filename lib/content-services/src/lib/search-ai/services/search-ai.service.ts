@@ -39,10 +39,7 @@ export class SearchAiService {
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private translateService: TranslateService
-    ) {}
+    constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
 
     /**
      * Update the state of the search AI input.

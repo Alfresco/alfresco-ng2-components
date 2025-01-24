@@ -71,7 +71,6 @@ export const processPresetsDefaultModel = {
 
 @Component({
     selector: 'adf-process-instance-list',
-    standalone: true,
     imports: [
         CommonModule,
         MatProgressSpinnerModule,

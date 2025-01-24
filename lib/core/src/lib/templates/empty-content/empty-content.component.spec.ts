@@ -25,7 +25,6 @@ import { EmptyContentComponent } from './empty-content.component';
 
 @Component({
     selector: 'adf-test-component',
-    standalone: true,
     imports: [EmptyContentComponent],
     template: `
         <adf-empty-content icon="delete" [title]="'CUSTOM_TITLE'" [subtitle]="'CUSTOM_SUBTITLE'">

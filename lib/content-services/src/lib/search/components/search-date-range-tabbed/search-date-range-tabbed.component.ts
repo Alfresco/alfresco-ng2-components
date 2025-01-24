@@ -36,7 +36,6 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
     selector: 'adf-search-date-range-tabbed',
-    standalone: true,
     imports: [CommonModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchFilterTabDirective],
     templateUrl: './search-date-range-tabbed.component.html',
     styleUrls: ['./search-date-range-tabbed.component.scss'],

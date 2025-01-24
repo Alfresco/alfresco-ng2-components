@@ -17,16 +17,12 @@
 
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    EditJsonDialogComponent,
-    EditJsonDialogSettings
-} from './edit-json.dialog';
+import { EditJsonDialogComponent, EditJsonDialogSettings } from './edit-json.dialog';
 
 @Component({
     selector: 'adf-edit-json-dialog-storybook',
-    template: `<button mat-raised-button (click)="openDialog()">
-        Open dialog
-    </button>`
+    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`,
+    standalone: false
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
@@ -75,11 +71,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
             .afterClosed()
             .subscribe((value: string) => {
                 if (value) {
-                    this._settings.value = JSON.stringify(
-                        JSON.parse(value),
-                        null,
-                        '  '
-                    );
+                    this._settings.value = JSON.stringify(JSON.parse(value), null, '  ');
                 }
             });
     }

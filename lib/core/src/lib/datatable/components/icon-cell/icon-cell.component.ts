@@ -22,7 +22,6 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    standalone: true,
     imports: [CommonModule, MatIconModule],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -21,7 +21,6 @@ import { FileDraggableDirective, INPUT_FOCUS_CSS_CLASS } from '../directives/fil
 
 @Component({
     selector: 'adf-test-component',
-    standalone: true,
     imports: [FileDraggableDirective],
     template: `
         <div id="test-container" [adf-file-draggable]="true">

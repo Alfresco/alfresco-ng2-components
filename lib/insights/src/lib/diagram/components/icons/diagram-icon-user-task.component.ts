@@ -23,7 +23,6 @@ import { RaphaelIconUserDirective } from '../raphael/icons/raphael-icon-user.com
 
 @Component({
     selector: 'diagram-icon-user-task',
-    standalone: true,
     imports: [RaphaelIconUserDirective],
     templateUrl: './diagram-icon-user-task.component.html'
 })

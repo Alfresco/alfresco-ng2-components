@@ -32,13 +32,9 @@ export interface TimeSync {
     providedIn: 'root'
 })
 export class TimeSyncService {
-
     private readonly _http: HttpClient;
 
-    constructor(
-        private _injector: Injector,
-        private _appConfigService: AppConfigService
-    ) {
+    constructor(private _injector: Injector, private _appConfigService: AppConfigService) {
         this._http = this._injector.get(HttpClient);
     }
 
@@ -59,7 +55,7 @@ export class TimeSyncService {
                     serverTimeInMs = serverTimeResponse;
                 }
 
-                const adjustedServerTimeInMs = serverTimeInMs + (roundTripTimeInMs / 2);
+                const adjustedServerTimeInMs = serverTimeInMs + roundTripTimeInMs / 2;
                 const localCurrentTimeInMs = Date.now();
                 const timeOffsetInMs = Math.abs(localCurrentTimeInMs - adjustedServerTimeInMs);
                 const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
@@ -71,7 +67,7 @@ export class TimeSyncService {
                     serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
                 };
             }),
-            catchError(error => throwError(() => new Error(error)))
+            catchError((error) => throwError(() => new Error(error)))
         );
     }
 
@@ -82,9 +78,7 @@ export class TimeSyncService {
      * @returns An Observable that emits a boolean indicating whether the local time is out of sync.
      */
     isLocalTimeOutOfSync(maxAllowedClockSkewInSec: number): Observable<boolean> {
-        return this.checkTimeSync(maxAllowedClockSkewInSec).pipe(
-            map(sync => sync.outOfSync)
-        );
+        return this.checkTimeSync(maxAllowedClockSkewInSec).pipe(map((sync) => sync.outOfSync));
     }
 
     private getServerTime(): Observable<number> {

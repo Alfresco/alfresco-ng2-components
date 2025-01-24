@@ -79,8 +79,7 @@
                 <ng-container *ngFor="let extensionTemplate of extensionTemplates">
                     <span *ngIf="extensionTemplate.isVisible" class="adf-viewer-render-custom-content">
                         <ng-template [ngTemplateOutlet]="extensionTemplate.template"
-                                     [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension }">
-                        </ng-template>
+                                     [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension }" />
                     </span>
                 </ng-container>
             </ng-container>
@@ -92,5 +91,5 @@
     </div>
 </div>
 <ng-container *ngIf="viewerTemplateExtensions">
-    <ng-template [ngTemplateOutlet]="viewerTemplateExtensions" [ngTemplateOutletInjector]="injector"></ng-template>
+    <ng-template [ngTemplateOutlet]="viewerTemplateExtensions" [ngTemplateOutletInjector]="injector" />
 </ng-container>

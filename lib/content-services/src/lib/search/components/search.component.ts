@@ -40,7 +40,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search',
-    standalone: true,
     imports: [CommonModule, TranslateModule],
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],

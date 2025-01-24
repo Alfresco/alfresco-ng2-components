@@ -25,7 +25,6 @@ import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 
 @Component({
     selector: 'diagram-event',
-    standalone: true,
     imports: [DiagramTooltipComponent, DiagramContainerIconEventTaskComponent, RaphaelCircleDirective],
     templateUrl: './diagram-event.component.html'
 })

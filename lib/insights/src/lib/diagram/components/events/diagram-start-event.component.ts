@@ -24,7 +24,6 @@ import { DiagramEventComponent } from './diagram-event.component';
 
 @Component({
     selector: 'diagram-start-event',
-    standalone: true,
     imports: [DiagramEventComponent],
     templateUrl: './diagram-start-event.component.html'
 })

@@ -25,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-create-process-attachment',
-    standalone: true,
     imports: [CommonModule, UploadDirective, MatButtonModule, MatIconModule],
     styleUrls: ['./create-process-attachment.component.css'],
     templateUrl: './create-process-attachment.component.html'

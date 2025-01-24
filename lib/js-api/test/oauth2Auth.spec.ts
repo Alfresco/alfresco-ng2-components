@@ -18,10 +18,7 @@
 import assert from 'assert';
 import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
 import { EcmAuthMock, OAuthMock } from './mockObjects';
-import jsdom from 'jsdom';
-
-const { JSDOM } = jsdom;
-const globalAny: any = global;
+import { jest } from '@jest/globals';
 
 describe('Oauth2  test', () => {
     let alfrescoJsApi: AlfrescoApi;
@@ -32,7 +29,8 @@ describe('Oauth2  test', () => {
         const hostOauth2 = 'https://myOauthUrl:30081';
         const mockStorage = {
             getItem: () => {},
-            setItem: () => {}
+            setItem: () => {},
+            removeItem: () => {}
         };
 
         oauth2Mock = new OAuthMock(hostOauth2);
@@ -43,6 +41,31 @@ describe('Oauth2  test', () => {
         });
 
         alfrescoJsApi.storage.setStorage(mockStorage);
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: {
+                ancestorOrigins: null,
+                hash: null,
+                host: 'dummy.com',
+                port: '80',
+                protocol: 'http:',
+                hostname: 'dummy.com',
+                href: 'http://localhost/',
+                origin: 'dummy.com',
+                pathname: null,
+                search: null,
+                assign: (url: string) => {
+                    window.location.href = url;
+                },
+                reload: null,
+                replace: null
+            }
+        });
+    });
+
+    afterEach(() => {
+        authResponseMock.cleanAll();
+        jest.clearAllMocks();
     });
 
     describe('Discovery urls', () => {
@@ -168,8 +191,8 @@ describe('Oauth2  test', () => {
             });
         });
 
-        it('should refresh token when the login not use the implicitFlow ', function (done) {
-            this.timeout(3000);
+        it('should refresh token when the login not use the implicitFlow ', (done) => {
+            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -204,8 +227,8 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should not hang the app also if teh logout is missing', function (done) {
-            this.timeout(3000);
+        it('should not hang the app also if the logout is missing', (done) => {
+            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -426,7 +449,7 @@ describe('Oauth2  test', () => {
         // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
         // eslint-disable-next-line ban/ban
         xit('should extend content session after oauth token refresh', function (done) {
-            this.timeout(3000);
+            jest.setTimeout(3000);
 
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
@@ -464,7 +487,7 @@ describe('Oauth2  test', () => {
             });
 
             alfrescoApi.login('admin', 'admin');
-            this.timeout(3000);
+            jest.setTimeout(3000);
             alfrescoApi.refreshToken();
         });
 
@@ -519,13 +542,7 @@ describe('Oauth2  test', () => {
         });
 
         describe('With mocked DOM', () => {
-            beforeEach(() => {
-                const dom = new JSDOM('', { url: 'https://localhost' });
-                globalAny.window = dom.window;
-                globalAny.document = dom.window.document;
-            });
-
-            it('a failed hash check calls the logout', () => {
+            it('a failed hash check calls the logout', (done) => {
                 const oauth2Auth = new Oauth2Auth(
                     {
                         oauth2: {
@@ -554,13 +571,8 @@ describe('Oauth2  test', () => {
 
                 // invalid hash location leads to a reject which leads to a logout
                 oauth2Auth.iFrameHashListener();
-                setTimeout(() => {
-                    assert.equal(logoutCalled, true);
-                }, 500);
-            });
-
-            afterEach(() => {
-                globalAny.window = undefined;
+                assert.equal(logoutCalled, true);
+                done();
             });
         });
 
@@ -582,10 +594,10 @@ describe('Oauth2  test', () => {
                     },
                     alfrescoJsApi
                 );
+                window.location.assign('public-url');
             });
 
             it('should return true if PathMatcher.match returns true for matching url', () => {
-                globalAny.window = { location: { href: 'public-url' } };
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
                 oauth2Auth.pathMatcher = {
                     match: () => true
@@ -595,7 +607,6 @@ describe('Oauth2  test', () => {
             });
 
             it('should return false if PathMatcher.match returns false for matching url', () => {
-                globalAny.window = { location: { href: 'some-public-url' } };
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
                 oauth2Auth.pathMatcher = {
                     match: () => false
@@ -609,13 +620,11 @@ describe('Oauth2  test', () => {
             });
 
             it('should return false if public urls is not set as an array list', () => {
-                globalAny.window = { location: { href: 'public-url-string' } };
                 oauth2Auth.config.oauth2.publicUrls = null;
                 assert.equal(oauth2Auth.isPublicUrl(), false);
             });
 
             it('should not call `implicitLogin`', async () => {
-                globalAny.window = { location: { href: 'public-url' } };
                 oauth2Auth.config.oauth2.silentLogin = true;
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
 

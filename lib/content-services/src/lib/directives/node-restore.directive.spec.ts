@@ -23,7 +23,6 @@ import { NoopTranslateModule, TranslationService } from '@alfresco/adf-core';
 import { TrashcanApi } from '@alfresco/js-api';
 
 @Component({
-    standalone: true,
     imports: [NodeRestoreDirective],
     template: ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
 })

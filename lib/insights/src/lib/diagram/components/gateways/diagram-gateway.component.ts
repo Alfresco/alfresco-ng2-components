@@ -25,7 +25,6 @@ import { RaphaelRhombusDirective } from '../raphael/raphael-rhombus.component';
 
 @Component({
     selector: 'diagram-gateway',
-    standalone: true,
     imports: [DiagramTooltipComponent, RaphaelRhombusDirective],
     templateUrl: './diagram-gateway.component.html'
 })

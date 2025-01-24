@@ -43,7 +43,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

@@ -26,7 +26,6 @@ export type HeaderVariant = 'minimal' | 'extended';
 
 @Component({
     selector: 'adf-header',
-    standalone: true,
     imports: [CommonModule, ...TOOLBAR_DIRECTIVES, NavbarComponent],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],

@@ -24,7 +24,6 @@ import { HighlightDirective } from './highlight.directive';
 /* spellchecker: disable */
 @Component({
     selector: 'adf-test-component',
-    standalone: true,
     imports: [HighlightDirective],
     template: ` <div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
             <div id="innerDiv11" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>

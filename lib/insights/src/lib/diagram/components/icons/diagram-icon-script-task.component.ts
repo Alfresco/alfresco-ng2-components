@@ -23,7 +23,6 @@ import { RaphaelIconScriptDirective } from '../raphael/icons/raphael-icon-script
 
 @Component({
     selector: 'diagram-icon-script-task',
-    standalone: true,
     imports: [RaphaelIconScriptDirective],
     templateUrl: './diagram-icon-script-task.component.html'
 })

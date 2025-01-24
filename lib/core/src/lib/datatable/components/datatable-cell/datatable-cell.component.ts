@@ -28,7 +28,6 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
 
 @Component({
     selector: 'adf-datatable-cell',
-    standalone: true,
     imports: [CommonModule, ClipboardDirective, TruncatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

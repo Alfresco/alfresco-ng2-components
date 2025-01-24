@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
 import { provideTranslations } from '@alfresco/adf-core';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
@@ -115,24 +115,18 @@ export class ContentModule {
                 provideTranslations('adf-content-services', 'assets/adf-content-services'),
                 ContentAuthLoaderService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: versionCompatibilityFactory,
-                    deps: [VersionCompatibilityService],
-                    multi: true
-                },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: contentAuthLoaderFactory,
-                    deps: [ContentAuthLoaderService],
-                    multi: true
-                },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: createAlfrescoApiInstance,
-                    deps: [AlfrescoApiLoaderService],
-                    multi: true
-                }
+                provideAppInitializer(() => {
+                    const initializerFn = versionCompatibilityFactory(inject(VersionCompatibilityService));
+                    return initializerFn();
+                }),
+                provideAppInitializer(() => {
+                    const initializerFn = contentAuthLoaderFactory(inject(ContentAuthLoaderService));
+                    return initializerFn();
+                }),
+                provideAppInitializer(() => {
+                    const initializerFn = createAlfrescoApiInstance(inject(AlfrescoApiLoaderService));
+                    return initializerFn();
+                })
             ]
         };
     }

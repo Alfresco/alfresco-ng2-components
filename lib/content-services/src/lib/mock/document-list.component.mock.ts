@@ -27,10 +27,13 @@ export const fakeNodeWithCreatePermission = new Node({
     path: {
         name: '/Company Home/User Homes',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: '55052317-7e59-4058-8e07-769f41e615e1', name: 'User Homes' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: '55052317-7e59-4058-8e07-769f41e615e1', name: 'User Homes' }
+        ]
     },
     isFolder: true,
     modifiedByUser: { id: 'Test', displayName: 'Test' },
@@ -51,10 +54,13 @@ export const fakeNodeWithNoPermission = new Node({
     path: {
         name: '/Company Home/User Homes',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: '55052317-7e59-4058-8e07-769f41e615e1', name: 'User Homes' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: '55052317-7e59-4058-8e07-769f41e615e1', name: 'User Homes' }
+        ]
     },
     isFolder: true,
     modifiedByUser: { id: 'Test', displayName: 'Test' },
@@ -72,36 +78,41 @@ export const fakeNodeAnswerWithEntries = {
             skipCount: 10,
             maxItems: 10
         },
-        entries: [{
-            entry: {
-                isFile: true,
-                createdByUser: { id: 'admin', displayName: 'Administrator' },
-                modifiedAt: '2017-05-24T15:08:55.640Z',
-                nodeType: 'cm:content',
-                content: {
-                    mimeType: 'application/rtf',
-                    mimeTypeName: 'Rich Text Format',
-                    sizeInBytes: 14530,
-                    encoding: 'UTF-8'
-                },
-                parentId: 'd124de26-6ba0-4f40-8d98-4907da2d337a',
-                createdAt: '2017-05-24T15:08:55.640Z',
-                path: {
-                    name: '/Company Home/Guest Home',
-                    isComplete: true,
-                    elements: [{
-                        id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-                        name: 'Company Home'
-                    }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
-                },
-                isFolder: false,
-                modifiedByUser: { id: 'admin', displayName: 'Administrator' },
-                name: 'b_txt_file.rtf',
-                id: '67b80f77-dbca-4f58-be6c-71b9dd61ea53',
-                properties: { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
-                allowableOperations: ['delete', 'update']
+        entries: [
+            {
+                entry: {
+                    isFile: true,
+                    createdByUser: { id: 'admin', displayName: 'Administrator' },
+                    modifiedAt: '2017-05-24T15:08:55.640Z',
+                    nodeType: 'cm:content',
+                    content: {
+                        mimeType: 'application/rtf',
+                        mimeTypeName: 'Rich Text Format',
+                        sizeInBytes: 14530,
+                        encoding: 'UTF-8'
+                    },
+                    parentId: 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+                    createdAt: '2017-05-24T15:08:55.640Z',
+                    path: {
+                        name: '/Company Home/Guest Home',
+                        isComplete: true,
+                        elements: [
+                            {
+                                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                                name: 'Company Home'
+                            },
+                            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+                        ]
+                    },
+                    isFolder: false,
+                    modifiedByUser: { id: 'admin', displayName: 'Administrator' },
+                    name: 'b_txt_file.rtf',
+                    id: '67b80f77-dbca-4f58-be6c-71b9dd61ea53',
+                    properties: { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+                    allowableOperations: ['delete', 'update']
+                }
             }
-        }]
+        ]
     }
 };
 
@@ -127,34 +138,38 @@ export const fakeGetSitesAnswer = {
             skipCount: 0,
             maxItems: 20
         },
-        entries: [{
-            entry: {
-                role: 'SiteManager',
-                visibility: 'PRIVATE',
-                guid: 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b',
-                id: 'admin-site',
-                preset: 'site-dashboard',
-                title: 'Admin Site'
+        entries: [
+            {
+                entry: {
+                    role: 'SiteManager',
+                    visibility: 'PRIVATE',
+                    guid: 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b',
+                    id: 'admin-site',
+                    preset: 'site-dashboard',
+                    title: 'Admin Site'
+                }
+            },
+            {
+                entry: {
+                    role: 'SiteManager',
+                    visibility: 'PUBLIC',
+                    guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
+                    description: 'This is a Sample Alfresco Team site.',
+                    id: 'swsdp',
+                    preset: 'site-dashboard',
+                    title: 'Sample: Web Site Design Project'
+                }
+            },
+            {
+                entry: {
+                    visibility: 'PUBLIC',
+                    guid: 'af36cf8f-d43c-4a4b-84e6-d1b03e3a2ce5',
+                    id: 'test-site',
+                    preset: 'site-dashboard',
+                    title: 'Test Site'
+                }
             }
-        }, {
-            entry: {
-                role: 'SiteManager',
-                visibility: 'PUBLIC',
-                guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
-                description: 'This is a Sample Alfresco Team site.',
-                id: 'swsdp',
-                preset: 'site-dashboard',
-                title: 'Sample: Web Site Design Project'
-            }
-        }, {
-            entry: {
-                visibility: 'PUBLIC',
-                guid: 'af36cf8f-d43c-4a4b-84e6-d1b03e3a2ce5',
-                id: 'test-site',
-                preset: 'site-dashboard',
-                title: 'Test Site'
-            }
-        }]
+        ]
     }
 };
 
@@ -167,30 +182,39 @@ export const fakeGetSiteMembership = {
             skipCount: 0,
             maxItems: 20
         },
-        entries: [{
-            entry: {
-                site: {
+        entries: [
+            {
+                entry: {
+                    site: {
+                        role: 'SiteManager',
+                        visibility: 'PRIVATE',
+                        guid: 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b',
+                        id: 'admin-site',
+                        preset: 'site-dashboard',
+                        title: 'Admin Site'
+                    },
                     role: 'SiteManager',
-                    visibility: 'PRIVATE',
                     guid: 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b',
-                    id: 'admin-site',
-                    preset: 'site-dashboard',
-                    title: 'Admin Site'
-                }, role: 'SiteManager', guid: 'ac65fdbe-0c79-4f67-bd6a-b89a2768561b', id: 'admin-site'
-            }
-        }, {
-            entry: {
-                site: {
+                    id: 'admin-site'
+                }
+            },
+            {
+                entry: {
+                    site: {
+                        role: 'SiteManager',
+                        visibility: 'PUBLIC',
+                        guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
+                        description: 'This is a Sample Alfresco Team site.',
+                        id: 'swsdp',
+                        preset: 'site-dashboard',
+                        title: 'Sample: Web Site Design Project'
+                    },
                     role: 'SiteManager',
-                    visibility: 'PUBLIC',
                     guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
-                    description: 'This is a Sample Alfresco Team site.',
-                    id: 'swsdp',
-                    preset: 'site-dashboard',
-                    title: 'Sample: Web Site Design Project'
-                }, role: 'SiteManager', guid: 'b4cff62a-664d-4d45-9302-98723eac1319', id: 'swsdp'
+                    id: 'swsdp'
+                }
             }
-        }]
+        ]
     }
 };
 
@@ -202,17 +226,24 @@ export const fakeNodePaging: NodePaging = {
             totalItems: 5,
             skipCount: 0,
             maxItems: 100
-        }, entries: [{
-            entry: fakeNodeWithNoPermission
-        }, {
-            entry: fakeNodeWithNoPermission
-        }, {
-            entry: fakeNodeWithNoPermission
-        }, {
-            entry: fakeNodeWithNoPermission
-        }, {
-            entry: fakeNodeWithNoPermission
-        }]
+        },
+        entries: [
+            {
+                entry: fakeNodeWithNoPermission
+            },
+            {
+                entry: fakeNodeWithNoPermission
+            },
+            {
+                entry: fakeNodeWithNoPermission
+            },
+            {
+                entry: fakeNodeWithNoPermission
+            },
+            {
+                entry: fakeNodeWithNoPermission
+            }
+        ]
     }
 };
 
@@ -232,10 +263,13 @@ export const mockNode1 = new Node({
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+        ]
     },
     isFolder: false,
     modifiedByUser: { id: 'admin', displayName: 'Administrator' },
@@ -261,10 +295,13 @@ export const mockNode2 = new Node({
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+        ]
     },
     isFolder: false,
     modifiedByUser: { id: 'admin', displayName: 'Administrator' },
@@ -290,10 +327,13 @@ export const mockNode3 = new Node({
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+        ]
     },
     isFolder: false,
     modifiedByUser: { id: 'admin', displayName: 'Administrator' },
@@ -320,12 +360,17 @@ export const mockNodePagingWithPreselectedNodes: NodePaging = {
             totalItems: 5,
             skipCount: 0,
             maxItems: 100
-        }, entries: [{
-            entry: mockNode1
-        }, {
-            entry: mockNode2
-        }, {
-            entry: mockNode3
-        }]
+        },
+        entries: [
+            {
+                entry: mockNode1
+            },
+            {
+                entry: mockNode2
+            },
+            {
+                entry: mockNode3
+            }
+        ]
     }
 };

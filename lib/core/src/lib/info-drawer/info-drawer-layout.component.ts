@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-info-drawer-layout',
-    standalone: true,
     imports: [CommonModule],
     templateUrl: './info-drawer-layout.component.html',
     styleUrls: ['./info-drawer-layout.component.scss'],

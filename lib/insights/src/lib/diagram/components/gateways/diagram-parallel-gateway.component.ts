@@ -25,7 +25,6 @@ import { RaphaelPlusDirective } from '../raphael/raphael-plus.component';
 
 @Component({
     selector: 'diagram-parallel-gateway',
-    standalone: true,
     imports: [DiagramGatewayComponent, RaphaelPlusDirective],
     templateUrl: './diagram-parallel-gateway.component.html'
 })

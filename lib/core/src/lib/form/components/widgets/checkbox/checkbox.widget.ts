@@ -28,7 +28,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'checkbox-widget',
-    standalone: true,
     templateUrl: './checkbox.widget.html',
     styles: [
         `

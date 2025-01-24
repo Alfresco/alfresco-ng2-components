@@ -17,17 +17,7 @@
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
-import {
-    Component,
-    EventEmitter,
-    Injector,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
@@ -41,7 +31,6 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
 
 @Component({
     selector: 'adf-viewer-render',
-    standalone: true,
     templateUrl: './viewer-render.component.html',
     styleUrls: ['./viewer-render.component.scss'],
     host: { class: 'adf-viewer-render' },

@@ -64,7 +64,6 @@ const DEFAULT_TAGS_SORTING = {
  */
 @Component({
     selector: 'adf-tags-creator',
-    standalone: true,
     imports: [
         CommonModule,
         MatInputModule,

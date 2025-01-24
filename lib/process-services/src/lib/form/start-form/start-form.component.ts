@@ -39,7 +39,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-start-form',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, FormRendererComponent, MatIconModule],
     templateUrl: './start-form.component.html',
     styleUrls: ['./start-form.component.scss'],

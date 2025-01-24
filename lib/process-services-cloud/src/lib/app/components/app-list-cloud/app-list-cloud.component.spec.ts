@@ -42,7 +42,6 @@ describe('AppListCloudComponent', () => {
     };
 
     @Component({
-        standalone: true,
         imports: [MatIconModule, CustomEmptyContentTemplateDirective, AppListCloudComponent],
         template: `
             <adf-cloud-app-list>

@@ -25,7 +25,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-cloud-process-filter-dialog-cloud',
-    standalone: true,
     imports: [TranslateModule, MatButtonModule, MatCardModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
     templateUrl: './process-filter-dialog-cloud.component.html',
     styleUrls: ['./process-filter-dialog-cloud.component.scss'],

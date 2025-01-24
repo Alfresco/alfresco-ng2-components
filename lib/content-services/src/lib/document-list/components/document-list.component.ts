@@ -92,7 +92,6 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
 @Component({
     selector: 'adf-document-list',
-    standalone: true,
     imports: [
         CommonModule,
         DataTableComponent,
@@ -735,7 +734,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     }
 
     private isLinkFolder(node: Node) {
-        return node.nodeType === 'app:folderlink' && node.properties && node.properties['cm:destination'];
+        return node.nodeType === 'app:folderlink' && node.properties?.['cm:destination'];
     }
 
     private updateCustomSourceData(nodeId: string): void {

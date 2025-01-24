@@ -31,7 +31,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-node-lock',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

@@ -27,7 +27,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'adf-decimal',
-    standalone: true,
     templateUrl: './decimal.component.html',
     styleUrls: ['./decimal.component.scss'],
     host: {

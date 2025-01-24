@@ -23,7 +23,6 @@ import { SearchFilterComponent } from '../search-filter';
 
 @Component({
     selector: 'adf-search-panel',
-    standalone: true,
     imports: [CommonModule, SearchFilterComponent],
     templateUrl: './search-panel.component.html',
     styleUrls: ['./search-panel.component.scss'],

@@ -22,7 +22,13 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from '../interfaces/identity-user.service.interface';
+import {
+    IdentityJoinGroupRequestModel,
+    IdentityUserServiceInterface,
+    IdentityUserPasswordModel,
+    IdentityUserQueryCloudRequestModel,
+    IdentityUserQueryResponse
+} from '../interfaces/identity-user.service.interface';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
 
@@ -30,11 +36,7 @@ import { OAuth2Service } from './oauth2.service';
     providedIn: 'root'
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
-
-    constructor(
-        private jwtHelperService: JwtHelperService,
-        private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService) { }
+    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
@@ -86,7 +88,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         const url = this.buildUserUrl();
         const queryParams = { username };
 
-        return this.oAuth2Service.get({url, queryParams });
+        return this.oAuth2Service.get({ url, queryParams });
     }
 
     /**
@@ -139,9 +141,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
      * @returns True if the user has access, false otherwise
      */
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
-        return this.getClientRoles(userId, clientId).pipe(
-            map((clientRoles) => clientRoles.length > 0)
-        );
+        return this.getClientRoles(userId, clientId).pipe(map((clientRoles) => clientRoles.length > 0));
     }
 
     /**
@@ -181,11 +181,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         const url = `${this.identityHost}/clients`;
         const queryParams = { clientId: applicationName };
 
-        return this.oAuth2Service
-            .get<any[]>({url, queryParams })
-            .pipe(
-                map((response) => response && response.length > 0 ? response[0].id : '')
-            );
+        return this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(map((response) => (response && response.length > 0 ? response[0].id : '')));
     }
 
     /**
@@ -196,9 +192,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
      * @returns True if the user has access, false otherwise
      */
     checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
-        return this.getClientIdByApplicationName(applicationName).pipe(
-            switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId))
-        );
+        return this.getClientIdByApplicationName(applicationName).pipe(switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId)));
     }
 
     /**
@@ -302,19 +296,21 @@ export class IdentityUserService implements IdentityUserServiceInterface {
      * @returns True if the user has one of the roles, false otherwise
      */
     checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean> {
-        return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
-            let hasRole = false;
-            if (userRoles && userRoles.length > 0) {
-                roleNames.forEach((roleName: string) => {
-                    const role = userRoles.find(({ name }) => roleName === name);
-                    if (role) {
-                        hasRole = true;
-                        return;
-                    }
-                });
-            }
-            return hasRole;
-        }));
+        return this.getUserRoles(userId).pipe(
+            map((userRoles: IdentityRoleModel[]) => {
+                let hasRole = false;
+                if (userRoles && userRoles.length > 0) {
+                    roleNames.forEach((roleName: string) => {
+                        const role = userRoles.find(({ name }) => roleName === name);
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
     }
 
     /**
@@ -330,16 +326,19 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         return this.getTotalUsersCount().pipe(
             switchMap((totalCount) =>
                 this.oAuth2Service.get<IdentityUserModel[]>({ url, queryParams }).pipe(
-                    map((response) => ({
-                        entries: response,
-                        pagination: {
-                            skipCount: requestQuery.first,
-                            maxItems: requestQuery.max,
-                            count: totalCount,
-                            hasMoreItems: false,
-                            totalItems: totalCount
-                        }
-                    } as IdentityUserQueryResponse))
+                    map(
+                        (response) =>
+                            ({
+                                entries: response,
+                                pagination: {
+                                    skipCount: requestQuery.first,
+                                    maxItems: requestQuery.max,
+                                    count: totalCount,
+                                    hasMoreItems: false,
+                                    totalItems: totalCount
+                                }
+                            } as IdentityUserQueryResponse)
+                    )
                 )
             )
         );

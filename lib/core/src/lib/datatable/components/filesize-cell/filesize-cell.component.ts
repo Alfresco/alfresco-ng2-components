@@ -22,7 +22,6 @@ import { FileSizePipe } from '../../../pipes';
 
 @Component({
     selector: 'adf-filesize-cell',
-    standalone: true,
     imports: [CommonModule, FileSizePipe],
     template: `
         <ng-container *ngIf="value$ | async | adfFileSize as fileSize">

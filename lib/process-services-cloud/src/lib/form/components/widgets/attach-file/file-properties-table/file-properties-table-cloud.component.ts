@@ -34,7 +34,6 @@ const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
     selector: 'adf-cloud-file-properties-table',
-    standalone: true,
     imports: [
         CommonModule,
         MatIconModule,

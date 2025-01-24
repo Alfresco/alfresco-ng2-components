@@ -25,13 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-    ADF_DATE_FORMATS,
-    ADF_DATETIME_FORMATS,
-    AdfDateFnsAdapter,
-    AdfDateTimeFnsAdapter,
-    DateFnsUtils
-} from '../../../../common';
+import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
@@ -40,7 +34,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-time-widget',
-    standalone: true,
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },

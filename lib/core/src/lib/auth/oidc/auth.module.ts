@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, inject, ModuleWithProviders, NgModule, InjectionToken } from '@angular/core';
+import { inject, ModuleWithProviders, NgModule, InjectionToken, provideAppInitializer } from '@angular/core';
 import { AUTH_CONFIG, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
@@ -63,12 +63,10 @@ export function oauthStorageFactory(): OAuthStorage {
         },
         RedirectAuthService,
         { provide: AuthService, useExisting: RedirectAuthService },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: loginFactory,
-            deps: [RedirectAuthService],
-            multi: true
-        },
+        provideAppInitializer(() => {
+            const initializerFn = loginFactory(inject(RedirectAuthService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

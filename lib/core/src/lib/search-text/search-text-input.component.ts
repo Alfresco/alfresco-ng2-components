@@ -46,7 +46,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-text-input',
-    standalone: true,
     templateUrl: './search-text-input.component.html',
     styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],

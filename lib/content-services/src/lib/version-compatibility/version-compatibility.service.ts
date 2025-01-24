@@ -31,7 +31,7 @@ export class VersionCompatibilityService {
 
     constructor(private discoveryApiService: DiscoveryApiService) {
         this.discoveryApiService.ecmProductInfo$
-            .pipe(filter(acsInfo => !!acsInfo))
+            .pipe(filter((acsInfo) => !!acsInfo))
             .subscribe((acsInfo: RepositoryInfo) => this.initializeAcsVersion(acsInfo.version));
     }
 
@@ -53,12 +53,13 @@ export class VersionCompatibilityService {
         if (currentVersion) {
             if (+currentVersion.major > +parsedRequiredVersion.major) {
                 versionSupported = true;
-            } else if (currentVersion.major === parsedRequiredVersion.major &&
-                +currentVersion.minor > +parsedRequiredVersion.minor) {
+            } else if (currentVersion.major === parsedRequiredVersion.major && +currentVersion.minor > +parsedRequiredVersion.minor) {
                 versionSupported = true;
-            } else if (currentVersion.major === parsedRequiredVersion.major &&
+            } else if (
+                currentVersion.major === parsedRequiredVersion.major &&
                 currentVersion.minor === parsedRequiredVersion.minor &&
-                +currentVersion.patch >= +parsedRequiredVersion.patch) {
+                +currentVersion.patch >= +parsedRequiredVersion.patch
+            ) {
                 versionSupported = true;
             }
         }

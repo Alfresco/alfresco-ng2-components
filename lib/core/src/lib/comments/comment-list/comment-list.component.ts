@@ -27,7 +27,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-comment-list',
-    standalone: true,
     imports: [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslateModule],
     templateUrl: './comment-list.component.html',
     styleUrls: ['./comment-list.component.scss'],

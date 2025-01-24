@@ -21,7 +21,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 @Component({
     selector: 'adf-test-component',
-    standalone: true,
     imports: [ToggleIconDirective],
     template: ` <button id="testButton" adf-toggle-icon>test</button> `
 })

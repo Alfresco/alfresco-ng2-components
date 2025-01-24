@@ -25,15 +25,13 @@ import { SnackBarData } from './snack-bar-data';
     styleUrls: ['./snackbar-content.component.scss'],
     host: {
         class: 'mat-simple-snackbar'
-    }
+    },
+    standalone: false
 })
 export class SnackbarContentComponent {
-    constructor(
-        public snackBarRef: MatSnackBarRef<SnackbarContentComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
-    ) {
+    constructor(public snackBarRef: MatSnackBarRef<SnackbarContentComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData) {
         if (!data) {
-            this.data = {message: ''};
+            this.data = { message: '' };
         }
     }
 

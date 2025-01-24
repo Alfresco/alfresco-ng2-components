@@ -22,33 +22,32 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    standalone: true,
     imports: [CommonModule, MatIconModule, MatExpansionModule, TranslateModule],
     selector: 'adf-content-metadata-header',
     encapsulation: ViewEncapsulation.None,
     styles: [
         `
-                    adf-content-metadata-header {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                    }
+            adf-content-metadata-header {
+                display: flex;
+                align-items: center;
+                width: 100%;
+            }
 
-                    .adf-metadata-properties-title {
-                        display: block;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        font-weight: 700;
-                        font-size: 15px;
-                        padding-left: 12px;
-                    }
-                `
+            .adf-metadata-properties-title {
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: 700;
+                font-size: 15px;
+                padding-left: 12px;
+            }
+        `
     ],
     template: `
         <ng-container>
             <mat-icon>{{ expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
             <mat-panel-title *ngIf="title" class="adf-metadata-properties-title" [title]="title | translate">{{ title | translate }}</mat-panel-title>
-            <ng-content></ng-content>
+            <ng-content />
         </ng-container>
     `
 })

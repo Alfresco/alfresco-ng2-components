@@ -21,7 +21,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-viewer-unknown-format',
-    standalone: true,
     templateUrl: './unknown-format.component.html',
     styleUrls: ['./unknown-format.component.scss'],
     imports: [MatIconModule, TranslateModule],

@@ -31,7 +31,6 @@ import { RowEditorComponent } from './editors/row-editor/row.editor';
 
 @Component({
     selector: 'dynamic-table-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.scss'],

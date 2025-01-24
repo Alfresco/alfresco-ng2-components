@@ -23,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-inplace-form-input',
-    standalone: true,
     templateUrl: './inplace-form-input.component.html',
     styleUrls: ['./inplace-form-input.component.scss'],
     imports: [MatFormFieldModule, ReactiveFormsModule, MatInputModule, NgClass],

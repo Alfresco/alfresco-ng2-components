@@ -29,7 +29,6 @@ import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 
 @Component({
     selector: 'adf-context-menu',
-    standalone: true,
     templateUrl: './context-menu-list.component.html',
     styleUrls: ['./context-menu-list.component.scss'],
     host: {

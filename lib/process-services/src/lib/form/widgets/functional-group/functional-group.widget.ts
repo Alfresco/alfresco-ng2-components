@@ -31,7 +31,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'functional-group-widget',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, ReactiveFormsModule, MatAutocompleteModule, ErrorWidgetComponent],
     templateUrl: './functional-group.widget.html',
     styleUrls: ['./functional-group.widget.scss'],

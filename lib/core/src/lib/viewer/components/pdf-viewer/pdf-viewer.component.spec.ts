@@ -40,7 +40,6 @@ declare const pdfjsLib: any;
 class TestDialogComponent {}
 
 @Component({
-    standalone: true,
     imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
@@ -56,7 +55,6 @@ class UrlTestComponent {
 }
 
 @Component({
-    standalone: true,
     imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
@@ -72,7 +70,6 @@ class UrlTestPasswordComponent {
 }
 
 @Component({
-    standalone: true,
     imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile" /> `
 })

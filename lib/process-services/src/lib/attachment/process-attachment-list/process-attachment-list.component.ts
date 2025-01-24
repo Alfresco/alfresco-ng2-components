@@ -44,7 +44,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-process-attachment-list',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

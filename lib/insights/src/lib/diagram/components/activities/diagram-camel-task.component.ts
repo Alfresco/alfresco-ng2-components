@@ -24,7 +24,6 @@ import { DiagramIconCamelTaskComponent } from '../icons/diagram-icon-camel-task.
 
 @Component({
     selector: 'diagram-camel-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconCamelTaskComponent],
     templateUrl: './diagram-camel-task.component.html'
 })

@@ -54,9 +54,11 @@ export class TranslationService {
     userLang: string;
     customLoader: TranslateLoaderService;
 
-    constructor(public translate: TranslateService,
-                userPreferencesService: UserPreferencesService,
-                @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
+    constructor(
+        public translate: TranslateService,
+        userPreferencesService: UserPreferencesService,
+        @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]
+    ) {
         this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
         this.defaultLang = 'en';

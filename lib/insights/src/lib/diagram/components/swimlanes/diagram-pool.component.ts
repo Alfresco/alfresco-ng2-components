@@ -23,7 +23,6 @@ import { RaphaelTextDirective } from '../raphael/raphael-text.component';
 
 @Component({
     selector: 'diagram-pool',
-    standalone: true,
     imports: [RaphaelRectDirective, RaphaelTextDirective],
     templateUrl: './diagram-pool.component.html'
 })

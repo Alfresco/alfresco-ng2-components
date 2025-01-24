@@ -26,7 +26,6 @@ import { ProcessAuditDirective } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'adf-basic-button',
-    standalone: true,
     imports: [ProcessAuditDirective],
     template: ` <button
         id="auditButton"

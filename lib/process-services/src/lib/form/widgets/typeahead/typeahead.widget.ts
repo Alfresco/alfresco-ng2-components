@@ -31,7 +31,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'typeahead-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatFormFieldModule, FormsModule, MatAutocompleteModule, ErrorWidgetComponent, MatInputModule],
     templateUrl: './typeahead.widget.html',
     styleUrls: ['./typeahead.widget.scss'],

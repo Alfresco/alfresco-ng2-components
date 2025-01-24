@@ -24,7 +24,6 @@ import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
     selector: 'adf-search-filter-menu-card',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule, MatDividerModule],
     templateUrl: './search-filter-menu-card.component.html',
     styleUrls: ['./search-filter-menu-card.component.scss'],

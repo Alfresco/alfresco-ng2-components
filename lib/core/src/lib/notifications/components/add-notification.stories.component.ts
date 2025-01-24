@@ -21,7 +21,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-add-notification-storybook',
-    standalone: true,
     imports: [MatButtonModule],
     template: ` <button mat-raised-button (click)="showInfo()">Add Notification</button>`
 })

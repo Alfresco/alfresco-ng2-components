@@ -27,7 +27,8 @@ import { NotFeaturesDirective } from './not-features.directive';
         <div>
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
-    `
+    `,
+    standalone: false
 })
 class TestWithEnabledFlagComponent {
     features = ['feature1', 'feature3'];
@@ -38,7 +39,8 @@ class TestWithEnabledFlagComponent {
         <div>
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
-    `
+    `,
+    standalone: false
 })
 class TestWithDisabledFlagComponent {
     features = 'feature2';

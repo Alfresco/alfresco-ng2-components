@@ -62,7 +62,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-form',
-    standalone: true,
     imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslateModule, FormRendererComponent, FormatSpacePipe],
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],

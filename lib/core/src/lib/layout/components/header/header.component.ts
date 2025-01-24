@@ -27,7 +27,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-layout-header',
-    standalone: true,
     imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslateModule],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],

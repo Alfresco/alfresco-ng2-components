@@ -33,7 +33,6 @@ import { HeaderWidgetComponent } from './widgets/header/header.widget';
 
 @Component({
     selector: 'adf-form-renderer',
-    standalone: true,
     templateUrl: './form-renderer.component.html',
     styleUrls: ['./form-renderer.component.scss'],
     providers: [

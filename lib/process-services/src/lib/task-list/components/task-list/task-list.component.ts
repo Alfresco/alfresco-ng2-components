@@ -60,7 +60,6 @@ export const PRESET_KEY = 'adf-task-list.presets';
 
 @Component({
     selector: 'adf-tasklist',
-    standalone: true,
     imports: [
         CommonModule,
         MatProgressSpinnerModule,

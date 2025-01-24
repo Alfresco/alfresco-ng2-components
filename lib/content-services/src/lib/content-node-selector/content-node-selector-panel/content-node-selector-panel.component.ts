@@ -62,7 +62,6 @@ export const defaultValidation = () => true;
 
 @Component({
     selector: 'adf-content-node-selector-panel',
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,

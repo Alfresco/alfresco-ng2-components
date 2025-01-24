@@ -44,7 +44,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-sidenav-layout',
-    standalone: true,
     imports: [CommonModule, LayoutContainerComponent],
     templateUrl: './sidenav-layout.component.html',
     styleUrls: ['./sidenav-layout.component.scss'],

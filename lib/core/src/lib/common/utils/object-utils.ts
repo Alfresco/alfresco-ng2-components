@@ -25,7 +25,6 @@ export class ObjectUtils {
      * @returns object property value
      */
     static getValue(target: any, key: string): any {
-
         if (!target || !key) {
             return undefined;
         }
@@ -80,46 +79,38 @@ export class ObjectUtils {
     }
 
     static isBooleanObject(target: any): boolean {
-        return Object.values(target).every(value => typeof value === 'boolean');
+        return Object.values(target).every((value) => typeof value === 'boolean');
     }
 
     static booleanPrettify(target: any, enhancer?: (param: string) => string): string {
-
-        if (
-            !target ||
-            ObjectUtils.isEmpty(target) ||
-            !ObjectUtils.isBooleanObject(target)
-            ) {
+        if (!target || ObjectUtils.isEmpty(target) || !ObjectUtils.isBooleanObject(target)) {
             return '';
         }
 
-        if (
-            !ObjectUtils.isObject(target) ||
-            !ObjectUtils.hasKeys(target)
-            ) {
+        if (!ObjectUtils.isObject(target) || !ObjectUtils.hasKeys(target)) {
             return target.toString();
         }
 
         const greenBorderWhiteCheckSymbol = '&#9989';
         const redCrossSymbol = '&#10060';
 
-        target = Object.keys(target).map((key) => {
-            if (target[key]) {
-                if (enhancer) {
-                    return `${greenBorderWhiteCheckSymbol} ${enhancer(key)}`;
-                } else {
-                    return `${greenBorderWhiteCheckSymbol} ${key}`;
+        target = Object.keys(target)
+            .map((key) => {
+                if (target[key]) {
+                    if (enhancer) {
+                        return `${greenBorderWhiteCheckSymbol} ${enhancer(key)}`;
+                    } else {
+                        return `${greenBorderWhiteCheckSymbol} ${key}`;
+                    }
                 }
 
-            }
-
-            if (enhancer) {
-                return `${redCrossSymbol} ${enhancer(key)}`;
-            } else {
-                return `${redCrossSymbol} ${key}`;
-            }
-
-        }).join('\n');
+                if (enhancer) {
+                    return `${redCrossSymbol} ${enhancer(key)}`;
+                } else {
+                    return `${redCrossSymbol} ${key}`;
+                }
+            })
+            .join('\n');
 
         return target;
     }

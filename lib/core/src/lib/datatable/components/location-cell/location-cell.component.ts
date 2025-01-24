@@ -22,7 +22,6 @@ import { RouterModule } from '@angular/router';
 import { PathInfo } from '../../../models/path.model';
 
 @Component({
-    standalone: true,
     imports: [AsyncPipe, RouterModule],
     selector: 'adf-location-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,

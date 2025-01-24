@@ -53,7 +53,6 @@ import { ContentService } from '../../common/services/content.service';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
-    standalone: true,
     imports: [ViewerToolbarComponent, AlfrescoViewerComponent],
     template: `
         <adf-alfresco-viewer>
@@ -67,8 +66,8 @@ class ViewerWithCustomToolbarComponent {}
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
-    standalone: true,
     imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
             <button mat-icon-button id="custom-button">
@@ -81,7 +80,6 @@ class ViewerWithCustomToolbarActionsComponent {}
 
 @Component({
     selector: 'adf-viewer-container-sidebar',
-    standalone: true,
     imports: [ViewerSidebarComponent, AlfrescoViewerComponent],
     template: `
         <adf-alfresco-viewer [allowRightSidebar]="true" [showRightSidebar]="true" [nodeId]="'1'">
@@ -95,14 +93,15 @@ class ViewerWithCustomSidebarComponent {}
 
 @Component({
     selector: 'adf-dialog-dummy',
-    template: ``
+    template: ``,
+    standalone: false
 })
 class DummyDialogComponent {}
 
 @Component({
     selector: 'adf-viewer-container-open-with',
-    standalone: true,
     imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-alfresco-viewer>
             <adf-viewer-open-with>
@@ -126,8 +125,8 @@ class ViewerWithCustomOpenWithComponent {}
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
-    standalone: true,
     imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>
             <button mat-menu-item>

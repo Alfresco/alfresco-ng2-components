@@ -32,7 +32,6 @@
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/no-host-metadata-property": "off",
         "@angular-eslint/no-input-prefix": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/dot-notation": "off",
@@ -63,7 +62,8 @@
         "rxjs/no-subject-unsubscribe": "error",
         "rxjs/no-subject-value": "error",
         "rxjs/no-unsafe-takeuntil": "error",
-        "unicorn/filename-case": "error"
+        "unicorn/filename-case": "error",
+        "@angular-eslint/prefer-standalone": "off"
       }
     },
     {

@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
-    standalone: true,
     imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
     selector: 'adf-date-cell',
     templateUrl: './date-cell.component.html',
@@ -32,7 +31,6 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
-
     @Input()
     dateConfig: DateConfig;
 

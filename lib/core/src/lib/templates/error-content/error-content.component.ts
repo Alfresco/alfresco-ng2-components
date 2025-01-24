@@ -26,7 +26,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-error-content',
-    standalone: true,
     imports: [CommonModule, TranslateModule],
     templateUrl: './error-content.component.html',
     styleUrls: ['./error-content.component.scss'],

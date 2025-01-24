@@ -34,7 +34,8 @@ import { NewVersionUploaderService } from './new-version-uploader.service';
 import { Version, VersionPaging } from '@alfresco/js-api';
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 class TestDialogComponent {
     @Output()

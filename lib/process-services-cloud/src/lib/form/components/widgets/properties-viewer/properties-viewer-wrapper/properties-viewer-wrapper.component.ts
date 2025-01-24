@@ -25,7 +25,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-properties-viewer-wrapper',
-    standalone: true,
     imports: [CommonModule, MatProgressSpinnerModule, ContentMetadataComponent],
     templateUrl: './properties-viewer-wrapper.component.html',
     encapsulation: ViewEncapsulation.None
@@ -82,7 +81,7 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     constructor(private nodesApiService: NodesApiService) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.['nodeId'] && changes['nodeId'].currentValue && !changes['nodeId'].isFirstChange()) {
+        if (changes?.['nodeId']?.currentValue && !changes['nodeId'].isFirstChange()) {
             this.getNode(changes['nodeId'].currentValue);
         }
     }

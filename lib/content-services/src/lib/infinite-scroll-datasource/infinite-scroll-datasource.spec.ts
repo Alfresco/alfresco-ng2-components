@@ -81,7 +81,8 @@ class TestDataSource extends InfiniteScrollDatasource<TestData> {
         <div *cdkVirtualFor="let item of testDatasource" class="test-item" style="display: block; height: 100%; width: 100%;">
             {{ item.testDescription }}
         </div>
-    </cdk-virtual-scroll-viewport>`
+    </cdk-virtual-scroll-viewport>`,
+    standalone: false
 })
 class TestComponent implements OnInit {
     testDatasource = new TestDataSource();

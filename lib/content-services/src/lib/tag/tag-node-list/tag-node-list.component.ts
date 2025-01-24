@@ -28,7 +28,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-tag-node-list',
-    standalone: true,
     imports: [DynamicChipListComponent],
     templateUrl: './tag-node-list.component.html',
     encapsulation: ViewEncapsulation.None

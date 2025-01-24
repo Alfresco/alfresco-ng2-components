@@ -24,7 +24,6 @@ import { DiagramIconBoxPublishTaskComponent } from '../icons/diagram-icon-box-pu
 
 @Component({
     selector: 'diagram-box-publish-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconBoxPublishTaskComponent],
     templateUrl: './diagram-box-publish-task.component.html'
 })

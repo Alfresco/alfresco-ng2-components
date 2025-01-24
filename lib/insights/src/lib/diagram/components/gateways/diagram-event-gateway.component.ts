@@ -26,7 +26,6 @@ import { RaphaelPentagonDirective } from '../raphael/raphael-pentagon.component'
 
 @Component({
     selector: 'diagram-event-gateway',
-    standalone: true,
     imports: [DiagramGatewayComponent, RaphaelCircleDirective, RaphaelPentagonDirective],
     templateUrl: './diagram-event-gateway.component.html'
 })

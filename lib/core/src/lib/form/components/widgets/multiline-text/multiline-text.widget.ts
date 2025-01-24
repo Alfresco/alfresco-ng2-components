@@ -29,7 +29,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'multiline-text-widget',
-    standalone: true,
     templateUrl: './multiline-text.widget.html',
     styleUrls: ['./multiline-text.widget.scss'],
     host: {

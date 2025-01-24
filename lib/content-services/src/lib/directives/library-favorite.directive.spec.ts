@@ -22,7 +22,6 @@ import { LibraryEntity } from '../interfaces/library-entity.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
-    standalone: true,
     imports: [LibraryFavoriteDirective],
     selector: 'app-test-component',
     template: `<button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button>`

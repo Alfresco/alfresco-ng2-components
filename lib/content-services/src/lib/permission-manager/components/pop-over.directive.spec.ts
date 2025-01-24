@@ -22,7 +22,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PopOverDirective } from './pop-over.directive';
 
 @Component({
-    standalone: true,
     imports: [PopOverDirective],
     template: `
         <div

@@ -21,7 +21,6 @@ import { CurrencyConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    standalone: true,
     imports: [CommonModule],
     selector: 'adf-amount-cell',
     templateUrl: './amount-cell.component.html',

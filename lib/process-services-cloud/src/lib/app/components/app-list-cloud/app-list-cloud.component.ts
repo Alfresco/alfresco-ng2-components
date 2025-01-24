@@ -35,7 +35,6 @@ export const DEPLOYED_STATUS: string = 'DEPLOYED';
 
 @Component({
     selector: 'adf-cloud-app-list',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

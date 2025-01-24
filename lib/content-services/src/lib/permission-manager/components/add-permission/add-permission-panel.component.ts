@@ -33,7 +33,6 @@ import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.co
 
 @Component({
     selector: 'adf-add-permission-panel',
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,

@@ -21,7 +21,6 @@ import { DiagramTooltipComponent } from './tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'adf-diagram-sequence-flow',
-    standalone: true,
     imports: [RaphaelFlowArrowDirective, DiagramTooltipComponent],
     templateUrl: './diagram-sequence-flow.component.html'
 })

@@ -26,7 +26,8 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 
 @Component({
-    template: ``
+    template: ``,
+    standalone: false
 })
 class TestPaginatedComponent implements PaginatedComponent {
     private _pagination: BehaviorSubject<PaginationModel>;

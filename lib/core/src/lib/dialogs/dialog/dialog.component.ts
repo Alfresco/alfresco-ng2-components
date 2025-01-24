@@ -29,7 +29,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
 @Component({
-    standalone: true,
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],

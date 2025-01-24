@@ -23,7 +23,6 @@ import { RaphaelIconCamelDirective } from '../raphael/icons/raphael-icon-camel.c
 
 @Component({
     selector: 'diagram-icon-camel-task',
-    standalone: true,
     imports: [RaphaelIconCamelDirective],
     templateUrl: './diagram-icon-camel-task.component.html'
 })

@@ -24,19 +24,12 @@ import { LoginDialogComponentData } from './login-dialog-component-data.interfac
 
 @Component({
     selector: 'adf-login-dialog',
-    standalone: true,
     templateUrl: './login-dialog.component.html',
     styleUrls: ['./login-dialog.component.scss'],
-    imports: [
-        MatDialogModule,
-        LoginDialogPanelComponent,
-        TranslateModule,
-        MatButtonModule
-    ],
+    imports: [MatDialogModule, LoginDialogPanelComponent, TranslateModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogComponent {
-
     @ViewChild('adfLoginPanel', { static: true })
     loginPanel: LoginDialogPanelComponent;
 

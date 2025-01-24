@@ -31,8 +31,7 @@ import { TaskScreenCloudComponent } from './screen-cloud.component';
             <button class="adf-cloud-test-container-complete-btn" (click)="onComplete()">complete</button>
         </div>
     `,
-    imports: [CommonModule],
-    standalone: true
+    imports: [CommonModule]
 })
 class TestComponent {
     @Input() taskId = '';
@@ -51,8 +50,7 @@ class TestComponent {
             </div>
         </adf-cloud-task-screen>
     `,
-    imports: [CommonModule, TaskScreenCloudComponent],
-    standalone: true
+    imports: [CommonModule, TaskScreenCloudComponent]
 })
 class TestWrapperComponent {
     onTaskCompleted() {}

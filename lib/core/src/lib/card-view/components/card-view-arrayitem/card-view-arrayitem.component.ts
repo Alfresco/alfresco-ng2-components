@@ -28,7 +28,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-card-view-arrayitem',
-    standalone: true,
     imports: [CommonModule, MatChipsModule, TranslateModule, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule],
     templateUrl: './card-view-arrayitem.component.html',
     styleUrls: ['./card-view-arrayitem.component.scss'],

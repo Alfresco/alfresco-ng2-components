@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-buttons-action-menu',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
     templateUrl: './buttons-menu.component.html',
     styleUrls: ['./buttons-menu.component.scss'],

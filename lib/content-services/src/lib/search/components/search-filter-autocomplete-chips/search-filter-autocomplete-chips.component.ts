@@ -33,7 +33,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
-    standalone: true,
     imports: [CommonModule, SearchChipAutocompleteInputComponent, TranslateModule, MatButtonModule],
     templateUrl: './search-filter-autocomplete-chips.component.html',
     encapsulation: ViewEncapsulation.None

@@ -35,7 +35,6 @@ export enum Relations {
 
 @Component({
     selector: 'adf-sites-dropdown',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,

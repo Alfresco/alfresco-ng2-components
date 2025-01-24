@@ -26,7 +26,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SharedLinksApiService {
-
     error = new Subject<{ statusCode: number; message: string }>();
 
     private _sharedLinksApi: SharedlinksApi;
@@ -35,9 +34,7 @@ export class SharedLinksApiService {
         return this._sharedLinksApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     /**
      * Gets shared links available to the current user.
@@ -54,9 +51,7 @@ export class SharedLinksApiService {
         const queryOptions = Object.assign({}, defaultOptions, options);
         const promise = this.sharedLinksApi.listSharedLinks(queryOptions);
 
-        return from(promise).pipe(
-            catchError((err) => of(err))
-        );
+        return from(promise).pipe(catchError((err) => of(err)));
     }
 
     /**
@@ -68,11 +63,9 @@ export class SharedLinksApiService {
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings? sharedLinkWithExpirySettings : { nodeId }, options);
+        const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings ? sharedLinkWithExpirySettings : { nodeId }, options);
 
-        return from(promise).pipe(
-            catchError((err) => of(err))
-        );
+        return from(promise).pipe(catchError((err) => of(err)));
     }
 
     /**
@@ -84,8 +77,6 @@ export class SharedLinksApiService {
     deleteSharedLink(sharedId: string): Observable<any | Error> {
         const promise = this.sharedLinksApi.deleteSharedLink(sharedId);
 
-        return from(promise).pipe(
-            catchError((err: Error) => of(err))
-        );
+        return from(promise).pipe(catchError((err: Error) => of(err)));
     }
 }

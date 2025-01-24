@@ -30,7 +30,8 @@ const fakeNode = {
 } as Node;
 
 @Component({
-    template: '<div [adf-node-lock]="node"></div>'
+    template: '<div [adf-node-lock]="node"></div>',
+    standalone: false
 })
 class TestComponent {
     node = null;

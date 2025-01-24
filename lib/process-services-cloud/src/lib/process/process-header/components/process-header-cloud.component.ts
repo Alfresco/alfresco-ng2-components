@@ -33,7 +33,6 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-cloud-process-header',
-    standalone: true,
     imports: [CardViewComponent, MatCardModule, NgIf],
     templateUrl: './process-header-cloud.component.html',
     encapsulation: ViewEncapsulation.None,

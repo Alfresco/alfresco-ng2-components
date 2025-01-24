@@ -22,7 +22,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-feature-flags-override-indicator',
-    standalone: true,
     imports: [CommonModule],
     styles: [
         `

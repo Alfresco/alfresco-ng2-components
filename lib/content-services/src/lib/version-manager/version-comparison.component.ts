@@ -23,7 +23,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-comparison',
-    standalone: true,
     imports: [CommonModule, TranslateModule, FileTypePipe],
     templateUrl: './version-comparison.component.html',
     styleUrls: ['./version-comparison.component.scss'],

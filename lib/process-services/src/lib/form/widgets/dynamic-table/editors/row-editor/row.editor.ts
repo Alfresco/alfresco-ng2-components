@@ -34,7 +34,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'row-editor',
-    standalone: true,
     imports: [
         CommonModule,
         DropdownEditorComponent,
