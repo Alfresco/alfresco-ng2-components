@@ -73,7 +73,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /** Emitted when filter is updated. */
     @Output()
-    updatedFilter: EventEmitter<string> = new EventEmitter<string>();
+    updatedFilter: EventEmitter<{ filterKey: string; filterValue: number }> = new EventEmitter<{ filterKey: string; filterValue: number }>();
 
     filters$: Observable<ProcessFilterCloudModel[]>;
     currentFilter?: ProcessFilterCloudModel;
@@ -299,7 +299,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
         }
         if (this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
-            this.updatedFilter.emit(filterKey);
+            this.updatedFilter.emit({ filterKey, filterValue });
             this.updatedFiltersSet.add(filterKey);
         }
     }

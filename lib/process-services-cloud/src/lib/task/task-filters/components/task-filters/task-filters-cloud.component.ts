@@ -59,7 +59,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /** Emitted when filter is updated. */
     @Output()
-    updatedFilter: EventEmitter<string> = new EventEmitter<string>();
+    updatedFilter: EventEmitter<{ filterKey: string; filterValue: number }> = new EventEmitter<{ filterKey: string; filterValue: number }>();
 
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
@@ -267,7 +267,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
         if (this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
-            this.updatedFilter.emit(filterKey);
+            this.updatedFilter.emit({ filterKey, filterValue });
             this.updatedCountersSet.add(filterKey);
         }
     }
