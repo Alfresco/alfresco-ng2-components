@@ -33,9 +33,7 @@ describe('FormModel', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         formService = new FormService();
     });
@@ -132,10 +130,7 @@ describe('FormModel', () => {
 
     it('should parse tabs', () => {
         const json = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
-            ]
+            tabs: [{ id: 'tab1' }, { id: 'tab2' }]
         };
 
         const form = new FormModel(json);
@@ -199,10 +194,7 @@ describe('FormModel', () => {
 
     it('should put fields into corresponding tabs', () => {
         const json = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
-            ],
+            tabs: [{ id: 'tab1' }, { id: 'tab2' }],
             fields: [
                 { id: 'field1', tab: 'tab1', type: FormFieldTypes.CONTAINER },
                 { id: 'field2', tab: 'tab2', type: FormFieldTypes.CONTAINER },
@@ -227,9 +219,7 @@ describe('FormModel', () => {
 
     it('should create standard form outcomes', () => {
         const json = {
-            fields: [
-                { id: 'container1' }
-            ]
+            fields: [{ id: 'container1' }]
         };
 
         const form = new FormModel(json);
@@ -255,12 +245,8 @@ describe('FormModel', () => {
 
     it('should use custom form outcomes', () => {
         const json = {
-            fields: [
-                { id: 'container1' }
-            ],
-            outcomes: [
-                { id: 'custom-1', name: 'custom 1' }
-            ]
+            fields: [{ id: 'container1' }],
+            outcomes: [{ id: 'custom-1', name: 'custom 1' }]
         };
 
         const form = new FormModel(json);
@@ -276,9 +262,7 @@ describe('FormModel', () => {
     it('should raise validation event when validating form', () => {
         const form = new FormModel({}, null, false, formService);
 
-        formService.validateForm.subscribe((validateFormEvent) =>
-            expect(validateFormEvent).toBeTruthy()
-        );
+        formService.validateForm.subscribe((validateFormEvent) => expect(validateFormEvent).toBeTruthy());
         form.validateForm();
     });
 
@@ -286,9 +270,7 @@ describe('FormModel', () => {
         const form = new FormModel({}, null, false, formService);
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
 
-        formService.validateFormField.subscribe((validateFormFieldEvent) =>
-            expect(validateFormFieldEvent).toBeTruthy()
-        );
+        formService.validateFormField.subscribe((validateFormFieldEvent) => expect(validateFormFieldEvent).toBeTruthy());
         form.validateField(field);
     });
 
@@ -503,6 +485,12 @@ describe('FormModel', () => {
                     processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
                     taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
                     taskVariable: true
+                },
+                {
+                    id: 'variables.datetime',
+                    name: 'variables.datetime',
+                    value: '2025-01-23T04:30:00.000+0000',
+                    type: 'date'
                 }
             ];
 
@@ -570,9 +558,14 @@ describe('FormModel', () => {
             expect(value).toBe('29.09.2019T00:00:00.000Z');
         });
 
-        it('should find a process variable by name', () => {
-            const value = form.getProcessVariableValue('booleanVar');
-            expect(value).toEqual(true);
+        [
+            { name: 'booleanVar', result: true },
+            { name: 'datetime', result: '2025-01-23T04:30:00.000+0000' }
+        ].forEach(({ name, result }) => {
+            it('should find a process variable by name and convert it', () => {
+                const value = form.getProcessVariableValue(name);
+                expect(value).toEqual(result);
+            });
         });
 
         it('should not find a process variable', () => {
@@ -614,7 +607,6 @@ describe('FormModel', () => {
             expect(form.values['pfx_property_six']).toEqual('text-value');
             expect(form.values['pfx_property_seven']).toBeNull();
             expect(form.values['pfx_property_eight']).toBeNull();
-
         });
     });
 
