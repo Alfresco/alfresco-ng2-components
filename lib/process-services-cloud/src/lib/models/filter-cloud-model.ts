@@ -197,7 +197,7 @@ export class TaskFilterCloudAdapter extends TaskListRequestModel {
             dueDateTo: filter.dueDateTo,
             completedFrom: filter.completedFrom,
             completedTo: filter.completedTo,
-            candidateGroupId: filter.candidateGroups?.map((group) => group.id)
+            processVariableFilters: filter.processVariableFilters
         });
     }
 }
