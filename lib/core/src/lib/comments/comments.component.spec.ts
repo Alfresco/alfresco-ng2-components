@@ -25,7 +25,6 @@ import { CommentsService } from './interfaces/comments-service.interface';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
-import { By } from '@angular/platform-browser';
 import { MatError } from '@angular/material/form-field';
 
 describe('CommentsComponent', () => {
@@ -158,10 +157,9 @@ describe('CommentsComponent', () => {
     });
 
     describe('Add comment', () => {
-        const getError = (): string => fixture.debugElement.query(By.directive(MatError))?.nativeElement?.textContent;
+        const getError = (): string => testingUtils.getByDirective(MatError)?.nativeElement?.textContent;
 
-        const getAddCommentButton = (): HTMLButtonElement =>
-            fixture.debugElement.query(By.css('[data-automation-id=comments-input-add]')).nativeElement;
+        const getAddCommentButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('comments-input-add').nativeElement;
 
         beforeEach(() => {
             component.id = '123';
@@ -170,8 +168,8 @@ describe('CommentsComponent', () => {
         });
 
         it('should normalize comment when user input contains spaces sequence', async () => {
-            component.message = 'test comment';
-            testingUtils.clickByCSS('.adf-comments-input-add');
+            component.commentControl.setValue('test comment');
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -191,8 +189,8 @@ describe('CommentsComponent', () => {
             getCommentSpy.and.returnValue(of([]));
             addCommentSpy.and.returnValue(commentsResponseMock.addComment(commentText));
 
-            component.message = commentText;
-            testingUtils.clickByCSS('.adf-comments-input-add');
+            component.commentControl.setValue(commentText);
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -202,9 +200,10 @@ describe('CommentsComponent', () => {
         });
 
         it('should call service to add a comment when add button is pressed', async () => {
-            component.message = 'Test Comment';
-            addCommentSpy.and.returnValue(commentsResponseMock.addComment(component.message));
-            testingUtils.clickByCSS('.adf-comments-input-add');
+            const comment = 'Test Comment';
+            component.commentControl.setValue(comment);
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment(comment));
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -216,8 +215,8 @@ describe('CommentsComponent', () => {
         });
 
         it('should not call service to add a comment when comment is empty', async () => {
-            component.message = '';
-            testingUtils.clickByCSS('.adf-comments-input-add');
+            component.commentControl.setValue('');
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -238,7 +237,7 @@ describe('CommentsComponent', () => {
         it('should emit an error when an error occurs adding the comment', () => {
             const emitSpy = spyOn(component.error, 'emit');
             addCommentSpy.and.returnValue(throwError(() => new Error('error')));
-            component.message = 'Test comment';
+            component.commentControl.setValue('Test comment');
             component.addComment();
             expect(emitSpy).toHaveBeenCalled();
         });
