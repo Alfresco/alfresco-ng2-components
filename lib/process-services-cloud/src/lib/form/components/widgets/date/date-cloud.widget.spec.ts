@@ -22,7 +22,7 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
 
-describe('DateWidgetComponent', () => {
+describe('DateCloudWidgetComponent', () => {
     let widget: DateCloudWidgetComponent;
     let fixture: ComponentFixture<DateCloudWidgetComponent>;
     let element: HTMLElement;
@@ -442,6 +442,24 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be valid when field is hidden with empty value', () => {
+            widget.field.isVisible = false;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            expect(widget.dateInputControl.valid).toBeTrue();
+            expect(widget.field.validationSummary.message).toBe('');
+        });
+
+        it('should be invalid when field is hidden with empty value', () => {
+            widget.field.isVisible = true;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.dateInputControl.valid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
         });
     });
 });
