@@ -278,6 +278,8 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should be able to display label with asterisk', () => {
+            fixture.detectChanges();
+
             const asterisk = element.querySelector<HTMLElement>('.adf-asterisk');
 
             expect(asterisk).not.toBeNull();
