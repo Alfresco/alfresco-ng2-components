@@ -491,6 +491,11 @@ describe('FormModel', () => {
                     name: 'variables.datetime',
                     value: '2025-01-23T04:30:00.000+0000',
                     type: 'date'
+                },
+                {
+                    type: 'date',
+                    name: 'variables.dateonly',
+                    value: '2025-01-27'
                 }
             ];
 
@@ -560,9 +565,10 @@ describe('FormModel', () => {
 
         [
             { name: 'booleanVar', result: true },
-            { name: 'datetime', result: '2025-01-23T04:30:00.000+0000' }
+            { name: 'datetime', result: '2025-01-23T04:30:00.000+0000' },
+            { name: 'dateonly', result: '2025-01-27T00:00:00.000Z' }
         ].forEach(({ name, result }) => {
-            it('should find a process variable by name and convert it', () => {
+            it(`should find a process variable by name ${name} and convert it`, () => {
                 const value = form.getProcessVariableValue(name);
                 expect(value).toEqual(result);
             });
