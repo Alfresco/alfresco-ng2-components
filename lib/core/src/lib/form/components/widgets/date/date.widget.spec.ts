@@ -163,6 +163,7 @@ describe('DateWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', () => {
+            fixture.detectChanges();
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
             testingUtils.blurByCSS('input');

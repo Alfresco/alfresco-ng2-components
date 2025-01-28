@@ -54,6 +54,11 @@ describe('CardViewTextItemComponent', () => {
         fixture.detectChanges();
     };
 
+    const updateTextFieldWithNumber = (key: string, value: number) => {
+        testingUtils.fillInputByDataAutomationId(`card-textitem-value-${key}`, value);
+        fixture.detectChanges();
+    };
+
     const getErrorElements = (key: string, includeItems = false): DebugElement[] =>
         testingUtils.getAllByCSS(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`);
 
@@ -784,7 +789,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should show validation error for float number', async () => {
-            updateTextField(component.property.key, '123.456');
+            updateTextFieldWithNumber(component.property.key, 123.456);
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -794,7 +799,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should show validation error for exceed the number limit (2147483648)', async () => {
-            updateTextField(component.property.key, '2147483648');
+            updateTextFieldWithNumber(component.property.key, 2147483648);
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -804,7 +809,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should not show validation error for below the number limit (2147483647)', async () => {
-            updateTextField(component.property.key, '2147483647');
+            updateTextFieldWithNumber(component.property.key, 2147483647);
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -813,11 +818,11 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should update input the value on input updated', async () => {
-            const expectedNumber = '2020';
+            const expectedNumber = 2020;
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
 
-            updateTextField(component.property.key, expectedNumber);
+            updateTextFieldWithNumber(component.property.key, expectedNumber);
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
@@ -828,8 +833,8 @@ describe('CardViewTextItemComponent', () => {
             });
 
             verifyNoErrors(component.property.key);
-            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber);
-            expect(component.property.value).toBe(expectedNumber);
+            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(component.property.value).toBe(expectedNumber.toString());
         });
     });
 
@@ -869,23 +874,23 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should update input the value on input updated', async () => {
-            const expectedNumber = '88.44';
+            const expectedNumber = 88.44;
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
 
-            updateTextField(component.property.key, expectedNumber);
+            updateTextFieldWithNumber(component.property.key, expectedNumber);
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
                 target: { ...component.property },
                 changed: {
-                    textkey: expectedNumber
+                    textkey: expectedNumber.toString()
                 }
             });
 
             verifyNoErrors(component.property.key);
-            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber);
-            expect(component.property.value).toBe(expectedNumber);
+            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(component.property.value).toBe(expectedNumber.toString());
         });
     });
 

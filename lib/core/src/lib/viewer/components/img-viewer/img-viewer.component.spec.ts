@@ -107,6 +107,7 @@ describe('Test Img viewer component ', () => {
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
+            testingUtils.setDebugElement(fixture.debugElement);
 
             component = fixture.componentInstance;
             fixture.detectChanges();
@@ -159,6 +160,7 @@ describe('Test Img viewer component ', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(ImgViewerComponent);
             component = fixture.componentInstance;
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             component.blobFile = createFakeBlob();
             const change = new SimpleChange(null, component.blobFile, true);
             component.ngOnChanges({ blobFile: change });
@@ -357,6 +359,7 @@ describe('Test Img viewer component ', () => {
     describe('allowedEditActions', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(ImgViewerComponent);
+            testingUtils.setDebugElement(fixture.debugElement);
             component = fixture.componentInstance;
         });
 

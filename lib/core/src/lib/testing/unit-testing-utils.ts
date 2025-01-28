@@ -34,10 +34,7 @@ import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
 
 export class UnitTestingUtils {
-    private debugElement: DebugElement;
-    private loader: HarnessLoader;
-
-    constructor(debugElement?: DebugElement, loader?: HarnessLoader) {
+    constructor(private debugElement?: DebugElement, private loader?: HarnessLoader) {
         this.debugElement = debugElement;
         this.loader = loader;
     }
@@ -68,10 +65,6 @@ export class UnitTestingUtils {
 
     getByDataAutomationClass(dataAutomationClass: string): DebugElement {
         return this.getByCSS(`[data-automation-class="${dataAutomationClass}"]`);
-    }
-
-    getAllByDataAutomationId(dataAutomationId: string): DebugElement[] {
-        return this.getAllByCSS(`[data-automation-id="${dataAutomationId}"]`);
     }
 
     getInnerTextByDataAutomationId(dataAutomationId: string): string {
@@ -149,7 +142,7 @@ export class UnitTestingUtils {
         input.dispatchEvent(new Event('input'));
     }
 
-    fillInputByDataAutomationId(dataAutomationId: string, value: string): void {
+    fillInputByDataAutomationId(dataAutomationId: string, value: any): void {
         const input = this.getInputByDataAutomationId(dataAutomationId);
         input.value = value;
         input.dispatchEvent(new Event('input'));
@@ -192,7 +185,7 @@ export class UnitTestingUtils {
         await button.click();
     }
 
-    async sendKeysToMatButton(keys: string[] | TestKey[]): Promise<void> {
+    async sendKeysToMatButton(keys: (string | TestKey)[]): Promise<void> {
         const button = await this.getMatButton();
         const host = await button.host();
         await host.sendKeys(...keys);
@@ -417,7 +410,7 @@ export class UnitTestingUtils {
         return input.getValue();
     }
 
-    async sendKeysToMatInput(keys: string[] | TestKey[]): Promise<void> {
+    async sendKeysToMatInput(keys: (string | TestKey)[]): Promise<void> {
         const input = await this.getMatInput();
         const host = await input.host();
         await host.sendKeys(...keys);

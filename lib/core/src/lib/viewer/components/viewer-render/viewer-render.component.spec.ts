@@ -127,6 +127,7 @@ describe('ViewerComponent', () => {
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
             fixture = TestBed.createComponent(ViewerRenderComponent);
+            testingUtils.setDebugElement(fixture.debugElement);
             component = fixture.componentInstance;
 
             component.urlFile = 'fake-test-file.pdf';
@@ -157,6 +158,7 @@ describe('ViewerComponent', () => {
             spyOn(extensionService, 'getViewerExtensions').and.returnValue(extensions);
 
             fixture = TestBed.createComponent(ViewerRenderComponent);
+            testingUtils.setDebugElement(fixture.debugElement);
             component = fixture.componentInstance;
 
             component.urlFile = 'fake-test-file.pdf';
@@ -178,6 +180,7 @@ describe('ViewerComponent', () => {
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
             fixture = TestBed.createComponent(ViewerRenderComponent);
+            testingUtils.setDebugElement(fixture.debugElement);
             component = fixture.componentInstance;
 
             component.urlFile = 'http://localhost:4200/alfresco';

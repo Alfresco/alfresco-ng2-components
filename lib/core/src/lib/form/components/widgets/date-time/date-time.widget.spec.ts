@@ -259,6 +259,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', () => {
+            fixture.detectChanges();
             expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
             testingUtils.blurByCSS('input');
@@ -268,6 +269,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should be able to display label with asterisk', () => {
+            fixture.detectChanges();
             const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).not.toBeNull();
