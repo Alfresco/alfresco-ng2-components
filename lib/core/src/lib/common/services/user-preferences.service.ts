@@ -250,12 +250,10 @@ export class UserPreferencesService {
         let language: LanguageItem;
 
         const customLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
-        if (customLanguages && Array.isArray(customLanguages)) {
-            language = customLanguages.find((language) => key.includes(language.key));
+        if (Array.isArray(customLanguages)) {
+            language = customLanguages.find((customLanguage) => key.includes(customLanguage.key));
         }
-        if (!language) {
-            language = DEFAULT_LANGUAGE_LIST.find((language) => language.key === key) ?? defaultLanguage;
-        }
+        language ??= DEFAULT_LANGUAGE_LIST.find((defaultLang) => defaultLang.key === key) ?? defaultLanguage;
         return language;
     }
 }
