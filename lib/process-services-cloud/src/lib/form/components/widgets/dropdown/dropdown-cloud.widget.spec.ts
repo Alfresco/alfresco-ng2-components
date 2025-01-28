@@ -336,9 +336,8 @@ describe('DropdownCloudWidgetComponent', () => {
             });
         });
 
-        it('should be able to display label with asterisk', async () => {
+        it('should be able to display label with asterisk', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
 
@@ -346,9 +345,8 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should display a required error when dropdown is required and has no value after an interaction', async () => {
+        it('should display a required error when dropdown is required and has no value after an interaction', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
@@ -356,7 +354,6 @@ describe('DropdownCloudWidgetComponent', () => {
             dropdownSelect.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
 
@@ -364,10 +361,9 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
         });
 
-        it('should NOT display a required error when dropdown is readonly', async () => {
+        it('should NOT display a required error when dropdown is readonly', () => {
             widget.field.readOnly = true;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
@@ -375,9 +371,26 @@ describe('DropdownCloudWidgetComponent', () => {
             dropdownSelect.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
+        });
+
+        it('should be valid when field is hidden with empty value', () => {
+            widget.field.isVisible = false;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            expect(widget.dropdownControl.valid).toBeTrue();
+            expect(widget.field.validationSummary.message).toBe('');
+        });
+
+        it('should be invalid when field is hidden with empty value', () => {
+            widget.field.isVisible = true;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.dropdownControl.valid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
         });
     });
 

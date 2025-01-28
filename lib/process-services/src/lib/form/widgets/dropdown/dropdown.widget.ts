@@ -150,7 +150,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     private updateFormControlState(): void {
-        this.dropdownControl.setValidators(this.isRequired() ? [this.customRequiredValidator(this.field)] : []);
+        this.dropdownControl.setValidators(this.isRequired() && this.field?.isVisible ? [this.customRequiredValidator(this.field)] : []);
         this.field?.readOnly || this.readOnly
             ? this.dropdownControl.disable({ emitEvent: false })
             : this.dropdownControl.enable({ emitEvent: false });
