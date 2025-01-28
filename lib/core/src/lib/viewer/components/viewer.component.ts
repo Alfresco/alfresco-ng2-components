@@ -363,10 +363,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
+        this.resetLoadingSpinner();
         this.navigateBefore.next(event);
     }
 
     onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
+        this.resetLoadingSpinner();
         this.navigateNext.next(event);
     }
 
@@ -392,22 +394,17 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             return;
         }
 
-        const key = event.keyCode;
-
-        // Left arrow
-        if (key === 37 && this.canNavigateBefore) {
+        if (event.key === 'ArrowLeft' && this.canNavigateBefore) {
             event.preventDefault();
             this.onNavigateBeforeClick(event);
         }
 
-        // Right arrow
-        if (key === 39 && this.canNavigateNext) {
+        if (event.key === 'ArrowRight' && this.canNavigateNext) {
             event.preventDefault();
             this.onNavigateNextClick(event);
         }
 
-        // Ctrl+F
-        if (key === 70 && event.ctrlKey) {
+        if (event.code === 'KeyF' && event.ctrlKey) {
             event.preventDefault();
             this.enterFullScreen();
         }
@@ -502,5 +499,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
                     }
                 });
         }
+    }
+
+    private resetLoadingSpinner() {
+        this.urlFile = '';
+        this.blobFile = null;
     }
 }
