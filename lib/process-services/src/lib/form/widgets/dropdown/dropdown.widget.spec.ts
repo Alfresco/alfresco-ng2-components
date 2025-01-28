@@ -179,6 +179,24 @@ describe('DropdownWidgetComponent', () => {
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
         });
+
+        it('should be valid when field is hidden with empty value', () => {
+            widget.field.isVisible = false;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            expect(widget.dropdownControl.valid).toBeTrue();
+            expect(widget.field.validationSummary.message).toBe('');
+        });
+
+        it('should be invalid when field is hidden with empty value', () => {
+            widget.field.isVisible = true;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.dropdownControl.valid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
     });
 
     describe('when template is ready', () => {

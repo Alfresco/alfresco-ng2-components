@@ -93,7 +93,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
     }
 
     private updateFormControlState(): void {
-        this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        this.dateInputControl.setValidators(this.isRequired() && this.field?.isVisible ? [Validators.required] : []);
         this.field?.readOnly || this.readOnly
             ? this.dateInputControl.disable({ emitEvent: false })
             : this.dateInputControl.enable({ emitEvent: false });
