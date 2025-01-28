@@ -2,10 +2,11 @@
 
 All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfresco/versions/1*
 
-| Method                              | HTTP request                                            | Description      |
-|-------------------------------------|---------------------------------------------------------|------------------|
-| [getPreference](#getPreference)     | **GET** /people/{personId}/preferences/{preferenceName} | Get a preference |
-| [listPreferences](#listPreferences) | **GET** /people/{personId}/preferences                  | List preferences |
+| Method                                | HTTP request                                             | Description       |
+|---------------------------------------|----------------------------------------------------------|-------------------|
+| [getPreference](#getPreference)       | **GET** /people/{personId}/preferences/{preferenceName}  | Get a preference  |
+| [listPreferences](#listPreferences)   | **GET** /people/{personId}/preferences                   | List preferences  |
+| [updatePreference](#updatePreference) | **POST** /people/{personId}/preferences/{preferenceName} | Update preference |
 
 ## getPreference
 
@@ -67,6 +68,36 @@ const preferencesApi = new PreferencesApi(alfrescoApi);
 const opts = {};
 
 preferencesApi.listPreferences(`<personId>`, opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+});
+```
+
+## updatePreference
+
+Update preference
+
+You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user.
+
+### Parameters
+
+| Name                | Type   | Description                 |
+|---------------------|--------|-----------------------------|
+| **personId**        | string | The identifier of a person. |
+| **preferenceName**  | string | The name of the preference. |
+| **preferenceValue** | string | New preference value.       |
+
+**Return type**: [PreferenceEntry](#PreferenceEntry)
+
+**Example**
+
+```javascript
+import { AlfrescoApi, PreferencesApi } from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const preferencesApi = new PreferencesApi(alfrescoApi);
+const newPreferenceValue = 'test';
+
+preferencesApi.updatePreference(`<personId>`, `<preferenceName>`, newPreferenceValue).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 });
 ```
