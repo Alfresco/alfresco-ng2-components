@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectFilterInputComponent } from './select-filter-input.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
 
 describe('SelectFilterInputComponent', () => {
     let fixture: ComponentFixture<SelectFilterInputComponent>;
@@ -78,7 +78,7 @@ describe('SelectFilterInputComponent', () => {
         component.onModelChange('some-search-term');
         expect(component.term).toBe('some-search-term');
 
-        component.selectFilterInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' } as any));
+        component.selectFilterInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' }));
         fixture.detectChanges();
         expect(component.term).toBe('');
     });

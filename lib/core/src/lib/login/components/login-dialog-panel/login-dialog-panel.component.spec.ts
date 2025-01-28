@@ -15,18 +15,21 @@
  * limitations under the License.
  */
 
-import { BasicAlfrescoAuthService, CoreTestingModule, LoginDialogPanelComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { LoginDialogPanelComponent } from './login-dialog-panel.component';
+import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;
     let fixture: ComponentFixture<LoginDialogPanelComponent>;
-    let element: HTMLElement;
     let usernameInput: HTMLInputElement;
     let passwordInput: HTMLInputElement;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
@@ -36,14 +39,14 @@ describe('LoginDialogPanelComponent', () => {
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
 
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        usernameInput = element.querySelector('#username');
-        passwordInput = element.querySelector('#password');
+        usernameInput = testingUtils.getByCSS('#username').nativeElement;
+        passwordInput = testingUtils.getByCSS('#password').nativeElement;
     });
 
     afterEach(() => {
@@ -63,8 +66,8 @@ describe('LoginDialogPanelComponent', () => {
     };
 
     it('should be created', () => {
-        expect(element.querySelector('#adf-login-form')).not.toBeNull();
-        expect(element.querySelector('#adf-login-form')).toBeDefined();
+        expect(testingUtils.getByCSS('#adf-login-form')).not.toBeNull();
+        expect(testingUtils.getByCSS('#adf-login-form')).toBeDefined();
     });
 
     it('should be able to login', (done) => {

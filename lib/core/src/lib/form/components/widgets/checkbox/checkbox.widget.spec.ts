@@ -19,9 +19,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TranslateLoader } from '@ngx-translate/core';
-import { CoreTestingModule } from '../../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
 import { TranslateLoaderService } from '../../../../translation';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { CheckboxWidgetComponent } from './checkbox.widget';
@@ -30,7 +29,7 @@ describe('CheckboxWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: CheckboxWidgetComponent;
     let fixture: ComponentFixture<CheckboxWidgetComponent>;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,11 +37,9 @@ describe('CheckboxWidgetComponent', () => {
             providers: [{ provide: TranslateLoader, useClass: TranslateLoaderService }]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
-
         widget = fixture.componentInstance;
-        element = fixture.nativeElement;
-
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => fixture.destroy());
@@ -60,20 +57,20 @@ describe('CheckboxWidgetComponent', () => {
         });
 
         it('should be marked as invalid when required after interaction', async () => {
-            const checkbox = await loader.getHarness(MatCheckboxHarness);
-            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+            const checkbox = await testingUtils.getMatCheckbox();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
             await checkbox.check();
             await checkbox.uncheck();
 
-            expect(element.querySelector('.adf-invalid')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk = element.querySelector('.adf-asterisk');
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -83,16 +80,14 @@ describe('CheckboxWidgetComponent', () => {
             widget.field.value = true;
             fixture.detectChanges();
 
-            const checkbox = await loader.getHarness(MatCheckboxHarness);
-            expect(await checkbox.isChecked()).toBe(true);
+            expect(await testingUtils.checkIfMatCheckboxIsChecked()).toBe(true);
         });
 
         it('should not be checked if false is passed', async () => {
             widget.field.value = false;
             fixture.detectChanges();
 
-            const checkbox = await loader.getHarness(MatCheckboxHarness);
-            expect(await checkbox.isChecked()).toBe(false);
+            expect(await testingUtils.checkIfMatCheckboxIsChecked()).toBe(false);
         });
 
         describe('when tooltip is set', () => {
@@ -105,10 +100,9 @@ describe('CheckboxWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                const checkbox = await loader.getHarness(MatCheckboxHarness);
-                await (await checkbox.host()).hover();
-
-                const tooltip = await (await checkbox.host()).getAttribute('title');
+                await testingUtils.hoverOverMatCheckbox();
+                const host = await testingUtils.getMatCheckboxHost();
+                const tooltip = await host.getAttribute('title');
                 expect(tooltip).toBe('my custom tooltip');
             });
         });

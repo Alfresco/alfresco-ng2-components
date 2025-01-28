@@ -15,41 +15,39 @@
  * limitations under the License.
  */
 
-import {
-    AppConfigService,
-    AuthenticationService,
-    BasicAlfrescoAuthService,
-    CoreTestingModule,
-    LoginErrorEvent,
-    LoginSuccessEvent,
-    UserPreferencesService
-} from '@alfresco/adf-core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
 import { EMPTY, of, throwError } from 'rxjs';
 import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
 import { LoginComponent } from './login.component';
+import { AuthenticationService } from '../../../auth/services/authentication.service';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
+import { AppConfigService } from '../../../app-config/app-config.service';
+import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { LoginSuccessEvent } from '../../models/login-success.event';
+import { LoginErrorEvent } from '../../models/login-error.event';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
-    let element: any;
     let authService: AuthenticationService;
     let router: Router;
     let userPreferences: UserPreferencesService;
     let appConfigService: AppConfigService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
+    let testingUtils: UnitTestingUtils;
 
     let usernameInput;
     let passwordInput;
 
-    const getLoginErrorElement = () => element.querySelector('#login-error');
+    const getLoginErrorElement = () => testingUtils.getByCSS('#login-error');
 
     const getLoginErrorMessage = () => {
         const errorMessage = undefined;
-        const errorElement = element.querySelector('#login-error .adf-login-error-message');
+        const errorElement = testingUtils.getByCSS('#login-error .adf-login-error-message')?.nativeElement;
 
         if (errorElement) {
             return errorElement.innerText;
@@ -74,8 +72,8 @@ describe('LoginComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(LoginComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.showRememberMe = true;
         component.showLoginActions = true;
@@ -89,8 +87,8 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            usernameInput = element.querySelector('#username');
-            passwordInput = element.querySelector('#password');
+            usernameInput = testingUtils.getByCSS('#username')?.nativeElement;
+            passwordInput = testingUtils.getByCSS('#password')?.nativeElement;
         });
     }));
 
@@ -106,12 +104,12 @@ describe('LoginComponent', () => {
         passwordInput.dispatchEvent(new Event('input'));
         fixture.detectChanges();
 
-        element.querySelector('.adf-login-button').click();
+        fixture.nativeElement.querySelector('.adf-login-button').click();
         fixture.detectChanges();
     };
 
     it('should be autocomplete off', () => {
-        expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
+        expect(testingUtils.getByCSS('#adf-login-form').nativeElement.getAttribute('autocomplete')).toBe('off');
     });
 
     it('should redirect to route on successful login', () => {
@@ -188,8 +186,8 @@ describe('LoginComponent', () => {
     });
 
     describe('Login button', () => {
-        const getLoginButton = () => element.querySelector('#login-button');
-        const getLoginButtonText = () => element.querySelector('#login-button span.adf-login-button-label').innerText;
+        const getLoginButton = () => testingUtils.getByCSS('#login-button');
+        const getLoginButtonText = () => testingUtils.getInnerTextByCSS('#login-button span.adf-login-button-label');
 
         it('should be rendered with the proper key by default', () => {
             expect(getLoginButton()).not.toBeNull();
@@ -201,7 +199,7 @@ describe('LoginComponent', () => {
 
             loginWithCredentials('fake-username', 'fake-password');
 
-            expect(element.querySelector('#checking-spinner')).not.toBeNull();
+            expect(testingUtils.getByCSS('#checking-spinner')).toBeDefined();
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.CHECKING');
         });
 
@@ -230,7 +228,7 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
 
             const loginButton = getLoginButton();
-            expect(loginButton.disabled).toBe(false);
+            expect(loginButton.nativeElement.disabled).toBe(false);
         });
 
         it('Should disable login button when username is not valid', () => {
@@ -244,7 +242,7 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
 
             const loginButton = getLoginButton();
-            expect(loginButton.disabled).toBe(true);
+            expect(loginButton.nativeElement.disabled).toBe(true);
         });
 
         it('Should disable login button when password is not valid', () => {
@@ -258,7 +256,7 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
 
             const loginButton = getLoginButton();
-            expect(loginButton.disabled).toBe(true);
+            expect(loginButton.nativeElement.disabled).toBe(true);
         });
 
         it('Should disable login button when username and password are empty', () => {
@@ -272,22 +270,22 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
 
             const loginButton = getLoginButton();
-            expect(loginButton.disabled).toBe(true);
+            expect(loginButton.nativeElement.disabled).toBe(true);
         });
     });
 
     describe('Remember me', () => {
         it('should be checked by default', () => {
-            expect(element.querySelector('#adf-login-remember input[type="checkbox"]').checked).toBe(true);
+            expect(testingUtils.getByCSS('#adf-login-remember input[type="checkbox"]').nativeElement.checked).toBe(true);
         });
 
         it('should set the component rememberMe property properly', () => {
-            element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
+            testingUtils.getByCSS('#adf-login-remember').nativeElement.dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(false);
 
-            element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
+            testingUtils.getByCSS('#adf-login-remember').nativeElement.dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(true);
@@ -304,26 +302,26 @@ describe('LoginComponent', () => {
     });
 
     it('should render Login form with all the keys to be translated', () => {
-        expect(element.querySelector('[data-automation-id="username"]')).toBeDefined();
-        expect(element.querySelectorAll('.adf-login-form-input-label')[0].innerText).toEqual('LOGIN.LABEL.USERNAME');
+        expect(testingUtils.getByDataAutomationId('username')).toBeDefined();
+        expect(testingUtils.getAllByCSS('.adf-login-form-input-label')[0].nativeElement.innerText).toEqual('LOGIN.LABEL.USERNAME');
 
-        expect(element.querySelector('#adf-login-remember')).toBeDefined();
-        expect(element.querySelector('#adf-login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
+        expect(testingUtils.getByCSS('#adf-login-remember')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('#adf-login-remember')).toContain('LOGIN.LABEL.REMEMBER');
 
-        expect(element.querySelector('[data-automation-id="password"]')).toBeDefined();
-        expect(element.querySelectorAll('.adf-login-form-input-label')[1].innerText).toContain('LOGIN.LABEL.PASSWORD');
+        expect(testingUtils.getByDataAutomationId('password')).toBeDefined();
+        expect(testingUtils.getAllByCSS('.adf-login-form-input-label')[1].nativeElement.innerText).toContain('LOGIN.LABEL.PASSWORD');
 
-        expect(element.querySelector('#adf-login-action-left')).toBeDefined();
-        expect(element.querySelector('#adf-login-action-left').innerText).toEqual('LOGIN.ACTION.HELP');
+        expect(testingUtils.getByCSS('#adf-login-action-left')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('#adf-login-action-left')).toEqual('LOGIN.ACTION.HELP');
 
-        expect(element.querySelector('#adf-login-action-right')).toBeDefined();
-        expect(element.querySelector('#adf-login-action-right').innerText).toEqual('LOGIN.ACTION.REGISTER');
+        expect(testingUtils.getByCSS('#adf-login-action-right')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('#adf-login-action-right')).toEqual('LOGIN.ACTION.REGISTER');
     });
 
     describe('Copyright text', () => {
         it('should render the default copyright text', () => {
-            expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual(
+            expect(testingUtils.getByDataAutomationId('login-copyright')).toBeDefined();
+            expect(testingUtils.getInnerTextByDataAutomationId('login-copyright')).toEqual(
                 '\u00A9 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.'
             );
         });
@@ -332,17 +330,17 @@ describe('LoginComponent', () => {
             component.copyrightText = 'customised';
             fixture.detectChanges();
 
-            expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('customised');
+            expect(testingUtils.getByDataAutomationId('login-copyright')).toBeDefined();
+            expect(testingUtils.getInnerTextByDataAutomationId('login-copyright')).toEqual('customised');
         });
     });
 
     it('should render user and password input fields with default values', () => {
-        expect(element.querySelector('form')).toBeDefined();
-        expect(element.querySelector('input[type="password"]')).toBeDefined();
-        expect(element.querySelector('input[type="text"]')).toBeDefined();
-        expect(element.querySelector('input[type="password"]').value).toEqual('');
-        expect(element.querySelector('input[type="text"]').value).toEqual('');
+        expect(testingUtils.getByCSS('form')).toBeDefined();
+        expect(testingUtils.getByCSS('input[type="password"]')).toBeDefined();
+        expect(testingUtils.getByCSS('input[type="text"]')).toBeDefined();
+        expect(testingUtils.getByCSS('input[type="password"]').nativeElement.value).toEqual('');
+        expect(testingUtils.getByCSS('input[type="text"]').nativeElement.value).toEqual('');
     });
 
     it('should hide remember me if showRememberMe is false', () => {
@@ -350,7 +348,7 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('#login-remember')).toBe(null);
+        expect(testingUtils.getByCSS('#login-remember')).toBe(null);
     });
 
     it('should hide login actions if showLoginActions is false', () => {
@@ -358,8 +356,8 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('#login-action-help')).toBe(null);
-        expect(element.querySelector('#login-action-register')).toBe(null);
+        expect(testingUtils.getByCSS('#login-action-help')).toBe(null);
+        expect(testingUtils.getByCSS('#login-action-register')).toBe(null);
     });
 
     describe('Error', () => {
@@ -380,8 +378,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-            expect(element.querySelector('#username-error')).toBeDefined();
-            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
 
         it('should throw a validation min-length error by default when the username is not at least 2 characters long', () => {
@@ -395,8 +393,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-            expect(element.querySelector('#username-error')).toBeDefined();
-            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
 
         it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
@@ -416,8 +414,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-            expect(element.querySelector('#username-error')).toBeDefined();
-            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
 
         it('should render validation required error when the username is empty and dirty', () => {
@@ -430,8 +428,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
-            expect(element.querySelector('#username-error')).toBeDefined();
-            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
         });
 
         it('should render validation required error when the password is empty and dirty', () => {
@@ -444,8 +442,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.password).toBeDefined();
             expect(component.formError.password).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
-            expect(element.querySelector('#password-required')).toBeDefined();
-            expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
+            expect(testingUtils.getByCSS('#password-required')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#password-required')).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
         });
 
         it('should render no validation errors when the username and password are filled', () => {
@@ -463,8 +461,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toEqual('');
             expect(component.formError.password).toEqual('');
-            expect(element.querySelector('#username-error')).toBeNull();
-            expect(element.querySelector('#password-required')).toBeNull();
+            expect(testingUtils.getByCSS('#username-error')).toBeNull();
+            expect(testingUtils.getByCSS('#password-required')).toBeNull();
         });
 
         it('should return error with a wrong username', (done) => {
@@ -593,8 +591,8 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('input[type="text"]').value).toEqual('fake-change-username');
-        expect(element.querySelector('input[type="password"]').value).toEqual('fake-change-password');
+        expect(testingUtils.getByCSS('input[type="text"]').nativeElement.value).toEqual('fake-change-username');
+        expect(testingUtils.getByCSS('input[type="password"]').nativeElement.value).toEqual('fake-change-password');
     });
 
     it('should return success event after the login have succeeded', (done) => {
@@ -648,7 +646,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         expect(component.isPasswordShow).toBe(true);
-        expect(element.querySelector('#password').type).toEqual('text');
+        expect(testingUtils.getByCSS('#password').nativeElement.type).toEqual('text');
     });
 
     it('should password be hidden when show password is false', () => {
@@ -658,7 +656,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         expect(component.isPasswordShow).toBe(false);
-        expect(element.querySelector('#password').type).toEqual('password');
+        expect(testingUtils.getByCSS('#password').nativeElement.type).toEqual('password');
     });
 
     it('should emit only the username and not the password as part of the executeSubmit', fakeAsync(() => {
@@ -688,8 +686,8 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#username')).toBeNull();
-                    expect(element.querySelector('#password')).toBeNull();
+                    expect(testingUtils.getByCSS('#username')).toBeNull();
+                    expect(testingUtils.getByCSS('#password')).toBeNull();
                 });
             }));
 
@@ -726,7 +724,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#login-button')).toBeNull();
+                    expect(testingUtils.getByCSS('#login-button')).toBeNull();
                 });
             }));
 
@@ -737,7 +735,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#login-button-sso')).toBeDefined();
+                    expect(testingUtils.getByCSS('#login-button-sso')).toBeDefined();
                 });
             }));
         });

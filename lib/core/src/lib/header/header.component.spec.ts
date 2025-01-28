@@ -18,13 +18,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
+import { UnitTestingUtils } from '../testing';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
+    let testingUtils: UnitTestingUtils;
 
-    const getLogoImgElement = () => fixture.nativeElement.querySelector('.adf-toolbar-logo');
-    const getTitleElement = () => fixture.nativeElement.querySelector('.adf-toolbar-title');
+    const getLogoImgElement = () => testingUtils.getByCSS('.adf-toolbar-logo')?.nativeElement;
+    const getTitleElement = () => testingUtils.getByCSS('.adf-toolbar-title')?.nativeElement;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -33,6 +35,7 @@ describe('HeaderComponent', () => {
 
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 

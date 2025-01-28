@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { Chip, CoreTestingModule, DynamicChipListComponent } from '@alfresco/adf-core';
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { Chip } from './chip';
+import { DynamicChipListComponent } from './dynamic-chip-list.component';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('DynamicChipListComponent', () => {
     let chips: Chip[] = [
@@ -41,7 +43,7 @@ describe('DynamicChipListComponent', () => {
     ];
     let component: DynamicChipListComponent;
     let fixture: ComponentFixture<DynamicChipListComponent>;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
     let resizeCallback: ResizeObserverCallback;
 
     /**
@@ -50,7 +52,7 @@ describe('DynamicChipListComponent', () => {
      * @returns native element
      */
     function findViewMoreButton(): HTMLButtonElement {
-        return element.querySelector('[data-automation-id="adf-dynamic-chip-list-view-more-button"]');
+        return testingUtils.getByDataAutomationId('adf-dynamic-chip-list-view-more-button').nativeElement;
     }
 
     /**
@@ -58,8 +60,8 @@ describe('DynamicChipListComponent', () => {
      *
      * @returns native element list
      */
-    function findChips(): NodeListOf<Element> {
-        return element.querySelectorAll('.adf-dynamic-chip-list-chip');
+    function findChips(): DebugElement[] {
+        return testingUtils.getAllByCSS('.adf-dynamic-chip-list-chip');
     }
 
     beforeEach(() => {
@@ -68,9 +70,9 @@ describe('DynamicChipListComponent', () => {
         });
         const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(DynamicChipListComponent);
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
         component.chips = chips;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
         resizeCallback = resizeObserverSpy.calls.mostRecent().args[0];
     });
@@ -83,13 +85,12 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-0')?.innerHTML).toBe('test1');
-            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-1')?.innerHTML).toBe('test2');
-            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-2')?.innerHTML).toBe('test3');
-
-            expect(element.querySelector('#adf-dynamic-chip-list-delete-test1')).not.toBe(null);
-            expect(element.querySelector('#adf-dynamic-chip-list-delete-test2')).not.toBe(null);
-            expect(element.querySelector('#adf-dynamic-chip-list-delete-test3')).not.toBe(null);
+            expect(testingUtils.getInnerTextByCSS('#adf-dynamic-chip-list-chip-name-0')).toBe('test1');
+            expect(testingUtils.getInnerTextByCSS('#adf-dynamic-chip-list-chip-name-1')).toBe('test2');
+            expect(testingUtils.getInnerTextByCSS('#adf-dynamic-chip-list-chip-name-2')).toBe('test3');
+            expect(testingUtils.getByCSS('#adf-dynamic-chip-list-delete-test1')).not.toBe(null);
+            expect(testingUtils.getByCSS('#adf-dynamic-chip-list-delete-test2')).not.toBe(null);
+            expect(testingUtils.getByCSS('#adf-dynamic-chip-list-delete-test3')).not.toBe(null);
         });
 
         it('should emit removedChip event when clicked on delete icon', async () => {
@@ -101,8 +102,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton: any = element.querySelector('#adf-dynamic-chip-list-delete-test1');
-            deleteButton.click();
+            testingUtils.clickByCSS('#adf-dynamic-chip-list-delete-test1');
 
             expect(component.removedChip.emit).toHaveBeenCalledWith('0ee933fa-57fc-4587-8a77-b787e814f1d2');
         });
@@ -116,8 +116,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton: any = element.querySelector('#adf-dynamic-chip-list-delete-test1');
-            expect(deleteButton).toBeNull();
+            expect(testingUtils.getByCSS('#adf-dynamic-chip-list-delete-test1')).toBeNull();
         });
 
         it('should show the delete button if showDelete is true', async () => {
@@ -129,8 +128,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton: any = element.querySelector('#adf-dynamic-chip-list-delete-test1');
-            expect(deleteButton).not.toBeNull();
+            expect(testingUtils.getByCSS('#adf-dynamic-chip-list-delete-test1')).not.toBeNull();
         });
 
         it('should round up chips if roundUpChips is true', async () => {
@@ -142,7 +140,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const chip = fixture.debugElement.query(By.css('.adf-dynamic-chip-list-chip'));
+            const chip = testingUtils.getByCSS('.adf-dynamic-chip-list-chip');
             expect(getComputedStyle(chip.nativeElement).borderRadius).toBe('20px');
         });
 
@@ -155,7 +153,7 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const chip = fixture.debugElement.query(By.css('.adf-dynamic-chip-list-delete-icon'));
+            const chip = testingUtils.getByCSS('.adf-dynamic-chip-list-delete-icon');
             expect(Object.keys(chip.attributes)).toContain('disabled');
         });
 
@@ -192,7 +190,7 @@ describe('DynamicChipListComponent', () => {
         beforeEach(() => {
             component.limitChipsDisplayed = true;
             component.ngOnInit();
-            element.style.maxWidth = '309px';
+            fixture.nativeElement.style.maxWidth = '309px';
         });
 
         afterEach(() => {
@@ -213,7 +211,7 @@ describe('DynamicChipListComponent', () => {
 
         it('should not render view more button when limiting is enabled and all chips fits into container', fakeAsync(() => {
             renderChips();
-            element.style.maxWidth = '800px';
+            fixture.nativeElement.style.maxWidth = '800px';
             component.ngOnChanges({
                 chips: new SimpleChange(undefined, component.chips, true)
             });
@@ -288,7 +286,7 @@ describe('DynamicChipListComponent', () => {
             });
             tick();
             fixture.detectChanges();
-            element.style.maxWidth = '800px';
+            fixture.nativeElement.style.maxWidth = '800px';
 
             resizeCallback([], null);
             fixture.detectChanges();
@@ -299,14 +297,14 @@ describe('DynamicChipListComponent', () => {
 
         it('should render view more button when there is not enough space after resizing', fakeAsync(() => {
             renderChips();
-            element.style.maxWidth = '800px';
+            fixture.nativeElement.style.maxWidth = '800px';
 
             component.ngOnChanges({
                 chips: new SimpleChange(undefined, component.chips, true)
             });
             tick();
             fixture.detectChanges();
-            element.style.maxWidth = '100px';
+            fixture.nativeElement.style.maxWidth = '100px';
 
             resizeCallback([], null);
             fixture.detectChanges();
@@ -324,7 +322,7 @@ describe('DynamicChipListComponent', () => {
             const viewMoreButton = findViewMoreButton();
             viewMoreButton.click();
             fixture.detectChanges();
-            element.style.maxWidth = '309px';
+            fixture.nativeElement.style.maxWidth = '309px';
 
             resizeCallback([], null);
             fixture.detectChanges();

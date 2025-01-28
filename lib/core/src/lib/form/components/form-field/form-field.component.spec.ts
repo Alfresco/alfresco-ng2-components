@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { CheckboxWidgetComponent, FormFieldModel, FormFieldTypes, FormModel, TextWidgetComponent } from '../widgets';
 import { FormFieldComponent } from './form-field.component';
@@ -25,6 +25,7 @@ describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
     let component: FormFieldComponent;
     let form: FormModel;
+    let testingUtils: UnitTestingUtils;
 
     let formRenderingService: FormRenderingService;
 
@@ -34,6 +35,7 @@ describe('FormFieldComponent', () => {
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         formRenderingService = fixture.debugElement.injector.get(FormRenderingService);
         form = new FormModel();
     });
@@ -117,9 +119,9 @@ describe('FormFieldComponent', () => {
 
         fixture.detectChanges();
 
-        const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style;
-        expect(debugElement.visibility).toEqual('hidden');
-        expect(debugElement.display).toEqual('none');
+        const styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
+        expect(styles.visibility).toEqual('hidden');
+        expect(styles.display).toEqual('none');
     });
 
     it('should show the field when it is visible', () => {
@@ -132,8 +134,9 @@ describe('FormFieldComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
+        const styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
+        expect(styles.visibility).toEqual('visible');
+        expect(styles.display).toEqual('block');
     });
 
     it('should hide a visible element', () => {
@@ -144,12 +147,14 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
+        let styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
+        expect(styles.visibility).toEqual('visible');
+        expect(styles.display).toEqual('block');
         component.field.isVisible = false;
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('hidden');
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('none');
+        styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
+        expect(styles.visibility).toEqual('hidden');
+        expect(styles.display).toEqual('none');
     });
 
     it('[C213878] - Should fields be correctly rendered when filled with process variables', () => {
@@ -199,7 +204,7 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         fixture.detectChanges();
-        const hyperlink: HTMLLinkElement = fixture.nativeElement.querySelector('#field-label2-container hyperlink-widget a');
+        const hyperlink: HTMLLinkElement = testingUtils.getByCSS('#field-label2-container hyperlink-widget a').nativeElement;
         expect(hyperlink).not.toBeNull();
         expect(hyperlink.href).toBe('http://testtest/');
         expect(hyperlink.textContent).toBe('testtest');

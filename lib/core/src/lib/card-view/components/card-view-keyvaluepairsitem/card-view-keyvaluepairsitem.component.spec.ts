@@ -16,16 +16,20 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('CardViewKeyValuePairsItemComponent', () => {
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
     let component: CardViewKeyValuePairsItemComponent;
     let cardViewUpdateService: CardViewUpdateService;
+    let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
     const mockEmptyData = [{ name: '', value: '' }];
     const mockData = [{ name: 'test-name', value: 'test-value' }];
 
@@ -35,6 +39,8 @@ describe('CardViewKeyValuePairsItemComponent', () => {
         });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         component = fixture.componentInstance;
         component.property = new CardViewKeyValuePairsItemModel({
             label: 'Key Value Pairs',
@@ -53,9 +59,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
         it('should render the label', () => {
             fixture.detectChanges();
 
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('Key Value Pairs');
+            expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Key Value Pairs');
         });
 
         it('should render readOnly table is editable property is FALSE', () => {
@@ -70,47 +74,44 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             fixture.detectChanges();
 
             expect(component.isEditable).toBe(false);
-            const table = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__read-only'));
-            const form = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
+            const table = testingUtils.getByCSS('.adf-card-view__key-value-pairs__read-only');
+            const form = testingUtils.getByCSS('.adf-card-view__key-value-pairs');
 
             expect(table).not.toBeNull();
             expect(form).toBeNull();
         });
 
-        it('should add new item on ADD button click', () => {
+        it('should add new item on ADD button click', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
-            addButton.triggerEventHandler('click', null);
+            await testingUtils.clickMatButtonByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
             fixture.detectChanges();
 
             expect(JSON.stringify(component.values)).toBe(JSON.stringify(mockEmptyData));
 
-            const content = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
+            const content = testingUtils.getByCSS('.adf-card-view__key-value-pairs');
             expect(content).not.toBeNull();
 
-            const nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
-            const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
+            const nameInput = testingUtils.getByDataAutomationId(`card-${component.property.key}-name-input-0`);
+            const valueInput = testingUtils.getByDataAutomationId(`card-${component.property.key}-value-input-0`);
             expect(nameInput).not.toBeNull();
             expect(valueInput).not.toBeNull();
         });
 
-        it('should remove an item from list on REMOVE button click', () => {
+        it('should remove an item from list on REMOVE button click', async () => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
-            addButton.triggerEventHandler('click', null);
+            await testingUtils.clickMatButtonByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
             fixture.detectChanges();
 
-            const removeButton = fixture.debugElement.query(By.css('.adf-property-col-delete'));
-            removeButton.triggerEventHandler('click', null);
+            await testingUtils.clickMatButtonByCSS('.adf-property-col-delete');
             fixture.detectChanges();
 
             expect(component.values.length).toBe(0);
-            const content = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
+            const content = testingUtils.getByCSS('.adf-card-view__key-value-pairs');
             expect(content).toBeNull();
 
             expect(cardViewUpdateService.update).toHaveBeenCalled();

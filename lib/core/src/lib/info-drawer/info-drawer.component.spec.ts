@@ -18,19 +18,18 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTabGroupHarness } from '@angular/material/tabs/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopTranslateModule } from '../testing/noop-translate.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('InfoDrawerComponent', () => {
-    let element: HTMLElement;
     let component: InfoDrawerComponent;
     let fixture: ComponentFixture<InfoDrawerComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,12 +37,12 @@ describe('InfoDrawerComponent', () => {
         });
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should define InfoDrawerTabLayout', () => {
-        const infoDrawerTabLayout = element.querySelector('adf-info-drawer-layout');
+        const infoDrawerTabLayout = testingUtils.getByCSS('adf-info-drawer-layout');
         expect(infoDrawerTabLayout).toBeDefined();
     });
 
@@ -57,7 +56,7 @@ describe('InfoDrawerComponent', () => {
     it('should render the title', () => {
         component.title = 'FakeTitle';
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = testingUtils.getAllByCSS('[info-drawer-title]');
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('FakeTitle');
     });
@@ -101,8 +100,9 @@ describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
-    const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+    const getNodeIcon = () => testingUtils.getAllByCSS('[info-drawer-node-icon]');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -113,6 +113,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -121,36 +122,30 @@ describe('Custom InfoDrawer', () => {
 
     it('should render the title', () => {
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = testingUtils.getAllByCSS('[info-drawer-title]');
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
     });
 
     it('should select the tab 1 (index 0) as default', async () => {
         fixture.detectChanges();
-        const tabs = await loader.getHarness(MatTabGroupHarness);
-        const selectedTab = await tabs.getSelectedTab();
 
-        expect(await selectedTab.getLabel()).toEqual('Tab1');
+        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toEqual('Tab1');
     });
 
     it('should select the tab 2 (index 1)', async () => {
         component.tabIndex = 1;
         fixture.detectChanges();
-        const tabs = await loader.getHarness(MatTabGroupHarness);
-        const selectedTab = await tabs.getSelectedTab();
 
-        expect(await selectedTab.getLabel()).toEqual('Tab2');
+        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toEqual('Tab2');
     });
 
     it('should render a tab with icon', async () => {
         component.tabIndex = 2;
         fixture.detectChanges();
-        const tabs = await loader.getHarness(MatTabGroupHarness);
-        const selectedTab = await tabs.getSelectedTab();
 
-        expect(await selectedTab.getLabel()).toContain('Tab3');
-        expect(await selectedTab.getLabel()).toContain('tab-icon');
+        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toContain('Tab3');
+        expect(await testingUtils.getSelectedTabLabelFromMatTabGroup()).toContain('tab-icon');
     });
 
     it('should render a icon with title', () => {
@@ -176,7 +171,8 @@ class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
 describe('Header visibility InfoDrawer', () => {
     let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
     let component: VisibilityInfoDrawerComponent;
-    const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+    let testingUtils: UnitTestingUtils;
+    const getNodeIcon = () => testingUtils.getAllByCSS('[info-drawer-node-icon]');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -185,12 +181,13 @@ describe('Header visibility InfoDrawer', () => {
         fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should show info drawer header by default', () => {
         component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = testingUtils.getAllByCSS('[info-drawer-title]');
         const icon = getNodeIcon();
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
         expect(title.length).toBe(1);
@@ -203,7 +200,7 @@ describe('Header visibility InfoDrawer', () => {
     it('should not show info drawer header with icon when showHeader is false', () => {
         component.showHeader = false;
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title = testingUtils.getAllByCSS('[info-drawer-title]');
         const icon = getNodeIcon();
         expect(title.length).toBe(0);
         expect(icon.length).toBe(0);
