@@ -144,4 +144,10 @@ export class TaskScreenCloudComponent implements OnInit {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
         }
     }
+
+    switchToDisplayMode(newDisplayMode?: string) {
+        if (this.componentRef?.instance?.switchToDisplayMode) {
+            this.componentRef.instance.switchToDisplayMode(newDisplayMode);
+        }
+    }
 }

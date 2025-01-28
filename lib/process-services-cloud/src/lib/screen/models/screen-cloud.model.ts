@@ -29,6 +29,7 @@ export interface UserTaskCustomUi {
     cancelTask: EventEmitter<any>;
     claimTask: EventEmitter<any>;
     error: EventEmitter<any>;
+    switchToDisplayMode: (newDisplayMode?: string) => void;
     taskCompleted: EventEmitter<string>;
     taskSaved: EventEmitter<string>;
     unclaimTask: EventEmitter<any>;

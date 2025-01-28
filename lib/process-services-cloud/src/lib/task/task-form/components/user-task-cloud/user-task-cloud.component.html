@@ -26,6 +26,7 @@
 
             <ng-container *ngSwitchCase="taskTypeEnum.Screen">
                 <adf-cloud-task-screen
+                    #adfCloudTaskScreen
                     [appName]="appName"
                     [canClaimTask]="canClaimTask()"
                     [canUnclaimTask]="canUnclaimTask()"
