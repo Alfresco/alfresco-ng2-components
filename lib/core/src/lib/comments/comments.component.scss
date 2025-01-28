@@ -15,10 +15,7 @@ adf-comments {
 
                 &#{$mat-form-field-invalid} {
                     #{$mat-input-element} {
-                        &::placeholder {
-                            color: var(--theme-warn-color);
-                        }
-
+                        &::placeholder,
                         &:focus::placeholder {
                             color: var(--theme-warn-color);
                         }
