@@ -114,7 +114,8 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const clickOnGroupSave = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement.click();
+    const getGroupSaveButton = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement;
+    const clickOnGroupSaveButton = () => getGroupSaveButton().click();
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
@@ -288,6 +289,135 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
+        describe('Save button - Grouped Properties', () => {
+            beforeEach(() => {
+                getGroupedPropertiesSpy.and.returnValue(
+                    of([
+                        {
+                            editable: true,
+                            title: 'test',
+                            properties: []
+                        }
+                    ])
+                );
+
+                component.ngOnInit();
+                component.readOnly = false;
+            });
+
+            it('should disable the save button if metadata has not changed', () => {
+                fixture.detectChanges();
+                toggleEditModeForGroup();
+                expect(getGroupSaveButton().disabled).toBeTrue();
+            });
+
+            it('should disable the save button if there are invalid properties', fakeAsync(() => {
+                updateService.update(
+                    {
+                        key: 'properties.property-key',
+                        isValidValue: false
+                    } as CardViewBaseItemModel,
+                    'updated-value'
+                );
+                tick(500);
+                fixture.detectChanges();
+                toggleEditModeForGroup();
+                expect(getGroupSaveButton().disabled).toBeTrue();
+            }));
+
+            it('should enable the save button if metadata has changed and there are no invalid properties', fakeAsync(() => {
+                updateService.update(
+                    {
+                        key: 'properties.property-key',
+                        isValidValue: true
+                    } as CardViewBaseItemModel,
+                    'updated-value'
+                );
+                tick(500);
+                fixture.detectChanges();
+                toggleEditModeForGroup();
+                expect(getGroupSaveButton().disabled).toBeFalse();
+            }));
+        });
+
+        describe('Save button - Basic Properties', () => {
+            beforeEach(fakeAsync(() => {
+                spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
+                component.ngOnInit();
+                component.readOnly = false;
+            }));
+
+            it('should disable the save button if metadata has not changed', fakeAsync(() => {
+                fixture.detectChanges();
+                toggleEditModeForGeneralInfo();
+                expect(findSaveGeneralInfoButton().disabled).toBeTrue();
+            }));
+
+            it('should enable the save button if metadata has changed and there are no invalid properties', fakeAsync(() => {
+                updateService.update(
+                    {
+                        key: 'properties.property-key',
+                        isValidValue: true
+                    } as CardViewBaseItemModel,
+                    'updated-value'
+                );
+                tick(500);
+                fixture.detectChanges();
+                toggleEditModeForGeneralInfo();
+                expect(findSaveGeneralInfoButton().disabled).toBeFalse();
+            }));
+
+            it('should disable the save button if there are invalid properties', fakeAsync(() => {
+                updateService.update(
+                    {
+                        key: 'properties.property-key',
+                        isValidValue: false
+                    } as CardViewBaseItemModel,
+                    'updated-value'
+                );
+                tick(500);
+                fixture.detectChanges();
+                toggleEditModeForGeneralInfo();
+                expect(findSaveGeneralInfoButton().disabled).toBeTrue();
+            }));
+        });
+
+        describe('updateInvalidProperties', () => {
+            it('should add the property key to invalidProperties if isValidValue is false and key is not present', fakeAsync(() => {
+                const property = { key: 'properties.property-key', isValidValue: false } as CardViewBaseItemModel;
+                expect(component.invalidProperties.size).toBe(0);
+                updateService.update(property, 'updated-value');
+                tick(500);
+                expect(component.invalidProperties.has(property.key)).toBeTrue();
+            }));
+
+            it('should not add the property key to invalidProperties if isValidValue is false and key is already present', fakeAsync(() => {
+                const property = { key: 'properties.property-key', isValidValue: false } as CardViewBaseItemModel;
+                updateService.update(property, 'updated-value-1');
+                tick(500);
+                updateService.update(property, 'updated-value-2');
+                tick(500);
+                expect(component.invalidProperties.size).toBe(1);
+                expect(component.invalidProperties.has(property.key)).toBeTrue();
+            }));
+
+            it('should remove the property key from invalidProperties if isValidValue is true and key is present', fakeAsync(() => {
+                updateService.update({ key: 'properties.property-key', isValidValue: false } as CardViewBaseItemModel, 'updated-value');
+                tick(500);
+                expect(component.invalidProperties).toContain('properties.property-key');
+                updateService.update({ key: 'properties.property-key', isValidValue: true } as CardViewBaseItemModel, 'updated-value');
+                tick(500);
+                expect(component.invalidProperties.has('properties.property-key')).toBeFalse();
+            }));
+
+            it('should not change invalidProperties if isValidValue is true and key is not present', fakeAsync(() => {
+                expect(component.invalidProperties.size).toBe(0);
+                updateService.update({ key: 'properties.property-key', isValidValue: true } as CardViewBaseItemModel, 'updated-value');
+                tick(500);
+                expect(component.invalidProperties.size).toBe(0);
+            }));
+        });
+
         it('should save changedProperties on save click', fakeAsync(() => {
             getGroupedPropertiesSpy.and.returnValue(
                 of([
@@ -309,7 +439,7 @@ describe('ContentMetadataComponent', () => {
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
             toggleEditModeForGroup();
 
-            clickOnGroupSave();
+            clickOnGroupSaveButton();
             expect(nodesApiService.updateNode).toHaveBeenCalled();
             expect(component.node).toEqual(expectedNode);
         }));
