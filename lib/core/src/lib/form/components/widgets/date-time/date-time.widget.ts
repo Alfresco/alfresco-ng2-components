@@ -25,18 +25,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-    ADF_DATE_FORMATS,
-    ADF_DATETIME_FORMATS,
-    AdfDateFnsAdapter,
-    AdfDateTimeFnsAdapter,
-    DateFnsUtils
-} from '../../../../common';
+import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormWidget } from '../reactive-widget.interface';
 
 @Component({
     selector: 'date-time-widget',
@@ -52,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
-export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
+export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     minDate: Date;
     maxDate: Date;
     datetimeInputControl: FormControl<Date> = new FormControl<Date>(null);
@@ -86,7 +81,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     private updateFormControlState(): void {
-        this.datetimeInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        this.datetimeInputControl.setValidators(this.isRequired() && this.field?.isVisible ? [Validators.required] : []);
         this.field?.readOnly || this.readOnly
             ? this.datetimeInputControl.disable({ emitEvent: false })
             : this.datetimeInputControl.enable({ emitEvent: false });

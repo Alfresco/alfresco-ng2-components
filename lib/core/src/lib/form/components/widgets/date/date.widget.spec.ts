@@ -162,11 +162,11 @@ describe('DateWidgetComponent', () => {
                 type: FormFieldTypes.DATE,
                 required: true
             });
-
-            fixture.detectChanges();
         });
 
         it('should be marked as invalid after interaction', () => {
+            fixture.detectChanges();
+
             const dateInput = fixture.nativeElement.querySelector('input');
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
 
@@ -174,6 +174,24 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be valid when field is hidden with empty value', () => {
+            widget.field.isVisible = false;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeTrue();
+            expect(widget.dateInputControl.valid).toBeTrue();
+            expect(widget.field.validationSummary.message).toBe('');
+        });
+
+        it('should be invalid when field is hidden with empty value', () => {
+            widget.field.isVisible = true;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeFalse();
+            expect(widget.dateInputControl.valid).toBeFalse();
+            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
         });
     });
 

@@ -198,7 +198,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private updateFormControlState(): void {
-        this.dropdownControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        this.dropdownControl.setValidators(this.isRequired() && this.field?.isVisible ? [Validators.required] : []);
 
         this.field?.readOnly || this.readOnly
             ? this.dropdownControl.disable({ emitEvent: false })
