@@ -28,8 +28,9 @@ const mockDialog = {
 describe('DownloadPromptDialogComponent', () => {
     let matDialogRef: MatDialogRef<DownloadPromptDialogComponent>;
     let fixture: ComponentFixture<DownloadPromptDialogComponent>;
+    let testingUtils: UnitTestingUtils;
 
-    const clickButton = (buttonId: string) => UnitTestingUtils.clickByCSS(fixture.debugElement, buttonId);
+    const clickButton = (buttonId: string) => testingUtils.clickByCSS(buttonId);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,6 +40,7 @@ describe('DownloadPromptDialogComponent', () => {
         matDialogRef = TestBed.inject(MatDialogRef);
 
         fixture = TestBed.createComponent(DownloadPromptDialogComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 

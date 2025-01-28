@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
@@ -25,10 +24,9 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
-
     let fixture: ComponentFixture<CardViewMapItemComponent>;
     let component: CardViewMapItemComponent;
-    let debug: DebugElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,15 +35,15 @@ describe('CardViewMapItemComponent', () => {
         fixture = TestBed.createComponent(CardViewMapItemComponent);
         service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    const getPropertyLabel = (): string => UnitTestingUtils.getInnerTextByCSS(debug, '.adf-property-label');
-    const getPropertyValue = (): string => UnitTestingUtils.getInnerTextByDataAutomationId(debug, `card-mapitem-value-${component.property.key}`);
+    const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
+    const getPropertyValue = (): string => testingUtils.getInnerTextByDataAutomationId(`card-mapitem-value-${component.property.key}`);
 
     it('should render the default if the value is empty and displayEmpty is true', () => {
         component.property = new CardViewMapItemModel({
@@ -73,7 +71,7 @@ describe('CardViewMapItemComponent', () => {
         component.displayEmpty = false;
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(debug, '.adf-property-label')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-property-label')).toBeNull();
         expect(getPropertyValue().trim()).toBe('');
     });
 
@@ -111,6 +109,6 @@ describe('CardViewMapItemComponent', () => {
             done();
         });
 
-        UnitTestingUtils.clickByCSS(debug, '.adf-mapitem-clickable-value');
+        testingUtils.clickByCSS('.adf-mapitem-clickable-value');
     });
 });

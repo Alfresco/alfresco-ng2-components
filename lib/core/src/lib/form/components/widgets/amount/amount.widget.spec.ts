@@ -31,6 +31,7 @@ describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,6 +40,7 @@ describe('AmountWidgetComponent', () => {
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     it('should setup currency from field', () => {
@@ -87,7 +89,7 @@ describe('AmountWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await UnitTestingUtils.getMatInputHost(loader);
+            const host = await testingUtils.getMatInputHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -104,18 +106,18 @@ describe('AmountWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const host = await UnitTestingUtils.getMatInputHost(loader);
+            const host = await testingUtils.getMatInputHost();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
             await host.blur();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -127,6 +129,7 @@ describe('AmountWidgetComponent - rendering', () => {
     let loader: HarnessLoader;
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -135,6 +138,7 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     it('[C289915] - Should be able to display different currency icons', async () => {
@@ -146,7 +150,7 @@ describe('AmountWidgetComponent - rendering', () => {
         });
         fixture.detectChanges();
 
-        const field = await UnitTestingUtils.getMatFormField(loader);
+        const field = await testingUtils.getMatFormField();
         expect(await field.getPrefixText()).toBe('$');
 
         widget.field.currency = '£';
@@ -183,23 +187,23 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const field = await UnitTestingUtils.getMatFormField(loader);
-        const inputField = await UnitTestingUtils.getMatInputByPlaceholder(loader, 'Check Placeholder Text');
+        const field = await testingUtils.getMatFormField();
+        const inputField = await testingUtils.getMatInputByPlaceholder('Check Placeholder Text');
         expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 
-        const widgetLabel = UnitTestingUtils.getByCSS(fixture.debugElement, 'label.adf-label').nativeElement;
+        const widgetLabel = testingUtils.getByCSS('label.adf-label').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount*');
         expect(widget.field.isValid).toBe(false);
 
-        const input = await UnitTestingUtils.getMatInput(loader);
+        const input = await testingUtils.getMatInput();
         await input.setValue('90');
         expect(widget.field.isValid).toBe(true);
 
         await input.setValue('gdfgdf');
         expect(widget.field.isValid).toBe(false);
 
-        const errorWidget = UnitTestingUtils.getByCSS(fixture.debugElement, 'error-widget .adf-error-text').nativeElement;
+        const errorWidget = testingUtils.getByCSS('error-widget .adf-error-text').nativeElement;
         expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
@@ -224,24 +228,24 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const widgetLabel = UnitTestingUtils.getByCSS(fixture.debugElement, 'label.adf-label').nativeElement;
+        const widgetLabel = testingUtils.getByCSS('label.adf-label').nativeElement;
         expect(widgetLabel.textContent.trim()).toBe('Test Amount*');
 
-        const field = await UnitTestingUtils.getMatFormField(loader);
+        const field = await testingUtils.getMatFormField();
         expect(await field.getPrefixText()).toBe('£');
 
         expect(widget.field.isValid).toBe(false);
 
-        const input = await UnitTestingUtils.getMatInput(loader);
+        const input = await testingUtils.getMatInput();
         await input.setValue('8');
         expect(widget.field.isValid).toBe(false);
 
-        let errorMessage = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-text').nativeElement;
+        let errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
 
         await input.setValue('99');
         expect(widget.field.isValid).toBe(false);
-        errorMessage = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-text').nativeElement;
+        errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
 
         await input.setValue('80');
@@ -252,7 +256,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
         await input.setValue('incorrect format');
         expect(widget.field.isValid).toBe(false);
-        errorMessage = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-text').nativeElement;
+        errorMessage = testingUtils.getByCSS('.adf-error-text').nativeElement;
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
@@ -270,8 +274,8 @@ describe('AmountWidgetComponent - rendering', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container')).not.toBeNull();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label')).not.toBeNull();
+            expect(testingUtils.getByCSS('.adf-left-label-input-container')).not.toBeNull();
+            expect(testingUtils.getByCSS('.adf-left-label')).not.toBeNull();
         });
 
         it('should not have left labels classes on leftLabels false', async () => {
@@ -287,8 +291,8 @@ describe('AmountWidgetComponent - rendering', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container')).toBeNull();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-left-label-input-container')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-left-label')).toBeNull();
         });
 
         it('should not have left labels classes on leftLabels not present', async () => {
@@ -304,8 +308,8 @@ describe('AmountWidgetComponent - rendering', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container')).toBeNull();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-left-label-input-container')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-left-label')).toBeNull();
         });
     });
 });

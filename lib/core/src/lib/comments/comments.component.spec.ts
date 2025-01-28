@@ -32,6 +32,7 @@ describe('CommentsComponent', () => {
     let getCommentSpy: jasmine.Spy;
     let addCommentSpy: jasmine.Spy;
     let commentsService: CommentsService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,6 +46,7 @@ describe('CommentsComponent', () => {
         });
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         commentsService = TestBed.inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
@@ -85,8 +87,8 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-message').length).toBe(3);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-message:empty')).toBeNull();
+        expect(testingUtils.getAllByCSS('.adf-comment-message').length).toBe(3);
+        expect(testingUtils.getByCSS('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should display comments count when the entity has comments', async () => {
@@ -96,7 +98,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#comment-header')).toBe('COMMENTS.HEADER');
+        expect(testingUtils.getInnerTextByCSS('#comment-header')).toBe('COMMENTS.HEADER');
     });
 
     it('should not display comments when the entity has no comments', async () => {
@@ -106,7 +108,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#comment-container')).toBeNull();
+        expect(testingUtils.getByCSS('#comment-container')).toBeNull();
     });
 
     it('should display comments input by default', async () => {
@@ -116,7 +118,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#comment-input')).not.toBeNull();
+        expect(testingUtils.getByCSS('#comment-input')).not.toBeNull();
     });
 
     it('should not display comments input when the entity is readonly', async () => {
@@ -125,7 +127,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#comment-input')).toBeNull();
+        expect(testingUtils.getByCSS('#comment-input')).toBeNull();
     });
 
     describe('Change detection id', () => {
@@ -162,7 +164,7 @@ describe('CommentsComponent', () => {
 
         it('should normalize comment when user input contains spaces sequence', async () => {
             component.message = 'test comment';
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-comments-input-add');
+            testingUtils.clickByCSS('.adf-comments-input-add');
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -183,32 +185,32 @@ describe('CommentsComponent', () => {
             addCommentSpy.and.returnValue(commentsResponseMock.addComment(commentText));
 
             component.message = commentText;
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-comments-input-add');
+            testingUtils.clickByCSS('.adf-comments-input-add');
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(addCommentSpy).toHaveBeenCalledWith('123', commentText);
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message')).toBe(commentText);
+            expect(testingUtils.getInnerTextByCSS('.adf-comment-message')).toBe(commentText);
         });
 
         it('should call service to add a comment when add button is pressed', async () => {
             component.message = 'Test Comment';
             addCommentSpy.and.returnValue(commentsResponseMock.addComment(component.message));
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-comments-input-add');
+            testingUtils.clickByCSS('.adf-comments-input-add');
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(addCommentSpy).toHaveBeenCalled();
-            const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-message');
+            const elements = testingUtils.getAllByCSS('.adf-comment-message');
             expect(elements.length).toBe(1);
             expect(elements[0].nativeElement.innerText).toBe('Test Comment');
         });
 
         it('should not call service to add a comment when comment is empty', async () => {
             component.message = '';
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-comments-input-add');
+            testingUtils.clickByCSS('.adf-comments-input-add');
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -217,12 +219,12 @@ describe('CommentsComponent', () => {
         });
 
         it('should clear comment when escape key is pressed', async () => {
-            UnitTestingUtils.keyBoardEventByCSS(fixture.debugElement, '#comment-input', 'keydown', 'Escape', 'Escape');
+            testingUtils.keyBoardEventByCSS('#comment-input', 'keydown', 'Escape', 'Escape');
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const input = UnitTestingUtils.getByCSS(fixture.debugElement, '#comment-input');
+            const input = testingUtils.getByCSS('#comment-input');
             expect(input.nativeElement.value).toBe('');
         });
 

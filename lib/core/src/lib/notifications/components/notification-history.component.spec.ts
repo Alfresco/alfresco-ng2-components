@@ -30,10 +30,11 @@ describe('Notification History Component', () => {
     let notificationService: NotificationService;
     let overlayContainerElement: HTMLElement;
     let storage: StorageService;
+    let testingUtils: UnitTestingUtils;
 
     const openNotification = () => {
         fixture.detectChanges();
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '#adf-notification-history-open-button');
+        testingUtils.clickByCSS('#adf-notification-history-open-button');
         fixture.detectChanges();
     };
 
@@ -43,6 +44,7 @@ describe('Notification History Component', () => {
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);

@@ -24,6 +24,7 @@ describe('InplaceFormInputComponent', () => {
     let component: InplaceFormInputComponent;
     let fixture: ComponentFixture<InplaceFormInputComponent>;
     let formControl: UntypedFormControl;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -37,13 +38,14 @@ describe('InplaceFormInputComponent', () => {
 
         component = fixture.componentInstance;
         component.control = formControl;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should update form value', () => {
         formControl.setValue('New Value');
         fixture.detectChanges();
 
-        const input = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-inplace-input').nativeElement;
+        const input = testingUtils.getByDataAutomationId('adf-inplace-input').nativeElement;
 
         expect(input.value).toBe('New Value');
     });
@@ -56,7 +58,7 @@ describe('InplaceFormInputComponent', () => {
 
         fixture.detectChanges();
 
-        const error = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-inplace-input-error');
+        const error = testingUtils.getByDataAutomationId('adf-inplace-input-error');
 
         expect(error).toBeTruthy();
     });
@@ -66,7 +68,7 @@ describe('InplaceFormInputComponent', () => {
 
         fixture.detectChanges();
 
-        const error = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-inplace-input-label');
+        const error = testingUtils.getByDataAutomationId('adf-inplace-input-label');
 
         expect(error).toBeTruthy();
     });

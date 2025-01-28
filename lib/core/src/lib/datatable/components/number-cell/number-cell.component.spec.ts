@@ -27,13 +27,14 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 describe('NumberCellComponent', () => {
     let component: NumberCellComponent;
     let fixture: ComponentFixture<NumberCellComponent>;
+    let testingUtils: UnitTestingUtils;
 
     const renderAndCheckNumberValue = (decimalConfig: DecimalConfig, value: number, expectedResult: string) => {
         component.value$ = new BehaviorSubject<number>(value);
         component.decimalConfig = decimalConfig;
 
         fixture.detectChanges();
-        const displayedNumber = UnitTestingUtils.getByCSS(fixture.debugElement, 'span');
+        const displayedNumber = testingUtils.getByCSS('span');
 
         expect(displayedNumber).toBeTruthy();
         expect(displayedNumber.nativeElement.textContent.trim()).toBe(expectedResult);
@@ -45,6 +46,7 @@ describe('NumberCellComponent', () => {
         });
         fixture = TestBed.createComponent(NumberCellComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should set default decimal config', () => {
@@ -64,6 +66,7 @@ describe('NumberCellComponent', () => {
 describe('NumberCellComponent locale', () => {
     let component: NumberCellComponent;
     let fixture: ComponentFixture<NumberCellComponent>;
+    let testingUtils: UnitTestingUtils;
 
     it('should render decimal value with custom locale', () => {
         TestBed.configureTestingModule({
@@ -73,13 +76,14 @@ describe('NumberCellComponent locale', () => {
 
         fixture = TestBed.createComponent(NumberCellComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         registerLocaleData(localePL);
 
         component.value$ = new BehaviorSubject<number>(123.45);
         component.decimalConfig = { locale: 'pl-PL' };
 
         fixture.detectChanges();
-        const displayedNumber = UnitTestingUtils.getByCSS(fixture.debugElement, 'span');
+        const displayedNumber = testingUtils.getByCSS('span');
 
         expect(displayedNumber).toBeTruthy();
         expect(displayedNumber.nativeElement.textContent.trim()).toBe('123,45');

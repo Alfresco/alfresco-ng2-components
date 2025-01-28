@@ -26,6 +26,7 @@ describe('Test Img viewer component ', () => {
     let component: ImgViewerComponent;
     let urlService: UrlService;
     let fixture: ComponentFixture<ImgViewerComponent>;
+    let testingUtils: UnitTestingUtils;
 
     const createFakeBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -42,6 +43,7 @@ describe('Test Img viewer component ', () => {
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
 
             component = fixture.componentInstance;
             component.urlFile = 'fake-url-file.png';
@@ -127,7 +129,7 @@ describe('Test Img viewer component ', () => {
         it('should present file name in the alt attribute', () => {
             component.fileName = 'fake-name';
             fixture.detectChanges();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-image').nativeElement.getAttribute('alt')).toEqual('fake-name');
+            expect(testingUtils.getByCSS('#viewer-image').nativeElement.getAttribute('alt')).toEqual('fake-name');
         });
 
         it('should call replace on cropper with new url if blobFile is null', () => {
@@ -208,15 +210,15 @@ describe('Test Img viewer component ', () => {
             component.readOnly = false;
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-rotate-button')).not.toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).not.toEqual(null);
         });
 
         it('should not show rotate button by default', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-rotate-button')).toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).toEqual(null);
         });
 
         it('should not show crop button by default', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-crop-button')).toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-crop-button')).toEqual(null);
         });
 
         it('should start cropping when clicking the crop button', fakeAsync(() => {
@@ -225,7 +227,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component.cropper, 'crop');
             spyOn(component.cropper, 'setDragMode');
             fixture.detectChanges();
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '#viewer-crop-button');
+            testingUtils.clickByCSS('#viewer-crop-button');
             tick();
 
             expect(component.cropImage).toHaveBeenCalled();
@@ -238,7 +240,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component, 'rotateImage').and.callThrough();
             spyOn(component.cropper, 'rotate');
             fixture.detectChanges();
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '#viewer-rotate-button');
+            testingUtils.clickByCSS('#viewer-rotate-button');
             tick();
 
             expect(component.rotateImage).toHaveBeenCalled();
@@ -250,14 +252,14 @@ describe('Test Img viewer component ', () => {
             component.isEditing = true;
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-secondary-toolbar')).not.toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).not.toEqual(null);
         }));
 
         it('should not display the second toolbar when in read only mode', () => {
             component.readOnly = true;
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-secondary-toolbar')).toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).toEqual(null);
         });
 
         it('should not display the second toolbar when not in editing', () => {
@@ -265,7 +267,7 @@ describe('Test Img viewer component ', () => {
             component.isEditing = false;
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-secondary-toolbar')).toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).toEqual(null);
         });
 
         it('should display second toolbar in edit mode', fakeAsync(() => {
@@ -274,9 +276,9 @@ describe('Test Img viewer component ', () => {
 
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-secondary-toolbar')).not.toEqual(null);
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-cancel-button')).not.toEqual(null);
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-save-button')).not.toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).not.toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-cancel-button')).not.toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-save-button')).not.toEqual(null);
         }));
 
         it('should not be in editing mode by default', () => {
@@ -310,7 +312,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component.cropper, 'zoomTo');
 
             fixture.detectChanges();
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '#viewer-cancel-button');
+            testingUtils.clickByCSS('#viewer-cancel-button');
             tick();
 
             expect(component.reset).toHaveBeenCalled();
@@ -332,7 +334,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component.cropper.getCroppedCanvas(), 'toBlob').and.callFake(() => component.isSaving.emit(false));
 
             fixture.detectChanges();
-            UnitTestingUtils.clickByCSS(fixture.debugElement, '#viewer-save-button');
+            testingUtils.clickByCSS('#viewer-save-button');
             tick();
 
             expect(component.save).toHaveBeenCalled();
@@ -364,22 +366,16 @@ describe('Test Img viewer component ', () => {
             fixture.detectChanges();
 
             // Check both buttons are visible when allowed
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-rotate-button')).not.toBeNull(
-                'Rotate button should be visible when allowed'
-            );
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-crop-button')).not.toBeNull('Crop button should be visible when allowed');
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).not.toBeNull('Rotate button should be visible when allowed');
+            expect(testingUtils.getByCSS('#viewer-crop-button')).not.toBeNull('Crop button should be visible when allowed');
 
             // Change allowedEditActions to disallow both actions
             component.allowedEditActions = { rotate: false, crop: false };
             fixture.detectChanges();
 
             // Check both buttons are not visible when not allowed
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-rotate-button')).toBeNull(
-                'Rotate button should not be visible when disallowed'
-            );
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-crop-button')).toBeNull(
-                'Crop button should not be visible when disallowed'
-            );
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).toBeNull('Rotate button should not be visible when disallowed');
+            expect(testingUtils.getByCSS('#viewer-crop-button')).toBeNull('Crop button should not be visible when disallowed');
         });
     });
 });

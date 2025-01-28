@@ -29,6 +29,7 @@ describe('CardViewBoolItemComponent', () => {
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
     let component: CardViewBoolItemComponent;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,14 +45,15 @@ describe('CardViewBoolItemComponent', () => {
             editable: false
         });
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    const getPropertyLabel = () => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-property-label');
-    const getPropertyValue = () => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-property-value');
+    const getPropertyLabel = () => testingUtils.getByCSS('.adf-property-label');
+    const getPropertyValue = () => testingUtils.getByCSS('.adf-property-value');
 
     describe('Rendering', () => {
         it('should render the label and value if the property is editable', () => {
@@ -87,7 +89,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeTrue();
         });
@@ -99,7 +101,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.default = true;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeTrue();
         });
@@ -108,7 +110,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = false;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeFalse();
         });
@@ -120,7 +122,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.default = false;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isChecked()).toBeFalse();
         });
@@ -131,7 +133,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isDisabled()).toBeFalse();
         });
@@ -142,7 +144,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isDisabled()).toBeTrue();
         });
@@ -153,7 +155,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const checkbox = await UnitTestingUtils.getMatCheckboxByDataAutomationId(loader, 'card-boolean-boolKey');
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
             expect(checkbox).toBeDefined();
             expect(await checkbox.isDisabled()).toBeTrue();
         });
@@ -201,7 +203,7 @@ describe('CardViewBoolItemComponent', () => {
                 done();
             });
 
-            UnitTestingUtils.clickByDataAutomationId(fixture.debugElement, 'card-boolean-label-boolKey');
+            testingUtils.clickByDataAutomationId('card-boolean-label-boolKey');
         });
     });
 });

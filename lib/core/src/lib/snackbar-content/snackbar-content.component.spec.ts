@@ -26,6 +26,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 describe('SnackbarContentComponent', () => {
     let component: SnackbarContentComponent;
     let fixture: ComponentFixture<SnackbarContentComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -46,6 +47,7 @@ describe('SnackbarContentComponent', () => {
         });
 
         fixture = TestBed.createComponent(SnackbarContentComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
     });
 
@@ -54,12 +56,12 @@ describe('SnackbarContentComponent', () => {
             message: 'Some message'
         };
         fixture.detectChanges();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-snackbar-message-content')).toBe(component.data.message);
+        expect(testingUtils.getInnerTextByCSS('.adf-snackbar-message-content')).toBe(component.data.message);
     });
 
     it('should not display message if message in data is not set', () => {
         fixture.detectChanges();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-snackbar-message-content')).toBe('');
+        expect(testingUtils.getInnerTextByCSS('.adf-snackbar-message-content')).toBe('');
     });
 
     it('should call snackBarRef.dismissWithAction() when button is clicked', () => {
@@ -70,7 +72,7 @@ describe('SnackbarContentComponent', () => {
         };
         spyOn(component.snackBarRef, 'dismissWithAction');
         fixture.detectChanges();
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-snackbar-message-content-action-button');
+        testingUtils.clickByCSS('.adf-snackbar-message-content-action-button');
         expect(component.snackBarRef.dismissWithAction).toHaveBeenCalled();
     });
 
@@ -81,9 +83,7 @@ describe('SnackbarContentComponent', () => {
             actionLabel: 'Some action action'
         };
         fixture.detectChanges();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-snackbar-message-content-action-button')).toBe(
-            component.data.actionLabel
-        );
+        expect(testingUtils.getInnerTextByCSS('.adf-snackbar-message-content-action-button')).toBe(component.data.actionLabel);
     });
 
     it('should not display actionLabel if actionLabel in data is not set', () => {
@@ -92,7 +92,7 @@ describe('SnackbarContentComponent', () => {
             showAction: true
         };
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-snackbar-message-content-action-button')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-snackbar-message-content-action-button')).toBeNull();
     });
 
     it('should render icon if actionIcon in data is set', () => {
@@ -102,7 +102,7 @@ describe('SnackbarContentComponent', () => {
             actionIcon: 'close'
         };
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByDirective(fixture.debugElement, MatIcon)).toBeDefined();
+        expect(testingUtils.getByDirective(MatIcon)).toBeDefined();
     });
 
     it('should not render icon if actionIcon in data is not set', () => {
@@ -111,6 +111,6 @@ describe('SnackbarContentComponent', () => {
             showAction: true
         };
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByDirective(fixture.debugElement, MatIcon)).toBeNull();
+        expect(testingUtils.getByDirective(MatIcon)).toBeNull();
     });
 });

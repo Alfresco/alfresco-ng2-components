@@ -39,6 +39,7 @@ describe('ClipboardDirective', () => {
     let fixture: ComponentFixture<TestTargetClipboardComponent>;
     let clipboardService: ClipboardService;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -48,21 +49,22 @@ describe('ClipboardDirective', () => {
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         fixture.detectChanges();
     });
 
     it('should notify copy target value on button click event', async () => {
         spyOn(clipboardService, 'copyToClipboard');
-        UnitTestingUtils.fillInputByCSS(fixture.debugElement, 'input', 'some value');
-        await UnitTestingUtils.clickMatButton(loader);
+        testingUtils.fillInputByCSS('input', 'some value');
+        await testingUtils.clickMatButton();
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
 
     it('should notify copy target value on keydown event', async () => {
         spyOn(clipboardService, 'copyToClipboard');
-        UnitTestingUtils.fillInputByCSS(fixture.debugElement, 'input', 'some value');
-        await UnitTestingUtils.sendKeysToMatButton(loader, [TestKey.ENTER]);
+        testingUtils.fillInputByCSS('input', 'some value');
+        await testingUtils.sendKeysToMatButton([TestKey.ENTER]);
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
@@ -82,6 +84,7 @@ describe('CopyClipboardDirective', () => {
     }
 
     let fixture: ComponentFixture<TestCopyClipboardComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -89,28 +92,29 @@ describe('CopyClipboardDirective', () => {
             declarations: [TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
     it('should show tooltip when hover element', () => {
-        UnitTestingUtils.hoverOverByCSS(fixture.debugElement, 'span');
+        testingUtils.hoverOverByCSS('span');
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-copy-tooltip')).not.toBeNull();
+        expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
     });
 
     it('should not show tooltip when element it is not hovered', () => {
-        UnitTestingUtils.hoverOverByCSS(fixture.debugElement, 'span');
+        testingUtils.hoverOverByCSS('span');
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-copy-tooltip')).not.toBeNull();
+        expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
 
-        UnitTestingUtils.mouseLeaveByCSS(fixture.debugElement, 'span');
+        testingUtils.mouseLeaveByCSS('span');
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-copy-tooltip')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-copy-tooltip')).toBeNull();
     });
 
     it('should copy the content of element when click it', fakeAsync(() => {
         spyOn(navigator.clipboard, 'writeText');
-        UnitTestingUtils.clickByCSS(fixture.debugElement, 'span');
+        testingUtils.clickByCSS('span');
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
@@ -118,7 +122,7 @@ describe('CopyClipboardDirective', () => {
 
     it('should copy the content of element on keydown event', fakeAsync(() => {
         spyOn(navigator.clipboard, 'writeText');
-        UnitTestingUtils.keyBoardEventByCSS(fixture.debugElement, 'span', 'keydown', 'Enter', 'Enter');
+        testingUtils.keyBoardEventByCSS('span', 'keydown', 'Enter', 'Enter');
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
@@ -126,7 +130,7 @@ describe('CopyClipboardDirective', () => {
 
     it('should not copy the content of element when click it', fakeAsync(() => {
         spyOn(navigator.clipboard, 'writeText');
-        UnitTestingUtils.mouseLeaveByCSS(fixture.debugElement, 'span');
+        testingUtils.mouseLeaveByCSS('span');
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).not.toHaveBeenCalled();

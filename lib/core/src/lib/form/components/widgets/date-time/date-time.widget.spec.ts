@@ -35,6 +35,7 @@ describe('DateTimeWidgetComponent', () => {
     let widget: DateTimeWidgetComponent;
     let fixture: ComponentFixture<DateTimeWidgetComponent>;
     let form: FormModel;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -52,6 +53,7 @@ describe('DateTimeWidgetComponent', () => {
         widget = fixture.componentInstance;
         form = new FormModel();
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -81,8 +83,8 @@ describe('DateTimeWidgetComponent', () => {
         });
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#data-time-widget')).toBeDefined();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#data-time-widget')).not.toBeNull();
+        expect(testingUtils.getByCSS('#data-time-widget')).toBeDefined();
+        expect(testingUtils.getByCSS('#data-time-widget')).not.toBeNull();
     });
 
     it('should setup max value for date picker', () => {
@@ -183,7 +185,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        await UnitTestingUtils.fillMatInput(loader, '9999-09-12T09:10:00.000Z');
+        await testingUtils.fillMatInput('9999-09-12T09:10:00.000Z');
 
         expect(field.value).toEqual(new Date('9999-09-12T09:10:00.000Z'));
         expect(field.isValid).toBeTrue();
@@ -201,7 +203,7 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        await UnitTestingUtils.fillMatInput(loader, '123abc');
+        await testingUtils.fillMatInput('123abc');
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
         expect(field.value).toBe(null);
@@ -222,7 +224,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        await UnitTestingUtils.fillMatInput(loader, null);
+        await testingUtils.fillMatInput(null);
 
         expect(widget.datetimeInputControl.value).toBe(null);
         expect(widget.datetimeInputControl.valid).toBeTrue();
@@ -240,7 +242,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await UnitTestingUtils.getMatInputHost(loader);
+            const host = await testingUtils.getMatInputHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -257,16 +259,16 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            UnitTestingUtils.blurByCSS(fixture.debugElement, 'input');
+            testingUtils.blurByCSS('input');
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', () => {
-            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).not.toBeNull();
             expect(asterisk?.textContent).toEqual('*');
@@ -303,7 +305,7 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(await UnitTestingUtils.getMatInputValue(loader)).toBe('30-11-9999 10:30 AM');
+            expect(await testingUtils.getMatInputValue()).toBe('30-11-9999 10:30 AM');
         });
 
         it('should show the correct format type', async () => {
@@ -318,7 +320,7 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(await UnitTestingUtils.getMatInputValue(loader)).toBe('12-30-9999 10:30 AM');
+            expect(await testingUtils.getMatInputValue()).toBe('12-30-9999 10:30 AM');
         });
 
         it('should disable date button when is readonly', () => {
@@ -331,7 +333,7 @@ describe('DateTimeWidgetComponent', () => {
             });
             fixture.detectChanges();
 
-            let dateButton = UnitTestingUtils.getByCSS(fixture.debugElement, 'button').nativeElement;
+            let dateButton = testingUtils.getByCSS('button').nativeElement;
 
             expect(dateButton).not.toBeNull();
             expect(dateButton?.disabled).toBeFalsy();
@@ -339,7 +341,7 @@ describe('DateTimeWidgetComponent', () => {
             widget.field.readOnly = true;
             fixture.detectChanges();
 
-            dateButton = UnitTestingUtils.getByCSS(fixture.debugElement, 'button').nativeElement;
+            dateButton = testingUtils.getByCSS('button').nativeElement;
 
             expect(dateButton).not.toBeNull();
             expect(dateButton?.disabled).toBeTruthy();
@@ -359,7 +361,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const input = await UnitTestingUtils.getMatInput(loader);
+        const input = await testingUtils.getMatInput();
         expect(await input.getValue()).toBe('12-30-9999 10:30 AM');
 
         widget.field.value = '2020-03-02T00:00:00.000Z';
@@ -384,7 +386,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const input = await UnitTestingUtils.getMatInput(loader);
+        const input = await testingUtils.getMatInput();
         expect(await input.getValue()).toBe('12/30/9999 10;30 AM');
 
         widget.field.value = '2020-03-02T00:00:00.000Z';
@@ -409,13 +411,13 @@ describe('DateTimeWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).not.toBeNull();
 
-            const leftDatePicker = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-datepicker');
+            const leftDatePicker = testingUtils.getByCSS('.adf-left-label-input-datepicker');
             expect(leftDatePicker).not.toBeNull();
 
-            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).not.toBeNull();
         });
 
@@ -431,13 +433,13 @@ describe('DateTimeWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const leftDatePicker = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-datepicker');
+            const leftDatePicker = testingUtils.getByCSS('.adf-left-label-input-datepicker');
             expect(leftDatePicker).toBeNull();
 
-            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
 
@@ -453,13 +455,13 @@ describe('DateTimeWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const leftDatePicker = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-datepicker');
+            const leftDatePicker = testingUtils.getByCSS('.adf-left-label-input-datepicker');
             expect(leftDatePicker).toBeNull();
 
-            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
 
@@ -473,10 +475,10 @@ describe('DateTimeWidgetComponent', () => {
                 required: true
             });
 
-            await UnitTestingUtils.focusMatInput(loader);
-            await UnitTestingUtils.sendKeysToMatInput(loader, [TestKey.ENTER]);
+            await testingUtils.focusMatInput();
+            await testingUtils.sendKeysToMatInput([TestKey.ENTER]);
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-date-time-widget-picker')).toBeTruthy();
+            expect(testingUtils.getByDataAutomationId('adf-date-time-widget-picker')).toBeTruthy();
         });
     });
 });

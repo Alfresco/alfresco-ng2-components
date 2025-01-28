@@ -22,6 +22,7 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('ToolbarComponent', () => {
     let fixture: ComponentFixture<ToolbarComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -29,6 +30,7 @@ describe('ToolbarComponent', () => {
         });
 
         fixture = TestBed.createComponent(ToolbarComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should render title span', async () => {
@@ -37,7 +39,7 @@ describe('ToolbarComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title: HTMLSpanElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-toolbar-title').nativeElement;
+        const title: HTMLSpanElement = testingUtils.getByCSS('.adf-toolbar-title').nativeElement;
         expect(title.innerHTML).toBe('test-title');
     });
 });

@@ -28,6 +28,7 @@ describe('DecimalComponent', () => {
     let loader: HarnessLoader;
     let widget: DecimalWidgetComponent;
     let fixture: ComponentFixture<DecimalWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -38,6 +39,7 @@ describe('DecimalComponent', () => {
         fixture = TestBed.createComponent(DecimalWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     describe('when tooltip is set', () => {
@@ -50,7 +52,7 @@ describe('DecimalComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await UnitTestingUtils.getMatInputHost(loader);
+            const host = await testingUtils.getMatInputHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -69,16 +71,16 @@ describe('DecimalComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            await UnitTestingUtils.blurMatInput(loader);
+            await testingUtils.blurMatInput();
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk?.textContent).toEqual('*');
@@ -99,10 +101,10 @@ describe('DecimalComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).not.toBeNull();
 
-            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).not.toBeNull();
         });
 
@@ -119,10 +121,10 @@ describe('DecimalComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
 
@@ -139,10 +141,10 @@ describe('DecimalComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const adfLeftLabel = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
     });

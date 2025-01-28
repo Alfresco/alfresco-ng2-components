@@ -25,12 +25,14 @@ import { of } from 'rxjs';
 describe('Text View component', () => {
     let component: TxtViewerComponent;
     let fixture: ComponentFixture<TxtViewerComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule, TxtViewerComponent]
         });
         fixture = TestBed.createComponent(TxtViewerComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         const httpClient = TestBed.inject(HttpClient);
         spyOn(httpClient, 'get').and.returnValue(of('example'));
@@ -49,7 +51,7 @@ describe('Text View component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
+            expect(testingUtils.getByCSS('.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
         });
 
         it('Should text container be present with Blob file', async () => {
@@ -62,7 +64,7 @@ describe('Text View component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
+            expect(testingUtils.getByCSS('.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
         });
     });
 });

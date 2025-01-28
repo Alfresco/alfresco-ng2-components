@@ -27,6 +27,7 @@ describe('ErrorContentComponent', () => {
     let fixture: ComponentFixture<ErrorContentComponent>;
     let errorContentComponent: ErrorContentComponent;
     let translateService: TranslationService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,6 +35,7 @@ describe('ErrorContentComponent', () => {
             providers: [{ provide: ActivatedRoute, useValue: { params: of() } }]
         });
         fixture = TestBed.createComponent(ErrorContentComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         errorContentComponent = fixture.debugElement.componentInstance;
         translateService = TestBed.inject(TranslationService);
     });
@@ -48,7 +50,7 @@ describe('ErrorContentComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const errorContentElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-content-code');
+            const errorContentElement = testingUtils.getByCSS('.adf-error-content-code');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
         });
@@ -57,7 +59,7 @@ describe('ErrorContentComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const errorContentElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-content-title');
+            const errorContentElement = testingUtils.getByCSS('.adf-error-content-title');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
         });
@@ -66,7 +68,7 @@ describe('ErrorContentComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const errorContentElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-content-description');
+            const errorContentElement = testingUtils.getByCSS('.adf-error-content-description');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
         });
@@ -75,7 +77,7 @@ describe('ErrorContentComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const errorContentElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-content-description');
+            const errorContentElement = testingUtils.getByCSS('.adf-error-content-description');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
         });
@@ -85,7 +87,7 @@ describe('ErrorContentComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const errorContentElement = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-content-description-link');
+            const errorContentElement = testingUtils.getByCSS('.adf-error-content-description-link');
             expect(errorContentElement).toBeNull();
         });
 

@@ -114,6 +114,7 @@ const testCases = [
 testCases.forEach((testCase) => {
     describe(`ContextMenuDirective ${testCase.description}`, () => {
         let fixture: ComponentFixture<TestComponent>;
+        let testingUtils: UnitTestingUtils;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -123,11 +124,12 @@ testCases.forEach((testCase) => {
             fixture = TestBed.createComponent(TestComponent);
             fixture.componentInstance.isEnabled = false;
             fixture.componentInstance.actions = testCase.actions;
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             fixture.detectChanges();
         });
 
         it('should not show menu on mouse contextmenu event when context menu is disabled', () => {
-            UnitTestingUtils.dispatchCustomEventByCSS(fixture.debugElement, '#target', 'contextmenu');
+            testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
             fixture.detectChanges();
 
             const contextMenu = document.querySelector('.adf-context-menu');
@@ -141,7 +143,7 @@ testCases.forEach((testCase) => {
                 fixture.componentInstance.isEnabled = true;
                 fixture.detectChanges();
 
-                UnitTestingUtils.dispatchCustomEventByCSS(fixture.debugElement, '#target', 'contextmenu');
+                testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
                 fixture.detectChanges();
                 contextMenu = document.querySelector('.adf-context-menu');
             });
@@ -175,10 +177,11 @@ testCases.forEach((testCase) => {
                 fixture.componentInstance.isEnabled = true;
                 fixture.detectChanges();
 
-                UnitTestingUtils.dispatchCustomEventByCSS(fixture.debugElement, '#target', 'contextmenu');
+                testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
                 fixture.detectChanges();
                 contextMenu = document.querySelector('.adf-context-menu');
                 loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
+                testingUtils.setLoader(loader);
             });
 
             it('should not render item with visibility property set to false', () => {
@@ -190,7 +193,7 @@ testCases.forEach((testCase) => {
             });
 
             it('should set first not disabled item as active', async () => {
-                const icon = await UnitTestingUtils.getMatIconWithAncestorByCSS(loader, 'adf-context-menu');
+                const icon = await testingUtils.getMatIconWithAncestorByCSS('adf-context-menu');
 
                 expect(await icon.getName()).toEqual('action-icon-3');
             });
@@ -210,7 +213,7 @@ testCases.forEach((testCase) => {
             });
 
             it('should not render item icon if not set', async () => {
-                expect(await UnitTestingUtils.checkIfMatIconExistsWithAncestorByCSSAndName(loader, 'adf-context-menu', 'Action 1')).toBeFalse();
+                expect(await testingUtils.checkIfMatIconExistsWithAncestorByCSSAndName('adf-context-menu', 'Action 1')).toBeFalse();
             });
         });
     });

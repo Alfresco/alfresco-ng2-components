@@ -27,6 +27,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -40,6 +41,7 @@ describe('CommentListComponent', () => {
         });
         fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         fixture.detectChanges();
     });
@@ -60,14 +62,14 @@ describe('CommentListComponent', () => {
 
         fixture.detectChanges();
 
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-comment-list-item');
+        testingUtils.clickByCSS('.adf-comment-list-item');
     });
 
     it('should not show comment list if no input is given', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-datatable')).toBeNull();
+        expect(testingUtils.getByCSS('adf-datatable')).toBeNull();
     });
 
     it('should show comment message when input is given', async () => {
@@ -76,10 +78,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-message');
+        const elements = testingUtils.getAllByCSS('.adf-comment-message');
         expect(elements.length).toBe(1);
         expect(elements[0].nativeElement.innerText).toBe(mockCommentOne.message);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-message:empty')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should show comment user when input is given', async () => {
@@ -88,10 +90,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-user-name');
+        const elements = testingUtils.getAllByCSS('.adf-comment-user-name');
         expect(elements.length).toBe(1);
         expect(elements[0].nativeElement.innerText).toBe(mockCommentOne.userDisplayName);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-user-name:empty')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-comment-user-name:empty')).toBeNull();
     });
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async () => {
@@ -103,7 +105,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message-time')).toContain('less than a minute ago');
+        expect(testingUtils.getInnerTextByCSS('.adf-comment-message-time')).toContain('less than a minute ago');
     });
 
     it('comment date time should start with Yesterday when comment date is yesterday', async () => {
@@ -114,7 +116,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message-time')).toContain('1 day ago');
+        expect(testingUtils.getInnerTextByCSS('.adf-comment-message-time')).toContain('1 day ago');
     });
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async () => {
@@ -125,7 +127,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const msgTime = UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-comment-message-time');
+        const msgTime = testingUtils.getInnerTextByCSS('.adf-comment-message-time');
         expect(msgTime).not.toContain('Today');
         expect(msgTime).not.toContain('Yesterday');
     });
@@ -136,10 +138,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-img-container');
+        const elements = testingUtils.getAllByCSS('.adf-comment-img-container');
         expect(elements.length).toBe(1);
         expect(elements[0].nativeElement.innerText).toContain(mockCommentOne.userInitials);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-comment-img-container:empty')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-comment-img-container:empty')).toBeNull();
     });
 
     it('should return picture when is a user with a picture', async () => {
@@ -148,7 +150,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-people-img');
+        const elements = testingUtils.getAllByCSS('.adf-people-img');
         expect(elements.length).toBe(1);
     });
 
@@ -158,7 +160,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-comment-user-icon');
+        const elements = testingUtils.getAllByCSS('.adf-comment-user-icon');
         expect(elements.length).toBe(1);
     });
 });

@@ -50,6 +50,7 @@ describe('InfiniteSelectScrollDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -65,11 +66,12 @@ describe('InfiniteSelectScrollDirective', () => {
         component.open();
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         flush();
     }));
 
     it('should call an action on scrollEnd event', async () => {
-        const panel = await UnitTestingUtils.getMatSelectHost(loader);
+        const panel = await testingUtils.getMatSelectHost();
         await panel.dispatchEvent('scrollEnd');
 
         expect(component.options.length).toBe(60);

@@ -30,6 +30,7 @@ describe('JsonCellComponent', () => {
     let dataTableAdapter: ObjectDataTableAdapter;
     let rowData: any;
     let columnData: any;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +39,7 @@ describe('JsonCellComponent', () => {
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     beforeEach(() => {
@@ -73,7 +75,7 @@ describe('JsonCellComponent', () => {
     it('should render json button inside cell', async () => {
         fixture.detectChanges();
 
-        expect(await UnitTestingUtils.checkIfMatButtonExists(loader)).toBe(true);
+        expect(await testingUtils.checkIfMatButtonExists()).toBe(true);
     });
 
     it('should not setup cell when has no data', () => {

@@ -36,6 +36,7 @@ describe('CardViewComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,17 +46,18 @@ describe('CardViewComponent', () => {
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    const getPropertyLabel = (): string => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label');
-    const getPropertyValue = (): string => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-property-value').nativeElement.value;
-    const getPropertyValueText = (): string => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-value');
+    const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
+    const getPropertyValue = (): string => testingUtils.getByCSS('.adf-property-value').nativeElement.value;
+    const getPropertyValueText = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
     const getPropertyValueByDataAutomationId = (dataAutomationId: string): string =>
-        UnitTestingUtils.getByDataAutomationId(fixture.debugElement, dataAutomationId).nativeElement.value;
+        testingUtils.getByDataAutomationId(dataAutomationId).nativeElement.value;
 
     it('should render the label and value', async () => {
         component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
@@ -80,7 +82,7 @@ describe('CardViewComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'datepicker-some-key')).not.toBeNull('Datepicker should be in DOM');
+        expect(testingUtils.getByDataAutomationId('datepicker-some-key')).not.toBeNull('Datepicker should be in DOM');
     });
 
     it('should render the date in the correct format', async () => {
@@ -161,7 +163,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const currentOptions = await UnitTestingUtils.getMatSelectOptions(loader);
+        const currentOptions = await testingUtils.getMatSelectOptions();
         expect(currentOptions.length).toBe(3);
         expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
         expect(await currentOptions[1].getText()).toContain(options[0].label);
@@ -190,7 +192,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const currentOptions = await UnitTestingUtils.getMatSelectOptions(loader);
+        const currentOptions = await testingUtils.getMatSelectOptions();
         expect(currentOptions.length).toBe(3);
         expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
         expect(await currentOptions[1].getText()).toContain(options[0].label);
@@ -219,7 +221,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const currentOptions = await UnitTestingUtils.getMatSelectOptions(loader);
+        const currentOptions = await testingUtils.getMatSelectOptions();
         expect(currentOptions.length).toBe(2);
         expect(await currentOptions[0].getText()).toContain(options[0].label);
         expect(await currentOptions[1].getText()).toContain(options[1].label);
@@ -251,7 +253,7 @@ describe('CardViewComponent', () => {
      * @returns the dispatcher component instance
      */
     function getCardViewItemDispatcherComponent(): CardViewItemDispatcherComponent {
-        const cardViewItemDispatcherDebugElement = UnitTestingUtils.getByDirective(fixture.debugElement, CardViewItemDispatcherComponent);
+        const cardViewItemDispatcherDebugElement = testingUtils.getByDirective(CardViewItemDispatcherComponent);
         return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
     }
 });

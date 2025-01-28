@@ -23,6 +23,7 @@ import { HyperlinkWidgetComponent } from './hyperlink.widget';
 describe('HyperlinkWidgetComponent', () => {
     let widget: HyperlinkWidgetComponent;
     let fixture: ComponentFixture<HyperlinkWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -30,6 +31,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
         fixture = TestBed.createComponent(HyperlinkWidgetComponent);
         widget = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should get link text from field display text', () => {
@@ -140,7 +142,7 @@ describe('HyperlinkWidgetComponent', () => {
         widget.ngOnInit();
 
         fixture.detectChanges();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, 'a')).toBe(url);
+        expect(testingUtils.getInnerTextByCSS('a')).toBe(url);
     });
 
     it('should be able to set label property', () => {
@@ -151,7 +153,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, 'label')).toBe(label);
+        expect(testingUtils.getInnerTextByCSS('label')).toBe(label);
     });
 
     it('should be able to set URL', () => {
@@ -162,7 +164,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const hyperlinkWidgetLink = UnitTestingUtils.getByCSS(fixture.debugElement, 'a').nativeElement;
+        const hyperlinkWidgetLink = testingUtils.getByCSS('a').nativeElement;
         expect(hyperlinkWidgetLink.href).toBe(url);
     });
 
@@ -176,7 +178,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const hyperlinkWidgetLink = UnitTestingUtils.getByCSS(fixture.debugElement, 'a').nativeElement;
+        const hyperlinkWidgetLink = testingUtils.getByCSS('a').nativeElement;
         expect(hyperlinkWidgetLink.href).toBe(url);
         expect(hyperlinkWidgetLink.innerText).toBe(displayText);
     });
@@ -193,7 +195,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const checkbox = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-hyperlink-widget div').nativeElement;
+        const checkbox = testingUtils.getByCSS('.adf-hyperlink-widget div').nativeElement;
         const tooltip = checkbox.getAttribute('title');
 
         expect(tooltip).toEqual(widget.field.tooltip);

@@ -31,6 +31,7 @@ describe('CardViewArrayItemComponent', () => {
     let fixture: ComponentFixture<CardViewArrayItemComponent>;
     let service: CardViewUpdateService;
     let serviceSpy: jasmine.Spy;
+    let testingUtils: UnitTestingUtils;
 
     const mockData = [
         { icon: 'person', value: 'Zlatan' },
@@ -55,6 +56,7 @@ describe('CardViewArrayItemComponent', () => {
         component = fixture.componentInstance;
         component.property = new CardViewArrayItemModel(mockDefaultProps);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -73,17 +75,17 @@ describe('CardViewArrayItemComponent', () => {
         });
 
         it('should call service on chip click', async () => {
-            await UnitTestingUtils.clickMatChip(loader, 'card-arrayitem-chip-Zlatan');
+            await testingUtils.clickMatChip('card-arrayitem-chip-Zlatan');
             expect(serviceSpy).toHaveBeenCalled();
         });
 
         it('should call service on edit icon click', async () => {
-            await UnitTestingUtils.clickMatButtonByDataAutomationId(loader, 'card-array-item-clickable-icon-array');
+            await testingUtils.clickMatButtonByDataAutomationId('card-array-item-clickable-icon-array');
             expect(serviceSpy).toHaveBeenCalled();
         });
 
         it('should NOT call service on chip list container click', async () => {
-            await UnitTestingUtils.clickMatChipListbox(loader, 'card-arrayitem-chip-list-container');
+            await testingUtils.clickMatChipListbox('card-arrayitem-chip-list-container');
             expect(serviceSpy).not.toHaveBeenCalled();
         });
     });
@@ -92,7 +94,7 @@ describe('CardViewArrayItemComponent', () => {
         it('should render the label', () => {
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label')).toBe('Array of items');
+            expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Array of items');
         });
 
         it('should render chip list', async () => {
@@ -102,7 +104,7 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipListBox = await UnitTestingUtils.getMatChips(loader);
+            const chipListBox = await testingUtils.getMatChips();
             expect(chipListBox).not.toBeNull();
             expect(chipListBox.length).toBe(4);
 
@@ -119,12 +121,12 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipListBox = await UnitTestingUtils.getMatChips(loader);
+            const chipListBox = await testingUtils.getMatChips();
             expect(chipListBox).not.toBeNull();
             expect(chipListBox.length).toBe(4);
 
-            const chip1Icon = await UnitTestingUtils.getMatIconWithAncestorByDataAutomationId(loader, 'card-arrayitem-chip-Zlatan');
-            const chip2Icon = await UnitTestingUtils.getMatIconWithAncestorByDataAutomationId(loader, 'card-arrayitem-chip-Lionel Messi');
+            const chip1Icon = await testingUtils.getMatIconWithAncestorByDataAutomationId('card-arrayitem-chip-Zlatan');
+            const chip2Icon = await testingUtils.getMatIconWithAncestorByDataAutomationId('card-arrayitem-chip-Lionel Messi');
             const firstChipText = await chipListBox[0].getText();
             const secondChipText = await chipListBox[1].getText();
 
@@ -140,7 +142,7 @@ describe('CardViewArrayItemComponent', () => {
                 clickable: true
             });
             fixture.detectChanges();
-            const editIcon = await UnitTestingUtils.getMatIconWithAncestorByDataAutomationId(loader, 'card-array-item-clickable-icon-array');
+            const editIcon = await testingUtils.getMatIconWithAncestorByDataAutomationId('card-array-item-clickable-icon-array');
             expect(await editIcon.getName()).toBe('edit');
         });
 
@@ -151,15 +153,15 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            expect(await UnitTestingUtils.checkIfMatButtonExistsWithDataAutomationId(loader, 'card-array-item-clickable-icon-array')).toBe(false);
+            expect(await testingUtils.checkIfMatButtonExistsWithDataAutomationId('card-array-item-clickable-icon-array')).toBe(false);
         });
 
         it('should render all values if noOfItemsToDisplay is not defined', async () => {
             fixture.detectChanges();
 
-            const chipList = await UnitTestingUtils.getMatChips(loader);
+            const chipList = await testingUtils.getMatChips();
 
-            expect(await UnitTestingUtils.checkIfMatChipExistsWithDataAutomationId(loader, 'card-arrayitem-more-chip')).toBeFalse();
+            expect(await testingUtils.checkIfMatChipExistsWithDataAutomationId('card-arrayitem-more-chip')).toBeFalse();
             expect(chipList.length).toBe(4);
         });
 
@@ -170,7 +172,7 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipList = await UnitTestingUtils.getMatChips(loader);
+            const chipList = await testingUtils.getMatChips();
 
             expect(chipList.length).toBe(3);
             expect(await chipList[2].getText()).toBe('2 CORE.CARDVIEW.MORE');

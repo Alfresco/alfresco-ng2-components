@@ -42,6 +42,7 @@ describe('LogoutDirective', () => {
         let router: Router;
         let authService: AuthenticationService;
         let appConfig: AppConfigService;
+        let testingUtils: UnitTestingUtils;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -51,6 +52,7 @@ describe('LogoutDirective', () => {
             authService = TestBed.inject(AuthenticationService);
             appConfig = TestBed.inject(AppConfigService);
             fixture = TestBed.createComponent(TestComponent);
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             fixture.detectChanges();
             appConfig.config['loginRoute'] = undefined;
         });
@@ -59,7 +61,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
+            testingUtils.clickByCSS('button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/login']);
@@ -71,7 +73,7 @@ describe('LogoutDirective', () => {
             appConfig.config['loginRoute'] = 'fake-base-logout';
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
+            testingUtils.clickByCSS('button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['fake-base-logout']);
@@ -82,7 +84,7 @@ describe('LogoutDirective', () => {
             spyOn(authService, 'isOauth').and.returnValue(true);
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
+            testingUtils.clickByCSS('button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).not.toHaveBeenCalled();
@@ -92,7 +94,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(throwError('err'));
 
-            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
+            testingUtils.clickByCSS('button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/login']);
@@ -114,6 +116,7 @@ describe('LogoutDirective', () => {
         let fixture: ComponentFixture<TestComponent>;
         let router: Router;
         let authService: AuthenticationService;
+        let testingUtils: UnitTestingUtils;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -122,6 +125,7 @@ describe('LogoutDirective', () => {
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             fixture.detectChanges();
         });
 
@@ -129,7 +133,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
+            testingUtils.clickByCSS('button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/myCustomUri']);
@@ -151,6 +155,7 @@ describe('LogoutDirective', () => {
         let fixture: ComponentFixture<TestComponent>;
         let router: Router;
         let authService: AuthenticationService;
+        let testingUtils: UnitTestingUtils;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -159,6 +164,7 @@ describe('LogoutDirective', () => {
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             fixture.detectChanges();
         });
 
@@ -166,7 +172,7 @@ describe('LogoutDirective', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'logout').and.returnValue(of(true));
 
-            UnitTestingUtils.clickByCSS(fixture.debugElement, 'button');
+            testingUtils.clickByCSS('button');
 
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).not.toHaveBeenCalled();

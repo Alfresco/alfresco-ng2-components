@@ -28,6 +28,7 @@ describe('ProgressComponent', () => {
     let component: ProgressComponent;
     let fixture: ComponentFixture<ProgressComponent>;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -36,6 +37,7 @@ describe('ProgressComponent', () => {
 
         fixture = TestBed.createComponent(ProgressComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -74,7 +76,7 @@ describe('ProgressComponent', () => {
         component.ariaLabel = testLabel;
         fixture.detectChanges();
 
-        const host = await UnitTestingUtils.getMatProgressBarHost(loader);
+        const host = await testingUtils.getMatProgressBarHost();
 
         expect(await host.getAttribute('aria-label')).toBe(testLabel);
     });
@@ -83,7 +85,7 @@ describe('ProgressComponent', () => {
         component.ariaHidden = true;
         fixture.detectChanges();
 
-        const host = await UnitTestingUtils.getMatProgressBarHost(loader);
+        const host = await testingUtils.getMatProgressBarHost();
 
         expect(await host.getAttribute('aria-hidden')).toBe('true');
     });
@@ -92,7 +94,7 @@ describe('ProgressComponent', () => {
         const testId = 'progress-test-id';
         component.testId = testId;
         fixture.detectChanges();
-        const progressBarElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, testId);
+        const progressBarElement = testingUtils.getByDataAutomationId(testId);
         expect(progressBarElement).not.toBeNull();
     });
 });

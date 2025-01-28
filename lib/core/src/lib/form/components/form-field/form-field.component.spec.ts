@@ -25,6 +25,7 @@ describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
     let component: FormFieldComponent;
     let form: FormModel;
+    let testingUtils: UnitTestingUtils;
 
     let formRenderingService: FormRenderingService;
 
@@ -34,6 +35,7 @@ describe('FormFieldComponent', () => {
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         formRenderingService = fixture.debugElement.injector.get(FormRenderingService);
         form = new FormModel();
     });
@@ -117,7 +119,7 @@ describe('FormFieldComponent', () => {
 
         fixture.detectChanges();
 
-        const styles = UnitTestingUtils.getByCSS(fixture.debugElement, '#field-FAKE-TXT-WIDGET-container').styles;
+        const styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
         expect(styles.visibility).toEqual('hidden');
         expect(styles.display).toEqual('none');
     });
@@ -132,7 +134,7 @@ describe('FormFieldComponent', () => {
 
         fixture.detectChanges();
 
-        const styles = UnitTestingUtils.getByCSS(fixture.debugElement, '#field-FAKE-TXT-WIDGET-container').styles;
+        const styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
         expect(styles.visibility).toEqual('visible');
         expect(styles.display).toEqual('block');
     });
@@ -145,12 +147,12 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         fixture.detectChanges();
-        let styles = UnitTestingUtils.getByCSS(fixture.debugElement, '#field-FAKE-TXT-WIDGET-container').styles;
+        let styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
         expect(styles.visibility).toEqual('visible');
         expect(styles.display).toEqual('block');
         component.field.isVisible = false;
         fixture.detectChanges();
-        styles = UnitTestingUtils.getByCSS(fixture.debugElement, '#field-FAKE-TXT-WIDGET-container').styles;
+        styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
         expect(styles.visibility).toEqual('hidden');
         expect(styles.display).toEqual('none');
     });
@@ -202,10 +204,7 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         fixture.detectChanges();
-        const hyperlink: HTMLLinkElement = UnitTestingUtils.getByCSS(
-            fixture.debugElement,
-            '#field-label2-container hyperlink-widget a'
-        ).nativeElement;
+        const hyperlink: HTMLLinkElement = testingUtils.getByCSS('#field-label2-container hyperlink-widget a').nativeElement;
         expect(hyperlink).not.toBeNull();
         expect(hyperlink.href).toBe('http://testtest/');
         expect(hyperlink.textContent).toBe('testtest');

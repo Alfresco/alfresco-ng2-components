@@ -43,6 +43,7 @@ class TestComponent {
 describe('HighlightDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -50,6 +51,7 @@ describe('HighlightDirective', () => {
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
@@ -57,7 +59,7 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.last.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv21');
+        const containerElement = testingUtils.getByCSS('#innerDiv21');
         expect(containerElement).not.toBeNull();
         expect(containerElement.nativeElement.innerHTML).toBe('Lorem ipsum <span class="adf-highlight">salana-eyong-aysis</span> dolor sit amet');
     });
@@ -66,8 +68,8 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement1 = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv11');
-        const containerElement2 = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv14');
+        const containerElement1 = testingUtils.getByCSS('#innerDiv11');
+        const containerElement2 = testingUtils.getByCSS('#innerDiv14');
         expect(containerElement1).not.toBeNull();
         expect(containerElement2).not.toBeNull();
         expect(containerElement1.nativeElement.innerHTML).toBe(
@@ -82,7 +84,7 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement1 = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv12');
+        const containerElement1 = testingUtils.getByCSS('#innerDiv12');
         expect(containerElement1).not.toBeNull();
         expect(containerElement1.nativeElement.innerHTML).toBe('Lorem ipsum salana-eyong-aysis dolor sit amet');
     });
@@ -93,7 +95,7 @@ describe('HighlightDirective', () => {
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 
-        const containerElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#innerDiv11');
+        const containerElement = testingUtils.getByCSS('#innerDiv11');
         expect(containerElement).not.toBeNull();
         expect(containerElement.nativeElement.innerHTML).not.toContain('Modified text');
     });

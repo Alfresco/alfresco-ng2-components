@@ -40,12 +40,14 @@ class TestComponent {}
 describe('EmptyContentComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
     let translateService: TranslateService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         translateService = TestBed.inject(TranslateService);
     });
 
@@ -53,7 +55,7 @@ describe('EmptyContentComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-content__title');
+        const title = testingUtils.getByCSS('.adf-empty-content__title');
         expect(title).toBeDefined();
         expect(title.nativeElement.textContent).toContain('CUSTOM_TITLE');
     });
@@ -73,8 +75,8 @@ describe('EmptyContentComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-content__title');
-        const subtitle = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-content__subtitle');
+        const title = testingUtils.getByCSS('.adf-empty-content__title');
+        const subtitle = testingUtils.getByCSS('.adf-empty-content__subtitle');
 
         expect(title).toBeDefined();
         expect(title.nativeElement.textContent).toContain('ENG_CUSTOM_TITLE');
@@ -84,7 +86,7 @@ describe('EmptyContentComponent', () => {
     });
 
     it('should render multiple subtitle elements', () => {
-        const subTitles = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-empty-content__text');
+        const subTitles = testingUtils.getAllByCSS('.adf-empty-content__text');
 
         expect(subTitles.length).toBe(3);
         expect(subTitles[0].nativeElement.textContent).toContain('SUBTITLE-1');

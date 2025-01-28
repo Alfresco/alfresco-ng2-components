@@ -24,6 +24,7 @@ describe('NavbarItemComponent', () => {
     let component: NavbarItemComponent;
     let fixture: ComponentFixture<NavbarItemComponent>;
     let button: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -32,11 +33,12 @@ describe('NavbarItemComponent', () => {
 
         fixture = TestBed.createComponent(NavbarItemComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component.label = 'Test Label';
         component.routerLink = '/expected-route';
         fixture.detectChanges();
 
-        button = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-navbar-item-btn').nativeElement;
+        button = testingUtils.getByCSS('.adf-navbar-item-btn').nativeElement;
     });
 
     it('should display label', () => {

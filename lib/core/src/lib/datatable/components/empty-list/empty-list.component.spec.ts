@@ -21,12 +21,14 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('EmptyListComponentComponent', () => {
     let fixture: ComponentFixture<EmptyListComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [EmptyListComponent]
         });
         fixture = TestBed.createComponent(EmptyListComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
@@ -37,6 +39,6 @@ describe('EmptyListComponentComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-empty-list_template')).toBeDefined();
+        expect(testingUtils.getByCSS('.adf-empty-list_template')).toBeDefined();
     });
 });

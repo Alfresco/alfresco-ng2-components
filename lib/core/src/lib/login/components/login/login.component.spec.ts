@@ -38,15 +38,16 @@ describe('LoginComponent', () => {
     let userPreferences: UserPreferencesService;
     let appConfigService: AppConfigService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
+    let testingUtils: UnitTestingUtils;
 
     let usernameInput;
     let passwordInput;
 
-    const getLoginErrorElement = () => UnitTestingUtils.getByCSS(fixture.debugElement, '#login-error');
+    const getLoginErrorElement = () => testingUtils.getByCSS('#login-error');
 
     const getLoginErrorMessage = () => {
         const errorMessage = undefined;
-        const errorElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#login-error .adf-login-error-message')?.nativeElement;
+        const errorElement = testingUtils.getByCSS('#login-error .adf-login-error-message')?.nativeElement;
 
         if (errorElement) {
             return errorElement.innerText;
@@ -71,6 +72,7 @@ describe('LoginComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(LoginComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component = fixture.componentInstance;
         component.showRememberMe = true;
@@ -85,8 +87,8 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            usernameInput = UnitTestingUtils.getByCSS(fixture.debugElement, '#username')?.nativeElement;
-            passwordInput = UnitTestingUtils.getByCSS(fixture.debugElement, '#password')?.nativeElement;
+            usernameInput = testingUtils.getByCSS('#username')?.nativeElement;
+            passwordInput = testingUtils.getByCSS('#password')?.nativeElement;
         });
     }));
 
@@ -107,7 +109,7 @@ describe('LoginComponent', () => {
     };
 
     it('should be autocomplete off', () => {
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-form').nativeElement.getAttribute('autocomplete')).toBe('off');
+        expect(testingUtils.getByCSS('#adf-login-form').nativeElement.getAttribute('autocomplete')).toBe('off');
     });
 
     it('should redirect to route on successful login', () => {
@@ -184,8 +186,8 @@ describe('LoginComponent', () => {
     });
 
     describe('Login button', () => {
-        const getLoginButton = () => UnitTestingUtils.getByCSS(fixture.debugElement, '#login-button');
-        const getLoginButtonText = () => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#login-button span.adf-login-button-label');
+        const getLoginButton = () => testingUtils.getByCSS('#login-button');
+        const getLoginButtonText = () => testingUtils.getInnerTextByCSS('#login-button span.adf-login-button-label');
 
         it('should be rendered with the proper key by default', () => {
             expect(getLoginButton()).not.toBeNull();
@@ -197,7 +199,7 @@ describe('LoginComponent', () => {
 
             loginWithCredentials('fake-username', 'fake-password');
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#checking-spinner')).toBeDefined();
+            expect(testingUtils.getByCSS('#checking-spinner')).toBeDefined();
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.CHECKING');
         });
 
@@ -274,16 +276,16 @@ describe('LoginComponent', () => {
 
     describe('Remember me', () => {
         it('should be checked by default', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-remember input[type="checkbox"]').nativeElement.checked).toBe(true);
+            expect(testingUtils.getByCSS('#adf-login-remember input[type="checkbox"]').nativeElement.checked).toBe(true);
         });
 
         it('should set the component rememberMe property properly', () => {
-            UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-remember').nativeElement.dispatchEvent(new Event('change'));
+            testingUtils.getByCSS('#adf-login-remember').nativeElement.dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(false);
 
-            UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-remember').nativeElement.dispatchEvent(new Event('change'));
+            testingUtils.getByCSS('#adf-login-remember').nativeElement.dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(true);
@@ -300,30 +302,26 @@ describe('LoginComponent', () => {
     });
 
     it('should render Login form with all the keys to be translated', () => {
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'username')).toBeDefined();
-        expect(UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-login-form-input-label')[0].nativeElement.innerText).toEqual(
-            'LOGIN.LABEL.USERNAME'
-        );
+        expect(testingUtils.getByDataAutomationId('username')).toBeDefined();
+        expect(testingUtils.getAllByCSS('.adf-login-form-input-label')[0].nativeElement.innerText).toEqual('LOGIN.LABEL.USERNAME');
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-remember')).toBeDefined();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#adf-login-remember')).toContain('LOGIN.LABEL.REMEMBER');
+        expect(testingUtils.getByCSS('#adf-login-remember')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('#adf-login-remember')).toContain('LOGIN.LABEL.REMEMBER');
 
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'password')).toBeDefined();
-        expect(UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-login-form-input-label')[1].nativeElement.innerText).toContain(
-            'LOGIN.LABEL.PASSWORD'
-        );
+        expect(testingUtils.getByDataAutomationId('password')).toBeDefined();
+        expect(testingUtils.getAllByCSS('.adf-login-form-input-label')[1].nativeElement.innerText).toContain('LOGIN.LABEL.PASSWORD');
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-action-left')).toBeDefined();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#adf-login-action-left')).toEqual('LOGIN.ACTION.HELP');
+        expect(testingUtils.getByCSS('#adf-login-action-left')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('#adf-login-action-left')).toEqual('LOGIN.ACTION.HELP');
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-action-right')).toBeDefined();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#adf-login-action-right')).toEqual('LOGIN.ACTION.REGISTER');
+        expect(testingUtils.getByCSS('#adf-login-action-right')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('#adf-login-action-right')).toEqual('LOGIN.ACTION.REGISTER');
     });
 
     describe('Copyright text', () => {
         it('should render the default copyright text', () => {
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'login-copyright')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'login-copyright')).toEqual(
+            expect(testingUtils.getByDataAutomationId('login-copyright')).toBeDefined();
+            expect(testingUtils.getInnerTextByDataAutomationId('login-copyright')).toEqual(
                 '\u00A9 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.'
             );
         });
@@ -332,17 +330,17 @@ describe('LoginComponent', () => {
             component.copyrightText = 'customised';
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'login-copyright')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'login-copyright')).toEqual('customised');
+            expect(testingUtils.getByDataAutomationId('login-copyright')).toBeDefined();
+            expect(testingUtils.getInnerTextByDataAutomationId('login-copyright')).toEqual('customised');
         });
     });
 
     it('should render user and password input fields with default values', () => {
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'form')).toBeDefined();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'input[type="password"]')).toBeDefined();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'input[type="text"]')).toBeDefined();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'input[type="password"]').nativeElement.value).toEqual('');
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'input[type="text"]').nativeElement.value).toEqual('');
+        expect(testingUtils.getByCSS('form')).toBeDefined();
+        expect(testingUtils.getByCSS('input[type="password"]')).toBeDefined();
+        expect(testingUtils.getByCSS('input[type="text"]')).toBeDefined();
+        expect(testingUtils.getByCSS('input[type="password"]').nativeElement.value).toEqual('');
+        expect(testingUtils.getByCSS('input[type="text"]').nativeElement.value).toEqual('');
     });
 
     it('should hide remember me if showRememberMe is false', () => {
@@ -350,7 +348,7 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#login-remember')).toBe(null);
+        expect(testingUtils.getByCSS('#login-remember')).toBe(null);
     });
 
     it('should hide login actions if showLoginActions is false', () => {
@@ -358,8 +356,8 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#login-action-help')).toBe(null);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#login-action-register')).toBe(null);
+        expect(testingUtils.getByCSS('#login-action-help')).toBe(null);
+        expect(testingUtils.getByCSS('#login-action-register')).toBe(null);
     });
 
     describe('Error', () => {
@@ -380,8 +378,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#username-error')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
 
         it('should throw a validation min-length error by default when the username is not at least 2 characters long', () => {
@@ -395,8 +393,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#username-error')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
 
         it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
@@ -416,8 +414,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#username-error')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
 
         it('should render validation required error when the username is empty and dirty', () => {
@@ -430,8 +428,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toBeDefined();
             expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#username-error')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
+            expect(testingUtils.getByCSS('#username-error')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#username-error')).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
         });
 
         it('should render validation required error when the password is empty and dirty', () => {
@@ -444,8 +442,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.password).toBeDefined();
             expect(component.formError.password).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#password-required')).toBeDefined();
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '#password-required')).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
+            expect(testingUtils.getByCSS('#password-required')).toBeDefined();
+            expect(testingUtils.getInnerTextByCSS('#password-required')).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
         });
 
         it('should render no validation errors when the username and password are filled', () => {
@@ -463,8 +461,8 @@ describe('LoginComponent', () => {
             expect(component.formError).toBeDefined();
             expect(component.formError.username).toEqual('');
             expect(component.formError.password).toEqual('');
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#username-error')).toBeNull();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#password-required')).toBeNull();
+            expect(testingUtils.getByCSS('#username-error')).toBeNull();
+            expect(testingUtils.getByCSS('#password-required')).toBeNull();
         });
 
         it('should return error with a wrong username', (done) => {
@@ -593,8 +591,8 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'input[type="text"]').nativeElement.value).toEqual('fake-change-username');
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'input[type="password"]').nativeElement.value).toEqual('fake-change-password');
+        expect(testingUtils.getByCSS('input[type="text"]').nativeElement.value).toEqual('fake-change-username');
+        expect(testingUtils.getByCSS('input[type="password"]').nativeElement.value).toEqual('fake-change-password');
     });
 
     it('should return success event after the login have succeeded', (done) => {
@@ -648,7 +646,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         expect(component.isPasswordShow).toBe(true);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#password').nativeElement.type).toEqual('text');
+        expect(testingUtils.getByCSS('#password').nativeElement.type).toEqual('text');
     });
 
     it('should password be hidden when show password is false', () => {
@@ -658,7 +656,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
 
         expect(component.isPasswordShow).toBe(false);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#password').nativeElement.type).toEqual('password');
+        expect(testingUtils.getByCSS('#password').nativeElement.type).toEqual('password');
     });
 
     it('should emit only the username and not the password as part of the executeSubmit', fakeAsync(() => {
@@ -688,8 +686,8 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#username')).toBeNull();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#password')).toBeNull();
+                    expect(testingUtils.getByCSS('#username')).toBeNull();
+                    expect(testingUtils.getByCSS('#password')).toBeNull();
                 });
             }));
 
@@ -726,7 +724,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#login-button')).toBeNull();
+                    expect(testingUtils.getByCSS('#login-button')).toBeNull();
                 });
             }));
 
@@ -737,7 +735,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#login-button-sso')).toBeDefined();
+                    expect(testingUtils.getByCSS('#login-button-sso')).toBeDefined();
                 });
             }));
         });

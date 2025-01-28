@@ -29,6 +29,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
     let component: CardViewKeyValuePairsItemComponent;
     let cardViewUpdateService: CardViewUpdateService;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
     const mockEmptyData = [{ name: '', value: '' }];
     const mockData = [{ name: 'test-name', value: 'test-value' }];
 
@@ -39,6 +40,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         component = fixture.componentInstance;
         component.property = new CardViewKeyValuePairsItemModel({
             label: 'Key Value Pairs',
@@ -57,7 +59,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
         it('should render the label', () => {
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label')).toBe('Key Value Pairs');
+            expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Key Value Pairs');
         });
 
         it('should render readOnly table is editable property is FALSE', () => {
@@ -72,8 +74,8 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             fixture.detectChanges();
 
             expect(component.isEditable).toBe(false);
-            const table = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-card-view__key-value-pairs__read-only');
-            const form = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-card-view__key-value-pairs');
+            const table = testingUtils.getByCSS('.adf-card-view__key-value-pairs__read-only');
+            const form = testingUtils.getByCSS('.adf-card-view__key-value-pairs');
 
             expect(table).not.toBeNull();
             expect(form).toBeNull();
@@ -83,16 +85,16 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            await UnitTestingUtils.clickMatButtonByDataAutomationId(loader, 'card-key-value-pairs-button-key-value-pairs');
+            await testingUtils.clickMatButtonByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
             fixture.detectChanges();
 
             expect(JSON.stringify(component.values)).toBe(JSON.stringify(mockEmptyData));
 
-            const content = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-card-view__key-value-pairs');
+            const content = testingUtils.getByCSS('.adf-card-view__key-value-pairs');
             expect(content).not.toBeNull();
 
-            const nameInput = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `card-${component.property.key}-name-input-0`);
-            const valueInput = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `card-${component.property.key}-value-input-0`);
+            const nameInput = testingUtils.getByDataAutomationId(`card-${component.property.key}-name-input-0`);
+            const valueInput = testingUtils.getByDataAutomationId(`card-${component.property.key}-value-input-0`);
             expect(nameInput).not.toBeNull();
             expect(valueInput).not.toBeNull();
         });
@@ -102,14 +104,14 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            await UnitTestingUtils.clickMatButtonByDataAutomationId(loader, 'card-key-value-pairs-button-key-value-pairs');
+            await testingUtils.clickMatButtonByDataAutomationId('card-key-value-pairs-button-key-value-pairs');
             fixture.detectChanges();
 
-            await UnitTestingUtils.clickMatButtonByCSS(loader, '.adf-property-col-delete');
+            await testingUtils.clickMatButtonByCSS('.adf-property-col-delete');
             fixture.detectChanges();
 
             expect(component.values.length).toBe(0);
-            const content = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-card-view__key-value-pairs');
+            const content = testingUtils.getByCSS('.adf-card-view__key-value-pairs');
             expect(content).toBeNull();
 
             expect(cardViewUpdateService.update).toHaveBeenCalled();

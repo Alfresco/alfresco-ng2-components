@@ -28,6 +28,7 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 describe('ColumnsSelectorComponent', () => {
     let fixture: ComponentFixture<ColumnsSelectorComponent>;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     let component: ColumnsSelectorComponent;
     let inputColumns: DataColumn[] = [];
@@ -44,6 +45,7 @@ describe('ColumnsSelectorComponent', () => {
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
 
         component = fixture.componentInstance;
         inputColumns = [
@@ -96,15 +98,15 @@ describe('ColumnsSelectorComponent', () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        let searchInput = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-columns-selector-search-input').nativeElement;
-        UnitTestingUtils.fillInputByCSS(fixture.debugElement, '.adf-columns-selector-search-input', 'TEST');
+        let searchInput = testingUtils.getByCSS('.adf-columns-selector-search-input').nativeElement;
+        testingUtils.fillInputByCSS('.adf-columns-selector-search-input', 'TEST');
 
         tick(300);
         expect(searchInput.value).toBe('TEST');
 
         menuClosedTrigger.next();
         tick(300);
-        searchInput = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-columns-selector-search-input').nativeElement;
+        searchInput = testingUtils.getByCSS('.adf-columns-selector-search-input').nativeElement;
 
         expect(searchInput.value).toBe('');
     }));
@@ -113,7 +115,7 @@ describe('ColumnsSelectorComponent', () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const checkboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+        const checkboxes = await testingUtils.getAllMatCheckboxes();
         const inputColumnsWithTitle = inputColumns.filter((column) => !!column.title);
         expect(checkboxes.length).toBe(inputColumnsWithTitle.length);
 
@@ -129,12 +131,12 @@ describe('ColumnsSelectorComponent', () => {
         fixture.detectChanges();
         menuOpenedTrigger.next();
 
-        UnitTestingUtils.fillInputByCSS(fixture.debugElement, '.adf-columns-selector-search-input', inputColumns[0].title);
+        testingUtils.fillInputByCSS('.adf-columns-selector-search-input', inputColumns[0].title);
 
         tick(400);
         fixture.detectChanges();
 
-        const columnCheckboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+        const columnCheckboxes = await testingUtils.getAllMatCheckboxes();
 
         expect(columnCheckboxes.length).toBe(1);
         expect(await columnCheckboxes[0].getLabelText()).toBe(inputColumns[0].title);
@@ -144,7 +146,7 @@ describe('ColumnsSelectorComponent', () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const firstColumnCheckbox = await UnitTestingUtils.getMatCheckbox(loader);
+        const firstColumnCheckbox = await testingUtils.getMatCheckbox();
         const checkBoxName = await firstColumnCheckbox.getLabelText();
 
         const toggledColumnItem = component.columnItems.find((item) => item.title === checkBoxName);
@@ -159,7 +161,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+            const checkboxes = await testingUtils.getAllMatCheckboxes();
 
             expect(await checkboxes[0].isChecked()).toBe(true);
             expect(await checkboxes[1].isChecked()).toBe(true);
@@ -172,7 +174,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+            const checkboxes = await testingUtils.getAllMatCheckboxes();
 
             expect(await checkboxes[0].isDisabled()).toBe(false);
             expect(await checkboxes[1].isDisabled()).toBe(false);
@@ -201,7 +203,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+            const checkboxes = await testingUtils.getAllMatCheckboxes();
             const labeTextOne = await checkboxes[0].getLabelText();
             const labeTextTwo = await checkboxes[1].getLabelText();
 
@@ -215,7 +217,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+            const checkboxes = await testingUtils.getAllMatCheckboxes();
             const labeTextOne = await checkboxes[0].getLabelText();
             const labeTextTwo = await checkboxes[1].getLabelText();
 
@@ -238,7 +240,7 @@ describe('ColumnsSelectorComponent', () => {
             menuOpenedTrigger.next();
             fixture.detectChanges();
 
-            const checkboxes = await UnitTestingUtils.getAllMatCheckboxes(loader);
+            const checkboxes = await testingUtils.getAllMatCheckboxes();
             const labeTextOne = await checkboxes[0].getLabelText();
             expect(labeTextOne).toBe(`${column.title}  ${column.subtitle}`);
         });

@@ -49,6 +49,7 @@ describe('ViewerComponent', () => {
     let viewUtilService: ViewUtilService;
     let appConfigService: AppConfigService;
     let thumbnailService: ThumbnailService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -66,6 +67,7 @@ describe('ViewerComponent', () => {
         });
 
         fixture = TestBed.createComponent(ViewerComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
         dialog = TestBed.inject(MatDialog);
         viewUtilService = TestBed.inject(ViewUtilService);
@@ -128,9 +130,7 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-viewer-display-name').nativeElement.textContent).toEqual(
-                'fakeFileName.jpeg'
-            );
+            expect(testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent).toEqual('fakeFileName.jpeg');
         });
 
         it('should set fileName providing fileName input', () => {
@@ -142,57 +142,62 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-viewer-display-name').nativeElement.textContent).toEqual('testFileName.jpg');
+            expect(testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent).toEqual('testFileName.jpg');
         });
     });
 
     describe('Viewer Example Component Rendering', () => {
         it('should use custom toolbar', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
+            testingUtils.setDebugElement(customFixture.debugElement);
             customFixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByCSS(customFixture.debugElement, '.custom-toolbar-element')).toBeDefined();
+                expect(testingUtils.getByCSS('.custom-toolbar-element')).toBeDefined();
                 done();
             });
         });
 
         it('should use custom toolbar actions', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
+            testingUtils.setDebugElement(customFixture.debugElement);
             customFixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByCSS(customFixture.debugElement, '#custom-button')).toBeDefined();
+                expect(testingUtils.getByCSS('#custom-button')).toBeDefined();
                 done();
             });
         });
 
         it('should use custom info drawer', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
+            testingUtils.setDebugElement(customFixture.debugElement);
             customFixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByCSS(customFixture.debugElement, '.custom-info-drawer-element')).toBeDefined();
+                expect(testingUtils.getByCSS('.custom-info-drawer-element')).toBeDefined();
                 done();
             });
         });
 
         it('should use custom open with menu', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
+            testingUtils.setDebugElement(customFixture.debugElement);
             customFixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByCSS(customFixture.debugElement, '.adf-viewer-container-open-with')).toBeDefined();
+                expect(testingUtils.getByCSS('.adf-viewer-container-open-with')).toBeDefined();
                 done();
             });
         });
 
         it('should use custom more actions menu', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
+            testingUtils.setDebugElement(customFixture.debugElement);
             customFixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByCSS(customFixture.debugElement, '.adf-viewer-container-more-actions')).toBeDefined();
+                expect(testingUtils.getByCSS('.adf-viewer-container-more-actions')).toBeDefined();
                 done();
             });
         });
@@ -207,8 +212,8 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-next-file')).not.toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-pref-file')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-next-file')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-pref-file')).toBeNull();
         });
 
         it('should provide tooltip for next file button', async () => {
@@ -219,9 +224,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-next-file').nativeElement.title).toBe(
-                'ADF_VIEWER.ACTIONS.NEXT_FILE'
-            );
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-next-file').nativeElement.title).toBe('ADF_VIEWER.ACTIONS.NEXT_FILE');
         });
 
         it('should show only previous file button', async () => {
@@ -232,8 +235,8 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-next-file')).toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-pref-file')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-next-file')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-pref-file')).not.toBeNull();
         });
 
         it('should provide tooltip for the previous file button', async () => {
@@ -244,9 +247,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-pref-file').nativeElement.title).toBe(
-                'ADF_VIEWER.ACTIONS.PREV_FILE'
-            );
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-pref-file').nativeElement.title).toBe('ADF_VIEWER.ACTIONS.PREV_FILE');
         });
 
         it('should show both file navigation buttons', async () => {
@@ -257,8 +258,8 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-next-file')).not.toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-pref-file')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-next-file')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-pref-file')).not.toBeNull();
         });
 
         it('should not show navigation buttons', async () => {
@@ -267,14 +268,14 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-next-file')).toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-pref-file')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-next-file')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-pref-file')).toBeNull();
         });
 
         it('should not show navigation buttons if file is saving', async () => {
             component.allowNavigate = true;
             fixture.detectChanges();
-            const viewerRender = UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-viewer-render');
+            const viewerRender = testingUtils.getByCSS('adf-viewer-render');
 
             viewerRender.triggerEventHandler('isSaving', true);
             expect(component.allowNavigate).toBeFalsy();
@@ -291,12 +292,12 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-next-file')).toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-pref-file')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-next-file')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-pref-file')).toBeNull();
         });
 
         it('should render fullscreen button', () => {
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-fullscreen')).toBeDefined();
+            expect(testingUtils.getByDataAutomationId('adf-toolbar-fullscreen')).toBeDefined();
         });
 
         it('should render close viewer button if it is not a shared link', (done) => {
@@ -304,7 +305,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-left-back')).not.toBeNull();
+                expect(testingUtils.getByDataAutomationId('adf-toolbar-left-back')).not.toBeNull();
                 done();
             });
         });
@@ -324,7 +325,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-right-sidebar')).toBeNull();
+                    expect(testingUtils.getByCSS('#adf-right-sidebar')).toBeNull();
                     done();
                 });
             });
@@ -335,7 +336,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    const sidebar = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-right-sidebar').nativeElement;
+                    const sidebar = testingUtils.getByCSS('#adf-right-sidebar').nativeElement;
                     expect(getComputedStyle(sidebar).order).toEqual('4');
                     done();
                 });
@@ -347,7 +348,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-left-sidebar')).toBeNull();
+                    expect(testingUtils.getByCSS('#adf-left-sidebar')).toBeNull();
                     done();
                 });
             });
@@ -358,7 +359,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    const sidebar = UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-left-sidebar').nativeElement;
+                    const sidebar = testingUtils.getByCSS('#adf-left-sidebar').nativeElement;
                     expect(getComputedStyle(sidebar).order).toEqual('1');
                     done();
                 });
@@ -366,7 +367,7 @@ describe('ViewerComponent', () => {
         });
 
         describe('Info Button', () => {
-            const infoButton = () => UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-sidebar');
+            const infoButton = () => testingUtils.getByDataAutomationId('adf-toolbar-sidebar');
 
             it('should NOT display info button on the right side', () => {
                 component.allowRightSidebar = true;
@@ -394,7 +395,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should header be present if is overlay mode', () => {
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-toolbar')).not.toBeNull();
+                    expect(testingUtils.getByCSS('.adf-viewer-toolbar')).not.toBeNull();
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
@@ -402,23 +403,21 @@ describe('ViewerComponent', () => {
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-viewer-display-name').nativeElement.textContent).toEqual(
-                        'fake-test-file.pdf'
-                    );
+                    expect(testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent).toEqual('fake-test-file.pdf');
                 });
 
                 it('should Close button be present if overlay mode', async () => {
                     fixture.detectChanges();
                     await fixture.whenStable();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-close-button')).not.toBeNull();
+                    expect(testingUtils.getByCSS('.adf-viewer-close-button')).not.toBeNull();
                 });
 
                 it('should Click on close button hide the viewer', async () => {
-                    UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-viewer-close-button');
+                    testingUtils.clickByCSS('.adf-viewer-close-button');
                     fixture.detectChanges();
 
                     await fixture.whenStable();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-content')).toBeNull();
+                    expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
                 });
 
                 it('should Esc button hide the viewer', async () => {
@@ -427,7 +426,7 @@ describe('ViewerComponent', () => {
                     fixture.detectChanges();
 
                     await fixture.whenStable();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-content')).toBeNull();
+                    expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
                 });
 
                 it('should not close the viewer on Escape event if dialog was opened', (done) => {
@@ -441,7 +440,7 @@ describe('ViewerComponent', () => {
                     dialogRef.afterClosed().subscribe(() => {
                         EventMock.keyDown(27);
                         fixture.detectChanges();
-                        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-content')).toBeNull();
+                        expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
                         done();
                     });
 
@@ -449,7 +448,7 @@ describe('ViewerComponent', () => {
 
                     document.body.dispatchEvent(event);
                     fixture.detectChanges();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-content')).not.toBeNull();
+                    expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
                 });
             });
 
@@ -465,7 +464,7 @@ describe('ViewerComponent', () => {
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-content')).not.toBeNull();
+                        expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
                         done();
                     });
                 });
@@ -481,13 +480,13 @@ describe('ViewerComponent', () => {
                 component.showViewer = false;
 
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-viewer-content')).toBeNull();
+                expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
             });
         });
 
         describe('Close Button', () => {
-            const getRightCloseButton = () => UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-right-back');
-            const getLeftCloseButton = () => UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-toolbar-left-back');
+            const getRightCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-right-back');
+            const getLeftCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-left-back');
 
             it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
                 component.allowGoBack = true;

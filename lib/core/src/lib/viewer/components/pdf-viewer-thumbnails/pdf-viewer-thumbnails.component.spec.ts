@@ -25,6 +25,7 @@ declare const pdfjsViewer: any;
 describe('PdfThumbListComponent', () => {
     let fixture: ComponentFixture<PdfThumbListComponent>;
     let component: PdfThumbListComponent;
+    let testingUtils: UnitTestingUtils;
 
     const page = (id) => ({
         id,
@@ -74,6 +75,7 @@ describe('PdfThumbListComponent', () => {
             imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(PdfThumbListComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
         component.pdfViewer = viewerMock;
 
@@ -82,7 +84,7 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.style.height = '700px';
         fixture.nativeElement.style.overflow = 'scroll';
 
-        const content = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-pdf-thumbnails__content').nativeElement;
+        const content = testingUtils.getByCSS('.adf-pdf-thumbnails__content').nativeElement;
 
         content.style.height = '2000px';
         content.style.position = 'unset';

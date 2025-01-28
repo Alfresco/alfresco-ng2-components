@@ -26,6 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('HeaderWidgetComponent', () => {
     let component: HeaderWidgetComponent;
     let fixture: ComponentFixture<HeaderWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -36,6 +37,7 @@ describe('HeaderWidgetComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HeaderWidgetComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.componentRef.setInput(
             'element',
             new ContainerModel(
@@ -61,10 +63,8 @@ describe('HeaderWidgetComponent', () => {
     it('should render header widget template when type is group', () => {
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header')).not.toBe(null);
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#container-header-label-test-id').nativeElement.textContent.trim()).toEqual(
-            'test-name'
-        );
+        expect(testingUtils.getByCSS('.adf-container-widget-header')).not.toBe(null);
+        expect(testingUtils.getByCSS('#container-header-label-test-id').nativeElement.textContent.trim()).toEqual('test-name');
     });
 
     it('should NOT render header widget template when type is different then group', () => {
@@ -72,13 +72,13 @@ describe('HeaderWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header')).toBe(null);
+        expect(testingUtils.getByCSS('.adf-container-widget-header')).toBe(null);
     });
 
     it('should display header text when hideHeader is set to false', () => {
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header__text')).not.toBe(null);
+        expect(testingUtils.getByCSS('.adf-container-widget-header__text')).not.toBe(null);
     });
 
     it('should NOT display header text when hideHeader is set to true', () => {
@@ -86,7 +86,7 @@ describe('HeaderWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-container-widget-header__text')).toBe(null);
+        expect(testingUtils.getByCSS('.adf-container-widget-header__text')).toBe(null);
     });
 
     it('should display expander when allowCollapse is set to true', () => {
@@ -94,13 +94,13 @@ describe('HeaderWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.mdl-button--icon')).not.toBe(null);
+        expect(testingUtils.getByCSS('.mdl-button--icon')).not.toBe(null);
     });
 
     it('should NOT display expander when allowCollapse is set to false', () => {
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.mdl-button--icon')).toBe(null);
+        expect(testingUtils.getByCSS('.mdl-button--icon')).toBe(null);
     });
 
     it('should call onExpanderClicked method when expander is clicked', () => {
@@ -109,7 +109,7 @@ describe('HeaderWidgetComponent', () => {
 
         spyOn(component, 'onExpanderClicked');
 
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '.mdl-button--icon');
+        testingUtils.clickByCSS('.mdl-button--icon');
 
         expect(component.onExpanderClicked).toHaveBeenCalledWith(component.element);
     });
@@ -119,7 +119,7 @@ describe('HeaderWidgetComponent', () => {
 
         spyOn(component, 'onExpanderClicked');
 
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '#container-header-label-test-id');
+        testingUtils.clickByCSS('#container-header-label-test-id');
 
         expect(component.onExpanderClicked).toHaveBeenCalledWith(component.element);
     });

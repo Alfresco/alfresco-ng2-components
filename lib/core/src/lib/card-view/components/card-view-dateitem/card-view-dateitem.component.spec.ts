@@ -34,6 +34,7 @@ describe('CardViewDateItemComponent', () => {
     let fixture: ComponentFixture<CardViewDateItemComponent>;
     let component: CardViewDateItemComponent;
     let appConfigService: AppConfigService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -58,12 +59,13 @@ describe('CardViewDateItemComponent', () => {
         });
 
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => fixture.destroy());
 
-    const getPropertyLabel = (): string => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label');
-    const getPropertyValue = (): string => UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-value');
+    const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
+    const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
 
     it('should render the label and value', () => {
         fixture.detectChanges();
@@ -134,8 +136,8 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = true;
         fixture.detectChanges();
 
-        const datePicker = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepicker-${component.property.key}`);
-        const datePickerToggle = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepickertoggle-${component.property.key}`);
+        const datePicker = testingUtils.getByDataAutomationId(`datepicker-${component.property.key}`);
+        const datePickerToggle = testingUtils.getByDataAutomationId(`datepickertoggle-${component.property.key}`);
         expect(datePicker).not.toBeNull('Datepicker should be in DOM');
         expect(datePickerToggle).not.toBeNull('Datepicker toggle should be shown');
     });
@@ -144,8 +146,8 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = false;
         fixture.detectChanges();
 
-        const datePicker = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepicker-${component.property.key}`);
-        const datePickerToggle = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepickertoggle-${component.property.key}`);
+        const datePicker = testingUtils.getByDataAutomationId(`datepicker-${component.property.key}`);
+        const datePickerToggle = testingUtils.getByDataAutomationId(`datepickertoggle-${component.property.key}`);
         expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
         expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
     });
@@ -156,8 +158,8 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
 
         expect(component.isEditable).toBe(false);
-        const datePicker = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepicker-${component.property.key}`);
-        const datePickerToggle = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepickertoggle-${component.property.key}`);
+        const datePicker = testingUtils.getByDataAutomationId(`datepicker-${component.property.key}`);
+        const datePickerToggle = testingUtils.getByDataAutomationId(`datepickertoggle-${component.property.key}`);
         expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
         expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
     });
@@ -168,7 +170,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         spyOn(component.datepicker, 'open');
 
-        UnitTestingUtils.getByDataAutomationId(fixture.debugElement, `datepicker-label-toggle-${component.property.key}`).nativeElement.click();
+        testingUtils.getByDataAutomationId(`datepicker-label-toggle-${component.property.key}`).nativeElement.click();
 
         expect(component.datepicker.open).toHaveBeenCalled();
     });
@@ -211,7 +213,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        UnitTestingUtils.doubleClickByDataAutomationId(fixture.debugElement, `card-dateitem-${component.property.key}`);
+        testingUtils.doubleClickByDataAutomationId(`card-dateitem-${component.property.key}`);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
@@ -224,10 +226,7 @@ describe('CardViewDateItemComponent', () => {
             component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
-            const datePickerClearToggle = UnitTestingUtils.getByDataAutomationId(
-                fixture.debugElement,
-                `datepicker-date-clear-${component.property.key}`
-            );
+            const datePickerClearToggle = testingUtils.getByDataAutomationId(`datepicker-date-clear-${component.property.key}`);
             expect(datePickerClearToggle).not.toBeNull('Clean Icon should be in DOM');
         });
 
@@ -237,10 +236,7 @@ describe('CardViewDateItemComponent', () => {
             component.property.value = null;
             fixture.detectChanges();
 
-            const datePickerClearToggle = UnitTestingUtils.getByDataAutomationId(
-                fixture.debugElement,
-                `datepicker-date-clear-${component.property.key}`
-            );
+            const datePickerClearToggle = testingUtils.getByDataAutomationId(`datepicker-date-clear-${component.property.key}`);
             expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
         });
 
@@ -251,10 +247,7 @@ describe('CardViewDateItemComponent', () => {
             component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
-            const datePickerClearToggle = UnitTestingUtils.getByDataAutomationId(
-                fixture.debugElement,
-                `datepicker-date-clear-${component.property.key}`
-            );
+            const datePickerClearToggle = testingUtils.getByDataAutomationId(`datepicker-date-clear-${component.property.key}`);
             expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
         });
 
@@ -319,7 +312,7 @@ describe('CardViewDateItemComponent', () => {
 
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'card-date-value-fake-key')).toEqual('Jul 10, 2017');
+        expect(testingUtils.getInnerTextByDataAutomationId('card-date-value-fake-key')).toEqual('Jul 10, 2017');
         component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         fixture.detectChanges();
@@ -338,7 +331,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chips = await UnitTestingUtils.getMatChips(loader);
+        const chips = await testingUtils.getMatChips();
         expect(chips.length).toBe(3);
         expect(await chips[0].getText()).toBe('Jul 10, 2017');
         expect(await chips[1].getText()).toBe('Jul 11, 2017');
@@ -357,7 +350,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const chips = await UnitTestingUtils.getMatChips(loader);
+        const chips = await testingUtils.getMatChips();
         expect(chips.length).toBe(3);
         expect(await chips[0].getText()).toBe('Jul 10, 2017, 0:01');
         expect(await chips[1].getText()).toBe('Jul 11, 2017, 0:01');

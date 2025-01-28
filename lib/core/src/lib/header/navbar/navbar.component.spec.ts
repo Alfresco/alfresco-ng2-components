@@ -25,6 +25,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
     let fixture: ComponentFixture<NavbarComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -33,6 +34,7 @@ describe('NavbarComponent', () => {
 
         fixture = TestBed.createComponent(NavbarComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
@@ -43,7 +45,7 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-navbar-item-btn');
+        const renderedItems = testingUtils.getAllByCSS('.adf-navbar-item-btn');
         expect(renderedItems.length).toBe(testItems.length);
     });
 
@@ -54,7 +56,7 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-navbar-item-btn').map((item) => item.nativeElement);
+        const renderedItems = testingUtils.getAllByCSS('.adf-navbar-item-btn').map((item) => item.nativeElement);
         testItems.forEach((item, index) => {
             expect(renderedItems[index].textContent).toContain(item.label);
             expect(renderedItems[index].getAttribute('ng-reflect-router-link')).toContain(item.routerLink);

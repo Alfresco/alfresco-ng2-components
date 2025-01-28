@@ -28,6 +28,7 @@ describe('SearchTextInputComponent', () => {
     let component: SearchTextInputComponent;
     let debugElement: DebugElement;
     let userPreferencesService: UserPreferencesService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -36,6 +37,7 @@ describe('SearchTextInputComponent', () => {
         fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
+        testingUtils = new UnitTestingUtils(debugElement);
         userPreferencesService = TestBed.inject(UserPreferencesService);
         component.focusListener = new Subject<any>();
     });
@@ -54,7 +56,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getAllByCSS(debugElement, 'input[type="search"]').length).toBe(1);
+            expect(testingUtils.getAllByCSS('input[type="search"]').length).toBe(1);
         });
     });
 
@@ -65,7 +67,7 @@ describe('SearchTextInputComponent', () => {
 
         it('search button should be hidden', () => {
             fixture.detectChanges();
-            expect(UnitTestingUtils.getByCSS(debugElement, '#adf-search-button')).toBe(null);
+            expect(testingUtils.getByCSS('#adf-search-button')).toBe(null);
         });
 
         it('should not have animation', () => {
@@ -81,7 +83,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            searchButton = UnitTestingUtils.getByCSS(debugElement, '#adf-search-button');
+            searchButton = testingUtils.getByCSS('#adf-search-button');
         }));
 
         it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
@@ -147,7 +149,7 @@ describe('SearchTextInputComponent', () => {
 
             expect(component.subscriptAnimationState.value).toBe('active');
 
-            UnitTestingUtils.keyBoardEventByCSS(debugElement, '#adf-control-input', 'keyup', 'Escape', 'Escape');
+            testingUtils.keyBoardEventByCSS('#adf-control-input', 'keyup', 'Escape', 'Escape');
 
             tick(100);
             fixture.detectChanges();
@@ -169,7 +171,7 @@ describe('SearchTextInputComponent', () => {
          */
         function clickSearchButton(): void {
             fixture.detectChanges();
-            UnitTestingUtils.clickByCSS(debugElement, '#adf-search-button');
+            testingUtils.clickByCSS('#adf-search-button');
             tick(100);
             fixture.detectChanges();
             tick(100);
@@ -222,7 +224,7 @@ describe('SearchTextInputComponent', () => {
             component.subscriptAnimationState.value = 'inactive';
             fixture.detectChanges();
             expect(component.subscriptAnimationState.value).toBe('inactive');
-            expect(UnitTestingUtils.getByCSS(debugElement, '.adf-search-button-inactive')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-search-button-inactive')).toBeTruthy();
         }));
 
         it('should set browser autocomplete to on when configured', async () => {
@@ -231,7 +233,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(debugElement, '#adf-control-input').nativeElement.getAttribute('autocomplete')).toBe('on');
+            expect(testingUtils.getByCSS('#adf-control-input').nativeElement.getAttribute('autocomplete')).toBe('on');
         });
     });
 
@@ -285,8 +287,7 @@ describe('SearchTextInputComponent', () => {
                 tick(200);
             }));
 
-            const getClearSearchButton = (): HTMLButtonElement =>
-                UnitTestingUtils.getByDataAutomationId(debugElement, 'adf-clear-search-button')?.nativeElement;
+            const getClearSearchButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('adf-clear-search-button')?.nativeElement;
 
             it('should clear button be visible when showClearButton is set to true', async () => {
                 component.showClearButton = true;

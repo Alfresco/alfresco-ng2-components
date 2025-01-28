@@ -54,6 +54,7 @@ describe('InfinitePaginationComponent', () => {
     let component: InfinitePaginationComponent;
     let pagination: PaginationModel;
     let changeDetectorRef: ChangeDetectorRef;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -62,6 +63,7 @@ describe('InfinitePaginationComponent', () => {
         });
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         changeDetectorRef = fixture.componentRef.injector.get(ChangeDetectorRef);
 
         component.target = TestBed.createComponent(TestPaginatedComponent).componentInstance;
@@ -82,7 +84,7 @@ describe('InfinitePaginationComponent', () => {
             component.target = null;
             changeDetectorRef.detectChanges();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-spinner')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-spinner')).not.toBeNull();
         });
 
         it('should NOT show the loading spinner if NOT loading', () => {
@@ -91,7 +93,7 @@ describe('InfinitePaginationComponent', () => {
             component.isLoading = false;
             changeDetectorRef.detectChanges();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-spinner')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-spinner')).toBeNull();
         });
 
         it('should show the load more button if NOT loading and has more items', () => {
@@ -100,7 +102,7 @@ describe('InfinitePaginationComponent', () => {
             component.isLoading = false;
             changeDetectorRef.detectChanges();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-button')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-button')).not.toBeNull();
         });
 
         it('should NOT show the load more button if there are no more elements to load', (done) => {
@@ -113,7 +115,7 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-button')).toBeNull();
+                expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-button')).toBeNull();
                 done();
             });
         });
@@ -126,7 +128,7 @@ describe('InfinitePaginationComponent', () => {
             changeDetectorRef.detectChanges();
 
             fixture.whenStable().then(() => {
-                expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-button')).not.toBeNull();
+                expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-button')).not.toBeNull();
                 done();
             });
         });
@@ -136,8 +138,8 @@ describe('InfinitePaginationComponent', () => {
             component.target.updatePagination(pagination);
             changeDetectorRef.detectChanges();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-button')).toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-spinner')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-button')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('adf-infinite-pagination-spinner')).toBeNull();
         });
 
         it('should trigger the loadMore event with skipcount 0 to reload all the elements', (done) => {
@@ -154,7 +156,7 @@ describe('InfinitePaginationComponent', () => {
                 done();
             });
 
-            UnitTestingUtils.clickByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-button');
+            testingUtils.clickByDataAutomationId('adf-infinite-pagination-button');
         });
 
         it('should trigger the loadMore event with merge true to reload all the elements', (done) => {
@@ -171,7 +173,7 @@ describe('InfinitePaginationComponent', () => {
                 done();
             });
 
-            UnitTestingUtils.clickByDataAutomationId(fixture.debugElement, 'adf-infinite-pagination-button');
+            testingUtils.clickByDataAutomationId('adf-infinite-pagination-button');
         });
     });
 

@@ -83,6 +83,7 @@ describe('DataTable', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     const testNotShownHeader = (data: ObjectDataTableAdapter) => {
         dataTable.ngOnChanges({
@@ -91,15 +92,15 @@ describe('DataTable', () => {
 
         dataTable.showHeader = ShowHeaderMode.Data;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-datatable-header')).toBeNull();
 
         dataTable.showHeader = ShowHeaderMode.Always;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-datatable-header')).toBeNull();
 
         dataTable.showHeader = ShowHeaderMode.Never;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-datatable-header')).toBeNull();
     };
 
     const testIfRowIsSelected = (data: any[], done?: DoneFn) => {
@@ -151,6 +152,7 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -266,8 +268,8 @@ describe('DataTable', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-card')).toBeNull();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-list')).not.toBeNull();
+        expect(testingUtils.getByCSS('.adf-datatable-card')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-datatable-list')).not.toBeNull();
     });
 
     describe('Header modes', () => {
@@ -278,7 +280,7 @@ describe('DataTable', () => {
             dataTable.loading = false;
             dataTable.data = newData;
             fixture.detectChanges();
-            return UnitTestingUtils.getByDirective(fixture.debugElement, CdkDropList).injector.get(CdkDropList);
+            return testingUtils.getByDirective(CdkDropList).injector.get(CdkDropList);
         };
 
         it('should show the header if showHeader is `Data` and there is data', () => {
@@ -290,7 +292,7 @@ describe('DataTable', () => {
 
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeDefined();
+            expect(testingUtils.getByCSS('.adf-datatable-header')).toBeDefined();
         });
 
         it('should hide the header if showHeader is `Data` and there is no data', () => {
@@ -302,7 +304,7 @@ describe('DataTable', () => {
 
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-datatable-header')).toBeNull();
         });
 
         it('should always show the header if showHeader is `Always`', () => {
@@ -313,13 +315,13 @@ describe('DataTable', () => {
                 data: new SimpleChange(null, newData, false)
             });
             fixture.detectChanges();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeDefined();
+            expect(testingUtils.getByCSS('.adf-datatable-header')).toBeDefined();
 
             dataTable.ngOnChanges({
                 data: new SimpleChange(null, emptyData, false)
             });
             fixture.detectChanges();
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeDefined();
+            expect(testingUtils.getByCSS('.adf-datatable-header')).toBeDefined();
         });
 
         it('should never show the header if showHeader is `Never`', () => {
@@ -331,7 +333,7 @@ describe('DataTable', () => {
 
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-datatable-header')).toBeNull();
 
             dataTable.ngOnChanges({
                 data: new SimpleChange(null, emptyData, false)
@@ -339,7 +341,7 @@ describe('DataTable', () => {
 
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-header')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-datatable-header')).toBeNull();
         });
 
         it('should never show the header if noPermission is true', () => {
@@ -400,7 +402,7 @@ describe('DataTable', () => {
 
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header-content');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
 
         headerColumns[0].nativeElement.click();
         fixture.detectChanges();
@@ -415,8 +417,8 @@ describe('DataTable', () => {
         });
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'text_TEST')).not.toBeNull();
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'text_FAKE')).not.toBeNull();
+        expect(testingUtils.getByDataAutomationId('text_TEST')).not.toBeNull();
+        expect(testingUtils.getByDataAutomationId('text_FAKE')).not.toBeNull();
     });
 
     it('should set rows to the data when rows defined', () => {
@@ -449,7 +451,7 @@ describe('DataTable', () => {
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
-        const rowElement = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-row')[0].nativeElement;
+        const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0].nativeElement;
 
         spyOn(dataTable.rowDblClick, 'emit');
 
@@ -683,7 +685,7 @@ describe('DataTable', () => {
         dataTable.actions = true;
         fixture.detectChanges();
 
-        const actions = UnitTestingUtils.getAllByCSS(fixture.debugElement, '[id^=action_menu_right]');
+        const actions = testingUtils.getAllByCSS('[id^=action_menu_right]');
         expect(actions.length).toBe(4);
     });
 
@@ -697,7 +699,7 @@ describe('DataTable', () => {
         dataTable.actionsPosition = 'left';
         fixture.detectChanges();
 
-        const actions = UnitTestingUtils.getAllByCSS(fixture.debugElement, '[id^=action_menu_left]');
+        const actions = testingUtils.getAllByCSS('[id^=action_menu_left]');
         expect(actions.length).toBe(4);
     });
 
@@ -828,7 +830,7 @@ describe('DataTable', () => {
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header-content');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
         headerColumns[0].nativeElement.click();
         fixture.detectChanges();
 
@@ -843,7 +845,7 @@ describe('DataTable', () => {
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc', { numeric: true }));
 
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header-content');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
         headerColumns[0].nativeElement.click();
         fixture.detectChanges();
 
@@ -859,7 +861,7 @@ describe('DataTable', () => {
         const sorting = new DataSorting('column_1', 'asc', { numeric: true });
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header-content');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
         headerColumns[0].nativeElement.click();
         fixture.detectChanges();
 
@@ -882,7 +884,7 @@ describe('DataTable', () => {
         dataTable.ngAfterViewInit();
 
         const [col1, col2] = dataTable.getSortableColumns();
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header-content');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
         headerColumns[1].nativeElement.click();
         fixture.detectChanges();
 
@@ -1221,7 +1223,7 @@ describe('DataTable', () => {
         dataTable.loading = false;
         dataTable.noPermission = false;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sticky-header')).not.toBeNull();
+        expect(testingUtils.getByCSS('.adf-sticky-header')).not.toBeNull();
     });
 
     it('should disable sticky header if component is loading', () => {
@@ -1234,7 +1236,7 @@ describe('DataTable', () => {
         dataTable.loading = true;
         dataTable.noPermission = false;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sticky-header')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-sticky-header')).toBeNull();
     });
 
     it('should disable sticky header if user has no permissions', () => {
@@ -1247,7 +1249,7 @@ describe('DataTable', () => {
         dataTable.loading = false;
         dataTable.noPermission = true;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sticky-header')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-sticky-header')).toBeNull();
     });
 
     it('should disable sticky header if user has no content', () => {
@@ -1257,7 +1259,7 @@ describe('DataTable', () => {
         dataTable.loading = false;
         dataTable.noPermission = false;
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sticky-header')).toBeNull();
+        expect(testingUtils.getByCSS('.adf-sticky-header')).toBeNull();
     });
 
     it('should be able to define values using the resolver function', () => {
@@ -1271,10 +1273,10 @@ describe('DataTable', () => {
         spyOn(dataTable, 'resolverFn').and.callFake(resolverFn);
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'text_1')).toEqual('1');
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'text_foo - bar')).toEqual('foo - bar');
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'text_2')).toEqual('2');
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'text_bar - baz')).toEqual('bar - baz');
+        expect(testingUtils.getInnerTextByDataAutomationId('text_1')).toEqual('1');
+        expect(testingUtils.getInnerTextByDataAutomationId('text_foo - bar')).toEqual('foo - bar');
+        expect(testingUtils.getInnerTextByDataAutomationId('text_2')).toEqual('2');
+        expect(testingUtils.getInnerTextByDataAutomationId('text_bar - baz')).toEqual('bar - baz');
         expect(dataTable.data.getRows().length).toEqual(2);
     });
 
@@ -1301,8 +1303,8 @@ describe('DataTable', () => {
         );
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'auto_id_id')).toContain('ID');
-        expect(UnitTestingUtils.getInnerTextByDataAutomationId(fixture.debugElement, 'auto_id_name')).toContain('CUSTOM HEADER');
+        expect(testingUtils.getInnerTextByDataAutomationId('auto_id_id')).toContain('ID');
+        expect(testingUtils.getInnerTextByDataAutomationId('auto_id_name')).toContain('CUSTOM HEADER');
     });
 
     it('should set isContextMenuSource to true for row whose id matches selectedRowId', () => {
@@ -1351,7 +1353,7 @@ describe('DataTable', () => {
 
         dataTable.resetSelection();
         const rowClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '[data-automation-id="datatable-row-0"] > div');
+        testingUtils.clickByCSS('[data-automation-id="datatable-row-0"] > div');
         fixture.detectChanges();
         await rowClickPromise;
 
@@ -1361,7 +1363,7 @@ describe('DataTable', () => {
 
         dataTable.resetSelection();
         const cellClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '[data-automation-id="datatable-row-1"] > div');
+        testingUtils.clickByCSS('[data-automation-id="datatable-row-1"] > div');
         fixture.detectChanges();
         await cellClickPromise;
 
@@ -1456,14 +1458,14 @@ describe('DataTable', () => {
             dataTable.displayCheckboxesOnHover = false;
             fixture.detectChanges();
 
-            expect(await UnitTestingUtils.checkIfMatCheckboxesHaveClass(loader, 'adf-datatable-hover-only')).toBeTrue();
+            expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
 
         it('should display checkboxes on hover when displayCheckboxesOnHover is set to true', async () => {
             dataTable.displayCheckboxesOnHover = true;
             fixture.detectChanges();
 
-            expect(await UnitTestingUtils.checkIfMatCheckboxesHaveClass(loader, 'adf-datatable-hover-only')).toBeTrue();
+            expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
     });
 });
@@ -1472,6 +1474,7 @@ describe('Accesibility', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let columnCustomTemplate: TemplateRef<any>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -1481,6 +1484,7 @@ describe('Accesibility', () => {
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
@@ -1496,12 +1500,12 @@ describe('Accesibility', () => {
         });
 
         fixture.detectChanges();
-        const datatableAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-list').attributes;
-        const datatableHeaderAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-list .adf-datatable-header').attributes;
-        const datatableHeaderCellAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-cell-header').attributes;
-        const datatableBodyAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-body').attributes;
-        const datatableBodyRowAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-row').attributes;
-        const datatableBodyCellAttributes = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-cell').attributes;
+        const datatableAttributes = testingUtils.getByCSS('.adf-datatable-list').attributes;
+        const datatableHeaderAttributes = testingUtils.getByCSS('.adf-datatable-list .adf-datatable-header').attributes;
+        const datatableHeaderCellAttributes = testingUtils.getByCSS('.adf-datatable-cell-header').attributes;
+        const datatableBodyAttributes = testingUtils.getByCSS('.adf-datatable-body').attributes;
+        const datatableBodyRowAttributes = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-row').attributes;
+        const datatableBodyCellAttributes = testingUtils.getByCSS('.adf-datatable-body .adf-datatable-cell').attributes;
 
         expect(datatableAttributes['role']).toEqual('grid');
         expect(datatableHeaderAttributes['role']).toEqual('rowgroup');
@@ -1568,8 +1572,9 @@ describe('Accesibility', () => {
             fixture.detectChanges();
             dataTable.ngAfterViewInit();
 
-            const rowElement = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-row')[0];
-            UnitTestingUtils.clickByCSS(rowElement, '.adf-datatable-cell');
+            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
+            testingUtils.setDebugElement(rowElement);
+            testingUtils.clickByCSS('.adf-datatable-cell');
 
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
@@ -1584,8 +1589,9 @@ describe('Accesibility', () => {
             fixture.detectChanges();
             dataTable.ngAfterViewInit();
 
-            const rowElement = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-row')[1];
-            UnitTestingUtils.clickByCSS(rowElement, '.adf-datatable-cell');
+            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[1];
+            testingUtils.setDebugElement(rowElement);
+            testingUtils.clickByCSS('.adf-datatable-cell');
 
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
@@ -1602,8 +1608,9 @@ describe('Accesibility', () => {
             fixture.detectChanges();
             dataTable.ngAfterViewInit();
 
-            const rowElement = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-row')[0];
-            UnitTestingUtils.clickByCSS(rowElement, '.adf-datatable-cell');
+            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
+            testingUtils.setDebugElement(rowElement);
+            testingUtils.clickByCSS('.adf-datatable-cell');
 
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
@@ -1620,8 +1627,9 @@ describe('Accesibility', () => {
             fixture.detectChanges();
             dataTable.ngAfterViewInit();
 
-            const rowElement = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-body .adf-datatable-row')[0];
-            UnitTestingUtils.clickByCSS(rowElement, '.adf-datatable-cell');
+            const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
+            testingUtils.setDebugElement(rowElement);
+            testingUtils.clickByCSS('.adf-datatable-cell');
 
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
@@ -1642,7 +1650,7 @@ describe('Accesibility', () => {
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
-        const cell = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
+        const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
         expect(cell?.nativeElement.getAttribute('tabindex')).toBe(null);
     });
 
@@ -1659,7 +1667,7 @@ describe('Accesibility', () => {
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
-        const cell = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
+        const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
         expect(cell?.nativeElement.getAttribute('tabindex')).toBe('0');
     });
 });
@@ -1669,6 +1677,7 @@ describe('Drag&Drop column header', () => {
     let dataTable: DataTableComponent;
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -1676,6 +1685,7 @@ describe('Drag&Drop column header', () => {
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         dataTable = fixture.componentInstance;
         data = [
             { id: 1, name: 'name1' },
@@ -1693,24 +1703,24 @@ describe('Drag&Drop column header', () => {
     it('should show/hide drag indicator icon', () => {
         fixture.detectChanges();
 
-        UnitTestingUtils.hoverOverByDataAutomationId(fixture.debugElement, 'auto_id_name');
+        testingUtils.hoverOverByDataAutomationId('auto_id_name');
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-datatable-cell-header-drag-icon-name')).toBeTruthy();
+        expect(testingUtils.getByDataAutomationId('adf-datatable-cell-header-drag-icon-name')).toBeTruthy();
 
-        UnitTestingUtils.mouseLeaveByDataAutomationId(fixture.debugElement, 'auto_id_name');
+        testingUtils.mouseLeaveByDataAutomationId('auto_id_name');
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-datatable-cell-header-drag-icon-name')).toBeFalsy();
+        expect(testingUtils.getByDataAutomationId('adf-datatable-cell-header-drag-icon-name')).toBeFalsy();
     });
 
     it('should not show drag indicator icon, when drag and drop is disabled', () => {
         fixture.detectChanges();
 
-        UnitTestingUtils.hoverOverByDataAutomationId(fixture.debugElement, 'auto_id_id');
+        testingUtils.hoverOverByDataAutomationId('auto_id_id');
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-datatable-cell-header-drag-icon-id')).toBeFalsy();
+        expect(testingUtils.getByDataAutomationId('adf-datatable-cell-header-drag-icon-id')).toBeFalsy();
     });
 
     it('should emit on change column order', () => {
@@ -1746,7 +1756,7 @@ describe('Drag&Drop column header', () => {
         fixture.detectChanges();
 
         const columns = dataTable.data.getColumns();
-        const headerCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell--text.adf-datatable-cell-header');
+        const headerCells = testingUtils.getAllByCSS('.adf-datatable-cell--text.adf-datatable-cell-header');
 
         expect(columns[0].key).toEqual(dataTableSchema[1].key);
         expect(columns[1].key).toEqual(dataTableSchema[0].key);
@@ -1761,6 +1771,7 @@ describe('Show/hide columns', () => {
     let dataTable: DataTableComponent;
     let data: DataColumn[] = [];
     let dataTableSchema: DataColumn[] = [];
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -1782,12 +1793,13 @@ describe('Show/hide columns', () => {
         ];
 
         dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         fixture.detectChanges();
     });
 
     it('should hide columns with isHidden prop', () => {
-        const headerCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell--text.adf-datatable-cell-header');
+        const headerCells = testingUtils.getAllByCSS('.adf-datatable-cell--text.adf-datatable-cell-header');
 
         expect(headerCells.length).toBe(2);
     });
@@ -1810,7 +1822,7 @@ describe('Show/hide columns', () => {
 
         fixture.detectChanges();
 
-        const headerCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell--text.adf-datatable-cell-header');
+        const headerCells = testingUtils.getAllByCSS('.adf-datatable-cell--text.adf-datatable-cell-header');
         expect(headerCells.length).toBe(1);
     });
 
@@ -1844,13 +1856,14 @@ describe('Column Resizing', () => {
     let dataTable: DataTableComponent;
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
+    let testingUtils: UnitTestingUtils;
 
-    const getTableBody = (): HTMLDivElement => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable-body').nativeElement;
+    const getTableBody = (): HTMLDivElement => testingUtils.getByCSS('.adf-datatable-body').nativeElement;
 
-    const getResizeHandler = (): HTMLDivElement => UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-datatable__resize-handle')?.nativeElement;
+    const getResizeHandler = (): HTMLDivElement => testingUtils.getByCSS('.adf-datatable__resize-handle')?.nativeElement;
 
     const getResizeHandlersCount = (): number => {
-        const resizeHandlers = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable__resize-handle');
+        const resizeHandlers = testingUtils.getAllByCSS('.adf-datatable__resize-handle');
         return resizeHandlers.length;
     };
 
@@ -1862,7 +1875,7 @@ describe('Column Resizing', () => {
         resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
         fixture.detectChanges();
 
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, headerColumnsSelector);
+        const headerColumns = testingUtils.getAllByCSS(headerColumnsSelector);
 
         expect(dataTable.isResizing).toBeTrue();
         headerColumns.forEach((header) => expect(header.nativeElement.classList).not.toContain(excludedClass));
@@ -1888,6 +1901,8 @@ describe('Column Resizing', () => {
         dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
 
         dataTable.isResizingEnabled = false;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
+
         fixture.detectChanges();
     });
 
@@ -1895,7 +1910,7 @@ describe('Column Resizing', () => {
         const resizeHandle = getResizeHandler();
 
         expect(resizeHandle).toBeUndefined();
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header');
 
         headerColumns.forEach((header) => {
             expect(header.nativeElement.classList).toContain('adf-datatable__cursor--pointer');
@@ -1925,7 +1940,7 @@ describe('Column Resizing', () => {
         const resizeHandle = getResizeHandler();
 
         expect(resizeHandle).not.toBeNull();
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header');
 
         headerColumns.forEach((header) => {
             expect(header.nativeElement.classList).toContain('adf-datatable__cursor--pointer');
@@ -1944,17 +1959,17 @@ describe('Column Resizing', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        UnitTestingUtils.hoverOverByDataAutomationId(fixture.debugElement, 'auto_id_id');
+        testingUtils.hoverOverByDataAutomationId('auto_id_id');
         fixture.detectChanges();
-        let dragIcon = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-datatable-cell-header-drag-icon-id');
+        let dragIcon = testingUtils.getByDataAutomationId('adf-datatable-cell-header-drag-icon-id');
 
         expect(dragIcon).not.toBeNull();
 
-        const resizeHandles = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable__resize-handle');
+        const resizeHandles = testingUtils.getAllByCSS('.adf-datatable__resize-handle');
         resizeHandles[0].nativeElement.dispatchEvent(new MouseEvent('mousedown'));
         fixture.detectChanges();
 
-        dragIcon = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'adf-datatable-cell-header-drag-icon-id');
+        dragIcon = testingUtils.getByDataAutomationId('adf-datatable-cell-header-drag-icon-id');
 
         expect(dataTable.isResizing).toBeTrue();
         expect(dragIcon).toBeNull();
@@ -2047,7 +2062,7 @@ describe('Column Resizing', () => {
         tick();
         fixture.detectChanges();
 
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header');
         expect(headerColumns[0].nativeElement.style.flex).toBe('0 1 125px');
     }));
 
@@ -2056,7 +2071,7 @@ describe('Column Resizing', () => {
         tick();
         fixture.detectChanges();
 
-        const headerColumns = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
+        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header');
         expect(headerColumns[0].nativeElement.style.flex).toBe('0 1 100px');
     }));
 
@@ -2136,7 +2151,7 @@ describe('Column Resizing', () => {
         dataTable.enableDragRows = false;
         dataTable.showHeader = ShowHeaderMode.Never;
         fixture.detectChanges();
-        const dragAndDrop = UnitTestingUtils.getByDirective(fixture.debugElement, CdkDropList).injector.get(CdkDropList);
+        const dragAndDrop = testingUtils.getByDirective(CdkDropList).injector.get(CdkDropList);
         dataTable.onDragDrop({} as CdkDragDrop<any>);
         expect(dataTable.dragDropped.emit).not.toHaveBeenCalled();
         expect(dragAndDrop.disabled).toBeTrue();
@@ -2165,8 +2180,8 @@ describe('Column Resizing', () => {
 
             const visibleColumns = dataTable.getVisibleColumns();
 
-            const datatableCellHeaders = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
-            const datatableCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell');
+            const datatableCellHeaders = testingUtils.getAllByCSS('.adf-datatable-cell-header');
+            const datatableCells = testingUtils.getAllByCSS('.adf-datatable-cell');
 
             expect(visibleColumns.length).toBe(2);
 
@@ -2186,8 +2201,8 @@ describe('Column Resizing', () => {
 
             const visibleColumns = dataTable.getVisibleColumns();
 
-            const datatableCellHeaders = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
-            const datatableCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell');
+            const datatableCellHeaders = testingUtils.getAllByCSS('.adf-datatable-cell-header');
+            const datatableCells = testingUtils.getAllByCSS('.adf-datatable-cell');
 
             expect(visibleColumns.length).toBe(2);
 
@@ -2212,8 +2227,8 @@ describe('Column Resizing', () => {
 
             const visibleColumns = dataTable.getVisibleColumns();
 
-            const datatableCellHeaders = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
-            const datatableCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell');
+            const datatableCellHeaders = testingUtils.getAllByCSS('.adf-datatable-cell-header');
+            const datatableCells = testingUtils.getAllByCSS('.adf-datatable-cell');
 
             expect(visibleColumns.length).toBe(2);
 
@@ -2236,8 +2251,8 @@ describe('Column Resizing', () => {
 
             const visibleColumns = dataTable.getVisibleColumns();
 
-            const datatableCellHeaders = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell-header');
-            const datatableCells = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-datatable-cell');
+            const datatableCellHeaders = testingUtils.getAllByCSS('.adf-datatable-cell-header');
+            const datatableCells = testingUtils.getAllByCSS('.adf-datatable-cell');
 
             expect(visibleColumns.length).toBe(2);
 

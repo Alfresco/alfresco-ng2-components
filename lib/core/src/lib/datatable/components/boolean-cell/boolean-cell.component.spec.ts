@@ -25,6 +25,7 @@ describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;
     let fixture: ComponentFixture<BooleanCellComponent>;
     let valueEl: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     const renderAndGetResult = async (value: any) => {
         component.value$.next(value);
@@ -38,7 +39,8 @@ describe('BooleanCellComponent', () => {
         });
         fixture = TestBed.createComponent(BooleanCellComponent);
         component = fixture.componentInstance;
-        valueEl = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
+        valueEl = testingUtils.getByCSS('span').nativeElement;
     });
 
     describe('Initialization', () => {

@@ -38,11 +38,11 @@ describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
+    let testingUtils: UnitTestingUtils;
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
-    const getTextField = (key: string): Promise<MatInputHarness> =>
-        UnitTestingUtils.getMatInputByDataAutomationId(loader, `card-textitem-value-${key}`);
+    const getTextField = (key: string): Promise<MatInputHarness> => testingUtils.getMatInputByDataAutomationId(`card-textitem-value-${key}`);
 
     const getTextFieldValue = async (key: string): Promise<string> => {
         const textField = await getTextField(key);
@@ -50,17 +50,12 @@ describe('CardViewTextItemComponent', () => {
     };
 
     const updateTextField = async (key: string, value: string) => {
-        await UnitTestingUtils.fillMatInputByDataAutomationId(loader, `card-textitem-value-${key}`, value);
-        fixture.detectChanges();
-    };
-
-    const updateTextFieldWithNumber = (key: string, value: number) => {
-        UnitTestingUtils.fillInputByDataAutomationId(fixture.debugElement, `card-textitem-value-${key}`, value);
+        await testingUtils.fillMatInputByDataAutomationId(`card-textitem-value-${key}`, value);
         fixture.detectChanges();
     };
 
     const getErrorElements = (key: string, includeItems = false): DebugElement[] =>
-        UnitTestingUtils.getAllByCSS(fixture.debugElement, `[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`);
+        testingUtils.getAllByCSS(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`);
 
     const getTextFieldError = (key: string): string => {
         const textItemInputErrors = getErrorElements(key, true);
@@ -104,7 +99,7 @@ describe('CardViewTextItemComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const valueChips = await UnitTestingUtils.getMatChips(loader);
+        const valueChips = await testingUtils.getMatChips();
         expect(valueChips.length).toBe(length);
         expect(await valueChips[0].getText()).toBe(param1);
         expect(await valueChips[1].getText()).toBe(param2);
@@ -118,6 +113,7 @@ describe('CardViewTextItemComponent', () => {
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -141,7 +137,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label')).toBe('Text label');
+            expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Text label');
             expect(await getTextFieldValue(component.property.key)).toBe('Lorem ipsum');
         });
 
@@ -205,8 +201,7 @@ describe('CardViewTextItemComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const editIcon = await UnitTestingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                loader,
+            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
                 `card-textitem-clickable-icon-${component.property.key}`
             );
             expect(editIcon).toBeFalse();
@@ -259,19 +254,19 @@ describe('CardViewTextItemComponent', () => {
             await renderChipsForMultiValuedProperties(cardViewTextItemFloatObject, true, 3, '10', '20.2', '35.8');
             const floatValidator: CardViewItemValidator = new CardViewItemFloatValidator();
             component.property.validators = [floatValidator];
-            const inputElement = UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'card-textitem-editchipinput-textkey').nativeElement;
+            const inputElement = testingUtils.getByDataAutomationId('card-textitem-editchipinput-textkey').nativeElement;
             component.addValueToList({ value: 'abcd', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
             expect(getTextFieldError('textkey')).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
-            let valueChips = await UnitTestingUtils.getMatChips(loader);
+            let valueChips = await testingUtils.getMatChips();
             expect(valueChips.length).toBe(3);
 
             component.addValueToList({ value: '22.1', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
             verifyNoErrors('textkey');
-            valueChips = await UnitTestingUtils.getMatChips(loader);
+            valueChips = await testingUtils.getMatChips();
             expect(valueChips.length).toBe(4);
         });
 
@@ -292,7 +287,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(await getTextFieldValue(component.property.key)).toBe('item1,item2,item3');
-            expect(await UnitTestingUtils.checkIfMatChipGridExists(loader)).toBe(false);
+            expect(await testingUtils.checkIfMatChipGridExists()).toBe(false);
         });
 
         it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
@@ -313,7 +308,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-property-label')).toBe('Text label');
+            expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Text label');
         });
 
         it('should NOT display the label for multi-valued chips if displayLabelForChips is false', async () => {
@@ -334,7 +329,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-property-label')).toBeNull();
+            expect(testingUtils.getByCSS('.adf-property-label')).toBeNull();
         });
 
         it('should return true when editable is true, and property.editable is false', () => {
@@ -392,8 +387,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await UnitTestingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                loader,
+            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
                 `card-textitem-clickable-icon-${component.property.key}`
             );
             expect(editIcon).toBeFalse();
@@ -408,8 +402,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await UnitTestingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                loader,
+            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
                 `card-textitem-clickable-icon-${component.property.key}`
             );
             expect(editIcon).toBeFalse();
@@ -425,10 +418,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await UnitTestingUtils.getMatIconWithAncestorByDataAutomationId(
-                loader,
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.getMatIconWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(editIcon).not.toBeNull();
             expect(await editIcon.getName()).toBe('FAKE_ICON');
         });
@@ -441,8 +431,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await UnitTestingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                loader,
+            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
                 `card-textitem-clickable-icon-${component.property.key}`
             );
             expect(editIcon).toBeFalse();
@@ -456,8 +445,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await UnitTestingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
-                loader,
+            const editIcon = await testingUtils.checkIfMatIconExistsWithAncestorByDataAutomationId(
                 `card-textitem-clickable-icon-${component.property.key}`
             );
             expect(editIcon).toBeFalse();
@@ -475,12 +463,9 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editIcon = await UnitTestingUtils.getMatIconWithAncestorByDataAutomationId(
-                loader,
-                `card-textitem-clickable-icon-${component.property.key}`
-            );
+            const editIcon = await testingUtils.getMatIconWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             expect(await editIcon.getName()).toBe('FAKE_ICON');
-            await UnitTestingUtils.clickMatIconWithAncestorByDataAutomationId(loader, `card-textitem-clickable-icon-${component.property.key}`);
+            await testingUtils.clickMatIconWithAncestorByDataAutomationId(`card-textitem-clickable-icon-${component.property.key}`);
             fixture.detectChanges();
             expect(callBackSpy).toHaveBeenCalled();
         });
@@ -498,7 +483,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            UnitTestingUtils.clickByDataAutomationId(fixture.debugElement, `card-textitem-toggle-${component.property.key}`);
+            testingUtils.clickByDataAutomationId(`card-textitem-toggle-${component.property.key}`);
             fixture.detectChanges();
             expect(cardViewUpdateService.clicked).toHaveBeenCalled();
         });
@@ -536,7 +521,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            UnitTestingUtils.doubleClickByDataAutomationId(fixture.debugElement, `card-textitem-value-${component.property.key}`);
+            testingUtils.doubleClickByDataAutomationId(`card-textitem-value-${component.property.key}`);
             fixture.detectChanges();
 
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(
@@ -551,7 +536,8 @@ describe('CardViewTextItemComponent', () => {
             component.ngOnChanges({});
 
             loader = TestbedHarnessEnvironment.loader(fixture);
-            const inputHarness = await UnitTestingUtils.getMatInputByDataAutomationId(loader, `card-textitem-value-${component.property.key}`);
+            testingUtils.setLoader(loader);
+            const inputHarness = await testingUtils.getMatInputByDataAutomationId(`card-textitem-value-${component.property.key}`);
 
             expect(component.isEditable).toBe(false);
             expect(await inputHarness.isReadonly()).toBe(true);
@@ -798,7 +784,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should show validation error for float number', async () => {
-            updateTextFieldWithNumber(component.property.key, 123.456);
+            updateTextField(component.property.key, '123.456');
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -808,7 +794,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should show validation error for exceed the number limit (2147483648)', async () => {
-            updateTextFieldWithNumber(component.property.key, 2147483648);
+            updateTextField(component.property.key, '2147483648');
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -818,7 +804,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should not show validation error for below the number limit (2147483647)', async () => {
-            updateTextFieldWithNumber(component.property.key, 2147483647);
+            updateTextField(component.property.key, '2147483647');
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -827,11 +813,11 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should update input the value on input updated', async () => {
-            const expectedNumber = 2020;
+            const expectedNumber = '2020';
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
 
-            updateTextFieldWithNumber(component.property.key, expectedNumber);
+            updateTextField(component.property.key, expectedNumber);
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
@@ -842,8 +828,8 @@ describe('CardViewTextItemComponent', () => {
             });
 
             verifyNoErrors(component.property.key);
-            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
-            expect(component.property.value).toBe(expectedNumber.toString());
+            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber);
+            expect(component.property.value).toBe(expectedNumber);
         });
     });
 
@@ -883,23 +869,23 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should update input the value on input updated', async () => {
-            const expectedNumber = 88.44;
+            const expectedNumber = '88.44';
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
 
-            updateTextFieldWithNumber(component.property.key, expectedNumber);
+            updateTextField(component.property.key, expectedNumber);
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
                 target: { ...component.property },
                 changed: {
-                    textkey: expectedNumber.toString()
+                    textkey: expectedNumber
                 }
             });
 
             verifyNoErrors(component.property.key);
-            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
-            expect(component.property.value).toBe(expectedNumber.toString());
+            expect(await getTextFieldValue(component.property.key)).toEqual(expectedNumber);
+            expect(component.property.value).toBe(expectedNumber);
         });
     });
 

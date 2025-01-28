@@ -28,6 +28,7 @@ describe('DataTableCellComponent', () => {
     let component: DataTableCellComponent;
     let fixture: ComponentFixture<DataTableCellComponent>;
     let dataTableService: DataTableService;
+    let testingUtils: UnitTestingUtils;
 
     const renderTextCell = (value: string, tooltip: string) => {
         component.value$ = new BehaviorSubject<string>(value);
@@ -37,14 +38,14 @@ describe('DataTableCellComponent', () => {
     };
 
     const checkDisplayedText = (expectedText: string) => {
-        const displayedText = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement.textContent.trim();
+        const displayedText = testingUtils.getByCSS('span').nativeElement.textContent.trim();
 
         expect(displayedText).toBeTruthy();
         expect(displayedText).toBe(expectedText);
     };
 
     const checkDisplayedTooltip = (expectedTooltip: string) => {
-        const displayedTooltip = UnitTestingUtils.getByCSS(fixture.debugElement, 'span').nativeElement.title;
+        const displayedTooltip = testingUtils.getByCSS('span').nativeElement.title;
 
         expect(displayedTooltip).toBeTruthy();
         expect(displayedTooltip).toBe(expectedTooltip);
@@ -59,6 +60,7 @@ describe('DataTableCellComponent', () => {
         fixture = TestBed.createComponent(DataTableCellComponent);
         component = fixture.componentInstance;
         dataTableService = TestBed.inject(DataTableService);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should display text and tooltip', () => {

@@ -29,6 +29,7 @@ describe('LoginDialogPanelComponent', () => {
     let usernameInput: HTMLInputElement;
     let passwordInput: HTMLInputElement;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
@@ -39,12 +40,13 @@ describe('LoginDialogPanelComponent', () => {
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
 
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        usernameInput = UnitTestingUtils.getByCSS(fixture.debugElement, '#username').nativeElement;
-        passwordInput = UnitTestingUtils.getByCSS(fixture.debugElement, '#password').nativeElement;
+        usernameInput = testingUtils.getByCSS('#username').nativeElement;
+        passwordInput = testingUtils.getByCSS('#password').nativeElement;
     });
 
     afterEach(() => {
@@ -64,8 +66,8 @@ describe('LoginDialogPanelComponent', () => {
     };
 
     it('should be created', () => {
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-form')).not.toBeNull();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#adf-login-form')).toBeDefined();
+        expect(testingUtils.getByCSS('#adf-login-form')).not.toBeNull();
+        expect(testingUtils.getByCSS('#adf-login-form')).toBeDefined();
     });
 
     it('should be able to login', (done) => {

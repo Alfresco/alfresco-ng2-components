@@ -30,6 +30,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;
     let widget: MultilineTextWidgetComponentComponent;
     let fixture: ComponentFixture<MultilineTextWidgetComponentComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +39,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     describe('when tooltip is set', () => {
@@ -50,7 +52,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const host = await UnitTestingUtils.getMatInputHost(loader);
+            const host = await testingUtils.getMatInputHost();
             await host.hover();
 
             const tooltip = await host.getAttribute('title');
@@ -68,14 +70,14 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            await UnitTestingUtils.blurMatInput(loader);
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
+            await testingUtils.blurMatInput();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');

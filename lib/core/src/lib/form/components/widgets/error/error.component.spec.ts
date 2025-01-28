@@ -24,6 +24,7 @@ import { ErrorWidgetComponent } from './error.component';
 describe('ErrorWidgetComponent', () => {
     let widget: ErrorWidgetComponent;
     let fixture: ComponentFixture<ErrorWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -31,6 +32,7 @@ describe('ErrorWidgetComponent', () => {
         });
         fixture = TestBed.createComponent(ErrorWidgetComponent);
         widget = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
     const errorMessage: string = 'fake-error';
     const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({ message: errorMessage });
@@ -44,7 +46,7 @@ describe('ErrorWidgetComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const errorIcon = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-icon').nativeElement.textContent;
+        const errorIcon = testingUtils.getByCSS('.adf-error-icon').nativeElement.textContent;
         expect(errorIcon).toEqual('error_outline');
     });
 
@@ -60,7 +62,7 @@ describe('ErrorWidgetComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const requiredErrorText = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-error-text').nativeElement.textContent;
+        const requiredErrorText = testingUtils.getByCSS('.adf-error-text').nativeElement.textContent;
         expect(requiredErrorText).toEqual(errorMessage);
     });
 });

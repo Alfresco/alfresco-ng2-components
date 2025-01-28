@@ -157,6 +157,7 @@ describe('Template transclusion', () => {
     let fixture: ComponentFixture<any>;
     let mediaMatcher: MediaMatcher;
     let mediaQueryList: any;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -174,6 +175,7 @@ describe('Template transclusion', () => {
         spyOn(mediaMatcher, 'matchMedia').and.callFake(() => mediaQueryList);
 
         fixture = TestBed.createComponent(SidenavLayoutTesterComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
@@ -181,11 +183,11 @@ describe('Template transclusion', () => {
         const injectedElementSelector = '[data-automation-id="adf-layout-container"] #nav-test';
 
         it('should contain the transcluded side navigation template', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, injectedElementSelector)).toBeDefined();
+            expect(testingUtils.getByCSS(injectedElementSelector)).toBeDefined();
         });
 
         it('should let the isMenuMinimized property of component to be accessed by the transcluded template', () => {
-            expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, injectedElementSelector).trim()).toBe('variable-is-injected');
+            expect(testingUtils.getInnerTextByCSS(injectedElementSelector).trim()).toBe('variable-is-injected');
         });
     });
 
@@ -197,14 +199,14 @@ describe('Template transclusion', () => {
             mediaQueryList.matches = false;
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, outerHeaderSelector)).toBeDefined();
+            expect(testingUtils.getByCSS(outerHeaderSelector)).toBeDefined();
         });
 
         it('should contain the transcluded header template inside of the layout-container', () => {
             mediaQueryList.matches = true;
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, innerHeaderSelector)).toBeDefined();
+            expect(testingUtils.getByCSS(innerHeaderSelector)).toBeDefined();
         });
     });
 
@@ -212,7 +214,7 @@ describe('Template transclusion', () => {
         const injectedElementSelector = '[data-automation-id="adf-layout-container"] #content-test';
 
         it('should contain the transcluded content template', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, injectedElementSelector)).toBeDefined();
+            expect(testingUtils.getByCSS(injectedElementSelector)).toBeDefined();
         });
     });
 });

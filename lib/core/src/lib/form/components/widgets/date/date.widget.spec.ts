@@ -28,6 +28,7 @@ describe('DateWidgetComponent', () => {
     let fixture: ComponentFixture<DateWidgetComponent>;
     let adapter: DateAdapter<Date>;
     let form: FormModel;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +39,7 @@ describe('DateWidgetComponent', () => {
         fixture = TestBed.createComponent(DateWidgetComponent);
         adapter = fixture.debugElement.injector.get(DateAdapter);
         widget = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('[C310333] - should be able to set a placeholder', () => {
@@ -118,8 +120,8 @@ describe('DateWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#data-widget')).toBeDefined();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#data-widget')).not.toBeNull();
+        expect(testingUtils.getByCSS('#data-widget')).toBeDefined();
+        expect(testingUtils.getByCSS('#data-widget')).not.toBeNull();
     });
 
     it('should setup max value for date picker', () => {
@@ -161,12 +163,12 @@ describe('DateWidgetComponent', () => {
         });
 
         it('should be marked as invalid after interaction', () => {
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            UnitTestingUtils.blurByCSS(fixture.debugElement, 'input');
+            testingUtils.blurByCSS('input');
             fixture.detectChanges();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be valid when field is hidden with empty value', () => {
@@ -204,7 +206,7 @@ describe('DateWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const dateElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#date-field-id').nativeElement;
+            const dateElement = testingUtils.getByCSS('#date-field-id').nativeElement;
 
             expect(dateElement).not.toBeNull();
             expect(dateElement?.value).toContain('9-9-9999');
@@ -221,7 +223,7 @@ describe('DateWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const dateElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#date-field-id').nativeElement;
+            const dateElement = testingUtils.getByCSS('#date-field-id').nativeElement;
 
             expect(dateElement?.value).toContain('30.12.9999');
         });
@@ -236,7 +238,7 @@ describe('DateWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            let dateButton = UnitTestingUtils.getByCSS(fixture.debugElement, 'button').nativeElement;
+            let dateButton = testingUtils.getByCSS('button').nativeElement;
 
             expect(dateButton).toBeDefined();
             expect(dateButton.disabled).toBeFalsy();
@@ -244,7 +246,7 @@ describe('DateWidgetComponent', () => {
             widget.field.readOnly = true;
             fixture.detectChanges();
 
-            dateButton = UnitTestingUtils.getByCSS(fixture.debugElement, 'button').nativeElement;
+            dateButton = testingUtils.getByCSS('button').nativeElement;
 
             expect(dateButton).toBeDefined();
             expect(dateButton.disabled).toBeTruthy();
@@ -283,7 +285,7 @@ describe('DateWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        const dateElement = UnitTestingUtils.getByCSS(fixture.debugElement, '#date-field-id').nativeElement;
+        const dateElement = testingUtils.getByCSS('#date-field-id').nativeElement;
 
         expect(dateElement).toBeDefined();
         expect(dateElement.value).toContain('12-30-9999');

@@ -29,6 +29,7 @@ describe('CheckboxWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: CheckboxWidgetComponent;
     let fixture: ComponentFixture<CheckboxWidgetComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +39,7 @@ describe('CheckboxWidgetComponent', () => {
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => fixture.destroy());
@@ -55,20 +57,20 @@ describe('CheckboxWidgetComponent', () => {
         });
 
         it('should be marked as invalid when required after interaction', async () => {
-            const checkbox = await UnitTestingUtils.getMatCheckbox(loader);
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeFalsy();
+            const checkbox = await testingUtils.getMatCheckbox();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
             await checkbox.check();
             await checkbox.uncheck();
 
-            expect(UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-invalid')).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-asterisk').nativeElement;
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -78,14 +80,14 @@ describe('CheckboxWidgetComponent', () => {
             widget.field.value = true;
             fixture.detectChanges();
 
-            expect(await UnitTestingUtils.checkIfMatCheckboxIsChecked(loader)).toBe(true);
+            expect(await testingUtils.checkIfMatCheckboxIsChecked()).toBe(true);
         });
 
         it('should not be checked if false is passed', async () => {
             widget.field.value = false;
             fixture.detectChanges();
 
-            expect(await UnitTestingUtils.checkIfMatCheckboxIsChecked(loader)).toBe(false);
+            expect(await testingUtils.checkIfMatCheckboxIsChecked()).toBe(false);
         });
 
         describe('when tooltip is set', () => {
@@ -98,8 +100,8 @@ describe('CheckboxWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                await UnitTestingUtils.hoverOverMatCheckbox(loader);
-                const host = await UnitTestingUtils.getMatCheckboxHost(loader);
+                await testingUtils.hoverOverMatCheckbox();
+                const host = await testingUtils.getMatCheckboxHost();
                 const tooltip = await host.getAttribute('title');
                 expect(tooltip).toBe('my custom tooltip');
             });

@@ -27,6 +27,7 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 describe('SidebarActionMenuComponent', () => {
     let component: SidebarActionMenuComponent;
     let fixture: ComponentFixture<SidebarActionMenuComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,6 +35,7 @@ describe('SidebarActionMenuComponent', () => {
         });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
@@ -44,7 +46,7 @@ describe('SidebarActionMenuComponent', () => {
         component.title = 'Fake-Title';
         component.expanded = true;
         fixture.detectChanges();
-        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sidebar-action-menu-text').nativeElement;
+        const title = testingUtils.getByCSS('.adf-sidebar-action-menu-text').nativeElement;
         fixture.detectChanges();
         expect(title.textContent).toBe('Fake-Title');
     });
@@ -80,6 +82,7 @@ class CustomSidebarActionMenuComponent {
 describe('Custom SidebarActionMenuComponent', () => {
     let fixture: ComponentFixture<CustomSidebarActionMenuComponent>;
     let component: CustomSidebarActionMenuComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -88,38 +91,39 @@ describe('Custom SidebarActionMenuComponent', () => {
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should defined adf-sidebar-action-menu', () => {
         fixture.detectChanges();
-        expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-sidebar-action-menu')).toBeDefined();
+        expect(testingUtils.getByCSS('adf-sidebar-action-menu')).toBeDefined();
     });
 
     it('should display the title', () => {
         component.title = 'FakeTitle';
         fixture.detectChanges();
-        const title = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sidebar-action-menu-text').nativeElement;
+        const title = testingUtils.getByCSS('.adf-sidebar-action-menu-text').nativeElement;
         fixture.detectChanges();
         expect(title.textContent).toBe('FakeTitle');
     });
 
     it('should render the adf-sidebar-menu-options', async () => {
         fixture.detectChanges();
-        const options = UnitTestingUtils.getAllByCSS(fixture.debugElement, '.adf-sidebar-action-menu-options');
-        UnitTestingUtils.clickByCSS(fixture.debugElement, '.adf-sidebar-action-menu-button');
+        const options = testingUtils.getAllByCSS('.adf-sidebar-action-menu-options');
+        testingUtils.clickByCSS('.adf-sidebar-action-menu-button');
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         expect(options).toBeDefined();
-        expect(UnitTestingUtils.getInnerTextByCSS(fixture.debugElement, '.adf-sidebar-action-menu-button').trim()).toBe('Fake titlearrow_drop_down');
+        expect(testingUtils.getInnerTextByCSS('.adf-sidebar-action-menu-button').trim()).toBe('Fake titlearrow_drop_down');
     });
 
     it('should show icon on icon menu', () => {
         component.title = 'FakeTitle';
         component.expanded = false;
         fixture.detectChanges();
-        const actionIcon = UnitTestingUtils.getByCSS(fixture.debugElement, '.adf-sidebar-action-menu-icon').nativeElement;
+        const actionIcon = testingUtils.getByCSS('.adf-sidebar-action-menu-icon').nativeElement;
         expect(actionIcon).not.toBeNull();
         expect(actionIcon).toBeDefined();
         expect(actionIcon.innerText.trim()).toBe('queue');

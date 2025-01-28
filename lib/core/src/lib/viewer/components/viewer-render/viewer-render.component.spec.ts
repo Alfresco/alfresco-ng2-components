@@ -66,6 +66,7 @@ describe('ViewerComponent', () => {
     let component: ViewerRenderComponent;
     let fixture: ComponentFixture<ViewerRenderComponent>;
     let extensionService: AppExtensionService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -73,6 +74,7 @@ describe('ViewerComponent', () => {
             providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog]
         });
         fixture = TestBed.createComponent(ViewerRenderComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
 
         extensionService = TestBed.inject(AppExtensionService);
@@ -136,7 +138,7 @@ describe('ViewerComponent', () => {
             expect(component.externalExtensions.includes('*')).toBe(true);
             expect(component.externalViewer).toBe(extension);
             expect(component.viewerType).toBe('external');
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'custom.component')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('custom.component')).not.toBeNull();
         });
 
         it('should display pdf with the first external viewer provided', async () => {
@@ -163,8 +165,8 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'custom.component.1')).not.toBeNull();
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'custom.component.2')).toBeNull();
+            expect(testingUtils.getByDataAutomationId('custom.component.1')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('custom.component.2')).toBeNull();
         });
 
         it('should display url with the external viewer provided', async () => {
@@ -187,7 +189,7 @@ describe('ViewerComponent', () => {
             expect(component.externalExtensions.includes('*')).toBe(true);
             expect(component.externalViewer).toBe(extension);
             expect(component.viewerType).toBe('external');
-            expect(UnitTestingUtils.getByDataAutomationId(fixture.debugElement, 'custom.component')).not.toBeNull();
+            expect(testingUtils.getByDataAutomationId('custom.component')).not.toBeNull();
         });
 
         it('should  extension file pdf  be loaded', (done) => {
@@ -197,7 +199,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-pdf-viewer')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -209,7 +211,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-image')).not.toBeNull();
+                expect(testingUtils.getByCSS('#viewer-image')).not.toBeNull();
                 done();
             });
         });
@@ -221,7 +223,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-media-player')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-media-player')).not.toBeNull();
                 done();
             });
         });
@@ -233,7 +235,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-txt-viewer')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-txt-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -246,15 +248,17 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-viewer-unknown-format')).toBeDefined();
+                expect(testingUtils.getByCSS('adf-viewer-unknown-format')).toBeDefined();
                 done();
             });
         });
     });
 
     describe('Custom viewer extension template', () => {
-        const getCustomViewerContent = (customFixture: ComponentFixture<DoubleViewerComponent>): HTMLHeadingElement =>
-            UnitTestingUtils.getByCSS(customFixture.debugElement, '.adf-viewer-render-custom-content h1').nativeElement;
+        const getCustomViewerContent = (customFixture: ComponentFixture<DoubleViewerComponent>): HTMLHeadingElement => {
+            testingUtils.setDebugElement(customFixture.debugElement);
+            return testingUtils.getByCSS('.adf-viewer-render-custom-content h1').nativeElement;
+        };
 
         it('should render provided custom template when file type matches supported extensions', async () => {
             const fixtureCustom = TestBed.createComponent(DoubleViewerComponent);
@@ -297,7 +301,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-image')).not.toBeNull();
+                expect(testingUtils.getByCSS('#viewer-image')).not.toBeNull();
                 done();
             });
         });
@@ -310,7 +314,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, '#viewer-image')).not.toBeNull();
+                expect(testingUtils.getByCSS('#viewer-image')).not.toBeNull();
                 done();
             });
         });
@@ -323,7 +327,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-txt-viewer')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-txt-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -336,7 +340,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-media-player')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-media-player')).not.toBeNull();
                 done();
             });
         }, 25000);
@@ -349,7 +353,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-media-player')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-media-player')).not.toBeNull();
                 done();
             });
         }, 25000);
@@ -362,7 +366,7 @@ describe('ViewerComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-pdf-viewer')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         }, 25000);
@@ -374,7 +378,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-pdf-viewer')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         }, 25000);
@@ -394,7 +398,7 @@ describe('ViewerComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const imgViewer = UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-img-viewer');
+            const imgViewer = testingUtils.getByCSS('adf-img-viewer');
             imgViewer.triggerEventHandler('isSaving', true);
 
             expect(component.isSaving.emit).toHaveBeenCalledWith(true);
@@ -419,7 +423,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(UnitTestingUtils.getByCSS(fixture.debugElement, 'adf-viewer-unknown-format')).toBeDefined();
+                    expect(testingUtils.getByCSS('adf-viewer-unknown-format')).toBeDefined();
                     done();
                 });
             });
