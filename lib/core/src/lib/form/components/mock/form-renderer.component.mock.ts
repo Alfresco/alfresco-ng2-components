@@ -2135,3 +2135,86 @@ export const displayBigDecimalWidgetMock = {
         }
     }
 };
+
+export const mockFormWithSimpleSection = {
+    id: 'form-363114eb-35f6-40d0-9908-8bbbe776c3e6',
+    name: 'simplest section',
+    key: 'simplest-section-uzvc7',
+    description: '',
+    version: 0,
+    formDefinition: {
+        tabs: [],
+        fields: [
+            {
+                id: 'Group0wuwv7',
+                name: 'Group',
+                type: 'group',
+                tab: null,
+                params: {
+                    hideHeader: false,
+                    allowCollapse: false,
+                    collapseByDefault: false
+                },
+                numberOfColumns: 1,
+                fields: {
+                    1: [
+                        {
+                            id: '51058d64-b36c-48f0-97a2-d9bd0398edab',
+                            name: 'Section',
+                            type: 'section',
+                            numberOfColumns: 2,
+                            fields: {
+                                1: [
+                                    {
+                                        id: 'Text07kgd8',
+                                        name: 'Text',
+                                        type: 'text',
+                                        readOnly: false,
+                                        required: false,
+                                        colspan: 1,
+                                        rowspan: 1,
+                                        placeholder: null,
+                                        minLength: 0,
+                                        maxLength: 0,
+                                        regexPattern: null,
+                                        visibilityCondition: null,
+                                        params: {
+                                            existingColspan: 1,
+                                            maxColspan: 2
+                                        }
+                                    }
+                                ],
+                                2: [
+                                    {
+                                        id: 'Date0opbi8',
+                                        name: 'Date',
+                                        type: 'date',
+                                        readOnly: false,
+                                        required: false,
+                                        colspan: 1,
+                                        rowspan: 1,
+                                        placeholder: null,
+                                        minValue: null,
+                                        maxValue: null,
+                                        minDateRangeValue: null,
+                                        maxDateRangeValue: null,
+                                        visibilityCondition: null,
+                                        params: {
+                                            existingColspan: 1,
+                                            maxColspan: 2
+                                        },
+                                        dateDisplayFormat: 'yyyy-MM-dd'
+                                    }
+                                ]
+                            },
+                            colspan: 1
+                        }
+                    ]
+                }
+            }
+        ],
+        outcomes: [],
+        metadata: {},
+        variables: []
+    }
+};

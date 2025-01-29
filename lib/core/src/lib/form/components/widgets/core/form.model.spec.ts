@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm, mockDisplayExternalPropertyForm } from '../../mock/form.mock';
+import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections } from '../../mock/form.mock';
 import { CoreTestingModule } from '../../../../testing';
 import { TestBed } from '@angular/core/testing';
 
@@ -642,5 +642,69 @@ describe('FormModel', () => {
 
         expect(FormFieldTypes.isConstantValueType(displayExternalPropertyWidget.type)).toBeTrue();
         expect(displayExternalPropertyWidget.value).toBe('hr');
+    });
+
+    describe('getFormFields', () => {
+        let form: FormModel;
+
+        beforeEach(() => {
+            form = new FormModel(mockFormWithSections);
+        });
+
+        it('should get all form fields (containers, sections, fields)', () => {
+            const fields = form.getFormFields();
+            expect(fields.length).toBe(13);
+        });
+
+        it('should filter form fields by type inside sections', () => {
+            const fields = form.getFormFields([FormFieldTypes.DATE]);
+            expect(fields.length).toBe(1);
+            expect(fields[0].id).toBe('dateInsideSection');
+            expect(fields[0].type).toBe(FormFieldTypes.DATE);
+        });
+
+        it('should filter form fields by type outside sections', () => {
+            const fields = form.getFormFields([FormFieldTypes.MULTILINE_TEXT]);
+            expect(fields.length).toBe(1);
+            expect(fields[0].id).toBe('multilineOutsideSection');
+            expect(fields[0].type).toBe(FormFieldTypes.MULTILINE_TEXT);
+        });
+
+        it('should filter form fields by multiple types', () => {
+            const fields = form.getFormFields([FormFieldTypes.DATE, FormFieldTypes.MULTILINE_TEXT]);
+            expect(fields.length).toBe(2);
+            expect(fields[0].id).toBe('dateInsideSection');
+            expect(fields[1].id).toBe('multilineOutsideSection');
+            expect(fields[0].type).toBe(FormFieldTypes.DATE);
+            expect(fields[1].type).toBe(FormFieldTypes.MULTILINE_TEXT);
+        });
+
+        it('should return no fields when filtered by a non-existent type', () => {
+            const fields = form.getFormFields(['NON_EXISTENT_TYPE']);
+            expect(fields.length).toBe(0);
+        });
+
+        it('should return fields from cache if available', () => {
+            form.fieldsCache = [new FormFieldModel(form, { type: FormFieldTypes.TEXT }), new FormFieldModel(form, { type: FormFieldTypes.NUMBER })];
+            const fields = form.getFormFields();
+            expect(fields.length).toBe(2);
+            expect(fields[0].type).toBe(FormFieldTypes.TEXT);
+            expect(fields[1].type).toBe(FormFieldTypes.NUMBER);
+        });
+
+        it('should return filtered fields from cache if available', () => {
+            form.fieldsCache = [
+                new FormFieldModel(form, { type: FormFieldTypes.TEXT }),
+                new FormFieldModel(form, { type: FormFieldTypes.AMOUNT }),
+                new FormFieldModel(form, { type: FormFieldTypes.DATE }),
+                new FormFieldModel(form, { type: FormFieldTypes.NUMBER })
+            ];
+
+            const fields = form.getFormFields([FormFieldTypes.AMOUNT, FormFieldTypes.DATE, FormFieldTypes.NUMBER]);
+            expect(fields.length).toBe(3);
+            expect(fields[0].type).toBe(FormFieldTypes.AMOUNT);
+            expect(fields[1].type).toBe(FormFieldTypes.DATE);
+            expect(fields[2].type).toBe(FormFieldTypes.NUMBER);
+        });
     });
 });

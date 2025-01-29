@@ -1406,3 +1406,283 @@ export const fakeViewerForm = {
         variables: []
     }
 };
+
+export const mockFormWithSections = {
+    id: 'form-970ddfcf-6d5d-4cbb-ae81-958ade65062c',
+    name: 'simple section',
+    key: 'simple-section-z54vk',
+    description: '',
+    version: 0,
+    tabs: [],
+    fields: [
+        {
+            id: 'Group0bw66i',
+            name: 'Group',
+            type: 'group',
+            tab: null,
+            params: {
+                hideHeader: false,
+                allowCollapse: false,
+                collapseByDefault: false
+            },
+            numberOfColumns: 1,
+            fields: {
+                1: [
+                    {
+                        id: '4c0590a9-44e3-415f-9e69-3a3ffe99066b',
+                        name: 'Section',
+                        type: 'section',
+                        numberOfColumns: 4,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'Text0xiuw4',
+                                    name: 'Text in section',
+                                    type: 'text',
+                                    readOnly: false,
+                                    required: false,
+                                    colspan: 1,
+                                    rowspan: 1,
+                                    placeholder: null,
+                                    minLength: 0,
+                                    maxLength: 0,
+                                    regexPattern: null,
+                                    visibilityCondition: {
+                                        leftType: 'field',
+                                        leftValue: 'Text0bbed8',
+                                        operator: '==',
+                                        rightValue: 'text inside',
+                                        rightType: 'value',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
+                                    },
+                                    params: {
+                                        existingColspan: 1,
+                                        maxColspan: 2
+                                    }
+                                }
+                            ],
+                            2: [],
+                            3: [
+                                {
+                                    id: 'dateInsideSection',
+                                    name: 'Date',
+                                    type: 'date',
+                                    readOnly: false,
+                                    required: true,
+                                    colspan: 2,
+                                    rowspan: 1,
+                                    placeholder: null,
+                                    minValue: null,
+                                    maxValue: null,
+                                    minDateRangeValue: null,
+                                    maxDateRangeValue: null,
+                                    visibilityCondition: {
+                                        leftType: 'field',
+                                        leftValue: 'Text0s7k3m',
+                                        operator: '==',
+                                        rightValue: 'date',
+                                        rightType: 'value',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
+                                    },
+                                    params: {
+                                        existingColspan: 1,
+                                        maxColspan: 2
+                                    },
+                                    dateDisplayFormat: 'yyyy-MM-dd'
+                                }
+                            ]
+                        },
+                        colspan: 1
+                    },
+                    {
+                        id: '9d0ed068-f6b9-4ddc-ba8b-8ac29b745e1d',
+                        name: 'Section',
+                        type: 'section',
+                        numberOfColumns: 6,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'Text0dkzym',
+                                    name: 'Text',
+                                    type: 'text',
+                                    readOnly: false,
+                                    required: false,
+                                    colspan: 2,
+                                    rowspan: 1,
+                                    placeholder: null,
+                                    minLength: 0,
+                                    maxLength: 0,
+                                    regexPattern: null,
+                                    visibilityCondition: null,
+                                    params: {
+                                        existingColspan: 1,
+                                        maxColspan: 2
+                                    }
+                                }
+                            ],
+                            2: [
+                                {
+                                    id: 'Text0kn8qb',
+                                    name: 'type text outside',
+                                    type: 'text',
+                                    readOnly: false,
+                                    required: false,
+                                    colspan: 2,
+                                    rowspan: 1,
+                                    placeholder: null,
+                                    minLength: 0,
+                                    maxLength: 0,
+                                    regexPattern: null,
+                                    visibilityCondition: null,
+                                    params: {
+                                        existingColspan: 1,
+                                        maxColspan: 2
+                                    }
+                                }
+                            ],
+                            3: [
+                                {
+                                    id: 'Text0bbed8',
+                                    name: 'type text inside',
+                                    type: 'text',
+                                    readOnly: false,
+                                    required: false,
+                                    colspan: 2,
+                                    rowspan: 1,
+                                    placeholder: null,
+                                    minLength: 0,
+                                    maxLength: 0,
+                                    regexPattern: null,
+                                    visibilityCondition: null,
+                                    params: {
+                                        existingColspan: 1,
+                                        maxColspan: 2
+                                    }
+                                }
+                            ]
+                        },
+                        colspan: 1
+                    }
+                ]
+            }
+        },
+        {
+            id: 'fc73e4fa-5725-41b2-9185-624d9efd6581',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 4,
+            fields: {
+                1: [
+                    {
+                        id: 'Text0p0v95',
+                        name: 'type section',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    },
+                    {
+                        id: 'Text0s7k3m',
+                        name: 'type date',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ],
+                2: [
+                    {
+                        id: 'multilineOutsideSection',
+                        name: 'Multiline text',
+                        type: 'multi-line-text',
+                        readOnly: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        required: false,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ],
+                3: [
+                    {
+                        id: 'Text0opb9w',
+                        name: 'Text',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 2,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: {
+                            leftType: 'field',
+                            leftValue: 'Text0kn8qb',
+                            operator: '==',
+                            rightValue: 'text outside',
+                            rightType: 'value',
+                            nextConditionOperator: '',
+                            nextCondition: null
+                        },
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: [],
+    metadata: {},
+    variables: [],
+    rules: {
+        fields: {
+            Text0bbed8: {
+                click: [
+                    {
+                        actions: [
+                            {
+                                target: 'field.Text0xiuw4',
+                                payload: {
+                                    value: 'updated by form rules!'
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+};

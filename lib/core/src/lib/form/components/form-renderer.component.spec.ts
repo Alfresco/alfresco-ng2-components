@@ -37,6 +37,7 @@ import {
     formNumberTextJson,
     formNumberWidgetVisibility,
     formRequiredNumberWidget,
+    mockFormWithSimpleSection,
     multilineWidgetFormVisibilityMock,
     numberMinMaxForm,
     numberNotRequiredForm,
@@ -44,7 +45,7 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { TextWidgetComponent } from './widgets';
+import { FormFieldModel, FormModel, TextWidgetComponent } from './widgets';
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
     testingUtils.fillInputByCSS(selector, message);
@@ -744,6 +745,33 @@ describe('Form Renderer Component', () => {
 
             const decimalInputElement = testingUtils.getByCSS('#Decimal0tzu53').nativeElement;
             expect(decimalInputElement.value).toBeTruthy('10.12');
+        });
+    });
+
+    describe('Section Handling', () => {
+        it('should display fields inside sections', async () => {
+            formRendererComponent.formDefinition = new FormModel(mockFormWithSimpleSection);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const sectionFields = fixture.nativeElement.querySelectorAll('.adf-grid-list-section-column-view-item adf-form-field');
+            expect(sectionFields.length).toBe(2);
+        });
+
+        it('should calculate the correct width for section columns', () => {
+            const numberOfColumns = 3;
+            const columnField = { colspan: 2 } as FormFieldModel;
+
+            const width = formRendererComponent.getSectionColumnWidth(numberOfColumns, [columnField]);
+            expect(width).toBe('66.66666666666667');
+        });
+
+        it('should handle columns with no colspan defined', () => {
+            const numberOfColumns = 3;
+            const columnField = {} as FormFieldModel;
+
+            const width = formRendererComponent.getSectionColumnWidth(numberOfColumns, [columnField]);
+            expect(width).toBe('33.333333333333336');
         });
     });
 });
