@@ -259,22 +259,28 @@ describe('FormModel', () => {
         expect(form.outcomes[1].isSystem).toBeFalsy();
     });
 
-    it('should raise validation event when validating form', () => {
+    it('should raise validation event when validating form', (done) => {
         const form = new FormModel({}, null, false, formService);
 
-        formService.validateForm.subscribe((validateFormEvent) => expect(validateFormEvent).toBeTruthy());
+        formService.validateForm.subscribe((validateFormEvent) => {
+            expect(validateFormEvent).toBeTruthy();
+            done();
+        });
         form.validateForm();
     });
 
-    it('should raise validation event when validating field', () => {
+    it('should raise validation event when validating field', (done) => {
         const form = new FormModel({}, null, false, formService);
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
 
-        formService.validateFormField.subscribe((validateFormFieldEvent) => expect(validateFormFieldEvent).toBeTruthy());
+        formService.validateFormField.subscribe((validateFormFieldEvent) => {
+            expect(validateFormFieldEvent).toBeTruthy();
+            done();
+        });
         form.validateField(field);
     });
 
-    it('should skip field validation when default behaviour prevented', () => {
+    it('should skip field validation when default behaviour prevented', (done) => {
         const form = new FormModel({}, null, false, formService);
 
         let prevented = false;
@@ -283,6 +289,7 @@ describe('FormModel', () => {
             event.isValid = false;
             event.preventDefault();
             prevented = true;
+            done();
         });
 
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
@@ -293,13 +300,14 @@ describe('FormModel', () => {
         expect(field.validate).not.toHaveBeenCalled();
     });
 
-    it('should validate fields when form validation not prevented', () => {
+    it('should validate fields when form validation not prevented', (done) => {
         const form = new FormModel(fakeMetadataForm, null, false, formService);
 
         let validated = false;
 
         formService.validateForm.subscribe(() => {
             validated = true;
+            done();
         });
 
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
@@ -311,13 +319,14 @@ describe('FormModel', () => {
         expect(field.validate).toHaveBeenCalled();
     });
 
-    it('should validate field when field validation not prevented', () => {
+    it('should validate field when field validation not prevented', (done) => {
         const form = new FormModel({}, null, false, formService);
 
         let validated = false;
 
         formService.validateFormField.subscribe(() => {
             validated = true;
+            done();
         });
 
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
@@ -327,7 +336,7 @@ describe('FormModel', () => {
         expect(field.validate).toHaveBeenCalled();
     });
 
-    it('should validate form when field validation not prevented', () => {
+    it('should validate form when field validation not prevented', (done) => {
         const form = new FormModel({}, null, false, formService);
         spyOn(form, 'validateForm').and.stub();
 
@@ -335,6 +344,7 @@ describe('FormModel', () => {
 
         formService.validateFormField.subscribe(() => {
             validated = true;
+            done();
         });
 
         const field: any = {
@@ -346,7 +356,7 @@ describe('FormModel', () => {
         expect(form.validateForm).toHaveBeenCalled();
     });
 
-    it('should not validate form when field validation prevented', () => {
+    it('should not validate form when field validation prevented', (done) => {
         const form = new FormModel({}, null, false, formService);
         spyOn(form, 'validateForm').and.stub();
 
@@ -355,6 +365,7 @@ describe('FormModel', () => {
         formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
             event.preventDefault();
             prevented = true;
+            done();
         });
 
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
