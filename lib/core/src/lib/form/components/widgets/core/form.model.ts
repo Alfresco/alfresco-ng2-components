@@ -313,7 +313,7 @@ export class FormModel implements ProcessFormModel {
         if (type && value) {
             switch (type) {
                 case 'date':
-                    return value ? `${value}T00:00:00.000Z` : undefined;
+                    return value.toString().includes('T') ? value : `${value}T00:00:00.000Z`;
                 case 'boolean':
                     return typeof value === 'string' ? JSON.parse(value) : value;
                 default:
