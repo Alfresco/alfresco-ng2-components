@@ -29,7 +29,7 @@ export class LanguageService implements LanguageServiceInterface {
 
     languages$ = this.languages.asObservable();
 
-    constructor(appConfigService: AppConfigService, private userPreferencesService: UserPreferencesService) {
+    constructor(appConfigService: AppConfigService, private readonly userPreferencesService: UserPreferencesService) {
         const customLanguages = appConfigService.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         this.setLanguages(customLanguages);
     }
