@@ -18,11 +18,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavbarItemComponent } from './navbar-item.component';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('NavbarItemComponent', () => {
     let component: NavbarItemComponent;
     let fixture: ComponentFixture<NavbarItemComponent>;
     let button: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -31,11 +33,12 @@ describe('NavbarItemComponent', () => {
 
         fixture = TestBed.createComponent(NavbarItemComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component.label = 'Test Label';
         component.routerLink = '/expected-route';
         fixture.detectChanges();
 
-        button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
+        button = testingUtils.getByCSS('.adf-navbar-item-btn').nativeElement;
     });
 
     it('should display label', () => {

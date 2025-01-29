@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { AvatarComponent } from '@alfresco/adf-core';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AvatarComponent } from './avatar.component';
 
 describe('AvatarComponent', () => {
     let component: AvatarComponent;
     let fixture: ComponentFixture<AvatarComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -29,15 +31,17 @@ describe('AvatarComponent', () => {
 
         fixture = TestBed.createComponent(AvatarComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
-    const getAvatarImageElement = (): HTMLImageElement => fixture.nativeElement.querySelector('.adf-avatar__image');
+    const getAvatarImageElement = (): HTMLImageElement => testingUtils.getByCSS('.adf-avatar__image').nativeElement;
+    const getAvatarInitialsElement = (): HTMLDivElement => testingUtils.getByCSS('.adf-avatar__initials').nativeElement;
 
     it('should display initials when src is not provided', () => {
         component.src = '';
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__initials');
+        const avatarElement = getAvatarInitialsElement();
         expect(avatarElement.textContent).toContain(component.initials);
     });
 
@@ -49,14 +53,14 @@ describe('AvatarComponent', () => {
 
     it('should use default initials when not provided', () => {
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__initials');
+        const avatarElement = getAvatarInitialsElement();
         expect(avatarElement.textContent).toContain('U');
     });
 
     it('should use custom initials', () => {
         component.initials = 'DV';
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__initials');
+        const avatarElement = getAvatarInitialsElement();
         expect(avatarElement.textContent).toContain('DV');
     });
 

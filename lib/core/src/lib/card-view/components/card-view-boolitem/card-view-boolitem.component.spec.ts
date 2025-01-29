@@ -16,16 +16,20 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('CardViewBoolItemComponent', () => {
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
     let component: CardViewBoolItemComponent;
+    let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -40,11 +44,16 @@ describe('CardViewBoolItemComponent', () => {
             default: false,
             editable: false
         });
+        loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
+
+    const getPropertyLabel = () => testingUtils.getByCSS('.adf-property-label');
+    const getPropertyValue = () => testingUtils.getByCSS('.adf-property-value');
 
     describe('Rendering', () => {
         it('should render the label and value if the property is editable', () => {
@@ -52,12 +61,8 @@ describe('CardViewBoolItemComponent', () => {
             component.property.editable = true;
             fixture.detectChanges();
 
-            const label = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(label).not.toBeNull();
-            expect(label.nativeElement.innerText).toBe('Boolean label');
-
-            const value = fixture.debugElement.query(By.css('.adf-property-value'));
-            expect(value).not.toBeNull();
+            expect(getPropertyLabel().nativeElement.innerText).toBe('Boolean label');
+            expect(getPropertyValue()).not.toBeNull();
         });
 
         it('should NOT render the label and value if the property is NOT editable and has no proper boolean value set', () => {
@@ -66,11 +71,8 @@ describe('CardViewBoolItemComponent', () => {
             component.property.editable = false;
             fixture.detectChanges();
 
-            const label = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(label).toBeNull();
-
-            const value = fixture.debugElement.query(By.css('.adf-property-value'));
-            expect(value).toBeNull();
+            expect(getPropertyLabel()).toBeNull();
+            expect(getPropertyValue()).toBeNull();
         });
 
         it('should render the label and value if the property is NOT editable but has a proper boolean value set', () => {
@@ -79,86 +81,83 @@ describe('CardViewBoolItemComponent', () => {
             component.property.editable = false;
             fixture.detectChanges();
 
-            const label = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(label).not.toBeNull();
-
-            const value = fixture.debugElement.query(By.css('.adf-property-value'));
-            expect(value).not.toBeNull();
+            expect(getPropertyLabel()).not.toBeNull();
+            expect(getPropertyValue()).not.toBeNull();
         });
 
-        it('should render ticked checkbox if property value is true', () => {
+        it('should render ticked checkbox if property value is true', async () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.checked).toBe(true);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isChecked()).toBeTrue();
         });
 
-        it('should render ticked checkbox if property value is not set but default is true and editable', () => {
+        it('should render ticked checkbox if property value is not set but default is true and editable', async () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = undefined;
             component.property.default = true;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.checked).toBe(true);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isChecked()).toBeTrue();
         });
 
-        it('should render un-ticked checkbox if property value is false', () => {
+        it('should render un-ticked checkbox if property value is false', async () => {
             component.property.value = false;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.checked).toBe(false);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isChecked()).toBeFalse();
         });
 
-        it('should render un-ticked checkbox if property value is not set but default is false and editable', () => {
+        it('should render un-ticked checkbox if property value is not set but default is false and editable', async () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = undefined;
             component.property.default = false;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.checked).toBe(false);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isChecked()).toBeFalse();
         });
 
-        it('should render enabled checkbox if property and component are both editable', () => {
+        it('should render enabled checkbox if property and component are both editable', async () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = true;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.hasAttribute('disabled')).toBe(false);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isDisabled()).toBeFalse();
         });
 
-        it('should render disabled checkbox if property is not editable', () => {
+        it('should render disabled checkbox if property is not editable', async () => {
             component.editable = true;
             component.property.editable = false;
             component.property.value = true;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.hasAttribute('disabled')).toBe(true);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isDisabled()).toBeTrue();
         });
 
-        it('should render disabled checkbox if component is not editable', () => {
+        it('should render disabled checkbox if component is not editable', async () => {
             component.editable = false;
             component.property.editable = true;
             component.property.value = true;
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.hasAttribute('disabled')).toBe(true);
+            const checkbox = await testingUtils.getMatCheckboxByDataAutomationId('card-boolean-boolKey');
+            expect(checkbox).toBeDefined();
+            expect(await checkbox.isDisabled()).toBeTrue();
         });
     });
 
@@ -204,8 +203,7 @@ describe('CardViewBoolItemComponent', () => {
                 done();
             });
 
-            const labelElement = fixture.debugElement.query(By.directive(MatCheckbox)).nativeElement.querySelector('label');
-            labelElement.click();
+            testingUtils.clickByDataAutomationId('card-boolean-label-boolKey');
         });
     });
 });

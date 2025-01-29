@@ -20,8 +20,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatIconHarness } from '@angular/material/icon/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component',
@@ -114,6 +114,7 @@ const testCases = [
 testCases.forEach((testCase) => {
     describe(`ContextMenuDirective ${testCase.description}`, () => {
         let fixture: ComponentFixture<TestComponent>;
+        let testingUtils: UnitTestingUtils;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -123,12 +124,12 @@ testCases.forEach((testCase) => {
             fixture = TestBed.createComponent(TestComponent);
             fixture.componentInstance.isEnabled = false;
             fixture.componentInstance.actions = testCase.actions;
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             fixture.detectChanges();
         });
 
         it('should not show menu on mouse contextmenu event when context menu is disabled', () => {
-            const targetElement = fixture.debugElement.nativeElement.querySelector('#target');
-            targetElement.dispatchEvent(new CustomEvent('contextmenu'));
+            testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
             fixture.detectChanges();
 
             const contextMenu = document.querySelector('.adf-context-menu');
@@ -136,15 +137,13 @@ testCases.forEach((testCase) => {
         });
 
         describe('Events', () => {
-            let targetElement: HTMLElement;
             let contextMenu: HTMLElement | null;
 
             beforeEach(() => {
                 fixture.componentInstance.isEnabled = true;
                 fixture.detectChanges();
 
-                targetElement = fixture.debugElement.nativeElement.querySelector('#target');
-                targetElement.dispatchEvent(new CustomEvent('contextmenu'));
+                testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
                 fixture.detectChanges();
                 contextMenu = document.querySelector('.adf-context-menu');
             });
@@ -171,7 +170,6 @@ testCases.forEach((testCase) => {
         });
 
         describe('Contextmenu list', () => {
-            let targetElement: HTMLElement;
             let contextMenu: HTMLElement | null;
             let loader: HarnessLoader;
 
@@ -179,11 +177,11 @@ testCases.forEach((testCase) => {
                 fixture.componentInstance.isEnabled = true;
                 fixture.detectChanges();
 
-                targetElement = fixture.debugElement.nativeElement.querySelector('#target');
-                targetElement.dispatchEvent(new CustomEvent('contextmenu'));
+                testingUtils.dispatchCustomEventByCSS('#target', 'contextmenu');
                 fixture.detectChanges();
                 contextMenu = document.querySelector('.adf-context-menu');
                 loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
+                testingUtils.setLoader(loader);
             });
 
             it('should not render item with visibility property set to false', () => {
@@ -195,7 +193,7 @@ testCases.forEach((testCase) => {
             });
 
             it('should set first not disabled item as active', async () => {
-                const icon = await loader.getHarness(MatIconHarness.with({ ancestor: 'adf-context-menu' }));
+                const icon = await testingUtils.getMatIconWithAncestorByCSS('adf-context-menu');
 
                 expect(await icon.getName()).toEqual('action-icon-3');
             });
@@ -215,16 +213,7 @@ testCases.forEach((testCase) => {
             });
 
             it('should not render item icon if not set', async () => {
-                expect(
-                    (
-                        await loader.getAllHarnesses(
-                            MatIconHarness.with({
-                                ancestor: 'adf-context-menu',
-                                name: 'Action 1'
-                            })
-                        )
-                    ).length
-                ).toBe(0);
+                expect(await testingUtils.checkIfMatIconExistsWithAncestorByCSSAndName('adf-context-menu', 'Action 1')).toBeFalse();
             });
         });
     });

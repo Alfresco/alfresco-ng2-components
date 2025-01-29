@@ -8,22 +8,22 @@
                     matInput
                     id="comment-input"
                     class="adf-text-text-area"
-                    [placeholder]='"COMMENTS.ADD" | translate'
+                    [placeholder]='("COMMENTS.ADD" | translate) + "*"'
                     [attr.aria-label]="'COMMENTS.ADD' | translate"
-                    [(ngModel)]="message"
+                    [formControl]="commentControl"
                     (keydown.escape)="clearMessage($event)"
                 >
                 </textarea>
+                <mat-error *ngIf="commentControl.invalid && commentControl.touched">{{ 'COMMENTS.EMPTY_ERROR' | translate }}</mat-error>
             </mat-form-field>
 
             <div class="adf-comments-input-actions">
                 <button
                     mat-button
-                    class="adf-comments-input-add"
                     data-automation-id="comments-input-add"
                     color="primary"
                     (click)="addComment()"
-                    [disabled]="!message"
+                    [disabled]="commentControl.invalid"
                 >
                     {{ 'COMMENTS.ADD' | translate }}
                 </button>

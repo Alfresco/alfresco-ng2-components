@@ -22,19 +22,19 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
+import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('Notification History Component', () => {
     let fixture: ComponentFixture<NotificationHistoryComponent>;
     let component: NotificationHistoryComponent;
-    let element: HTMLElement;
     let notificationService: NotificationService;
     let overlayContainerElement: HTMLElement;
     let storage: StorageService;
+    let testingUtils: UnitTestingUtils;
 
     const openNotification = () => {
         fixture.detectChanges();
-        const button = element.querySelector<HTMLButtonElement>('#adf-notification-history-open-button');
-        button.click();
+        testingUtils.clickByCSS('#adf-notification-history-open-button');
         fixture.detectChanges();
     };
 
@@ -44,7 +44,7 @@ describe('Notification History Component', () => {
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);

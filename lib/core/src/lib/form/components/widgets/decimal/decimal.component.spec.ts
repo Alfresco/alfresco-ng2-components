@@ -19,18 +19,16 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material/input';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { CoreTestingModule } from '../../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
-
 import { DecimalWidgetComponent } from './decimal.component';
 
 describe('DecimalComponent', () => {
     let loader: HarnessLoader;
     let widget: DecimalWidgetComponent;
     let fixture: ComponentFixture<DecimalWidgetComponent>;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -40,8 +38,8 @@ describe('DecimalComponent', () => {
 
         fixture = TestBed.createComponent(DecimalWidgetComponent);
         widget = fixture.componentInstance;
-        element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     describe('when tooltip is set', () => {
@@ -54,10 +52,10 @@ describe('DecimalComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
+            const host = await testingUtils.getMatInputHost();
+            await host.hover();
 
-            const tooltip = await (await input.host()).getAttribute('title');
+            const tooltip = await host.getAttribute('title');
             expect(tooltip).toBe('my custom tooltip');
         });
     });
@@ -73,20 +71,16 @@ describe('DecimalComponent', () => {
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-            const inputHost = await input.host();
-            await inputHost.blur();
+            await testingUtils.blurMatInput();
             fixture.detectChanges();
 
-            const invalidElement = fixture.nativeElement.querySelector('.adf-invalid');
-
-            expect(invalidElement).toBeTruthy();
+            expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            const asterisk = element.querySelector('.adf-asterisk');
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk?.textContent).toEqual('*');
@@ -107,10 +101,10 @@ describe('DecimalComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).not.toBeNull();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).not.toBeNull();
         });
 
@@ -127,10 +121,10 @@ describe('DecimalComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
 
@@ -147,10 +141,10 @@ describe('DecimalComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
+            const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
     });

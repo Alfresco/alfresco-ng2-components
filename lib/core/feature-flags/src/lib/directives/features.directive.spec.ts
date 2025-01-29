@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockFeatureFlags } from '../mocks/features-service-mock.factory';
 import { FeaturesDirective } from './features.directive';
-import { By } from '@angular/platform-browser';
+import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils';
 
 @Component({
     template: `
@@ -46,6 +46,7 @@ class TestWithDisabledFlagComponent {
 describe('FeaturesDirective', () => {
     let enabledFixture: ComponentFixture<TestWithEnabledFlagComponent>;
     let disabledFixture: ComponentFixture<TestWithDisabledFlagComponent>;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
@@ -66,16 +67,20 @@ describe('FeaturesDirective', () => {
         disabledFixture = TestBed.createComponent(TestWithDisabledFlagComponent);
         disabledFixture.detectChanges();
 
+        testingUtils = new UnitTestingUtils(enabledFixture.debugElement);
+
         await enabledFixture.whenStable();
         await disabledFixture.whenStable();
     });
 
     it('should render the element with enabled features', () => {
-        expect(enabledFixture.debugElement.query(By.css('#underFeatureFlag'))).toBeDefined();
-        expect(enabledFixture.debugElement.query(By.css('#underFeatureFlag')).nativeElement).toBeDefined();
+        const enabledFixtureElement = testingUtils.getByCSS('#underFeatureFlag');
+        expect(enabledFixtureElement).toBeDefined();
+        expect(enabledFixtureElement.nativeElement).toBeDefined();
     });
 
     it('should not render the element with disabled features', () => {
-        expect(disabledFixture.debugElement.query(By.css('#underFeatureFlag'))).toBeNull();
+        testingUtils.setDebugElement(disabledFixture.debugElement);
+        expect(testingUtils.getByCSS('#underFeatureFlag')).toBeNull();
     });
 });

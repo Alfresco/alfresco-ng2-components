@@ -17,17 +17,16 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { ImgViewerComponent } from './img-viewer.component';
 
 describe('Test Img viewer component ', () => {
     let component: ImgViewerComponent;
     let urlService: UrlService;
     let fixture: ComponentFixture<ImgViewerComponent>;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     const createFakeBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -44,8 +43,8 @@ describe('Test Img viewer component ', () => {
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
 
-            element = fixture.nativeElement;
             component = fixture.componentInstance;
             component.urlFile = 'fake-url-file.png';
             fixture.detectChanges();
@@ -81,7 +80,6 @@ describe('Test Img viewer component ', () => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
-            element = fixture.nativeElement;
             component = fixture.componentInstance;
             component.urlFile =
                 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
@@ -109,8 +107,8 @@ describe('Test Img viewer component ', () => {
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
+            testingUtils.setDebugElement(fixture.debugElement);
 
-            element = fixture.nativeElement;
             component = fixture.componentInstance;
             fixture.detectChanges();
         });
@@ -132,7 +130,7 @@ describe('Test Img viewer component ', () => {
         it('should present file name in the alt attribute', () => {
             component.fileName = 'fake-name';
             fixture.detectChanges();
-            expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
+            expect(testingUtils.getByCSS('#viewer-image').nativeElement.getAttribute('alt')).toEqual('fake-name');
         });
 
         it('should call replace on cropper with new url if blobFile is null', () => {
@@ -161,8 +159,8 @@ describe('Test Img viewer component ', () => {
     describe('toolbar actions', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(ImgViewerComponent);
-            element = fixture.nativeElement;
             component = fixture.componentInstance;
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
             component.blobFile = createFakeBlob();
             const change = new SimpleChange(null, component.blobFile, true);
             component.ngOnChanges({ blobFile: change });
@@ -213,19 +211,16 @@ describe('Test Img viewer component ', () => {
         it('should show rotate button if not in read only mode', () => {
             component.readOnly = false;
             fixture.detectChanges();
-            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
 
-            expect(rotateButtonElement).not.toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).not.toEqual(null);
         });
 
         it('should not show rotate button by default', () => {
-            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
-            expect(rotateButtonElement).toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).toEqual(null);
         });
 
         it('should not show crop button by default', () => {
-            const rotateButtonElement = element.querySelector('#viewer-crop-button');
-            expect(rotateButtonElement).toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-crop-button')).toEqual(null);
         });
 
         it('should start cropping when clicking the crop button', fakeAsync(() => {
@@ -234,8 +229,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component.cropper, 'crop');
             spyOn(component.cropper, 'setDragMode');
             fixture.detectChanges();
-            const cropButtonElement = fixture.debugElement.query(By.css('#viewer-crop-button'));
-            cropButtonElement.triggerEventHandler('click', null);
+            testingUtils.clickByCSS('#viewer-crop-button');
             tick();
 
             expect(component.cropImage).toHaveBeenCalled();
@@ -248,8 +242,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component, 'rotateImage').and.callThrough();
             spyOn(component.cropper, 'rotate');
             fixture.detectChanges();
-            const rotateButtonElement = fixture.debugElement.query(By.css('#viewer-rotate-button'));
-            rotateButtonElement.triggerEventHandler('click', null);
+            testingUtils.clickByCSS('#viewer-rotate-button');
             tick();
 
             expect(component.rotateImage).toHaveBeenCalled();
@@ -260,26 +253,23 @@ describe('Test Img viewer component ', () => {
             component.readOnly = false;
             component.isEditing = true;
             fixture.detectChanges();
-            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
 
-            expect(secondaryToolbar).not.toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).not.toEqual(null);
         }));
 
         it('should not display the second toolbar when in read only mode', () => {
             component.readOnly = true;
             fixture.detectChanges();
-            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
 
-            expect(secondaryToolbar).toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).toEqual(null);
         });
 
         it('should not display the second toolbar when not in editing', () => {
             component.readOnly = true;
             component.isEditing = false;
             fixture.detectChanges();
-            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
 
-            expect(secondaryToolbar).toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).toEqual(null);
         });
 
         it('should display second toolbar in edit mode', fakeAsync(() => {
@@ -287,13 +277,10 @@ describe('Test Img viewer component ', () => {
             component.isEditing = true;
 
             fixture.detectChanges();
-            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
-            const resetButton = document.querySelector('#viewer-cancel-button');
-            const saveButton = document.querySelector('#viewer-save-button');
 
-            expect(secondaryToolbar).not.toEqual(null);
-            expect(resetButton).not.toEqual(null);
-            expect(saveButton).not.toEqual(null);
+            expect(testingUtils.getByCSS('.adf-secondary-toolbar')).not.toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-cancel-button')).not.toEqual(null);
+            expect(testingUtils.getByCSS('#viewer-save-button')).not.toEqual(null);
         }));
 
         it('should not be in editing mode by default', () => {
@@ -327,8 +314,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component.cropper, 'zoomTo');
 
             fixture.detectChanges();
-            const cancelButtonElement = fixture.debugElement.query(By.css('#viewer-cancel-button'));
-            cancelButtonElement.triggerEventHandler('click', null);
+            testingUtils.clickByCSS('#viewer-cancel-button');
             tick();
 
             expect(component.reset).toHaveBeenCalled();
@@ -350,8 +336,7 @@ describe('Test Img viewer component ', () => {
             spyOn(component.cropper.getCroppedCanvas(), 'toBlob').and.callFake(() => component.isSaving.emit(false));
 
             fixture.detectChanges();
-            const saveButtonElement = fixture.debugElement.query(By.css('#viewer-save-button'));
-            saveButtonElement.triggerEventHandler('click', null);
+            testingUtils.clickByCSS('#viewer-save-button');
             tick();
 
             expect(component.save).toHaveBeenCalled();
@@ -374,7 +359,7 @@ describe('Test Img viewer component ', () => {
     describe('allowedEditActions', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(ImgViewerComponent);
-            element = fixture.nativeElement;
+            testingUtils.setDebugElement(fixture.debugElement);
             component = fixture.componentInstance;
         });
 
@@ -383,23 +368,17 @@ describe('Test Img viewer component ', () => {
             component.allowedEditActions = { rotate: true, crop: true };
             fixture.detectChanges();
 
-            let rotateButton = element.querySelector('#viewer-rotate-button');
-            let cropButton = element.querySelector('#viewer-crop-button');
-
             // Check both buttons are visible when allowed
-            expect(rotateButton).not.toBeNull('Rotate button should be visible when allowed');
-            expect(cropButton).not.toBeNull('Crop button should be visible when allowed');
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).not.toBeNull('Rotate button should be visible when allowed');
+            expect(testingUtils.getByCSS('#viewer-crop-button')).not.toBeNull('Crop button should be visible when allowed');
 
             // Change allowedEditActions to disallow both actions
             component.allowedEditActions = { rotate: false, crop: false };
             fixture.detectChanges();
 
-            rotateButton = element.querySelector('#viewer-rotate-button');
-            cropButton = element.querySelector('#viewer-crop-button');
-
             // Check both buttons are not visible when not allowed
-            expect(rotateButton).toBeNull('Rotate button should not be visible when disallowed');
-            expect(cropButton).toBeNull('Crop button should not be visible when disallowed');
+            expect(testingUtils.getByCSS('#viewer-rotate-button')).toBeNull('Rotate button should not be visible when disallowed');
+            expect(testingUtils.getByCSS('#viewer-crop-button')).toBeNull('Crop button should not be visible when disallowed');
         });
     });
 });

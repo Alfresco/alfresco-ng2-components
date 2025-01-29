@@ -31,6 +31,7 @@ export abstract class CardViewBaseItemModel<T = any> {
     data?: any;
     type?: string;
     multivalued?: boolean;
+    isValidValue?: boolean;
 
     constructor(props: CardViewItemProperties) {
         this.label = props.label || '';

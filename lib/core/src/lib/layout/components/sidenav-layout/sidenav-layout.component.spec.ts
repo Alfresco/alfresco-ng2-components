@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { Component } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -27,6 +26,7 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 import { CommonModule } from '@angular/common';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component-for-sidenav',
@@ -157,6 +157,7 @@ describe('Template transclusion', () => {
     let fixture: ComponentFixture<any>;
     let mediaMatcher: MediaMatcher;
     let mediaQueryList: any;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -174,53 +175,46 @@ describe('Template transclusion', () => {
         spyOn(mediaMatcher, 'matchMedia').and.callFake(() => mediaQueryList);
 
         fixture = TestBed.createComponent(SidenavLayoutTesterComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
     describe('adf-sidenav-layout-navigation', () => {
-        const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #nav-test');
+        const injectedElementSelector = '[data-automation-id="adf-layout-container"] #nav-test';
 
         it('should contain the transcluded side navigation template', () => {
-            const injectedElement = fixture.debugElement.query(injectedElementSelector);
-
-            expect(injectedElement === null).toBe(false);
+            expect(testingUtils.getByCSS(injectedElementSelector)).toBeDefined();
         });
 
         it('should let the isMenuMinimized property of component to be accessed by the transcluded template', () => {
-            const injectedElement = fixture.debugElement.query(injectedElementSelector);
-
-            expect(injectedElement.nativeElement.innerText.trim()).toBe('variable-is-injected');
+            expect(testingUtils.getInnerTextByCSS(injectedElementSelector).trim()).toBe('variable-is-injected');
         });
     });
 
     describe('adf-sidenav-layout-header', () => {
-        const outerHeaderSelector = By.css('.adf-sidenav-layout-full-space > #header-test');
-        const innerHeaderSelector = By.css('.adf-layout__content > #header-test');
+        const outerHeaderSelector = '.adf-sidenav-layout-full-space > #header-test';
+        const innerHeaderSelector = '.adf-layout__content > #header-test';
 
         it('should contain the transcluded header template outside of the layout-container', () => {
             mediaQueryList.matches = false;
             fixture.detectChanges();
-            const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
 
-            expect(outerHeaderElement).toBeDefined();
+            expect(testingUtils.getByCSS(outerHeaderSelector)).toBeDefined();
         });
 
         it('should contain the transcluded header template inside of the layout-container', () => {
             mediaQueryList.matches = true;
-
             fixture.detectChanges();
-            const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
 
-            expect(innerHeaderElement).toBeDefined();
+            expect(testingUtils.getByCSS(innerHeaderSelector)).toBeDefined();
         });
     });
 
     describe('adf-sidenav-layout-content', () => {
-        const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #content-test');
+        const injectedElementSelector = '[data-automation-id="adf-layout-container"] #content-test';
 
         it('should contain the transcluded content template', () => {
-            const injectedElement = fixture.debugElement.query(injectedElementSelector);
-            expect(injectedElement === null).toBe(false);
+            expect(testingUtils.getByCSS(injectedElementSelector)).toBeDefined();
         });
     });
 });
