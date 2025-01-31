@@ -26,7 +26,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-cloud-task-screen',
     standalone: true,
     imports: [CommonModule, MatCardModule],
-    templateUrl: './screen-cloud.component.html'
+    templateUrl: './screen-cloud.component.html',
+    styleUrls: ['./screen-cloud.component.scss']
 })
 export class TaskScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
@@ -80,7 +81,7 @@ export class TaskScreenCloudComponent implements OnInit {
 
     private destroyRef = inject(DestroyRef);
     componentRef: ComponentRef<UserTaskCustomUi>;
-
+    isFullScreen = false;
     private readonly screenRenderingService = inject(ScreenRenderingService);
 
     ngOnInit() {
@@ -148,6 +149,10 @@ export class TaskScreenCloudComponent implements OnInit {
     switchToDisplayMode(newDisplayMode?: string) {
         if (this.componentRef?.instance?.switchToDisplayMode) {
             this.componentRef.instance.switchToDisplayMode(newDisplayMode);
+        } else {
+            if (newDisplayMode === 'fullScreen') {
+                this.isFullScreen = true;
+            }
         }
     }
 }

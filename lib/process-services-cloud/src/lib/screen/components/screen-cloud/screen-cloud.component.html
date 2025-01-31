@@ -1,5 +1,5 @@
-<mat-card>
-    <mat-card-content [ngStyle]="{'position':'relative'}">
-        <div #container></div>
+<mat-card [className]="isFullScreen ? 'adf-cloud-task-screen-fullscreen' : ''">
+    <mat-card-content [ngStyle]="{'position':'relative'}" >
+        <div #container class="adf-cloud-task-screen-container"></div>
     </mat-card-content>
 </mat-card>
