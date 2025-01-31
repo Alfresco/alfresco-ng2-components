@@ -193,6 +193,19 @@ describe('UserPreferencesService', () => {
             expect(storage.getItem(textOrientation)).toBe('rtl');
         });
 
+        it('should set direction from default languages when language config is not present', () => {
+            appConfig.config.languages = [
+                {
+                    key: 'fake-locale-config',
+                    direction: 'ltr'
+                }
+            ];
+            appConfig.config.locale = 'ar';
+            appConfig.load();
+            const textOrientation = preferences.getPropertyKey('textOrientation');
+            expect(storage.getItem(textOrientation)).toBe('rtl');
+        });
+
         it('should not store textOrientation based on language ', () => {
             appConfig.config.languages = [
                 {

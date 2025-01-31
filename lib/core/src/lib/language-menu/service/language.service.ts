@@ -21,36 +21,15 @@ import { BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { LanguageItem } from '../../common/services/language-item.interface';
 import { UserPreferencesService } from '../../common/services/user-preferences.service';
+import { DEFAULT_LANGUAGE_LIST } from '../../common/models/default-languages.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class LanguageService implements LanguageServiceInterface {
-
-    private languages = new BehaviorSubject<LanguageItem[]>([
-        {key: 'de', label: 'Deutsch'},
-        {key: 'en', label: 'English'},
-        {key: 'es', label: 'Español'},
-        {key: 'fr', label: 'Français'},
-        {key: 'it', label: 'Italiano'},
-        {key: 'ja', label: '日本語'},
-        {key: 'nb', label: 'Bokmål'},
-        {key: 'nl', label: 'Nederlands'},
-        {key: 'pt-BR', label: 'Português (Brasil)'},
-        {key: 'ru', label: 'Русский'},
-        {key: 'zh-CN', label: '中文简体'},
-        {key: 'cs', label: 'Čeština'},
-        {key: 'da', label: 'Dansk'},
-        {key: 'fi', label: 'Suomi'},
-        {key: 'pl', label: 'Polski'},
-        {key: 'sv', label: 'Svenska'},
-        {key: 'ar', label: 'العربية', direction: 'rtl'}
-    ]);
+    private languages = new BehaviorSubject<LanguageItem[]>(DEFAULT_LANGUAGE_LIST);
 
     languages$ = this.languages.asObservable();
 
-    constructor(
-        appConfigService: AppConfigService,
-        private userPreferencesService: UserPreferencesService) {
-
+    constructor(appConfigService: AppConfigService, private readonly userPreferencesService: UserPreferencesService) {
         const customLanguages = appConfigService.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         this.setLanguages(customLanguages);
     }

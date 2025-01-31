@@ -24,6 +24,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { LanguageItem } from './language-item.interface';
 import { DOCUMENT } from '@angular/common';
 import { Directionality, Direction } from '@angular/cdk/bidi';
+import { DEFAULT_LANGUAGE_LIST } from '../models/default-languages.model';
 
 // eslint-disable-next-line no-shadow
 export enum UserPreferenceValues {
@@ -246,11 +247,13 @@ export class UserPreferencesService {
 
     private getLanguageByKey(key: string): LanguageItem {
         const defaultLanguage = { key: 'en' } as LanguageItem;
+        let language: LanguageItem;
 
-        const registeredLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
-        if (registeredLanguages && Array.isArray(registeredLanguages)) {
-            return registeredLanguages.find((language) => key.includes(language.key)) || defaultLanguage;
+        const customLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
+        if (Array.isArray(customLanguages)) {
+            language = customLanguages.find((customLanguage) => key.includes(customLanguage.key));
         }
-        return defaultLanguage;
+        language ??= DEFAULT_LANGUAGE_LIST.find((defaultLang) => defaultLang.key === key) ?? defaultLanguage;
+        return language;
     }
 }
