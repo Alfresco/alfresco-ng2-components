@@ -26,8 +26,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-cloud-task-screen',
     standalone: true,
     imports: [CommonModule, MatCardModule],
-    templateUrl: './screen-cloud.component.html',
-    styleUrls: ['./screen-cloud.component.scss']
+    templateUrl: './screen-cloud.component.html'
 })
 export class TaskScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
@@ -136,23 +135,19 @@ export class TaskScreenCloudComponent implements OnInit {
         }
 
         if (this.componentRef.instance?.claimTask) {
-            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
+            this.componentRef.instance.claimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
         }
         if (this.componentRef.instance?.unclaimTask) {
-            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.unclaimTask.emit(data));
+            this.componentRef.instance.unclaimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.unclaimTask.emit(data));
         }
         if (this.componentRef.instance?.cancelTask) {
-            this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
+            this.componentRef.instance.cancelTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
         }
     }
 
     switchToDisplayMode(newDisplayMode?: string) {
         if (this.componentRef?.instance?.switchToDisplayMode) {
             this.componentRef.instance.switchToDisplayMode(newDisplayMode);
-        } else {
-            if (newDisplayMode === 'fullScreen') {
-                this.isFullScreen = true;
-            }
         }
     }
 }
