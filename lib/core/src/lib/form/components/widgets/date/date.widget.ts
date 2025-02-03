@@ -75,7 +75,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Reac
         this.initDateRange();
         this.initStartAt();
         this.subscribeToDateChanges();
-        this.updateField();
+        this.validateField();
     }
 
     updateField(): void {

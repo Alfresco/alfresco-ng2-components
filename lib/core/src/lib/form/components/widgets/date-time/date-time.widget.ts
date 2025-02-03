@@ -63,7 +63,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         this.initDateAdapter();
         this.initDateRange();
         this.subscribeToDateChanges();
-        this.updateField();
+        this.validateField();
     }
 
     updateField(): void {
