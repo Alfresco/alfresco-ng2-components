@@ -41,17 +41,7 @@
                          [style.width.%]="getColumnWidth(currentRootElement)">
                         <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
                             <ng-container *ngIf="field.type === 'section'; else formField">
-                                <div class="adf-grid-list-section-single-column"
-                                    [style.visibility]="!field?.isVisible ? 'hidden' : 'visible'"
-                                    [style.display]="!field?.isVisible ? 'none' : 'flex'">
-                                    <div *ngFor="let sectionColumn of field.columns"
-                                        [style.width.%]="getSectionColumnWidth(field.numberOfColumns, sectionColumn.fields)"
-                                    >
-                                        <div *ngFor="let sectionField of sectionColumn.fields" class="adf-grid-list-section-column-view-item">
-                                            <adf-form-field [field]="sectionField"/>
-                                        </div>
-                                    </div>
-                                </div>
+                                <adf-form-section [field]="field"/>
                             </ng-container>
                             <ng-template #formField>
                                 <adf-form-field [field]="field"/>

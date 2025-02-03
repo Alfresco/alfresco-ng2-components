@@ -2136,6 +2136,58 @@ export const displayBigDecimalWidgetMock = {
     }
 };
 
+export const mockSectionWithFields = {
+    id: '51058d64-b36c-48f0-97a2-d9bd0398edab',
+    name: 'Section',
+    type: 'section',
+    numberOfColumns: 2,
+    fields: {
+        1: [
+            {
+                id: 'Text07kgd8',
+                name: 'Text',
+                type: 'text',
+                readOnly: false,
+                required: false,
+                colspan: 1,
+                rowspan: 1,
+                placeholder: null,
+                minLength: 0,
+                maxLength: 0,
+                regexPattern: null,
+                visibilityCondition: null,
+                params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                }
+            }
+        ],
+        2: [
+            {
+                id: 'Date0opbi8',
+                name: 'Date',
+                type: 'date',
+                readOnly: false,
+                required: false,
+                colspan: 1,
+                rowspan: 1,
+                placeholder: null,
+                minValue: null,
+                maxValue: null,
+                minDateRangeValue: null,
+                maxDateRangeValue: null,
+                visibilityCondition: null,
+                params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                },
+                dateDisplayFormat: 'yyyy-MM-dd'
+            }
+        ]
+    },
+    colspan: 1
+};
+
 export const mockFormWithSimpleSection = {
     id: 'form-363114eb-35f6-40d0-9908-8bbbe776c3e6',
     name: 'simplest section',
@@ -2157,16 +2209,47 @@ export const mockFormWithSimpleSection = {
                 },
                 numberOfColumns: 1,
                 fields: {
+                    1: [mockSectionWithFields]
+                }
+            }
+        ],
+        outcomes: [],
+        metadata: {},
+        variables: []
+    }
+};
+
+export const mockSectionVisibilityForm = {
+    id: 'form-65e9f07c-44d9-4469-8f5d-74aba3bd7326',
+    name: 'section visibility',
+    key: 'section-visibility-tark1',
+    description: '',
+    version: 0,
+    formDefinition: {
+        tabs: [],
+        fields: [
+            {
+                id: 'Group0sfmn9',
+                name: 'Group',
+                type: 'group',
+                tab: null,
+                params: {
+                    hideHeader: false,
+                    allowCollapse: false,
+                    collapseByDefault: false
+                },
+                numberOfColumns: 1,
+                fields: {
                     1: [
                         {
-                            id: '51058d64-b36c-48f0-97a2-d9bd0398edab',
+                            id: '48e6bfed-b477-4641-86cb-bfa70229a31e',
                             name: 'Section',
                             type: 'section',
-                            numberOfColumns: 2,
+                            numberOfColumns: 1,
                             fields: {
                                 1: [
                                     {
-                                        id: 'Text07kgd8',
+                                        id: 'Text0t23xu',
                                         name: 'Text',
                                         type: 'text',
                                         readOnly: false,
@@ -2177,37 +2260,81 @@ export const mockFormWithSimpleSection = {
                                         minLength: 0,
                                         maxLength: 0,
                                         regexPattern: null,
-                                        visibilityCondition: null,
+                                        visibilityCondition: {
+                                            leftType: 'field',
+                                            leftValue: 'Text0nu6os',
+                                            operator: '==',
+                                            rightValue: 'section text',
+                                            rightType: 'value',
+                                            nextConditionOperator: '',
+                                            nextCondition: null
+                                        },
                                         params: {
                                             existingColspan: 1,
                                             maxColspan: 2
                                         }
                                     }
-                                ],
-                                2: [
-                                    {
-                                        id: 'Date0opbi8',
-                                        name: 'Date',
-                                        type: 'date',
-                                        readOnly: false,
-                                        required: false,
-                                        colspan: 1,
-                                        rowspan: 1,
-                                        placeholder: null,
-                                        minValue: null,
-                                        maxValue: null,
-                                        minDateRangeValue: null,
-                                        maxDateRangeValue: null,
-                                        visibilityCondition: null,
-                                        params: {
-                                            existingColspan: 1,
-                                            maxColspan: 2
-                                        },
-                                        dateDisplayFormat: 'yyyy-MM-dd'
-                                    }
                                 ]
                             },
-                            colspan: 1
+                            colspan: 1,
+                            visibilityCondition: {
+                                leftType: 'field',
+                                leftValue: 'Text0n9o62',
+                                operator: '==',
+                                rightValue: 'section',
+                                rightType: 'value',
+                                nextConditionOperator: '',
+                                nextCondition: null
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                id: 'f89d427e-dc4d-44df-b47d-4f61a1cea21f',
+                name: 'Label',
+                type: 'container',
+                tab: null,
+                numberOfColumns: 2,
+                fields: {
+                    1: [
+                        {
+                            id: 'Text0n9o62',
+                            name: 'display section',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ],
+                    2: [
+                        {
+                            id: 'Text0nu6os',
+                            name: 'display section field',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
                         }
                     ]
                 }

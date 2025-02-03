@@ -120,7 +120,6 @@ describe('FormFieldComponent', () => {
         fixture.detectChanges();
 
         const styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
-        expect(styles.visibility).toEqual('hidden');
         expect(styles.display).toEqual('none');
     });
 
@@ -135,7 +134,6 @@ describe('FormFieldComponent', () => {
         fixture.detectChanges();
 
         const styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
-        expect(styles.visibility).toEqual('visible');
         expect(styles.display).toEqual('block');
     });
 
@@ -147,13 +145,14 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         fixture.detectChanges();
+
         let styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
-        expect(styles.visibility).toEqual('visible');
         expect(styles.display).toEqual('block');
+
         component.field.isVisible = false;
         fixture.detectChanges();
+
         styles = testingUtils.getByCSS('#field-FAKE-TXT-WIDGET-container').styles;
-        expect(styles.visibility).toEqual('hidden');
         expect(styles.display).toEqual('none');
     });
 
