@@ -29,6 +29,7 @@ import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
 import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
+import { FormSectionComponent } from './form-section/form-section.component';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -56,7 +57,8 @@ import { HeaderWidgetComponent } from './widgets/header/header.widget';
         FormsModule,
         JsonPipe,
         NgClass,
-        HeaderWidgetComponent
+        HeaderWidgetComponent,
+        FormSectionComponent
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -155,14 +157,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         const { field } = container;
         const colspan = field ? field.colspan : 1;
         return (100 / field.numberOfColumns) * colspan + '';
-    }
-
-    getSectionColumnWidth(numberOfColumns: number, columnFields: FormFieldModel[]): string {
-        const firstColumnFieldIndex = 0;
-        const defaultColspan = 1;
-        const fieldColspan = columnFields[firstColumnFieldIndex]?.colspan ?? defaultColspan;
-
-        return (100 / numberOfColumns) * fieldColspan + '';
     }
 
     private runMiddlewareServices(): void {
