@@ -536,7 +536,7 @@ describe('ViewerComponent', () => {
             expect(component.viewerType).toBe('image');
         });
 
-        it('should not show spinner when isLoading = false and isContentReady = false for other viewerTypes', () => {
+        it('should not show spinner when isLoading = false and isContentReady = false for other viewer types', () => {
             component.isLoading = false;
             component.urlFile = 'some-url.txt';
 
