@@ -289,18 +289,20 @@ export class FormFieldModel extends FormWidgetModel {
         this.colspan = 1;
 
         Object.keys(fields).forEach((currentField) => {
-            if (Object.prototype.hasOwnProperty.call(fields, currentField)) {
-                const col = new ContainerColumnModel();
-                col.fields = (fields[currentField] || []).map((field: any) => new FormFieldModel(form, field));
-                col.rowspan = fields[currentField].length;
-
-                if (!FormFieldTypes.isSectionType(this.type)) {
-                    this.updateContainerColspan(col.fields);
-                }
-
-                this.rowspan = Math.max(this.rowspan, col.rowspan);
-                this.columns.push(col);
+            if (!Object.prototype.hasOwnProperty.call(fields, currentField)) {
+                return;
             }
+
+            const col = new ContainerColumnModel();
+            col.fields = (fields[currentField] || []).map((field: any) => new FormFieldModel(form, field));
+            col.rowspan = fields[currentField].length;
+
+            if (!FormFieldTypes.isSectionType(this.type)) {
+                this.updateContainerColspan(col.fields);
+            }
+
+            this.rowspan = Math.max(this.rowspan, col.rowspan);
+            this.columns.push(col);
         });
     }
 
