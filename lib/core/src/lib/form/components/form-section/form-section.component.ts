@@ -26,6 +26,7 @@ import { NgFor } from '@angular/common';
     standalone: true,
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./form-section.component.scss'],
     imports: [NgFor, FormFieldComponent]
 })
 export class FormSectionComponent implements OnInit {

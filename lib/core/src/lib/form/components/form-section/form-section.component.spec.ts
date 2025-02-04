@@ -21,7 +21,7 @@ import { FormFieldModel, FormModel } from '../widgets';
 import { FormSectionComponent } from './form-section.component';
 import { mockSectionWithFields } from '../mock/form-renderer.component.mock';
 
-describe('FormFieldComponent', () => {
+describe('FormSectionComponent', () => {
     let fixture: ComponentFixture<FormSectionComponent>;
     let component: FormSectionComponent;
 
@@ -49,7 +49,7 @@ describe('FormFieldComponent', () => {
         expect(width).toBe('33.333333333333336');
     });
 
-    it('should display fields inside sections', () => {
+    it('should display fields inside section', () => {
         const sectionField = new FormFieldModel(new FormModel(), mockSectionWithFields);
         fixture.componentRef.setInput('field', sectionField);
         fixture.detectChanges();
