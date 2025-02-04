@@ -476,4 +476,73 @@ describe('ViewerComponent', () => {
             });
         });
     });
+
+    describe('Spinner', () => {
+        it('should show spinner when isLoading is true', () => {
+            component.isLoading = true;
+            fixture.detectChanges();
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+        });
+
+        it('should show spinner until content is ready when viewerType is media', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-file.mp4';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+
+            const mediaViewer = testingUtils.getByCSS('adf-media-player');
+            mediaViewer.triggerEventHandler('canPlay', null);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(component.viewerType).toBe('media');
+        });
+
+        it('should show spinner until content is ready when viewerType is pdf', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-url.pdf';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+
+            const pdfViewer = testingUtils.getByCSS('adf-pdf-viewer');
+            pdfViewer.triggerEventHandler('pagesLoaded', null);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(component.viewerType).toBe('pdf');
+        });
+
+        it('should show spinner until content is ready when viewerType is image', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-url.png';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+
+            const imgViewer = testingUtils.getByCSS('adf-img-viewer');
+            imgViewer.triggerEventHandler('imageLoaded', null);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(component.viewerType).toBe('image');
+        });
+
+        it('should not show spinner when isLoading = false and isContentReady = false for other viewerTypes', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-url.txt';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect((component.isContentReady = false));
+        });
+    });
 });

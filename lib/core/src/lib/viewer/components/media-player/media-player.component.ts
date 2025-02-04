@@ -49,6 +49,9 @@ export class MediaPlayerComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
+    @Output()
+    canPlay = new EventEmitter<void>();
+
     constructor(private urlService: UrlService) {}
 
     ngOnChanges(changes: SimpleChanges) {
