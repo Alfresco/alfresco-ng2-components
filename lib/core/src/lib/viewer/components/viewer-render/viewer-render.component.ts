@@ -17,17 +17,7 @@
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
-import {
-    Component,
-    EventEmitter,
-    Injector,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
@@ -148,6 +138,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     extension: string;
     internalFileName: string;
     viewerType: string = 'unknown';
+    isContentReady = false;
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -190,6 +181,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
+        this.isContentReady = false;
         this.isLoading = !this.blobFile && !this.urlFile;
 
         if (this.blobFile) {
