@@ -542,7 +542,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
-            expect((component.isContentReady = false));
+            expect(component.isContentReady).toBeFalse();
         });
     });
 });
