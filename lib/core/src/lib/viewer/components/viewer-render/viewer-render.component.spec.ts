@@ -18,13 +18,13 @@
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { ViewerExtensionDirective } from '@alfresco/adf-core';
+import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -478,10 +478,12 @@ describe('ViewerComponent', () => {
     });
 
     describe('Spinner', () => {
+        const getMainLoader = (): DebugElement => testingUtils.getByCSS('.adf-viewer-render-main-loader');
+
         it('should show spinner when isLoading is true', () => {
             component.isLoading = true;
             fixture.detectChanges();
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+            expect(getMainLoader()).not.toBeNull();
         });
 
         it('should show spinner until content is ready when viewerType is media', () => {
@@ -491,13 +493,13 @@ describe('ViewerComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+            expect(getMainLoader()).not.toBeNull();
 
-            const mediaViewer = testingUtils.getByCSS('adf-media-player');
+            const mediaViewer = testingUtils.getByDirective(MediaPlayerComponent);
             mediaViewer.triggerEventHandler('canPlay', null);
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('media');
         });
 
@@ -508,13 +510,13 @@ describe('ViewerComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+            expect(getMainLoader()).not.toBeNull();
 
-            const pdfViewer = testingUtils.getByCSS('adf-pdf-viewer');
+            const pdfViewer = testingUtils.getByDirective(PdfViewerComponent);
             pdfViewer.triggerEventHandler('pagesLoaded', null);
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('pdf');
         });
 
@@ -524,13 +526,13 @@ describe('ViewerComponent', () => {
 
             component.ngOnChanges();
             fixture.detectChanges();
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).not.toBeNull();
+            expect(getMainLoader()).not.toBeNull();
 
-            const imgViewer = testingUtils.getByCSS('adf-img-viewer');
+            const imgViewer = testingUtils.getByDirective(ImgViewerComponent);
             imgViewer.triggerEventHandler('imageLoaded', null);
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('image');
         });
 
@@ -541,7 +543,7 @@ describe('ViewerComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('.adf-viewer-render-main-loader')).toBeNull();
+            expect(getMainLoader()).toBeNull();
             expect(component.isContentReady).toBeFalse();
         });
     });
