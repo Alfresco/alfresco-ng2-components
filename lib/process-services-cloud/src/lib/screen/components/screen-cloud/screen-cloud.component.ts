@@ -30,23 +30,36 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class TaskScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
-    @Input() taskId: string;
-    /** App id to fetch corresponding form and values. */
+    @Input()
+    taskId: string;
+
+    /** App name to fetch data for dynamic component. */
     @Input()
     appName: string = '';
+
+    /** Boolean informing if a task can be claimed. */
     @Input()
     canClaimTask: boolean;
+
+    /** Boolean informing if a task can be unclaimed. */
     @Input()
     canUnclaimTask: boolean;
+
     @Input()
     showCancelButton: boolean;
-    /** Screen id to fetch corresponding screen widget. */
+
+    /** Screen id to create dynamic component. */
     @Input()
     screenId: string = '';
+
+    /** Process Instance Id to fetch corresponding data. */
     @Input()
     processInstanceId: string = '';
+
+    /** Name of the task. */
     @Input()
     taskName: string = '';
+
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;
