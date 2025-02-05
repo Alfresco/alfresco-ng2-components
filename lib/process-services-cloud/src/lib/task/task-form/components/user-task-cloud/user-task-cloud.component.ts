@@ -61,6 +61,9 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @ViewChild('adfCloudTaskForm')
     adfCloudTaskForm: TaskFormCloudComponent;
 
+    @ViewChild('adfCloudTaskScreen')
+    adfCloudTaskScreen: TaskScreenCloudComponent;
+
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -269,6 +272,9 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     public switchToDisplayMode(newDisplayMode?: string): void {
         if (this.adfCloudTaskForm) {
             this.adfCloudTaskForm.switchToDisplayMode(newDisplayMode);
+        }
+        if (this.adfCloudTaskScreen) {
+            this.adfCloudTaskScreen.switchToDisplayMode(newDisplayMode);
         }
     }
 }

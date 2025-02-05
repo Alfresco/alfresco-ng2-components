@@ -34,9 +34,11 @@ export class UserTaskCloudButtonsComponent {
     @Input()
     appName: string = '';
 
+    /** Boolean informing if a task can be claimed. */
     @Input()
     canClaimTask: boolean;
 
+    /** Boolean informing if a task can be unclaimed. */
     @Input()
     canUnclaimTask: boolean;
 

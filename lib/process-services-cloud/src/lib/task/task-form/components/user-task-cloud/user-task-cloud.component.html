@@ -26,18 +26,23 @@
 
             <ng-container *ngSwitchCase="taskTypeEnum.Screen">
                 <adf-cloud-task-screen
+                    #adfCloudTaskScreen
                     [appName]="appName"
-                    [screenId]="screenId"
-                    [taskId]="taskId"
-                    [taskName]="taskDetails.name"
+                    [canClaimTask]="canClaimTask()"
+                    [canUnclaimTask]="canUnclaimTask()"
                     [processInstanceId]="taskDetails.processInstanceId"
+                    [screenId]="screenId"
+                    [showCancelButton]="showCancelButton"
+                    [taskName]="taskDetails.name"
+                    [taskId]="taskId"
+
+                    (cancelTask)="onCancelClick()"
+                    (claimTask)="onClaimTask()"
                     (error)="onError($event)"
                     (taskCompleted)="onCompleteTask()"
                     (taskSaved)="onFormSaved()"
-                >
-                    <ng-template [ngTemplateOutlet]="taskFormCloudButtons" buttons>
-                    </ng-template>
-                </adf-cloud-task-screen>
+                    (unclaimTask)="onUnclaimTask()"
+                />
             </ng-container>
 
             <ng-container *ngSwitchCase="taskTypeEnum.None">

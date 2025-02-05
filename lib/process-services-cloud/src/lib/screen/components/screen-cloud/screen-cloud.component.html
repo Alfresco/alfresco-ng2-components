@@ -1,8 +1,5 @@
 <mat-card>
-    <mat-card-content [ngStyle]="{'position':'relative'}">
-        <div #container></div>
+    <mat-card-content [ngStyle]="{'position':'relative'}" >
+        <ng-container #container />
     </mat-card-content>
-    <mat-card-actions align="end">
-        <ng-content select="[buttons]"></ng-content>
-    </mat-card-actions>
 </mat-card>

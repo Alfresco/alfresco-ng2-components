@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ScreenRenderingService } from '../../../services/public-api';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
@@ -36,37 +36,45 @@ import { TaskScreenCloudComponent } from './screen-cloud.component';
 })
 class TestComponent {
     @Input() taskId = '';
+    @Input() screenId = '';
     @Output() taskCompleted = new EventEmitter();
+    displayMode: string;
     onComplete() {
         this.taskCompleted.emit();
+    }
+    switchToDisplayMode(newDisplayMode?: string) {
+        this.displayMode = newDisplayMode;
     }
 }
 
 @Component({
     selector: 'adf-cloud-test-actions-component',
-    template: `
-        <adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'" (taskCompleted)="onTaskCompleted()">
-            <div buttons class="adf-cloud-test-buttons">
-                <button>Test</button>
-            </div>
-        </adf-cloud-task-screen>
-    `,
+    template: ` <adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'" (taskCompleted)="onTaskCompleted()" /> `,
     imports: [CommonModule, TaskScreenCloudComponent],
     standalone: true
 })
 class TestWrapperComponent {
+    @Input() screenId = '';
+    @ViewChild('adfCloudTaskScreen') adfCloudTaskScreen: TaskScreenCloudComponent;
     onTaskCompleted() {}
+    switchToDisplayMode(newDisplayMode?: string): void {
+        if (this.adfCloudTaskScreen) {
+            this.adfCloudTaskScreen.switchToDisplayMode(newDisplayMode);
+        }
+    }
 }
 
 describe('TaskScreenCloudComponent', () => {
     let fixture: ComponentFixture<TestWrapperComponent>;
     let screenRenderingService: ScreenRenderingService;
+    let component: TestWrapperComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [TaskScreenCloudComponent, TestComponent, TestWrapperComponent]
         });
         fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.componentInstance;
         screenRenderingService = TestBed.inject(ScreenRenderingService);
         screenRenderingService.register({ ['test']: () => TestComponent });
         fixture.componentRef.setInput('screenId', 'test');
@@ -76,11 +84,6 @@ describe('TaskScreenCloudComponent', () => {
     it('should create custom component instance', () => {
         const dynamicComponent = fixture.debugElement.query(By.css('.adf-cloud-test-container'));
         expect(dynamicComponent).toBeTruthy();
-    });
-
-    it('should project content into component', async () => {
-        const projectedContent = fixture.debugElement.query(By.css('.adf-cloud-test-buttons'));
-        expect(projectedContent).toBeTruthy();
     });
 
     it('should set input property for dynamic component', () => {
@@ -96,5 +99,14 @@ describe('TaskScreenCloudComponent', () => {
 
         (btnComplete.nativeElement as HTMLButtonElement).click();
         expect(onTaskCompletedSpy).toHaveBeenCalled();
+    });
+
+    it('should call switchToDisplayMode on dynamic component', () => {
+        const taskScreenCloudComponentSpy = jasmine.createSpyObj('TaskScreenCloudComponent', ['switchToDisplayMode']);
+        component.adfCloudTaskScreen = taskScreenCloudComponentSpy;
+        component.switchToDisplayMode();
+        fixture.detectChanges();
+
+        expect(component.adfCloudTaskScreen.switchToDisplayMode).toHaveBeenCalled();
     });
 });
