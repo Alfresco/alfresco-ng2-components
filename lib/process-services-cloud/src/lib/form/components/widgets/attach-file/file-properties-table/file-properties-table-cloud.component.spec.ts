@@ -62,7 +62,7 @@ describe('FilePropertiesTableCloudComponent', () => {
 
         widget.hasFile = true;
 
-        widget.displayedColumns = ['icon', 'fileName'];
+        widget.displayedColumns = ['icon', 'fileName', 'title'];
 
         fixture.detectChanges();
     });
