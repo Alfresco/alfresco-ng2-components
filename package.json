@@ -86,7 +86,7 @@
     "@editorjs/editorjs": "2.30.5",
     "@editorjs/header": "2.8.1",
     "@editorjs/inline-code": "1.5.0",
-    "@editorjs/list": "1.10.0",
+    "@editorjs/list": "2.0.4",
     "@editorjs/marker": "1.4.0",
     "@editorjs/paragraph": "^2.11.6",
     "@editorjs/underline": "1.1.0",
