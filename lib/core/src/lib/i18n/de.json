@@ -6,7 +6,7 @@
       "CONTRIBUTOR": "Beitragender",
       "COLLABORATOR": "Mitarbeiter",
       "COORDINATOR": "Koordinator",
-      "EDITOR": "Editor",
+      "EDITOR": "Redakteur",
       "CONSUMER": "Verbraucher",
       "SITECOLLABORATOR": "Site-Mitarbeiter",
       "SITECONSUMER": "Site-Verbraucher",
@@ -37,7 +37,7 @@
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "Vorschau nicht verfügbar",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": "Im Vorschaumodus können Sie keine Datei anhängen"
       }
     },
     "FIELD": {
@@ -49,15 +49,15 @@
       "UPLOAD": "Hochladen",
       "REQUIRED": "Feld erforderlich",
       "REST_API_FAILED": "Der Server '{{ hostname }}' ist nicht erreichbar",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Beim Laden von Dropdown-Elementen ist ein Problem aufgetreten. Bitte kontaktieren Sie den Administrator.",
+      "DATA_TABLE_LOAD_FAILED": "Beim Laden der Tabellenelemente ist ein Problem aufgetreten. Bitte wenden Sie sich an den Administrator.",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Beim Laden eines externen Objekts ist ein Problem aufgetreten. Bitte kontaktieren Sie den Administrator.",
       "FILE_NAME": "Dateiname",
       "NO_FILE_ATTACHED": "Keine Datei angehängt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DECIMAL_NUMBER": "Dezimalzahlformat verwenden",
+        "INVALID_DECIMAL_PRECISION": "Falscher Dezimalwert, nach dem Dezimalpunkt sollte ein Maximum von {{precision}} Ziffern angegeben werden.",
         "INVALID_DATE": "Verwenden Sie ein anderes Datumsformat",
         "INVALID_VALUE": "Geben Sie einen anderen Wert ein",
         "NOT_GREATER_THAN": "Darf nicht größer als {{ maxValue }} sein",
@@ -72,39 +72,39 @@
       "NAMELESS_TASK": "Namenlose Aufgabe"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "Schriftgröße",
+      "FONT_WEIGHT": "Schriftgewicht",
+      "FONT_COLOR": "Schriftfarbe",
       "FONT_WEIGHTS": {
-        "REGULAR": "regular",
-        "BOLD": "bold"
+        "REGULAR": "regelmäßig",
+        "BOLD": "fettgedruckt"
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "Systemfarbe",
+        "BLACK": "schwarz",
+        "GREY": "grau",
+        "RED": "rot",
+        "GREEN": "grün",
+        "BLUE": "blau",
+        "YELLOW": "gelb"
       },
       "PREDEFINED": {
         "HEADER": {
           "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "HEADING": "Überschrift",
+          "TITLE": "Titel"
         },
         "RADIO_BUTTONS": {
           "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "STRONG": "stark",
+          "HEADING": "Überschrift"
         },
         "READONLY_TEXT": {
           "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "STRONG": "stark",
+          "HEADING": "Überschrift",
+          "TITLE": "Titel",
+          "ANNOTATION": "kommentieren"
         }
       }
     }
@@ -119,13 +119,13 @@
     "FILE_SIZE": {
       "BYTES": "Bytes",
       "KB": "KB",
-      "MB": "MB",
-      "GB": "GB",
+      "MB": "MN",
+      "GB": "SF",
       "TB": "TB",
       "PB": "PB",
-      "EB": "EB",
+      "EB": "TB",
       "ZB": "ZB",
-      "YB": "YB"
+      "YB": "JB"
     },
     "PAGINATION": {
       "ARIA": {
@@ -145,21 +145,21 @@
           "CANCEL": "Abbrechen"
         },
         "TITLE": "Dateien werden zu ZIP-Ordner hinzugefügt. Dies kann ein paar Minuten dauern",
-        "COMPLETE": "complete"
+        "COMPLETE": "vollständig"
       },
       "EDIT_JSON": {
         "CLOSE": "Schließen",
         "UPDATE": "Aktualisieren"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "Ungespeicherte Änderungen",
+        "DESCRIPTION": "Sie haben ungespeicherte Änderungen auf diesem Bildschirm. Sind Sie sicher, ohne Änderungen zu speichern?",
+        "DISCARD_CHANGES_BUTTON": "Änderungen verwerfen"
       }
     },
     "BREADCRUMBS": {
       "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "SHOWALL": "Alle anzeigen"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Datei sperren",
@@ -234,11 +234,11 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
         "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat",
-        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LONG_VALIDATION_ERROR": "Langes Format verwenden",
         "LENGTH_VALIDATION_ERROR": "Wert muss zwischen {{ minLength }} und {{ maxLength }} lang sein",
         "MATCH_VALIDATION_ERROR": "Wert muss dem folgenden Muster entsprechen: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "Wert muss zwischen {{ minValue }} und {{ maxValue }} liegen",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "ONLY_POSITIVE_NUMBER": "Nur positiver Wert ist erlaubt"
       },
       "MORE": "Mehr"
     },
@@ -293,19 +293,20 @@
       "SORT_BY": "Sortieren nach"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "Feature-Flags überschreibt",
+      "FILTER_OR_ADD_NEW": "Filtern oder hinzufügen",
+      "FILTER": "Filtern",
+      "ADD_NEW": "Neue Feature-Flag hinzufügen (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
+    "PROFILE_IMAGE": "Profilbild",
     "NONE": "Keine Kommentare vorhanden",
     "ADD": "Hinzufügen",
     "HEADER": "Kommentare ({{ count }})",
     "CREATED_BY_HEADER": "Erstellt von",
     "MESSAGE_HEADER": "Nachricht",
+    "EMPTY_ERROR": "Kommentar darf nicht leer sein",
     "DIALOG": {
       "TITLE": "Neuer Kommentar",
       "LABELS": {
@@ -366,7 +367,7 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Content-Aktionen",
-      "SELECT_COLUMNS": "Select columns"
+      "SELECT_COLUMNS": "Spalten auswählen"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Aktionen",
@@ -381,7 +382,7 @@
       "ICON_TEXT": "Elementtyp {{ type }}",
       "ICON_DISABLED": "Deaktiviert",
       "ROW_OPTION_BUTTON": "Aktionen",
-      "DRAG": "Drag button",
+      "DRAG": "Drag Button",
       "EMPTY_HEADER": "Leerer Header"
     },
     "FILE_TYPE": {
@@ -394,7 +395,7 @@
       "POWERPOINT": "Powerpoint-Präsentation",
       "VIDEO": "Video",
       "AUDIO": "Audio",
-      "WEBSITE": "Website",
+      "WEBSITE": "Webseite",
       "ARCHIVE": "Archiv",
       "PRESENTATION": "Präsentation",
       "SPREADSHEET": "Tabelle",
@@ -417,8 +418,8 @@
       "MY_PROFILE": "Mein Profil"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "Content-Dienste",
+      "PS": "Prozessdienste"
     }
   },
   "ADF_VIEWER": {
@@ -437,7 +438,7 @@
       "WAIT": "Warten"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
+      "MIME_TYPE_ICON": "Dateityp-Symbol",
       "PREVIOUS_PAGE": "Vorherige Seite",
       "NEXT_PAGE": "Nächste Seite",
       "ZOOM_IN": "Vergrößern",
@@ -611,10 +612,10 @@
     "SELECTION_ARIA_LABEL": "{{placeholder}} Kombinationsfeld {{selectedOption}}"
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": "Knotensymbol"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": "Mehr laden"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bestätigen",

@@ -1,51 +1,51 @@
 {
   "ANALYTICS": {
-    "TITLE": "ANALYTICS",
+    "TITLE": "ANÁLISES",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
-      "FILL-PARAMETER": "Choose from the report options",
-      "NO-DATA-FOUND": "No data found",
-      "ZERO-DATA-FOUND": "There are only zero values",
-      "ICON-SETTING": "Settings",
-      "ICON-SAVE": "Save",
-      "ICON-DELETE": "Delete",
-      "ICON-EXPORT-CSV": "Export"
+      "UNKNOWN-WIDGET-TYPE": "TIPO DE WIDGET DESCONHECIDO",
+      "FILL-PARAMETER": "Escolha entre as opções de relatório",
+      "NO-DATA-FOUND": "Não foram encontrados dados",
+      "ZERO-DATA-FOUND": "Só existem valores nulos",
+      "ICON-SETTING": "Configurações",
+      "ICON-SAVE": "Guardar",
+      "ICON-DELETE": "Eliminar",
+      "ICON-EXPORT-CSV": "Exportar"
     }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-DEFINITION-OVERVIEW": {
-        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
-        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
-        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
-        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Número total de definições de processo",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Número total de instâncias de processos",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Número total de instâncias de processo ativas",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Número total de instâncias de processo co"
       }
     }
   },
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
+        "TYPE-FILTERING": "Incluir etapas de passagem, como eventos de início e gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
+        "PROCESS-DEFINITION": "Definição do processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "SLOW-PROC-INST-NUMBER": "Quantas das instâncias de processo mais lentas devem ser apr"
       },
       "TASK-OVERVIEW": {
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "DATE-RANGE-INTERVAL": "Group dates by"
+        "PROCESS-DEFINITION": "Definição do processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "DATE-RANGE-INTERVAL": "Agrupar datas por"
       },
       "TASK-SLA": {
-        "TASK": "Task",
-        "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range",
-        "SLA-DURATION": "SLA required completion time"
+        "TASK": "Tarefa",
+        "PROCESS-DEFINITION": "Definição do processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "SLA-DURATION": "Tempo de conclusão exigido pelo SLA"
       }
     },
-    "PROCESS-STATUS": "Process status",
-    "TASK-STATUS": "Task status"
+    "PROCESS-STATUS": "Estado do processo",
+    "TASK-STATUS": "Estado da tarefa"
   },
-  "DIAGRAMS": "Diagrams"
+  "DIAGRAMS": "Diagramas"
 }

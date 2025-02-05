@@ -1,119 +1,119 @@
 {
   "ADF": {
-    "LANGUAGE": "Language",
+    "LANGUAGE": "Idioma",
     "ROLES": {
-      "ALL": "All",
-      "CONTRIBUTOR": "Contributor",
-      "COLLABORATOR": "Collaborator",
-      "COORDINATOR": "Coordinator",
+      "ALL": "Tudo",
+      "CONTRIBUTOR": "Contribuinte",
+      "COLLABORATOR": "Colaborador",
+      "COORDINATOR": "Coordenador",
       "EDITOR": "Editor",
-      "CONSUMER": "Consumer",
-      "SITECOLLABORATOR": "Site Collaborator",
-      "SITECONSUMER": "Site Consumer",
-      "SITECONTRIBUTOR": "Site Contributor",
-      "SITEMANAGER": "Site Manager"
+      "CONSUMER": "Consumidor",
+      "SITECOLLABORATOR": "Colaborador do sítio",
+      "SITECONSUMER": "Consumidor do sítio",
+      "SITECONTRIBUTOR": "Contribuinte do sítio",
+      "SITEMANAGER": "Gestor do sítio"
     }
   },
-  "SAVE": "SAVE",
-  "COMPLETE": "COMPLETE",
-  "CANCEL": "CANCEL",
-  "CLAIM": "CLAIM",
-  "UNCLAIM": "RELEASE",
-  "START PROCESS": "START PROCESS",
-  "DATA_LOADING": "Data is loading",
-  "CLOSE": "CLOSE",
+  "SAVE": "GUARDAR",
+  "COMPLETE": "CONCLUÍDO",
+  "CANCEL": "CANCELAR",
+  "CLAIM": "RECLAMAÇÃO",
+  "UNCLAIM": "LANÇAR",
+  "START PROCESS": "INICIAR PROCESSO",
+  "DATA_LOADING": "Os dados estão a ser carregados",
+  "CLOSE": "FECHAR",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "You have no notifications at this time.",
-    "TITLE": "Notifications",
-    "MARK_AS_READ": "Mark all as read",
-    "SYSTEM": "System",
-    "LOAD_MORE": "Load more",
-    "OPEN_HISTORY": "Open notification history"
+    "NO_MESSAGE": "De momento, não tem notificações.",
+    "TITLE": "Notificações",
+    "MARK_AS_READ": "Marcar todas como lidas",
+    "SYSTEM": "Sistema",
+    "LOAD_MORE": "Carregar mais",
+    "OPEN_HISTORY": "Abrir histórico de notificações"
   },
   "FORM": {
     "START_FORM": {
-      "TITLE": "Start Form"
+      "TITLE": "Formulário de início"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "IMAGE_NOT_AVAILABLE": "Pré-visualização não disponível",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": "No modo de pré-visualização não é possível anexar um ficheiro"
       }
     },
     "FIELD": {
-      "LOCALSTORAGE": "Local storage",
-      "SOURCE": "Select source from ",
-      "VIEW_FILE": "View",
-      "DOWNLOAD_FILE": "Download",
-      "REMOVE_FILE": "Remove",
-      "UPLOAD": "UPLOAD",
-      "REQUIRED": "This is a required field",
-      "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
-      "FILE_NAME": "File Name",
-      "NO_FILE_ATTACHED": "No file attached",
+      "LOCALSTORAGE": "Armazenamento local",
+      "SOURCE": "Selecionar fonte de ",
+      "VIEW_FILE": "Visualizar",
+      "DOWNLOAD_FILE": "Fazer o download",
+      "REMOVE_FILE": "Remover",
+      "UPLOAD": "CARREGAR",
+      "REQUIRED": "Este é um campo obrigatório",
+      "REST_API_FAILED": "O servidor `{{ hostname }}` não pode ser acedido",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Problema ao carregar elementos suspensos. Entre em contacto com o administrador.",
+      "DATA_TABLE_LOAD_FAILED": "Problema ao carregar os elementos da tabela. Entre em contacto com o administrador.",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Houve um problema ao carregar a propriedade externa. Entre em contacto com o administrador.",
+      "FILE_NAME": "Nome do ficheiro",
+      "NO_FILE_ATTACHED": "Nenhum ficheiro anexado",
       "VALIDATOR": {
-        "INVALID_NUMBER": "Use a different number format",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
-        "INVALID_DATE": "Use a different date format",
-        "INVALID_VALUE": "Enter a different value",
-        "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",
-        "NOT_LESS_THAN": "Can't be less than {{ minValue }}",
-        "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
-        "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
+        "INVALID_NUMBER": "Utilizar um formato numérico diferente",
+        "INVALID_DECIMAL_NUMBER": "Utilizar um formato de número decimal",
+        "INVALID_DECIMAL_PRECISION": "Valor decimal incorreto, deve haver um máximo de {{precision}} dígitos após o ponto decimal.",
+        "INVALID_DATE": "Utilizar um formato de data diferente",
+        "INVALID_VALUE": "Introduzir um valor diferente",
+        "NOT_GREATER_THAN": "Não pode ser maior do que {{ maxValue }}",
+        "NOT_LESS_THAN": "Não pode ser inferior a {{ minValue }}",
+        "AT_LEAST_LONG": "Introduzir pelo menos {{ minLength }} caracteres",
+        "NO_LONGER_THAN": "Não introduzir mais de {{ maxLength }} caracteres"
       },
-      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
-      "ATTACH": "Attach"
+      "FILE_ALREADY_UPLOADED": "Já foi carregado um ficheiro com o mesmo nome.",
+      "ATTACH": "Anexar"
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Nameless task"
+      "NAMELESS_TASK": "Tarefa sem nome"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "Tamanho do tipo de letra",
+      "FONT_WEIGHT": "Tamanho da letra",
+      "FONT_COLOR": "Cor da letra",
       "FONT_WEIGHTS": {
         "REGULAR": "regular",
-        "BOLD": "bold"
+        "BOLD": "negrito"
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "cor do sistema",
+        "BLACK": "preto",
+        "GREY": "cinza",
+        "RED": "vermelho",
+        "GREEN": "verde",
+        "BLUE": "azul",
+        "YELLOW": "amarelo"
       },
       "PREDEFINED": {
         "HEADER": {
           "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "HEADING": "cabeçalho",
+          "TITLE": "título"
         },
         "RADIO_BUTTONS": {
           "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "STRONG": "forte",
+          "HEADING": "cabeçalho"
         },
         "READONLY_TEXT": {
           "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "STRONG": "forte",
+          "HEADING": "cabeçalho",
+          "TITLE": "título",
+          "ANNOTATION": "anterior"
         }
       }
     }
   },
   "CORE": {
     "HEADER": {
-      "LOGO_ARIA": "Company Logo",
+      "LOGO_ARIA": "Logótipo da empresa",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Toggle Menu"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Alternar Menu"
       }
     },
     "FILE_SIZE": {
@@ -129,497 +129,498 @@
     },
     "PAGINATION": {
       "ARIA": {
-        "ITEMS_PER_PAGE": "Page size selector",
-        "CURRENT_PAGE": "Current page selector",
-        "PREVIOUS_PAGE": "Previous page button",
-        "NEXT_PAGE": "Next page button"
+        "ITEMS_PER_PAGE": "Seletor de tamanho de página",
+        "CURRENT_PAGE": "Seletor de página atual",
+        "PREVIOUS_PAGE": "Botão página anterior",
+        "NEXT_PAGE": "Botão de página seguinte"
       },
-      "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
-      "ITEMS_PER_PAGE": "Items per page",
-      "CURRENT_PAGE": "Page {{ number }}",
-      "TOTAL_PAGES": "of {{ total }}"
+      "ITEMS_RANGE": "Mostrar {{ range }} de {{ total }}",
+      "ITEMS_PER_PAGE": "Itens por página",
+      "CURRENT_PAGE": "Página {{ number }}",
+      "TOTAL_PAGES": "de {{ total }}"
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Cancel"
+          "CANCEL": "Cancelar"
         },
-        "TITLE": "Adding files to zip, this could take a few minutes",
-        "COMPLETE": "complete"
+        "TITLE": "Adicionar ficheiros ao zip, isto pode demorar alguns minutos",
+        "COMPLETE": "concluir"
       },
       "EDIT_JSON": {
-        "CLOSE": "Close",
-        "UPDATE": "Update"
+        "CLOSE": "Fechar",
+        "UPDATE": "Atualizar"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "Alterações não guardadas",
+        "DESCRIPTION": "Tem alterações não guardadas neste ecrã. Tem a certeza de que pretende sair sem guardar as alterações?",
+        "DISCARD_CHANGES_BUTTON": "Rejeitar alterações"
       }
     },
     "BREADCRUMBS": {
       "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "SHOWALL": "Mostrar tudo"
     },
     "FILE_DIALOG": {
-      "FILE_LOCK": "Lock file",
-      "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",
-      "FILE_LOCK_CHECKBOX": "Lock file",
-      "TIME_LOCK_CHECKBOX": "Time lock",
+      "FILE_LOCK": "Bloquear ficheiro",
+      "ALLOW_OTHERS_CHECKBOX": "Permitir que o proprietário modifique este ficheiro",
+      "FILE_LOCK_CHECKBOX": "Bloquear ficheiro",
+      "TIME_LOCK_CHECKBOX": "Bloqueio de tempo",
       "SAVE_BUTTON": {
-        "LABEL": "Save"
+        "LABEL": "Guardar"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Cancel"
+        "LABEL": "Cancelar"
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Create new folder",
-      "EDIT_FOLDER_TITLE": "Edit folder",
+      "CREATE_FOLDER_TITLE": "Criar nova pasta",
+      "EDIT_FOLDER_TITLE": "Editar pasta",
       "FOLDER_NAME": {
-        "LABEL": "Name",
+        "LABEL": "Nome",
         "ERRORS": {
-          "REQUIRED": "Folder name is required",
-          "SPECIAL_CHARACTERS": "Folder name can't contain these characters * \" < > \\ / ? : |",
-          "ENDING_DOT": "Folder name can't end with a period .",
-          "ONLY_SPACES": "Folder name can't contain only spaces"
+          "REQUIRED": "Nome da pasta é obrigatório",
+          "SPECIAL_CHARACTERS": "O nome da pasta não pode conter estes caracteres * \" < > \\ / ? : |",
+          "ENDING_DOT": "O nome da pasta não pode terminar com um ponto final .",
+          "ONLY_SPACES": "O nome da pasta não pode conter apenas espaços"
         }
       },
       "FOLDER_DESCRIPTION": {
-        "LABEL": "Description"
+        "LABEL": "Descrição"
       },
       "FOLDER_TITLE": {
-        "LABEL": "Title"
+        "LABEL": "Título"
       },
       "CREATE_BUTTON": {
-        "LABEL": "Create"
+        "LABEL": "Criar"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Update"
+        "LABEL": "Atualizar"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Cancel"
+        "LABEL": "Cancelar"
       }
     },
     "MESSAGES": {
       "ERRORS": {
-        "GENERIC": "The action was unsuccessful. Try again or contact your IT Team.",
-        "EXISTENT_FOLDER": "There's already a folder with this name. Try a different name."
+        "GENERIC": "A ação não teve êxito. Tente novamente ou entre em contato com sua equipa de TI.",
+        "EXISTENT_FOLDER": "Já existe uma pasta com este nome. Tente um nome diferente."
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "View",
-      "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
-      "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
-      "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
-      "GENERIC": "There was a problem restoring {{ name }} item",
-      "PLURAL": "Restore successful",
-      "SINGULAR": "{{ name }} item restored"
+      "VIEW": "Visualizar",
+      "PARTIAL_PLURAL": "{{ number }} itens não restaurados devido a problemas com a localização do restauro",
+      "NODE_EXISTS": "Não é possível restaurar, item {{ name }} já existe",
+      "LOCATION_MISSING": "Não é possível restaurar item{{ name }}a localização original já não existe",
+      "GENERIC": "Ocorreu um problema ao restaurar {{ name }} item",
+      "PLURAL": "Restauro bem-sucedido",
+      "SINGULAR": "{{ name }} item restaurado"
     },
     "DELETE_NODE": {
-      "SINGULAR": "{{ name }} deleted",
-      "PLURAL": "{{ number }} items deleted",
-      "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
-      "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
-      "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
-      "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
+      "SINGULAR": "{{ name }} eliminado",
+      "PLURAL": "{{ number }} itens eliminados",
+      "PARTIAL_SINGULAR": "Eliminado {{ success }} item, {{ failed }} não pôde ser eliminado",
+      "PARTIAL_PLURAL": "Eliminados {{ success }} itens, {{ failed }} não puderam ser eliminados",
+      "ERROR_SINGULAR": "Não foi possível eliminar {{ name }}",
+      "ERROR_PLURAL": "Não foi possível eliminar {{ number }} itens"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
-        "ADD": "Add New",
-        "NAME": "Name",
-        "VALUE": "Value"
+        "ADD": "Adicionar novo",
+        "NAME": "Nome",
+        "VALUE": "Valor"
       },
-      "NONE": "None",
+      "NONE": "Nenhum",
       "VALIDATORS": {
-        "FLOAT_VALIDATION_ERROR": "Use a number format",
-        "INT_VALIDATION_ERROR": "Use an integer format",
-        "LONG_VALIDATION_ERROR": "Use a long format",
-        "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
-        "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "FLOAT_VALIDATION_ERROR": "Utilizar um formato numérico",
+        "INT_VALIDATION_ERROR": "Utilizar um formato inteiro",
+        "LONG_VALIDATION_ERROR": "Utilizar um formato longo",
+        "LENGTH_VALIDATION_ERROR": "O valor deve ter entre {{ minLength }} e {{ maxLength }} de comprimento",
+        "MATCH_VALIDATION_ERROR": "O valor não corresponde ao padrão: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "O valor deve estar entre {{ minValue }} e {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Só é permitido um valor positivo"
       },
-      "MORE": "More"
+      "MORE": "Mais"
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "General info",
-        "NAME": "Name",
-        "TITLE": "Title",
-        "DESCRIPTION": "Description",
-        "AUTHOR": "Author",
-        "MIMETYPE": "Mimetype",
-        "SIZE": "Size",
-        "CREATOR": "Creator",
-        "CREATED_DATE": "Created Date",
-        "MODIFIER": "Modifier",
-        "MODIFIED_DATE": "Modified Date",
-        "CONTENT_TYPE": "Content Type"
+        "HEADER": "Informações gerais",
+        "NAME": "Nome",
+        "TITLE": "Título",
+        "DESCRIPTION": "Descrição",
+        "AUTHOR": "Autor",
+        "MIMETYPE": "Tipo Mime",
+        "SIZE": "Tamanho",
+        "CREATOR": "Criador",
+        "CREATED_DATE": "Data de criação",
+        "MODIFIER": "Modificador",
+        "MODIFIED_DATE": "Data de modificação",
+        "CONTENT_TYPE": "Tipo de conteúdo"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
-          "TITLE": "Change content type",
-          "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
-          "CONFIRM": "Are you sure you want to change the content type?",
-          "CANCEL": "CANCEL",
-          "APPLY": "Save Changes",
-          "VIEW_DETAILS": "View details",
+          "TITLE": "Alterar tipo de conteúdo",
+          "DESCRIPTION": "Ao efetuar esta alteração ao tipo de conteúdo, irá adicionar permanentemente algumas propriedades e metadados armazenados ao documento.",
+          "CONFIRM": "Tem a certeza de que pretende alterar o tipo de conteúdo",
+          "CANCEL": "CANCELAR",
+          "APPLY": "Guardar alterações",
+          "VIEW_DETAILS": "Ver detalhes",
           "PROPERTY": {
-            "NAME": "Name",
-            "DESCRIPTION": "Description",
-            "DATA_TYPE": "Data type"
+            "NAME": "Nome",
+            "DESCRIPTION": "Descrição",
+            "DATA_TYPE": "Tipo de dados"
           }
         }
       },
       "ACTIONS": {
-        "EDIT": "Edit",
-        "SAVE": "Save",
-        "CANCEL": "Cancel",
-        "CLEAR": "Clear",
-        "TOGGLE": "Toggle value",
-        "COPY_TO_CLIPBOARD": "Double click to copy value",
-        "EDIT_ASPECTS": "Edit Aspect"
+        "EDIT": "Editar",
+        "SAVE": "Guardar",
+        "CANCEL": "Cancelar",
+        "CLEAR": "Limpar",
+        "TOGGLE": "Alternar valor",
+        "COPY_TO_CLIPBOARD": "Clique duas vezes para copiar o valor",
+        "EDIT_ASPECTS": "Editar aspeto"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit button",
-        "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
-        "EDIT_ASPECTS": "Edit Aspect"
+        "EDIT": "Botão Editar",
+        "DATEPICKER": "Utilize as teclas de setas para navegar entre datas. Para cima e para baixo passam para a semana seguinte ou anterior, mas no mesmo dia. A esquerda e a direita deslocam-se para o dia seguinte ou anterior.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado para a área de transferência",
+        "EDIT_ASPECTS": "Editar aspeto"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
-      "SORT_BY": "Sort by"
+      "TOGGLE_ASC_DESC_ORDER": "Alternar resultados entre ordem crescente e decrescente",
+      "SORT_BY": "Ordenar por:"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "Substituições do sinalizador de caraterística",
+      "FILTER_OR_ADD_NEW": "Filtrar ou adicionar novo",
+      "FILTER": "Filtro",
+      "ADD_NEW": "Adicionar novo sinalizador de recurso (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
-    "NONE": "No comments",
-    "ADD": "Add",
-    "HEADER": "Comments ({{ count }})",
-    "CREATED_BY_HEADER": "Created by",
-    "MESSAGE_HEADER": "Message",
+    "PROFILE_IMAGE": "Imagem de perfil",
+    "NONE": "Sem comentários",
+    "ADD": "Adicionar",
+    "HEADER": "Comentários ({{ count }})",
+    "CREATED_BY_HEADER": "Criado por",
+    "MESSAGE_HEADER": "Mensagem",
+    "EMPTY_ERROR": "O comentário não pode estar vazio",
     "DIALOG": {
-      "TITLE": "New comment",
+      "TITLE": "Novo comentário",
       "LABELS": {
-        "MESSAGE": "Message"
+        "MESSAGE": "Mensagem"
       },
       "BUTTON": {
-        "ADD": "Add Comment",
-        "CANCEL": "Cancel"
+        "ADD": "Adicionar comentário",
+        "CANCEL": "Cancelar"
       }
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco, faça o negócio fluir",
     "LABEL": {
-      "LOGIN": "Sign in",
-      "USERNAME": "Username",
-      "PASSWORD": "Password",
-      "REMEMBER": "Remember me"
+      "LOGIN": "Iniciar sessão",
+      "USERNAME": "Nome do utilizador",
+      "PASSWORD": "Palavra-passe",
+      "REMEMBER": "Lembrar-me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Show password",
-      "HIDE-PASSWORD": "Hide password"
+      "SHOW-PASSWORD": "Mostrar palavra-passe",
+      "HIDE-PASSWORD": "Ocultar palavra-passe"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Required",
-      "USERNAME-MIN": "Your username needs to be at least {{ minLength }} characters.",
-      "PASSWORD-REQUIRED": "Enter your password to sign in",
-      "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
-      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
-      "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
-      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
-      "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
+      "USERNAME-REQUIRED": "Desejado",
+      "USERNAME-MIN": "O seu nome de utilizador tem de ter pelo menos {{ minLength }} caracter",
+      "PASSWORD-REQUIRED": "Introduza a sua palavra-passe para iniciar sessão",
+      "LOGIN-ERROR-CREDENTIALS": "Introduziu um nome de utilizador ou uma palavra-passe desconhecidos",
+      "LOGIN-ERROR-PROVIDERS": "Os fornecedores não podem ser indefinidos",
+      "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do seu servidor",
+      "LOGIN-ERROR-CSRF": "Exceção CSRF, defina \"disableCSRF\": true em app.config.json",
+      "LOGIN-ECM-LICENSE": "O repositório dos Serviços de conteúdo Alfresco está em modo só de leitura",
+      "SSO-WRONG-CONFIGURATION": "Servidor de autenticação SSO inacessível"
     },
     "BUTTON": {
-      "LOGIN": "SIGN IN",
-      "CHECKING": "CHECKING",
-      "WELCOME": "WELCOME",
-      "SSO": "SIGN IN SSO"
+      "LOGIN": "ENTRAR",
+      "CHECKING": "VERIFICAR",
+      "WELCOME": "BEM-VINDO",
+      "SSO": "INICIAR SESSÃO SSO"
     },
     "ACTION": {
-      "HELP": "NEED HELP?",
-      "REGISTER": "REGISTER"
+      "HELP": "PRECISA DE AJUDA?",
+      "REGISTER": "REGISTAR"
     },
     "DIALOG": {
-      "CANCEL": "Cancel",
-      "CHOOSE": "Choose",
-      "LOGIN": "Sign in"
+      "CANCEL": "Cancelar",
+      "CHOOSE": "Escolher",
+      "LOGIN": "Iniciar sessão"
     }
   },
   "ADF-DATATABLE": {
     "EMPTY": {
-      "HEADER": "This list is empty",
+      "HEADER": "Esta lista está vazia",
       "DRAG-AND-DROP": {
-        "TITLE": "Drag and drop",
-        "SUBTITLE": "to upload files"
+        "TITLE": "Arrastar e largar",
+        "SUBTITLE": "para carregar ficheiros"
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Content actions",
-      "SELECT_COLUMNS": "Select columns"
+      "TOOLTIP": "Ações de conteúdo",
+      "SELECT_COLUMNS": "Selecionar colunas"
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "Actions",
-      "SELECT_ALL": "Select all",
-      "SELECT_FILE": "Select file",
-      "SORT_ASCENDING": "Ascending",
-      "SORT_DESCENDING": "Descending",
-      "SORT_NONE": "None",
-      "SORT_DEFAULT": "Sortable",
-      "SORT_ASCENDING_BY": "Ascending by {{ string }}",
-      "SORT_DESCENDING_BY": "Descending by {{ string }}",
-      "ICON_TEXT": "Item type {{ type }}",
-      "ICON_DISABLED": "Disabled",
-      "ROW_OPTION_BUTTON": "Actions",
-      "DRAG": "Drag button",
-      "EMPTY_HEADER": "Empty header"
+      "ACTIONS": "Ações",
+      "SELECT_ALL": "Selecionar tudo",
+      "SELECT_FILE": "Selecionar ficheiro",
+      "SORT_ASCENDING": "Crescente",
+      "SORT_DESCENDING": "Decrescente",
+      "SORT_NONE": "Nenhum",
+      "SORT_DEFAULT": "Classificável",
+      "SORT_ASCENDING_BY": "Ascendente por {{ string }}",
+      "SORT_DESCENDING_BY": "Decrescente por {{ string }}",
+      "ICON_TEXT": "Tipo de item {{ type }}",
+      "ICON_DISABLED": "Desativado",
+      "ROW_OPTION_BUTTON": "Ações",
+      "DRAG": "Botão Arrastar",
+      "EMPTY_HEADER": "Cabeçalho vazio"
     },
     "FILE_TYPE": {
-      "DOCUMENT": "Document",
-      "FOLDER": "Folder",
+      "DOCUMENT": "Documento",
+      "FOLDER": "Pasta",
       "PDF": "PDF",
-      "IMAGE": "Image",
-      "EXCEL": "Excel spreadsheet",
-      "WORD": "Word document",
-      "POWERPOINT": "Powerpoint presentation",
-      "VIDEO": "Video",
-      "AUDIO": "Audio",
-      "WEBSITE": "Website",
-      "ARCHIVE": "Archive",
-      "PRESENTATION": "Presentation",
-      "SPREADSHEET": "Spreadsheet",
-      "MISCELLANEOUS": "Miscellaneous"
+      "IMAGE": "Imagem",
+      "EXCEL": "Folha de cálculo Excel",
+      "WORD": "Documento Word",
+      "POWERPOINT": "Apresentação em Powerpoint",
+      "VIDEO": "Vídeo",
+      "AUDIO": "Áudio",
+      "WEBSITE": "Sítio Web",
+      "ARCHIVE": "Arquivo",
+      "PRESENTATION": "Apresentação",
+      "SPREADSHEET": "Folha de cálculo",
+      "MISCELLANEOUS": "Diversos"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Columns",
-      "SEARCH": "Search",
-      "APPLY": "Apply"
+      "COLUMNS": "Colunas",
+      "SEARCH": "Pesquisar",
+      "APPLY": "Aplicar"
     }
   },
   "USER_PROFILE": {
     "LABELS": {
       "ECM": {
-        "JOB_TITLE": "Job Title"
+        "JOB_TITLE": "Título da tarefa"
       },
       "BPM": {
-        "TENANT": "Tenant"
+        "TENANT": "Locatário"
       },
-      "MY_PROFILE": "My Profile"
+      "MY_PROFILE": "O meu perfil"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "Serviços de conteúdo",
+      "PS": "Serviços de processamento"
     }
   },
   "ADF_VIEWER": {
     "ACTIONS": {
-      "BACK": "Back",
-      "OPEN_WITH": "Open with",
-      "DOWNLOAD": "Download",
-      "PRINT": "Print",
-      "SHARE": "Share",
-      "MORE_ACTIONS": "More actions",
-      "INFO": "Info",
-      "FULLSCREEN": "Activate full-screen mode",
-      "CLOSE": "Close",
-      "NEXT_FILE": "Next File",
-      "PREV_FILE": "Previous File",
-      "WAIT": "Wait"
+      "BACK": "Voltar",
+      "OPEN_WITH": "Abrir com",
+      "DOWNLOAD": "Fazer o download",
+      "PRINT": "Imprimir",
+      "SHARE": "Partilhar",
+      "MORE_ACTIONS": "Mais ações",
+      "INFO": "Informação",
+      "FULLSCREEN": "Ativar o modo de ecrã inteiro",
+      "CLOSE": "Fechar",
+      "NEXT_FILE": "Ficheiro seguinte",
+      "PREV_FILE": "Ficheiro anterior",
+      "WAIT": "Esperar"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
-      "PREVIOUS_PAGE": "Previous page",
-      "NEXT_PAGE": "Next page",
-      "ZOOM_IN": "Zoom in",
-      "ZOOM_OUT": "Zoom out",
-      "FIT_PAGE": "Fit page",
-      "ROTATE": "Rotate",
-      "CROP": "Crop",
-      "SAVE": "Save",
-      "CANCEL": "Cancel",
-      "RESET": "Reset",
-      "THUMBNAILS": "Document thumbnails",
-      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel"
+      "MIME_TYPE_ICON": "Ícone do tipo de ficheiro",
+      "PREVIOUS_PAGE": "Página anterior",
+      "NEXT_PAGE": "Página seguinte",
+      "ZOOM_IN": "Ampliar",
+      "ZOOM_OUT": "Reduzir",
+      "FIT_PAGE": "Ajustar página",
+      "ROTATE": "Rodar",
+      "CROP": "Cortar",
+      "SAVE": "Guardar",
+      "CANCEL": "Cancelar",
+      "RESET": "Redefinir",
+      "THUMBNAILS": "Miniaturas do documento",
+      "THUMBNAILS_PANLEL_CLOSE": "Fechar painel de miniaturas"
     },
     "PAGE_LABEL": {
-      "SHOWING": "Showing",
-      "OF": "of",
-      "PAGE_SELECTOR_LABEL": "Page selector"
+      "SHOWING": "A mostrar",
+      "OF": "de",
+      "PAGE_SELECTOR_LABEL": "Seletor de páginas"
     },
-    "LOADING": "Loading",
-    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
+    "LOADING": "A carregar",
+    "UNKNOWN_FORMAT": "Não foi possível carregar a pré-visualização. Tipo de ficheiro não suportado ou erro de carregamento. Tente atualizar a página.",
     "SIDEBAR": {
       "THUMBNAILS": {
-        "PAGE": "Page {{ pageNum }}"
+        "PAGE": "Página {{ pageNum }}"
       }
     },
     "PDF_DIALOG": {
-      "SUBMIT": "Submit",
-      "CLOSE": "Close",
-      "PLACEHOLDER": "Password",
-      "ERROR": "Password is wrong"
+      "SUBMIT": "Enviar",
+      "CLOSE": "Fechar",
+      "PLACEHOLDER": "Palavra-passe",
+      "ERROR": "A palavra-passe está errada"
     },
-    "SUBTITLES": "Subtitles",
+    "SUBTITLES": "Legendas",
     "NON_RESPONSIVE_DIALOG": {
-      "HEADER": "Preview loading delayed",
-      "LABEL": "You can continue to wait, or download the document."
+      "HEADER": "Atraso no carregamento da pré-visualização",
+      "LABEL": "Pode continuar a aguardar ou descarregar o documento."
     }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "We hit a problem.",
-      "DESCRIPTION": "Looks like something went wrong.",
+      "TITLE": "Encontrámos um problema.",
+      "DESCRIPTION": "Parece que algo correu mal.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     },
     "403": {
-      "TITLE": "You don't have permission to access this server.",
-      "DESCRIPTION": "You're not allowed access to this resource on the server.",
+      "TITLE": "Não tem permissão para aceder a este servidor.",
+      "DESCRIPTION": "Não tem permissão para aceder a este recurso no servidor.",
       "SECONDARY_BUTTON": {
-        "TEXT": "Report issue"
+        "TEXT": "Comunicar problema"
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     },
     "404": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "We couldn’t find the page you were looking for.",
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "Não foi possível encontrar a página que procurava.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     },
     "500": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "Internal server error, try again or contact IT support [500].",
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "Erro interno do servidor, tente novamente ou contacte o apoio informático \\[500].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     },
     "502": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "Bad Gateway, try again or contact IT support [502].",
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "Bad Gateway, tente novamente ou contacte o suporte de TI \\[502].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     },
     "503": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "Service Temporarily Unavailable [503].",
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "Serviço temporariamente indisponível \\[503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     },
     "504": {
-      "TITLE": "An error occurred.",
-      "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "O servidor atingiu o tempo limite, tente novamente ou contacte o suporte de TI \\[504].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },
       "RETURN_BUTTON": {
-        "TEXT": "Back to home"
+        "TEXT": "Voltar à página inicial"
       }
     }
   },
   "ABOUT": {
-    "VERSION": "Version",
+    "VERSION": "Versão",
     "SERVER_SETTINGS": {
-      "TITLE": "Server settings",
-      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
-      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
+      "TITLE": "Definições do site",
+      "CONTENT_SERVICE_HOST": "URL dos Serviços de Conteúdos Alfresco: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL dos serviços de processos Alfresco: {{ value }}"
     },
-    "REPOSITORY": "Repository",
+    "REPOSITORY": "Repositório",
     "PACKAGES": {
-      "TITLE": "Packages",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "Pacotes",
+      "NAME": "Nome",
+      "VERSION": "Versão"
     },
     "EXTENSIONS": {
-      "TITLE": "Plugins",
+      "TITLE": "Plug-ins",
       "TABLE_HEADERS": {
         "ID": "ID",
-        "NAME": "Name",
-        "VERSION": "Version",
-        "VENDOR": "Vendor",
-        "LICENSE": "License",
-        "RUNTIME": "Runtime",
-        "DESCRIPTION": "Description"
+        "NAME": "Nome",
+        "VERSION": "Versão",
+        "VENDOR": "Fornecedor",
+        "LICENSE": "Licença",
+        "RUNTIME": "Tempo de execução",
+        "DESCRIPTION": "Descrição"
       }
     },
     "LICENSE": {
-      "TITLE": "License",
-      "PROPERTY": "Property",
-      "VALUE": "Value"
+      "TITLE": "Licença",
+      "PROPERTY": "Propriedade",
+      "VALUE": "Valor"
     },
     "STATUS": {
-      "TITLE": "Status",
-      "PROPERTY": "Property",
-      "VALUE": "Value"
+      "TITLE": "Estado",
+      "PROPERTY": "Propriedade",
+      "VALUE": "Valor"
     },
     "MODULES": {
-      "TITLE": "Modules",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "Módulos",
+      "NAME": "Nome",
+      "VERSION": "Versão"
     },
     "PLUGINS": {
-      "TITLE": "Plugins",
-      "NAME": "Name",
-      "VERSION": "Version"
+      "TITLE": "Plug-ins",
+      "NAME": "Nome",
+      "VERSION": "Versão"
     }
   },
   "CLIPBOARD": {
-    "CLICK_TO_COPY": "Click to copy",
-    "SUCCESS_COPY": "Text copied to clipboard"
+    "CLICK_TO_COPY": "Clique para copiar",
+    "SUCCESS_COPY": "Texto copiado para a área de transferência"
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Search",
-      "ARIA_LABEL": "Search options"
+      "PLACEHOLDER": "Pesquisar",
+      "ARIA_LABEL": "Opções de pesquisa"
     },
     "BUTTON": {
-      "ARIA_LABEL": "Clear"
+      "ARIA_LABEL": "Limpar"
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Loading...",
+    "LOADING": "A carregar...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": "Ícone de nó"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": "Carregar mais"
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Confirm",
-    "ACTION": "Do you want to proceed?",
-    "YES_LABEL": "Yes",
-    "NO_LABEL": "No"
+    "TITLE": "Confirmar",
+    "ACTION": "Pretende prosseguir?",
+    "YES_LABEL": "Sim",
+    "NO_LABEL": "Não"
   }
 }
