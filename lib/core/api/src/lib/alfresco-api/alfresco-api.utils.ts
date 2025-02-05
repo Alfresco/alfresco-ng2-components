@@ -15,18 +15,31 @@
  * limitations under the License.
  */
 
-import { HttpEvent, HttpUploadProgressEvent, HttpEventType, HttpResponse, HttpParams, HttpParameterCodec, HttpUrlEncodingCodec } from '@angular/common/http';
+import {
+    HttpEvent,
+    HttpUploadProgressEvent,
+    HttpEventType,
+    HttpResponse,
+    HttpParams,
+    HttpParameterCodec,
+    HttpUrlEncodingCodec
+} from '@angular/common/http';
 import { Constructor } from '../types';
 
 export const isHttpUploadProgressEvent = <T>(val: HttpEvent<T>): val is HttpUploadProgressEvent => val.type === HttpEventType.UploadProgress;
 export const isHttpResponseEvent = <T>(val: HttpEvent<T>): val is HttpResponse<T> => val.type === HttpEventType.Response;
 export const isDate = (value: unknown): value is Date => value instanceof Date;
 export const isXML = (value: unknown): boolean => typeof value === 'string' && value.startsWith('<?xml');
-export const isBlobResponse = (response: HttpResponse<any>, returnType: Constructor<unknown> | 'blob'): response is HttpResponse<Blob> => returnType === 'blob' || response.body instanceof Blob;
-export const isConstructor = <T = unknown>(value: any): value is Constructor<T> => typeof value === 'function' && !!value?.prototype?.constructor.name;
+export const isBlobResponse = (response: HttpResponse<any>, returnType: Constructor<unknown> | 'blob'): response is HttpResponse<Blob> =>
+    returnType === 'blob' || response.body instanceof Blob;
+export const isConstructor = <T = unknown>(value: any): value is Constructor<T> =>
+    typeof value === 'function' && !!value?.prototype?.constructor.name;
 
-const convertParamsToString = (value: any): any => isDate(value) ? value.toISOString() : value;
-export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unknown>, encoder: HttpParameterCodec = new HttpUrlEncodingCodec()): HttpParams | undefined => {
+const convertParamsToString = (value: any): any => (isDate(value) ? value.toISOString() : value);
+export const getQueryParamsWithCustomEncoder = (
+    obj: Record<string | number, unknown>,
+    encoder: HttpParameterCodec = new HttpUrlEncodingCodec()
+): HttpParams | undefined => {
     if (!obj) {
         return undefined;
     }
@@ -38,7 +51,6 @@ export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unk
     const params = removeNilValues(obj);
 
     for (const key in params) {
-
         if (Object.prototype.hasOwnProperty.call(params, key)) {
             const value = params[key];
             if (value instanceof Array) {
@@ -62,7 +74,6 @@ export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unk
  * @returns object with updated values
  */
 export const removeNilValues = (obj: Record<string | number, unknown>) => {
-
     if (!obj) {
         return {};
     }
@@ -74,9 +85,7 @@ export const removeNilValues = (obj: Record<string | number, unknown>) => {
     }, {});
 };
 
-
 export const convertObjectToFormData = (formParams: Record<string | number, string | Blob>): FormData => {
-
     const formData = new FormData();
 
     for (const key in formParams) {

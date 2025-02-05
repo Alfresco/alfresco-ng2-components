@@ -27,9 +27,7 @@ export class UserAccessService {
     private globalAccess: string[];
     private applicationAccess: ApplicationAccessModel[];
 
-    constructor(private jwtHelperService: JwtHelperService,
-                private appConfigService: AppConfigService) {
-    }
+    constructor(private jwtHelperService: JwtHelperService, private appConfigService: AppConfigService) {}
 
     fetchUserAccess() {
         if (this.hasRolesInRealmAccess()) {
@@ -100,8 +98,10 @@ export class UserAccessService {
      */
     hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean {
         if (rolesToCheck?.length > 0) {
-            const appAccess = this.hasRolesInRealmAccess() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
-            return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
+            const appAccess = this.hasRolesInRealmAccess()
+                ? this.applicationAccess[appName]
+                : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
+            return appAccess ? appAccess.roles.some((appRole) => rolesToCheck.includes(appRole)) : false;
         }
         return true;
     }

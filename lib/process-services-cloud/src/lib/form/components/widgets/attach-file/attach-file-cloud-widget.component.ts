@@ -276,7 +276,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     isRetrieveMetadataOptionEnabled(): boolean {
-        return this.field?.params?.menuOptions && this.field.params.menuOptions[RETRIEVE_METADATA_OPTION];
+        return this.field?.params?.menuOptions?.[RETRIEVE_METADATA_OPTION];
     }
 
     isValidAlias(alias: string): boolean {

@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { FormOutcomeModel } from './form-outcome.model';
 
 export class FormOutcomeEvent {
-
     private readonly _outcome: FormOutcomeModel;
     private _defaultPrevented: boolean = false;
 
@@ -39,5 +38,4 @@ export class FormOutcomeEvent {
     preventDefault() {
         this._defaultPrevented = true;
     }
-
 }

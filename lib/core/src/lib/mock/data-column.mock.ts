@@ -18,9 +18,7 @@
 import { DataColumn } from '../datatable/data/data-column.model';
 import { mockPathInfos } from '../datatable/components/mocks/datatable.mock';
 
-export const getDataColumnMock = <T = unknown>(
-    column: Partial<DataColumn<T>> = {}
-): DataColumn<T> => ({
+export const getDataColumnMock = <T = unknown>(column: Partial<DataColumn<T>> = {}): DataColumn<T> => ({
     id: 'columnId',
     key: 'key',
     type: 'text',
@@ -42,12 +40,7 @@ export const getDataColumnMock = <T = unknown>(
     ...column
 });
 
-export const textColumnRows = [
-    { firstname: 'John' },
-    { firstname: 'Henry' },
-    { firstname: 'David' },
-    { firstname: 'Thomas' }
-];
+export const textColumnRows = [{ firstname: 'John' }, { firstname: 'Henry' }, { firstname: 'David' }, { firstname: 'Thomas' }];
 
 export const dateColumnRows = [
     { createdOn: new Date(2016, 6, 1, 11, 8, 4) },
@@ -80,41 +73,14 @@ export const locationColumnRows = [
     }
 ];
 
-export const booleanColumnRows = [
-    { bool: 'true' },
-    { bool: 'false' },
-    { bool: true },
-    { bool: false }
-];
+export const booleanColumnRows = [{ bool: 'true' }, { bool: 'false' }, { bool: true }, { bool: false }];
 
-export const iconColumnRows = [
-    { icon: 'alarm' },
-    { icon: 'folder_open' },
-    { icon: 'accessibility' }
-];
+export const iconColumnRows = [{ icon: 'alarm' }, { icon: 'folder_open' }, { icon: 'accessibility' }];
 
-export const imageColumnRows = [
-    { image: 'material-icons://image' },
-    { image: 'material-icons://image' },
-    { image: 'material-icons://image' }
-];
+export const imageColumnRows = [{ image: 'material-icons://image' }, { image: 'material-icons://image' }, { image: 'material-icons://image' }];
 
-export const fileSizeColumnRows = [
-    { size: 12313 },
-    { size: 23 },
-    { size: 42421412421 }
-];
+export const fileSizeColumnRows = [{ size: 12313 }, { size: 23 }, { size: 42421412421 }];
 
-export const amountColumnRows = [
-    { price: 1230 },
-    { price: 422.55 },
-    { price: 50000.7855332 },
-    { price: 0.123 },
-    { price: -2022.3321 }
-];
+export const amountColumnRows = [{ price: 1230 }, { price: 422.55 }, { price: 50000.7855332 }, { price: 0.123 }, { price: -2022.3321 }];
 
-export const jsonColumnRows = [
-    { rowInfo: { id: 1, name: 'row1' } },
-    { rowInfo: { id: 2, name: 'row2' } },
-    { rowInfo: { id: 3, name: 'row3' } }
-];
+export const jsonColumnRows = [{ rowInfo: { id: 1, name: 'row1' } }, { rowInfo: { id: 2, name: 'row2' } }, { rowInfo: { id: 3, name: 'row3' } }];

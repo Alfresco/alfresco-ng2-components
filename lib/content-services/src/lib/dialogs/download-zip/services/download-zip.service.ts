@@ -24,15 +24,13 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class DownloadZipService {
-
     private _downloadsApi: DownloadsApi;
     get downloadsApi(): DownloadsApi {
         this._downloadsApi = this._downloadsApi ?? new DownloadsApi(this.apiService.getInstance());
         return this._downloadsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Creates a new download.

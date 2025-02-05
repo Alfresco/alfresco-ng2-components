@@ -34,8 +34,7 @@ export function loadAppConfig(
     storageService: StorageService,
     adfHttpClient: AdfHttpClient,
     storagePrefixFactory: StoragePrefixFactory
-    ) {
-
+) {
     const init = () => {
         adfHttpClient.disableCsrf = appConfigService.get<boolean>(AppConfigValues.DISABLECSRF, true);
         storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
@@ -45,4 +44,4 @@ export function loadAppConfig(
         });
     };
     return () => appConfigService.load(init);
-};
+}

@@ -35,9 +35,7 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService impleme
     getForms(appName: string): Observable<FormRepresentation[]> {
         const url = `${this.getBasePath(appName)}/form/v1/forms`;
 
-        return this.get(url).pipe(
-            map((data: any) => data.map((formData: any) => formData.formRepresentation))
-        );
+        return this.get(url).pipe(map((data: any) => data.map((formData: any) => formData.formRepresentation)));
     }
 
     /**

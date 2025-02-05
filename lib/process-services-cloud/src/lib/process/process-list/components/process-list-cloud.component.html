@@ -31,7 +31,7 @@
                     class="adf-cloud-process-list-loading-margin"
                     [color]="'primary'"
                     [mode]="'indeterminate'" />
-                <ng-content select="adf-custom-loading-content-template"></ng-content>
+                <ng-content select="adf-custom-loading-content-template" />
             </ng-template>
         </adf-loading-content-template>
         <adf-no-content-template>
@@ -40,7 +40,7 @@
                     icon="assessment"
                     [title]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.TITLE' | translate"
                     [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate" />
-                <ng-content select="adf-custom-empty-content-template"></ng-content>
+                <ng-content select="adf-custom-empty-content-template" />
             </ng-template>
         </adf-no-content-template>
 

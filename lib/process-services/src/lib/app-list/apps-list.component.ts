@@ -17,16 +17,7 @@
 
 import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AppsProcessService } from '../services/apps-process.service';
-import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { IconModel } from './icon.model';
 import { finalize, map } from 'rxjs/operators';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';

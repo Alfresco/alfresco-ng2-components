@@ -50,8 +50,7 @@
                             *ngIf="data?.list?.entries.length === 0">
                     <ng-content
                         selector="adf-empty-search-result"
-                        *ngIf="isNoSearchTemplatePresent() else defaultNoResult">
-                    </ng-content>
+                        *ngIf="isNoSearchTemplatePresent() else defaultNoResult" />
                     <ng-template #defaultNoResult>
                         <p matListItemLine class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm:
                             searchTerm} }}</p>

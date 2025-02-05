@@ -32,11 +32,7 @@ import { OAuth2Service } from './oauth2.service';
 
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService implements IdentityGroupServiceInterface {
-
-    constructor(
-        private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService
-    ) {}
+    constructor(private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
@@ -125,18 +121,22 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
         return this.getTotalGroupsCount().pipe(
             switchMap((totalCount: IdentityGroupCountModel) =>
-            this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(
-                map((response) => ({
-                    entries: response,
-                    pagination: {
-                        skipCount: requestQuery.first,
-                        maxItems: requestQuery.max,
-                        count: totalCount.count,
-                        hasMoreItems: false,
-                        totalItems: totalCount.count
-                    }
-                } as IdentityGroupQueryResponse))
-            ))
+                this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(
+                    map(
+                        (response) =>
+                            ({
+                                entries: response,
+                                pagination: {
+                                    skipCount: requestQuery.first,
+                                    maxItems: requestQuery.max,
+                                    count: totalCount.count,
+                                    hasMoreItems: false,
+                                    totalItems: totalCount.count
+                                }
+                            } as IdentityGroupQueryResponse)
+                    )
+                )
+            )
         );
     }
 
@@ -222,20 +222,22 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param roleNames Array of role names
      * @returns True if the group has one or more of the roles, false otherwise
      */
-    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
-        return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
-            let hasRole = false;
-            if (groupRoles?.length > 0) {
-                roleNames.forEach((roleName: string) => {
-                    const role = groupRoles.find(({ name }) => roleName === name);
-                    if (role) {
-                        hasRole = true;
-                        return;
-                    }
-                });
-            }
-            return hasRole;
-        }));
+    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
+        return this.getGroupRoles(groupId).pipe(
+            map((groupRoles) => {
+                let hasRole = false;
+                if (groupRoles?.length > 0) {
+                    roleNames.forEach((roleName: string) => {
+                        const role = groupRoles.find(({ name }) => roleName === name);
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
     }
 
     /**
@@ -246,11 +248,9 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = `${this.identityHost}/clients`;
-        const queryParams = {clientId: applicationName};
+        const queryParams = { clientId: applicationName };
 
-        return this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(
-            map((response) => response && response.length > 0 ? response[0].id : '')
-        );
+        return this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(map((response) => (response && response.length > 0 ? response[0].id : '')));
     }
 
     /**
@@ -273,9 +273,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @returns True if the group has the client app, false otherwise
      */
     checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
-        return this.getClientRoles(groupId, clientId).pipe(
-            map((response) => response && response.length > 0)
-        );
+        return this.getClientRoles(groupId, clientId).pipe(map((response) => response && response.length > 0));
     }
 
     /**

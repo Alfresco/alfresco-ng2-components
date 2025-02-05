@@ -16,7 +16,8 @@
  */
 
 import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
-import { AuthModule, JWT_STORAGE_SERVICE, RedirectAuthService } from '../auth';
+import { AuthModule, JWT_STORAGE_SERVICE } from '../auth/oidc/auth.module';
+import { RedirectAuthService } from '../auth/oidc/redirect-auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppConfigService, StoragePrefixFactory } from '../app-config';
