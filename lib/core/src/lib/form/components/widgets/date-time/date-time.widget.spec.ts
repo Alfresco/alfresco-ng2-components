@@ -61,6 +61,28 @@ describe('DateTimeWidgetComponent', () => {
         TestBed.resetTestingModule();
     });
 
+    it('should not call onFieldChanged on init', () => {
+        spyOn(widget, 'onFieldChanged').and.callThrough();
+        expect(widget.onFieldChanged).not.toHaveBeenCalled();
+    });
+
+    it('should call onFieldChanged when datetime changes', () => {
+        const spy = spyOn(widget, 'onFieldChanged').and.callThrough();
+        const field = new FormFieldModel(form, {
+            id: 'date-id',
+            name: 'date-name',
+            type: FormFieldTypes.DATETIME
+        });
+        const newDate = new Date('1982-03-13T10:00:00.000Z');
+
+        widget.field = field;
+        fixture.detectChanges();
+        widget.datetimeInputControl.setValue(newDate);
+
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.mostRecent().args[0].value).toBe(newDate);
+    });
+
     it('should setup min value for date picker', () => {
         const minValue = '1982-03-13T10:00:00Z';
         widget.field = new FormFieldModel(form, {

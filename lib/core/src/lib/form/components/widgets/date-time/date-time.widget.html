@@ -21,7 +21,6 @@
                    (keydown.enter)="datetimePicker.open()"
                    [placeholder]="field.placeholder"
                    [title]="field.tooltip"
-                   (blur)="updateField()"
                    [min]="minDate"
                    [max]="maxDate">
             <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"

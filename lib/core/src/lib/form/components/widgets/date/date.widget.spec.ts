@@ -42,6 +42,29 @@ describe('DateWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
+    it('should not call onFieldChanged on init', () => {
+        spyOn(widget, 'onFieldChanged').and.callThrough();
+        expect(widget.onFieldChanged).not.toHaveBeenCalled();
+    });
+
+    it('should call onFieldChanged when date changes', () => {
+        const spy = spyOn(widget, 'onFieldChanged').and.callThrough();
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9-9-9999',
+            type: 'date'
+        });
+        const newDate = new Date('12/12/2012');
+
+        widget.field = field;
+        fixture.detectChanges();
+        widget.dateInputControl.setValue(newDate);
+
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.mostRecent().args[0].value).toBe(newDate);
+    });
+
     it('[C310333] - should be able to set a placeholder', () => {
         widget.field = new FormFieldModel(form, {
             id: 'date-id',
