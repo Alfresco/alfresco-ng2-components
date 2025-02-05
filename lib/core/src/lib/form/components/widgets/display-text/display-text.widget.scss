@@ -4,4 +4,5 @@
     font-weight: var(--adf-readonly-text-font-weight, var(--adf-form-label-font-weight, var(--theme-font-weight)));
     color: var(--adf-readonly-text-color, var(--adf-form-label-color, var(--theme-text-color)));
     line-height: normal;
+    word-break: break-word;
 }

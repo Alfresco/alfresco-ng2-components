@@ -879,6 +879,21 @@ describe('FormFieldModel', () => {
         expect(field.numberOfColumns).toBe(123);
     });
 
+    it('should NOT update colspan based on fields colspans for section type', () => {
+        const form = new FormModel();
+        const json = {
+            type: FormFieldTypes.SECTION,
+            numberOfColumns: 2,
+            fields: {
+                column1: [{ id: 'field1', colspan: 2 }],
+                column2: [{ id: 'field2', colspan: 3 }]
+            }
+        };
+        const formField = new FormFieldModel(form, json);
+
+        expect(formField.colspan).toBe(1);
+    });
+
     it('should instantiate FormField when has no variable', () => {
         const form = new FormModel({});
         form.json = {

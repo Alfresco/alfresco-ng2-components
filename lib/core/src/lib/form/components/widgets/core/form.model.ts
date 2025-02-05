@@ -340,28 +340,63 @@ export class FormModel implements ProcessFormModel {
         return this.fieldsCache.find((field) => field.id === fieldId);
     }
 
-    getFormFields(): FormFieldModel[] {
-        if (this.fieldsCache.length > 0) {
-            return this.fieldsCache;
-        } else {
-            const formFieldModel: FormFieldModel[] = [];
-
-            for (let i = 0; i < this.fields.length; i++) {
-                const field = this.fields[i];
-
-                if (field instanceof ContainerModel) {
-                    formFieldModel.push(field.field);
-
-                    field.field.columns.forEach((column) => {
-                        formFieldModel.push(...column.fields);
-                    });
-                } else {
-                    formFieldModel.push(field);
-                }
-            }
-
-            return formFieldModel;
+    getFormFields(filterTypes?: string[]): FormFieldModel[] {
+        if (this.fieldsCache?.length) {
+            return this.filterFieldsByType(this.fieldsCache, filterTypes);
         }
+
+        const formFieldModel: FormFieldModel[] = [];
+        this.processFields(this.fields, formFieldModel);
+        return this.filterFieldsByType(formFieldModel, filterTypes);
+    }
+
+    private processFields(fields: (ContainerModel | FormFieldModel)[], formFieldModel: FormFieldModel[]): void {
+        fields.forEach((field) => {
+            if (this.isSectionField(field)) {
+                this.handleSectionField(field, formFieldModel);
+            } else if (this.isContainerField(field)) {
+                this.handleContainerField(field, formFieldModel);
+            } else {
+                this.handleSingleField(field, formFieldModel);
+            }
+        });
+    }
+
+    private isContainerField(field: ContainerModel | FormFieldModel): field is ContainerModel {
+        return field instanceof ContainerModel;
+    }
+
+    private isSectionField(field: ContainerModel | FormFieldModel): field is FormFieldModel {
+        return field.type === FormFieldTypes.SECTION;
+    }
+
+    private handleSectionField(section: FormFieldModel, formFieldModel: FormFieldModel[]): void {
+        formFieldModel.push(section);
+        section.columns.forEach((column) => {
+            this.processFields(column.fields, formFieldModel);
+        });
+    }
+
+    private handleContainerField(container: ContainerModel, formFieldModel: FormFieldModel[]): void {
+        formFieldModel.push(container.field);
+        container.field.columns.forEach((column) => {
+            this.processFields(column.fields, formFieldModel);
+        });
+    }
+
+    private handleSingleField(field: FormFieldModel, formFieldModel: FormFieldModel[]): void {
+        formFieldModel.push(field);
+        if (field.fields) {
+            this.processFields(Object.values(field.fields), formFieldModel);
+        }
+    }
+
+    private filterFieldsByType(fields: FormFieldModel[], types?: string[]): FormFieldModel[] {
+        if (!types?.length) {
+            return fields;
+        }
+
+        return fields.filter((field) => types.includes(field?.type));
     }
 
     markAsInvalid(): void {
