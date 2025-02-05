@@ -147,15 +147,14 @@
       "NO_EXISTING_TAGS": "Keine vorhandenen Tags",
       "TITLE": "Tags erstellen",
       "CREATE_TAG": "Erstellen: {{tag}}",
-      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
+      "TAG_SEARCH_PLACEHOLDER": "Tags suchen",
       "ERRORS": {
         "EXISTING_TAG": "Dieses Tag gibt es bereits",
         "ALREADY_ADDED_TAG": "Tag wurde bereits hinzugefügt",
         "EMPTY_TAG": "Tag-Name darf nicht nur aus Leerzeichen bestehen",
-        "REQUIRED": "Tag-Name ist erforderlich",
         "FETCH_TAGS": "Fehler beim Abrufen der Tags",
         "CREATE_TAGS": "Fehler beim Erstellen der Tags",
-        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
+        "SPECIAL_CHARACTERS": "Tag-Name darf keine verbotenen Zeichen enthalten"
       },
       "TOOLTIPS": {
         "DELETE_TAG": "Tag löschen"
@@ -176,7 +175,7 @@
     "GENERIC_CREATE": "Erstellen: {{name}}",
     "NAME": "Kategoriename",
     "LOADING": "Laden",
-    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "NO_CATEGORIES_ADDED": "Derzeit gibt es keine Kategorien hinzugefügt",
     "ERRORS": {
       "NOT_FOUND": "Kategorie nicht gefunden",
       "REQUIRED": "Kategoriename ist erforderlich",
@@ -186,7 +185,7 @@
       "CREATE_CATEGORIES": "Fehler beim Erstellen von Kategorien",
       "EXISTING_CATEGORIES": "Einige Kategorien sind bereits vorhanden"
     },
-    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Kategorien suchen"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -274,15 +273,15 @@
       "ARIA-LABEL": "Suchschaltfläche"
     },
     "INPUT": {
-      "LABEL": "Search",
-      "PLACEHOLDER": "Search Query",
+      "LABEL": "Suchen",
+      "PLACEHOLDER": "Suchanfrage",
       "ARIA-LABEL": "Sucheingabe"
     },
     "RESULTS": {
       "SUMMARY": "{{numResults}} Ergebnis gefunden für {{searchTerm}}",
       "NONE": "Keine Ergebnisse gefunden für {{searchTerm}}",
       "ERROR": "Bei der Suche ist ein Problem aufgetreten. Versuchen Sie es noch einmal.",
-      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
+      "WILL_CONTAIN": "Ergebnisse werden '{{searchTerm}} ' enthalten",
       "COLUMNS": {
         "NAME": "Namen anzeigen",
         "MODIFIED_BY": "Bearbeitet von",
@@ -333,11 +332,11 @@
         "OPTIONS-SELECTION": "Optionen Auswahl"
       },
       "ANY": "Alle",
-      "PEOPLE": "People"
+      "PEOPLE": "Personen"
     },
     "FACET_FIELDS": {
-      "MODIFIER_LABEL": "Modified by",
-      "CREATOR_LABEL": "Created by"
+      "MODIFIER_LABEL": "Geändert von",
+      "CREATOR_LABEL": "Erstellt von"
     },
     "ICONS": {
       "ft_ic_raster_image": "Bilddatei",
@@ -375,7 +374,7 @@
     },
     "UNKNOWN_CONFIGURATION": "Unbekannte Konfiguration",
     "SEARCH_HEADER": {
-      "TITLE": "Filter",
+      "TITLE": "Filtern",
       "TYPE": "Typ",
       "FILTER_BY": "Filtern nach {{ category }}",
       "CLEAR": "Löschen",
@@ -405,67 +404,67 @@
     "LOGICAL_SEARCH": {
       "MATCH_ALL": "ALLE",
       "MATCH_ALL_LABEL": "Finden Sie ALLE diese Ausdrücke",
-      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ALL_HINT": "Ergebnisse stimmen mit allen hier eingegebenen Wörtern überein",
       "MATCH_ANY": "BELIEBIG",
       "MATCH_ANY_LABEL": "Ordnen Sie einen der BELIEBIGEN Ausdrücke zu",
-      "MATCH_ANY_HINT": "Results will match any words entered here",
-      "MATCH_EXACT": "EXACT",
-      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
-      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "MATCH_ANY_HINT": "Ergebnisse stimmen mit allen hier eingegebenen Wörtern überein",
+      "MATCH_EXACT": "EXAKT",
+      "MATCH_EXACT_LABEL": "Diesem EXACT PHRASE entsprechen",
+      "MATCH_EXACT_HINT": "Ergebnisse stimmen mit der gesamten Phrase überein",
       "EXCLUDE": "AUSSCHLIESSEN",
       "EXCLUDE_LABEL": "Diese Ausdrücke AUSSCHLIESSEN",
-      "EXCLUDE_HINT": "Results will exclude matches with these words"
+      "EXCLUDE_HINT": "Ergebnisse schließen Übereinstimmungen mit diesen Wörtern aus"
     },
     "DATE_RANGE_ADVANCED": {
       "OPTIONS": {
-        "ANYTIME": "Anytime",
-        "IN_LAST": "In the last",
-        "BETWEEN": "Between"
+        "ANYTIME": "Jederzeit",
+        "IN_LAST": "In der letzten",
+        "BETWEEN": "Zwischen"
       },
       "IN_LAST_LABELS": {
-        "DAYS": "Days",
-        "WEEKS": "Weeks",
-        "MONTHS": "Months"
+        "DAYS": "Tage",
+        "WEEKS": "Wochen",
+        "MONTHS": "Monate"
       },
       "IN_LAST_DISPLAY_LABELS": {
-        "DAYS": "In the last {{value}} days",
-        "WEEKS": "In the last {{value}} weeks",
-        "MONTHS": "In the last {{value}} months"
+        "DAYS": "In den letzten {{value}} Tagen",
+        "WEEKS": "In den letzten {{value}} Wochen",
+        "MONTHS": "In den letzten {{value}} Monaten"
       },
       "BETWEEN_PLACEHOLDERS": {
-        "START_DATE": "Start Date",
-        "END_DATE": "End Date"
+        "START_DATE": "Startdatum",
+        "END_DATE": "Enddatum"
       },
       "ERROR": {
-        "IN_LAST": "Value required",
+        "IN_LAST": "Wert erforderlich",
         "START_DATE": {
-          "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid"
+          "REQUIRED": "Startdatum erforderlich",
+          "INVALID_FORMAT": "Startdatum ungültig"
         },
         "END_DATE": {
-          "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid"
+          "REQUIRED": "Enddatum erforderlich",
+          "INVALID_FORMAT": "Enddatum ungültig"
         }
       },
       "ARIA_LABEL": {
-        "NUMBER_INPUT": "Number input"
+        "NUMBER_INPUT": "Nummereingabe"
       }
     },
     "SEARCH_PROPERTIES": {
-      "FILE_SIZE": "File Size",
-      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE": "Größe der Datei",
+      "FILE_SIZE_PLACEHOLDER": "Dateigröße eingeben",
       "FILE_SIZE_OPERATOR": {
-        "AT_LEAST": "At Least",
-        "AT_MOST": "At Most",
-        "EXACTLY": "Exactly"
+        "AT_LEAST": "Mindestens",
+        "AT_MOST": "Höchstens",
+        "EXACTLY": "Genau"
       },
       "FILE_SIZE_UNIT_ABBREVIATION": {
         "KB": "KB",
-        "MB": "MB",
-        "GB": "GB"
+        "MB": "MN",
+        "GB": "SF"
       },
-      "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type"
+      "FILE_TYPE": "Dateityp",
+      "FILE_TYPE_PLACEHOLDER": "Dateityp hinzufügen"
     }
   },
   "PERMISSION": {
@@ -486,9 +485,9 @@
       "MODIFIED_DATE": "Datum der Änderung",
       "CONTENT_TYPE": "Content-Typ",
       "TAGS": "Tags",
-      "NO_TAGS_ADDED": "There are currently no tags added",
-      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
-      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
+      "NO_TAGS_ADDED": "Derzeit sind keine Tags hinzugefügt",
+      "NO_ITEMS_MESSAGE": "Es gibt derzeit keinen {{ groupTitle }} hinzugefügt",
+      "SAVE_OR_DISCARD_CHANGES": "Speichern oder verwerfen um fortzufahren"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -535,7 +534,7 @@
     },
     "UNSHARE_ERROR": "Fehler beim Aufheben der Freigabe dieser Datei",
     "UNSHARE_PERMISSION_ERROR": "Sie verfügen nicht über die Berechtigung die Freigabe für diese Datei aufzuheben",
-    "INVALID_DATE_ERROR": "Invalid date"
+    "INVALID_DATE_ERROR": "Ungültiges Datum"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -659,7 +658,7 @@
       "DROPDOWN": "Dropdown"
     },
     "HEADER": {
-      "SELECTED": "Selected ({{ count }})"
+      "SELECTED": "Ausgewählt ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -705,8 +704,8 @@
   "KNOWLEDGE_RETRIEVAL": {
     "SEARCH": {
       "WARNINGS": {
-        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
-        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+        "TOO_MANY_FILES_SELECTED": "Bitte wählen Sie nicht mehr als {{ maxFiles }} Dateien.",
+        "FOLDER_SELECTED": "Ordner sind nicht kompatibel mit KI Agents."
       }
     }
   }

@@ -1,354 +1,354 @@
 {
   "DIALOG": {
-    "SAVE_MESSAGE": "Click Save to add a report with the current settings to your reports list.",
+    "SAVE_MESSAGE": "Clique em Guardar para adicionar um relatório com as definições atuais à sua lista de relatórios.",
     "EXPORT_MESSAGE": ""
   },
   "DATE-WIDGET": {
-    "START-DATE": "Start date",
-    "END-DATE": "End date",
+    "START-DATE": "Data inicial",
+    "END-DATE": "Data final",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "Start date is required",
-      "START-LESS-THAN-END-DATE": "Start date must be before end date"
+      "START-DATE-REQUIRED": "Data de início é obrigatória",
+      "START-LESS-THAN-END-DATE": "A data de início tem de ser anterior à data de fim"
     }
   },
   "ADF_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later",
-      "TASK_APP_NAME": "Task App"
+      "TITLE": "Não foram encontradas aplicaçõe",
+      "SUBTITLE": "Crie uma nova aplicação que pretenda encontrar facilmente mais tarde",
+      "TASK_APP_NAME": "Aplicação de tarefas"
     },
     "LIST": {
       "MESSAGES": {
-        "TITLE": "No Tasks Found",
-        "SUBTITLE": "Create a new task that you want to easily find later",
-        "NONE": "No task lists found"
+        "TITLE": "Não foram encontradas tarefas",
+        "SUBTITLE": "Criar uma nova tarefa que pretende encontrar facilmente mais tarde",
+        "NONE": "Não foram encontradas listas de tarefas"
       }
     },
     "PROPERTIES": {
-      "TASK_NAME": "Task",
-      "THUMBNAIL": "Thumbnail",
-      "DURATION": "Duration",
-      "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Task Name",
-      "ASSIGNEE": "Assignee",
-      "ASSIGNEE_DEFAULT": "No assignee",
-      "PRIORITY": "Priority",
-      "DUE_DATE": "Due Date",
-      "DUE_DATE_DEFAULT": "No date",
-      "STATUS": "Status",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "PARENT_NAME": "Parent name",
-      "PARENT_NAME_DEFAULT": "No parent",
-      "CREATED_BY": "Created By",
-      "CREATED": "Created",
-      "END_DATE": "End date",
+      "TASK_NAME": "Tarefa",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Duração",
+      "PARENT_TASK_ID": "ID da tarefa principal",
+      "NAME": "Nome da tarefa",
+      "ASSIGNEE": "Destinatário",
+      "ASSIGNEE_DEFAULT": "Sem destinatário",
+      "PRIORITY": "Prioridade",
+      "DUE_DATE": "Data de vencimento",
+      "DUE_DATE_DEFAULT": "Sem data",
+      "STATUS": "Estado",
+      "CATEGORY": "Categoria",
+      "CATEGORY_DEFAULT": "Sem categoria",
+      "PARENT_NAME": "Nome do pai",
+      "PARENT_NAME_DEFAULT": "Nenhum pai",
+      "CREATED_BY": "Criado por",
+      "CREATED": "Criada",
+      "END_DATE": "Data final",
       "ID": "ID",
-      "DESCRIPTION": "Description",
-      "DESCRIPTION_DEFAULT": "No description",
-      "FORM_NAME": "Form Name",
-      "FORM_NAME_DEFAULT": "No form"
+      "DESCRIPTION": "Descrição",
+      "DESCRIPTION_DEFAULT": "Sem descrição",
+      "FORM_NAME": "Nome do formulário",
+      "FORM_NAME_DEFAULT": "Sem formulário"
     },
     "MENU_ACTIONS": {
-      "VIEW_CONTENT": "View",
-      "REMOVE_CONTENT": "Remove",
-      "DOWNLOAD_CONTENT": "Download",
-      "DOWNLOAD_AUDIT": "Download Audit"
+      "VIEW_CONTENT": "Visualizar",
+      "REMOVE_CONTENT": "Remover",
+      "DOWNLOAD_CONTENT": "Fazer o download",
+      "DOWNLOAD_AUDIT": "Descarregar auditoria"
     },
     "DETAILS": {
       "LABELS": {
-        "INFO_DRAWER_TITLE": "Activities",
-        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
-        "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
-        "ASSIGNEE": "Assignee",
-        "DUE": "Due",
-        "FORM": "Form",
-        "PEOPLE": "People this task is shared with",
-        "COMMENTS": "Comments",
-        "CHECKLIST": "Checklist",
-        "INVOLVED_PEOPLE": "People Involved",
-        "ADD_PEOPLE": "Add people and groups",
-        "ADD_ASSIGNEE": "Add new assignee"
+        "INFO_DRAWER_TITLE": "Atividades",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Atividade",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Detalhes",
+        "ASSIGNEE": "Destinatário",
+        "DUE": "Vencimento",
+        "FORM": "Formulário",
+        "PEOPLE": "Pessoas com quem esta tarefa é partilhada",
+        "COMMENTS": "Comentários",
+        "CHECKLIST": "Lista de verificação",
+        "INVOLVED_PEOPLE": "Pessoas envolvidas",
+        "ADD_PEOPLE": "Adicionar pessoas e grupos",
+        "ADD_ASSIGNEE": "Adicionar novo responsável"
       },
       "BUTTON": {
-        "COMPLETE": "Complete",
-        "CLAIM": "Claim",
-        "UNCLAIM": "Release",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment"
+        "COMPLETE": "Concluir",
+        "CLAIM": "Reclamação",
+        "UNCLAIM": "Lançar",
+        "DRAG-ATTACHMENT": "Largar ficheiros para carregar",
+        "UPLOAD-ATTACHMENT": "Carregar anexo"
       },
       "MESSAGES": {
-        "NONE": "No task details found",
-        "CLAIM": "Click Claim to work on this task"
+        "NONE": "Não foram encontrados detalhes da tarefa",
+        "CLAIM": "Clique em Reclamar para trabalhar nesta tarefa"
       },
       "FORM": {
-        "NONE": "No form"
+        "NONE": "Sem formulário"
       },
       "DUE": {
-        "NONE": "No due date"
+        "NONE": "Sem data de vencimento"
       },
       "ASSIGNEE": {
-        "NONE": "No assignee"
+        "NONE": "Nenhum responsável"
       },
       "PEOPLE": {
-        "NONE": "Nobody involved"
+        "NONE": "Ninguém envolvido"
       },
       "CHECKLIST": {
-        "NONE": "No checklist",
+        "NONE": "Sem lista de verificação",
         "DIALOG": {
-          "TITLE": "New Check",
-          "CANCEL-BUTTON": "Cancel",
-          "ADD-BUTTON": "Add Checklist",
-          "PLACEHOLDER": "Name"
+          "TITLE": "Nova verificação",
+          "CANCEL-BUTTON": "Cancelar",
+          "ADD-BUTTON": "Adicionar lista de verificação",
+          "PLACEHOLDER": "Nome"
         }
       },
       "ERROR": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "Try again or check that you have access.",
-        "CLOSE": "Close"
+        "TITLE": "Não foi possível concluir a ação",
+        "DESCRIPTION": "Tente novamente ou verifique se tem acesso.",
+        "CLOSE": "Fechar"
       }
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No task filter selected"
+        "NONE": "Nenhum filtro de tarefas selecionado"
       }
     },
     "START_TASK": {
-      "DEFAULT_NAME": "My Default Task",
-      "BUTTON": "CREATE TASK",
+      "DEFAULT_NAME": "A minha tarefa predefinida",
+      "BUTTON": "CRIAR TAREFA",
       "FORM": {
-        "TITLE": "Start Task",
+        "TITLE": "Iniciar tarefa",
         "LABEL": {
-          "NONE": "None",
-          "NAME": "Name",
-          "DESCRIPTION": "Description",
-          "ATTACHFORM": "Attach Form",
-          "ASSIGNEE": "Assignee",
-          "FORM": "Form",
-          "DATE": "Choose Date"
+          "NONE": "Nenhum",
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrição",
+          "ATTACHFORM": "Anexar formulário",
+          "ASSIGNEE": "Destinatário",
+          "FORM": "Formulário",
+          "DATE": "Selecionar data Iniciar"
         },
         "ACTION": {
-          "START": "Start",
-          "CANCEL": "Cancel"
+          "START": "Início",
+          "CANCEL": "Cancelar"
         },
         "ERROR": {
-          "REQUIRED": "Field required",
-          "DATE": "Date format DD/MM/YYYY",
-          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-          "MESSAGE": "Enter a different value"
+          "REQUIRED": "Campo obrigatório",
+          "DATE": "Formato da data DD/MM/AAAA",
+          "MAXIMUM_LENGTH": "Comprimento excedido, {{characters}} caracteres máx.",
+          "MESSAGE": "Introduzir um valor diferente"
         }
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Assignee",
-      "DIALOG_CLOSE": "CLOSE",
-      "ADD_USER": "ADD",
-      "ADD_ASSIGNEE": "ASSIGN",
-      "SEARCH_USER": "Search user",
+      "ASSIGNEE": "Destinatário",
+      "DIALOG_CLOSE": "FECHAR",
+      "ADD_USER": "ADICIONAR",
+      "ADD_ASSIGNEE": "ATRIBUIR",
+      "SEARCH_USER": "Procurar utilizador",
       "SEARCH": {
-        "NO_USERS": "Nobody found to involve"
+        "NO_USERS": "Ninguém para envolver"
       }
     },
     "ATTACHMENT": {
       "EMPTY": {
-        "HEADER": "This list is empty",
+        "HEADER": "Esta lista está vazia",
         "DRAG-AND-DROP": {
-          "TITLE": "Drag and drop",
-          "SUBTITLE": "to upload files"
+          "TITLE": "Arrastar e largar",
+          "SUBTITLE": "para carregar ficheiros"
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Não existem ficheiros disponíveis"
       }
     },
     "STANDALONE_TASK": {
-      "NO_FORM_MESSAGE": "No forms attached",
-      "COMPLETE_TASK_MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE_TASK_SUB_MESSAGE": "No forms to be added"
+      "NO_FORM_MESSAGE": "Não há formulários anexados",
+      "COMPLETE_TASK_MESSAGE": "Tarefa {{taskName}} concluída",
+      "COMPLETE_TASK_SUB_MESSAGE": "Não há formulários a adicionar"
     },
     "ATTACH_FORM": {
-      "SELECT_FORM": "Select Form To Attach",
-      "REMOVE_FORM": "Remove Form",
-      "SELECT_OPTION": "Select an option"
+      "SELECT_FORM": "Selecionar formulário a anexar",
+      "REMOVE_FORM": "Remover formulário",
+      "SELECT_OPTION": "Selecionar uma opção"
     }
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "No Processes Found",
-      "SUBTITLE": "Create a new process that you want to easily find later",
-      "SUMMARY": "{{total}} process instances found",
-      "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
+      "TITLE": "Não foram encontrados processos",
+      "SUBTITLE": "Crie um novo processo que pretende encontrar facilmente mais tarde",
+      "SUMMARY": "{{total}} instâncias de processo encontradas",
+      "ERROR": "Não foi possível carregar as instâncias de processos. Tente novamente ou partilhe a seguinte mensagem com a sua equipa de TI: {{errorMessage}}"
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "No process instance filter selected."
+        "NONE": "Nenhum filtro de instância de processo selecionado."
       }
     },
     "PROPERTIES": {
-      "PROCESS_NAME": "Process",
-      "NAME": "Name",
-      "THUMBNAIL": "Thumbnail",
-      "STATUS": "Status",
-      "END_DATE": "End Date",
-      "END_DATE_DEFAULT": "No date",
-      "CATEGORY": "Category",
-      "CATEGORY_DEFAULT": "No category",
-      "CREATED_BY": "Created By",
-      "CREATED_BY_DEFAULT": "No assignee",
-      "CREATED": "Created",
-      "BUSINESS_KEY": "Business key",
-      "BUSINESS_KEY_DEFAULT": "None",
-      "DESCRIPTION": "Description",
-      "DESCRIPTION_DEFAULT": "No description",
+      "PROCESS_NAME": "Processo",
+      "NAME": "Nome",
+      "THUMBNAIL": "Miniatura",
+      "STATUS": "Estado",
+      "END_DATE": "Data final",
+      "END_DATE_DEFAULT": "Sem data",
+      "CATEGORY": "Categoria",
+      "CATEGORY_DEFAULT": "Sem categoria",
+      "CREATED_BY": "Criado por",
+      "CREATED_BY_DEFAULT": "Nenhum responsável",
+      "CREATED": "Criada",
+      "BUSINESS_KEY": "Chave comercial",
+      "BUSINESS_KEY_DEFAULT": "Nenhum",
+      "DESCRIPTION": "Descrição",
+      "DESCRIPTION_DEFAULT": "Sem descrição",
       "ID": "ID"
     },
     "MENU_ACTIONS": {
-      "VIEW_CONTENT": "View",
-      "REMOVE_CONTENT": "Remove",
-      "DOWNLOAD_CONTENT": "Download",
-      "DOWNLOAD_AUDIT": "Download audit",
-      "VIEW_TASK": "View Task"
+      "VIEW_CONTENT": "Visualizar",
+      "REMOVE_CONTENT": "Remover",
+      "DOWNLOAD_CONTENT": "Fazer o download",
+      "DOWNLOAD_AUDIT": "Descarregar auditoria",
+      "VIEW_TASK": "Ver tarefa"
     },
     "DETAILS": {
       "LABELS": {
-        "STARTED_BY": "Started by",
-        "STARTED": "Started",
-        "ENDED": "Ended",
-        "COMMENTS": "Comments",
-        "START_FORM": "Start Form",
-        "TASKS_ACTIVE": "Active Tasks",
-        "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
-        "REFRESH": "Refresh"
+        "STARTED_BY": "Iniciado por",
+        "STARTED": "Iniciado",
+        "ENDED": "Finalizado",
+        "COMMENTS": "Comentários",
+        "START_FORM": "Formulário de início",
+        "TASKS_ACTIVE": "Tarefas ativas",
+        "TASKS_COMPLETED": "Tarefas concluídas",
+        "TASK_SUBTITLE": "Atribuída a {{user}}, criada {{created}}",
+        "REFRESH": "Atualizar"
       },
       "BUTTON": {
-        "CANCEL": "Cancel Process",
-        "CLOSE": "Close",
-        "SHOW_DIAGRAM": "Show Diagram",
-        "DRAG-ATTACHMENT": "Drop files to upload",
-        "UPLOAD-ATTACHMENT": "Upload Attachment",
-        "FILE_OPTION_MENU": "File Option Menu"
+        "CANCEL": "Cancelar processo",
+        "CLOSE": "Fechar",
+        "SHOW_DIAGRAM": "Mostrar diagrama",
+        "DRAG-ATTACHMENT": "Largar ficheiros para carregar",
+        "UPLOAD-ATTACHMENT": "Carregar anexo",
+        "FILE_OPTION_MENU": "Menu de opções de ficheiros"
       },
       "MESSAGES": {
-        "NONE": "No process details found"
+        "NONE": "Não foram encontrados detalhes do processo"
       },
       "TASKS": {
-        "NO_ACTIVE": "No currently active tasks",
-        "NO_COMPLETED": "No tasks completed yet",
-        "TASK_DETAILS": "Task details",
-        "TASK_CLOSE": "Close"
+        "NO_ACTIVE": "Não há tarefas ativas atualmente",
+        "NO_COMPLETED": "Ainda não há tarefas concluídas",
+        "TASK_DETAILS": "Detalhes da tarefa",
+        "TASK_CLOSE": "Fechar"
       },
       "COMMENTS": {
-        "ADD": "Add a comment",
-        "HEADER": "Comments ({{ count }})",
-        "NONE": "No comments",
+        "ADD": "Adicionar um comentário",
+        "HEADER": "Comentários ({{ count }})",
+        "NONE": "Sem comentários",
         "BUTTON": {
-          "ADD": "Add a comment"
+          "ADD": "Adicionar um comentário"
         },
         "ADD_DIALOG": {
-          "TITLE": "New comment",
+          "TITLE": "Novo comentário",
           "LABEL": {
-            "MESSAGE": "Message"
+            "MESSAGE": "Mensagem"
           },
           "BUTTON": {
-            "ADD": "Add Comment",
-            "CANCEL": "Cancel"
+            "ADD": "Adicionar comentário",
+            "CANCEL": "Cancelar"
           }
         }
       },
       "ADD_DIALOG": {
-        "TITLE": "Set process variable",
+        "TITLE": "Definir variável de processo",
         "LABEL": {
-          "NAME": "Name",
-          "VALUE": "Value",
-          "SCOPE": "Scope"
+          "NAME": "Nome",
+          "VALUE": "Valor",
+          "SCOPE": "Alcance"
         }
       },
       "EDIT_DIALOG": {
-        "TITLE": "Edit process variable"
+        "TITLE": "Editar variável de processo"
       },
       "ERROR_DIALOG": {
-        "TITLE": "Couldn't complete the action",
-        "DESCRIPTION": "You might not have the required access level, check with your IT Team."
+        "TITLE": "Não foi possível concluir a ação",
+        "DESCRIPTION": "Poderá não ter o nível de acesso necessário, consulte a sua equipa de TI."
       }
     },
     "START_PROCESS": {
-      "BUTTON": "Start Process",
-      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-      "NO_START_FORM": "No start form",
-      "NO_PROCESS_DEF_SELECTED": "No process definition selected",
+      "BUTTON": "Iniciar processo",
+      "NO_PROCESS_DEFINITIONS": "Não é possível iniciar um processo porque não existem definições de processo disponíveis",
+      "NO_START_FORM": "Não há formulário de início",
+      "NO_PROCESS_DEF_SELECTED": "Nenhuma definição de processo selecionada",
       "FORM": {
         "LABEL": {
-          "SELECT_APPLICATION": "Select Application",
-          "TYPE": "Select Process",
-          "NAME": "Process Name",
-          "SELECTED_PEOPLE": "Selected people"
+          "SELECT_APPLICATION": "Selecionar aplicação",
+          "TYPE": "Selecionar processo",
+          "NAME": "Nome do processo",
+          "SELECTED_PEOPLE": "Pessoas selecionadas"
         },
-        "TYPE_PLACEHOLDER": "Choose one...",
+        "TYPE_PLACEHOLDER": "Selecionar um(a)...",
         "ACTION": {
-          "START": "Start Process",
-          "CANCEL": "Cancel"
+          "START": "Iniciar processo",
+          "CANCEL": "Cancelar"
         }
       },
       "ERROR": {
-        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
-        "PROCESS_NAME_REQUIRED": "Process name is required."
+        "LOAD_PROCESS_DEFS": "Não foi possível carregar as definições do processo, verifique se tem acesso.",
+        "START": "Não foi possível carregar as definições do processo, verifique se tem acesso.",
+        "MAXIMUM_LENGTH": "Comprimento excedido, {{characters}} caracteres máx.",
+        "SPACE_VALIDATOR": "Não pode começar ou terminar com um espaço.",
+        "PROCESS_NAME_REQUIRED": "O nome do processo é obrigatório"
       }
     },
     "PROCESS-ATTACHMENT": {
       "EMPTY": {
-        "HEADER": "This list is empty",
+        "HEADER": "Esta lista está vazia",
         "DRAG-AND-DROP": {
-          "TITLE": "Drag and drop",
-          "SUBTITLE": "to upload files"
+          "TITLE": "Arrastar e largar",
+          "SUBTITLE": "para carregar ficheiros"
         }
       },
       "EMPTY-LIST": {
-        "HEADER": "No files are available"
+        "HEADER": "Não existem ficheiros disponíveis"
       },
       "COLUMNS": {
-        "NAME": "Name",
-        "CREATED-ON": "Created on"
+        "NAME": "Nome",
+        "CREATED-ON": "Criado em"
       }
     }
   },
   "APP": {
     "DIALOG": {
-      "START": "Continue",
-      "TITLE": "Select a process app",
-      "LIST": "Process App list",
-      "ERROR": "There is a problem connecting to Process Services"
+      "START": "Continuar",
+      "TITLE": "Selecionar uma aplicação de processo",
+      "LIST": "Lista de aplicações de processos",
+      "ERROR": "Temos um problema ao ligar aos Serviços de Processos"
     }
   },
   "ATTACH-FILE": {
     "DIALOG": {
-      "LOGIN": "Sign into '{{ ecmHost }}'"
+      "LOGIN": "Iniciar sessão em '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Login",
-      "CANCEL": "Cancel",
-      "CHOOSE": "Select",
-      "CHOOSE_ITEM": "Select content to attach from '{{ name }}'"
+      "CANCEL": "Cancelar",
+      "CHOOSE": "Selecionar",
+      "CHOOSE_ITEM": "Selecionar o conteúdo a anexar '{{ name }}'"
     }
   },
   "ADF_TASK_FORM": {
     "EMPTY_FORM": {
-      "SUBTITLE": "Attach a form that can be viewed later",
-      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
-      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "SUBTITLE": "Anexar um formulário que pode ser exibido posteriormente",
+      "COMPLETE-TASK-MESSAGE": "Tarefa {{taskName}} concluída",
+      "COMPLETE-TASK-SUB-MESSAGE": "Não há formulários a adicionar",
       "BUTTONS": {
-        "COMPLETE": "COMPLETE",
-        "CANCEL": "CANCEL",
-        "CLAIM": "CLAIM",
-        "UNCLAIM": "RELEASE"
+        "COMPLETE": "CONCLUÍDO",
+        "CANCEL": "CANCELAR",
+        "CLAIM": "RECLAMAÇÃO",
+        "UNCLAIM": "LANÇAR"
       }
     },
     "COMPLETED_TASK": {
-      "TITLE": "Task {{taskName}} completed",
-      "SUBTITLE": "No forms to be added"
+      "TITLE": "Tarefa {{taskName}} concluída",
+      "SUBTITLE": "Não há formulários a adicionar"
     }
   }
 }

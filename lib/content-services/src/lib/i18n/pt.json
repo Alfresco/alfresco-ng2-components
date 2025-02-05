@@ -1,712 +1,711 @@
 {
   "COMMON": {
-    "APPLY": "Apply",
-    "CANCEL": "Cancel",
-    "NAME": "Name"
+    "APPLY": "Aplicar",
+    "CANCEL": "Cancelar",
+    "NAME": "Nome"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
-      "RESTORE": "Restore",
-      "DELETE": "Delete",
-      "DOWNLOAD": "Download",
-      "VIEW": "View",
+      "RESTORE": "Restaurar",
+      "DELETE": "Eliminar",
+      "DOWNLOAD": "Fazer o download",
+      "VIEW": "Visualizar",
       "UPLOAD": {
-        "TITLE": "Upload new version",
-        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
-        "MAJOR": "major changes ({{version}})",
-        "MINOR": "minor changes ({{version}})",
-        "COMMENT": "Leave a comment",
-        "ADD": "Add New Version",
-        "CANCEL": "Cancel"
+        "TITLE": "Carregar nova versão",
+        "TOOLTIP": "Restrição: é necessário carregar um ficheiro com o mesmo nome para criar uma nova versão do mesmo",
+        "MAJOR": "alterações importantes ({{version}})",
+        "MINOR": "alterações menores ({{version}})",
+        "COMMENT": "Deixe um comentário",
+        "ADD": "Adicionar nova versão",
+        "CANCEL": "Cancelar"
       }
     },
     "CONFIRM_DELETE": {
-      "TITLE": "Delete version",
-      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
-      "YES_LABEL": "Yes",
-      "NO_LABEL": "No"
+      "TITLE": "Eliminar versão",
+      "MESSAGE": "As versões de ficheiros eliminadas não podem ser restauradas. Continuar?",
+      "YES_LABEL": "Sim",
+      "NO_LABEL": "Não"
     },
-    "MANAGE_VERSION_OPTIONS": "Manage version options"
+    "MANAGE_VERSION_OPTIONS": "Gerir opções de versão"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Manage Versions",
-      "CLOSE": "Close"
+      "TITLE": "Gerir versões",
+      "CLOSE": "Fechar"
     },
     "DIALOG_UPLOAD": {
-      "TITLE": "Upload New Version",
-      "CANCEL": "Cancel",
-      "UPLOAD": "Upload"
+      "TITLE": "Carregar nova versão",
+      "CANCEL": "Cancelar",
+      "UPLOAD": "Fazer o upload"
     }
   },
   "ADF_VERSION_COMPARISON": {
-    "CURRENT_VERSION": "Current",
-    "NEW_VERSION": "New",
+    "CURRENT_VERSION": "Atual",
+    "NEW_VERSION": "Novo",
     "ACCESSIBILITY": {
-      "ICON_TEXT": "Item type {{ type }}",
-      "ARROW_ICON": "Arrow right icon"
+      "ICON_TEXT": "Tipo de item {{ type }}",
+      "ARROW_ICON": "Ícone de seta para a direita"
     }
   },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
-      "HEADER": "This folder is empty"
+      "HEADER": "Este pasta está vazia"
     },
-    "NO_PERMISSION": "You don't have permission to view this file or folder.",
+    "NO_PERMISSION": "Não tem permissão para ver este ficheiro ou pasta.",
     "LAYOUT": {
-      "CREATED": "Created",
-      "CREATED_BY": "Created by",
-      "THUMBNAIL": "Thumbnail",
-      "NAME": "Name",
-      "LOCATION": "Location",
-      "SIZE": "Size",
-      "DELETED_ON": "Deleted",
-      "DELETED_BY": "Deleted by",
-      "STATUS": "Status",
-      "MODIFIED_ON": "Modified",
-      "MODIFIED_BY": "Modified by",
-      "SHARED_BY": "Shared by",
-      "LOAD_MORE": "Load more"
+      "CREATED": "Criada",
+      "CREATED_BY": "Criado por",
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nome",
+      "LOCATION": "Localização",
+      "SIZE": "Tamanho",
+      "DELETED_ON": "Eliminado",
+      "DELETED_BY": "Eliminado por",
+      "STATUS": "Estado",
+      "MODIFIED_ON": "Modificado",
+      "MODIFIED_BY": "Modificado por",
+      "SHARED_BY": "Partilhado por",
+      "LOAD_MORE": "Carregar mais"
     },
     "MENU_ACTIONS": {
-      "VIEW": "View",
-      "REMOVE": "Remove",
-      "DOWNLOAD": "Download"
+      "VIEW": "Visualizar",
+      "REMOVE": "Remover",
+      "DOWNLOAD": "Fazer o download"
     },
-    "LOADER_LABEL": "Document list loader",
+    "LOADER_LABEL": "Carregador de lista de documentos",
     "FILE_AUTO_DOWNLOAD_DIALOG": {
-      "HEADER": "Preview loading unresponsive",
-      "LABEL": "Download to view this document, or cancel to continue without preview.",
+      "HEADER": "Carregamento da pré-visualização não responde",
+      "LABEL": "Descarregar para visualizar este documento ou cancelar para continuar sem pré-visualização.",
       "ACTIONS": {
-        "CANCEL": "Cancel",
-        "DOWNLOAD": "Download"
+        "CANCEL": "Cancelar",
+        "DOWNLOAD": "Fazer o download"
       }
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
-      "ACTION_CREATE": "Create...",
-      "ACTION_NEW_FOLDER": "New Folder",
-      "CREATE": "Create",
-      "CANCEL": "Cancel"
+      "ACTION_CREATE": "Criar...",
+      "ACTION_NEW_FOLDER": "Nova pasta",
+      "CREATE": "Criar",
+      "CANCEL": "Cancelar"
     }
   },
   "DROPDOWN": {
-    "PLACEHOLDER_LABEL": "Site List",
-    "MY_FILES_OPTION": "My files"
+    "PLACEHOLDER_LABEL": "Lista de sites",
+    "MY_FILES_OPTION": "Os meus ficheiros"
   },
   "NODE_SELECTOR": {
-    "CANCEL": "Cancel",
-    "CHOOSE": "Select",
-    "ATTACH": "Attach",
-    "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
-    "COPY": "Copy",
-    "COPY_ITEM": "Copy '{{ name }}' to...",
-    "LOCATION": "Location",
-    "MOVE": "Move",
-    "MOVE_ITEM": "Move '{{ name }}' to...",
-    "NO_RESULTS": "No results found",
-    "SEARCH": "Search",
-    "SEARCH_RESULTS": "Search results",
-    "SELECT_LIBRARY": "Select a Library",
-    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
-    "REPOSITORY": "Repository",
-    "UPLOAD_FROM_DEVICE": "Upload from your device"
+    "CANCEL": "Cancelar",
+    "CHOOSE": "Selecionar",
+    "ATTACH": "Anexar",
+    "CHOOSE_ITEM": "Selecionar o conteúdo a anexar '{{ name }}'",
+    "COPY": "Copiar",
+    "COPY_ITEM": "Copiar '{{ name }}' para...",
+    "LOCATION": "Localização",
+    "MOVE": "Mover",
+    "MOVE_ITEM": "Mover '{{ name }}' para...",
+    "NO_RESULTS": "Nenhum resultado encontrado",
+    "SEARCH": "Pesquisar",
+    "SEARCH_RESULTS": "Resultados da pesquisa",
+    "SELECT_LIBRARY": "Selecionar uma biblioteca",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Não é possível carregar um ficheiro enquanto a pesquisa ainda está a decorre",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "O utilizador não tem permissão para carregar conteúdos para a pasta",
+    "REPOSITORY": "Repositório",
+    "UPLOAD_FROM_DEVICE": "Carregar a partir do seu dispositivo"
   },
   "OPERATION": {
     "SUCCESS": {
       "CONTENT": {
-        "COPY": "Copy successful",
-        "MOVE": "Move successful"
+        "COPY": "Cópia bem-sucedida",
+        "MOVE": "Movimentação bem-sucedida"
       },
       "FOLDER": {
-        "COPY": "Copy successful",
-        "MOVE": "Move successful"
+        "COPY": "Cópia bem-sucedida",
+        "MOVE": "Movimentação bem-sucedida"
       }
     },
     "ERROR": {
-      "CONFLICT": "This name is already in use, try a different name.",
-      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
-      "PERMISSION": "You don't have access to do this."
+      "CONFLICT": "Este nome já está em uso. Tente um nome diferente.",
+      "UNKNOWN": "A ação não teve êxito. Tente novamente ou entre em contato com sua equipa de TI.",
+      "PERMISSION": "Não tem acesso para fazer isso."
     }
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "New Tag"
+      "NEWTAG": "Nova etiqueta"
     },
     "MESSAGES": {
-      "EXIST": "Tag already exists"
+      "EXIST": "Etiqueta já existe"
     },
     "BUTTON": {
-      "ADD": "Add Tag"
+      "ADD": "Adicionar etiqueta"
     },
     "TAGS_CREATOR": {
-      "EXISTING_TAGS": "Existing tags:",
-      "EXISTING_TAGS_SELECTION": "Select an existing tag:",
-      "NO_TAGS_CREATED": "No Tags Created",
-      "NO_EXISTING_TAGS": "No Existing Tags",
-      "TITLE": "Create Tags",
-      "CREATE_TAG": "Create: {{tag}}",
-      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
+      "EXISTING_TAGS": "Marcas existentes:",
+      "EXISTING_TAGS_SELECTION": "Selecione uma etiqueta existente:",
+      "NO_TAGS_CREATED": "Nenhuma etiqueta criada",
+      "NO_EXISTING_TAGS": "Nenhuma etiqueta existente",
+      "TITLE": "Criar etiquetas",
+      "CREATE_TAG": "Criar: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Pesquisar etiquetas",
       "ERRORS": {
-        "EXISTING_TAG": "Tag already exists",
-        "ALREADY_ADDED_TAG": "Tag is already added",
-        "EMPTY_TAG": "Tag name can't contain only spaces",
-        "REQUIRED": "Tag name is required",
-        "FETCH_TAGS": "Error while fetching the tags",
-        "CREATE_TAGS": "Error while creating the tags",
-        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
+        "EXISTING_TAG": "Etiqueta já existe",
+        "ALREADY_ADDED_TAG": "Etiqueta já adicionada",
+        "EMPTY_TAG": "O nome da etiqueta não pode conter apenas espaços",
+        "FETCH_TAGS": "Erro ao obter as etiquetas",
+        "CREATE_TAGS": "Erro ao criar as etiquetas",
+        "SPECIAL_CHARACTERS": "O nome da etiqueta não pode conter caracteres proibidos"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Delete tag"
+        "DELETE_TAG": "Eliminar etiqueta"
       },
-      "TAGS_LOADING": "Tags loading",
-      "CREATE_TAGS_SUCCESS": "Tags created successfully"
+      "TAGS_LOADING": "Carregamento de etiquetas",
+      "CREATE_TAGS_SUCCESS": "Etiquetas criadas com sucesso"
     }
   },
   "CATEGORIES_MANAGEMENT": {
-    "CATEGORIES_TITLE": "Categories",
-    "NO_CATEGORIES_CREATED": "No Categories created",
-    "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
-    "UNASSIGN_CATEGORY": "Unassign Category",
-    "DELETE_CATEGORY": "Delete Category",
-    "EXISTING_CATEGORIES": "Existing Categories:",
-    "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
-    "NO_EXISTING_CATEGORIES": "No existing Categories",
-    "GENERIC_CREATE": "Create: {{name}}",
-    "NAME": "Category name",
-    "LOADING": "Loading",
-    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "CATEGORIES_TITLE": "Categorias",
+    "NO_CATEGORIES_CREATED": "Nenhuma categoria criada",
+    "NO_CATEGORIES_ASSIGNED": "Nenhuma categoria atribuída",
+    "UNASSIGN_CATEGORY": "Anular a atribuição de categoria",
+    "DELETE_CATEGORY": "Eliminar categoria",
+    "EXISTING_CATEGORIES": "Categorias existentes:",
+    "SELECT_EXISTING_CATEGORY": "Selecionar uma categoria existente:",
+    "NO_EXISTING_CATEGORIES": "Nenhuma categoria existente",
+    "GENERIC_CREATE": "Criar: {{name}}",
+    "NAME": "Nome da Categoria",
+    "LOADING": "A carregar",
+    "NO_CATEGORIES_ADDED": "No momento, não há categorias adicionadas",
     "ERRORS": {
-      "NOT_FOUND": "Categories not found",
-      "REQUIRED": "Category name is required",
-      "EMPTY_CATEGORY": "Category name can't contain only spaces",
-      "ALREADY_EXISTS": "Category already exists",
-      "DUPLICATED_CATEGORY": "Category is already added",
-      "CREATE_CATEGORIES": "Error while creating categories",
-      "EXISTING_CATEGORIES": "Some categories already exist"
+      "NOT_FOUND": "Categorias não encontradas",
+      "REQUIRED": "O nome da categoria é obrigatório",
+      "EMPTY_CATEGORY": "O nome da categoria não pode conter apenas espaços",
+      "ALREADY_EXISTS": "A categoria já existe",
+      "DUPLICATED_CATEGORY": "Categoria já adicionada",
+      "CREATE_CATEGORIES": "Erro ao criar categorias",
+      "EXISTING_CATEGORIES": "Algumas categorias já existem"
     },
-    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Categorias de Pesquisa"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
-      "MINIMIZE": "Minimize",
-      "MAXIMIZE": "Maximize",
-      "CLOSE": "Close",
-      "STOP_ALL": "Stop uploads",
-      "STOP_FILE": "Stop upload",
-      "UPLOAD_SUCCESSFUL": "Upload successful"
+      "MINIMIZE": "Minimizar",
+      "MAXIMIZE": "Maximizar",
+      "CLOSE": "Fechar",
+      "STOP_ALL": "Parar carregamentos",
+      "STOP_FILE": "Parar carregamento",
+      "UPLOAD_SUCCESSFUL": "Carregamento bem sucedido"
     },
     "STATUS": {
-      "FILE_CANCELED_STATUS": "Canceled",
-      "FILE_DONE_STATUS": "Uploaded"
+      "FILE_CANCELED_STATUS": "Cancelado",
+      "FILE_DONE_STATUS": "Upload realizado"
     },
     "CONFIRMATION": {
       "BUTTON": {
-        "CANCEL": "Yes",
-        "CONTINUE": "No"
+        "CANCEL": "Sim",
+        "CONTINUE": "Não"
       },
       "MESSAGE": {
-        "TITLE": "Stop Upload",
-        "TEXT": "Stop and cancel all in-progress and pending uploads."
+        "TITLE": "Parar carregamento",
+        "TEXT": "Pára e cancela todos os carregamentos em curso e pendentes."
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "File version {{ version }}",
-      "DIALOG": "Upload list",
-      "DIALOG_MAXIMIZE": "Maximize upload dialog",
-      "DIALOG_MINIMIZE": "Minimize upload dialog",
-      "DIALOG_CLOSE": "Close upload dialog",
-      "STOP_ALL": "Stop uploads",
-      "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
-      "STOP_FILE": "Stop file {{ file }}",
-      "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
-      "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
+      "VERSION": "Versão do ficheiro {{ version }}",
+      "DIALOG": "Lista de carregamento",
+      "DIALOG_MAXIMIZE": "Maximizar caixa de diálogo de carregamento",
+      "DIALOG_MINIMIZE": "Minimizar caixa de diálogo de carregamento",
+      "DIALOG_CLOSE": "Fechar a caixa de diálogo de carregamento",
+      "STOP_ALL": "Parar carregamentos",
+      "UPLOAD_SUCCESSFUL": "Ficheiro carregado com sucesso {{ file }}",
+      "STOP_FILE": "Parar ficheiro {{ file }}",
+      "STOP_FILE_UPLOAD": "Parar carregamento do ficheiro {{ file }}",
+      "UPLOAD_FILE_ERROR": "Erro de carregamento {{ error }}",
       "CONFIRMATION": {
-        "CANCEL": "Confirm cancel",
-        "CONTINUE": "Continue upload"
+        "CANCEL": "Confirmar cancelamento",
+        "CONTINUE": "Continuar carregamento"
       }
     }
   },
   "FILE_UPLOAD": {
     "BUTTON": {
-      "UPLOAD_FILE": "Upload file",
-      "UPLOAD_FOLDER": "Upload folder",
-      "PERMISSION_CHECK_ERROR": "Error checking permission."
+      "UPLOAD_FILE": "Carregar ficheiro",
+      "UPLOAD_FOLDER": "Carregar pasta",
+      "PERMISSION_CHECK_ERROR": "Erro ao verificar a permissão."
     },
     "VERSION": {
       "MESSAGES": {
-        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
-        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
+        "NO_ACCEPTED_FILE_TYPES": "Tenha em atenção que a definição de \"acceptedFilesType\" não tem efeito para carregamentos de novas versões. O tipo de ficheiro será o mesmo que o do ficheiro original.",
+        "INCOMPATIBLE_VERSION": "Apenas um ficheiro do mesmo tipo pode ser carregado como uma nova versão."
       }
     },
     "MESSAGES": {
-      "UPLOAD_CANCELED": "Upload canceled",
-      "UPLOAD_PROGRESS": "Uploaded {{ completed }} / {{ total }}",
-      "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
-      "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
-      "PROGRESS": "Upload in progress...",
-      "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
-      "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
-      "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
-      "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
-      "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
+      "UPLOAD_CANCELED": "Carregamento cancelado",
+      "UPLOAD_PROGRESS": "Carregado {{ completed }}} / {{ total }}}",
+      "UPLOAD_ERROR": "{{ total }}} carregamento sem sucesso",
+      "UPLOAD_ERRORS": "{{ total }}} carregamentos sem sucesso",
+      "PROGRESS": "Carregamento em curso...",
+      "FOLDER_ALREADY_EXIST": "A pasta {0} já existe",
+      "FOLDER_NOT_SUPPORTED": "O carregamento da pasta não é suportado pelo seu navegador, experimente um navegador diferente",
+      "REMOVE_FILE_ERROR": "Não foi possível remover {{ fileName }} tente novamente ou verifique com a sua equipa de TI.",
+      "REMOVE_FILES_ERROR": "Não foi possível remover os ficheiros {{ total }} tente novamente ou contacte a sua equipa de TI.",
+      "EXCEED_MAX_FILE_SIZE": "O ficheiro {{ fileName }}} é maior do que o tamanho de ficheiro permitido"
     },
     "ACTION": {
-      "UNDO": "Undo"
+      "UNDO": "Anular"
     },
     "ERRORS": {
-      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
-      "500": "Internal server error, try again or contact IT support [500]",
-      "504": "The server timed out, try again or contact IT support [504]",
-      "403": "Insufficient permissions to upload in this location [403]",
-      "404": "Upload location no longer exists [404]",
-      "409": "A file with the same name already exists [409]"
+      "GENERIC": "Carregamento mal sucedido. Contacte TI se o problema persistir",
+      "500": "Erro interno do servidor, tente novamente ou contacte o suporte de TI [500]",
+      "504": "O servidor atingiu o tempo limite, tente novamente ou contacte o suporte de TI [504]",
+      "403": "Permissões insuficientes para carregar neste local [403]",
+      "404": "O local de carregamento já não existe [404]",
+      "409": "Já existe um ficheiro com o mesmo nome [409]"
     },
     "ARIA-LABEL": {
-      "ERROR": "Upload error"
+      "ERROR": "Erro de carregamento"
     }
   },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
-      "TOOLTIP": "Search",
-      "ARIA-LABEL": "Search button"
+      "TOOLTIP": "Pesquisar",
+      "ARIA-LABEL": "Botão Pesquisar"
     },
     "INPUT": {
-      "LABEL": "Search",
-      "PLACEHOLDER": "Search Query",
-      "ARIA-LABEL": "Search input"
+      "LABEL": "Pesquisar",
+      "PLACEHOLDER": "Consulta de pesquisa",
+      "ARIA-LABEL": "Entrada de pesquisa"
     },
     "RESULTS": {
-      "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
-      "NONE": "No results found for {{searchTerm}}",
-      "ERROR": "We hit a problem during the search - try again.",
-      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
+      "SUMMARY": "{{numResults}} resultado(s) encontrado(s) para {{searchTerm}}",
+      "NONE": "Nenhum resultado encontrado para {{searchTerm}}",
+      "ERROR": "Ocorreu um problema durante a pesquisa - tente novamente.",
+      "WILL_CONTAIN": "Os resultados irão conter '{{searchTerm}}'",
       "COLUMNS": {
-        "NAME": "Display name",
-        "MODIFIED_BY": "Modified by",
-        "MODIFIED_AT": "Modified at"
+        "NAME": "Mostrar nome",
+        "MODIFIED_BY": "Modificado por",
+        "MODIFIED_AT": "Modificado em"
       }
     },
     "FILTER": {
       "ACTIONS": {
-        "SEARCH": "Search",
-        "CLEAR": "Clear",
-        "APPLY": "Apply",
-        "CLEAR-ALL": "Clear all",
-        "SHOW-MORE": "Show more",
-        "SHOW-LESS": "Show less",
-        "ADD_OPTION": "Add Option..."
+        "SEARCH": "Pesquisar",
+        "CLEAR": "Limpar",
+        "APPLY": "Aplicar",
+        "CLEAR-ALL": "Limpar tudo",
+        "SHOW-MORE": "Mostrar mais",
+        "SHOW-LESS": "Mostrar menos",
+        "ADD_OPTION": "Adicionar opção..."
       },
       "BUTTONS": {
-        "CLOSE": "Close",
-        "CLEAR": "Clear",
-        "REMOVE": "Remove",
-        "APPLY": "Apply",
+        "CLOSE": "Fechar",
+        "CLEAR": "Limpar",
+        "REMOVE": "Remover",
+        "APPLY": "Aplicar",
         "CLEAR-ALL": {
-          "LABEL": "Clear all",
-          "TOOLTIP": "This will remove all selections"
+          "LABEL": "Limpar tudo",
+          "TOOLTIP": "Isso removerá todas as seleções"
         },
         "RESET-ALL": {
-          "LABEL": "Reset all",
-          "TOOLTIP": "This will reset all selections and all filters"
+          "LABEL": "Repor tudo",
+          "TOOLTIP": "Isso redefinirá todas as seleções e todos os filtros"
         }
       },
       "RANGE": {
-        "FROM": "From",
-        "TO": "To",
-        "FROM-DATE": "From",
-        "TO-DATE": "To"
+        "FROM": "De",
+        "TO": "Até",
+        "FROM-DATE": "De",
+        "TO-DATE": "Até"
       },
       "VALIDATION": {
-        "REQUIRED-VALUE": "Required value",
-        "NO-DAYS": "No days selected.",
-        "INVALID-FORMAT": "Invalid Format",
-        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
-        "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
+        "REQUIRED-VALUE": "Valor requerido",
+        "NO-DAYS": "Nenhum dia selecionado.",
+        "INVALID-FORMAT": "Formato inválido",
+        "INVALID-DATE": "Data inválida. A data deve estar no formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "A data é posterior à data máxima.",
+        "INVALID-DATETIME": "Data-hora inválida. A data-hora deve estar no formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "A data e hora excede a data e hora máximas."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Search Filter List",
-        "OPTIONS-SELECTION": "Options Selection"
+        "SEARCH_FILTER": "Lista de Filtros de Pesquisa",
+        "OPTIONS-SELECTION": "Seleção de Opções"
       },
-      "ANY": "Any",
-      "PEOPLE": "People"
+      "ANY": "Qualquer",
+      "PEOPLE": "Pessoas"
     },
     "FACET_FIELDS": {
-      "MODIFIER_LABEL": "Modified by",
-      "CREATOR_LABEL": "Created by"
+      "MODIFIER_LABEL": "Modificado por",
+      "CREATOR_LABEL": "Criado por"
     },
     "ICONS": {
-      "ft_ic_raster_image": "Image file",
-      "ft_ic_pdf": "PDF document",
-      "ft_ic_ms_excel": "Microsoft Excel file",
-      "ft_ic_ms_word": "Microsoft Word document",
-      "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
-      "ft_ic_video": "Video file",
-      "ft_ic_document": "Document file",
-      "ft_ic_website": "Web resource",
-      "ft_ic_archive": "Archive file",
-      "ft_ic_presentation": "Presentation file",
-      "ft_ic_spreadsheet": "Spreadsheet file"
+      "ft_ic_raster_image": "Ficheiro de imagens",
+      "ft_ic_pdf": "Documento PDF",
+      "ft_ic_ms_excel": "Ficheiro Microsoft Excel",
+      "ft_ic_ms_word": "Documento do Microsoft Word",
+      "ft_ic_ms_powerpoint": "Ficheiro Microsoft PowerPoint",
+      "ft_ic_video": "Ficheiro de Vídeo",
+      "ft_ic_document": "Ficheiro de documento",
+      "ft_ic_website": "Recurso de Web",
+      "ft_ic_archive": "Ficheiro do arquivo",
+      "ft_ic_presentation": "Ficheiro de apresentação",
+      "ft_ic_spreadsheet": "Ficheiro de folha de cálculo"
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {
-        "DISPLAY_NAME": "Display name",
-        "CREATED_BY": "Created by",
-        "CREATED_ON": "Created"
+        "DISPLAY_NAME": "Mostrar nome",
+        "CREATED_BY": "Criado por",
+        "CREATED_ON": "Criada"
       },
       "ACTIONS": {
         "FOLDER": {
-          "DELETE": "Delete",
-          "MOVE": "Move",
-          "COPY": "Copy"
+          "DELETE": "Eliminar",
+          "MOVE": "Mover",
+          "COPY": "Copiar"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "Download",
-          "DELETE": "Delete",
-          "MOVE": "Move",
-          "COPY": "Copy",
-          "PROCESS_ACTION": "Start Process"
+          "DOWNLOAD": "Fazer o download",
+          "DELETE": "Eliminar",
+          "MOVE": "Mover",
+          "COPY": "Copiar",
+          "PROCESS_ACTION": "Iniciar processo"
         }
       }
     },
-    "UNKNOWN_CONFIGURATION": "Unknown Configuration",
+    "UNKNOWN_CONFIGURATION": "Configuração desconhecida",
     "SEARCH_HEADER": {
-      "TITLE": "Filter",
-      "TYPE": "Type",
-      "FILTER_BY": "Filter by {{ category }}",
-      "CLEAR": "Clear",
-      "APPLY": "Apply",
+      "TITLE": "Filtro",
+      "TYPE": "Tipo",
+      "FILTER_BY": "Filtrar por {{ category }}",
+      "CLEAR": "Limpar",
+      "APPLY": "Aplicar",
       "FILTERS": {
         "NAME": {
-          "TITLE": "Name",
-          "PLACEHOLDER": "Enter the name"
+          "TITLE": "Nome",
+          "PLACEHOLDER": "Insira o nome"
         },
         "TYPE": {
-          "TITLE": "Check type",
-          "FOLDER": "Folder",
-          "DOCUMENT": "Document"
+          "TITLE": "Verificar tipo",
+          "FOLDER": "Pasta",
+          "DOCUMENT": "Documento"
         },
         "SIZE": {
-          "TITLE": "Content Size (range)",
-          "SMALL": "Small",
-          "MEDIUM": "Medium",
-          "LARGE": "Large",
-          "HUGE": "Huge"
+          "TITLE": "Tamanho do conteúdo (intervalo)",
+          "SMALL": "Pequeno",
+          "MEDIUM": "Médio",
+          "LARGE": "Grande",
+          "HUGE": "Enorme"
         },
         "DATE": {
-          "TITLE": "Created Date (range)"
+          "TITLE": "Data de criação (intervalo)"
         }
       }
     },
     "LOGICAL_SEARCH": {
-      "MATCH_ALL": "ALL",
-      "MATCH_ALL_LABEL": "Match ALL of these words",
-      "MATCH_ALL_HINT": "Results will match all words entered here",
-      "MATCH_ANY": "ANY",
-      "MATCH_ANY_LABEL": "Match ANY of these words",
-      "MATCH_ANY_HINT": "Results will match any words entered here",
-      "MATCH_EXACT": "EXACT",
-      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
-      "MATCH_EXACT_HINT": "Results will match this entire phrase",
-      "EXCLUDE": "EXCLUDE",
-      "EXCLUDE_LABEL": "EXCLUDE these words",
-      "EXCLUDE_HINT": "Results will exclude matches with these words"
+      "MATCH_ALL": "TUDO",
+      "MATCH_ALL_LABEL": "Corresponder TODAS estas palavras",
+      "MATCH_ALL_HINT": "Os resultados corresponderão a todas as palavras introduzidas aqui",
+      "MATCH_ANY": "QUALQUER",
+      "MATCH_ANY_LABEL": "Corresponder QUALQUER uma destas palavras",
+      "MATCH_ANY_HINT": "Os resultados corresponderão às palavras inseridas aqui",
+      "MATCH_EXACT": "EXATO",
+      "MATCH_EXACT_LABEL": "Corresponder esta FRASE EXATA",
+      "MATCH_EXACT_HINT": "Os resultados corresponderão a esta frase inteira",
+      "EXCLUDE": "EXCLUIR",
+      "EXCLUDE_LABEL": "EXCLUIR estas palavras",
+      "EXCLUDE_HINT": "Os resultados excluirão correspondências com estas palavras"
     },
     "DATE_RANGE_ADVANCED": {
       "OPTIONS": {
-        "ANYTIME": "Anytime",
-        "IN_LAST": "In the last",
-        "BETWEEN": "Between"
+        "ANYTIME": "A qualquer hora",
+        "IN_LAST": "Nos(as) últimos(as)",
+        "BETWEEN": "Entre"
       },
       "IN_LAST_LABELS": {
-        "DAYS": "Days",
-        "WEEKS": "Weeks",
-        "MONTHS": "Months"
+        "DAYS": "Dias",
+        "WEEKS": "Semanas",
+        "MONTHS": "Meses"
       },
       "IN_LAST_DISPLAY_LABELS": {
-        "DAYS": "In the last {{value}} days",
-        "WEEKS": "In the last {{value}} weeks",
-        "MONTHS": "In the last {{value}} months"
+        "DAYS": "Nos últimos {{value}} dias",
+        "WEEKS": "Nas últimas {{value}} semanas",
+        "MONTHS": "Nos últimos {{value}} meses"
       },
       "BETWEEN_PLACEHOLDERS": {
-        "START_DATE": "Start Date",
-        "END_DATE": "End Date"
+        "START_DATE": "Data inicial",
+        "END_DATE": "Data final"
       },
       "ERROR": {
-        "IN_LAST": "Value required",
+        "IN_LAST": "O valor é obrigatório",
         "START_DATE": {
-          "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid"
+          "REQUIRED": "A data de início é obrigatório",
+          "INVALID_FORMAT": "Data de início inválida"
         },
         "END_DATE": {
-          "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid"
+          "REQUIRED": "Data final obrigatória",
+          "INVALID_FORMAT": "Data final inválida"
         }
       },
       "ARIA_LABEL": {
-        "NUMBER_INPUT": "Number input"
+        "NUMBER_INPUT": "Entrada de número"
       }
     },
     "SEARCH_PROPERTIES": {
-      "FILE_SIZE": "File Size",
-      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE": "Tamanho do ficheiro",
+      "FILE_SIZE_PLACEHOLDER": "Inserir tamanho do ficheiro",
       "FILE_SIZE_OPERATOR": {
-        "AT_LEAST": "At Least",
-        "AT_MOST": "At Most",
-        "EXACTLY": "Exactly"
+        "AT_LEAST": "Pelo menos",
+        "AT_MOST": "No máximo",
+        "EXACTLY": "Exatamente"
       },
       "FILE_SIZE_UNIT_ABBREVIATION": {
         "KB": "KB",
         "MB": "MB",
         "GB": "GB"
       },
-      "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type"
+      "FILE_TYPE": "Tipo de ficheiro",
+      "FILE_TYPE_PLACEHOLDER": "Adicionar tipo de ficheiro"
     }
   },
   "PERMISSION": {
-    "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
+    "LACKOF": "Não tem a permissão {{permission}} para {{action}} o {{type}}"
   },
   "METADATA": {
     "BASIC": {
-      "HEADER": "Properties",
-      "NAME": "Name",
-      "TITLE": "Title",
-      "DESCRIPTION": "Description",
-      "AUTHOR": "Author",
-      "MIMETYPE": "Mimetype",
-      "SIZE": "Size",
-      "CREATOR": "Creator",
-      "CREATED_DATE": "Created Date",
-      "MODIFIER": "Modifier",
-      "MODIFIED_DATE": "Modified Date",
-      "CONTENT_TYPE": "Content Type",
-      "TAGS": "Tags",
-      "NO_TAGS_ADDED": "There are currently no tags added",
-      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
-      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
+      "HEADER": "Propriedades",
+      "NAME": "Nome",
+      "TITLE": "Título",
+      "DESCRIPTION": "Descrição",
+      "AUTHOR": "Autor",
+      "MIMETYPE": "Tipo Mime",
+      "SIZE": "Tamanho",
+      "CREATOR": "Criador",
+      "CREATED_DATE": "Data de criação",
+      "MODIFIER": "Modificador",
+      "MODIFIED_DATE": "Data de modificação",
+      "CONTENT_TYPE": "Tipo de conteúdo",
+      "TAGS": "Etiquetas",
+      "NO_TAGS_ADDED": "Não existem atualmente etiquetas adicionadas",
+      "NO_ITEMS_MESSAGE": " Não existem atualmente {{ groupTitle }} adicionados",
+      "SAVE_OR_DISCARD_CHANGES": "Guardar ou rejeitar alterações para continuar"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
-        "TITLE": "Change content type",
-        "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
-        "CONFIRM": "Are you sure you want to change the content type?",
-        "CANCEL": "CANCEL",
-        "APPLY": "SAVE CHANGES",
-        "VIEW_DETAILS": "View details",
+        "TITLE": "Alterar tipo de conteúdo",
+        "DESCRIPTION": "Ao efetuar esta alteração ao tipo de conteúdo, irá adicionar permanentemente algumas propriedades e metadados armazenados ao documento.",
+        "CONFIRM": "Tem a certeza de que pretende alterar o tipo de conteúdo",
+        "CANCEL": "CANCELAR",
+        "APPLY": "GUARDAR ALTERAÇÕES",
+        "VIEW_DETAILS": "Ver detalhes",
         "PROPERTY": {
-          "NAME": "Name",
-          "DESCRIPTION": "Description",
-          "DATA_TYPE": "Data type"
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrição",
+          "DATA_TYPE": "Tipo de dados"
         }
       }
     },
     "ERRORS": {
-      "GENERIC": "Error updating property",
-      "409": "Duplicate child name not allowed [409]",
-      "422": "Invalid property value"
+      "GENERIC": "Erro ao atualizar a propriedade",
+      "409": "Nome do filho duplicado não permitido \\[409]",
+      "422": "Valor de propriedade inválido"
     }
   },
   "SHARE": {
-    "PUBLIC-LINK": "Public link",
-    "DIALOG-TITLE": "Share",
-    "DESCRIPTION": "Click the link below to copy it to the clipboard.",
-    "TITLE": "Link to share",
-    "SHARE-LINK": "Share Link",
-    "SHARABLE-LINK-CREATED": "Sharable Link is Created",
-    "PUBLIC-CONTENT": "This content is publicly available to anyone with this link",
-    "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
-    "EXPIRES": "Expires on",
-    "LINK-EXPIRY-DATE": "Link Expiry Date",
-    "EXPIRATION-LABEL": "Expiration Date",
-    "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
-    "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
-    "CLOSE": "Close",
-    "COPY_BUTTON_LABEL": "Copy link",
+    "PUBLIC-LINK": "Ligação pública",
+    "DIALOG-TITLE": "Partilhar",
+    "DESCRIPTION": "Clique na ligação abaixo para a copiar para a área de transferênc",
+    "TITLE": "Ligação para partilhar",
+    "SHARE-LINK": "Partilhar ligação",
+    "SHARABLE-LINK-CREATED": "É criada uma ligação partilhável",
+    "PUBLIC-CONTENT": "Este conteúdo está disponível publicamente para qualquer pessoa com esta ligação",
+    "LINK-WITH-EXPIRY-SETTINGS": "Foi gerada uma nova ligação com definições de expiração",
+    "EXPIRES": "Expira em",
+    "LINK-EXPIRY-DATE": "Data de expiração da ligação",
+    "EXPIRATION-LABEL": "Data de validade",
+    "EXPIRATION-PLACEHOLDER": "DD/MM/AAAA",
+    "CLIPBOARD-MESSAGE": "Ligação copiada para a área de transferência",
+    "CLOSE": "Fechar",
+    "COPY_BUTTON_LABEL": "Copiar ligação",
     "CONFIRMATION": {
-      "DIALOG-TITLE": "Remove this shared link",
-      "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
-      "CANCEL": "Cancel",
-      "REMOVE": "Remove"
+      "DIALOG-TITLE": "Remover este link partilhado",
+      "MESSAGE": "Esta ligação será eliminada e será criada uma nova ligação da próxima vez que este ficheiro for partilhado",
+      "CANCEL": "Cancelar",
+      "REMOVE": "Remover"
     },
-    "UNSHARE_ERROR": "Error unsharing this file",
-    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
-    "INVALID_DATE_ERROR": "Invalid date"
+    "UNSHARE_ERROR": "Erro ao anular a partilha deste ficheiro",
+    "UNSHARE_PERMISSION_ERROR": "Não tem permissão para anular a partilha deste ficheiro",
+    "INVALID_DATE_ERROR": "Data inválida"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
-      "INHERITED": "Inherited",
-      "AUTHORITY_ID": "Authority ID",
-      "ROLE": "Role",
-      "LOCALLY_SET": "Locally set",
-      "NO_PERMISSIONS": "No permissions"
+      "INHERITED": "Herdada",
+      "AUTHORITY_ID": "ID da Autoridade",
+      "ROLE": "Função",
+      "LOCALLY_SET": "Definido localmente",
+      "NO_PERMISSIONS": "Sem permissões"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Search for users or groups to add",
-      "TITLE": "Add permission",
-      "TYPE-MESSAGE": "Type something to start searching groups or people",
-      "NO-RESULT": "No result found for this search",
-      "SELECT-ACTION": "SELECT",
-      "ADD-ACTION": "ADD",
-      "CLOSE-ACTION": "CANCEL",
-      "BASE-DIALOG-TITLE": "Search a group or people to add...",
-      "EVERYONE": "EVERYONE",
-      "USER-GROUP-LIST": "User or Group List"
+      "SEARCH": "Procurar utilizadores ou grupos para adicionar",
+      "TITLE": "Adicionar permissão",
+      "TYPE-MESSAGE": "Digite algo para começar a pesquisar grupos ou pessoas",
+      "NO-RESULT": "Nenhum resultado encontrado para esta pesquisa",
+      "SELECT-ACTION": "SELECIONAR",
+      "ADD-ACTION": "ADICIONAR",
+      "CLOSE-ACTION": "CANCELAR",
+      "BASE-DIALOG-TITLE": "Pesquisar um grupo ou pessoas para adicionar...",
+      "EVERYONE": "TODOS",
+      "USER-GROUP-LIST": "Lista de utilizadores ou grupos"
     },
     "COLUMN": {
-      "NAME": "Users and Groups ({{ count }})",
-      "LOCATION": "Location",
-      "BULK-ROLE": "Set all role to"
+      "NAME": "Utilizadores e grupos ({{ count }})",
+      "LOCATION": "Localização",
+      "BULK-ROLE": "Definir todas as funções para"
     },
     "LABELS": {
-      "HIDE": "Hide",
-      "SHOW": "Show",
-      "ON": "On",
-      "OFF": "Off",
-      "DIRECT-PERMISSIONS": "Directly Applied Permission",
-      "INHERITED-PERMISSIONS": "Inherited Permission",
-      "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
-      "SELECT-ROLE": "Select role",
-      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
+      "HIDE": "Ocultar",
+      "SHOW": "Mostrar",
+      "ON": "Ligado",
+      "OFF": "Desligado",
+      "DIRECT-PERMISSIONS": "Permissão aplicada diretamente",
+      "INHERITED-PERMISSIONS": "Permissão herdada",
+      "INHERITED-SUBTITLE": "{{count}} utilizadores ou grupos estão a herdar permissões de uma pasta principal",
+      "SELECT-ROLE": "Selecionar função",
+      "INHERITED_PERMISSION_TOGGLE": "Alternar permissão herdada"
     },
     "MESSAGE": {
-      "EMPTY-PERMISSION": "No users/groups",
-      "EMPTY-SUBTITLE": "Add user/group to manage permission.",
-      "NO-MEMBERS": "Add groups or people to manage roles",
-      "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user(s) {{group}} group(s)",
-      "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
-      "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
-      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s) {{group}} group(s)",
-      "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
-      "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
-      "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",
-      "PERMISSION-ADD-FAIL": "Failed to add user/group",
-      "INHERIT-ENABLE-SUCCESS": "Enabled inherited permission",
-      "INHERIT-DISABLE-SUCCESS": "Disabled inherited permission",
-      "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
+      "EMPTY-PERMISSION": "Sem utilizadores/grupos",
+      "EMPTY-SUBTITLE": "Adicionar utilizador/grupo para gerir as permissões.",
+      "NO-MEMBERS": "Adicionar grupos ou pessoas para gerir funções",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Atualizado {{user}} utilizador(es) {{group}} groupo(s)",
+      "PERMISSION-UPDATE-SUCCESS": "Utilizador/Grupo atualizado",
+      "PERMISSION-UPDATE-FAIL": "Falha na atualização do utilizador/grupo",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Eliminado(s) {{user}} utilizador(es) {{group}} grupo(s)",
+      "PERMISSION-DELETE-SUCCESS": "Utilizador/Grupo eliminado",
+      "PERMISSION-DELETE-FAIL": "Falha ao eliminar utilizador/grupo",
+      "PERMISSION-ADD-SUCCESS": "Adicionado(s) {{user}} utilizador(es) {{group}} grupo(s)",
+      "PERMISSION-ADD-FAIL": "Falha ao adicionar utilizador/grupo",
+      "INHERIT-ENABLE-SUCCESS": "Permissão herdada ativada",
+      "INHERIT-DISABLE-SUCCESS": "Permissão herdada desativada",
+      "TOGGLE-PERMISSION-FAILED": "Falha ao alternar a permissão herdada"
     },
     "ACTION": {
-      "DELETE": "Delete",
-      "ADD-PERMISSION": "Add User or Group"
+      "DELETE": "Eliminar",
+      "ADD-PERMISSION": "Adicionar utilizador ou grupo"
     },
     "ERROR": {
-      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
-      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
-      "NOT-ALLOWED": "You are not allowed to change permissions"
+      "NOT-FOUND": "Este item já não existe ou não tem permissão para o visualizar.",
+      "DUPLICATE-PERMISSION": "Uma ou mais das permissões que definiu já estão presentes: {{list}}",
+      "NOT-ALLOWED": "Não tem permissão para alterar as permissões"
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "No nodeId provided!",
+    "MISSING-ID": "Não foi fornecido nenhum nodeId!",
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "Toggle {{ name }}"
+      "ARIA_LABEL": "Alternar {{ name }}"
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Load more {{ name }}"
+    "LOAD-MORE-BUTTON": "Carregar mais {{ name }}"
   },
   "LIBRARY": {
     "DIALOG": {
-      "CREATE_TITLE": "Create Library",
-      "CREATE": "Create",
-      "UPDATE": "Update",
-      "EDIT": "Edit",
-      "CANCEL": "Cancel",
+      "CREATE_TITLE": "Criar biblioteca",
+      "CREATE": "Criar",
+      "UPDATE": "Atualizar",
+      "EDIT": "Editar",
+      "CANCEL": "Cancelar",
       "FORM": {
-        "DESCRIPTION": "Description",
-        "SITE_ID": "Library ID",
-        "NAME": "Name",
-        "VISIBILITY": "Visibility"
+        "DESCRIPTION": "Descrição",
+        "SITE_ID": "ID da biblioteca",
+        "NAME": "Nome",
+        "VISIBILITY": "Visibilidade"
       }
     },
     "ROLE": {
-      "MANAGER": "Manager",
-      "COLLABORATOR": "Collaborator",
-      "CONTRIBUTOR": "Contributor",
-      "CONSUMER": "Consumer",
-      "NONE": "Not a member"
+      "MANAGER": "Gestor",
+      "COLLABORATOR": "Colaborador",
+      "CONTRIBUTOR": "Contribuinte",
+      "CONSUMER": "Consumidor",
+      "NONE": "Não é membro"
     },
     "VISIBILITY": {
-      "PRIVATE": "Private",
-      "PUBLIC": "Public",
-      "MODERATED": "Moderated"
+      "PRIVATE": "Particular",
+      "PUBLIC": "Público",
+      "MODERATED": "Moderado"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "Library name already in use"
+      "SITE_TITLE_EXISTS": "Nome da biblioteca já está a ser utilizado"
     },
     "ERRORS": {
-      "GENERIC": "We hit a problem",
-      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
-      "CONFLICT": "This Library ID is already used. Check the trashcan.",
-      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
-      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
-      "TITLE_TOO_LONG": "Use 256 characters or less for title",
-      "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
-      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
-      "ONLY_SPACES": "Library name can't contain only spaces",
-      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties"
+      "GENERIC": "Encontrámos um problema",
+      "EXISTENT_SITE": "Este ID de biblioteca não está disponível. Tente um ID de biblioteca diferente.",
+      "CONFLICT": "Este ID da biblioteca já está a ser utilizado. Verificar o caixote do lixo.",
+      "ID_TOO_LONG": "Use 72 caracteres ou menos para o nome da URL",
+      "DESCRIPTION_TOO_LONG": "Usar 512 caracteres ou menos para descrição",
+      "TITLE_TOO_LONG": "Usar 256 caracteres ou menos para o título",
+      "TITLE_TOO_SHORT": "O título deve ter pelo menos 2 caracteres",
+      "ILLEGAL_CHARACTERS": "Utilizar apenas números e letras",
+      "ONLY_SPACES": "O nome da biblioteca não pode conter apenas espaços",
+      "LIBRARY_UPDATE_ERROR": "Ocorreu um erro ao atualizar as propriedades da biblioteca"
     },
     "SUCCESS": {
-      "LIBRARY_UPDATED": "Library properties updated"
+      "LIBRARY_UPDATED": "Propriedades da biblioteca atualizadas"
     }
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
-      "DROPDOWN": "Dropdown"
+      "DROPDOWN": "Lista suspensa"
     },
     "HEADER": {
-      "SELECTED": "Selected ({{ count }})"
+      "SELECTED": "Selecionado({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "Open {{ name }}"
+      "ARIA_LABEL": "Abrir {{ name }}"
     }
   },
   "ADF-ASPECT-LIST": {
-    "PROPERTY_NAME": "Property Name",
-    "DESCRIPTION": "Description",
-    "DATA_TYPE": "Data Type",
+    "PROPERTY_NAME": "Nome da propriedade",
+    "DESCRIPTION": "Descrição",
+    "DATA_TYPE": "Tipo de dados",
     "DIALOG": {
-      "TITLE": "Customize Properties",
-      "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
-      "RESET": "Reset",
-      "CLEAR": "Clear",
-      "CANCEL": "Cancel",
-      "APPLY": "Apply",
-      "OVER-TABLE-MESSAGE": "Select property aspects",
-      "SELECTED": "Selected"
+      "TITLE": "Personalizar propriedades",
+      "DESCRIPTION": "Gerir as propriedades associadas ao(s) ficheiro(s) selecionado(s). Escolha entre os aspetos de propriedade listados abaixo, para expor e aplicar metadados e funcionalidades adicionais",
+      "RESET": "Redefinir",
+      "CLEAR": "Limpar",
+      "CANCEL": "Cancelar",
+      "APPLY": "Aplicar",
+      "OVER-TABLE-MESSAGE": "Selecionar aspectos da propriedade",
+      "SELECTED": "Selecionado"
     }
   },
   "NODE_COUNTER": {
-    "SELECTED_COUNT": "{{ count }} selected"
+    "SELECTED_COUNT": "{{ count }} selecionado(s)"
   },
   "TAG_NODE_LIST": {
-    "VIEW_MORE": "View {{ count }} more"
+    "VIEW_MORE": "Ver {{ count }} mais"
   },
-  "swsdp": "Sample: Web Site Design Project",
+  "swsdp": "Amostra: Projeto de Design de Web Site",
   "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
     "ERRORS": {
-      "INVALID_RECEIVER_EMAIL": "Recipient(s) email address not valid, contact IT.",
-      "INVALID_SENDER_EMAIL": "Your email address must be valid before requesting to join.",
-      "JOIN_CANCEL_FAILED": "Cannot cancel your join request",
-      "JOIN_REQUEST_FAILED": "Cannot join the library"
+      "INVALID_RECEIVER_EMAIL": "O endereço de e-mail do(s) destinatário(s) não é válido, contacte TI.",
+      "INVALID_SENDER_EMAIL": "O seu endereço de e-mail tem de ser válido antes de solicitar a adesão.",
+      "JOIN_CANCEL_FAILED": "Não é possível cancelar o seu pedido de adesão",
+      "JOIN_REQUEST_FAILED": "Não é possível aderir à biblioteca"
     },
     "INFO": {
-      "JOINED": "Library joined",
-      "JOIN_CANCELED": "Canceled the request to join the library",
-      "JOIN_REQUESTED": "Request sent to join this library"
+      "JOINED": "Biblioteca unida",
+      "JOIN_CANCELED": "Cancelou o pedido de adesão à biblioteca",
+      "JOIN_REQUESTED": "Solicitação enviada para aderir a esta biblioteca"
     }
   },
   "KNOWLEDGE_RETRIEVAL": {
     "SEARCH": {
       "WARNINGS": {
-        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
-        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+        "TOO_MANY_FILES_SELECTED": "Selecione no máximo {{ maxFiles }} ficheiros.",
+        "FOLDER_SELECTED": "As pastas não são compatíveis com os Agentes de IA."
       }
     }
   }
