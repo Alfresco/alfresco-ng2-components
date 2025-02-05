@@ -31,6 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'people-widget',
@@ -44,6 +45,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MatIconModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
+        MatTooltipModule,
         InitialUsernamePipe,
         ErrorWidgetComponent
     ],
@@ -135,7 +137,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     getDisplayName(model: LightUserRepresentation) {
         if (model) {
-            const displayName = `${model.firstName || ''} ${model.lastName || ''}`;
+            const displayName = `${model.firstName || ''} ${model.lastName || ''} <${model.email}>`;
             return displayName.trim();
         }
         return '';

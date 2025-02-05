@@ -9,6 +9,7 @@
                 *ngFor="let user of selectedUsers"
                 (removed)="onRemove(user)"
                 [disabled]="field.readOnly"
+                [matTooltip]="user.email"
                 [attr.data-automation-id]="'adf-people-widget-chip-' + user.id">
                 {{ getDisplayName(user) }}
                 <button matChipRemove [attr.aria-label]="'remove ' + user.firstName">
