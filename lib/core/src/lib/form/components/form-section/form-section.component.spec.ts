@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { FormFieldModel, FormModel } from '../widgets';
 import { FormSectionComponent } from './form-section.component';
 import { mockSectionWithFields } from '../mock/form-renderer.component.mock';
@@ -24,12 +24,14 @@ import { mockSectionWithFields } from '../mock/form-renderer.component.mock';
 describe('FormSectionComponent', () => {
     let fixture: ComponentFixture<FormSectionComponent>;
     let component: FormSectionComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(FormSectionComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
     });
 
@@ -54,7 +56,7 @@ describe('FormSectionComponent', () => {
         fixture.componentRef.setInput('field', sectionField);
         fixture.detectChanges();
 
-        const sectionFields = fixture.nativeElement.querySelectorAll('.adf-grid-list-section-column-view-item adf-form-field');
+        const sectionFields = testingUtils.getAllByCSS('.adf-grid-list-section-column-view-item adf-form-field');
         expect(sectionFields.length).toBe(2);
     });
 });
