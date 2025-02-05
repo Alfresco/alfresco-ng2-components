@@ -53,6 +53,7 @@
       "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
       "FILE_NAME": "File Name",
+      "TITLE": "Title",
       "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",
