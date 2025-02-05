@@ -174,13 +174,13 @@
     </div>
 
     <div
-        *ngIf="!loading"
+        *ngIf="!loading; else loadingRowTemplate"
         class="adf-datatable-body"
         [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing), 'adf-datatable-body__draggable': enableDragRows && !isDraggingRow, 'adf-datatable-body__dragging': isDraggingRow }"
         cdkDropList
         [cdkDropListDisabled]="!enableDragRows"
         role="rowgroup">
-        <ng-container *ngIf="!noPermission">
+        <ng-container *ngIf="!noPermission; else noPermissionsRowTemplate">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
                 cdkDrag
                 [cdkDragDisabled]="!enableDragRows"
@@ -441,23 +441,27 @@
             </div>
         </ng-container>
 
-        <div *ngIf="noPermission"
-             role="row"
-             class="adf-datatable-row adf-no-permission__row">
-            <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
-                <ng-template *ngIf="noPermissionTemplate"
+        <ng-template #noPermissionsRowTemplate>
+            <div
+                role="row"
+                class="adf-datatable-row adf-no-permission__row">
+                <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
+                    <ng-template *ngIf="noPermissionTemplate"
+                                ngFor [ngForOf]="[data]"
+                                [ngForTemplate]="noPermissionTemplate">
+                    </ng-template>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <ng-template #loadingRowTemplate>
+        <div class="adf-datatable-row">
+            <div class="adf-no-content-container adf-datatable-cell">
+                <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
-                             [ngForTemplate]="noPermissionTemplate">
+                             [ngForTemplate]="loadingTemplate">
                 </ng-template>
             </div>
         </div>
-    </div>
-    <div *ngIf="loading" class="adf-datatable-row">
-        <div class="adf-no-content-container adf-datatable-cell">
-            <ng-template *ngIf="loadingTemplate"
-                         ngFor [ngForOf]="[data]"
-                         [ngForTemplate]="loadingTemplate">
-            </ng-template>
-        </div>
-    </div>
+    </ng-template>
 </div>

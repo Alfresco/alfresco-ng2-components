@@ -1468,6 +1468,44 @@ describe('DataTable', () => {
             expect(await testingUtils.checkIfMatCheckboxesHaveClass('adf-datatable-hover-only')).toBeTrue();
         });
     });
+
+    it('should scroll back to the top when new data is set', async () => {
+        const columnDefinitions = [
+            {
+                type: 'text',
+                key: 'id',
+                title: ''
+            },
+            {
+                type: 'text',
+                key: 'name',
+                title: 'Name'
+            }
+        ] as DataColumn[];
+        const initialRows = Array.from({ length: 20 }, (_, i) => ({ id: `${i + 1}`, name: `Row ${i + 1}` }));
+        const nextRows = Array.from({ length: 20 }, (_, i) => ({ id: `${i + 21}`, name: `Row ${i + 21}` }));
+
+        // Load first 20 records
+        dataTable.data = new ObjectDataTableAdapter(initialRows, columnDefinitions);
+        fixture.detectChanges();
+
+        // Check that scroll body height > 0
+        const scrollBody = fixture.nativeElement.querySelector('.adf-datatable-body');
+        expect(scrollBody.scrollHeight).toBeGreaterThan(0);
+
+        // Scroll to bottom
+        scrollBody.scrollTop = scrollBody.scrollHeight;
+        scrollBody.dispatchEvent(new Event('scroll'));
+        fixture.detectChanges();
+
+        // Set new records
+        dataTable.data = new ObjectDataTableAdapter(nextRows, columnDefinitions);
+        fixture.detectChanges();
+
+        // Verify new records are loaded and first record is at top
+        expect(scrollBody.scrollTop).toBe(0);
+        expect(testingUtils.getInnerTextByDataAutomationId('text_Row 21')).toContain('Row 21');
+    });
 });
 
 describe('Accesibility', () => {
