@@ -40,7 +40,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@alfresco/js-api": ">=8.0.0-alpha.8-0",
     "@alfresco/adf-extensions": ">=7.0.0-alpha.8-0",
-    "minimatch-browser": "1.0.0",
+    "minimatch": "^10.0.1",
     "pdfjs-dist": "3.3.122",
     "ts-morph": "^20.0.0"
   },
