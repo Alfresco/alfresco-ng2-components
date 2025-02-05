@@ -15,7 +15,7 @@
                 [min]="minDate"
                 [max]="maxDate"
                 [title]="field.tooltip"
-                (blur)="updateField()">
+            />
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
             <mat-datepicker #datePicker
                 [startAt]="startAt"
