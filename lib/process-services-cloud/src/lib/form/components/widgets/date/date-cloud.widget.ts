@@ -101,7 +101,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     private updateFormControlState(): void {
-        this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        this.dateInputControl.setValidators(this.isRequired() && this.field?.isVisible ? [Validators.required] : []);
         this.field?.readOnly || this.readOnly
             ? this.dateInputControl.disable({ emitEvent: false })
             : this.dateInputControl.enable({ emitEvent: false });

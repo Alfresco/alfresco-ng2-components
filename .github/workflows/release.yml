@@ -135,7 +135,7 @@ jobs:
           npx nx run-many -t build --prod --skip-nx-cache
           npx nx run-many -t pretheme
           npx nx run-many -t build-schematics
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
@@ -144,7 +144,7 @@ jobs:
       - run: npx nx run-many -t npm-publish --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
         name: release libraries Npm registry
         with:
           node-version-file: '.nvmrc'
@@ -198,7 +198,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Push Source Files to Crowdin
-        uses: crowdin/github-action@d1632879d4d4da358f2d040f79fa094571c9a649 # v2.5.1
+        uses: crowdin/github-action@b811e495831e49ff516e7c801f7c5546879b9ee7 # v2.5.2
         with:
           upload_sources: true
           upload_sources_args: --delete-obsolete

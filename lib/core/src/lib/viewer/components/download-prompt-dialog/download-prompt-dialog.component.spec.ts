@@ -17,8 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
-import { By } from '@angular/platform-browser';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { DownloadPromptActions } from '../../models/download-prompt.actions';
 import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
 
@@ -29,8 +28,9 @@ const mockDialog = {
 describe('DownloadPromptDialogComponent', () => {
     let matDialogRef: MatDialogRef<DownloadPromptDialogComponent>;
     let fixture: ComponentFixture<DownloadPromptDialogComponent>;
+    let testingUtils: UnitTestingUtils;
 
-    const getButton = (buttonId: string) => fixture.debugElement.query(By.css(buttonId)).nativeElement;
+    const clickButton = (buttonId: string) => testingUtils.clickByCSS(buttonId);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -40,12 +40,12 @@ describe('DownloadPromptDialogComponent', () => {
         matDialogRef = TestBed.inject(MatDialogRef);
 
         fixture = TestBed.createComponent(DownloadPromptDialogComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
     it('should emit DownloadPromptActions.WAIT and close dialog when clicking on the wait button', async () => {
-        const waitButton = getButton('#waitButton');
-        waitButton.dispatchEvent(new Event('click'));
+        clickButton('#waitButton');
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -54,8 +54,7 @@ describe('DownloadPromptDialogComponent', () => {
     });
 
     it('should emit DownloadPromptActions.DOWNLOAD and close dialog when clicking on the download button', async () => {
-        const waitButton = getButton('#downloadButton');
-        waitButton.dispatchEvent(new Event('click'));
+        clickButton('#downloadButton');
 
         fixture.detectChanges();
         await fixture.whenStable();

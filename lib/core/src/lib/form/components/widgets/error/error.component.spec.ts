@@ -17,14 +17,14 @@
 
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
 import { ErrorMessageModel } from '../core';
 import { ErrorWidgetComponent } from './error.component';
 
 describe('ErrorWidgetComponent', () => {
     let widget: ErrorWidgetComponent;
     let fixture: ComponentFixture<ErrorWidgetComponent>;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -32,7 +32,7 @@ describe('ErrorWidgetComponent', () => {
         });
         fixture = TestBed.createComponent(ErrorWidgetComponent);
         widget = fixture.componentInstance;
-        element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
     const errorMessage: string = 'fake-error';
     const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({ message: errorMessage });
@@ -46,7 +46,7 @@ describe('ErrorWidgetComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const errorIcon = element.querySelector('.adf-error-icon').textContent;
+        const errorIcon = testingUtils.getByCSS('.adf-error-icon').nativeElement.textContent;
         expect(errorIcon).toEqual('error_outline');
     });
 
@@ -62,7 +62,7 @@ describe('ErrorWidgetComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const requiredErrorText = element.querySelector('.adf-error-text').textContent;
+        const requiredErrorText = testingUtils.getByCSS('.adf-error-text').nativeElement.textContent;
         expect(requiredErrorText).toEqual(errorMessage);
     });
 });

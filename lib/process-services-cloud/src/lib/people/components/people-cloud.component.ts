@@ -48,6 +48,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { IdentityUserService } from '../services/identity-user.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -64,7 +65,8 @@ import { IdentityUserService } from '../services/identity-user.service';
         MatAutocompleteModule,
         ReactiveFormsModule,
         MatChipsModule,
-        MatInputModule
+        MatInputModule,
+        MatTooltipModule
     ],
     providers: [FullNamePipe],
     templateUrl: './people-cloud.component.html',
@@ -177,6 +179,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
      */
     @Input()
     showErrors: boolean = true;
+
+    /**
+     * Show the full name of the user on hover in the chips
+     */
+    @Input()
+    showFullNameOnHover: boolean = false;
 
     /** Emitted when a user is selected. */
     @Output()

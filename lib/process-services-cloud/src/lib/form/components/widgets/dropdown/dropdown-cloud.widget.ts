@@ -41,6 +41,7 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormUtilsService } from '../../../services/form-utils.service';
+import { defaultValueValidator } from './validators';
 
 export const DEFAULT_OPTION = {
     id: 'empty',
@@ -198,7 +199,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private updateFormControlState(): void {
-        this.dropdownControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        const isFieldRequired = this.isRequired();
+
+        this.dropdownControl.setValidators(isFieldRequired && this.field?.isVisible ? [Validators.required] : []);
+
+        const addSelectDefaultOptionValidator = isFieldRequired && this.field.hasEmptyValue;
+        if (addSelectDefaultOptionValidator) {
+            this.dropdownControl.addValidators([defaultValueValidator(this.field)]);
+        }
 
         this.field?.readOnly || this.readOnly
             ? this.dropdownControl.disable({ emitEvent: false })

@@ -16,9 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
-import { CoreTestingModule } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
@@ -26,6 +25,7 @@ declare const pdfjsViewer: any;
 describe('PdfThumbListComponent', () => {
     let fixture: ComponentFixture<PdfThumbListComponent>;
     let component: PdfThumbListComponent;
+    let testingUtils: UnitTestingUtils;
 
     const page = (id) => ({
         id,
@@ -75,6 +75,7 @@ describe('PdfThumbListComponent', () => {
             imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(PdfThumbListComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
         component.pdfViewer = viewerMock;
 
@@ -83,7 +84,7 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.style.height = '700px';
         fixture.nativeElement.style.overflow = 'scroll';
 
-        const content = fixture.debugElement.query(By.css('.adf-pdf-thumbnails__content')).nativeElement;
+        const content = testingUtils.getByCSS('.adf-pdf-thumbnails__content').nativeElement;
 
         content.style.height = '2000px';
         content.style.position = 'unset';

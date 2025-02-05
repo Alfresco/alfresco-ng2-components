@@ -84,4 +84,25 @@ export class PreferencesApi extends BaseApi {
             queryParams
         });
     }
+
+    updatePreference(personId: string, preferenceName: string, preferenceValue: string): Promise<PreferenceEntry> {
+        throwIfNotDefined(personId, 'personId');
+        throwIfNotDefined(preferenceName, 'preferenceName');
+        throwIfNotDefined(preferenceValue, 'preferenceValue');
+
+        const pathParams = {
+            personId,
+            preferenceName
+        };
+
+        const bodyParam = {
+            value: preferenceValue
+        };
+
+        return this.put({
+            path: '/people/{personId}/preferences/{preferenceName}',
+            pathParams,
+            bodyParam: bodyParam
+        });
+    }
 }

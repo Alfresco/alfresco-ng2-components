@@ -23,14 +23,23 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommentListComponent } from './comment-list';
 
 @Component({
     selector: 'adf-comments',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, CommentListComponent],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        CommentListComponent,
+        ReactiveFormsModule
+    ],
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -49,10 +58,15 @@ export class CommentsComponent implements OnChanges {
     error = new EventEmitter<any>();
 
     comments: CommentModel[] = [];
-    message: string;
     beingAdded: boolean = false;
 
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
+
+    private readonly _commentControl = new FormControl('', [this.validateEmptyComment]);
+
+    get commentControl(): FormControl<string> {
+        return this._commentControl;
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.id = null;
@@ -95,10 +109,10 @@ export class CommentsComponent implements OnChanges {
 
         this.beingAdded = true;
 
-        this.commentsService.add(this.id, this.message).subscribe({
+        this.commentsService.add(this.id, this.commentControl.value).subscribe({
             next: (res) => {
                 this.addToComments(res);
-                this.resetMessage();
+                this.commentControl.reset();
             },
             error: (err) => {
                 this.error.emit(err);
@@ -111,19 +125,15 @@ export class CommentsComponent implements OnChanges {
 
     clearMessage(event: Event): void {
         event.stopPropagation();
-        this.resetMessage();
+        this.commentControl.reset();
     }
 
     private addToComments(comment: CommentModel): void {
         this.comments.unshift(comment);
     }
 
-    private resetMessage(): void {
-        this.message = '';
-    }
-
     private canAddComment(): boolean {
-        return this.hasId() && this.message && this.message.trim() && !this.beingAdded;
+        return this.hasId() && this.commentControl.value?.trim() && !this.beingAdded;
     }
 
     private hasId(): boolean {
@@ -145,5 +155,9 @@ export class CommentsComponent implements OnChanges {
 
     private resetComments(): void {
         this.comments = [];
+    }
+
+    private validateEmptyComment(commentControl: FormControl<string>): ValidationErrors {
+        return commentControl.value?.trim() ? null : { emptyComment: true };
     }
 }

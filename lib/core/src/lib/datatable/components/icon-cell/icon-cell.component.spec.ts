@@ -22,17 +22,19 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatIconHarness } from '@angular/material/icon/testing';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('IconCellComponent', () => {
     let component: IconCellComponent;
     let fixture: ComponentFixture<IconCellComponent>;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
+
     const renderAndCheckResult = async (value: any, expectedOccurrence: boolean, expectedIconName?: string) => {
         component.value$.next(value);
         fixture.detectChanges();
 
-        const icon = await loader.getHarnessOrNull(MatIconHarness);
+        const icon = await testingUtils.getMatIconOrNull();
 
         expectedOccurrence ? expect(icon).not.toBeNull() : expect(icon).toBeNull();
         if (expectedIconName) {
@@ -48,6 +50,7 @@ describe('IconCellComponent', () => {
         fixture = TestBed.createComponent(IconCellComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     describe('Initialization', () => {

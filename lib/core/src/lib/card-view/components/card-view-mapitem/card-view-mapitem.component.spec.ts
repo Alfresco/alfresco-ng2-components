@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
-
     let fixture: ComponentFixture<CardViewMapItemComponent>;
     let component: CardViewMapItemComponent;
-    let debug: DebugElement;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,13 +35,15 @@ describe('CardViewMapItemComponent', () => {
         fixture = TestBed.createComponent(CardViewMapItemComponent);
         service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
+
+    const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
+    const getPropertyValue = (): string => testingUtils.getInnerTextByDataAutomationId(`card-mapitem-value-${component.property.key}`);
 
     it('should render the default if the value is empty and displayEmpty is true', () => {
         component.property = new CardViewMapItemModel({
@@ -57,13 +56,8 @@ describe('CardViewMapItemComponent', () => {
         component.displayEmpty = true;
         fixture.detectChanges();
 
-        const labelValue = debug.query(By.css('.adf-property-label'));
-        expect(labelValue).not.toBeNull();
-        expect(labelValue.nativeElement.innerText).toBe('Map label');
-
-        const value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('Fake default');
+        expect(getPropertyLabel()).toBe('Map label');
+        expect(getPropertyValue().trim()).toBe('Fake default');
     });
 
     it('should NOT render the default if the value is empty and displayEmpty is false', () => {
@@ -77,12 +71,8 @@ describe('CardViewMapItemComponent', () => {
         component.displayEmpty = false;
         fixture.detectChanges();
 
-        const labelValue = debug.query(By.css('.adf-property-label'));
-        expect(labelValue).toBeNull();
-
-        const value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('');
+        expect(testingUtils.getByCSS('.adf-property-label')).toBeNull();
+        expect(getPropertyValue().trim()).toBe('');
     });
 
     it('should render the label and value', () => {
@@ -95,13 +85,8 @@ describe('CardViewMapItemComponent', () => {
 
         fixture.detectChanges();
 
-        const labelValue = debug.query(By.css('.adf-property-label'));
-        expect(labelValue).not.toBeNull();
-        expect(labelValue.nativeElement.innerText).toBe('Map label');
-
-        const value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
-        expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('fakeProcessName');
+        expect(getPropertyLabel()).toBe('Map label');
+        expect(getPropertyValue().trim()).toBe('fakeProcessName');
     });
 
     it('should render a clickable value', (done) => {
@@ -114,7 +99,6 @@ describe('CardViewMapItemComponent', () => {
         });
 
         fixture.detectChanges();
-        const value: any = element.querySelector('.adf-mapitem-clickable-value');
 
         const disposableUpdate = service.itemClicked$.subscribe((response) => {
             expect(response.target).not.toBeNull();
@@ -125,6 +109,6 @@ describe('CardViewMapItemComponent', () => {
             done();
         });
 
-        value.click();
+        testingUtils.clickByCSS('.adf-mapitem-clickable-value');
     });
 });

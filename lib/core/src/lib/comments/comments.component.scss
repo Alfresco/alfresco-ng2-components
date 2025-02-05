@@ -12,10 +12,15 @@ adf-comments {
 
             #{$mat-form-field} {
                 width: 100%;
-            }
 
-            #{$mat-form-field-subscript-wrapper} {
-                display: none;
+                &#{$mat-form-field-invalid} {
+                    #{$mat-input-element} {
+                        &::placeholder,
+                        &:focus::placeholder {
+                            color: var(--theme-warn-color);
+                        }
+                    }
+                }
             }
 
             #{$mat-form-field-wrapper} {

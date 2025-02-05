@@ -21,13 +21,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
 import { ProgressComponent } from './progress.component';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('ProgressComponent', () => {
     let component: ProgressComponent;
     let fixture: ComponentFixture<ProgressComponent>;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -36,6 +37,7 @@ describe('ProgressComponent', () => {
 
         fixture = TestBed.createComponent(ProgressComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -74,8 +76,8 @@ describe('ProgressComponent', () => {
         component.ariaLabel = testLabel;
         fixture.detectChanges();
 
-        const progress = await loader.getHarness(MatProgressBarHarness);
-        const host = await progress.host();
+        const host = await testingUtils.getMatProgressBarHost();
+
         expect(await host.getAttribute('aria-label')).toBe(testLabel);
     });
 
@@ -83,8 +85,7 @@ describe('ProgressComponent', () => {
         component.ariaHidden = true;
         fixture.detectChanges();
 
-        const progress = await loader.getHarness(MatProgressBarHarness);
-        const host = await progress.host();
+        const host = await testingUtils.getMatProgressBarHost();
 
         expect(await host.getAttribute('aria-hidden')).toBe('true');
     });
@@ -93,7 +94,7 @@ describe('ProgressComponent', () => {
         const testId = 'progress-test-id';
         component.testId = testId;
         fixture.detectChanges();
-        const progressBarElement = fixture.nativeElement.querySelector(`[data-automation-id="${testId}"]`);
+        const progressBarElement = testingUtils.getByDataAutomationId(testId);
         expect(progressBarElement).not.toBeNull();
     });
 });

@@ -15,7 +15,9 @@
                 [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
                 (removed)="onRemove(user)"
                 [disabled]="isReadonly() || isValidationLoading()"
-                title="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
+                title="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}"
+                [matTooltip]="showFullNameOnHover ? (user | fullName) : ''"
+                >
                 {{user | fullName}}
                 <mat-icon
                     matChipRemove

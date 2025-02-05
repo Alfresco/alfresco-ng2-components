@@ -23,7 +23,9 @@ import { of, throwError } from 'rxjs';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../testing/noop-translate.module';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
+import { MatError } from '@angular/material/form-field';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -31,6 +33,7 @@ describe('CommentsComponent', () => {
     let getCommentSpy: jasmine.Spy;
     let addCommentSpy: jasmine.Spy;
     let commentsService: CommentsService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,6 +47,7 @@ describe('CommentsComponent', () => {
         });
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
 
         commentsService = TestBed.inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
@@ -64,7 +68,7 @@ describe('CommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getCommentSpy.and.returnValue(throwError({}));
+        getCommentSpy.and.returnValue(throwError(() => new Error('error')));
 
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ id: change });
@@ -84,8 +88,8 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelectorAll('.adf-comment-message').length).toBe(3);
-        expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
+        expect(testingUtils.getAllByCSS('.adf-comment-message').length).toBe(3);
+        expect(testingUtils.getByCSS('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should display comments count when the entity has comments', async () => {
@@ -95,8 +99,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const element = fixture.nativeElement.querySelector('#comment-header');
-        expect(element.innerText).toBe('COMMENTS.HEADER');
+        expect(testingUtils.getInnerTextByCSS('#comment-header')).toBe('COMMENTS.HEADER');
     });
 
     it('should not display comments when the entity has no comments', async () => {
@@ -106,7 +109,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
+        expect(testingUtils.getByCSS('#comment-container')).toBeNull();
     });
 
     it('should display comments input by default', async () => {
@@ -116,7 +119,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
+        expect(testingUtils.getByCSS('#comment-input')).not.toBeNull();
     });
 
     it('should not display comments input when the entity is readonly', async () => {
@@ -125,7 +128,7 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
+        expect(testingUtils.getByCSS('#comment-input')).toBeNull();
     });
 
     describe('Change detection id', () => {
@@ -154,6 +157,10 @@ describe('CommentsComponent', () => {
     });
 
     describe('Add comment', () => {
+        const getError = (): string => testingUtils.getByDirective(MatError)?.nativeElement?.textContent;
+
+        const getAddCommentButton = (): HTMLButtonElement => testingUtils.getByDataAutomationId('comments-input-add').nativeElement;
+
         beforeEach(() => {
             component.id = '123';
             fixture.detectChanges();
@@ -161,9 +168,8 @@ describe('CommentsComponent', () => {
         });
 
         it('should normalize comment when user input contains spaces sequence', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'test comment';
-            element.dispatchEvent(new Event('click'));
+            component.commentControl.setValue('test comment');
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -183,40 +189,34 @@ describe('CommentsComponent', () => {
             getCommentSpy.and.returnValue(of([]));
             addCommentSpy.and.returnValue(commentsResponseMock.addComment(commentText));
 
-            component.message = commentText;
-            const addButton = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            addButton.dispatchEvent(new Event('click'));
+            component.commentControl.setValue(commentText);
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(addCommentSpy).toHaveBeenCalledWith('123', commentText);
-
-            const messageElement = fixture.nativeElement.querySelector('.adf-comment-message');
-            expect(messageElement.innerText).toBe(commentText);
+            expect(testingUtils.getInnerTextByCSS('.adf-comment-message')).toBe(commentText);
         });
 
         it('should call service to add a comment when add button is pressed', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-
-            component.message = 'Test Comment';
-            addCommentSpy.and.returnValue(commentsResponseMock.addComment(component.message));
-
-            element.dispatchEvent(new Event('click'));
+            const comment = 'Test Comment';
+            component.commentControl.setValue(comment);
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment(comment));
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(addCommentSpy).toHaveBeenCalled();
-            const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
+            const elements = testingUtils.getAllByCSS('.adf-comment-message');
             expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe('Test Comment');
+            expect(elements[0].nativeElement.innerText).toBe('Test Comment');
         });
 
         it('should not call service to add a comment when comment is empty', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = '';
-            element.dispatchEvent(new Event('click'));
+            component.commentControl.setValue('');
+            getAddCommentButton().dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -225,27 +225,25 @@ describe('CommentsComponent', () => {
         });
 
         it('should clear comment when escape key is pressed', async () => {
-            const event = new KeyboardEvent('keydown', { key: 'Escape' });
-            let element = fixture.nativeElement.querySelector('#comment-input');
-            element.dispatchEvent(event);
+            testingUtils.keyBoardEventByCSS('#comment-input', 'keydown', 'Escape', 'Escape');
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            element = fixture.nativeElement.querySelector('#comment-input');
-            expect(element.value).toBe('');
+            const input = testingUtils.getByCSS('#comment-input');
+            expect(input.nativeElement.value).toBe('');
         });
 
         it('should emit an error when an error occurs adding the comment', () => {
             const emitSpy = spyOn(component.error, 'emit');
-            addCommentSpy.and.returnValue(throwError({}));
-            component.message = 'Test comment';
+            addCommentSpy.and.returnValue(throwError(() => new Error('error')));
+            component.commentControl.setValue('Test comment');
             component.addComment();
             expect(emitSpy).toHaveBeenCalled();
         });
 
         it('should set beingAdded variable back to false when an error occurs adding the comment', () => {
-            addCommentSpy.and.returnValue(throwError({}));
+            addCommentSpy.and.returnValue(throwError(() => new Error('error')));
             component.addComment();
             expect(component.beingAdded).toBeFalse();
         });
@@ -263,9 +261,85 @@ describe('CommentsComponent', () => {
         });
 
         it('should not add comment if message is empty', () => {
-            component.message = '';
+            component.commentControl.setValue('');
             component.addComment();
             expect(addCommentSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not display error message initially', () => {
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should display error message when comment is empty and was touched', () => {
+            component.commentControl.setValue('');
+            component.commentControl.markAsTouched();
+
+            fixture.detectChanges();
+            expect(getError()).toBe('COMMENTS.EMPTY_ERROR');
+        });
+
+        it('should display error message when comment has only spaces and was touched', () => {
+            component.commentControl.setValue('    ');
+            component.commentControl.markAsTouched();
+
+            fixture.detectChanges();
+            expect(getError()).toBe('COMMENTS.EMPTY_ERROR');
+        });
+
+        it('should not display error message when comment is empty but was not touched', () => {
+            component.commentControl.setValue('');
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should not display error message when comment has only spaces but was not touched', () => {
+            component.commentControl.setValue('    ');
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should not display error message when comment is not empty and was touched', () => {
+            component.commentControl.setValue('Some comment');
+            component.commentControl.markAsTouched();
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should not display error message when comment is not empty and was not touched', () => {
+            component.commentControl.setValue('Some comment');
+
+            fixture.detectChanges();
+            expect(getError()).toBeUndefined();
+        });
+
+        it('should disable add button initially', () => {
+            expect(getAddCommentButton().disabled).toBeTrue();
+        });
+
+        it('should disable add button when comment is empty', () => {
+            component.commentControl.setValue('Some comment');
+            component.commentControl.setValue('');
+
+            fixture.detectChanges();
+            expect(getAddCommentButton().disabled).toBeTrue();
+        });
+
+        it('should disable add button when comment has only spaces', () => {
+            component.commentControl.setValue('Some comment');
+            component.commentControl.setValue('    ');
+
+            fixture.detectChanges();
+            expect(getAddCommentButton().disabled).toBeTrue();
+        });
+
+        it('should enable add button when comment is not empty', () => {
+            component.commentControl.setValue('Some comment');
+
+            fixture.detectChanges();
+            expect(getAddCommentButton().disabled).toBeFalse();
         });
     });
 });

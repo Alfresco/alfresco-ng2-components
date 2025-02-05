@@ -22,20 +22,22 @@ import { BehaviorSubject } from 'rxjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('AmountCellComponent', () => {
     let component: AmountCellComponent;
     let fixture: ComponentFixture<AmountCellComponent>;
+    let testingUtils: UnitTestingUtils;
 
     const renderAndCheckCurrencyValue = (currencyConfig: CurrencyConfig, value: number, expectedResult: string) => {
         component.value$ = new BehaviorSubject<number>(value);
         component.currencyConfig = currencyConfig;
 
         fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
+        const displayedAmount = testingUtils.getByCSS('span');
 
         expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toBe(expectedResult);
+        expect(displayedAmount.nativeElement.textContent.trim()).toBe(expectedResult);
     };
 
     beforeEach(() => {
@@ -44,6 +46,7 @@ describe('AmountCellComponent', () => {
         });
         fixture = TestBed.createComponent(AmountCellComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     it('should set default currency config', () => {
@@ -73,6 +76,7 @@ describe('AmountCellComponent', () => {
 describe('AmountCellComponent locale', () => {
     let component: AmountCellComponent;
     let fixture: ComponentFixture<AmountCellComponent>;
+    let testingUtils: UnitTestingUtils;
 
     it('should render currency value with custom locale', () => {
         TestBed.configureTestingModule({
@@ -82,15 +86,16 @@ describe('AmountCellComponent locale', () => {
 
         fixture = TestBed.createComponent(AmountCellComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         registerLocaleData(localePL);
 
         component.value$ = new BehaviorSubject<number>(123.45);
         component.currencyConfig = { code: 'PLN', display: 'symbol', locale: 'pl-PL' };
 
         fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
+        const displayedAmount = testingUtils.getByCSS('span');
 
         expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toMatch(/123,45\s?zł/);
+        expect(displayedAmount.nativeElement.textContent.trim()).toMatch(/123,45\s?zł/);
     });
 });

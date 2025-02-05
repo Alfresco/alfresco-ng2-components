@@ -22,9 +22,9 @@ import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatInputHarness } from '@angular/material/input/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
+import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 
 describe('TextWidgetComponent', () => {
     const form = new FormModel({ taskId: 'fake-task-id' });
@@ -32,8 +32,8 @@ describe('TextWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
-    let element: HTMLElement;
     let errorWidget: HTMLElement;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,8 +41,8 @@ describe('TextWidgetComponent', () => {
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;
-        element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     describe('when template is ready', () => {
@@ -59,8 +59,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 expect(widget.field.value).toBe('');
 
-                const input = await loader.getHarness(MatInputHarness);
-                await input.setValue('TEXT');
+                await testingUtils.fillMatInput('TEXT');
 
                 expect(widget.field.value).toBe('TEXT');
             });
@@ -75,8 +74,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                const textWidgetLabel = element.querySelector('label');
-                expect(textWidgetLabel.innerText).toBe('text-name');
+                expect(testingUtils.getInnerTextByCSS('label')).toBe('text-name');
             });
 
             it('should be able to set a placeholder for Text widget', async () => {
@@ -91,8 +89,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Your name here' }));
-                expect(inputField).toBeTruthy();
+                expect(await testingUtils.getMatInputByPlaceholder('Your name here')).toBeTruthy();
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
@@ -107,22 +104,21 @@ describe('TextWidgetComponent', () => {
                 });
                 fixture.detectChanges();
 
-                const input = await loader.getHarness(MatInputHarness);
-                await input.setValue('TEXT');
+                await testingUtils.fillMatInput('TEXT');
 
-                errorWidget = element.querySelector('.adf-error-text');
+                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
                 expect(widget.field.isValid).toBe(false);
 
-                await input.setValue('TEXT VALUE');
+                await testingUtils.fillMatInput('TEXT VALUE');
 
-                errorWidget = element.querySelector('.adf-error-text');
+                errorWidget = testingUtils.getByCSS('.adf-error-text')?.nativeElement;
                 expect(widget.field.isValid).toBe(true);
 
-                await input.setValue('TEXT VALUE TOO LONG');
+                await testingUtils.fillMatInput('TEXT VALUE TOO LONG');
                 expect(widget.field.isValid).toBe(false);
 
-                errorWidget = element.querySelector('.adf-error-text');
+                errorWidget = testingUtils.getByCSS('.adf-error-text').nativeElement;
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 
@@ -137,14 +133,13 @@ describe('TextWidgetComponent', () => {
                 });
                 fixture.detectChanges();
 
-                const input = await loader.getHarness(MatInputHarness);
-                await input.setValue('TEXT');
+                await testingUtils.fillMatInput('TEXT');
                 expect(widget.field.isValid).toBe(false);
 
-                await input.setValue('8');
+                await testingUtils.fillMatInput('8');
                 expect(widget.field.isValid).toBe(true);
 
-                await input.setValue('8XYZ');
+                await testingUtils.fillMatInput('8XYZ');
                 expect(widget.field.isValid).toBe(false);
             });
         });
@@ -159,10 +154,10 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                const input = await loader.getHarness(MatInputHarness);
-                await (await input.host()).hover();
+                const host = await testingUtils.getMatInputHost();
+                await host.hover();
 
-                const tooltip = await (await input.host()).getAttribute('title');
+                const tooltip = await host.getAttribute('title');
                 expect(tooltip).toBe('my custom tooltip');
             });
         });
@@ -180,19 +175,18 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should be marked as invalid after interaction', async () => {
-                const input = await loader.getHarness(MatInputHarness);
-                expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+                expect(testingUtils.getByCSS('.adf-invalid')).toBeFalsy();
 
-                await (await input.host()).blur();
+                await testingUtils.blurMatInput();
 
-                expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+                expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
             });
 
             it('should be able to display label with asterisk', async () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const asterisk = element.querySelector('.adf-asterisk');
+                const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
                 expect(asterisk).toBeTruthy();
                 expect(asterisk.textContent).toEqual('*');
@@ -213,7 +207,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should be disabled on readonly forms', async () => {
-                const input = await loader.getHarness(MatInputHarness);
+                const input = await testingUtils.getMatInput();
                 expect(await input.isDisabled()).toBe(true);
             });
         });
@@ -233,28 +227,25 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
+                inputElement = testingUtils.getByCSS('#text-id').nativeElement;
             });
 
             it('should show text widget', async () => {
-                expect(await loader.hasHarness(MatInputHarness)).toBe(true);
+                expect(await testingUtils.checkIfMatInputExists()).toBe(true);
             });
 
             it('should show the field placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'simple placeholder' }));
-                expect(inputField).toBeTruthy();
+                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('simple placeholder')).toBeTrue();
             });
 
             it('should show the field placeholder when clicked', async () => {
-                const input = await loader.getHarness(MatInputHarness);
-                await (await input.host()).click();
+                await testingUtils.clickMatInput();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'simple placeholder' }));
-                expect(inputField).toBeTruthy();
+                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('simple placeholder')).toBeTruthy();
             });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async () => {
-                expect(element.querySelector('#text-id')).not.toBeNull();
+                expect(testingUtils.getByCSS('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
                 widget.field.value = 'F';
@@ -265,12 +256,11 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
-                expect(inputElement.value).toBe('');
+                expect(testingUtils.getByCSS('#text-id').nativeElement.value).toBe('');
             });
 
             it('should prevent text to be written if is not allowed by the mask on input event', async () => {
-                expect(element.querySelector('#text-id')).not.toBeNull();
+                expect(testingUtils.getByCSS('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
                 widget.field.value = 'F';
@@ -279,15 +269,14 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
-                expect(inputElement.value).toBe('');
+                expect(testingUtils.getByCSS('#text-id').nativeElement.value).toBe('');
             });
 
             it('should allow masked configured value on keyUp event', async () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(element.querySelector('#text-id')).not.toBeNull();
+                expect(testingUtils.getByCSS('#text-id')).not.toBeNull();
 
                 inputElement.value = '1';
                 widget.field.value = '1';
@@ -298,15 +287,14 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const textEle = element.querySelector<HTMLInputElement>('#text-id');
-                expect(textEle.value).toBe('1');
+                expect(testingUtils.getByCSS('#text-id').nativeElement.value).toBe('1');
             });
 
             it('should auto-fill masked configured value on keyUp event', async () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(element.querySelector('#text-id')).not.toBeNull();
+                expect(testingUtils.getByCSS('#text-id')).not.toBeNull();
 
                 inputElement.value = '12345678';
                 widget.field.value = '12345678';
@@ -317,8 +305,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const textEle = element.querySelector<HTMLInputElement>('#text-id');
-                expect(textEle.value).toBe('12-345,67%');
+                expect(testingUtils.getByCSS('#text-id').nativeElement.value).toBe('12-345,67%');
             });
         });
 
@@ -336,7 +323,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
+                inputElement = testingUtils.getByCSS('#text-id').nativeElement;
             });
 
             afterEach(() => {
@@ -348,7 +335,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(element.querySelector('#text-id')).not.toBeNull();
+                expect(testingUtils.getByCSS('#text-id')).not.toBeNull();
 
                 inputElement.value = '1234';
                 widget.field.value = '1234';
@@ -359,8 +346,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const textEle = element.querySelector<HTMLInputElement>('#text-id');
-                expect(textEle.value).toBe('12,34%');
+                expect(testingUtils.getByCSS('#text-id').nativeElement.value).toBe('12,34%');
             });
         });
 
@@ -380,16 +366,13 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the input mask placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Phone : (__) ___-___' }));
-                expect(inputField).toBeTruthy();
+                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('Phone : (__) ___-___')).toBeTrue();
             });
 
             it('should show the input mask placeholder when clicked', async () => {
-                const input = await loader.getHarness(MatInputHarness);
-                await (await input.host()).click();
+                await testingUtils.clickMatInput();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Phone : (__) ___-___' }));
-                expect(inputField).toBeTruthy();
+                expect(await testingUtils.checkIfMatInputExistsWithPlaceholder('Phone : (__) ___-___')).toBeTrue();
             });
         });
 
@@ -407,10 +390,10 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
                 expect(widgetContainer).not.toBeNull();
 
-                const adfLeftLabel = element.querySelector('.adf-left-label');
+                const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
                 expect(adfLeftLabel).not.toBeNull();
             });
 
@@ -427,10 +410,10 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
                 expect(widgetContainer).toBeNull();
 
-                const adfLeftLabel = element.querySelector('.adf-left-label');
+                const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
                 expect(adfLeftLabel).toBeNull();
             });
 
@@ -447,10 +430,10 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                const widgetContainer = testingUtils.getByCSS('.adf-left-label-input-container');
                 expect(widgetContainer).toBeNull();
 
-                const adfLeftLabel = element.querySelector('.adf-left-label');
+                const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
                 expect(adfLeftLabel).toBeNull();
             });
         });

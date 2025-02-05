@@ -37,6 +37,7 @@ adf-layout-container {
 #{$mat-sidenav-content},
 #{$mat-drawer-transition} #{$mat-drawer-content} {
     margin-left: 0 !important;
+    margin-right: 0 !important;
     transform: unset !important;
     transition-property: unset !important;
     transition-duration: unset !important;
