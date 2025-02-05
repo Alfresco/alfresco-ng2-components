@@ -80,7 +80,6 @@ export class TaskScreenCloudComponent implements OnInit {
 
     private destroyRef = inject(DestroyRef);
     componentRef: ComponentRef<UserTaskCustomUi>;
-    isFullScreen = false;
     private readonly screenRenderingService = inject(ScreenRenderingService);
 
     ngOnInit() {
