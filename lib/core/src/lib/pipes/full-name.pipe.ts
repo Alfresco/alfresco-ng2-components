@@ -23,8 +23,9 @@ import { UserLike } from './user-like.interface';
     standalone: true
 })
 export class FullNamePipe implements PipeTransform {
-    transform(user: UserLike): string {
-        return this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
+    transform(user: UserLike, emailDisplayed?: boolean): string {
+        const fullName = this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
+        return `${fullName} ${emailDisplayed ? '<' + user?.email + '>' : ''}`.trim();
     }
 
     buildFullName(user: UserLike): string {
