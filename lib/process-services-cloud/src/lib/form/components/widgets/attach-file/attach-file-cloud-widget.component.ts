@@ -90,7 +90,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
-    displayedColumns = ['icon', 'fileName', 'action'];
+    displayedColumns = ['icon', 'fileName', 'title', 'action'];
 
     constructor(formService: FormService) {
         super(formService);

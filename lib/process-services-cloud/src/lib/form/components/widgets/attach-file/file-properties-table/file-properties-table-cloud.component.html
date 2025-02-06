@@ -29,6 +29,11 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>{{ 'FORM.FIELD.TITLE' | translate }}</th>
+            <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">{{ element.title }}</td>
+        </ng-container>
+
         <ng-container *ngFor="let prop of field?.params?.displayableCMProperties" [matColumnDef]="prop.name">
             <th mat-header-cell *matHeaderCellDef>{{prop.title ? prop.title : prop.name | titlecase }}</th>
             <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let row">
