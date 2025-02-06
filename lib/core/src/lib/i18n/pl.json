@@ -37,7 +37,7 @@
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "Podgląd niedostępny",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": "W trybie podglądu nie można dołączyć pliku"
       }
     },
     "FIELD": {
@@ -49,15 +49,15 @@
       "UPLOAD": "Prześlij",
       "REQUIRED": "Pole wymagane",
       "REST_API_FAILED": "Serwer '{{ hostname }}' jest nieosiągalny",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Wystąpił problem podczas ładowania elementów rozwijania. Skontaktuj się z administratorem.",
+      "DATA_TABLE_LOAD_FAILED": "Wystąpił problem podczas ładowania elementów tabeli. Skontaktuj się z administratorem.",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Wystąpił problem podczas ładowania właściwości zewnętrznej. Skontaktuj się z administratorem.",
       "FILE_NAME": "Nazwa pliku",
       "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {
         "INVALID_NUMBER": "Użyj innego formatu liczby.",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DECIMAL_NUMBER": "Użyj formatu liczby dziesiętnej",
+        "INVALID_DECIMAL_PRECISION": "Niepoprawna wartość dziesiętna, po przecinku powinna być maksymalnie liczba {{precision}}.",
         "INVALID_DATE": "Użyj innego formatu daty.",
         "INVALID_VALUE": "Wprowadź inną wartość.",
         "NOT_GREATER_THAN": "Wartość nie może być większa niż {{ maxValue }}.",
@@ -72,39 +72,39 @@
       "NAMELESS_TASK": "Zadanie bez nazwy"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "Rozmiar czcionki",
+      "FONT_WEIGHT": "Waga czcionki",
+      "FONT_COLOR": "Kolor czcionki",
       "FONT_WEIGHTS": {
-        "REGULAR": "regular",
-        "BOLD": "bold"
+        "REGULAR": "zwykły",
+        "BOLD": "pogrubiony"
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "kolor systemu",
+        "BLACK": "czarny",
+        "GREY": "szary",
+        "RED": "czerwony",
+        "GREEN": "zielony",
+        "BLUE": "niebieski",
+        "YELLOW": "żółty"
       },
       "PREDEFINED": {
         "HEADER": {
-          "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "NORMAL": "normalny",
+          "HEADING": "nagłówek",
+          "TITLE": "tytuł"
         },
         "RADIO_BUTTONS": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "NORMAL": "normalny",
+          "STRONG": "silny",
+          "HEADING": "nagłówek"
         },
         "READONLY_TEXT": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "NORMAL": "normalny",
+          "STRONG": "silny",
+          "HEADING": "nagłówek",
+          "TITLE": "tytuł",
+          "ANNOTATION": "adnotacja"
         }
       }
     }
@@ -125,7 +125,7 @@
       "PB": "PB",
       "EB": "EB",
       "ZB": "ZB",
-      "YB": "YB"
+      "YB": "JM"
     },
     "PAGINATION": {
       "ARIA": {
@@ -145,21 +145,21 @@
           "CANCEL": "Anuluj"
         },
         "TITLE": "Trwa dodawanie plików do archiwum zip. Może to potrwać kilka minut.",
-        "COMPLETE": "complete"
+        "COMPLETE": "zakończone"
       },
       "EDIT_JSON": {
         "CLOSE": "Zamknij",
         "UPDATE": "Aktualizuj"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "Niezapisane zmiany",
+        "DESCRIPTION": "Masz niezapisane zmiany na tym ekranie. Czy na pewno chcesz opuścić bez zapisywania zmian?",
+        "DISCARD_CHANGES_BUTTON": "Odrzuć zmiany"
       }
     },
     "BREADCRUMBS": {
-      "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "TITLE": "Ścieżki",
+      "SHOWALL": "Pokaż wszystkie"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Zablokuj plik",
@@ -234,11 +234,11 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
         "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej",
-        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LONG_VALIDATION_ERROR": "Użyj długiego formatu",
         "LENGTH_VALIDATION_ERROR": "Wartość powinna mieć długość od {{ minLength }} do {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Wartość nie pasuje do wzorca: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "Wartość powinna mieścić się w zakresie od {{ minValue }} do {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "ONLY_POSITIVE_NUMBER": "Dozwolona jest tylko wartość dodatnia"
       },
       "MORE": "Więcej"
     },
@@ -293,19 +293,20 @@
       "SORT_BY": "Sortuj wg"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "Zastąpienie flagi funkcji",
+      "FILTER_OR_ADD_NEW": "Filtruj lub dodaj nowe",
+      "FILTER": "Filtruj",
+      "ADD_NEW": "Dodaj nową flagę funkcji (Shift + Enter)"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
+    "PROFILE_IMAGE": "Zdjęcie profilowe",
     "NONE": "Brak komentarzy",
     "ADD": "Dodaj",
     "HEADER": "Liczba komentarzy: ({{ count }})",
     "CREATED_BY_HEADER": "Utworzone przez",
     "MESSAGE_HEADER": "Komunikat",
+    "EMPTY_ERROR": "Komentarz nie może być pusty",
     "DIALOG": {
       "TITLE": "Nowy komentarz",
       "LABELS": {
@@ -366,7 +367,7 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Czynności dotyczące zawartości",
-      "SELECT_COLUMNS": "Select columns"
+      "SELECT_COLUMNS": "Wybierz kolumny"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Czynności",
@@ -381,7 +382,7 @@
       "ICON_TEXT": "Typ elementu {{ type }}",
       "ICON_DISABLED": "Wyłączone",
       "ROW_OPTION_BUTTON": "Czynności",
-      "DRAG": "Drag button",
+      "DRAG": "Przeciągnij przycisk",
       "EMPTY_HEADER": "Pusty nagłówek"
     },
     "FILE_TYPE": {
@@ -417,8 +418,8 @@
       "MY_PROFILE": "Mój profil"
     },
     "TAB": {
-      "CS": "Content Services",
-      "PS": "Process Services"
+      "CS": "Usługi treści",
+      "PS": "Usługi procesowe"
     }
   },
   "ADF_VIEWER": {
@@ -437,7 +438,7 @@
       "WAIT": "Poczekaj"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
+      "MIME_TYPE_ICON": "Ikona typu pliku",
       "PREVIOUS_PAGE": "Poprzednia strona",
       "NEXT_PAGE": "Następna strona",
       "ZOOM_IN": "Powiększ",
@@ -611,10 +612,10 @@
     "SELECTION_ARIA_LABEL": "{{placeholder}} - pole kombi - {{selectedOption}}"
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": "Ikona węzła"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": "Załaduj więcej"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Potwierdź",

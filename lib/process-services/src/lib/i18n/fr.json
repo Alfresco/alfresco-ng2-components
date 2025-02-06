@@ -282,7 +282,7 @@
           "SELECT_APPLICATION": "Sélectionner l'application",
           "TYPE": "Sélectionner un processus",
           "NAME": "Nom de processus",
-          "SELECTED_PEOPLE": "Selected people"
+          "SELECTED_PEOPLE": "Personnes sélectionnées"
         },
         "TYPE_PLACEHOLDER": "Choisissez une valeur...",
         "ACTION": {

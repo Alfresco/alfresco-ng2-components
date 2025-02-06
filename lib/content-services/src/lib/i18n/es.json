@@ -2,7 +2,7 @@
   "COMMON": {
     "APPLY": "Aplicar",
     "CANCEL": "Cancelar",
-    "NAME": "Name"
+    "NAME": "Nombre"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -147,15 +147,14 @@
       "NO_EXISTING_TAGS": "No hay tarjetas existentes",
       "TITLE": "Crear etiquetas",
       "CREATE_TAG": "Crear: {{tag}}",
-      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
+      "TAG_SEARCH_PLACEHOLDER": "Etiquetas de búsqueda",
       "ERRORS": {
         "EXISTING_TAG": "Ya existe esta etiqueta",
         "ALREADY_ADDED_TAG": "La etiqueta ya está añadida",
         "EMPTY_TAG": "El nombre de la etiqueta no puede contener solo espacios",
-        "REQUIRED": "Se requiere un nombre de etiqueta",
         "FETCH_TAGS": "Error al recuperar las etiquetas",
         "CREATE_TAGS": "Error al crear las etiquetas",
-        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
+        "SPECIAL_CHARACTERS": "El nombre de la etiqueta no puede contener caracteres prohibidos"
       },
       "TOOLTIPS": {
         "DELETE_TAG": "Eliminar etiqueta"
@@ -176,7 +175,7 @@
     "GENERIC_CREATE": "Crear: {{name}}",
     "NAME": "Nombre de categoría",
     "LOADING": "Cargando",
-    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "NO_CATEGORIES_ADDED": "Actualmente no hay categorías añadidas",
     "ERRORS": {
       "NOT_FOUND": "Categorías no encontradas",
       "REQUIRED": "Se requiere un nombre de categoría",
@@ -186,7 +185,7 @@
       "CREATE_CATEGORIES": "Error al crear las categorías",
       "EXISTING_CATEGORIES": "Algunas de las categorías ya existen"
     },
-    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Categorías de búsqueda"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -274,15 +273,15 @@
       "ARIA-LABEL": "Botón de búsqueda"
     },
     "INPUT": {
-      "LABEL": "Search",
-      "PLACEHOLDER": "Search Query",
+      "LABEL": "Buscar",
+      "PLACEHOLDER": "Consulta de búsqueda",
       "ARIA-LABEL": "Entrada de búsqueda"
     },
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultados encontrados para {{searchTerm}}",
       "NONE": "No se han encontrado resultados para {{searchTerm}}",
       "ERROR": "Se ha surgido un problema durante la búsqueda; vuelva a intentarlo.",
-      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
+      "WILL_CONTAIN": "Los resultados contendrán '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Mostrar nombre",
         "MODIFIED_BY": "Modificado por",
@@ -333,11 +332,11 @@
         "OPTIONS-SELECTION": "Selección de opciones"
       },
       "ANY": "Cualquier",
-      "PEOPLE": "People"
+      "PEOPLE": "Personas"
     },
     "FACET_FIELDS": {
-      "MODIFIER_LABEL": "Modified by",
-      "CREATOR_LABEL": "Created by"
+      "MODIFIER_LABEL": "Modificado por",
+      "CREATOR_LABEL": "Creado por"
     },
     "ICONS": {
       "ft_ic_raster_image": "Fichero de imagen",
@@ -405,67 +404,67 @@
     "LOGICAL_SEARCH": {
       "MATCH_ALL": "TODAS",
       "MATCH_ALL_LABEL": "Coincidir TODAS estas frases",
-      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ALL_HINT": "Los resultados coincidirán con todas las palabras introducidas aquí",
       "MATCH_ANY": "CUALQUIERA",
       "MATCH_ANY_LABEL": "Coincidir CUALQUIERA de estas frases",
-      "MATCH_ANY_HINT": "Results will match any words entered here",
-      "MATCH_EXACT": "EXACT",
-      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
-      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "MATCH_ANY_HINT": "Los resultados coincidirán con cualquier palabra introducida aquí",
+      "MATCH_EXACT": "EXACTA",
+      "MATCH_EXACT_LABEL": "Coincidir con esta FRASE EXACTA",
+      "MATCH_EXACT_HINT": "Los resultados coincidirán con esta frase completa",
       "EXCLUDE": "EXCLUIR",
       "EXCLUDE_LABEL": "EXCLUIR estas frases",
-      "EXCLUDE_HINT": "Results will exclude matches with these words"
+      "EXCLUDE_HINT": "Los resultados excluirán las coincidencias con estas palabras"
     },
     "DATE_RANGE_ADVANCED": {
       "OPTIONS": {
-        "ANYTIME": "Anytime",
-        "IN_LAST": "In the last",
-        "BETWEEN": "Between"
+        "ANYTIME": "En cualquier momento",
+        "IN_LAST": "En el último/En la última/En los últimos/En las últimas",
+        "BETWEEN": "Entre"
       },
       "IN_LAST_LABELS": {
-        "DAYS": "Days",
-        "WEEKS": "Weeks",
-        "MONTHS": "Months"
+        "DAYS": "Días",
+        "WEEKS": "Semanas",
+        "MONTHS": "Meses"
       },
       "IN_LAST_DISPLAY_LABELS": {
-        "DAYS": "In the last {{value}} days",
-        "WEEKS": "In the last {{value}} weeks",
-        "MONTHS": "In the last {{value}} months"
+        "DAYS": "En los últimos {{value}} días",
+        "WEEKS": "En las últimas {{value}} semanas",
+        "MONTHS": "En los últimos {{value}} meses"
       },
       "BETWEEN_PLACEHOLDERS": {
-        "START_DATE": "Start Date",
-        "END_DATE": "End Date"
+        "START_DATE": "Fecha de inicio",
+        "END_DATE": "Fecha de fin"
       },
       "ERROR": {
-        "IN_LAST": "Value required",
+        "IN_LAST": "Valor requerido",
         "START_DATE": {
-          "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid"
+          "REQUIRED": "Se requiere la fecha de inicio",
+          "INVALID_FORMAT": "Fecha de inicio no válida"
         },
         "END_DATE": {
-          "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid"
+          "REQUIRED": "Se requiere la fecha de fin",
+          "INVALID_FORMAT": "Fecha de fin no válida"
         }
       },
       "ARIA_LABEL": {
-        "NUMBER_INPUT": "Number input"
+        "NUMBER_INPUT": "Número de entrada"
       }
     },
     "SEARCH_PROPERTIES": {
-      "FILE_SIZE": "File Size",
-      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE": "Tamaño del fichero",
+      "FILE_SIZE_PLACEHOLDER": "Indicar tamaño de fichero",
       "FILE_SIZE_OPERATOR": {
-        "AT_LEAST": "At Least",
-        "AT_MOST": "At Most",
-        "EXACTLY": "Exactly"
+        "AT_LEAST": "Como mínimo",
+        "AT_MOST": "Como máximo",
+        "EXACTLY": "Exactamente"
       },
       "FILE_SIZE_UNIT_ABBREVIATION": {
         "KB": "KB",
         "MB": "MB",
         "GB": "GB"
       },
-      "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type"
+      "FILE_TYPE": "Tipo de fichero",
+      "FILE_TYPE_PLACEHOLDER": "Añadir tipo de fichero"
     }
   },
   "PERMISSION": {
@@ -486,9 +485,9 @@
       "MODIFIED_DATE": "Fecha de modificación",
       "CONTENT_TYPE": "Tipo de contenido",
       "TAGS": "Etiquetas",
-      "NO_TAGS_ADDED": "There are currently no tags added",
-      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
-      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
+      "NO_TAGS_ADDED": "Actualmente no hay etiquetas añadidas",
+      "NO_ITEMS_MESSAGE": "Actualmente, no hay {{ groupTitle }} añadidas",
+      "SAVE_OR_DISCARD_CHANGES": "Guardar o descartar cambios para continuar"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -535,7 +534,7 @@
     },
     "UNSHARE_ERROR": "Error al dejar de compartir este fichero",
     "UNSHARE_PERMISSION_ERROR": "No tiene permiso para dejar de compartir este fichero",
-    "INVALID_DATE_ERROR": "Invalid date"
+    "INVALID_DATE_ERROR": "Fecha no válida"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -659,7 +658,7 @@
       "DROPDOWN": "Desplegable"
     },
     "HEADER": {
-      "SELECTED": "Selected ({{ count }})"
+      "SELECTED": "Seleccionado(s) ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -705,8 +704,8 @@
   "KNOWLEDGE_RETRIEVAL": {
     "SEARCH": {
       "WARNINGS": {
-        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
-        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+        "TOO_MANY_FILES_SELECTED": "No seleccione más de {{ maxFiles }} ficheros.",
+        "FOLDER_SELECTED": "Las carpetas no son compatibles con los Agentes IA."
       }
     }
   }

@@ -18,12 +18,19 @@
 import { EventEmitter } from '@angular/core';
 
 export interface UserTaskCustomUi {
+    appName: string;
+    canClaimTask: boolean;
+    canUnclaimTask: boolean;
     processInstanceId: string;
     taskName: string;
-    appName: string;
     taskId: string;
     screenId: string;
+    showCancelButton: boolean;
+    cancelTask: EventEmitter<any>;
+    claimTask: EventEmitter<any>;
+    error: EventEmitter<any>;
+    switchToDisplayMode?: (newDisplayMode?: string) => void;
     taskCompleted: EventEmitter<string>;
     taskSaved: EventEmitter<string>;
-    error: EventEmitter<any>;
+    unclaimTask: EventEmitter<any>;
 }

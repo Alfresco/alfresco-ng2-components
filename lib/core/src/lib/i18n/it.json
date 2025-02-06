@@ -37,7 +37,7 @@
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile",
       "ATTACH_FILE_WIDGET": {
-        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+        "ON_ATTACH_FILE_CLICK": "In modalità di anteprima non è possibile allegare un file"
       }
     },
     "FIELD": {
@@ -49,15 +49,15 @@
       "UPLOAD": "Carica",
       "REQUIRED": "Campo obbligatorio",
       "REST_API_FAILED": "Il server '{{ hostname }}' non è raggiungibile",
-      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
-      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
-      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Si è verificato un problema durante il caricamento degli elementi a discesa. Si prega di contattare l’amministratore.",
+      "DATA_TABLE_LOAD_FAILED": "Si è verificato un problema durante il caricamento degli elementi della tabella. Si prega di contattare l’amministratore.",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "Si è verificato un problema durante il caricamento delle proprietà esterne. Si prega di contattare l’amministratore.",
       "FILE_NAME": "Nome file",
       "NO_FILE_ATTACHED": "Nessun file allegato",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizzare un formato numerico diverso",
-        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
-        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
+        "INVALID_DECIMAL_NUMBER": "Utilizzare un formato numerico decimale",
+        "INVALID_DECIMAL_PRECISION": "Valore decimale errato, devono esserci massimo {{precision}} cifre dopo il punto decimale.",
         "INVALID_DATE": "Utilizzare un formato data diverso",
         "INVALID_VALUE": "Immettere un altro valore",
         "NOT_GREATER_THAN": "Non può essere maggiore di {{ maxValue }}",
@@ -72,39 +72,39 @@
       "NAMELESS_TASK": "Compito senza nome"
     },
     "FIELD_STYLE": {
-      "FONT_SIZE": "Font size",
-      "FONT_WEIGHT": "Font weight",
-      "FONT_COLOR": "Font color",
+      "FONT_SIZE": "Dimensioni carattere",
+      "FONT_WEIGHT": "Peso carattere",
+      "FONT_COLOR": "Colore del carattere",
       "FONT_WEIGHTS": {
-        "REGULAR": "regular",
-        "BOLD": "bold"
+        "REGULAR": "regolare",
+        "BOLD": "grassetto"
       },
       "COLORS": {
-        "SYSTEM_COLOR": "system color",
-        "BLACK": "black",
-        "GREY": "grey",
-        "RED": "red",
-        "GREEN": "green",
-        "BLUE": "blue",
-        "YELLOW": "yellow"
+        "SYSTEM_COLOR": "colore sistema",
+        "BLACK": "nero",
+        "GREY": "grigio",
+        "RED": "rosso",
+        "GREEN": "verde",
+        "BLUE": "blu",
+        "YELLOW": "giallo"
       },
       "PREDEFINED": {
         "HEADER": {
-          "NORMAL": "normal",
-          "HEADING": "heading",
-          "TITLE": "title"
+          "NORMAL": "normale",
+          "HEADING": "intestazione",
+          "TITLE": "titolo"
         },
         "RADIO_BUTTONS": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading"
+          "NORMAL": "normale",
+          "STRONG": "forte",
+          "HEADING": "intestazione"
         },
         "READONLY_TEXT": {
-          "NORMAL": "normal",
-          "STRONG": "strong",
-          "HEADING": "heading",
-          "TITLE": "title",
-          "ANNOTATION": "annotation"
+          "NORMAL": "normale",
+          "STRONG": "forte",
+          "HEADING": "intestazione",
+          "TITLE": "titolo",
+          "ANNOTATION": "annotazione"
         }
       }
     }
@@ -145,21 +145,21 @@
           "CANCEL": "Annulla"
         },
         "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti",
-        "COMPLETE": "complete"
+        "COMPLETE": "completo"
       },
       "EDIT_JSON": {
         "CLOSE": "Chiudi",
         "UPDATE": "Aggiorna"
       },
       "UNSAVED_CHANGES": {
-        "TITLE": "Unsaved changes",
-        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
-        "DISCARD_CHANGES_BUTTON": "Discard Changes"
+        "TITLE": "Modifiche non salvate",
+        "DESCRIPTION": "Vi sono modifiche non salvate in questa schermata. Uscire senza salvare le modifiche?",
+        "DISCARD_CHANGES_BUTTON": "Annulla modifiche"
       }
     },
     "BREADCRUMBS": {
-      "TITLE": "Breadcrumbs",
-      "SHOWALL": "Show all"
+      "TITLE": "Breadcrumb",
+      "SHOWALL": "Mostra tutto"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Blocca file",
@@ -234,11 +234,11 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
         "INT_VALIDATION_ERROR": "Utilizzare numeri interi",
-        "LONG_VALIDATION_ERROR": "Use a long format",
+        "LONG_VALIDATION_ERROR": "Utilizzare un formato lungo",
         "LENGTH_VALIDATION_ERROR": "La lunghezza del valore deve essere compresa tra {{ minLength }} e {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Il valore non corrisponde al modello: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "Il valore deve essere compreso tra {{ minValue }} e {{ maxValue }}",
-        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
+        "ONLY_POSITIVE_NUMBER": "È ammesso solo un valore positivo"
       },
       "MORE": "Altro"
     },
@@ -293,19 +293,20 @@
       "SORT_BY": "Ordina per"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides",
-      "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter",
-      "ADD_NEW": "Add new feature flag (Shift + Enter)"
+      "OVERRIDES": "Ridefinizioni flag funzione",
+      "FILTER_OR_ADD_NEW": "Filtra o aggiungi nuovo",
+      "FILTER": "Filtro",
+      "ADD_NEW": "Aggiungi nuova flag funzione (MAIUSC+Invio)"
     }
   },
   "COMMENTS": {
-    "PROFILE_IMAGE": "Profile Image",
+    "PROFILE_IMAGE": "Immagine profilo",
     "NONE": "Nessun commento",
     "ADD": "Aggiungi",
     "HEADER": "Commenti ({{ count }})",
     "CREATED_BY_HEADER": "Creato da",
     "MESSAGE_HEADER": "Messaggio",
+    "EMPTY_ERROR": "Il commento non può essere vuoto",
     "DIALOG": {
       "TITLE": "Nuovo commento",
       "LABELS": {
@@ -318,7 +319,7 @@
     }
   },
   "LOGIN": {
-    "LOGO": "Alfresco, make business flow",
+    "LOGO": "Alfresco, agevola il flusso delle attività di business",
     "LABEL": {
       "LOGIN": "Accedi",
       "USERNAME": "Nome utente",
@@ -366,7 +367,7 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Azioni contenuti",
-      "SELECT_COLUMNS": "Select columns"
+      "SELECT_COLUMNS": "Seleziona colonne"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Azioni",
@@ -381,7 +382,7 @@
       "ICON_TEXT": "Tipo di elemento {{ type }}",
       "ICON_DISABLED": "Disabilitato",
       "ROW_OPTION_BUTTON": "Azioni",
-      "DRAG": "Drag button",
+      "DRAG": "Pulsante di trascinamento",
       "EMPTY_HEADER": "Intestazione vuota"
     },
     "FILE_TYPE": {
@@ -412,7 +413,7 @@
         "JOB_TITLE": "Professione"
       },
       "BPM": {
-        "TENANT": "Tenant"
+        "TENANT": "Proprietario"
       },
       "MY_PROFILE": "Il mio profilo"
     },
@@ -437,7 +438,7 @@
       "WAIT": "Attendi"
     },
     "ARIA": {
-      "MIME_TYPE_ICON": "File type icon",
+      "MIME_TYPE_ICON": "Icona tipo di file",
       "PREVIOUS_PAGE": "Pagina precedente",
       "NEXT_PAGE": "Pagina successiva",
       "ZOOM_IN": "Zoom avanti",
@@ -611,10 +612,10 @@
     "SELECTION_ARIA_LABEL": "{{placeholder}} casella combinata {{selectedOption}}"
   },
   "INFO_DRAWER": {
-    "ICON": "Node Icon"
+    "ICON": "Icona nodo"
   },
   "DYNAMIC_CHIP_LIST": {
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": "Carica di più"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Conferma",

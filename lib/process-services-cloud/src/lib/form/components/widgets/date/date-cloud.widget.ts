@@ -83,12 +83,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         this.initRangeSelection();
         this.initStartAt();
         this.subscribeToDateChanges();
-        this.updateField();
-    }
-
-    updateField(): void {
         this.validateField();
-        this.onFieldChanged(this.field);
     }
 
     updateReactiveFormControl(): void {
@@ -114,6 +109,11 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             this.field.value = newDate;
             this.updateField();
         });
+    }
+
+    private updateField(): void {
+        this.validateField();
+        this.onFieldChanged(this.field);
     }
 
     private validateField(): void {
