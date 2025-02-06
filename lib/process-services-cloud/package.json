@@ -23,7 +23,7 @@
     "editorjs-paragraph-with-alignment": "3.0.0",
     "editorjs-text-alignment-blocktune": "^1.0.3",
     "editorjs-text-color-plugin": "1.13.1",
-    "@quanzo/change-font-size": "1.0.0"
+    "@valano/change-font-size": "1.0.0"
   },
   "peerDependencies": {
     "@angular/animations": ">=14.1.3",

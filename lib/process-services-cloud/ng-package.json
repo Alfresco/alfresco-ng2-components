@@ -38,7 +38,7 @@
     "@editorjs/marker",
     "@editorjs/paragraph",
     "@editorjs/underline",
-    "@quanzo/change-font-size",
+    "@valano/change-font-size",
     "editorjs-text-color-plugin",
     "editorjs-html",
     "editorjs-paragraph-with-alignment",
