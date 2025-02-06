@@ -18,7 +18,6 @@
 import { FullNamePipe } from './full-name.pipe';
 
 describe('FullNamePipe', () => {
-
     let pipe: FullNamePipe;
 
     beforeEach(() => {
@@ -31,27 +30,32 @@ describe('FullNamePipe', () => {
     });
 
     it('should return only firstName as fullName when there is no lastName ', () => {
-        const user = {firstName : 'Abc'};
+        const user = { firstName: 'Abc' };
         expect(pipe.transform(user)).toBe('Abc');
     });
 
     it('should return only lastName as fullName when there is no firstName ', () => {
-        const user = {lastName : 'Xyz'};
+        const user = { lastName: 'Xyz' };
         expect(pipe.transform(user)).toBe('Xyz');
     });
 
     it('should return fullName when firstName and lastName are available', () => {
-        const user = {firstName : 'Abc', lastName : 'Xyz'};
+        const user = { firstName: 'Abc', lastName: 'Xyz' };
         expect(pipe.transform(user)).toBe('Abc Xyz');
     });
 
     it('should return username when firstName and lastName are not available', () => {
-        const user = {firstName : '', lastName : '', username: 'username'};
+        const user = { firstName: '', lastName: '', username: 'username' };
         expect(pipe.transform(user)).toBe('username');
     });
 
     it('should return user eamil when firstName, lastName and username are not available', () => {
-        const user = {firstName : '', lastName : '', username: '', email: 'abcXyz@gmail.com'};
+        const user = { firstName: '', lastName: '', username: '', email: 'abcXyz@gmail.com' };
         expect(pipe.transform(user)).toBe('abcXyz@gmail.com');
+    });
+
+    it('should display email and fullName if emailDisplayed param is true', () => {
+        const user = { firstName: 'John', lastName: 'Doe', username: '', email: 'abcXyz@gmail.com' };
+        expect(pipe.transform(user)).toBe('John Doe <abcXyz@gmail.com>');
     });
 });
