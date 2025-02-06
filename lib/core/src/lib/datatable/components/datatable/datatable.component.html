@@ -174,12 +174,13 @@
     </div>
 
     <div
+        *ngIf="!loading; else loadingRowTemplate"
         class="adf-datatable-body"
         [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing), 'adf-datatable-body__draggable': enableDragRows && !isDraggingRow, 'adf-datatable-body__dragging': isDraggingRow }"
         cdkDropList
         [cdkDropListDisabled]="!enableDragRows"
         role="rowgroup">
-        <ng-container *ngIf="!loading && !noPermission">
+        <ng-container *ngIf="!noPermission; else noPermissionsRowTemplate">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
                 cdkDrag
                 [cdkDragDisabled]="!enableDragRows"
@@ -200,8 +201,8 @@
                 (contextmenu)="markRowAsContextMenuSource(row)">
                 <!-- Drag button -->
                 <div *ngIf="enableDragRows"
-                     role="gridcell"
-                     class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
+                        role="gridcell"
+                        class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-hover-only">
                     <button mat-icon-button
                             [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate">
                         <mat-icon>drag_indicator</mat-icon>
@@ -229,11 +230,11 @@
                 </div>
 
                 <label *ngIf="multiselect"
-                       (keydown.enter)="onEnterKeyPressed(row, $any($event))"
-                       (click)="onCheckboxLabelClick(row, $event)"
-                       [for]="'select-file-' + idx"
-                       class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
-                       tabindex="0">
+                        (keydown.enter)="onEnterKeyPressed(row, $any($event))"
+                        (click)="onCheckboxLabelClick(row, $event)"
+                        [for]="'select-file-' + idx"
+                        class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
+                        tabindex="0">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
                         [disabled]="!row?.isSelectable"
@@ -273,7 +274,7 @@
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
                                     <mat-icon class="adf-datatable-selected"
-                                              *ngIf="row.isSelected && !multiselect; else no_selected_row" svgIcon="selected" />
+                                                *ngIf="row.isSelected && !multiselect; else no_selected_row" svgIcon="selected" />
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
                                             [attr.aria-label]="(data.getValue(row, col) | fileType) === 'disable' ?
@@ -317,7 +318,7 @@
                             </div>
 
                             <div *ngSwitchCase="'location'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"  class="adf-cell-value"
-                                 [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)">
+                                    [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)">
                                 <adf-location-cell
                                     [data]="data"
                                     [column]="col"
@@ -326,7 +327,7 @@
                                     [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
-                                 [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)">
+                                    [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)">
                                 <adf-filesize-cell class="adf-datatable-center-size-column-ie"
                                     [data]="data"
                                     [column]="col"
@@ -335,7 +336,7 @@
                                     [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
-                                 [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
+                                    [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
                                     [data]="data"
@@ -345,7 +346,7 @@
                                     [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'boolean'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
-                                 [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
+                                    [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
                                 <adf-boolean-cell
                                     [data]="data"
                                     [column]="col"
@@ -402,9 +403,9 @@
                         !showProvidedActions &&
                         ((actions && actionsPosition === 'right') ||
                         (mainActionTemplate && showMainDatatableActions))"
-                     role="gridcell"
-                     tabindex="0"
-                     class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu">
+                        role="gridcell"
+                        tabindex="0"
+                        class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu">
 
                     <ng-container *ngIf="(actions && actionsPosition === 'right')">
                         <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
@@ -432,24 +433,29 @@
             <div *ngIf="isEmpty()" role="row" class="adf-datatable-row">
                 <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
-                                 ngFor [ngForOf]="[data]"
-                                 [ngForTemplate]="noContentTemplate">
+                                    ngFor [ngForOf]="[data]"
+                                    [ngForTemplate]="noContentTemplate">
                     </ng-template>
                     <ng-content select="adf-empty-list"></ng-content>
                 </div>
             </div>
         </ng-container>
-        <div *ngIf="!loading && noPermission"
-             role="row"
-             class="adf-datatable-row adf-no-permission__row">
-            <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
-                <ng-template *ngIf="noPermissionTemplate"
-                             ngFor [ngForOf]="[data]"
-                             [ngForTemplate]="noPermissionTemplate">
-                </ng-template>
+
+        <ng-template #noPermissionsRowTemplate>
+            <div
+                role="row"
+                class="adf-datatable-row adf-no-permission__row">
+                <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
+                    <ng-template *ngIf="noPermissionTemplate"
+                                ngFor [ngForOf]="[data]"
+                                [ngForTemplate]="noPermissionTemplate">
+                    </ng-template>
+                </div>
             </div>
-        </div>
-        <div *ngIf="loading" class="adf-datatable-row">
+        </ng-template>
+    </div>
+    <ng-template #loadingRowTemplate>
+        <div class="adf-datatable-row">
             <div class="adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
@@ -457,5 +463,5 @@
                 </ng-template>
             </div>
         </div>
-    </div>
+    </ng-template>
 </div>
