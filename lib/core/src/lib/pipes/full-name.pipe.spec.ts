@@ -56,6 +56,6 @@ describe('FullNamePipe', () => {
 
     it('should display email and fullName if emailDisplayed param is true', () => {
         const user = { firstName: 'John', lastName: 'Doe', username: '', email: 'abcXyz@gmail.com' };
-        expect(pipe.transform(user)).toBe('John Doe <abcXyz@gmail.com>');
+        expect(pipe.transform(user, true)).toBe('John Doe <abcXyz@gmail.com>');
     });
 });
