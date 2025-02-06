@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,10 +123,10 @@ export default {
         copyrightText: {
             control: 'text',
             description: 'The copyright text below the login box.',
-            defaultValue: '\u00A9 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.',
+            defaultValue: '\u00A9 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '\u00A9 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.' }
+                defaultValue: { summary: '\u00A9 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.' }
             }
         },
         fieldsValidation: {
