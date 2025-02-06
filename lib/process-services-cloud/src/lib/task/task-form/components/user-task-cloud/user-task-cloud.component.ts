@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,9 @@ type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
 export class UserTaskCloudComponent implements OnInit, OnChanges {
     @ViewChild('adfCloudTaskForm')
     adfCloudTaskForm: TaskFormCloudComponent;
+
+    @ViewChild('adfCloudTaskScreen')
+    adfCloudTaskScreen: TaskScreenCloudComponent;
 
     /** App id to fetch corresponding form and values. */
     @Input()
@@ -269,6 +272,9 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     public switchToDisplayMode(newDisplayMode?: string): void {
         if (this.adfCloudTaskForm) {
             this.adfCloudTaskForm.switchToDisplayMode(newDisplayMode);
+        }
+        if (this.adfCloudTaskScreen) {
+            this.adfCloudTaskScreen.switchToDisplayMode(newDisplayMode);
         }
     }
 }

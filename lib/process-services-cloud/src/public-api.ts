@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ export * from './lib/people/public-api';
 export * from './lib/form/public-api';
 export * from './lib/services/public-api';
 export * from './lib/rich-text-editor/public-api';
+export * from './lib/screen/public-api';
 
 export * from './lib/types';
 export * from './lib/common/index';

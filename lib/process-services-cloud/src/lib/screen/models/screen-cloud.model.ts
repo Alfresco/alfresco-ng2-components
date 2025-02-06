@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,19 @@
 import { EventEmitter } from '@angular/core';
 
 export interface UserTaskCustomUi {
+    appName: string;
+    canClaimTask: boolean;
+    canUnclaimTask: boolean;
     processInstanceId: string;
     taskName: string;
-    appName: string;
     taskId: string;
     screenId: string;
+    showCancelButton: boolean;
+    cancelTask: EventEmitter<any>;
+    claimTask: EventEmitter<any>;
+    error: EventEmitter<any>;
+    switchToDisplayMode?: (newDisplayMode?: string) => void;
     taskCompleted: EventEmitter<string>;
     taskSaved: EventEmitter<string>;
-    error: EventEmitter<any>;
+    unclaimTask: EventEmitter<any>;
 }

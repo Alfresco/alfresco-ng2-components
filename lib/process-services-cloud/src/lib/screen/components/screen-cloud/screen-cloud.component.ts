@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/public-api';
 import { MatCardModule } from '@angular/material/card';
-import { UserTaskCustomUi } from './screen-cloud.interface';
+import { UserTaskCustomUi } from '../../models/screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -30,17 +30,36 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class TaskScreenCloudComponent implements OnInit {
     /** Task id to fetch corresponding form and values. */
-    @Input() taskId: string;
-    /** App id to fetch corresponding form and values. */
+    @Input()
+    taskId: string;
+
+    /** App name to fetch data for dynamic component. */
     @Input()
     appName: string = '';
-    /** Screen id to fetch corresponding screen widget. */
+
+    /** Boolean informing if a task can be claimed. */
+    @Input()
+    canClaimTask: boolean;
+
+    /** Boolean informing if a task can be unclaimed. */
+    @Input()
+    canUnclaimTask: boolean;
+
+    @Input()
+    showCancelButton: boolean;
+
+    /** Screen id to create dynamic component. */
     @Input()
     screenId: string = '';
+
+    /** Process Instance Id to fetch corresponding data. */
     @Input()
     processInstanceId: string = '';
+
+    /** Name of the task. */
     @Input()
     taskName: string = '';
+
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;
@@ -57,12 +76,23 @@ export class TaskScreenCloudComponent implements OnInit {
     @Output()
     error = new EventEmitter<any>();
 
+    /** Emitted when the task is cancelled. */
+    @Output()
+    cancelTask = new EventEmitter<any>();
+
+    /** Emitted when the task is claimed. */
+    @Output()
+    claimTask = new EventEmitter<any>();
+
+    /** Emitted when the task is unclaimed. */
+    @Output()
+    unclaimTask = new EventEmitter<any>();
+
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
 
     private destroyRef = inject(DestroyRef);
     componentRef: ComponentRef<UserTaskCustomUi>;
-
     private readonly screenRenderingService = inject(ScreenRenderingService);
 
     ngOnInit() {
@@ -94,6 +124,15 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.taskName && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskName')) {
             this.componentRef.setInput('taskName', this.taskName);
         }
+        if (this.canClaimTask && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'canClaimTask')) {
+            this.componentRef.setInput('canClaimTask', this.canClaimTask);
+        }
+        if (this.canUnclaimTask && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'canUnclaimTask')) {
+            this.componentRef.setInput('canUnclaimTask', this.canUnclaimTask);
+        }
+        if (this.showCancelButton && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showCancelButton')) {
+            this.componentRef.setInput('showCancelButton', this.showCancelButton);
+        }
     }
 
     subscribeToOutputs() {
@@ -105,6 +144,22 @@ export class TaskScreenCloudComponent implements OnInit {
         }
         if (this.componentRef.instance?.error) {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
+        }
+
+        if (this.componentRef.instance?.claimTask) {
+            this.componentRef.instance.claimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
+        }
+        if (this.componentRef.instance?.unclaimTask) {
+            this.componentRef.instance.unclaimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.unclaimTask.emit(data));
+        }
+        if (this.componentRef.instance?.cancelTask) {
+            this.componentRef.instance.cancelTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
+        }
+    }
+
+    switchToDisplayMode(newDisplayMode?: string) {
+        if (this.componentRef?.instance?.switchToDisplayMode) {
+            this.componentRef.instance.switchToDisplayMode(newDisplayMode);
         }
     }
 }

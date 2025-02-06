@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,20 @@
  * limitations under the License.
  */
 
-import { NodesApi, NodeEntry, PreferencesApi } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { NodesApi, NodeEntry, PreferencesApi, ContentFieldsQuery, PreferenceEntry } from '@alfresco/js-api';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
 import { AuthenticationService } from '@alfresco/adf-core';
+
+export interface SavedSearchesPreferencesApiService {
+    getPreference: (personId: string, preferenceName: string, opts?: ContentFieldsQuery) => Promise<PreferenceEntry> | Observable<PreferenceEntry>;
+    updatePreference: (personId: string, preferenceName: string, preferenceValue: string) => Promise<PreferenceEntry> | Observable<PreferenceEntry>;
+}
+
+export const SAVED_SEARCHES_SERVICE_PREFERENCES = new InjectionToken<SavedSearchesPreferencesApiService>('SAVED_SEARCHES_SERVICE_PREFERENCES');
 
 @Injectable({
     providedIn: 'root'
@@ -29,14 +36,20 @@ import { AuthenticationService } from '@alfresco/adf-core';
 export class SavedSearchesService {
     private savedSearchFileNodeId: string;
     private _nodesApi: NodesApi;
-    private _preferencesApi: PreferencesApi;
+    private _preferencesApi: SavedSearchesPreferencesApiService;
+    private preferencesService = inject(SAVED_SEARCHES_SERVICE_PREFERENCES, { optional: true });
 
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    get preferencesApi(): PreferencesApi {
+    get preferencesApi(): SavedSearchesPreferencesApiService {
+        if (this.preferencesService) {
+            this._preferencesApi = this.preferencesService;
+            return this._preferencesApi;
+        }
+
         this._preferencesApi = this._preferencesApi ?? new PreferencesApi(this.apiService.getInstance());
         return this._preferencesApi;
     }
