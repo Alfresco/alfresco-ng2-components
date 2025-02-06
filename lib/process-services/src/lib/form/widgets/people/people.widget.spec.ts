@@ -67,12 +67,12 @@ describe('PeopleWidgetComponent', () => {
                 lastName: 'Doe',
                 email: 'john@doe.com'
             };
-            expect(widget.getDisplayName(model)).toBe('John Doe <john@doe.com>');
+            expect(widget.getDisplayName(model)).toBe('John Doe');
         });
 
         it('should skip first name for display name', () => {
             const model = { firstName: null, lastName: 'Doe', email: 'john@doe.com' };
-            expect(widget.getDisplayName(model)).toBe('Doe <john@doe.com>');
+            expect(widget.getDisplayName(model)).toBe('Doe');
         });
 
         it('should skip last name for display name', () => {
