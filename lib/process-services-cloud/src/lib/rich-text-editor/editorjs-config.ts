@@ -23,7 +23,7 @@ import InlineCode from '@editorjs/inline-code';
 import List from '@editorjs/list';
 import Marker from '@editorjs/marker';
 import Underline from '@editorjs/underline';
-import ChangeFontSize from '@quanzo/change-font-size';
+import ChangeFontSize from '@valano/change-font-size';
 import ColorPlugin from 'editorjs-text-color-plugin';
 import AlignmentTuneTool from 'editorjs-text-alignment-blocktune';
 
