@@ -53,6 +53,7 @@
       "DATA_TABLE_LOAD_FAILED": "Beim Laden der Tabellenelemente ist ein Problem aufgetreten. Bitte wenden Sie sich an den Administrator.",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Beim Laden eines externen Objekts ist ein Problem aufgetreten. Bitte kontaktieren Sie den Administrator.",
       "FILE_NAME": "Dateiname",
+      "TITLE": "Title",
       "NO_FILE_ATTACHED": "Keine Datei angehängt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",
