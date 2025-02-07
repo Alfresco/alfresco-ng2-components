@@ -1,17 +1,18 @@
 <mat-chip-listbox role="listbox" [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.SEARCH_FILTER' | translate">
     <ng-container *ngFor="let category of categories">
-        <adf-search-widget-chip [category]="category" />
+        <adf-search-widget-chip [category]="category" role="option" />
     </ng-container>
 
     <ng-container *ngIf="showContextFacets && tabbedFacet">
         <adf-search-facet-chip-tabbed
-            [tabbedFacet]="tabbedFacet"
-            [attr.data-automation-id]="facetChipTabbedId" />
+                [tabbedFacet]="tabbedFacet"
+                role="option"
+                [attr.data-automation-id]="facetChipTabbedId" />
     </ng-container>
 
     <ng-container *ngIf="showContextFacets && responseFacets">
         <ng-container *ngFor="let field of responseFacets">
-            <adf-search-facet-chip [field]="field" [attr.data-automation-id]="'search-fact-chip-' + field.field" />
+            <adf-search-facet-chip [field]="field" role="option" [attr.data-automation-id]="'search-fact-chip-' + field.field" />
         </ng-container>
     </ng-container>
 
