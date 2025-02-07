@@ -53,6 +53,7 @@
       "DATA_TABLE_LOAD_FAILED": "Wystąpił problem podczas ładowania elementów tabeli. Skontaktuj się z administratorem.",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Wystąpił problem podczas ładowania właściwości zewnętrznej. Skontaktuj się z administratorem.",
       "FILE_NAME": "Nazwa pliku",
+      "TITLE": "Title",
       "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {
         "INVALID_NUMBER": "Użyj innego formatu liczby.",
