@@ -90,7 +90,7 @@
     "@editorjs/paragraph": "^2.11.6",
     "@editorjs/underline": "1.1.0",
     "@nx/angular": "16.10.0",
-    "@nx/eslint-plugin": "16.10.0",
+    "@nx/eslint-plugin": "20.4.2",
     "@nx/js": "16.10.0",
     "@nx/node": "16.10.0",
     "@nx/storybook": "19.6.2",
