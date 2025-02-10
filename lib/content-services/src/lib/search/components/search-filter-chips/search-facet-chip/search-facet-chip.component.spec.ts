@@ -25,7 +25,7 @@ import { MatMenuHarness } from '@angular/material/menu/testing';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import { MatChipOptionHarness } from '@angular/material/chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 
 describe('SearchFacetChipComponent', () => {
     let loader: HarnessLoader;
@@ -88,7 +88,7 @@ describe('SearchFacetChipComponent', () => {
     });
 
     it('should display remove icon and disable facet when no items are loaded', async () => {
-        const menu = await loader.getHarness(MatChipOptionHarness);
+        const menu = await loader.getHarness(MatChipHarness);
         const disabled = await menu.isDisabled();
         expect(disabled).toBe(true);
 

@@ -1,4 +1,4 @@
-<mat-chip-listbox role="listbox" [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.SEARCH_FILTER' | translate">
+<mat-chip-set [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.SEARCH_FILTER' | translate">
     <ng-container *ngFor="let category of categories">
         <adf-search-widget-chip [category]="category" />
     </ng-container>
@@ -16,4 +16,4 @@
     </ng-container>
 
     <ng-content></ng-content>
-</mat-chip-listbox>
+</mat-chip-set>
