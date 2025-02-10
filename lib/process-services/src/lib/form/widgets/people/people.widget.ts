@@ -109,6 +109,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             }
             if (params?.multiple) {
                 this.multiSelect = params.multiple;
+                this.field.value = this.selectedUsers;
             }
         }
     }

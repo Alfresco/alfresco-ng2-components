@@ -105,6 +105,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
             }
             if (params?.multiple) {
                 this.multiSelect = params.multiple;
+                this.field.value = this.selectedGroups;
             }
 
             if (this.field.value?.name) {
@@ -122,7 +123,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
                     return;
                 }
             } else {
-                this.field.value = [option];
+                this.field.value = option;
             }
             this.selectedGroups.push(option);
         } else {

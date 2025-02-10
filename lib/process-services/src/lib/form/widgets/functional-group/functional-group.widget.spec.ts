@@ -110,7 +110,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         component.updateOption(groups[1]);
 
-        expect(component.field.value).toEqual([groups[1]]);
+        expect(component.field.value).toEqual(groups[1]);
     });
 
     it('should fetch groups and show popup on key up', async () => {
