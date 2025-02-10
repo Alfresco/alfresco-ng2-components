@@ -37,7 +37,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { AnnotationMode, OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
+import {
+    AnnotationMode,
+    getDocument,
+    GlobalWorkerOptions,
+    OnProgressParameters,
+    PDFDocumentLoadingTask,
+    PDFDocumentProxy
+} from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { EventBus, PDFViewer } from 'pdfjs-dist/legacy/web/pdf_viewer.mjs';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
@@ -45,9 +53,6 @@ import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
-
-declare const pdfjsLib: any;
-declare const pdfjsViewer: any;
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -126,7 +131,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
-    private eventBus = new pdfjsViewer.EventBus();
+    private eventBus = new EventBus();
     private pdfjsDefaultOptions = {
         disableAutoFetch: true,
         disableStream: true,
@@ -210,9 +215,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
+        GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
 
-        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
+        this.loadingTask = getDocument(pdfOptions);
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
@@ -234,15 +239,19 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 return pdfDocument.getPage(1);
             })
             .then(() => this.scalePage('init'))
-            .catch(() => this.error.emit());
+            .catch((e) => {
+                console.error(e);
+
+                this.error.emit();
+            });
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
         const viewer: any = this.getViewer();
-        const container = this.getDocumentContainer();
+        const container = this.getDocumentContainer() as HTMLDivElement;
 
         if (viewer && container) {
-            this.pdfViewer = new pdfjsViewer.PDFViewer({
+            this.pdfViewer = new PDFViewer({
                 container,
                 viewer,
                 renderingQueue: this.renderingQueueServices,
@@ -266,11 +275,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         if (this.pdfViewer) {
             // cspell: disable-next
-            this.eventBus.off('pagechanging');
+            this.eventBus.off('pagechanging', () => {});
             // cspell: disable-next
-            this.eventBus.off('pagesloaded');
+            this.eventBus.off('pagesloaded', () => {});
             // cspell: disable-next
-            this.eventBus.off('textlayerrendered');
+            this.eventBus.off('textlayerrendered', () => {});
         }
 
         if (this.loadingTask) {
