@@ -213,10 +213,6 @@
                     font-size: var(--theme-subheading-2-font-size);
                 }
 
-                #{$mat-floating-label-float-above} {
-                    padding-bottom: 6px;
-                }
-
                 #{$mat-floating-label-required} {
                     &::after {
                         font-size: var(--theme-subheading-2-font-size);
