@@ -13,7 +13,7 @@ Node: 18.x
 NPM: 9.x
 ``` 
 
-Also, check out the tutorial: [Creating your first ADF Application](docs/tutorials/creating-your-first-adf-application.md)
+Also, check out the tutorial [Creating your first ADF Application](docs/tutorials/creating-your-first-adf-application.md)
 for full details on what you may need to install before using ADF.
 
 ### See also
