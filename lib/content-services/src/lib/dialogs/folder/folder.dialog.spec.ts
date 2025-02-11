@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
@@ -315,6 +315,15 @@ describe('FolderDialogComponent', () => {
                 component.form.controls['description'].setValue('description');
 
                 component.submit();
+            });
+
+            it('should enable submit button after changing name field when previous value caused error', () => {
+                createFolderNode$.error(throwError('error'));
+                spyOn(component, 'handleError').and.callFake((val) => val);
+                component.form.controls['name'].setValue('');
+                expect(component.disableSubmitButton).toBeTrue();
+                component.form.controls['name'].setValue('testName');
+                expect(component.disableSubmitButton).toBeFalse();
             });
         });
     });
