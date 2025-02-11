@@ -321,8 +321,8 @@ describe('FolderDialogComponent', () => {
                 createFolderNode$.error(throwError('error'));
                 spyOn(component, 'handleError').and.callFake((val) => val);
                 component.form.controls['name'].setValue('');
-                expect(component.disableSubmitButton).toBeTrue();
                 component.submit();
+                expect(component.disableSubmitButton).toBeTrue();
 
                 component.form.controls['name'].setValue('testName');
                 component.submit();
