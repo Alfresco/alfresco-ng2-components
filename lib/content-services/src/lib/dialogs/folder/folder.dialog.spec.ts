@@ -325,7 +325,6 @@ describe('FolderDialogComponent', () => {
                 expect(component.disableSubmitButton).toBeTrue();
 
                 component.form.controls['name'].setValue('testName');
-                component.submit();
                 expect(component.disableSubmitButton).toBeFalse();
             });
         });
