@@ -322,7 +322,10 @@ describe('FolderDialogComponent', () => {
                 spyOn(component, 'handleError').and.callFake((val) => val);
                 component.form.controls['name'].setValue('');
                 expect(component.disableSubmitButton).toBeTrue();
+                component.submit();
+
                 component.form.controls['name'].setValue('testName');
+                component.submit();
                 expect(component.disableSubmitButton).toBeFalse();
             });
         });
