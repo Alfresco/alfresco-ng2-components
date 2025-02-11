@@ -2,11 +2,20 @@
      [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
     <div *ngIf="formDefinition.hasTabs()">
         <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
-            <mat-tab-group>
-                <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate ">
+            <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+                <mat-tab *ngFor="let tab of visibleTabs(); let tabIndex = index" [label]="tab.title | translate">
                     <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }"></ng-template>
+                    <div class="adf-cloud-form-tab-navigation-btn-container" *ngIf="tabCounts() > 1">
+                        <button [disabled]="tabIndex === 0" mat-button class="adf-cloud-form-tab-navigation-prev-btn" (click)="goToPreviousTab(tabIndex)">
+                            <span>Previous</span>
+                        </button>
+                        <button [disabled]="tabIndex === tabCounts() - 1" mat-button class="adf-cloud-form-tab-navigation-next-btn" (click)="goToNextTab(tabIndex)">
+                            <span>Next</span>
+                        </button>
+                    </div>
                 </mat-tab>
             </mat-tab-group>
+
         </div>
     </div>
 

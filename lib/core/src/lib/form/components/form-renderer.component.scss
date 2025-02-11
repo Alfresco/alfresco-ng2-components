@@ -245,3 +245,11 @@ form-field {
         line-height: normal;
     }
 }
+
+.adf-cloud-form-tab-navigation-btn-container {
+    width: fit-content;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-right: 20px;
+}
