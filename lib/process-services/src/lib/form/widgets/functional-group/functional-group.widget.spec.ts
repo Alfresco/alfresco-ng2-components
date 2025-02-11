@@ -16,14 +16,13 @@
  */
 
 import { of, timer } from 'rxjs';
-import { FormFieldModel, FormModel, GroupModel, CoreTestingModule, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, GroupModel, CoreTestingModule, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatChipRowHarness } from '@angular/material/chips/testing';
-import { By } from '@angular/platform-browser';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 describe('FunctionalGroupWidgetComponent', () => {
@@ -33,6 +32,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     let getWorkflowGroupsSpy: jasmine.Spy;
     let element: HTMLElement;
     let loader: HarnessLoader;
+    let unitTestingUtils: UnitTestingUtils;
 
     const groups: GroupModel[] = [
         { id: '1', name: 'group 1' },
@@ -48,6 +48,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         fixture = TestBed.createComponent(FunctionalGroupWidgetComponent);
         component = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         loader = TestbedHarnessEnvironment.loader(fixture);
         component.field = new FormFieldModel(new FormModel());
         element = fixture.nativeElement;
@@ -220,8 +221,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     describe('Groups input', () => {
-        const getInputElement = (): HTMLInputElement =>
-            fixture.debugElement.query(By.css('[data-automation-id=adf-group-search-input]')).nativeElement;
+        const getInputElement = (): HTMLInputElement => unitTestingUtils.getByDataAutomationId('adf-group-search-input').nativeElement;
 
         it('should disable input if multiple property of params is false, some group is selected and field is not readOnly', () => {
             component.field.params.multiple = false;
