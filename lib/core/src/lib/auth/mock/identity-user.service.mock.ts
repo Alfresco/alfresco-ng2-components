@@ -35,7 +35,6 @@ import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockIdentity
     providedIn: 'root'
 })
 export class IdentityUserServiceMock implements IdentityUserServiceInterface {
-
     getCurrentUserInfo(): IdentityUserModel {
         return mockIdentityUser1;
     }
@@ -45,9 +44,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
             return of([]);
         }
 
-        return of(mockIdentityUsers.filter(user =>
-            user.username.toUpperCase().includes(search.toUpperCase())
-        ));
+        return of(mockIdentityUsers.filter((user) => user.username.toUpperCase().includes(search.toUpperCase())));
     }
 
     findUserByUsername(username: string): Observable<IdentityUserModel[]> {
@@ -55,7 +52,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
             return of([]);
         }
 
-        return of(mockIdentityUsers.filter(user => user.username === username));
+        return of(mockIdentityUsers.filter((user) => user.username === username));
     }
 
     findUserByEmail(email: string): Observable<IdentityUserModel[]> {
@@ -63,7 +60,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
             return of([]);
         }
 
-        return of(mockIdentityUsers.filter(user => user.email === email));
+        return of(mockIdentityUsers.filter((user) => user.email === email));
     }
 
     findUserById(id: string): Observable<any> {
@@ -71,7 +68,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
             return of([]);
         }
 
-        return of(mockIdentityUsers.find(user => user.id === id));
+        return of(mockIdentityUsers.find((user) => user.id === id));
     }
 
     getClientRoles(userId: string, _clientId: string): Observable<any[]> {
@@ -83,9 +80,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
     }
 
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
-        return this.getClientRoles(userId, clientId).pipe(
-            map((clientRoles) => clientRoles.length > 0)
-        );
+        return this.getClientRoles(userId, clientId).pipe(map((clientRoles) => clientRoles.length > 0));
     }
 
     checkUserHasAnyClientAppRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
@@ -112,9 +107,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
     }
 
     checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
-        return this.getClientIdByApplicationName(applicationName).pipe(
-            switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId))
-        );
+        return this.getClientIdByApplicationName(applicationName).pipe(switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId)));
     }
 
     checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
@@ -178,19 +171,21 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
     }
 
     checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean> {
-        return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
-            let hasRole = false;
-            if (userRoles && userRoles.length > 0) {
-                roleNames.forEach((roleName: string) => {
-                    const role = userRoles.find(({ name }) => roleName === name);
-                    if (role) {
-                        hasRole = true;
-                        return;
-                    }
-                });
-            }
-            return hasRole;
-        }));
+        return this.getUserRoles(userId).pipe(
+            map((userRoles: IdentityRoleModel[]) => {
+                let hasRole = false;
+                if (userRoles && userRoles.length > 0) {
+                    roleNames.forEach((roleName: string) => {
+                        const role = userRoles.find(({ name }) => roleName === name);
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
     }
 
     queryUsers(_requestQuery: IdentityUserQueryCloudRequestModel): Observable<IdentityUserQueryResponse> {

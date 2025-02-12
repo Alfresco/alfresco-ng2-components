@@ -24,7 +24,7 @@
       "defaultConfiguration": "production"
     },
     "build-schematics": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/core/schematics/migrations",
@@ -48,7 +48,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "lib/core/**/*.ts",
@@ -71,10 +71,7 @@
         "browserTarget": "core:build",
         "configDir": "lib/core/.storybook",
         "compodoc": false,
-        "styles": [
-          "node_modules/cropperjs/dist/cropper.min.css",
-          "node_modules/pdfjs-dist/web/pdf_viewer.css"
-        ],
+        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         }

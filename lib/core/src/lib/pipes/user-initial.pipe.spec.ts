@@ -20,7 +20,6 @@ import { User } from '../models/general-user.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
 
 class FakeSanitizer extends DomSanitizer {
-
     constructor() {
         super();
     }
@@ -51,7 +50,6 @@ class FakeSanitizer extends DomSanitizer {
 }
 
 describe('UserInitialPipe', () => {
-
     let pipe: InitialUsernamePipe;
     let fakeUser: User;
 

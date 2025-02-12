@@ -24,18 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatSnackBarModule,
-        MatButtonModule,
-        TranslateModule
-    ],
-    declarations: [
-        SnackbarContentComponent
-    ],
-    exports: [
-        SnackbarContentComponent
-    ]
+    imports: [CommonModule, MatIconModule, MatSnackBarModule, MatButtonModule, TranslateModule],
+    declarations: [SnackbarContentComponent],
+    exports: [SnackbarContentComponent]
 })
 export class SnackbarContentModule {}

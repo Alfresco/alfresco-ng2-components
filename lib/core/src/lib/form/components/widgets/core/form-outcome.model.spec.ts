@@ -19,7 +19,6 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 
 describe('FormOutcomeModel', () => {
-
     it('should setup with json config', () => {
         const json = {
             id: '<id>',

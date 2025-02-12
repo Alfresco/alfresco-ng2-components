@@ -22,46 +22,47 @@ import { Authentication } from '../authentication';
 import { AuthenticationInterceptor, SHOULD_ADD_AUTH_TOKEN } from './authentication.interceptor';
 
 class MockAuthentication extends Authentication {
-  addTokenToHeader(_: string, httpHeaders: HttpHeaders): Observable<HttpHeaders> {
-    return of(httpHeaders);
-  }
+    addTokenToHeader(_: string, httpHeaders: HttpHeaders): Observable<HttpHeaders> {
+        return of(httpHeaders);
+    }
 }
 
 const mockNext: HttpHandler = {
-  handle: () => new Observable(subscriber => {
-    subscriber.complete();
-  })
+    handle: () =>
+        new Observable((subscriber) => {
+            subscriber.complete();
+        })
 };
 
 const request = new HttpRequest('GET', 'http://localhost:4200');
 
 describe('AuthenticationInterceptor', () => {
-  let interceptor: AuthenticationInterceptor;
-  let addTokenToHeaderSpy: jasmine.Spy<any>;
+    let interceptor: AuthenticationInterceptor;
+    let addTokenToHeaderSpy: jasmine.Spy<any>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [AuthenticationInterceptor, {provide: Authentication, useClass: MockAuthentication}]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [AuthenticationInterceptor, { provide: Authentication, useClass: MockAuthentication }]
+        });
+        interceptor = TestBed.inject(AuthenticationInterceptor);
+        addTokenToHeaderSpy = spyOn(interceptor['authService'], 'addTokenToHeader');
     });
-    interceptor = TestBed.inject(AuthenticationInterceptor);
-    addTokenToHeaderSpy = spyOn(interceptor['authService'], 'addTokenToHeader');
-  });
 
-  it('should call add auth token method when SHOULD_ADD_AUTH_TOKEN context is set to true', () => {
-    addTokenToHeaderSpy.and.callThrough();
-    request.context.set(SHOULD_ADD_AUTH_TOKEN, true);
-    interceptor.intercept(request, mockNext);
-    expect(addTokenToHeaderSpy).toHaveBeenCalled();
-  });
+    it('should call add auth token method when SHOULD_ADD_AUTH_TOKEN context is set to true', () => {
+        addTokenToHeaderSpy.and.callThrough();
+        request.context.set(SHOULD_ADD_AUTH_TOKEN, true);
+        interceptor.intercept(request, mockNext);
+        expect(addTokenToHeaderSpy).toHaveBeenCalled();
+    });
 
-  it('should not call add auth token method when SHOULD_ADD_AUTH_TOKEN context is set to false', () => {
-    request.context.set(SHOULD_ADD_AUTH_TOKEN, false);
-    interceptor.intercept(request, mockNext);
-    expect(addTokenToHeaderSpy).not.toHaveBeenCalled();
-  });
+    it('should not call add auth token method when SHOULD_ADD_AUTH_TOKEN context is set to false', () => {
+        request.context.set(SHOULD_ADD_AUTH_TOKEN, false);
+        interceptor.intercept(request, mockNext);
+        expect(addTokenToHeaderSpy).not.toHaveBeenCalled();
+    });
 
-  it('should not call add auth token method when SHOULD_ADD_AUTH_TOKEN context is not provided', () => {
-    interceptor.intercept(request, mockNext);
-    expect(addTokenToHeaderSpy).not.toHaveBeenCalled();
-  });
+    it('should not call add auth token method when SHOULD_ADD_AUTH_TOKEN context is not provided', () => {
+        interceptor.intercept(request, mockNext);
+        expect(addTokenToHeaderSpy).not.toHaveBeenCalled();
+    });
 });

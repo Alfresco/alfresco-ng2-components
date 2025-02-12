@@ -22,8 +22,7 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
-
-  constructor(private storage: StorageService) { }
+    constructor(private storage: StorageService) {}
 
     /**
      * Gets local preferences
@@ -36,13 +35,11 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
-        return of(
-            {
-                list: {
-                    entries: []
-                }
+        return of({
+            list: {
+                entries: []
             }
-        );
+        });
     }
 
     /**

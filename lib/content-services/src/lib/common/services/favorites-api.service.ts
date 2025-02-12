@@ -26,7 +26,6 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class FavoritesApiService {
-
     private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
@@ -42,16 +41,11 @@ export class FavoritesApiService {
         return { entry };
     }
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
-    ) {
-    }
+    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     remapFavoritesData(data: FavoritePaging = {}): NodePaging {
-        const pagination = (data?.list?.pagination || {});
-        const entries: any[] = this
-            .remapFavoriteEntries(data?.list?.entries || []);
+        const pagination = data?.list?.pagination || {};
+        const entries: any[] = this.remapFavoriteEntries(data?.list?.entries || []);
 
         return {
             list: { entries, pagination }
@@ -63,7 +57,7 @@ export class FavoritesApiService {
             .map(({ entry: { target } }: any) => ({
                 entry: target.file || target.folder
             }))
-            .filter(({ entry }) => (!!entry))
+            .filter(({ entry }) => !!entry)
             .map(FavoritesApiService.remapEntry);
     }
 
@@ -82,12 +76,8 @@ export class FavoritesApiService {
             include: ['properties', 'allowableOperations']
         };
         const queryOptions = Object.assign(defaultOptions, options);
-        const promise = this.favoritesApi
-            .listFavorites(personId, queryOptions)
-            .then(this.remapFavoritesData);
+        const promise = this.favoritesApi.listFavorites(personId, queryOptions).then(this.remapFavoritesData);
 
-        return from(promise).pipe(
-            catchError((err) => of(err))
-        );
+        return from(promise).pipe(catchError((err) => of(err)));
     }
 }

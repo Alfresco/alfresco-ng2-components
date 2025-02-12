@@ -18,7 +18,6 @@
 import { SortingPickerComponent } from './sorting-picker.component';
 
 describe('SortingPickerComponent', () => {
-
     let component: SortingPickerComponent;
 
     beforeEach(() => {
@@ -28,7 +27,7 @@ describe('SortingPickerComponent', () => {
     it('should raise changed event on changing value', (done) => {
         component.selected = 'key1';
 
-        component.valueChange.subscribe((key: string) =>  {
+        component.valueChange.subscribe((key: string) => {
             expect(key).toBe('key2');
             done();
         });
@@ -38,7 +37,7 @@ describe('SortingPickerComponent', () => {
     it('should raise changed event on changing direction', (done) => {
         component.ascending = false;
 
-        component.sortingChange.subscribe((ascending: boolean) =>  {
+        component.sortingChange.subscribe((ascending: boolean) => {
             expect(ascending).toBeTruthy();
             done();
         });

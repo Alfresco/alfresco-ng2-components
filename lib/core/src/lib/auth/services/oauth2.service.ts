@@ -36,17 +36,14 @@ export class OAuth2Service {
     request<T>(opts: OAuth2RequestParams): Observable<T> {
         const { httpMethod, url, bodyParam, queryParams } = opts;
         return from(
-            this.adfHttpClient.request(
-                url,
-                {
-                    httpMethod,
-                    queryParams,
-                    headerParams: {},
-                    formParams: {},
-                    bodyParam,
-                    returnType: Object
-                }
-            )
+            this.adfHttpClient.request(url, {
+                httpMethod,
+                queryParams,
+                headerParams: {},
+                formParams: {},
+                bodyParam,
+                returnType: Object
+            })
         );
     }
 

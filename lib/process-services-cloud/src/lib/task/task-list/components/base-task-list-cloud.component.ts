@@ -165,29 +165,29 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
 
     /** Emitted when rows are selected/unselected */
     @Output()
-    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
+    rowsSelected: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
 
     /** Emitted when the task list is loaded */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success: EventEmitter<unknown> = new EventEmitter<unknown>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<unknown> = new EventEmitter<unknown>();
 
     pagination: BehaviorSubject<PaginationModel>;
 
     requestNode: TaskQueryCloudRequestModel;
-    rows: any[] = [];
+    rows = [];
     size: number;
     skipCount: number = 0;
-    currentInstanceId: any;
-    selectedInstances: any[];
-    formattedSorting: any[];
+    currentInstanceId: string;
+    selectedInstances: string[];
+    formattedSorting: string[];
     dataAdapter: ObjectDataTableAdapter | undefined;
 
     protected defaultSorting = { key: 'startDate', direction: 'desc' };
-    boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
+    boundReplacePriorityValues: (row: DataRow, col: DataColumn) => unknown;
 
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);

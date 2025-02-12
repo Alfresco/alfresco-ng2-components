@@ -29,17 +29,18 @@ import { NodeActionsService } from './node-actions.service';
     providedIn: 'root'
 })
 export class FolderActionsService {
-
     permissionEvent = new Subject<PermissionModel>();
     error = new Subject<Error>();
     success = new Subject<string>();
 
     private handlers: { [id: string]: ContentActionHandler } = {};
 
-    constructor(private nodeActionsService: NodeActionsService,
-                private documentListService: DocumentListService,
-                private contentService: ContentService,
-                private translation: TranslationService) {
+    constructor(
+        private nodeActionsService: NodeActionsService,
+        private documentListService: DocumentListService,
+        private contentService: ContentService,
+        private translation: TranslationService
+    ) {
         this.setupActionHandlers();
     }
 
@@ -107,36 +108,36 @@ export class FolderActionsService {
     }
 
     private prepareHandlers(actionObservable: Observable<any>, target?: any): void {
-        actionObservable.subscribe(
-            (fileOperationMessage) => {
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
-                this.success.next(fileOperationMessage);
-            },
-            this.error.next.bind(this.error)
-        );
+        actionObservable.subscribe((fileOperationMessage) => {
+            if (target && typeof target.reload === 'function') {
+                target.reload();
+            }
+            this.success.next(fileOperationMessage);
+        }, this.error.next.bind(this.error));
     }
 
     private deleteNode(node: NodeEntry, target?: any, permission?: string): Observable<any> {
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasAllowableOperations(node.entry, permission)) {
                 const handlerObservable = this.documentListService.deleteNode(node.entry.id);
-                handlerObservable.subscribe(() => {
-                    if (target && typeof target.reload === 'function') {
-                        target.reload();
-                    }
+                handlerObservable.subscribe(
+                    () => {
+                        if (target && typeof target.reload === 'function') {
+                            target.reload();
+                        }
 
-                    const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
-                    this.success.next(message);
-                }, () => {
-                    const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
-                    this.error.next(message);
-                });
+                        const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                        this.success.next(message);
+                    },
+                    () => {
+                        const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                        this.error.next(message);
+                    }
+                );
 
                 return handlerObservable;
             } else {
-                this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission}));
+                this.permissionEvent.next(new PermissionModel({ type: 'folder', action: 'delete', permission }));
                 return throwError(new Error('No permission to delete'));
             }
         }

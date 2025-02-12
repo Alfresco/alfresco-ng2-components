@@ -18,7 +18,6 @@
 import { ObjectUtils } from './object-utils';
 
 export class StringUtils {
-
     static capitalize(target: string): string {
         return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
     }
@@ -37,7 +36,7 @@ export class StringUtils {
 
     static removeAll(target: string, ...delimiters: string[]): string {
         const delimiterObj = {};
-        delimiters.forEach(delimiter => {
+        delimiters.forEach((delimiter) => {
             delimiterObj[delimiter] = '';
         });
 
@@ -49,8 +48,6 @@ export class StringUtils {
         const bagOfWords = redactedTarget.split(' ');
         const capitalizedBagOfWords = bagOfWords.map((word) => StringUtils.capitalize(word));
 
-
         return capitalizedBagOfWords.join(' ');
     }
-
 }

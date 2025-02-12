@@ -36,9 +36,7 @@ export class AttachFileWidgetDialogService {
 
     private externalApis: { [key: string]: AlfrescoApiService } = {};
 
-    constructor(private dialog: MatDialog,
-                private translation: TranslationService) {
-    }
+    constructor(private dialog: MatDialog, private translation: TranslationService) {}
 
     /**
      * Opens a dialog to choose a file to upload.
@@ -104,8 +102,7 @@ export class AttachFileWidgetDialogService {
             ...this.constructPayload(repository),
             loginOnly: true
         };
-        return this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: 'adf-attach-file-widget-dialog', width: '630px' })
-            .afterClosed();
+        return this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: 'adf-attach-file-widget-dialog', width: '630px' }).afterClosed();
     }
 
     private constructPayload(repository: AlfrescoEndpointRepresentation) {

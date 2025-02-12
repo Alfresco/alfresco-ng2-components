@@ -21,9 +21,7 @@ import { AppConfigService, StorageService } from '@alfresco/adf-core';
 
 @Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {
-
-    constructor(protected appConfig: AppConfigService,
-                protected storageService: StorageService) {
+    constructor(protected appConfig: AppConfigService, protected storageService: StorageService) {
         super(appConfig, storageService);
         if (!this.alfrescoApi) {
             this.initAlfrescoApi();

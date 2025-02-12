@@ -71,11 +71,11 @@
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
     }
 
-    .adf-property-readonly-value {
-        color: var(--adf-metadata-property-panel-label-color);
+    .adf-property-readonly-value:disabled {
+        --mdc-filled-text-field-disabled-input-text-color: var(--adf-metadata-property-panel-title-color);
     }
 
-    .adf-property-value-editable {
+    .adf-property-value-editable:not(:disabled) {
         color: var(--adf-metadata-property-panel-title-color);
     }
 

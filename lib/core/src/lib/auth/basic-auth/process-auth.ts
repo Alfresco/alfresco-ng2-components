@@ -22,12 +22,10 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { StorageService } from '../../common/services/storage.service';
 import { ReplaySubject, Subject } from 'rxjs';
 
-
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessAuth {
-
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
     onError = new Subject<any>();
@@ -38,7 +36,8 @@ export class ProcessAuth {
     };
 
     authentications: Authentication = {
-        basicAuth: {ticket: ''}, type: 'activiti'
+        basicAuth: { ticket: '' },
+        type: 'activiti'
     };
 
     get basePath(): string {
@@ -46,9 +45,7 @@ export class ProcessAuth {
         return this.appConfigService.get<string>(AppConfigValues.BPMHOST) + '/' + contextRootBpm;
     }
 
-    constructor(private appConfigService: AppConfigService,
-                private adfHttpClient: AdfHttpClient,
-                private storageService: StorageService) {
+    constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient, private storageService: StorageService) {
         this.appConfigService.onLoad.subscribe(() => {
             this.setConfig();
         });
@@ -118,7 +115,8 @@ export class ProcessAuth {
                         this.onError.next('error');
                     }
                     reject(error);
-                });
+                }
+            );
         });
 
         return promise;
@@ -147,7 +145,8 @@ export class ProcessAuth {
                     this.adfHttpClient.emit('error');
                     this.onError.next('error');
                     reject(error);
-                });
+                }
+            );
         });
     }
 
