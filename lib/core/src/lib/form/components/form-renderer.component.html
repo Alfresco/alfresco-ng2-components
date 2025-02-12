@@ -7,10 +7,10 @@
                     <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }"></ng-template>
                     <div class="adf-cloud-form-tab-navigation-btn-container" *ngIf="tabCounts() > 1">
                         <button [disabled]="tabIndex === 0" mat-button class="adf-cloud-form-tab-navigation-prev-btn" (click)="goToPreviousTab(tabIndex)">
-                            <span>Previous</span>
+                            <span>{{"ADF_FORM_TAB_NAV_BUTTON.PREVIOUS" | translate}}</span>
                         </button>
                         <button [disabled]="tabIndex === tabCounts() - 1" mat-button class="adf-cloud-form-tab-navigation-next-btn" (click)="goToNextTab(tabIndex)">
-                            <span>Next</span>
+                            <span>{{"ADF_FORM_TAB_NAV_BUTTON.NEXT" | translate}}</span>
                         </button>
                     </div>
                 </mat-tab>

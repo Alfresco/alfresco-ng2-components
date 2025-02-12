@@ -2135,3 +2135,86 @@ export const displayBigDecimalWidgetMock = {
         }
     }
 };
+
+export const displayMultiTabsForm = {
+    formRepresentation: {
+        id: 'form-098756a5-2222-4c3a-1111-81dabc9a88b6',
+        name: 'displayBigdecimalForm',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [
+                {
+                    fields: [
+                        {
+                            id: '45269202-5f2a-438e-b14c-fe13eb4b2aa1',
+                            name: 'Label',
+                            type: 'container',
+                            tab: null,
+                            numberOfColumns: 2,
+                            fields: {
+                                1: [
+                                    {
+                                        id: 'Decimal0tzu53',
+                                        name: 'Bigdecimal',
+                                        type: FormFieldTypes.DECIMAL,
+                                        required: false,
+                                        colspan: 1,
+                                        placeholder: null,
+                                        minLength: 0,
+                                        maxLength: 0,
+                                        regexPattern: null,
+                                        visibilityCondition: null,
+                                        precision: 2,
+                                        value: '10.12345678',
+                                        params: {
+                                            existingColspan: 1,
+                                            maxColspan: 2
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    fields: [
+                        {
+                            id: '45269202-5f2a-438e-b14c-fe13eb4b2bb1',
+                            name: 'Label',
+                            type: 'container',
+                            tab: null,
+                            numberOfColumns: 2,
+                            fields: {
+                                1: [
+                                    {
+                                        id: 'Decimal0tzu53',
+                                        name: 'Bigdecimal',
+                                        type: FormFieldTypes.DECIMAL,
+                                        required: false,
+                                        colspan: 1,
+                                        placeholder: null,
+                                        minLength: 0,
+                                        maxLength: 0,
+                                        regexPattern: null,
+                                        visibilityCondition: null,
+                                        precision: 2,
+                                        value: '10.12345678',
+                                        params: {
+                                            existingColspan: 1,
+                                            maxColspan: 2
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};

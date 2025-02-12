@@ -29,6 +29,7 @@ import {
     customWidgetFormWithVisibility,
     dateWidgetFormVisibilityMock,
     displayBigDecimalWidgetMock,
+    displayMultiTabsForm,
     displayTextWidgetFormVisibilityMock,
     formDateVisibility,
     formDisplayValueCombinedVisibility,
@@ -744,6 +745,22 @@ describe('Form Renderer Component', () => {
 
             const decimalInputElement = testingUtils.getByCSS('#Decimal0tzu53').nativeElement;
             expect(decimalInputElement.value).toBeTruthy('10.12');
+        });
+    });
+
+    describe('Display navigation buttons for multi-tab forms', () => {
+        it('dhould be able to display the navigation buttons for multi-tab forms', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(displayMultiTabsForm.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const nextButton = testingUtils.getByCSS('.adf-cloud-form-tab-navigation-next-btn').nativeElement;
+            const previousButton = testingUtils.getByCSS('.adf-cloud-form-tab-navigation-prev-btn').nativeElement;
+
+            expect(fixture.componentInstance.hasTabs()).toBe(true);
+            expect(fixture.componentInstance.tabCounts()).toBe(2);
+            expect(nextButton).toBeTruthy();
+            expect(previousButton).toBeTruthy();
         });
     });
 });

@@ -623,5 +623,9 @@
     "ACTION": "Do you want to proceed?",
     "YES_LABEL": "Yes",
     "NO_LABEL": "No"
+  },
+  "ADF_FORM_TAB_NAV_BUTTON": {
+    "NEXT": "Next",
+    "PREVIOUS": "Previous"
   }
 }
