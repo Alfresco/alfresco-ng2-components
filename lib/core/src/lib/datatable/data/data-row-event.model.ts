@@ -19,7 +19,6 @@ import { BaseUIEvent } from '../../events';
 import { DataRow } from './data-row.model';
 
 export class DataRowEvent extends BaseUIEvent<DataRow> {
-
     sender: any;
 
     constructor(value: DataRow, domEvent: Event, sender?: any) {
@@ -28,5 +27,4 @@ export class DataRowEvent extends BaseUIEvent<DataRow> {
         this.event = domEvent;
         this.sender = sender;
     }
-
 }

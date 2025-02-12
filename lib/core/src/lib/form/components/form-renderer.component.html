@@ -13,6 +13,11 @@
                             <span>{{"ADF_FORM_TAB_NAV_BUTTON.NEXT" | translate}}</span>
                         </button>
                     </div>
+
+            <mat-tab-group>
+                <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate ">
+                    <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }" />
+
                 </mat-tab>
             </mat-tab-group>
 
@@ -20,7 +25,7 @@
     </div>
 
     <div *ngIf="!formDefinition.hasTabs() && formDefinition.hasFields()">
-        <ng-template *ngTemplateOutlet="render; context: { fieldToRender: formDefinition.fields }"></ng-template>
+        <ng-template *ngTemplateOutlet="render; context: { fieldToRender: formDefinition.fields }" />
     </div>
 </div>
 

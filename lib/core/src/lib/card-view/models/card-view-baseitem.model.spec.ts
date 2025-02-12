@@ -117,18 +117,20 @@ describe('CardViewBaseItemModel', () => {
             const isValid = itemModel.isValid('test-against-this');
 
             expect(isValid).toBe(false);
-            expect(itemModel.getValidationErrors('test-against-this')).toEqual([validator1, validator3 ]);
+            expect(itemModel.getValidationErrors('test-against-this')).toEqual([validator1, validator3]);
         });
 
         it('should validate field with special character and return false when there is REGEX constraint and requiresMatch is false', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
                 value: 'test.',
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: false }
-                }]
+                constraints: [
+                    {
+                        id: 'constraint-id',
+                        type: 'REGEX',
+                        parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: false }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
@@ -138,11 +140,13 @@ describe('CardViewBaseItemModel', () => {
         it('should validate field without special character and return true when there is REGEX constraint and requiresMatch is false', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: false }
-                }]
+                constraints: [
+                    {
+                        id: 'constraint-id',
+                        type: 'REGEX',
+                        parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: false }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
@@ -152,11 +156,13 @@ describe('CardViewBaseItemModel', () => {
         it('should validate field without special character and return false when there is REGEX constraint and requiresMatch is true', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: true }
-                }]
+                constraints: [
+                    {
+                        id: 'constraint-id',
+                        type: 'REGEX',
+                        parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: true }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
@@ -167,11 +173,13 @@ describe('CardViewBaseItemModel', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
                 value: 'test.',
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: true }
-                }]
+                constraints: [
+                    {
+                        id: 'constraint-id',
+                        type: 'REGEX',
+                        parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: true }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);

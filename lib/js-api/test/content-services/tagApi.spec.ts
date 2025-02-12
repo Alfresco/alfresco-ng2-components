@@ -103,7 +103,7 @@ describe('Tags', () => {
     });
 
     describe('createTags', () => {
-        it('should return created tags', (done: Mocha.Done) => {
+        it('should return created tags', (done) => {
             tagMock.createTags201Response();
             tagsApi.createTags([new TagBody(), new TagBody()]).then((tags) => {
                 assert.equal(tags.length, 2);

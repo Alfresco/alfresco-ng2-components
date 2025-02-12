@@ -18,7 +18,6 @@
 const DEFAULT_PAGE_SIZE = 5;
 
 export class SearchFilterList<T> implements Iterable<T> {
-
     private filteredItems: T[] = [];
     private _filterText: string = '';
 
@@ -41,7 +40,7 @@ export class SearchFilterList<T> implements Iterable<T> {
         return this._filter;
     }
 
-    set filter(value: (item: T) => boolean ) {
+    set filter(value: (item: T) => boolean) {
         this._filter = value;
         this.applyFilter();
     }

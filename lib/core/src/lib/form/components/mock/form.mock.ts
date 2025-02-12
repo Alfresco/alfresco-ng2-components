@@ -30,7 +30,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'text1',
@@ -54,7 +54,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'text2',
@@ -88,7 +88,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'multilinetext1',
@@ -109,7 +109,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'multilinetext2',
@@ -140,7 +140,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'number1',
@@ -160,7 +160,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'number2',
@@ -190,7 +190,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'checkbox1',
@@ -207,7 +207,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'checkbox2',
@@ -234,7 +234,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'dropdown1',
@@ -261,7 +261,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'dropdown2',
@@ -298,7 +298,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'amount1',
@@ -321,7 +321,7 @@ export const cloudFormMock = {
                         currency: '$'
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'amount2',
@@ -354,7 +354,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'date1',
@@ -375,7 +375,7 @@ export const cloudFormMock = {
                         dateDisplayFormat: 'D-M-YYYY'
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'date2',
@@ -406,7 +406,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'radiobuttons1',
@@ -442,7 +442,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'radiobuttons2',
@@ -488,7 +488,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'AttachFileFieldRepresentation',
                         id: 'attachfile1',
@@ -513,7 +513,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'AttachFileFieldRepresentation',
                         id: 'attachfile2',
@@ -548,7 +548,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'displayvalue1',
@@ -572,7 +572,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'displayvalue2',
@@ -606,7 +606,7 @@ export const cloudFormMock = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'displaytext1',
@@ -624,7 +624,7 @@ export const cloudFormMock = {
                         }
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'displaytext2',
@@ -691,7 +691,7 @@ export const fakeCloudForm = {
                     name: 'Label',
                     tab: null,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 type: 'text',
                                 id: 'firstName',
@@ -710,7 +710,7 @@ export const fakeCloudForm = {
                                 regexPattern: null
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 type: 'text',
                                 id: 'lastName',
@@ -775,7 +775,7 @@ export const conditionalUploadWidgetsMock: any = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 id: 'Text0xlk8n',
                                 name: 'Text',
@@ -793,7 +793,7 @@ export const conditionalUploadWidgetsMock: any = {
                                 }
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 id: 'Attachfile0h9fr1',
                                 name: 'Attach file',
@@ -863,7 +863,7 @@ export const multilingualForm: any = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 id: 'textField',
                                 name: 'TEXT_FIELD.TITLE',
@@ -881,7 +881,7 @@ export const multilingualForm: any = {
                                 }
                             }
                         ],
-                        2: []
+                        '2': []
                     }
                 },
                 {
@@ -891,7 +891,7 @@ export const multilingualForm: any = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 id: 'fildUploadField',
                                 name: 'FILE_UPLOAD_FIELD.TITLE',
@@ -909,7 +909,7 @@ export const multilingualForm: any = {
                                 }
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 id: 'amountField',
                                 name: 'AMOUNT_FIELD.TITLE',
@@ -937,7 +937,7 @@ export const multilingualForm: any = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 id: 'dateField',
                                 name: 'DATE_FIELD.TITLE',
@@ -955,7 +955,7 @@ export const multilingualForm: any = {
                                 dateDisplayFormat: 'D-M-YYYY'
                             }
                         ],
-                        2: []
+                        '2': []
                     }
                 }
             ],
@@ -980,7 +980,7 @@ export const fakeMetadataForm = {
                 name: 'Label',
                 tab: null,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             type: 'text',
                             id: 'pfx_property_one',
@@ -999,7 +999,7 @@ export const fakeMetadataForm = {
                             regexPattern: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             type: 'boolean',
                             id: 'pfx_property_two',
@@ -1018,7 +1018,7 @@ export const fakeMetadataForm = {
                             regexPattern: null
                         }
                     ],
-                    3: [
+                    '3': [
                         {
                             id: 'content_form_nodes',
                             name: 'Nodes',
@@ -1046,7 +1046,7 @@ export const fakeMetadataForm = {
                             }
                         }
                     ],
-                    4: [
+                    '4': [
                         {
                             id: 'pfx_property_three',
                             name: 'pfx_property_three',
@@ -1081,7 +1081,7 @@ export const fakeMetadataForm = {
                             restLabelProperty: null
                         }
                     ],
-                    5: [
+                    '5': [
                         {
                             id: 'pfx_property_four',
                             name: 'pfx_property_four',
@@ -1116,7 +1116,7 @@ export const fakeMetadataForm = {
                             restLabelProperty: null
                         }
                     ],
-                    6: [
+                    '6': [
                         {
                             id: 'pfx_property_five',
                             name: 'pfx_property_five',
@@ -1151,7 +1151,7 @@ export const fakeMetadataForm = {
                             restLabelProperty: null
                         }
                     ],
-                    7: [
+                    '7': [
                         {
                             id: 'cmfb85b2a7295ba41209750bca176ccaf9a',
                             name: 'File viewer',
@@ -1167,7 +1167,7 @@ export const fakeMetadataForm = {
                             }
                         }
                     ],
-                    8: [
+                    '8': [
                         {
                             type: 'text',
                             id: 'pfx_property_six',
@@ -1186,7 +1186,7 @@ export const fakeMetadataForm = {
                             regexPattern: null
                         }
                     ],
-                    9: [
+                    '9': [
                         {
                             type: 'text',
                             id: 'pfx_property_seven',
@@ -1205,7 +1205,7 @@ export const fakeMetadataForm = {
                             regexPattern: null
                         }
                     ],
-                    10: [
+                    '10': [
                         {
                             type: 'text',
                             id: 'pfx_property_eight',
@@ -1249,7 +1249,7 @@ export const mockDisplayExternalPropertyForm = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         id: 'DisplayExternalProperty02kj65',
                         name: 'Display External Property',
@@ -1267,7 +1267,7 @@ export const mockDisplayExternalPropertyForm = {
                         value: 'hr'
                     }
                 ],
-                2: [
+                '2': [
                     {
                         id: 'DisplayExternalProperty0ei65x',
                         name: 'Display External Property',
@@ -1325,7 +1325,7 @@ export const fakeViewerForm = {
                 name: 'Label',
                 tab: null,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             id: 'content_form_nodes',
                             name: 'Nodes',
@@ -1353,7 +1353,7 @@ export const fakeViewerForm = {
                             }
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             id: 'upload_widget',
                             name: 'Nodes',
@@ -1381,7 +1381,7 @@ export const fakeViewerForm = {
                             }
                         }
                     ],
-                    3: [
+                    '3': [
                         {
                             id: 'cmfb85b2a7295ba41209750bca176ccaf9a',
                             name: 'File viewer',

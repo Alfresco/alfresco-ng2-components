@@ -67,7 +67,7 @@ describe('TranslationService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({TEST: 'This is a test', TEST2: 'This is another test'})
+            responseText: JSON.stringify({ TEST: 'This is a test', TEST2: 'This is another test' })
         });
     });
 
@@ -79,7 +79,7 @@ describe('TranslationService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({TEST: 'This is a test', TEST2: 'This is another test'})
+            responseText: JSON.stringify({ TEST: 'This is a test', TEST2: 'This is another test' })
         });
     });
 

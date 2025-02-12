@@ -6,32 +6,23 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "projectRoot": "lib/eslint-angular",
         "outputPath": "dist/libs/eslint-plugin-eslint-angular",
         "main": "lib/eslint-angular/index.ts",
-        "generatePackageJson": true,
-        "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        },
-        "target": "node",
-        "compiler": "tsc"
+        "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
       },
       "configurations": {
         "production": {
-          "projectRoot": "lib/eslint-angular",
-          "outputPath": "dist/libs/eslint-plugin-eslint-angular",
-          "main": "lib/eslint-angular/index.ts",
-          "generatePackageJson": true,
-          "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
+          "optimization": true,
+          "sourceMap": false,
+          "extractLicenses": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
       }
@@ -59,5 +50,6 @@
         ]
       }
     }
-  }
+  },
+  "tags": []
 }

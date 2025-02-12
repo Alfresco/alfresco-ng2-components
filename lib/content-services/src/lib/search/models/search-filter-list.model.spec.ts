@@ -26,14 +26,13 @@ export class Payload {
 }
 
 describe('SearchFilterList', () => {
-
-    const generateItems = (count: number): Payload[] => Array(count).fill(null).map((_, id) => new Payload(id));
+    const generateItems = (count: number): Payload[] =>
+        Array(count)
+            .fill(null)
+            .map((_, id) => new Payload(id));
 
     it('should init with external items', () => {
-        const items = [
-            new Payload(1),
-            new Payload(2)
-        ];
+        const items = [new Payload(1), new Payload(2)];
         const list = new SearchFilterList<Payload>(items);
 
         expect(list.length).toBe(2);

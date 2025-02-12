@@ -22,11 +22,12 @@ export const mockCarsData: any = [
     {
         car_id: 1,
         car_name: 'Fiat 126p (Process)',
-        car_price: 599.00,
+        car_price: 599.0,
         fuel_consumption: 5.25789,
         is_available: 'false',
         production_start: '1972-04-23',
-        description: 'The Fiat 126 (Type 126) is a four-passenger, rear-engine, city car manufactured and marketed by Fiat over a twenty-eight year production run from 1972 until 2000, over a single generation.',
+        description:
+            'The Fiat 126 (Type 126) is a four-passenger, rear-engine, city car manufactured and marketed by Fiat over a twenty-eight year production run from 1972 until 2000, over a single generation.',
         icon: 'airport_shuttle',
         wikipedia_link: 'https://en.wikipedia.org/wiki/Fiat_126'
     },
@@ -48,7 +49,8 @@ export const mockCarsData: any = [
         fuel_consumption: 6,
         is_available: 'true',
         production_start: '1998-06-25T12:25:20',
-        description: 'The Audi A3 is a subcompact executive/small family car (C-segment) manufactured and marketed by the German automaker Audi AG since September 1996, currently in its fourth generation.',
+        description:
+            'The Audi A3 is a subcompact executive/small family car (C-segment) manufactured and marketed by the German automaker Audi AG since September 1996, currently in its fourth generation.',
         icon: 'directions_car',
         wikipedia_link: 'https://en.wikipedia.org/wiki/Audi_A3'
     }

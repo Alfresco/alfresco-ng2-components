@@ -6,7 +6,7 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["build-esm5"],
       "options": {
@@ -24,7 +24,7 @@
       }
     },
     "build-esm5": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["build-esm2015"],
       "options": {
@@ -34,7 +34,7 @@
       }
     },
     "build-esm2015": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["build-cjs"],
       "options": {
@@ -44,7 +44,7 @@
       }
     },
     "build-cjs": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/js-api",
@@ -54,7 +54,7 @@
       }
     },
     "build-types": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/js-api/typings",
@@ -76,7 +76,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["lib/js-api/**/*.ts"]
@@ -105,19 +105,12 @@
       "dependsOn": ["build"]
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "commands": ["nx run js-api:build:test", "mocha --full-trace --config lib/js-api/.mocharc.json", "rm -fr dist/tmp/libs/js-api"],
-        "parallel": false
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    }
+          "jestConfig": "lib/js-api/jest.config.ts",
+          "passWithNoTests": true
+      }}
   },
   "tags": []
 }

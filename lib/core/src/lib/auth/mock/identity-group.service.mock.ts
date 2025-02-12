@@ -31,7 +31,6 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 
 Injectable({ providedIn: 'root' });
 export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
-
     getGroups(): Observable<IdentityGroupModel[]> {
         return of(mockIdentityGroups);
     }
@@ -81,9 +80,7 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
             return of([]);
         }
 
-        return of(mockIdentityGroups.filter(group =>
-            group.name.toUpperCase().includes(searchParams.name.toUpperCase())
-        ));
+        return of(mockIdentityGroups.filter((group) => group.name.toUpperCase().includes(searchParams.name.toUpperCase())));
     }
 
     getGroupRoles(_groupId: string): Observable<IdentityRoleModel[]> {
@@ -91,19 +88,21 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
     }
 
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
-        return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
-            let hasRole = false;
-            if (groupRoles?.length > 0) {
-                roleNames.forEach((roleName: string) => {
-                    const role = groupRoles.find(({ name }) => roleName === name);
-                    if (role) {
-                        hasRole = true;
-                        return;
-                    }
-                });
-            }
-            return hasRole;
-        }));
+        return this.getGroupRoles(groupId).pipe(
+            map((groupRoles) => {
+                let hasRole = false;
+                if (groupRoles?.length > 0) {
+                    roleNames.forEach((roleName: string) => {
+                        const role = groupRoles.find(({ name }) => roleName === name);
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
     }
 
     getClientIdByApplicationName(_applicationName: string): Observable<string> {
@@ -119,9 +118,7 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
     }
 
     checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
-        return this.getClientRoles(groupId, clientId).pipe(
-            map((response) => response && response.length > 0)
-        );
+        return this.getClientRoles(groupId, clientId).pipe(map((response) => response && response.length > 0));
     }
 
     checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {

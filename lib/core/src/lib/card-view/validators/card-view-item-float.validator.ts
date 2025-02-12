@@ -18,7 +18,6 @@
 import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export class CardViewItemFloatValidator implements CardViewItemValidator {
-
     message = 'CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR';
 
     isValid(value: any | any[]): boolean {

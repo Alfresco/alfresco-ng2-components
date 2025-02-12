@@ -32,7 +32,6 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
-
     @Input()
     dateConfig: DateConfig;
 
