@@ -511,9 +511,9 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const inputThreeContainer = fixture.nativeElement.querySelector('#field-text3-container');
-            expect(inputThreeContainer.style.visibility).toBe('hidden');
+            expect(inputThreeContainer.style.display).toBe('none');
             const completeOutcomeButton: HTMLButtonElement = fixture.nativeElement.querySelector('#adf-form-complete');
-            expect(completeOutcomeButton.style.visibility).not.toBe('hidden');
+            expect(completeOutcomeButton.style.display).not.toBe('none');
             completeOutcomeButton.click();
             fixture.detectChanges();
         });

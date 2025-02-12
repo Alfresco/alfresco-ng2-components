@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
+import { FormFieldModel } from './form-field.model';
 
 export class ContainerColumnModel {
-
     size: number = 12;
-    fields: any[] = [];
+    fields: FormFieldModel[] = [];
     colspan: number = 1;
     rowspan: number = 1;
 
     hasFields(): boolean {
-        return this.fields && this.fields.length > 0;
+        return !!this.fields?.length;
     }
 }
