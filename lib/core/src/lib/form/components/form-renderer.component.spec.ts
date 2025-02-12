@@ -38,6 +38,7 @@ import {
     formNumberTextJson,
     formNumberWidgetVisibility,
     formRequiredNumberWidget,
+    mockSectionVisibilityForm,
     multilineWidgetFormVisibilityMock,
     numberMinMaxForm,
     numberNotRequiredForm,
@@ -45,22 +46,22 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { TextWidgetComponent } from './widgets';
+import { FormModel, TextWidgetComponent } from './widgets';
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
     testingUtils.fillInputByCSS(selector, message);
 };
 
-const expectElementToBeHidden = (testingUtils: UnitTestingUtils, selector: string): void => {
-    const targetElement = testingUtils.getByCSS(selector).nativeElement;
+const expectElementToBeHidden = (testingUtils: UnitTestingUtils, fieldId: string): void => {
+    const targetElement = testingUtils.getByCSS(`#field-${fieldId}-container`).nativeElement;
     expect(targetElement).toBeTruthy();
-    expect(targetElement.style.visibility).toBe('hidden', `${targetElement.id} should be hidden but it is not`);
+    expect(targetElement.style.display).toBe('none', `${targetElement.id} should be hidden but it is not`);
 };
 
-const expectElementToBeVisible = (testingUtils: UnitTestingUtils, selector: string): void => {
-    const targetElement = testingUtils.getByCSS(selector).nativeElement;
+const expectElementToBeVisible = (testingUtils: UnitTestingUtils, fieldId: string, display: string = 'block'): void => {
+    const targetElement = testingUtils.getByCSS(`#field-${fieldId}-container`).nativeElement;
     expect(targetElement).toBeTruthy();
-    expect(targetElement.style.visibility).not.toBe('hidden', `${targetElement.id} should be visibile but it is not`);
+    expect(targetElement.style.display).toBe(display, `${targetElement.id} should be visible but it is not`);
 };
 
 const expectInputElementValueIs = (testingUtils: UnitTestingUtils, selector: string, value: string): void => {
@@ -109,13 +110,13 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeHidden(testingUtils, '#field-Text0pqd1u-container');
+            expectElementToBeHidden(testingUtils, 'Text0pqd1u');
             testingUtils.fillInputByCSS('#Date0hwq20', '2019-11-19');
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text0pqd1u-container');
+            expectElementToBeVisible(testingUtils, 'Text0pqd1u');
         });
 
         it('Should not be able to see a widget when the visibility condition refers to another fields with specific date', async () => {
@@ -123,14 +124,14 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text0uyqd3-container');
+            expectElementToBeVisible(testingUtils, 'Text0uyqd3');
 
             testingUtils.fillInputByCSS('#Date0hwq20', '2019-11-19');
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeHidden(testingUtils, '#field-Text0uyqd3-container');
+            expectElementToBeHidden(testingUtils, 'Text0uyqd3');
         });
 
         it('[C310336] - Should be able to set visibility conditions for Date widget', async () => {
@@ -138,14 +139,14 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text5asd0a-container');
-            expectElementToBeHidden(testingUtils, '#field-Date8wbe3d-container');
+            expectElementToBeVisible(testingUtils, 'Text5asd0a');
+            expectElementToBeHidden(testingUtils, 'Date8wbe3d');
 
             typeIntoInput(testingUtils, '#Text5asd0a', 'Date');
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Date8wbe3d-container');
+            expectElementToBeVisible(testingUtils, 'Date8wbe3d');
         });
     });
 
@@ -155,12 +156,12 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeHidden(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeHidden(testingUtils, 'Displayvalue0g6092');
             typeIntoInput(testingUtils, '#Text0bq3ar', 'DisplayValue');
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeVisible(testingUtils, 'Displayvalue0g6092');
             expectInputElementValueIs(testingUtils, '#Displayvalue0g6092', 'No field selected');
         });
 
@@ -168,82 +169,82 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-DisplayValueOne-container');
+            expectElementToBeHidden(testingUtils, 'DisplayValueOne');
 
             typeIntoInput(testingUtils, '#Text0howrc', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-DisplayValueOne-container');
+            expectElementToBeVisible(testingUtils, 'DisplayValueOne');
             expectInputElementValueIs(testingUtils, '#DisplayValueOne', 'No field selected');
 
             typeIntoInput(testingUtils, '#Text0howrc', 'aaab');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-DisplayValueOne-container');
+            expectElementToBeHidden(testingUtils, 'DisplayValueOne');
         });
 
         it('[C309864] - Should be able to see Display value widget when visibility condition refers to another field and form variable', async () => {
             formRendererComponent.formDefinition = formService.parseForm(formDisplayValueForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-DisplayValueVariableField-container');
+            expectElementToBeHidden(testingUtils, 'DisplayValueVariableField');
 
             typeIntoInput(testingUtils, '#TextOne', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-DisplayValueVariableField-container');
+            expectElementToBeVisible(testingUtils, 'DisplayValueVariableField');
             expectInputElementValueIs(testingUtils, '#DisplayValueVariableField', 'No field selected');
 
             typeIntoInput(testingUtils, '#TextOne', 'aaab');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-DisplayValueVariableField-container');
+            expectElementToBeHidden(testingUtils, 'DisplayValueVariableField');
         });
 
         it('[C309865] - Should be able to see Display value widget when has multiple visibility conditions and next condition operators', async () => {
             formRendererComponent.formDefinition = formService.parseForm(formDisplayValueCombinedVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#Text0bq3ar');
-            expectElementToBeVisible(testingUtils, '#TextTwo');
-            expectElementToBeHidden(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeVisible(testingUtils, 'Text0bq3ar');
+            expectElementToBeVisible(testingUtils, 'TextTwo');
+            expectElementToBeHidden(testingUtils, 'Displayvalue0g6092');
 
             typeIntoInput(testingUtils, '#Text0bq3ar', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
             typeIntoInput(testingUtils, '#Text0bq3ar', 'aaa');
             expectInputElementValueIs(testingUtils, '#TextTwo', '');
-            expectElementToBeVisible(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeVisible(testingUtils, 'Displayvalue0g6092');
 
             typeIntoInput(testingUtils, '#Text0bq3ar', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
             typeIntoInput(testingUtils, '#Text0bq3ar', 'bbb');
             expectInputElementValueIs(testingUtils, '#TextTwo', '');
-            expectElementToBeHidden(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeHidden(testingUtils, 'Displayvalue0g6092');
 
             typeIntoInput(testingUtils, '#TextTwo', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
             typeIntoInput(testingUtils, '#Text0bq3ar', 'bbb');
             expectInputElementValueIs(testingUtils, '#TextTwo', 'aaa');
-            expectElementToBeHidden(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeHidden(testingUtils, 'Displayvalue0g6092');
 
             typeIntoInput(testingUtils, '#Text0bq3ar', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
             typeIntoInput(testingUtils, '#Text0bq3ar', 'aaa');
             expectInputElementValueIs(testingUtils, '#TextTwo', 'aaa');
-            expectElementToBeHidden(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeHidden(testingUtils, 'Displayvalue0g6092');
 
             typeIntoInput(testingUtils, '#TextTwo', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
             typeIntoInput(testingUtils, '#Text0bq3ar', 'aaa');
             expectInputElementValueIs(testingUtils, '#TextTwo', 'bbb');
-            expectElementToBeVisible(testingUtils, '#field-Displayvalue0g6092-container');
+            expectElementToBeVisible(testingUtils, 'Displayvalue0g6092');
         });
     });
 
@@ -253,24 +254,24 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#Number1');
-            expectElementToBeHidden(testingUtils, '#field-Number2-container');
+            expectElementToBeVisible(testingUtils, 'Number1');
+            expectElementToBeHidden(testingUtils, 'Number2');
             expect(formRendererComponent.formDefinition.isValid).toBe(true, 'Form should be valid by default');
 
             typeIntoInput(testingUtils, '#Number1', '5');
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#Number1');
-            expectElementToBeVisible(testingUtils, '#field-Number2-container');
+            expectElementToBeVisible(testingUtils, 'Number1');
+            expectElementToBeVisible(testingUtils, 'Number2');
             expect(formRendererComponent.formDefinition.isValid).toBe(true, 'Form should be valid with a valid value');
 
             typeIntoInput(testingUtils, '#Number1', 'az');
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#Number1');
-            expectElementToBeHidden(testingUtils, '#field-Number2-container');
+            expectElementToBeVisible(testingUtils, 'Number1');
+            expectElementToBeHidden(testingUtils, 'Number2');
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should be invalid with an invalid value');
         });
 
@@ -279,18 +280,18 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#Text');
-            expectElementToBeHidden(testingUtils, '#field-NumberFieldValue-container');
+            expectElementToBeVisible(testingUtils, 'Text');
+            expectElementToBeHidden(testingUtils, 'NumberFieldValue');
 
             typeIntoInput(testingUtils, '#Text', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-NumberFieldValue-container');
+            expectElementToBeVisible(testingUtils, 'NumberFieldValue');
 
             typeIntoInput(testingUtils, '#Text', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-NumberFieldValue-container');
+            expectElementToBeHidden(testingUtils, 'NumberFieldValue');
         });
 
         it('[C315170] - Should be able to complete a task with a form with required number widgets', async () => {
@@ -298,18 +299,18 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeHidden(testingUtils, '#field-Number2-container');
-            expectElementToBeVisible(testingUtils, '#Number1');
+            expectElementToBeHidden(testingUtils, 'Number2');
+            expectElementToBeVisible(testingUtils, 'Number1');
 
             typeIntoInput(testingUtils, '#Number1', '5');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Number2-container');
+            expectElementToBeVisible(testingUtils, 'Number2');
 
             typeIntoInput(testingUtils, '#Number1', '123');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Number2-container');
+            expectElementToBeHidden(testingUtils, 'Number2');
             const errorWidgetText = testingUtils.getByCSS('#field-Number1-container error-widget .adf-error-text').nativeElement;
             expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
@@ -319,8 +320,8 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(formNumberTextJson.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#NumberReq');
-            expectElementToBeVisible(testingUtils, '#NumberNotReq');
+            expectElementToBeVisible(testingUtils, 'NumberReq');
+            expectElementToBeVisible(testingUtils, 'NumberNotReq');
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should be invalid with an empty required value');
 
             typeIntoInput(testingUtils, '#NumberNotReq', '5');
@@ -339,7 +340,13 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null, false, true);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div.adf-grid-list');
+
+            const numbersContainerGridElement = testingUtils.getByCSS(
+                `#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div.adf-grid-list`
+            ).nativeElement;
+            expect(numbersContainerGridElement).toBeTruthy();
+            expect(numbersContainerGridElement.style.display).not.toBe('hidden');
+
             const sectionGridElement: HTMLElement[] = testingUtils
                 .getAllByCSS('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div .adf-grid-list-item')
                 .map((element) => element.nativeElement);
@@ -357,7 +364,13 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null, false, false);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list-column-view');
+
+            const numbersContainerElement = testingUtils.getByCSS(
+                `#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list-column-view`
+            ).nativeElement;
+            expect(numbersContainerElement).toBeTruthy();
+            expect(numbersContainerElement.style.display).not.toBe('hidden');
+
             const sectionGridElement = testingUtils
                 .getAllByCSS('#field-2bc275fb-e113-4d-7d-885f-6e74a7332d40-container section .adf-grid-list-single-column')
                 .map((element) => element.nativeElement);
@@ -377,7 +390,10 @@ describe('Form Renderer Component', () => {
             const twoSpanTextWidgetContainerId = '#field-1ff21afc-7df4-4607-8363-1dc8576e1c8e-container';
             const oneSpanTextWidgetContainerId = '#field-f4285ad-g123-1a73-521d-7nm4a7231aul0-container';
 
-            expectElementToBeVisible(testingUtils, `${oneSpanTextWidgetContainerId} section.adf-grid-list-column-view`);
+            const oneSpanTextWidgetElement = testingUtils.getByCSS(`${oneSpanTextWidgetContainerId} section.adf-grid-list-column-view`).nativeElement;
+            expect(oneSpanTextWidgetElement).toBeTruthy();
+            expect(oneSpanTextWidgetElement.style.display).not.toBe('hidden');
+
             const sectionGridElement = testingUtils
                 .getAllByCSS(`${oneSpanTextWidgetContainerId} section .adf-grid-list-single-column`)
                 .map((element) => element.nativeElement);
@@ -395,7 +411,7 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#Number0x8cbv');
+            expectElementToBeVisible(testingUtils, 'Number0x8cbv');
             expectElementToBeValid(testingUtils, 'Number0x8cbv');
 
             testingUtils.blurByCSS('#Number0x8cbv');
@@ -435,7 +451,7 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(numberMinMaxForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#Number0him2z');
+            expectElementToBeVisible(testingUtils, 'Number0him2z');
             expectElementToBeValid(testingUtils, 'Number0him2z');
 
             testingUtils.blurByCSS('#Number0him2z');
@@ -476,17 +492,17 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             const inputText = testingUtils.getByCSS('#Text').nativeElement;
             expect(inputText).not.toBeNull();
-            expectElementToBeHidden(testingUtils, '#field-NumberFieldValue-container');
+            expectElementToBeHidden(testingUtils, 'NumberFieldValue');
 
             typeIntoInput(testingUtils, '#Text', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-NumberFieldValue-container');
+            expectElementToBeVisible(testingUtils, 'NumberFieldValue');
 
             typeIntoInput(testingUtils, '#Text', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-NumberFieldValue-container');
+            expectElementToBeHidden(testingUtils, 'NumberFieldValue');
         });
 
         it('[C309665] - Should be able to see Number widget when visibility condition refers to another field and form variable', async () => {
@@ -495,39 +511,39 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             const inputText = testingUtils.getByCSS('#Text').nativeElement;
             expect(inputText).not.toBeNull();
-            expectElementToBeHidden(testingUtils, '#field-NumberFieldVariable-container');
+            expectElementToBeHidden(testingUtils, 'NumberFieldVariable');
 
             typeIntoInput(testingUtils, '#Text', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-NumberFieldVariable-container');
+            expectElementToBeVisible(testingUtils, 'NumberFieldVariable');
 
             typeIntoInput(testingUtils, '#Text', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-NumberFieldVariable-container');
+            expectElementToBeHidden(testingUtils, 'NumberFieldVariable');
         });
 
         it('[C309666] - Should be able to see Number widget when has multiple visibility conditions and next condition operators', async () => {
             formRendererComponent.formDefinition = formService.parseForm(numberWidgetVisibilityForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Number0wxaur-container');
+            expectElementToBeHidden(testingUtils, 'Number0wxaur');
 
             typeIntoInput(testingUtils, '#Text0hs0gt', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Number0wxaur-container');
+            expectElementToBeVisible(testingUtils, 'Number0wxaur');
 
             typeIntoInput(testingUtils, '#Text0hs0gt', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Number0wxaur-container');
+            expectElementToBeHidden(testingUtils, 'Number0wxaur');
 
             typeIntoInput(testingUtils, '#Text0cuqet', 'aaa');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Number0wxaur-container');
+            expectElementToBeHidden(testingUtils, 'Number0wxaur');
             expectInputElementValueIs(testingUtils, '#Text0hs0gt', 'bbb');
 
             typeIntoInput(testingUtils, '#Text0hs0gt', 'aaa');
@@ -535,7 +551,7 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             expectInputElementValueIs(testingUtils, '#Text0hs0gt', 'aaa');
             expectInputElementValueIs(testingUtils, '#Text0cuqet', 'aaa');
-            expectElementToBeHidden(testingUtils, '#field-Number0wxaur-container');
+            expectElementToBeHidden(testingUtils, 'Number0wxaur');
         });
     });
 
@@ -544,26 +560,26 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(textWidgetVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#textOne');
-            expectElementToBeHidden(testingUtils, '#field-textThree-container');
-            expectElementToBeHidden(testingUtils, '#field-textTwo-container');
-            expectElementToBeVisible(testingUtils, '#field-textFour-container');
+            expectElementToBeVisible(testingUtils, 'textOne');
+            expectElementToBeHidden(testingUtils, 'textThree');
+            expectElementToBeHidden(testingUtils, 'textTwo');
+            expectElementToBeVisible(testingUtils, 'textFour');
 
             typeIntoInput(testingUtils, '#textOne', 'Test');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-textOne-container');
-            expectElementToBeVisible(testingUtils, '#field-textTwo-container');
-            expectElementToBeVisible(testingUtils, '#field-textThree-container');
-            expectElementToBeHidden(testingUtils, '#field-textFour-container');
+            expectElementToBeVisible(testingUtils, 'textOne');
+            expectElementToBeVisible(testingUtils, 'textTwo');
+            expectElementToBeVisible(testingUtils, 'textThree');
+            expectElementToBeHidden(testingUtils, 'textFour');
 
             typeIntoInput(testingUtils, '#textTwo', 'Test');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-textOne-container');
-            expectElementToBeVisible(testingUtils, '#field-textTwo-container');
-            expectElementToBeVisible(testingUtils, '#field-textFour-container');
-            expectElementToBeHidden(testingUtils, '#field-textThree-container');
+            expectElementToBeVisible(testingUtils, 'textOne');
+            expectElementToBeVisible(testingUtils, 'textTwo');
+            expectElementToBeVisible(testingUtils, 'textFour');
+            expectElementToBeHidden(testingUtils, 'textThree');
         });
     });
 
@@ -572,13 +588,13 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(radioWidgetVisibilityForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Text0cee7g-container');
-            expectElementToBeHidden(testingUtils, '#field-Radiobuttons03rkbo-container');
+            expectElementToBeVisible(testingUtils, 'Text0cee7g');
+            expectElementToBeHidden(testingUtils, 'Radiobuttons03rkbo');
 
             typeIntoInput(testingUtils, '#Text0cee7g', 'Radio');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Radiobuttons03rkbo-container');
+            expectElementToBeVisible(testingUtils, 'Radiobuttons03rkbo');
         });
     });
 
@@ -588,8 +604,8 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#Text0vdi18');
-            expectElementToBeVisible(testingUtils, '#bananaforevah0k8gui');
+            expectElementToBeVisible(testingUtils, 'Text0vdi18');
+            expectElementToBeVisible(testingUtils, 'bananaforevah0k8gui');
         });
 
         it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
@@ -597,11 +613,11 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-bananaforevah0k8gui-container');
+            expectElementToBeHidden(testingUtils, 'bananaforevah0k8gui');
             typeIntoInput(testingUtils, '#Text0vdi18', 'no');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-bananaforevah0k8gui-container');
+            expectElementToBeVisible(testingUtils, 'bananaforevah0k8gui');
         });
     });
 
@@ -642,15 +658,15 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text0id3ic-container');
-            expectElementToBeVisible(testingUtils, '#field-Number0yggl7-container');
-            expectElementToBeHidden(testingUtils, '#field-Amount0kceqc-container');
+            expectElementToBeVisible(testingUtils, 'Text0id3ic');
+            expectElementToBeVisible(testingUtils, 'Number0yggl7');
+            expectElementToBeHidden(testingUtils, 'Amount0kceqc');
 
             typeIntoInput(testingUtils, '#Text0id3ic', 'text1');
             typeIntoInput(testingUtils, '#Number0yggl7', '77');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Amount0kceqc-container');
+            expectElementToBeVisible(testingUtils, 'Amount0kceqc');
         });
     });
 
@@ -660,19 +676,19 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Checkbox0pr51m-container');
-            expectElementToBeVisible(testingUtils, '#field-Checkbox0fp0zf-container');
-            expectElementToBeHidden(testingUtils, '#field-Checkbox0lb7ze-container');
+            expectElementToBeVisible(testingUtils, 'Checkbox0pr51m');
+            expectElementToBeVisible(testingUtils, 'Checkbox0fp0zf');
+            expectElementToBeHidden(testingUtils, 'Checkbox0lb7ze');
 
             testingUtils.clickByCSS('#Checkbox0pr51m-input');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Checkbox0lb7ze-container');
+            expectElementToBeHidden(testingUtils, 'Checkbox0lb7ze');
 
             testingUtils.clickByCSS('#Checkbox0fp0zf-input');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Checkbox0lb7ze-container');
+            expectElementToBeVisible(testingUtils, 'Checkbox0lb7ze');
         });
     });
 
@@ -682,18 +698,18 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text-container');
-            expectElementToBeVisible(testingUtils, '#field-MultilineTextId-container');
+            expectElementToBeVisible(testingUtils, 'Text');
+            expectElementToBeVisible(testingUtils, 'MultilineTextId');
 
             typeIntoInput(testingUtils, '#Text', 'textwrong');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-MultilineTextId-container');
+            expectElementToBeHidden(testingUtils, 'MultilineTextId');
 
             typeIntoInput(testingUtils, '#Text', 'text');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-MultilineTextId-container');
+            expectElementToBeVisible(testingUtils, 'MultilineTextId');
         });
     });
 
@@ -703,18 +719,18 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text0tzu53-container');
-            expectElementToBeHidden(testingUtils, '#field-Displaytext0q4w02-container');
+            expectElementToBeVisible(testingUtils, 'Text0tzu53');
+            expectElementToBeHidden(testingUtils, 'Displaytext0q4w02');
 
             typeIntoInput(testingUtils, '#Text0tzu53', 'aaa-value');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Displaytext0q4w02-container');
+            expectElementToBeVisible(testingUtils, 'Displaytext0q4w02');
 
             typeIntoInput(testingUtils, '#Text0tzu53', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Displaytext0q4w02-container');
+            expectElementToBeHidden(testingUtils, 'Displaytext0q4w02');
         });
 
         it('[C309870] - Should be able to see Display text widget when visibility condition refers to another field and form variable', async () => {
@@ -722,18 +738,18 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expectElementToBeVisible(testingUtils, '#field-Text0tzu53-container');
-            expectElementToBeHidden(testingUtils, '#field-Displaytext8bac2e-container');
+            expectElementToBeVisible(testingUtils, 'Text0tzu53');
+            expectElementToBeHidden(testingUtils, 'Displaytext8bac2e');
 
             typeIntoInput(testingUtils, '#Text0tzu53', 'aaa-variable');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, '#field-Displaytext8bac2e-container');
+            expectElementToBeVisible(testingUtils, 'Displaytext8bac2e');
 
             typeIntoInput(testingUtils, '#Text0tzu53', 'bbb');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, '#field-Displaytext8bac2e-container');
+            expectElementToBeHidden(testingUtils, 'Displaytext8bac2e');
         });
     });
 
@@ -748,6 +764,7 @@ describe('Form Renderer Component', () => {
         });
     });
 
+
     describe('Display navigation buttons for multi-tab forms', () => {
         it('should be able to display the navigation buttons for multi-tab forms', async () => {
             formRendererComponent.formDefinition = formService.parseForm(displayMultiTabsForm.formRepresentation.formDefinition);
@@ -761,6 +778,36 @@ describe('Form Renderer Component', () => {
             expect(fixture.componentInstance.tabCounts()).toBe(2);
             expect(nextButton).toBeTruthy();
             expect(previousButton).toBeTruthy();
+        });
+    });
+  
+    describe('Section', () => {
+        it('should be able to set visibility conditions for Section with fields', () => {
+            const formDefinition = new FormModel(mockSectionVisibilityForm);
+            const sectionIdSelector = '48e6bfed-b477-4641-86cb-bfa70229a31e';
+            const mockTextDisplaySectionId = 'Text0n9o62';
+            const mockTestDisplaySectionFieldId = 'Text0nu6os';
+            const mockSectionFieldId = 'Text0t23xu';
+
+            fixture.componentRef.setInput('formDefinition', formDefinition);
+            fixture.detectChanges();
+
+            expectElementToBeVisible(testingUtils, mockTestDisplaySectionFieldId);
+            expectElementToBeVisible(testingUtils, mockTextDisplaySectionId);
+
+            expectElementToBeHidden(testingUtils, sectionIdSelector);
+            expectElementToBeHidden(testingUtils, mockSectionFieldId);
+
+            typeIntoInput(testingUtils, `#${mockTextDisplaySectionId}`, 'section');
+            fixture.detectChanges();
+
+            expectElementToBeVisible(testingUtils, sectionIdSelector, 'flex');
+
+            typeIntoInput(testingUtils, `#${mockTestDisplaySectionFieldId}`, 'section text');
+            fixture.detectChanges();
+
+            expectElementToBeVisible(testingUtils, mockSectionFieldId);
+
         });
     });
 });

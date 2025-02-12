@@ -16,7 +16,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { Component, Inject, OnInit, Optional, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Inject, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives';
 import { MatButtonModule } from '@angular/material/button';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-folder-dialog',
@@ -93,6 +94,8 @@ export class FolderDialogComponent implements OnInit {
         };
     }
 
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
@@ -132,6 +135,8 @@ export class FolderDialogComponent implements OnInit {
             title: [title],
             description: [description]
         });
+
+        this.form.controls['name'].valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.disableSubmitButton = false));
     }
 
     submit() {
