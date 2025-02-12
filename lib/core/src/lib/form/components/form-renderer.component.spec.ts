@@ -749,7 +749,7 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Display navigation buttons for multi-tab forms', () => {
-        it('dhould be able to display the navigation buttons for multi-tab forms', async () => {
+        it('should be able to display the navigation buttons for multi-tab forms', async () => {
             formRendererComponent.formDefinition = formService.parseForm(displayMultiTabsForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
