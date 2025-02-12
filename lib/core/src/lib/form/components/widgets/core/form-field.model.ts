@@ -282,30 +282,34 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private containerFactory(json: any, form: any): void {
-        this.numberOfColumns = json.numberOfColumns || 1;
-
-        this.fields = json.fields;
-
+        const { numberOfColumns = 1, fields = {} } = json;
+        this.numberOfColumns = numberOfColumns;
+        this.fields = fields;
         this.rowspan = 1;
         this.colspan = 1;
 
-        if (json.fields) {
-            for (const currentField in json.fields) {
-                if (Object.prototype.hasOwnProperty.call(json.fields, currentField)) {
-                    const col = new ContainerColumnModel();
-
-                    col.fields = (json.fields[currentField] || []).map((field) => new FormFieldModel(form, field));
-                    col.rowspan = json.fields[currentField].length;
-
-                    col.fields.forEach((colFields: any) => {
-                        this.colspan = colFields.colspan > this.colspan ? colFields.colspan : this.colspan;
-                    });
-
-                    this.rowspan = this.rowspan < col.rowspan ? col.rowspan : this.rowspan;
-                    this.columns.push(col);
-                }
+        Object.keys(fields).forEach((currentField) => {
+            if (!Object.prototype.hasOwnProperty.call(fields, currentField)) {
+                return;
             }
-        }
+
+            const col = new ContainerColumnModel();
+            col.fields = (fields[currentField] || []).map((field: any) => new FormFieldModel(form, field));
+            col.rowspan = fields[currentField].length;
+
+            if (!FormFieldTypes.isSectionType(this.type)) {
+                this.updateContainerColspan(col.fields);
+            }
+
+            this.rowspan = Math.max(this.rowspan, col.rowspan);
+            this.columns.push(col);
+        });
+    }
+
+    private updateContainerColspan(fields: FormFieldModel[]): void {
+        fields.forEach((colField: FormFieldModel) => {
+            this.colspan = Math.max(this.colspan, colField.colspan);
+        });
     }
 
     parseValue(json: any): any {

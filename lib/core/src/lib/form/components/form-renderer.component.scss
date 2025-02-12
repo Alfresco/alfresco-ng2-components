@@ -14,39 +14,37 @@
 }
 
 .adf-container-widget {
-    .adf-grid-list-column-view {
-        @include layout-bp(lt-md) {
-            display: flow;
-        }
-
-        display: flex;
-        align-items: flex-start;
-        margin-right: -1%;
-    }
-
-    .adf-grid-list-single-column {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        flex: 1 1 auto;
-    }
-
-    .adf-grid-list-column-view-item {
-        width: 100%;
-        flex-grow: 1;
-        box-sizing: border-box;
-        padding-left: 1%;
-        padding-right: 1%;
-    }
-
     .adf-grid-list {
         display: grid;
-    }
 
-    .adf-grid-list-item {
-        box-sizing: border-box;
-        padding-left: 3px;
-        padding-right: 3px;
+        &-column-view {
+            @include layout-bp(lt-md) {
+                display: flow;
+            }
+
+            display: flex;
+            margin-right: -1%;
+
+            &-item {
+                width: 100%;
+                flex-grow: 1;
+                box-sizing: border-box;
+                padding-left: 1%;
+                padding-right: 1%;
+            }
+        }
+
+        &-single-column {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+        }
+
+        &-item {
+            box-sizing: border-box;
+            padding-left: 3px;
+            padding-right: 3px;
+        }
     }
 
     @include layout-bp(lt-md) {

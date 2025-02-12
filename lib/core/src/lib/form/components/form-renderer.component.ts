@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet, UpperCasePipe } from '@angular/common';
+import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,8 +28,8 @@ import { FormService } from '../services/form.service';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
 import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
-import { FieldStylePipe } from '../pipes/field-style.pipe';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
+import { FormSectionComponent } from './form-section/form-section.component';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -56,10 +56,9 @@ import { HeaderWidgetComponent } from './widgets/header/header.widget';
         MatSlideToggleModule,
         FormsModule,
         JsonPipe,
-        UpperCasePipe,
-        FieldStylePipe,
         NgClass,
-        HeaderWidgetComponent
+        HeaderWidgetComponent,
+        FormSectionComponent
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -166,9 +165,10 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
      * @param container container model
      * @returns the column width for the given model
      */
-    getColumnWith(container: ContainerModel): string {
-        const colspan = container ? container.field.colspan : 1;
-        return (100 / container.field.numberOfColumns) * colspan + '';
+    getColumnWidth(container: ContainerModel): string {
+        const { field } = container;
+        const colspan = field ? field.colspan : 1;
+        return (100 / field.numberOfColumns) * colspan + '';
     }
 
     private runMiddlewareServices(): void {
