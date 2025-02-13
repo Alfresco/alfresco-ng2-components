@@ -16,9 +16,11 @@
  */
 
 import { Injectable, Type } from '@angular/core';
+import { MatMenuItem } from '@angular/material/menu';
 
 export interface ExtensionComponent {
     data: any;
+    menuItem?: MatMenuItem;
 }
 
 @Injectable({ providedIn: 'root' })

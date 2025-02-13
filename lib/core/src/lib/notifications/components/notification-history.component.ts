@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
@@ -119,16 +109,6 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
 
     onMenuOpened() {
         this.createPagination();
-    }
-
-    onKeyPress(event: KeyboardEvent) {
-        this.closeUserModal(event);
-    }
-
-    private closeUserModal($event: KeyboardEvent) {
-        if ($event.keyCode === 27) {
-            this.trigger.closeMenu();
-        }
     }
 
     markAsRead() {

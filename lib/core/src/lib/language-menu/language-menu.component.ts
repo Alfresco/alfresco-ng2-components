@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, QueryList, ViewChildren } from '@angular/core';
 import { LanguageService } from './service/language.service';
 import { Observable } from 'rxjs';
 import { LanguageItem } from '../common/services/language-item.interface';
 import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-language-menu',
@@ -36,6 +36,9 @@ export class LanguageMenuComponent {
     /** Emitted when the language change */
     @Output()
     changedLanguage: EventEmitter<LanguageItem> = new EventEmitter<LanguageItem>();
+
+    @ViewChildren(MatMenuItem)
+    menuItem: QueryList<MatMenuItem>;
 
     languages$: Observable<LanguageItem[]>;
 

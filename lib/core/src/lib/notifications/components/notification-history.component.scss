@@ -3,34 +3,10 @@
 $notification-item-height: 72px;
 
 .adf {
-    &-notification-history-container {
-        margin-top: 1px;
-    }
-
     &-notification-history-list {
-        .adf-notification-history-menu-item-content-wrapper {
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-
         /* stylelint-disable selector-class-pattern */
         .mdc-list-item__secondary-text::before {
             height: auto;
-        }
-    }
-
-    &-notification-history-menu-item-content {
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        overflow: hidden;
-        padding: 0 0 0 16px;
-
-        p {
-            line-height: 16px;
-            margin-bottom: 0;
-            color: var(--theme-sidenav-user-menu-color);
         }
     }
 
@@ -44,6 +20,7 @@ $notification-item-height: 72px;
         padding: 0;
         min-width: 40px;
         height: 40px;
+        margin-top: 1px;
 
         .adf-notification-history-menu_button-icon {
             margin-right: 0;
@@ -54,18 +31,67 @@ $notification-item-height: 72px;
         }
     }
 
-    &-notification-history-list #{$mat-subheader} {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
     &-notification-history-menu:has(.adf-notification-history-list) {
-        .adf-notification-history-menu-item {
-            cursor: pointer;
-            height: $notification-item-height;
+        .adf-notification-history-list-header {
+            padding: 10.5px 16px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding-left: 16px;
+        }
+
+        .adf-notification-history-menu-title {
+            line-height: 28px;
+        }
+
+        .adf-notification-history-mark-as-read {
+            display: flex;
+            padding: 10px;
+            width: auto;
+            margin: 4px 0;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: none;
+            }
+
+            #{$mat-icon} {
+                margin: 0;
+                color: inherit;
+            }
+        }
+
+        .adf-notification-history-item-list {
+            padding-top: 8px;
+
+            .adf-notification-history-menu-item {
+                cursor: pointer;
+                height: $notification-item-height;
+                align-items: center;
+                display: block;
+                padding: 0 14px;
+
+                &-content {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+
+                    &-message {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        box-sizing: border-box;
+                        overflow: hidden;
+                        padding: 0 0 0 16px;
+
+                        p {
+                            line-height: normal;
+                            margin: 0;
+                            color: var(--theme-sidenav-user-menu-color);
+                        }
+                    }
+                }
+            }
         }
 
         .adf-notification-history-menu-item:focus {
@@ -79,18 +105,23 @@ $notification-item-height: 72px;
 
         .adf-notification-history-menu-message:is(p),
         .adf-notification-history-menu-no-message:is(p) {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             font-size: var(--theme-body-1-font-size);
         }
 
         .adf-notification-history-menu-no-message-text {
             font-size: 16px;
             color: var(--theme-sidenav-user-menu-color);
-            margin-bottom: 0;
+            margin: 0;
+            padding: 12px 16px;
             -webkit-font-smoothing: subpixel-antialiased;
         }
 
         .adf-notification-history-menu-date.adf-notification-history-menu-text:is(p) {
             font-size: var(--theme-caption-font-size);
+            text-indent: 3px;
         }
 
         .adf-notification-history-menu-initiator {
@@ -119,12 +150,10 @@ $notification-item-height: 72px;
         padding: 10px;
 
         button {
+            justify-content: center;
             width: 100%;
+            min-height: 36px;
         }
-    }
-
-    &-notification-history-mark-as-read {
-        margin: 4px 0;
     }
 }
 
@@ -134,18 +163,5 @@ $notification-item-height: 72px;
 
     #{$mat-menu-content} {
         padding: 0;
-
-        #{$mat-list} {
-            padding: 8px 0 0;
-
-            #{$mat-list-item-unscoped-content} {
-                display: flex;
-            }
-
-            #{$mat-list-item-content} {
-                display: flex;
-                align-items: center;
-            }
-        }
     }
 }
