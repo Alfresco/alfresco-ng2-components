@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import ee from 'event-emitter';
 import { AlfrescoApiClient } from '../alfrescoApiClient';
 import { AlfrescoApiConfig } from '../alfrescoApiConfig';
 import { Authentication } from './authentication';
@@ -587,7 +586,17 @@ export class Oauth2Auth extends AlfrescoApiClient {
         const contentTypes = ['application/x-www-form-urlencoded'];
         const accepts = ['application/json'];
 
-        const promise = this.callCustomApi(this.discovery.tokenEndpoint, 'POST', {}, {}, headerParams, formParams, {}, contentTypes, accepts).then(
+        const promise: any = this.callCustomApi(
+            this.discovery.tokenEndpoint,
+            'POST',
+            {},
+            {},
+            headerParams,
+            formParams,
+            {},
+            contentTypes,
+            accepts
+        ).then(
             (data: any) => {
                 this.saveUsername(username);
                 this.silentRefresh();
@@ -604,7 +613,9 @@ export class Oauth2Auth extends AlfrescoApiClient {
             }
         );
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
     }
 
     pollingRefreshToken() {
@@ -638,7 +649,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
         const contentTypes = ['application/x-www-form-urlencoded'];
         const accepts = ['application/json'];
 
-        const promise = new Promise((resolve, reject) => {
+        const promise: any = new Promise((resolve, reject) => {
             this.callCustomApi(this.discovery.tokenEndpoint, 'POST', {}, {}, headerParams, formParams, {}, contentTypes, accepts).then(
                 (data: any) => {
                     this.setToken(data.access_token, data.refresh_token);
@@ -654,7 +665,9 @@ export class Oauth2Auth extends AlfrescoApiClient {
             );
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
 
         return promise;
     }

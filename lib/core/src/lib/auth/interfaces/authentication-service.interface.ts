@@ -16,19 +16,18 @@
  */
 
 import { HttpHeaders } from '@angular/common/http';
-import ee from 'event-emitter';
 import { Observable } from 'rxjs';
+import mitt from 'mitt';
 
+const events = mitt();
 export interface AuthenticationServiceInterface {
-
     onError: any;
     onLogin: any;
     onLogout: any;
 
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    emit: (type: string, ...args: any[]) => void;
+    on: typeof events.on;
+    off: typeof events.off;
+    emit: typeof events.emit;
 
     getToken(): string;
 

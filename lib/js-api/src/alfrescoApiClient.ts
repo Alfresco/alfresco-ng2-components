@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import ee from 'event-emitter';
 import { AlfrescoApiConfig } from './alfrescoApiConfig';
 import { Authentication } from './authentication/authentication';
 import { SuperagentHttpClient } from './superagentHttpClient';
 import { Emitters, HttpClient, LegacyHttpClient, RequestOptions, SecurityOptions } from './api-clients/http-client.interface';
 import { paramToString } from './utils';
 import { Storage } from './storage';
+import mitt from 'mitt';
+const events = mitt();
 
 declare const Buffer: any;
 
 export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    emit: (type: string, ...args: any[]) => void;
+    on: typeof events.on;
+    off: typeof events.off;
+    emit: typeof events.emit;
     abort?: () => void;
 };
 
@@ -62,11 +62,10 @@ export function buildCollectionParam(param: string[], collectionFormat: string):
     }
 }
 
-export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    emit: (type: string, ...args: any[]) => void;
+export class AlfrescoApiClient implements LegacyHttpClient {
+    on = events.on;
+    off = events.off;
+    emit = events.emit;
 
     storage: Storage;
     host: string;
@@ -110,8 +109,6 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
         // fallback for backward compatibility
         this.httpClient = httpClient || new SuperagentHttpClient();
-
-        ee(this);
     }
 
     request<T = any>(options: RequestOptions): Promise<T> {
@@ -302,7 +299,7 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
         const httpRequestOptions = this.getRequestOptionsWithAcceptAndContentType(options);
         const promise = httpCall(url, httpRequestOptions, security, emitters);
 
-        return this.addPromiseListeners(promise, emitters.eventEmitter);
+        return this.addPromiseListeners(promise, emitters);
     }
 
     private getSecurityOptions(): SecurityOptions {
@@ -316,16 +313,9 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
     }
 
     private getEventEmitters(): Emitters {
-        const apiClientEmitter = {
-            on: this.on.bind(this),
-            off: this.off.bind(this),
-            once: this.once.bind(this),
-            emit: this.emit.bind(this)
-        };
-
         return {
-            apiClientEmitter,
-            eventEmitter: ee({})
+            apiClientEmitter: events,
+            eventEmitter: events
         };
     }
 
@@ -374,16 +364,11 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: ee.Emitter): AlfrescoApiClientPromise<T> {
+    private addPromiseListeners<T = any>(promise: Promise<T>, { eventEmitter }: Emitters): AlfrescoApiClientPromise<T> {
         return Object.assign(promise, {
             on() {
                 // eslint-disable-next-line prefer-spread,prefer-rest-params
                 eventEmitter.on.apply(eventEmitter, arguments);
-                return this;
-            },
-            once() {
-                // eslint-disable-next-line prefer-spread,prefer-rest-params
-                eventEmitter.once.apply(eventEmitter, arguments);
                 return this;
             },
             emit() {

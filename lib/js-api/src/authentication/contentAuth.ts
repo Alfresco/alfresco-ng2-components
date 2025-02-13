@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import ee from 'event-emitter';
 import { AuthenticationApi, TicketBody } from '../api/auth-rest-api';
 import { AlfrescoApiClient } from '../alfrescoApiClient';
 import { AlfrescoApiConfig } from '../alfrescoApiConfig';
@@ -104,7 +103,10 @@ export class ContentAuth extends AlfrescoApiClient {
                 });
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 
@@ -133,7 +135,10 @@ export class ContentAuth extends AlfrescoApiClient {
             );
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 
@@ -160,7 +165,10 @@ export class ContentAuth extends AlfrescoApiClient {
             );
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 

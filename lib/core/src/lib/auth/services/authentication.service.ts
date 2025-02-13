@@ -21,13 +21,11 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 import { Observable, Subject, from } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
-import ee from 'event-emitter';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
+export class AuthenticationService implements AuthenticationServiceInterface {
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
     onTokenReceived: Subject<any> = new Subject<any>();
@@ -46,19 +44,15 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    get on(): ee.EmitterMethod {
+    get on() {
         return this.isOauth() ? this.oidcAuthenticationService.on : this.basicAlfrescoAuthService.on;
     }
 
-    get off(): ee.EmitterMethod {
+    get off() {
         return this.isOauth() ? this.oidcAuthenticationService.off : this.basicAlfrescoAuthService.off;
     }
 
-    get once(): ee.EmitterMethod {
-        return this.isOauth() ? this.oidcAuthenticationService.once : this.basicAlfrescoAuthService.once;
-    }
-
-    get emit(): (type: string, ...args: any[]) => void {
+    get emit() {
         return this.isOauth() ? this.oidcAuthenticationService.emit : this.basicAlfrescoAuthService.emit;
     }
 

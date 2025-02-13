@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import ee from 'event-emitter';
 import { AlfrescoApiClient, AlfrescoApiClientPromise } from '../alfrescoApiClient';
 import { AlfrescoApiConfig } from '../alfrescoApiConfig';
 import { Authentication } from './authentication';
@@ -123,7 +122,10 @@ export class ProcessAuth extends AlfrescoApiClient {
             );
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 
@@ -154,7 +156,10 @@ export class ProcessAuth extends AlfrescoApiClient {
             );
         });
 
-        ee(promise);
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 

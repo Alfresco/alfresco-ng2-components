@@ -34,23 +34,17 @@ import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encod
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
-import ee, { Emitter } from 'event-emitter';
-
-export interface Emitters {
-    readonly eventEmitter: Emitter;
-    readonly apiClientEmitter: Emitter;
-}
+import mitt from 'mitt';
+const events = mitt();
 
 @Injectable({
     providedIn: 'root'
 })
-export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
+export class AdfHttpClient implements JsApiHttpClient {
+    on = events.on;
+    off = events.off;
+    emit = events.emit;
     _disableCsrf: boolean;
-
-    emit: (type: string, ...args: any[]) => void;
 
     get disableCsrf(): boolean {
         return this._disableCsrf;
@@ -67,9 +61,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         defaultHeaders: {}
     };
 
-    constructor(private httpClient: HttpClient) {
-        ee(this);
-    }
+    constructor(private httpClient: HttpClient) {}
 
     setDefaultSecurityOption(options: any) {
         this.defaultSecurityOptions = this.merge(this.defaultSecurityOptions, options);
@@ -141,11 +133,6 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
                 eventEmitter.on.apply(eventEmitter, arguments);
                 return this;
             },
-            once() {
-                // eslint-disable-next-line prefer-spread, prefer-rest-params
-                eventEmitter.once.apply(eventEmitter, arguments);
-                return this;
-            },
             emit() {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.emit.apply(eventEmitter, arguments);
@@ -161,17 +148,10 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         return eventPromise;
     }
 
-    private getEventEmitters(): Emitters {
-        const apiClientEmitter = {
-            on: this.on.bind(this),
-            off: this.off.bind(this),
-            once: this.once.bind(this),
-            emit: this.emit.bind(this)
-        };
-
+    private getEventEmitters(): JsApiEmitters {
         return {
-            apiClientEmitter,
-            eventEmitter: ee({})
+            apiClientEmitter: events,
+            eventEmitter: events
         };
     }
 

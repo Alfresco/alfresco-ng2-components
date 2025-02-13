@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import ee, { EmitterMethod, Emitter } from 'event-emitter';
 import { ContentAuth } from './authentication/contentAuth';
 import { ProcessAuth } from './authentication/processAuth';
 import { Oauth2Auth } from './authentication/oauth2Auth';
@@ -26,8 +25,10 @@ import { AlfrescoApiConfig } from './alfrescoApiConfig';
 import { Authentication } from './authentication/authentication';
 import { AlfrescoApiType } from './to-deprecate/alfresco-api-type';
 import { HttpClient } from './api-clients/http-client.interface';
+import mitt from 'mitt';
+const events = mitt();
 
-export class AlfrescoApi implements Emitter, AlfrescoApiType {
+export class AlfrescoApi implements AlfrescoApiType {
     __type = 'legacy-client';
     storage: Storage;
     config: AlfrescoApiConfig;
@@ -43,19 +44,15 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
     processAuth: ProcessAuth;
     contentAuth: ContentAuth;
 
-    on: EmitterMethod;
-    off: EmitterMethod;
-    once: EmitterMethod;
+    on = events.on;
+    off = events.off;
+    emit = events.emit;
 
     bufferEvents: string[] = [];
-
-    emit: (type: string, ...args: any[]) => void;
 
     username: string;
 
     constructor(config?: AlfrescoApiConfig, public httpClient?: HttpClient) {
-        ee(this);
-
         if (config) {
             this.setConfig(config);
         }
@@ -415,7 +412,10 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
             );
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 
@@ -470,7 +470,10 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
             );
         });
 
-        ee(promise); // jshint ignore:line
+        promise.on = this.on;
+        promise.off = this.off;
+        promise.emit = this.emit;
+
         return promise;
     }
 

@@ -16,7 +16,7 @@
  */
 
 import { Authentication } from '../authentication/authentication';
-import { Emitter } from 'event-emitter';
+import { Emitter, EventType } from 'mitt';
 
 export interface RequestOptions {
     path: string;
@@ -93,8 +93,8 @@ export interface SecurityOptions {
 }
 
 export interface Emitters {
-    readonly eventEmitter: Emitter;
-    readonly apiClientEmitter: Emitter;
+    readonly eventEmitter: Emitter<Record<EventType, unknown>>;
+    readonly apiClientEmitter: Emitter<Record<EventType, unknown>>;
 }
 
 export interface HttpClient {
