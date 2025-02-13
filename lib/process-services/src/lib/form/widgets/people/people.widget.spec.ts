@@ -253,6 +253,20 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.selectedUsers).toEqual([selectedUser]);
     });
 
+    it('should set default value to field value if field can have multiple values', () => {
+        widget.field.params.multiple = true;
+
+        widget.ngOnInit();
+        expect(widget.field.value).toEqual([]);
+    });
+
+    it('should not set default value to field value if field can not have multiple values', () => {
+        widget.field.params.multiple = false;
+
+        widget.ngOnInit();
+        expect(widget.field.value).toBeUndefined();
+    });
+
     describe('when is required', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {

@@ -1,5 +1,16 @@
 .adf {
     &-group-widget {
         width: 100%;
+
+        .adf-group-widget-field {
+            .adf-group-widget-field-chip {
+                border: 1px solid var(--adf-chip-border-color);
+                border-radius: 10px;
+                background-color: var(--theme-primary-color-default-contrast);
+                height: auto;
+                word-break: break-word;
+                padding: 4px 0;
+            }
+        }
     }
 }

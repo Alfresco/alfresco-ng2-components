@@ -16,10 +16,14 @@
  */
 
 import { of, timer } from 'rxjs';
-import { FormFieldModel, FormModel, GroupModel, CoreTestingModule, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, GroupModel, CoreTestingModule, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleProcessService } from '../../../services/people-process.service';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatChipRowHarness } from '@angular/material/chips/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;
@@ -27,6 +31,9 @@ describe('FunctionalGroupWidgetComponent', () => {
     let peopleProcessService: PeopleProcessService;
     let getWorkflowGroupsSpy: jasmine.Spy;
     let element: HTMLElement;
+    let loader: HarnessLoader;
+    let unitTestingUtils: UnitTestingUtils;
+
     const groups: GroupModel[] = [
         { id: '1', name: 'group 1' },
         { id: '2', name: 'group 2' }
@@ -41,6 +48,8 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         fixture = TestBed.createComponent(FunctionalGroupWidgetComponent);
         component = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component.field = new FormFieldModel(new FormModel());
         element = fixture.nativeElement;
         fixture.detectChanges();
@@ -102,7 +111,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         component.updateOption(groups[1]);
 
-        expect(component.field.value).toBe(groups[1]);
+        expect(component.field.value).toEqual(groups[1]);
     });
 
     it('should fetch groups and show popup on key up', async () => {
@@ -171,6 +180,145 @@ describe('FunctionalGroupWidgetComponent', () => {
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
+        });
+    });
+
+    describe('Groups chips', () => {
+        beforeEach(() => {
+            component.field.value = groups;
+            component.ngOnInit();
+        });
+
+        it('should display chip for each selected group', async () => {
+            fixture.detectChanges();
+            expect(await loader.getAllHarnesses(MatChipRowHarness)).toHaveSize(2);
+        });
+
+        it('should disable chips based on field readOnly property', async () => {
+            component.field.readOnly = true;
+
+            fixture.detectChanges();
+            expect((await loader.getAllHarnesses(MatChipRowHarness)).every((chip) => chip.isDisabled())).toBeTrue();
+        });
+
+        it('should display correct group name for each chip', async () => {
+            fixture.detectChanges();
+            const chips = await loader.getAllHarnesses(MatChipRowHarness);
+            expect(await chips[0].getText()).toBe('group 1');
+            expect(await chips[1].getText()).toBe('group 2');
+        });
+
+        it('should allow to remove chips', async () => {
+            fixture.detectChanges();
+            const chips = await loader.getAllHarnesses(MatChipRowHarness);
+
+            await chips[0].remove();
+            const chipsAfterRemoving = await loader.getAllHarnesses(MatChipRowHarness);
+            expect(component.field.value).toEqual([groups[1]]);
+            expect(chipsAfterRemoving).toHaveSize(1);
+            expect(await chipsAfterRemoving[0].getText()).toBe('group 2');
+        });
+    });
+
+    describe('Groups input', () => {
+        const getInputElement = (): HTMLInputElement => unitTestingUtils.getByDataAutomationId('adf-group-search-input').nativeElement;
+
+        it('should disable input if multiple property of params is false, some group is selected and field is not readOnly', () => {
+            component.field.params.multiple = false;
+            component.field.value = [groups[0]];
+            component.field.readOnly = false;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeTrue();
+        });
+
+        it('should enable input if multiple property of params is false, none group is selected and field is not readOnly', () => {
+            component.field.params.multiple = false;
+            component.field.value = [];
+            component.field.readOnly = false;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeFalse();
+        });
+
+        it('should enable input if multiple property of params is true, none group is selected and field is not readOnly', () => {
+            component.field.params.multiple = true;
+            component.field.value = [];
+            component.field.readOnly = false;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeFalse();
+        });
+
+        it('should enable input if multiple property of params is true, some group is selected and field is not readOnly', () => {
+            component.field.params.multiple = true;
+            component.field.value = [groups[0]];
+            component.field.readOnly = false;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeFalse();
+        });
+
+        it('should disable input if multiple property of params is false, some group is selected and field is readOnly', () => {
+            component.field.params.multiple = false;
+            component.field.value = [groups[0]];
+            component.field.readOnly = true;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeTrue();
+        });
+
+        it('should disable input if multiple property of params is false, none group is selected and field is readOnly', () => {
+            component.field.params.multiple = false;
+            component.field.value = [];
+            component.field.readOnly = true;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeTrue();
+        });
+
+        it('should disable input if multiple property of params is true, none group is selected and field is readOnly', () => {
+            component.field.params.multiple = true;
+            component.field.value = [];
+            component.field.readOnly = true;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeTrue();
+        });
+
+        it('should disable input if multiple property of params is true, some group is selected and field is readOnly', () => {
+            component.field.params.multiple = true;
+            component.field.value = [groups[0]];
+            component.field.readOnly = true;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            expect(getInputElement().disabled).toBeTrue();
+        });
+    });
+
+    describe('Autocomplete options', () => {
+        it('should have disabled already selected groups', async () => {
+            component.field.params.multiple = true;
+            component.ngOnInit();
+            getWorkflowGroupsSpy.and.returnValue(of(groups));
+            await typeIntoInput('group');
+            const autocompleteHarness = await loader.getHarness(MatAutocompleteHarness);
+            await autocompleteHarness.selectOption({
+                text: groups[0].name
+            });
+
+            await typeIntoInput('group');
+            const options = await autocompleteHarness.getOptions();
+            expect(await options[0].isDisabled()).toBeTrue();
+            expect(await options[1].isDisabled()).toBeFalse();
         });
     });
 });

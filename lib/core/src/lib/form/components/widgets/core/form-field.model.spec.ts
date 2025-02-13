@@ -221,6 +221,40 @@ describe('FormFieldModel', () => {
             expect(field.hasEmptyValue).toBe(false);
         });
 
+        it('should detect multiple values when multiple property of params is true', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [
+                    { id: 'fake-option-1', name: 'fake label 1' },
+                    { id: 'fake-option-2', name: 'fake label 2' },
+                    { id: 'fake-option-3', name: 'fake label 3' }
+                ],
+                value: [],
+                params: {
+                    multiple: true
+                }
+            });
+
+            expect(field.hasMultipleValues).toBeTrue();
+        });
+
+        it('should not detect multiple values when multiple property of params is false', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [
+                    { id: 'fake-option-1', name: 'fake label 1' },
+                    { id: 'fake-option-2', name: 'fake label 2' },
+                    { id: 'fake-option-3', name: 'fake label 3' }
+                ],
+                value: [],
+                params: {
+                    multiple: false
+                }
+            });
+
+            expect(field.hasMultipleValues).toBeFalse();
+        });
+
         describe('should leave not resolved value (in case of delayed options)', () => {
             it('when string', () => {
                 const field = new FormFieldModel(new FormModel(), {

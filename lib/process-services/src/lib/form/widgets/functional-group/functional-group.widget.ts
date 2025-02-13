@@ -17,9 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ErrorWidgetComponent, FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
-import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { PeopleProcessService } from '../../../services/people-process.service';
@@ -28,11 +28,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'functional-group-widget',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, ReactiveFormsModule, MatAutocompleteModule, ErrorWidgetComponent],
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        TranslateModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        ErrorWidgetComponent,
+        MatChipsModule,
+        MatIconModule
+    ],
     templateUrl: './functional-group.widget.html',
     styleUrls: ['./functional-group.widget.scss'],
     host: {
@@ -53,16 +65,25 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
     groupId: string;
     searchTerm = new UntypedFormControl();
     groups$ = merge(this.searchTerm.valueChanges).pipe(
+        distinctUntilChanged(),
         tap((search: GroupModel | string) => {
             const isValid = typeof search !== 'string';
             const empty = search === '';
-            this.updateOption(isValid ? (search as GroupModel) : null);
             this.validateGroup(isValid, empty);
         }),
-        filter((group: string | GroupModel) => typeof group === 'string' && group.length >= this.minTermLength),
         debounceTime(300),
-        switchMap((searchTerm: string) => this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId).pipe(catchError(() => of([]))))
+        switchMap((searchTerm) => {
+            if (typeof searchTerm !== 'string' || searchTerm.length < this.minTermLength) {
+                return of([]);
+            }
+            return this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId).pipe(catchError(() => of([])));
+        })
     );
+    selectedGroups: GroupModel[] = [];
+    multiSelect = false;
+
+    @ViewChild('inputValue', { static: true })
+    input: ElementRef;
 
     constructor(public peopleProcessService: PeopleProcessService, public formService: FormService, public elementRef: ElementRef) {
         super(formService);
@@ -70,6 +91,9 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
     ngOnInit() {
         if (this.field) {
+            if (this.field.value) {
+                Array.isArray(this.field.value) ? this.selectedGroups.push(...this.field.value) : this.selectedGroups.push(this.field.value);
+            }
             if (this.field.readOnly) {
                 this.searchTerm.disable();
             }
@@ -78,6 +102,10 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
             if (params?.restrictWithGroup) {
                 const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
+            }
+            if (params?.multiple) {
+                this.multiSelect = params.multiple;
+                this.field.value = this.selectedGroups;
             }
 
             if (this.field.value?.name) {
@@ -88,11 +116,22 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
     updateOption(option?: GroupModel) {
         if (option) {
-            this.field.value = option;
+            if (this.multiSelect) {
+                if (!this.isGroupAlreadySelected(option)) {
+                    this.field.value = this.selectedGroups;
+                } else {
+                    return;
+                }
+            } else {
+                this.field.value = option;
+            }
+            this.selectedGroups.push(option);
         } else {
             this.field.value = null;
         }
 
+        this.searchTerm.setValue('');
+        this.input.nativeElement.value = '';
         this.field.updateForm();
     }
 
@@ -116,5 +155,17 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
             return typeof model === 'string' ? model : model.name;
         }
         return '';
+    }
+
+    onRemove(group: GroupModel): void {
+        const index = this.selectedGroups.indexOf(group);
+        if (index >= 0) {
+            this.selectedGroups.splice(index, 1);
+            this.field.value = this.selectedGroups;
+        }
+    }
+
+    isGroupAlreadySelected(group: GroupModel): boolean {
+        return this.selectedGroups?.some((selectedGroup) => selectedGroup.id === group.id);
     }
 }
