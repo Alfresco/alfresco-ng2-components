@@ -3,13 +3,6 @@
 $notification-item-height: 72px;
 
 .adf {
-    &-notification-history-list {
-        /* stylelint-disable selector-class-pattern */
-        .mdc-list-item__secondary-text::before {
-            height: auto;
-        }
-    }
-
     &-notification-history-menu-title {
         font-size: 14px;
         -webkit-font-smoothing: subpixel-antialiased;
@@ -31,34 +24,34 @@ $notification-item-height: 72px;
         }
     }
 
-    &-notification-history-menu:has(.adf-notification-history-list) {
+    &-notification-history-menu {
         .adf-notification-history-list-header {
             padding: 10.5px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            .adf-notification-history-mark-as-read {
+                display: flex;
+                padding: 10px;
+                width: auto;
+                margin: 4px 0;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    background: none;
+                }
+
+                &-icon {
+                    margin: 0;
+                    color: inherit;
+                }
+            }
         }
 
         .adf-notification-history-menu-title {
             line-height: 28px;
-        }
-
-        .adf-notification-history-mark-as-read {
-            display: flex;
-            padding: 10px;
-            width: auto;
-            margin: 4px 0;
-
-            &:hover,
-            &:focus,
-            &:active {
-                background: none;
-            }
-
-            &-icon {
-                margin: 0;
-                color: inherit;
-            }
         }
 
         .adf-notification-history-item-list {
@@ -110,11 +103,12 @@ $notification-item-height: 72px;
             font-size: var(--theme-body-1-font-size);
         }
 
-        .adf-notification-history-menu-no-message-text {
+        .adf-notification-history-item-list .adf-notification-history-menu-no-message-text {
             color: var(--theme-sidenav-user-menu-color);
             margin: 0;
             padding: 12px 16px;
             opacity: inherit;
+            border: none;
 
             span {
                 font-size: 16px;
