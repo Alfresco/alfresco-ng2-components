@@ -23,7 +23,7 @@ import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuItem } from '@angular/material/menu';
-import { UnitTestingUtils } from '@alfresco/adf-core';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'test-component',
@@ -43,7 +43,6 @@ describe('DynamicExtensionComponent', () => {
     let fixture: ComponentFixture<DynamicExtensionComponent>;
     let componentRegister: ComponentRegisterService;
     let component: DynamicExtensionComponent;
-    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         componentRegister = new ComponentRegisterService();
@@ -60,7 +59,6 @@ describe('DynamicExtensionComponent', () => {
     describe('Sub-component creation', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
-            testingUtils = new UnitTestingUtils(fixture.debugElement);
             component = fixture.componentInstance;
             component.id = 'test-component';
             component.data = { foo: 'bar' };
@@ -75,11 +73,12 @@ describe('DynamicExtensionComponent', () => {
         });
 
         it('should load the TestComponent', () => {
-            expect(testingUtils.getByDataAutomationId('found-me')).not.toBeNull();
+            const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
+            expect(innerElement).not.toBeNull();
         });
 
         it('should pass through the data', () => {
-            const testComponent = testingUtils.getByDirective(TestComponent).componentInstance;
+            const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
 
             expect(testComponent.data).toBe(component.data);
         });
@@ -89,12 +88,12 @@ describe('DynamicExtensionComponent', () => {
 
             component.ngOnChanges({ data: new SimpleChange(component.data, data, false) });
 
-            const testComponent = testingUtils.getByDirective(TestComponent).componentInstance;
+            const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
             expect(testComponent.data).toBe(data);
         });
 
         it('should assign menuItem from dynamically generated component in ngAfterViewInit', () => {
-            const innerElement = testingUtils.getByDataAutomationId('found-me');
+            const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
             innerElement.componentInstance.menuItem = new MatMenuItem(null, null, null, null, null);
             component.ngAfterViewInit();
             expect(component.menuItem).toBeInstanceOf(MatMenuItem);
@@ -107,12 +106,11 @@ describe('DynamicExtensionComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
             component = fixture.componentInstance;
-            testingUtils = new UnitTestingUtils(fixture.debugElement);
             component.id = 'test-component';
 
             fixture.detectChanges();
             component.ngOnChanges({});
-            testComponent = testingUtils.getByDirective(TestComponent).componentInstance;
+            testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
         });
 
         afterEach(() => {
