@@ -19,15 +19,15 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import mitt from 'mitt';
 
-const events = mitt();
+const ee = mitt();
 export interface AuthenticationServiceInterface {
     onError: any;
     onLogin: any;
     onLogout: any;
 
-    on: typeof events.on;
-    off: typeof events.off;
-    emit: typeof events.emit;
+    on: typeof ee.on;
+    off: typeof ee.off;
+    emit: typeof ee.emit;
 
     getToken(): string;
 

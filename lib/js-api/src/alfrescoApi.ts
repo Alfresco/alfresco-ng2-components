@@ -26,7 +26,7 @@ import { Authentication } from './authentication/authentication';
 import { AlfrescoApiType } from './to-deprecate/alfresco-api-type';
 import { HttpClient } from './api-clients/http-client.interface';
 import mitt from 'mitt';
-const events = mitt();
+const ee = mitt();
 
 export class AlfrescoApi implements AlfrescoApiType {
     __type = 'legacy-client';
@@ -44,9 +44,9 @@ export class AlfrescoApi implements AlfrescoApiType {
     processAuth: ProcessAuth;
     contentAuth: ContentAuth;
 
-    on = events.on;
-    off = events.off;
-    emit = events.emit;
+    on = ee.on;
+    off = ee.off;
+    emit = ee.emit;
 
     bufferEvents: string[] = [];
 

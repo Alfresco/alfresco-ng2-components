@@ -22,12 +22,12 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { CookieService } from '../../common/services/cookie.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import mitt from 'mitt';
-const events = mitt();
+const ee = mitt();
 
 export abstract class BaseAuthenticationService implements AuthenticationServiceInterface {
-    on = events.on;
-    off = events.off;
-    emit = events.emit;
+    on = ee.on;
+    off = ee.off;
+    emit = ee.emit;
 
     protected redirectUrl: RedirectionModel = null;
 

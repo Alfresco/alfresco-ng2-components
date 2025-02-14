@@ -22,14 +22,14 @@ import { Emitters, HttpClient, LegacyHttpClient, RequestOptions, SecurityOptions
 import { paramToString } from './utils';
 import { Storage } from './storage';
 import mitt from 'mitt';
-const events = mitt();
+const ee = mitt();
 
 declare const Buffer: any;
 
 export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
-    on: typeof events.on;
-    off: typeof events.off;
-    emit: typeof events.emit;
+    on: typeof ee.on;
+    off: typeof ee.off;
+    emit: typeof ee.emit;
     abort?: () => void;
 };
 
@@ -63,9 +63,9 @@ export function buildCollectionParam(param: string[], collectionFormat: string):
 }
 
 export class AlfrescoApiClient implements LegacyHttpClient {
-    on = events.on;
-    off = events.off;
-    emit = events.emit;
+    on = ee.on;
+    off = ee.off;
+    emit = ee.emit;
 
     storage: Storage;
     host: string;
@@ -314,8 +314,8 @@ export class AlfrescoApiClient implements LegacyHttpClient {
 
     private getEventEmitters(): Emitters {
         return {
-            apiClientEmitter: events,
-            eventEmitter: events
+            apiClientEmitter: ee,
+            eventEmitter: ee
         };
     }
 

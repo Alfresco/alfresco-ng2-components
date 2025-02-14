@@ -35,15 +35,15 @@ import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-e
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import mitt from 'mitt';
-const events = mitt();
+const ee = mitt();
 
 @Injectable({
     providedIn: 'root'
 })
 export class AdfHttpClient implements JsApiHttpClient {
-    on = events.on;
-    off = events.off;
-    emit = events.emit;
+    on = ee.on;
+    off = ee.off;
+    emit = ee.emit;
     _disableCsrf: boolean;
 
     get disableCsrf(): boolean {
@@ -150,8 +150,8 @@ export class AdfHttpClient implements JsApiHttpClient {
 
     private getEventEmitters(): JsApiEmitters {
         return {
-            apiClientEmitter: events,
-            eventEmitter: events
+            apiClientEmitter: ee,
+            eventEmitter: ee
         };
     }
 
