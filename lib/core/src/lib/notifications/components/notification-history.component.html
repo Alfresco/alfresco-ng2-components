@@ -61,10 +61,9 @@
                 </button>
             </ng-container>
             <ng-template #empty_list_template>
-                <div id="adf-notification-history-component-no-message"
-                     class="adf-notification-history-menu-no-message">
-                    <p class="adf-notification-history-menu-no-message-text">{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
-                </div>
+                <p mat-menu-item disabled id="adf-notification-history-component-no-message" class="adf-notification-history-menu-no-message-text test">
+                    {{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}
+                </p>
             </ng-template>
         </div>
 

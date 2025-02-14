@@ -38,7 +38,7 @@ export class LanguageMenuComponent {
     changedLanguage: EventEmitter<LanguageItem> = new EventEmitter<LanguageItem>();
 
     @ViewChildren(MatMenuItem)
-    menuItem: QueryList<MatMenuItem>;
+    menuItems: QueryList<MatMenuItem>;
 
     languages$: Observable<LanguageItem[]>;
 

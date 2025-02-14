@@ -79,7 +79,7 @@ describe('DynamicExtensionComponent', () => {
         });
 
         it('should pass through the data', () => {
-            const testComponent = testingUtils.getByCSS('test-component').componentInstance;
+            const testComponent = testingUtils.getByDirective(TestComponent).componentInstance;
 
             expect(testComponent.data).toBe(component.data);
         });
@@ -89,7 +89,7 @@ describe('DynamicExtensionComponent', () => {
 
             component.ngOnChanges({ data: new SimpleChange(component.data, data, false) });
 
-            const testComponent = testingUtils.getByCSS('test-component').componentInstance;
+            const testComponent = testingUtils.getByDirective(TestComponent).componentInstance;
             expect(testComponent.data).toBe(data);
         });
 
@@ -112,7 +112,7 @@ describe('DynamicExtensionComponent', () => {
 
             fixture.detectChanges();
             component.ngOnChanges({});
-            testComponent = testingUtils.getByCSS('test-component').componentInstance;
+            testComponent = testingUtils.getByDirective(TestComponent).componentInstance;
         });
 
         afterEach(() => {

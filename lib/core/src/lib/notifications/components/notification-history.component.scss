@@ -103,8 +103,7 @@ $notification-item-height: 72px;
             background-color: var(--adf-theme-background-hover-color);
         }
 
-        .adf-notification-history-menu-message:is(p),
-        .adf-notification-history-menu-no-message:is(p) {
+        .adf-notification-history-menu-message:is(p) {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -112,11 +111,15 @@ $notification-item-height: 72px;
         }
 
         .adf-notification-history-menu-no-message-text {
-            font-size: 16px;
             color: var(--theme-sidenav-user-menu-color);
             margin: 0;
             padding: 12px 16px;
-            -webkit-font-smoothing: subpixel-antialiased;
+            opacity: inherit;
+
+            span {
+                font-size: 16px;
+                -webkit-font-smoothing: subpixel-antialiased;
+            }
         }
 
         .adf-notification-history-menu-date.adf-notification-history-menu-text:is(p) {

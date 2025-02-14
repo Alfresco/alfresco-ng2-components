@@ -31,9 +31,7 @@ describe('LanguagePickerComponent', () => {
         await TestBed.configureTestingModule({
             imports: [CoreTestingModule, LanguagePickerComponent]
         }).compileComponents();
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(LanguagePickerComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
@@ -47,8 +45,8 @@ describe('LanguagePickerComponent', () => {
         const menuItem1 = new MatMenuItem(null, null, null, null, null);
         const menuItem2 = new MatMenuItem(null, null, null, null, null);
 
-        languageMenuComponent.menuItem = new QueryList<MatMenuItem>();
-        languageMenuComponent.menuItem.reset([menuItem1, menuItem2]);
+        languageMenuComponent.menuItems = new QueryList<MatMenuItem>();
+        languageMenuComponent.menuItems.reset([menuItem1, menuItem2]);
         spyOn(component.menu, 'ngAfterContentInit').and.callThrough();
 
         component.ngAfterViewInit();
