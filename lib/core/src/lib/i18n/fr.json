@@ -53,7 +53,7 @@
       "DATA_TABLE_LOAD_FAILED": "Un problème est survenu lors du chargement des éléments du tableau. Veuillez contacter un administrateur.",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Un problème est survenu lors du chargement de la propriété externe. Veuillez contacter un administrateur.",
       "FILE_NAME": "Nom de fichier",
-      "TITLE": "Title",
+      "TITLE": "Titre",
       "NO_FILE_ATTACHED": "Aucun fichier joint",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utiliser un format de numéro différent",
