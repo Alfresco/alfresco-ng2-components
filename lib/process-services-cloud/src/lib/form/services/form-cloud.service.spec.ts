@@ -16,16 +16,23 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { FormCloudService } from './form-cloud.service';
+import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, FormCloudService } from './form-cloud.service';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { FORM_FIELD_VALIDATORS, FormFieldValidator } from '@alfresco/adf-core';
 
 const mockTaskResponseBody = {
     entry: { id: 'id', name: 'name', formKey: 'form-key' }
 };
 
 const mockFormResponseBody = { formRepresentation: { id: 'form-id', name: 'task-form', taskId: 'task-id' } };
+
+const fakeValidator = {
+    supportedTypes: ['test'],
+    isSupported: () => true,
+    validate: () => true
+} as FormFieldValidator;
 
 describe('Form Cloud service', () => {
     let service: FormCloudService;
@@ -37,7 +44,8 @@ describe('Form Cloud service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule],
+            providers: [{ provide: FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }]
         });
         service = TestBed.inject(FormCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -67,6 +75,14 @@ describe('Form Cloud service', () => {
             expect(result).toBeDefined();
             expect(result.id).toBe(formId);
             expect(result.name).toBe('task-form');
+        });
+
+        it('should create form with injected validators', () => {
+            const formId = 'form-id';
+            const json = { formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id', formDefinition: {} } };
+            const result = service.parseForm(json, undefined, undefined);
+            expect(result).toBeDefined();
+            expect(result.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, fakeValidator]);
         });
     });
 
