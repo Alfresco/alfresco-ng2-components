@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, QueryList, ViewChild } from '@angular/core';
 import { LanguageItem } from '../common/services/language-item.interface';
 import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageMenuComponent } from './language-menu.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,7 +37,25 @@ import { MatIconModule } from '@angular/material/icon';
         </mat-menu>
     `
 })
-export class LanguagePickerComponent {
+export class LanguagePickerComponent implements AfterViewInit {
     @Output()
     public changedLanguage = new EventEmitter<LanguageItem>();
+
+    @ViewChild('langMenu')
+    menu: MatMenu;
+
+    @ViewChild(MatMenuItem)
+    menuItem: MatMenuItem;
+
+    @ViewChild(LanguageMenuComponent)
+    languageMenuComponent: LanguageMenuComponent;
+
+    ngAfterViewInit() {
+        const menuItems = this.languageMenuComponent.menuItems.filter((menuItem) => menuItem !== undefined);
+        const menuItemsQueryList = new QueryList<MatMenuItem>();
+        menuItemsQueryList.reset(menuItems);
+        // eslint-disable-next-line no-underscore-dangle
+        this.menu._allItems = menuItemsQueryList;
+        this.menu.ngAfterContentInit();
+    }
 }

@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
@@ -121,22 +111,11 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
         this.createPagination();
     }
 
-    onKeyPress(event: KeyboardEvent) {
-        this.closeUserModal(event);
-    }
-
-    private closeUserModal($event: KeyboardEvent) {
-        if ($event.keyCode === 27) {
-            this.trigger.closeMenu();
-        }
-    }
-
     markAsRead() {
         this.notifications = [];
         this.paginatedNotifications = [];
         this.storageService.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
         this.createPagination();
-        this.trigger.closeMenu();
     }
 
     createPagination() {
@@ -149,7 +128,8 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
         this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
     }
 
-    loadMore() {
+    loadMore($event: MouseEvent) {
+        $event.stopPropagation();
         this.pagination.skipCount = this.pagination.maxItems + this.pagination.skipCount;
         this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
         this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
@@ -159,7 +139,8 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
         return this.pagination?.hasMoreItems;
     }
 
-    onNotificationClick(notification: NotificationModel) {
+    onNotificationClick(notification: NotificationModel, $event: MouseEvent) {
+        $event.stopPropagation();
         if (notification.clickCallBack) {
             notification.clickCallBack(notification.args);
             this.trigger.closeMenu();

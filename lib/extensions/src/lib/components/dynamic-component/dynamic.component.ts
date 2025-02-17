@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, ComponentRef, ViewChild, ViewContainerRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ComponentRef, ViewChild, ViewContainerRef, OnDestroy, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
+import { MatMenuItem } from '@angular/material/menu';
 
 // cSpell:words lifecycle
 @Component({
@@ -25,7 +26,7 @@ import { ExtensionComponent } from '../../services/component-register.service';
     standalone: true,
     template: `<div #content></div>`
 })
-export class DynamicExtensionComponent implements OnChanges, OnDestroy {
+export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterViewInit {
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
@@ -34,6 +35,9 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
 
     /** Data for the dynamically-loaded component instance. */
     @Input() data: any;
+
+    /** Provides the menu item of dynamically-loaded component instance. */
+    menuItem: MatMenuItem;
 
     private componentRef: ComponentRef<ExtensionComponent>;
     private loaded: boolean = false;
@@ -59,6 +63,10 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
             this.componentRef.destroy();
             this.componentRef = null;
         }
+    }
+
+    ngAfterViewInit() {
+        this.menuItem = this.componentRef?.instance?.menuItem;
     }
 
     private loadComponent() {

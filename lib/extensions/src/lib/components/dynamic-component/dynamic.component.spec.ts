@@ -19,10 +19,11 @@
 
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatMenuItem } from '@angular/material/menu';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'test-component',
@@ -71,9 +72,10 @@ describe('DynamicExtensionComponent', () => {
             TestBed.resetTestingModule();
         });
 
+        const getInnerElement = () => fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
+
         it('should load the TestComponent', () => {
-            const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
-            expect(innerElement).not.toBeNull();
+            expect(getInnerElement()).not.toBeNull();
         });
 
         it('should pass through the data', () => {
@@ -89,6 +91,12 @@ describe('DynamicExtensionComponent', () => {
 
             const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
             expect(testComponent.data).toBe(data);
+        });
+
+        it('should assign menuItem from dynamically generated component in ngAfterViewInit', () => {
+            getInnerElement().componentInstance.menuItem = new MatMenuItem(null, null, null, null, null);
+            component.ngAfterViewInit();
+            expect(component.menuItem).toBeInstanceOf(MatMenuItem);
         });
     });
 
