@@ -51,7 +51,7 @@ export class LanguagePickerComponent implements AfterViewInit {
     languageMenuComponent: LanguageMenuComponent;
 
     ngAfterViewInit() {
-        const menuItems: MatMenuItem[] = this.languageMenuComponent.menuItems.filter((menuItem: MatMenuItem) => menuItem !== undefined);
+        const menuItems = this.languageMenuComponent.menuItems.filter((menuItem) => menuItem !== undefined);
         const menuItemsQueryList = new QueryList<MatMenuItem>();
         menuItemsQueryList.reset(menuItems);
         // eslint-disable-next-line no-underscore-dangle

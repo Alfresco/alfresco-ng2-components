@@ -72,9 +72,10 @@ describe('DynamicExtensionComponent', () => {
             TestBed.resetTestingModule();
         });
 
+        const getInnerElement = () => fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
+
         it('should load the TestComponent', () => {
-            const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
-            expect(innerElement).not.toBeNull();
+            expect(getInnerElement()).not.toBeNull();
         });
 
         it('should pass through the data', () => {
@@ -93,8 +94,7 @@ describe('DynamicExtensionComponent', () => {
         });
 
         it('should assign menuItem from dynamically generated component in ngAfterViewInit', () => {
-            const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
-            innerElement.componentInstance.menuItem = new MatMenuItem(null, null, null, null, null);
+            getInnerElement().componentInstance.menuItem = new MatMenuItem(null, null, null, null, null);
             component.ngAfterViewInit();
             expect(component.menuItem).toBeInstanceOf(MatMenuItem);
         });
