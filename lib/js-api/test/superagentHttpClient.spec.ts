@@ -20,10 +20,9 @@ import { SuperagentHttpClient } from '../src/superagentHttpClient';
 import { Response } from 'superagent';
 
 describe('SuperagentHttpClient', () => {
-    describe('#buildRequest', () => {
-        const client = new SuperagentHttpClient();
-
+    describe('buildRequest', () => {
         it('should create a request with response type blob', () => {
+            const client = new SuperagentHttpClient();
             const queryParams = {};
             const headerParams = {};
             const formParams = {};
@@ -68,8 +67,8 @@ describe('SuperagentHttpClient', () => {
         });
     });
 
-    describe('#deserialize', () => {
-        it('should the deserializer return an array of object when the response is an array', () => {
+    describe('deserialize', () => {
+        it('should deserialize to an array when the response body is an array', () => {
             const data = {
                 body: [
                     {
@@ -85,6 +84,77 @@ describe('SuperagentHttpClient', () => {
             const result = SuperagentHttpClient['deserialize'](data);
             const isArray = Array.isArray(result);
             assert.equal(isArray, true);
+        });
+
+        it('should deserialize to an object when the response body is an object', () => {
+            const data = {
+                body: {
+                    id: '1',
+                    name: 'test1'
+                }
+            } as Response;
+            const result = SuperagentHttpClient['deserialize'](data);
+            const isArray = Array.isArray(result);
+            assert.equal(isArray, false);
+        });
+
+        it('should return null when response is null', () => {
+            const result = SuperagentHttpClient['deserialize'](null);
+            assert.equal(result, null);
+        });
+
+        it('should fallback to text property when body is null', () => {
+            const data = {
+                text: '{"id": "1", "name": "test1"}',
+                header: {
+                    'content-type': 'application/json'
+                }
+            } as any as Response;
+            const result = SuperagentHttpClient['deserialize'](data, 'blob');
+            assert.deepEqual(result, new Blob([data.text], { type: data.header['content-type'] }));
+        });
+
+        it('should convert to returnType when provided', () => {
+            class Dummy {
+                id: string;
+                name: string;
+                constructor(data: any) {
+                    this.id = data.id;
+                    this.name = data.name;
+                }
+            }
+            const data = {
+                body: {
+                    id: '1',
+                    name: 'test1'
+                }
+            } as Response;
+            const result = SuperagentHttpClient['deserialize'](data, Dummy);
+            assert.ok(result instanceof Dummy);
+            assert.equal(result.id, '1');
+            assert.equal(result.name, 'test1');
+        });
+    });
+
+    describe('setCsrfToken', () => {
+        it('should set CSRF token in headers and document.cookie', () => {
+            const client = new SuperagentHttpClient();
+            const fakeRequest: any = {
+                header: {},
+                set: function (key: string, value: string) {
+                    this.header[key] = value;
+                    return this;
+                },
+                withCredentials: function () {}
+            };
+
+            if (typeof document === 'undefined') {
+                (global as any).document = { cookie: '' };
+            }
+
+            client.setCsrfToken(fakeRequest);
+            assert.ok(fakeRequest.header['X-CSRF-TOKEN']);
+            assert.ok(document.cookie.indexOf('CSRF-TOKEN=') !== -1);
         });
     });
 });

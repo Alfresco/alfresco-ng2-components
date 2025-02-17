@@ -7,6 +7,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext", "dom"]
+    "lib": ["ESNext", "dom"],
+    "types": ["jest"]
   }
 }
