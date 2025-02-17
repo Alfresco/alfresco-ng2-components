@@ -1,5 +1,5 @@
 <p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content" aria-hidden="true"><mat-icon *ngIf="data.decorativeIcon" data-automation-id="adf-snackbar-decorative-icon">{{ data.decorativeIcon }}</mat-icon>{{ data.message }}</p>
-<div *ngIf="data.showAction" class="adf-snackbar-message-content-action" aria-hidden="true">
+<div *ngIf="data.showAction" class="adf-snackbar-message-content-action">
     <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="adf-snackbar-message-content-action-button"
             data-automation-id="adf-snackbar-message-content-action-button">
         {{data.actionLabel}}
