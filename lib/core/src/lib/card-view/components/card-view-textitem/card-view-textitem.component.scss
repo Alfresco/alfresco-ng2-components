@@ -72,7 +72,7 @@
     }
 
     .adf-property-readonly-value:disabled {
-        --mdc-filled-text-field-disabled-input-text-color: var(--adf-metadata-property-panel-title-color);
+        color: var(--adf-metadata-property-panel-title-color);
     }
 
     .adf-property-value-editable:not(:disabled) {
