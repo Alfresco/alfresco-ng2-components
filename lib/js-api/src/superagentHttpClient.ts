@@ -283,7 +283,7 @@ export class SuperagentHttpClient implements HttpClient {
         const newParams: { [key: string]: any } = {};
 
         for (const key in params) {
-            if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== undefined && params[key] !== null) {
+            if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== null) {
                 const value = params[key];
                 if (SuperagentHttpClient.isFileParam(value) || Array.isArray(value)) {
                     newParams[key] = value;

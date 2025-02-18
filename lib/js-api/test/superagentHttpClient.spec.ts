@@ -55,7 +55,9 @@ describe('SuperagentHttpClient', () => {
                 json: () => Promise.resolve({ data: 'test' })
             } as unknown as FetchResponse<unknown>;
             (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+
             const result = await client.request(url, options, securityOptions, emitters);
+
             expect(result).toEqual({ data: 'test' });
             expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('success', { data: 'test' });
         });
@@ -68,6 +70,7 @@ describe('SuperagentHttpClient', () => {
                 text: () => Promise.resolve('Bad Request')
             } as unknown as FetchResponse<unknown>;
             (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+
             await expect(client.request(url, options, securityOptions, emitters)).rejects.toMatchObject({ status: 400 });
             expect(emitters.apiClientEmitter.emit).toHaveBeenCalledWith('error', fakeResponse);
             expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('error', fakeResponse);
@@ -81,9 +84,74 @@ describe('SuperagentHttpClient', () => {
                 text: () => Promise.resolve('Unauthorized')
             } as unknown as FetchResponse<unknown>;
             (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+
             await expect(client.request(url, options, securityOptions, emitters)).rejects.toMatchObject({ status: 401 });
+
             expect(emitters.apiClientEmitter.emit).toHaveBeenCalledWith('unauthorized');
             expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('unauthorized');
+        });
+
+        it('should reject with network error when fetch fails', async () => {
+            const networkError = new Error('Network failure');
+            (ofetch as unknown as jest.Mock).mockRejectedValue(networkError);
+
+            await expect(client.request(url, options, defaultSecurityOptions, emitters)).rejects.toEqual(networkError);
+            expect(emitters.apiClientEmitter.emit).toHaveBeenCalledWith('error', networkError);
+            expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('error', networkError);
+        });
+
+        it('should parse text/html response correctly', async () => {
+            const htmlResponse = {
+                ok: true,
+                headers: new Map([['content-type', 'text/html']]),
+                json: () => Promise.reject(new Error('Not JSON')),
+                text: () => Promise.resolve('<html><body>HTML Content</body></html>')
+            } as unknown as FetchResponse<unknown>;
+            (ofetch as unknown as jest.Mock).mockResolvedValue(htmlResponse);
+
+            const result = await client.request('http://fake-api/test', defaultRequestOptions, defaultSecurityOptions, emitters);
+
+            expect(result).toEqual('<html><body>HTML Content</body></html>');
+            expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('success', '<html><body>HTML Content</body></html>');
+        });
+
+        it('should include custom headers from headerParams', async () => {
+            const customOptions: RequestOptions = {
+                ...defaultRequestOptions,
+                headerParams: { 'X-Custom-Header': 'customValue' }
+            };
+            // Return a successful JSON response
+            const fakeResponse = {
+                ok: true,
+                headers: new Map([['content-type', 'application/json']]),
+                json: () => Promise.resolve({ data: 'with-custom-header' })
+            } as unknown as FetchResponse<unknown>;
+            (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+
+            await client.request(url, customOptions, securityOptions, emitters);
+
+            const fetchCallArgs = (ofetch as unknown as jest.Mock).mock.calls[0];
+            const fetchOptions = fetchCallArgs[1];
+            expect(fetchOptions.headers['x-custom-header']).toEqual('customValue');
+        });
+
+        it('should include headers from securityOptions.defaultHeaders', async () => {
+            const securityOptionsWithDefault = {
+                ...defaultSecurityOptions,
+                defaultHeaders: { 'X-Default-Header': 'defaultValue' }
+            };
+            const fakeResponse = {
+                ok: true,
+                headers: new Map([['content-type', 'application/json']]),
+                json: () => Promise.resolve({ data: 'with-default-header' })
+            } as unknown as FetchResponse<unknown>;
+            (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+
+            await client.request(url, defaultRequestOptions, securityOptionsWithDefault, emitters);
+
+            const fetchCallArgs = (ofetch as unknown as jest.Mock).mock.calls[0];
+            const fetchOptions = fetchCallArgs[1];
+            expect(fetchOptions.headers['x-default-header']).toEqual('defaultValue');
         });
     });
 
