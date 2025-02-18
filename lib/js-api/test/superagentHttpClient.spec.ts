@@ -19,7 +19,7 @@ import { SuperagentHttpClient } from '../src/superagentHttpClient';
 import { FetchResponse, ofetch } from 'ofetch';
 import { RequestOptions } from '../src/api-clients/http-client.interface';
 import { Emitters } from '@alfresco/adf-core/api';
-import * as utils from '../src/utils';
+import { isBrowser } from '../src/utils';
 
 jest.mock('ofetch', () => ({
     ofetch: jest.fn()
@@ -177,7 +177,7 @@ describe('SuperagentHttpClient', () => {
             };
 
             // Override isBrowser to simulate a non-browser environment
-            (utils.isBrowser as jest.Mock).mockReturnValue(false);
+            (isBrowser as jest.Mock).mockReturnValue(false);
 
             const request = client['buildRequest']({
                 httpMethod,
