@@ -1,5 +1,4 @@
 @use 'sass:map';
-@import '@angular/material/theming';
 @import './theme-configuration';
 @import './typography';
 @import './custom-theme-palettes';
@@ -14,9 +13,6 @@ $text-color: map.get($theme-config, 'textColor');
 $base-font-size: map.get($theme-config, 'baseFontSize');
 $font-family: map.get($theme-config, 'fontFamily');
 
-$app-typography: get-mat-typography(
-    $base-font-size,
-    $font-family
-);
+$app-typography: get-mat-typography($base-font-size, $font-family);
 
 $palettes: get-mat-palettes($primary-color, $accent-color);
