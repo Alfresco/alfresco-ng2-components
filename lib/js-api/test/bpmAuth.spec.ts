@@ -17,7 +17,7 @@
 
 import assert from 'assert';
 import { ProcessAuth } from '../src';
-import { SuperagentHttpClient } from '../src/superagentHttpClient';
+import { SuperagentHttpClient } from '../src/ofetchHttpClient';
 import { BpmAuthMock } from './mockObjects';
 
 describe('Bpm Auth test', () => {

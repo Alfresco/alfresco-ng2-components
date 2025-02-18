@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SuperagentHttpClient } from '../src/superagentHttpClient';
+import { SuperagentHttpClient } from '../src/ofetchHttpClient';
 import { FetchResponse, ofetch } from 'ofetch';
 import { RequestOptions } from '../src/api-clients/http-client.interface';
 import { isBrowser } from '../src/utils';
