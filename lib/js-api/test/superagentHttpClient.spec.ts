@@ -17,7 +17,7 @@
 
 import assert from 'assert';
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
-import { Response } from 'superagent';
+import { FetchResponse } from 'ofetch';
 
 describe('SuperagentHttpClient', () => {
     describe('buildRequest', () => {
@@ -27,10 +27,10 @@ describe('SuperagentHttpClient', () => {
             const headerParams = {};
             const formParams = {};
 
-            const contentTypes = 'application/json';
-            const accepts = 'application/json';
+            const contentType = 'application/json';
+            const accept = 'application/json';
             const responseType = 'blob';
-            const url = '/fake-api/enterprise/process-instances/';
+            const url = 'http://fake-api/enterprise/process-instances/';
             const httpMethod = 'GET';
             const securityOptions = {
                 isBpmRequest: false,
@@ -45,76 +45,78 @@ describe('SuperagentHttpClient', () => {
                 defaultHeaders: {}
             };
 
-            const response: any = client['buildRequest'](
+            const request = client['buildRequest']({
                 httpMethod,
                 url,
                 queryParams,
                 headerParams,
                 formParams,
-                null,
-                contentTypes,
-                accepts,
+                contentType,
+                accept,
                 responseType,
-                null,
-                null,
+                bodyParam: null,
+                returnType: null,
                 securityOptions
-            );
+            });
 
-            assert.equal(response.url, '/fake-api/enterprise/process-instances/');
-            assert.equal(response.header.Accept, 'application/json');
-            assert.equal(response.header['Content-Type'], 'application/json');
-            assert.equal(response._responseType, 'blob');
+            assert.equal(request.urlWithParams, 'http://fake-api/enterprise/process-instances/');
+            const { fetchOptions } = request;
+
+            assert.equal(fetchOptions.headers['accept'], 'application/json');
+            assert.equal(fetchOptions.headers['content-type'], 'application/json');
+            assert.equal(fetchOptions.responseType, 'blob');
         });
     });
 
     describe('deserialize', () => {
-        it('should deserialize to an array when the response body is an array', () => {
-            const data = {
-                body: [
-                    {
-                        id: '1',
-                        name: 'test1'
-                    },
-                    {
-                        id: '2',
-                        name: 'test2'
-                    }
-                ]
-            } as Response;
-            const result = SuperagentHttpClient['deserialize'](data);
+        it('should deserialize to an array when the response body is an array', async () => {
+            const data = [
+                {
+                    id: '1',
+                    name: 'test1'
+                },
+                {
+                    id: '2',
+                    name: 'test2'
+                }
+            ];
+            const response = {
+                json() {
+                    return Promise.resolve(data);
+                }
+            } as FetchResponse<unknown>;
+            const result = await SuperagentHttpClient['deserialize'](response);
+
             const isArray = Array.isArray(result);
             assert.equal(isArray, true);
         });
 
         it('should deserialize to an object when the response body is an object', () => {
-            const data = {
-                body: {
-                    id: '1',
-                    name: 'test1'
-                }
-            } as Response;
-            const result = SuperagentHttpClient['deserialize'](data);
+            const response = {
+                json: () => Promise.resolve({ id: '1', name: 'test1' })
+            } as FetchResponse<unknown>;
+            const result = SuperagentHttpClient['deserialize'](response);
+
             const isArray = Array.isArray(result);
             assert.equal(isArray, false);
         });
 
-        it('should return null when response is null', () => {
-            const result = SuperagentHttpClient['deserialize'](null);
+        it('should return null when response is null', async () => {
+            const result = await SuperagentHttpClient['deserialize'](null);
             assert.equal(result, null);
         });
 
-        it('should fallback to text property when body is null', () => {
+        it('should fallback to text property when body cant be parsed', async () => {
             const data = {
-                text: '{"id": "1", "name": "test1"}',
-                header: {
-                    'content-type': 'application/json'
-                }
-            } as any as Response;
-            const result = SuperagentHttpClient['deserialize'](data, 'blob');
-            assert.deepEqual(result, new Blob([data.text], { type: data.header['content-type'] }));
+                text: () => Promise.resolve('mock-response-text')
+            } as FetchResponse<unknown>;
+
+            const result = await SuperagentHttpClient['deserialize'](data);
+
+            assert.equal(result, 'mock-response-text');
         });
 
-        it('should convert to returnType when provided', () => {
+        it('should convert to returnType when provided', async () => {
             class Dummy {
                 id: string;
                 name: string;
@@ -124,12 +126,9 @@ describe('SuperagentHttpClient', () => {
                 }
             }
             const data = {
-                body: {
-                    id: '1',
-                    name: 'test1'
-                }
-            } as Response;
-            const result = SuperagentHttpClient['deserialize'](data, Dummy);
+                json: () => Promise.resolve({ id: '1', name: 'test1' })
+            } as FetchResponse<unknown>;
+            const result = await SuperagentHttpClient['deserialize'](data, Dummy);
             assert.ok(result instanceof Dummy);
             assert.equal(result.id, '1');
             assert.equal(result.name, 'test1');

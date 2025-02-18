@@ -15,18 +15,12 @@
  * limitations under the License.
  */
 
-import ee, { Emitter } from 'event-emitter';
-import superagent, { Response, SuperAgentRequest } from 'superagent';
+import { FetchOptions, FetchResponse, ofetch } from 'ofetch';
 import { Authentication } from './authentication/authentication';
 import { RequestOptions, HttpClient, SecurityOptions, Emitters } from './api-clients/http-client.interface';
 import { Oauth2 } from './authentication/oauth2';
 import { BasicAuth } from './authentication/basicAuth';
 import { isBrowser, paramToString } from './utils';
-
-declare const Blob: any;
-declare const Buffer: any;
-
-const isProgressEvent = (event: ProgressEvent | unknown): event is ProgressEvent => (event as ProgressEvent)?.lengthComputable;
 
 export class SuperagentHttpClient implements HttpClient {
     /**
@@ -54,7 +48,7 @@ export class SuperagentHttpClient implements HttpClient {
         const { httpMethod, queryParams, headerParams, formParams, bodyParam, contentType, accept, responseType, returnType } = options;
         const { eventEmitter, apiClientEmitter } = emitters;
 
-        let request = this.buildRequest(
+        const { urlWithParams, fetchOptions } = this.buildRequest({
             httpMethod,
             url,
             queryParams,
@@ -64,201 +58,181 @@ export class SuperagentHttpClient implements HttpClient {
             contentType,
             accept,
             responseType,
-            eventEmitter,
             returnType,
             securityOptions
-        );
-
-        if (returnType === 'Binary') {
-            request = request.buffer(true).parse(superagent.parse['application/octet-stream']);
-        }
-
-        const promise: any = new Promise((resolve, reject) => {
-            request.on('abort', () => {
-                eventEmitter.emit('abort');
-            });
-            request.end((error: any, response: Response) => {
-                if (error) {
-                    apiClientEmitter.emit('error', error);
-                    eventEmitter.emit('error', error);
-
-                    if (error.status === 401) {
-                        apiClientEmitter.emit('unauthorized');
-                        eventEmitter.emit('unauthorized');
-                    }
-
-                    if (response?.text) {
-                        error = error || {};
-                        reject(Object.assign(error, { message: response.text }));
-                    } else {
-                        // eslint-disable-next-line prefer-promise-reject-errors
-                        reject({ error });
-                    }
-                } else {
-                    if (securityOptions.isBpmRequest) {
-                        const hasSetCookie = Object.prototype.hasOwnProperty.call(response.header, 'set-cookie');
-                        if (response.header && hasSetCookie) {
-                            // mutate the passed value from AlfrescoApiClient class for backward compatibility
-                            securityOptions.authentications.cookie = response.header['set-cookie'][0];
-                        }
-                    }
-                    let data = {};
-                    if (response.type === 'text/html') {
-                        data = SuperagentHttpClient.deserialize(response);
-                    } else {
-                        data = SuperagentHttpClient.deserialize(response, returnType);
-                    }
-
-                    eventEmitter.emit('success', data);
-                    resolve(data);
-                }
-            });
         });
 
-        promise.abort = function () {
-            request.abort();
-            return this;
-        };
+        const controller = new AbortController();
+        fetchOptions.signal = controller.signal;
+
+        const promise = new Promise<T>((resolve, reject) => {
+            ofetch(urlWithParams, fetchOptions)
+                .then(async (response: Response) => {
+                    if (response.ok) {
+                        if (securityOptions.isBpmRequest) {
+                            const hasSetCookie = Object.prototype.hasOwnProperty.call(response.headers, 'set-cookie');
+                            if (response.headers && hasSetCookie) {
+                                securityOptions.authentications.cookie = response.headers.get('set-cookie');
+                            }
+                        }
+                        let data: T;
+                        if (response.headers.get('content-type') === 'text/html') {
+                            data = await SuperagentHttpClient.deserialize(response);
+                        } else {
+                            data = await SuperagentHttpClient.deserialize(response, returnType);
+                        }
+
+                        eventEmitter.emit('success', data);
+                        resolve(data);
+                    } else {
+                        apiClientEmitter.emit('error', response);
+                        eventEmitter.emit('error', response);
+
+                        if (response.status === 401) {
+                            apiClientEmitter.emit('unauthorized');
+                            eventEmitter.emit('unauthorized');
+                        }
+
+                        response.text().then((text) => {
+                            reject(Object.assign(new Error(text), { status: response.status }));
+                        });
+                    }
+                })
+                .catch((error: any) => {
+                    apiClientEmitter.emit('error', error);
+                    eventEmitter.emit('error', error);
+                    reject(error);
+                });
+        });
 
         return promise;
     }
 
-    private buildRequest(
-        httpMethod: string,
-        url: string,
-        queryParams: { [key: string]: any },
-        headerParams: { [key: string]: any },
-        formParams: { [key: string]: any },
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        bodyParam: string | Object,
-        contentType: string,
-        accept: string,
-        responseType: string,
-        eventEmitter: ee.Emitter,
-        returnType: string,
-        securityOptions: SecurityOptions
-    ) {
-        const request = superagent(httpMethod, url);
+    private buildRequest({
+        httpMethod,
+        url,
+        queryParams,
+        headerParams,
+        formParams,
+        bodyParam,
+        contentType,
+        accept,
+        responseType,
+        returnType,
+        securityOptions
+    }: {
+        httpMethod: string;
+        url: string;
+        queryParams: { [key: string]: any };
+        headerParams: { [key: string]: any };
+        formParams: { [key: string]: any };
+        bodyParam: string | object;
+        contentType: string;
+        accept: string;
+        responseType: string;
+        returnType: string;
+        securityOptions: SecurityOptions;
+    }) {
+        const urlWithParams = new URL(url);
+        urlWithParams.search = new URLSearchParams(SuperagentHttpClient.normalizeParams(queryParams)).toString();
 
-        const { isBpmRequest, authentications, defaultHeaders = {}, enableCsrf, withCredentials = false } = securityOptions;
+        // Create a Headers object and add default and normalized header params
+        const headers = new Headers();
+        for (const key in securityOptions.defaultHeaders) {
+            if (Object.prototype.hasOwnProperty.call(securityOptions.defaultHeaders, key)) {
+                headers.append(key, securityOptions.defaultHeaders[key]);
+            }
+        }
+        const normHeaders = SuperagentHttpClient.normalizeParams(headerParams);
+        for (const key in normHeaders) {
+            if (Object.prototype.hasOwnProperty.call(normHeaders, key)) {
+                headers.append(key, normHeaders[key]);
+            }
+        }
 
-        // apply authentications
-        this.applyAuthToRequest(request, authentications);
+        const fetchOptions: FetchOptions = { method: httpMethod };
 
-        // set query parameters
-        request.query(SuperagentHttpClient.normalizeParams(queryParams));
-
-        // set header parameters
-        request.set(defaultHeaders).set(SuperagentHttpClient.normalizeParams(headerParams));
+        const { isBpmRequest, authentications, enableCsrf, withCredentials = false } = securityOptions;
+        this.applyAuthToRequest(headers, authentications);
 
         if (isBpmRequest && enableCsrf) {
-            this.setCsrfToken(request);
+            this.setCsrfToken(headers);
         }
 
         if (withCredentials) {
-            request.withCredentials();
+            fetchOptions.credentials = 'include';
         }
-
-        // add cookie for activiti
-        if (isBpmRequest) {
-            request.withCredentials();
-            if (securityOptions.authentications.cookie) {
-                if (!isBrowser()) {
-                    request.set('Cookie', securityOptions.authentications.cookie);
-                }
+        if (isBpmRequest && securityOptions.authentications.cookie) {
+            if (!isBrowser()) {
+                headers.set('Cookie', securityOptions.authentications.cookie);
             }
         }
-
-        // set request timeout
-        request.timeout(this.timeout);
-
         if (contentType && contentType !== 'multipart/form-data') {
-            request.type(contentType);
-        } else if (!(request as any).header['Content-Type'] && contentType !== 'multipart/form-data') {
-            request.type('application/json');
+            headers.set('Content-Type', contentType);
+        } else if (!headers.has('Content-Type') && contentType !== 'multipart/form-data') {
+            headers.set('Content-Type', 'application/json');
         }
 
         if (contentType === 'application/x-www-form-urlencoded') {
-            request.send(SuperagentHttpClient.normalizeParams(formParams)).on('progress', (event: any) => {
-                this.progress(event, eventEmitter);
-            });
+            fetchOptions.body = new URLSearchParams(SuperagentHttpClient.normalizeParams(formParams)).toString();
         } else if (contentType === 'multipart/form-data') {
-            const _formParams = SuperagentHttpClient.normalizeParams(formParams);
-            for (const key in _formParams) {
-                if (Object.prototype.hasOwnProperty.call(_formParams, key)) {
-                    if (SuperagentHttpClient.isFileParam(_formParams[key])) {
-                        // file field
-                        request.attach(key, _formParams[key]).on('progress', (event: ProgressEvent) => {
-                            // jshint ignore:line
-                            this.progress(event, eventEmitter);
-                        });
-                    } else {
-                        request.field(key, _formParams[key]).on('progress', (event: ProgressEvent) => {
-                            // jshint ignore:line
-                            this.progress(event, eventEmitter);
-                        });
-                    }
+            const formData = new FormData();
+            const normalizedParams = SuperagentHttpClient.normalizeParams(formParams);
+            for (const key in normalizedParams) {
+                if (Object.prototype.hasOwnProperty.call(normalizedParams, key)) {
+                    formData.append(key, normalizedParams[key]);
                 }
             }
+            fetchOptions.body = formData;
         } else if (bodyParam) {
-            request.send(bodyParam).on('progress', (event: any) => {
-                this.progress(event, eventEmitter);
-            });
+            fetchOptions.body = JSON.stringify(bodyParam);
         }
 
         if (accept) {
-            request.accept(accept);
+            headers.set('Accept', accept);
         }
-
         if (returnType === 'blob' || returnType === 'Blob' || responseType === 'blob' || responseType === 'Blob') {
-            request.responseType('blob');
+            fetchOptions.responseType = 'blob';
         } else if (returnType === 'String') {
-            request.responseType('string');
+            fetchOptions.responseType = 'text';
         }
 
-        return request;
-    }
+        const parsedHeaders: Record<string, string> = {};
 
-    setCsrfToken(request: SuperAgentRequest): void {
-        const token = SuperagentHttpClient.createCSRFToken();
-        request.set('X-CSRF-TOKEN', token);
+        headers.forEach((value, key) => {
+            parsedHeaders[key] = value;
+        });
 
-        if (!isBrowser()) {
-            request.set('Cookie', 'CSRF-TOKEN=' + token + ';path=/');
-        }
+        fetchOptions.headers = parsedHeaders;
 
-        try {
-            document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
-        } catch (err) {
-            /* continue regardless of error */
-        }
+        return { urlWithParams: urlWithParams.toString(), fetchOptions };
     }
 
     /**
      * Applies authentication headers to the request.
-     * @param request The request object created by a <code>superagent()</code> call.
+     * @param fetchOptions The fetch options object.
      * @param authentications authentications
      */
-    private applyAuthToRequest(request: SuperAgentRequest, authentications: Authentication) {
+    private applyAuthToRequest(headers: Headers, authentications: Authentication) {
         if (authentications) {
             switch (authentications.type) {
                 case 'basic': {
                     const basicAuth: BasicAuth = authentications.basicAuth;
                     if (basicAuth.username || basicAuth.password) {
-                        request.auth(basicAuth.username || '', basicAuth.password || '');
+                        headers.set('Authorization', 'Basic ' + btoa(basicAuth.username + ':' + basicAuth.password));
                     }
                     break;
                 }
                 case 'activiti': {
                     if (authentications.basicAuth.ticket) {
-                        request.set({ Authorization: authentications.basicAuth.ticket });
+                        headers.set('Authorization', authentications.basicAuth.ticket);
                     }
                     break;
                 }
                 case 'oauth2': {
                     const oauth2: Oauth2 = authentications.oauth2;
                     if (oauth2.accessToken) {
-                        request.set({ Authorization: 'Bearer ' + oauth2.accessToken });
+                        headers.set('Authorization', 'Bearer ' + oauth2.accessToken);
                     }
                     break;
                 }
@@ -268,17 +242,18 @@ export class SuperagentHttpClient implements HttpClient {
         }
     }
 
-    private progress(event: ProgressEvent | unknown, eventEmitter: Emitter): void {
-        if (isProgressEvent(event)) {
-            const percent = Math.round((event.loaded / event.total) * 100);
+    setCsrfToken(headers: Headers): void {
+        const token = SuperagentHttpClient.createCSRFToken();
+        headers.set('X-CSRF-TOKEN', token);
 
-            const progress = {
-                total: event.total,
-                loaded: event.loaded,
-                percent
-            };
+        if (!isBrowser()) {
+            headers.set('Cookie', 'CSRF-TOKEN=' + token + ';path=/');
+        }
 
-            eventEmitter.emit('progress', progress);
+        try {
+            document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
+        } catch (err) {
+            /* continue regardless of error */
         }
     }
 
@@ -290,37 +265,41 @@ export class SuperagentHttpClient implements HttpClient {
 
     /**
      * Deserializes an HTTP response body into a value of the specified type.
-     * @param response A SuperAgent response object.
+     * @param response A fetch response object.
      * @param returnType The type to return. Pass a string for simple types
      * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
      * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
      * all properties on <code>data<code> will be converted to this type.
      * @returns A value of the specified type.
      */
-    private static deserialize(response: Response, returnType?: any): any {
+    private static async deserialize(response: FetchResponse<unknown>, returnType?: any): Promise<any> {
         if (response === null) {
             return null;
         }
 
-        let data = response.body;
+        let parsedBody: unknown;
 
-        if (data === null) {
-            data = response.text;
+        try {
+            parsedBody = await response.json();
+        } catch (error) {
+            parsedBody = await response.text();
         }
 
         if (returnType) {
             if (returnType === 'blob' && isBrowser()) {
-                data = new Blob([data], { type: response.header['content-type'] });
+                return response.blob();
             } else if (returnType === 'blob' && !isBrowser()) {
-                data = new Buffer.from(data, 'binary');
-            } else if (Array.isArray(data)) {
-                data = data.map((element) => new returnType(element));
+                return response.arrayBuffer();
             } else {
-                data = new returnType(data);
+                if (Array.isArray(parsedBody)) {
+                    return parsedBody.map((element) => new returnType(element));
+                } else {
+                    return new returnType(await parsedBody);
+                }
             }
         }
 
-        return data;
+        return parsedBody;
     }
 
     /**
