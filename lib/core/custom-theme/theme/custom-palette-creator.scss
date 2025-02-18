@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:color';
+@use '@angular/material' as mat;
 
 @function multiply($fore, $back) {
     $red: math.div(color.red($back) * color.red($fore), 255);
@@ -44,8 +45,11 @@
     $green: color.green($color);
     $blue: color.blue($color);
 
-    $light-text: $light-primary-text;
-    $dark-text: $dark-primary-text;
+    $light-text: map.get(mat.$light-theme-foreground-palette, text);
+    $light-secondary-text: map.get(mat.$light-theme-foreground-palette, secondary-text);
+
+    $dark-text: map.get(mat.$dark-theme-foreground-palette, text);
+    $dark-secondary-text: map.get(mat.$dark-theme-foreground-palette, secondary-text);
 
     @if $colorType == 'accent' {
         $light-text: $light-secondary-text;
