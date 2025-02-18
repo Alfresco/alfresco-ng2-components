@@ -29,7 +29,13 @@
 
             <!-- Columns -->
             <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
-                <mat-checkbox [indeterminate]="isSelectAllIndeterminate" [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
+                <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
+                              [checked]="isSelectAllChecked"
+                              (change)="onSelectAllClick($event)"
+                              class="adf-checkbox-sr-only"
+                              [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate">
+                    {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
+                </mat-checkbox>
             </div>
 
             <ng-container
