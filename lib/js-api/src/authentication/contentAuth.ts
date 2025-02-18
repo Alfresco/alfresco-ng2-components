@@ -22,6 +22,8 @@ import { Authentication } from './authentication';
 import { Storage } from '../storage';
 import { AlfrescoApiType } from '../to-deprecate/alfresco-api-type';
 import { HttpClient } from '../api-clients/http-client.interface';
+import mitt from 'mitt';
+const ee = mitt();
 
 export class ContentAuth extends AlfrescoApiClient {
     ticketStorageLabel: string;
@@ -103,11 +105,7 @@ export class ContentAuth extends AlfrescoApiClient {
                 });
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners<string>(promise, ee);
     }
 
     /**
@@ -135,11 +133,7 @@ export class ContentAuth extends AlfrescoApiClient {
             );
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners<string>(promise, ee);
     }
 
     /**
@@ -165,11 +159,7 @@ export class ContentAuth extends AlfrescoApiClient {
             );
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners(promise, ee);
     }
 
     /**

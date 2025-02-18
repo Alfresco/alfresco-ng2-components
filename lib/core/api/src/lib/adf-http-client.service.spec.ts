@@ -34,7 +34,7 @@ const emitter = {
     emit: () => {},
     off: () => {},
     on: () => {},
-    once: () => {}
+    all: new Map()
 };
 
 const emitters: Emitters = {

@@ -221,6 +221,7 @@ describe('Auth', () => {
 
                 it('should emit an error event if a failing call is executed', (done) => {
                     alfrescoJsApi.on('error', () => {
+                        alfrescoJsApi.off('error');
                         done();
                     });
 

@@ -282,10 +282,12 @@ export class UploadService {
             .on('success', (data) => {
                 if (this.abortedFile === file.name) {
                     this.onUploadAborted(file);
-                    if (file.id === undefined) {
-                        this.deleteAbortedNode(data.entry.id);
-                    } else {
-                        this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
+                    if (data.entry) {
+                        if (file.id === undefined) {
+                            this.deleteAbortedNode(data.entry.id);
+                        } else {
+                            this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
+                        }
                     }
                     if (successEmitter) {
                         successEmitter.emit({ value: 'File deleted' });

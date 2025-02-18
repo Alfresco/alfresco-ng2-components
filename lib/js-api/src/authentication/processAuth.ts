@@ -21,6 +21,8 @@ import { Authentication } from './authentication';
 import { Storage } from '../storage';
 import { HttpClient } from '../api-clients/http-client.interface';
 import { isBrowser } from '../utils';
+import mitt from 'mitt';
+const ee = mitt();
 
 export class ProcessAuth extends AlfrescoApiClient {
     ticket: string;
@@ -122,11 +124,7 @@ export class ProcessAuth extends AlfrescoApiClient {
             );
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners<string>(promise, ee);
     }
 
     /**
@@ -156,11 +154,7 @@ export class ProcessAuth extends AlfrescoApiClient {
             );
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners(promise, ee);
     }
 
     /**

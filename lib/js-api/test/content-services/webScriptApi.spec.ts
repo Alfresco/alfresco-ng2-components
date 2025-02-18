@@ -93,6 +93,7 @@ describe('WebScript', () => {
 
             webscriptPromise.catch(() => {});
             webscriptPromise.on('error', () => {
+                webscriptPromise.off('error');
                 done();
             });
         });
@@ -104,6 +105,7 @@ describe('WebScript', () => {
 
             webscriptPromise.catch(() => {});
             webscriptPromise.on('unauthorized', () => {
+                webscriptPromise.off('unauthorized');
                 done();
             });
         });

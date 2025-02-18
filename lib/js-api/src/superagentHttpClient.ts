@@ -114,10 +114,12 @@ export class SuperagentHttpClient implements HttpClient {
             });
         });
 
-        promise.abort = function () {
-            request.abort();
-            return this;
-        };
+        Object.assign(promise, {
+            abort() {
+                request.abort();
+                return this;
+            }
+        });
 
         return promise;
     }

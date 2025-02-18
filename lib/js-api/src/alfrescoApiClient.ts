@@ -299,7 +299,7 @@ export class AlfrescoApiClient implements LegacyHttpClient {
         const httpRequestOptions = this.getRequestOptionsWithAcceptAndContentType(options);
         const promise = httpCall(url, httpRequestOptions, security, emitters);
 
-        return this.addPromiseListeners(promise, emitters);
+        return this.addPromiseListeners(promise, ee);
     }
 
     private getSecurityOptions(): SecurityOptions {
@@ -364,7 +364,7 @@ export class AlfrescoApiClient implements LegacyHttpClient {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, { eventEmitter }: Emitters): AlfrescoApiClientPromise<T> {
+    public addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: typeof ee): AlfrescoApiClientPromise<T> {
         return Object.assign(promise, {
             on() {
                 // eslint-disable-next-line prefer-spread,prefer-rest-params

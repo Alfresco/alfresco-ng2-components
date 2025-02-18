@@ -82,7 +82,8 @@ describe('Upload', () => {
             const file = createTestFileStream('testFile.txt');
 
             const promise: any = uploadApi.uploadFile(file, null, null, null, { autoRename: true });
-            promise.once('abort', () => {
+            promise.on('abort', () => {
+                promise.off('abort');
                 done();
             });
 
@@ -112,6 +113,7 @@ describe('Upload', () => {
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
             uploadPromise.on('error', () => {
+                uploadPromise.off('error');
                 done();
             });
         });
@@ -125,6 +127,7 @@ describe('Upload', () => {
 
             uploadPromise.catch(() => {});
             uploadPromise.on('unauthorized', () => {
+                uploadPromise.off('unauthorized');
                 done();
             });
         });
@@ -135,7 +138,10 @@ describe('Upload', () => {
             const file = createTestFileStream('testFile.txt');
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.once('progress', () => done());
+            uploadPromise.on('progress', () => {
+                uploadPromise.off('progress');
+                done();
+            });
         });
 
         it('Multiple Upload should fire progress events on the right promise during the upload', (done) => {
@@ -149,7 +155,7 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const promise: any = uploadApi.uploadFile(file);
-                promise.once('success', () => {
+                promise.on('success', () => {
                     progressOneOk = true;
                     resolve('Resolving');
                 });
@@ -159,7 +165,7 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const promise: any = uploadApi.uploadFile(fileTwo);
-                promise.once('success', () => {
+                promise.on('success', () => {
                     progressTwoOk = true;
                     resolve('Resolving');
                 });
@@ -184,7 +190,7 @@ describe('Upload', () => {
 
                 const uploadPromise: any = uploadApi.uploadFile(file);
                 uploadPromise.catch(() => {});
-                uploadPromise.once('success', () => {
+                uploadPromise.on('success', () => {
                     errorOneOk = true;
                     resolve('Resolving');
                 });
@@ -195,7 +201,7 @@ describe('Upload', () => {
 
                 const uploadPromise: any = uploadApi.uploadFile(fileTwo);
                 uploadPromise.catch(() => {});
-                uploadPromise.once('success', () => {
+                uploadPromise.on('success', () => {
                     errorTwoOk = true;
                     resolve('Resolving');
                 });
@@ -220,9 +226,10 @@ describe('Upload', () => {
 
                 const uploadPromiseOne: any = uploadApi.uploadFile(file);
                 uploadPromiseOne.catch(() => {});
-                uploadPromiseOne.once('success', () => {
+                uploadPromiseOne.on('success', () => {
                     successOneOk = true;
                     resolve('Resolving');
+                    uploadPromiseOne.off('success');
                 });
             });
 
@@ -231,9 +238,10 @@ describe('Upload', () => {
 
                 const uploadPromiseTwo: any = uploadApi.uploadFile(fileTwo);
                 uploadPromiseTwo.catch(() => {});
-                uploadPromiseTwo.once('success', () => {
+                uploadPromiseTwo.on('success', () => {
                     successTwoOk = true;
                     resolve('Resolving');
+                    uploadPromiseTwo.off('success');
                 });
             });
 
@@ -308,11 +316,13 @@ describe('Upload', () => {
             uploadPromise.catch(() => {});
 
             uploadPromise
-                .once('error', () => {
+                .on('error', () => {
                     promiseProgressOne = Promise.resolve('Resolving');
+                    uploadPromise.off('error');
                 })
-                .once('unauthorized', () => {
+                .on('unauthorized', () => {
                     promiseProgressTwo = Promise.resolve('Resolving');
+                    uploadPromise.off('unauthorized');
                 });
 
             Promise.all([promiseProgressOne, promiseProgressTwo]).then(() => {

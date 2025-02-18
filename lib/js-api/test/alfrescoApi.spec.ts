@@ -84,7 +84,7 @@ describe('Basic configuration test', () => {
             assert.equal(alfrescoApi.config.ticketEcm, mockConfigTicket);
             assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockConfigTicket);
 
-            alfrescoApi.on('ticket_mismatch', () => {
+            alfrescoApi.contentClient.on('ticket_mismatch', () => {
                 // As the ticket mismatch event is triggered, the ticketEcm should now be the one from storage
                 assert.equal(alfrescoApi.config.ticketEcm, mockStorageTicket);
                 assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockStorageTicket);
@@ -290,7 +290,7 @@ describe('Basic configuration test', () => {
 
             authEcmMock.get201Response();
 
-            alfrescoJsApi.on('logged-in', () => {
+            alfrescoJsApi.contentAuth.on('logged-in', () => {
                 done();
             });
 
@@ -309,7 +309,7 @@ describe('Basic configuration test', () => {
                 provider: 'BPM'
             });
 
-            alfrescoJsApi.on('logged-in', () => {
+            alfrescoJsApi.contentAuth.on('logged-in', () => {
                 done();
             });
 
@@ -333,7 +333,7 @@ describe('Basic configuration test', () => {
                 authType: 'OAUTH'
             });
 
-            alfrescoJsApi.on('logged-in', () => {
+            alfrescoJsApi.oauth2Auth.on('logged-in', () => {
                 done();
             });
 

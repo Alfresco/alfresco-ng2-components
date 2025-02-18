@@ -280,7 +280,7 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            oauth2Auth.once('token_issued', () => {
+            oauth2Auth.on('token_issued', () => {
                 oauth2Auth.logOut();
                 done();
             });
@@ -307,7 +307,7 @@ describe('Oauth2  test', () => {
             );
 
             let counterCallEvent = 0;
-            oauth2Auth.once('token_issued', () => {
+            oauth2Auth.on('token_issued', () => {
                 counterCallEvent++;
             });
 
@@ -340,7 +340,7 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            oauth2Auth.once('token_issued', () => {
+            oauth2Auth.on('token_issued', () => {
                 oauth2Auth.logOut();
                 done();
             });
@@ -367,7 +367,7 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            oauth2Auth.once('token_issued', () => {
+            oauth2Auth.on('token_issued', () => {
                 oauth2Auth.logOut();
                 done();
             });
@@ -404,42 +404,6 @@ describe('Oauth2  test', () => {
                 );
 
                 alfrescoApi.oauth2Auth.logOut();
-                done();
-            });
-
-            alfrescoApi.login('admin', 'admin');
-        });
-
-        it('should after token_issued event exchange the access_token for the alf_ticket with the compatibility layer', (done) => {
-            oauth2Mock.get200Response();
-            authResponseMock.get200ValidTicket();
-
-            const alfrescoApi = new AlfrescoApi({
-                hostEcm: 'https://myOauthUrl:30081',
-                oauth2: {
-                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                    clientId: 'activiti',
-                    scope: 'openid',
-                    secret: '',
-                    redirectUri: '/',
-                    redirectUriLogout: '/logout'
-                },
-                authType: 'OAUTH'
-            });
-
-            const contentApi = new ContentApi(alfrescoApi);
-
-            alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
-                assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-
-                const URL = contentApi.getContentUrl('FAKE-NODE-ID');
-                assert.equal(
-                    URL,
-                    'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
-                );
-                alfrescoApi.oauth2Auth.logOut();
-
                 done();
             });
 

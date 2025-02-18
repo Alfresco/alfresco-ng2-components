@@ -306,8 +306,11 @@ export class AlfrescoApi implements AlfrescoApiType {
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
     login(username: string, password: string): Promise<any> {
+        let promise: any;
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
-            return Promise.reject(new Error('missing username or password'));
+            promise = Promise.reject(new Error('missing username or password'));
+
+            return this.addPromiseListeners(promise, ee);
         }
 
         if (username) {
@@ -317,38 +320,35 @@ export class AlfrescoApi implements AlfrescoApiType {
         this.username = username;
 
         if (this.isOauthConfiguration()) {
-            const promise = this.oauth2Auth.login(username, password);
-            promise.then((accessToken) => {
+            promise = this.oauth2Auth.login(username, password);
+            promise.then((accessToken: string) => {
                 this.config.accessToken = accessToken;
             });
-            return promise;
         } else {
             if (this.isBpmConfiguration()) {
-                const promise = this.processAuth.login(username, password);
-                promise.then((ticketBpm) => {
+                promise = this.processAuth.login(username, password);
+                promise.then((ticketBpm: string) => {
                     this.config.ticketBpm = ticketBpm;
                 });
-                return promise;
             } else if (this.isEcmConfiguration()) {
-                const promise = this.contentAuth.login(username, password);
-                promise.then((ticketEcm) => {
+                promise = this.contentAuth.login(username, password);
+                promise.then((ticketEcm: string) => {
                     this.setAuthenticationClientECMBPM(this.contentAuth.getAuthentication(), null);
                     this.config.ticketEcm = ticketEcm;
                 });
-                return promise;
             } else if (this.isEcmBpmConfiguration()) {
-                const contentProcessPromise = this.loginBPMECM(username, password);
+                promise = this.loginBPMECM(username, password);
 
-                contentProcessPromise.then((data) => {
+                promise.then((data: string[]) => {
                     this.config.ticketEcm = data[0];
                     this.config.ticketBpm = data[1];
                 });
-
-                return contentProcessPromise;
             } else {
-                return Promise.reject(new Error('Unknown configuration'));
+                promise = Promise.reject(new Error('Unknown configuration'));
             }
         }
+
+        return this.addPromiseListeners(promise, ee);
     }
 
     isCredentialValid(credential: string): boolean {
@@ -412,11 +412,7 @@ export class AlfrescoApi implements AlfrescoApiType {
             );
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners(promise, ee);
     }
 
     /**
@@ -470,11 +466,7 @@ export class AlfrescoApi implements AlfrescoApiType {
             );
         });
 
-        promise.on = this.on;
-        promise.off = this.off;
-        promise.emit = this.emit;
-
-        return promise;
+        return this.addPromiseListeners(promise, ee);
     }
 
     /**
@@ -639,5 +631,25 @@ export class AlfrescoApi implements AlfrescoApiType {
         } else {
             this.on(event, callback);
         }
+    }
+
+    private addPromiseListeners<T = void>(promise: Promise<T>, eventEmitter: typeof ee): Promise<T> {
+        return Object.assign(promise, {
+            on() {
+                // eslint-disable-next-line prefer-spread,prefer-rest-params
+                eventEmitter.on.apply(eventEmitter, arguments);
+                return this;
+            },
+            emit() {
+                // eslint-disable-next-line prefer-spread,prefer-rest-params
+                eventEmitter.emit.apply(eventEmitter, arguments);
+                return this;
+            },
+            off() {
+                // eslint-disable-next-line prefer-spread,prefer-rest-params
+                eventEmitter.off.apply(eventEmitter, arguments);
+                return this;
+            }
+        });
     }
 }
