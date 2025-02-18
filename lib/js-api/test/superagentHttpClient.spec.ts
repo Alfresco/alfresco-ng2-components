@@ -99,15 +99,17 @@ describe('SuperagentHttpClient', () => {
             const httpMethod = 'GET';
             const securityOptions = { ...defaultSecurityOptions };
 
-            const request = client['buildRequest']({
-                ...options,
-                path: '',
-                httpMethod,
-                url,
-                bodyParam: null,
-                returnType: null,
+            const request = client['buildRequest'](
+                {
+                    ...options,
+                    path: '',
+                    httpMethod,
+                    url,
+                    bodyParam: null,
+                    returnType: null
+                },
                 securityOptions
-            });
+            );
 
             expect(request.urlWithParams).toEqual(url);
             const { fetchOptions } = request;
@@ -129,15 +131,17 @@ describe('SuperagentHttpClient', () => {
 
             (isBrowser as jest.Mock).mockReturnValue(false);
 
-            const request = client['buildRequest']({
-                ...options,
-                path: '',
-                httpMethod,
-                url,
-                bodyParam: null,
-                returnType: null,
+            const request = client['buildRequest'](
+                {
+                    ...options,
+                    path: '',
+                    httpMethod,
+                    url,
+                    bodyParam: null,
+                    returnType: null
+                },
                 securityOptions
-            });
+            );
             expect(request.fetchOptions.headers['cookie']).toEqual('testCookie');
         });
     });

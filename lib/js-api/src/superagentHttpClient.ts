@@ -48,11 +48,7 @@ export class SuperagentHttpClient implements HttpClient {
         const { returnType } = options;
         const { eventEmitter, apiClientEmitter } = emitters;
 
-        const { urlWithParams, fetchOptions } = this.buildRequest({
-            ...options,
-            url,
-            securityOptions
-        });
+        const { urlWithParams, fetchOptions } = this.buildRequest({ ...options, url }, securityOptions);
 
         const controller = new AbortController();
         fetchOptions.signal = controller.signal;
@@ -100,19 +96,10 @@ export class SuperagentHttpClient implements HttpClient {
         return promise;
     }
 
-    private buildRequest({
-        httpMethod,
-        url,
-        queryParams,
-        headerParams,
-        formParams,
-        bodyParam,
-        contentType,
-        accept,
-        responseType,
-        returnType,
-        securityOptions
-    }: RequestOptions & { securityOptions: SecurityOptions }) {
+    private buildRequest(
+        { httpMethod, url, queryParams, headerParams, formParams, bodyParam, contentType, accept, responseType, returnType }: RequestOptions,
+        securityOptions: SecurityOptions
+    ) {
         const urlWithParams = new URL(url);
         urlWithParams.search = new URLSearchParams(SuperagentHttpClient.normalizeParams(queryParams)).toString();
 
