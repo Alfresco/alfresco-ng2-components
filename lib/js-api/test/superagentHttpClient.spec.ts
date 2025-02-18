@@ -27,7 +27,7 @@ jest.mock('ofetch', () => ({
 
 jest.mock('../src/utils', () => ({
     isBrowser: jest.fn(() => true),
-    paramToString: (param: any) => String(param)
+    paramToString: (param: unknown) => String(param)
 }));
 
 describe('SuperagentHttpClient', () => {
@@ -100,14 +100,10 @@ describe('SuperagentHttpClient', () => {
             const securityOptions = { ...defaultSecurityOptions };
 
             const request = client['buildRequest']({
+                ...options,
+                path: '',
                 httpMethod,
                 url,
-                queryParams: options.queryParams,
-                headerParams: options.headerParams,
-                formParams: options.formParams,
-                contentType: options.contentType,
-                accept: options.accept,
-                responseType: options.responseType,
                 bodyParam: null,
                 returnType: null,
                 securityOptions
@@ -134,14 +130,10 @@ describe('SuperagentHttpClient', () => {
             (isBrowser as jest.Mock).mockReturnValue(false);
 
             const request = client['buildRequest']({
+                ...options,
+                path: '',
                 httpMethod,
                 url,
-                queryParams: options.queryParams,
-                headerParams: options.headerParams,
-                formParams: options.formParams,
-                contentType: options.contentType,
-                accept: options.accept,
-                responseType: options.responseType,
                 bodyParam: null,
                 returnType: null,
                 securityOptions

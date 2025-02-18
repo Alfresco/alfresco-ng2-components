@@ -45,20 +45,12 @@ export class SuperagentHttpClient implements HttpClient {
     }
 
     request<T = any>(url: string, options: RequestOptions, securityOptions: SecurityOptions, emitters: Emitters): Promise<T> {
-        const { httpMethod, queryParams, headerParams, formParams, bodyParam, contentType, accept, responseType, returnType } = options;
+        const { returnType } = options;
         const { eventEmitter, apiClientEmitter } = emitters;
 
         const { urlWithParams, fetchOptions } = this.buildRequest({
-            httpMethod,
+            ...options,
             url,
-            queryParams,
-            headerParams,
-            formParams,
-            bodyParam,
-            contentType,
-            accept,
-            responseType,
-            returnType,
             securityOptions
         });
 
@@ -120,19 +112,7 @@ export class SuperagentHttpClient implements HttpClient {
         responseType,
         returnType,
         securityOptions
-    }: {
-        httpMethod: string;
-        url: string;
-        queryParams: { [key: string]: any };
-        headerParams: { [key: string]: any };
-        formParams: { [key: string]: any };
-        bodyParam: string | object;
-        contentType: string;
-        accept: string;
-        responseType: string;
-        returnType: string;
-        securityOptions: SecurityOptions;
-    }) {
+    }: RequestOptions & { securityOptions: SecurityOptions }) {
         const urlWithParams = new URL(url);
         urlWithParams.search = new URLSearchParams(SuperagentHttpClient.normalizeParams(queryParams)).toString();
 
