@@ -15,11 +15,98 @@
  * limitations under the License.
  */
 
-import assert from 'assert';
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
-import { FetchResponse } from 'ofetch';
+import { FetchResponse, ofetch } from 'ofetch';
+import { RequestOptions } from '../src/api-clients/http-client.interface';
+import { Emitters } from '@alfresco/adf-core/api';
+import * as utils from '../src/utils';
+
+jest.mock('ofetch', () => ({
+    ofetch: jest.fn()
+}));
+
+jest.mock('../src/utils', () => ({
+    isBrowser: jest.fn(() => true), // default implementation: browser environment
+    paramToString: (param: any) => String(param)
+}));
 
 describe('SuperagentHttpClient', () => {
+    describe('request', () => {
+        let client: SuperagentHttpClient;
+        let emitters: Emitters;
+
+        const url = 'http://fake-api/test';
+        const options: RequestOptions = {
+            path: '/test',
+            httpMethod: 'GET',
+            queryParams: {},
+            headerParams: {},
+            formParams: {},
+            bodyParam: null,
+            contentType: 'application/json',
+            accept: 'application/json',
+            responseType: 'json',
+            returnType: null
+        };
+        const securityOptions = {
+            isBpmRequest: false,
+            enableCsrf: false,
+            withCredentials: false,
+            authentications: {
+                basicAuth: { ticket: '' },
+                type: 'basic'
+            },
+            defaultHeaders: {}
+        };
+
+        beforeEach(() => {
+            client = new SuperagentHttpClient();
+            emitters = {
+                eventEmitter: { emit: jest.fn(), on: jest.fn(), off: jest.fn(), once: jest.fn() },
+                apiClientEmitter: { emit: jest.fn(), on: jest.fn(), off: jest.fn(), once: jest.fn() }
+            };
+            (ofetch as unknown as jest.Mock).mockClear();
+        });
+
+        it('should resolve with deserialized data on success', async () => {
+            const fakeResponse = {
+                ok: true,
+                headers: new Map([['content-type', 'application/json']]),
+                json: () => Promise.resolve({ data: 'test' })
+            } as unknown as FetchResponse<unknown>;
+            (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+            const result = await client.request(url, options, securityOptions, emitters);
+            expect(result).toEqual({ data: 'test' });
+            expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('success', { data: 'test' });
+        });
+
+        it('should handle non-ok response and reject with error', async () => {
+            const fakeResponse = {
+                ok: false,
+                status: 400,
+                headers: new Map([['content-type', 'application/json']]),
+                text: () => Promise.resolve('Bad Request')
+            } as unknown as FetchResponse<unknown>;
+            (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+            await expect(client.request(url, options, securityOptions, emitters)).rejects.toMatchObject({ status: 400 });
+            expect(emitters.apiClientEmitter.emit).toHaveBeenCalledWith('error', fakeResponse);
+            expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('error', fakeResponse);
+        });
+
+        it('should handle 401 unauthorized response appropriately', async () => {
+            const fakeResponse = {
+                ok: false,
+                status: 401,
+                headers: new Map([['content-type', 'application/json']]),
+                text: () => Promise.resolve('Unauthorized')
+            } as unknown as FetchResponse<unknown>;
+            (ofetch as unknown as jest.Mock).mockResolvedValue(fakeResponse);
+            await expect(client.request(url, options, securityOptions, emitters)).rejects.toMatchObject({ status: 401 });
+            expect(emitters.apiClientEmitter.emit).toHaveBeenCalledWith('unauthorized');
+            expect(emitters.eventEmitter.emit).toHaveBeenCalledWith('unauthorized');
+        });
+    });
+
     describe('buildRequest', () => {
         it('should create a request with response type blob', () => {
             const client = new SuperagentHttpClient();
@@ -59,12 +146,53 @@ describe('SuperagentHttpClient', () => {
                 securityOptions
             });
 
-            assert.equal(request.urlWithParams, 'http://fake-api/enterprise/process-instances/');
+            expect(request.urlWithParams).toEqual('http://fake-api/enterprise/process-instances/');
             const { fetchOptions } = request;
 
-            assert.equal(fetchOptions.headers['accept'], 'application/json');
-            assert.equal(fetchOptions.headers['content-type'], 'application/json');
-            assert.equal(fetchOptions.responseType, 'blob');
+            expect(fetchOptions.headers['accept']).toEqual('application/json');
+            expect(fetchOptions.headers['content-type']).toEqual('application/json');
+            expect(fetchOptions.responseType).toEqual('blob');
+        });
+
+        it('should set Cookie header when isBpmRequest is true and cookie exists in non-browser environment', () => {
+            const client = new SuperagentHttpClient();
+            const queryParams = {};
+            const headerParams = {};
+            const formParams = {};
+            const contentType = 'application/json';
+            const accept = 'application/json';
+            const responseType = 'json';
+            const url = 'http://fake-api/test-cookie';
+            const httpMethod = 'GET';
+            const securityOptions = {
+                isBpmRequest: true,
+                enableCsrf: false,
+                withCredentials: false,
+                authentications: {
+                    cookie: 'testCookie',
+                    basicAuth: { ticket: '' },
+                    type: 'basic'
+                },
+                defaultHeaders: {}
+            };
+
+            // Override isBrowser to simulate a non-browser environment
+            (utils.isBrowser as jest.Mock).mockReturnValue(false);
+
+            const request = client['buildRequest']({
+                httpMethod,
+                url,
+                queryParams,
+                headerParams,
+                formParams,
+                contentType,
+                accept,
+                responseType,
+                bodyParam: null,
+                returnType: null,
+                securityOptions
+            });
+            expect(request.fetchOptions.headers['cookie']).toEqual('testCookie');
         });
     });
 
@@ -88,7 +216,7 @@ describe('SuperagentHttpClient', () => {
             const result = await SuperagentHttpClient['deserialize'](response);
 
             const isArray = Array.isArray(result);
-            assert.equal(isArray, true);
+            expect(isArray).toEqual(true);
         });
 
         it('should deserialize to an object when the response body is an object', () => {
@@ -98,12 +226,12 @@ describe('SuperagentHttpClient', () => {
             const result = SuperagentHttpClient['deserialize'](response);
 
             const isArray = Array.isArray(result);
-            assert.equal(isArray, false);
+            expect(isArray).toEqual(false);
         });
 
         it('should return null when response is null', async () => {
             const result = await SuperagentHttpClient['deserialize'](null);
-            assert.equal(result, null);
+            expect(result).toEqual(null);
         });
 
         it('should fallback to text property when body cant be parsed', async () => {
@@ -113,7 +241,7 @@ describe('SuperagentHttpClient', () => {
 
             const result = await SuperagentHttpClient['deserialize'](data);
 
-            assert.equal(result, 'mock-response-text');
+            expect(result).toEqual('mock-response-text');
         });
 
         it('should convert to returnType when provided', async () => {
@@ -129,9 +257,9 @@ describe('SuperagentHttpClient', () => {
                 json: () => Promise.resolve({ id: '1', name: 'test1' })
             } as FetchResponse<unknown>;
             const result = await SuperagentHttpClient['deserialize'](data, Dummy);
-            assert.ok(result instanceof Dummy);
-            assert.equal(result.id, '1');
-            assert.equal(result.name, 'test1');
+            expect(result).toBeInstanceOf(Dummy);
+            expect(result.id).toEqual('1');
+            expect(result.name).toEqual('test1');
         });
     });
 
@@ -152,8 +280,8 @@ describe('SuperagentHttpClient', () => {
             }
 
             client.setCsrfToken(fakeRequest);
-            assert.ok(fakeRequest.header['X-CSRF-TOKEN']);
-            assert.ok(document.cookie.indexOf('CSRF-TOKEN=') !== -1);
+            expect(fakeRequest.header['X-CSRF-TOKEN']).toBeTruthy();
+            expect(document.cookie.indexOf('CSRF-TOKEN=')).not.toEqual(-1);
         });
     });
 });
