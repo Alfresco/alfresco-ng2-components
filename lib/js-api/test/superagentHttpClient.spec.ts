@@ -18,46 +18,26 @@
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
 import { FetchResponse, ofetch } from 'ofetch';
 import { RequestOptions } from '../src/api-clients/http-client.interface';
-import { Emitters } from '@alfresco/adf-core/api';
 import { isBrowser } from '../src/utils';
+import { buildRequestMockOptions, defaultEmitters, defaultRequestOptions, defaultSecurityOptions } from './mockObjects/httpClient.mock';
 
 jest.mock('ofetch', () => ({
     ofetch: jest.fn()
 }));
 
 jest.mock('../src/utils', () => ({
-    isBrowser: jest.fn(() => true), // default implementation: browser environment
+    isBrowser: jest.fn(() => true),
     paramToString: (param: any) => String(param)
 }));
 
 describe('SuperagentHttpClient', () => {
     describe('request', () => {
         let client: SuperagentHttpClient;
-        let emitters: Emitters;
+        let emitters: typeof defaultEmitters;
 
         const url = 'http://fake-api/test';
-        const options: RequestOptions = {
-            path: '/test',
-            httpMethod: 'GET',
-            queryParams: {},
-            headerParams: {},
-            formParams: {},
-            bodyParam: null,
-            contentType: 'application/json',
-            accept: 'application/json',
-            responseType: 'json',
-            returnType: null
-        };
-        const securityOptions = {
-            isBpmRequest: false,
-            enableCsrf: false,
-            withCredentials: false,
-            authentications: {
-                basicAuth: { ticket: '' },
-                type: 'basic'
-            },
-            defaultHeaders: {}
-        };
+        const options: RequestOptions = { ...defaultRequestOptions };
+        const securityOptions = { ...defaultSecurityOptions };
 
         beforeEach(() => {
             client = new SuperagentHttpClient();
@@ -110,84 +90,58 @@ describe('SuperagentHttpClient', () => {
     describe('buildRequest', () => {
         it('should create a request with response type blob', () => {
             const client = new SuperagentHttpClient();
-            const queryParams = {};
-            const headerParams = {};
-            const formParams = {};
+            const options = { ...buildRequestMockOptions };
+            options.contentType = 'application/json';
+            options.accept = 'application/json';
+            options.responseType = 'blob';
 
-            const contentType = 'application/json';
-            const accept = 'application/json';
-            const responseType = 'blob';
             const url = 'http://fake-api/enterprise/process-instances/';
             const httpMethod = 'GET';
-            const securityOptions = {
-                isBpmRequest: false,
-                enableCsrf: false,
-                withCredentials: false,
-                authentications: {
-                    basicAuth: {
-                        ticket: ''
-                    },
-                    type: 'basic'
-                },
-                defaultHeaders: {}
-            };
+            const securityOptions = { ...defaultSecurityOptions };
 
             const request = client['buildRequest']({
                 httpMethod,
                 url,
-                queryParams,
-                headerParams,
-                formParams,
-                contentType,
-                accept,
-                responseType,
+                queryParams: options.queryParams,
+                headerParams: options.headerParams,
+                formParams: options.formParams,
+                contentType: options.contentType,
+                accept: options.accept,
+                responseType: options.responseType,
                 bodyParam: null,
                 returnType: null,
                 securityOptions
             });
 
-            expect(request.urlWithParams).toEqual('http://fake-api/enterprise/process-instances/');
+            expect(request.urlWithParams).toEqual(url);
             const { fetchOptions } = request;
-
-            expect(fetchOptions.headers['accept']).toEqual('application/json');
-            expect(fetchOptions.headers['content-type']).toEqual('application/json');
+            expect(fetchOptions.headers['accept']).toEqual(options.accept);
+            expect(fetchOptions.headers['content-type']).toEqual(options.contentType);
             expect(fetchOptions.responseType).toEqual('blob');
         });
 
         it('should set Cookie header when isBpmRequest is true and cookie exists in non-browser environment', () => {
             const client = new SuperagentHttpClient();
-            const queryParams = {};
-            const headerParams = {};
-            const formParams = {};
-            const contentType = 'application/json';
-            const accept = 'application/json';
-            const responseType = 'json';
+            const options = { ...buildRequestMockOptions };
             const url = 'http://fake-api/test-cookie';
             const httpMethod = 'GET';
             const securityOptions = {
+                ...defaultSecurityOptions,
                 isBpmRequest: true,
-                enableCsrf: false,
-                withCredentials: false,
-                authentications: {
-                    cookie: 'testCookie',
-                    basicAuth: { ticket: '' },
-                    type: 'basic'
-                },
-                defaultHeaders: {}
+                authentications: { cookie: 'testCookie', basicAuth: { ticket: '' }, type: 'basic' }
             };
 
-            // Override isBrowser to simulate a non-browser environment
             (isBrowser as jest.Mock).mockReturnValue(false);
 
             const request = client['buildRequest']({
                 httpMethod,
                 url,
-                queryParams,
-                headerParams,
-                formParams,
-                contentType,
-                accept,
-                responseType,
+                queryParams: options.queryParams,
+                headerParams: options.headerParams,
+                formParams: options.formParams,
+                contentType: options.contentType,
+                accept: options.accept,
+                responseType: options.responseType,
                 bodyParam: null,
                 returnType: null,
                 securityOptions
@@ -199,14 +153,8 @@ describe('SuperagentHttpClient', () => {
     describe('deserialize', () => {
         it('should deserialize to an array when the response body is an array', async () => {
             const data = [
-                {
-                    id: '1',
-                    name: 'test1'
-                },
-                {
-                    id: '2',
-                    name: 'test2'
-                }
+                { id: '1', name: 'test1' },
+                { id: '2', name: 'test2' }
             ];
             const response = {
                 json() {
@@ -214,7 +162,6 @@ describe('SuperagentHttpClient', () => {
                 }
             } as FetchResponse<unknown>;
             const result = await SuperagentHttpClient['deserialize'](response);
-
             const isArray = Array.isArray(result);
             expect(isArray).toEqual(true);
         });
@@ -224,7 +171,6 @@ describe('SuperagentHttpClient', () => {
                 json: () => Promise.resolve({ id: '1', name: 'test1' })
             } as FetchResponse<unknown>;
             const result = SuperagentHttpClient['deserialize'](response);
-
             const isArray = Array.isArray(result);
             expect(isArray).toEqual(false);
         });
@@ -238,9 +184,7 @@ describe('SuperagentHttpClient', () => {
             const data = {
                 text: () => Promise.resolve('mock-response-text')
             } as FetchResponse<unknown>;
-
             const result = await SuperagentHttpClient['deserialize'](data);
-
             expect(result).toEqual('mock-response-text');
         });
 
