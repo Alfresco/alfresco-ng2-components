@@ -42,10 +42,10 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     constructor(
         adfHttpClient: AdfHttpClient,
-        @Optional() @Inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN) injectedFieldValidators: FormFieldValidator[]
+        @Optional() @Inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]
     ) {
         super(adfHttpClient);
-        this.fieldValidators = injectedFieldValidators;
+        this.fieldValidators = injectedFieldValidators || [];
     }
 
     /**

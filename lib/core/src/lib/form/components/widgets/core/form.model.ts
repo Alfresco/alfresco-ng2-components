@@ -133,8 +133,8 @@ export class FormModel implements ProcessFormModel {
 
             this.parseOutcomes();
         }
-        this.fieldValidators = injectedFieldValidators ? [...FORM_FIELD_VALIDATORS, ...injectedFieldValidators] : [...FORM_FIELD_VALIDATORS];
 
+        this.loadInjectedFieldValidators(injectedFieldValidators);
         this.validateForm();
     }
 
@@ -502,5 +502,9 @@ export class FormModel implements ProcessFormModel {
         if (variable) {
             variable.value = value;
         }
+    }
+
+    private loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {
+        this.fieldValidators = injectedFieldValidators ? [...FORM_FIELD_VALIDATORS, ...injectedFieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 }

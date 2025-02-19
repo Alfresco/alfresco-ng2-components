@@ -63,7 +63,7 @@ export class FormService implements FormValidationService {
     formRulesEvent = new Subject<FormRulesEvent>();
 
     constructor(@Optional() @Inject(FORM_SERVICE_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]) {
-        this.fieldValidators = injectedFieldValidators;
+        this.fieldValidators = injectedFieldValidators || [];
     }
 
     /**
