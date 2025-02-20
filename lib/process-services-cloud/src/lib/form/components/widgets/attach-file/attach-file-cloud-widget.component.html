@@ -2,7 +2,7 @@
     <div class="adf-attach-widget {{field.className}}"
         [class.adf-readonly]="field.readOnly">
         <label class="adf-label" [attr.for]="field.id">{{field.name}}
-            <span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
         <div class="adf-attach-widget-container" (focusout)="markAsTouched()">
             <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible()">

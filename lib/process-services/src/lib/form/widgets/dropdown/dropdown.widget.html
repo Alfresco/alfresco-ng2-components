@@ -3,7 +3,9 @@
     [class.adf-invalid]="dropdownControl.invalid && dropdownControl.touched"
     [class.adf-readonly]="field.readOnly"
 >
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+    <label class="adf-label" [attr.for]="field.id"
+        >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+    >
     <mat-form-field>
         <mat-select class="adf-select" [id]="field.id" [formControl]="dropdownControl">
             <mat-option *ngFor="let opt of field.options" [value]="opt" [id]="opt.id">{{opt.name}}</mat-option>

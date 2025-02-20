@@ -1,13 +1,29 @@
-<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched" [class.adf-left-label-input-container]="field.leftLabels">
+<div
+    class="{{field.className}}"
+    id="data-widget"
+    [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched"
+    [class.adf-left-label-input-container]="field.leftLabels"
+>
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk"
-            *ngIf="isRequired()">*</span></label>
-     </div>
+        <label class="adf-label adf-left-label" [attr.for]="field.id"
+            >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
+                class="adf-asterisk"
+                [style.visibility]="isRequired() ? 'visible' : 'hidden'"
+                >*</span
+            ></label
+        >
+    </div>
     <div>
         <mat-form-field class="adf-date-widget" [class.adf-left-label-input-datepicker]="field.leftLabels" [hideRequiredMarker]="true">
-            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk"
-                *ngIf="isRequired()">*</span></label>
-            <input matInput
+            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id"
+                >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
+                    class="adf-asterisk"
+                    [style.visibility]="isRequired() ? 'visible' : 'hidden'"
+                    >*</span
+                ></label
+            >
+            <input
+                matInput
                 [matDatepicker]="datePicker"
                 [id]="field.id"
                 [formControl]="dateInputControl"
@@ -17,9 +33,7 @@
                 [title]="field.tooltip"
             />
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
-            <mat-datepicker #datePicker
-                [startAt]="startAt"
-                [disabled]="field.readOnly" />
+            <mat-datepicker #datePicker [startAt]="startAt" [disabled]="field.readOnly" />
         </mat-form-field>
         <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary" />
     </div>

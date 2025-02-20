@@ -1,47 +1,53 @@
-<div class="adf-group-widget {{field.className}}"
-     [class.is-dirty]="!!field.value"
-     [class.adf-invalid]="!field.isValid && isTouched()"
-     [class.adf-readonly]="field.readOnly"
-     id="functional-group-div">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-    <mat-form-field
-        appearance="outline"
-        class="adf-group-widget-field">
+<div
+    class="adf-group-widget {{field.className}}"
+    [class.is-dirty]="!!field.value"
+    [class.adf-invalid]="!field.isValid && isTouched()"
+    [class.adf-readonly]="field.readOnly"
+    id="functional-group-div"
+>
+    <label class="adf-label" [attr.for]="field.id"
+        >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+    >
+    <mat-form-field appearance="outline" class="adf-group-widget-field">
         <mat-chip-grid #chipGrid>
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 (removed)="onRemove(group)"
                 [disabled]="field.readOnly"
                 [attr.data-automation-id]="'adf-group-widget-chip-' + group.id"
-                class="adf-group-widget-field-chip">
+                class="adf-group-widget-field-chip"
+            >
                 {{ getDisplayName(group) }}
                 <button matChipRemove [attr.aria-label]="'remove ' + group.name">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-chip-row>
-        <input matInput
-               class="adf-input"
-               type="text"
-               data-automation-id="adf-group-search-input"
-               [matChipInputFor]="chipGrid"
-               [id]="field.id"
-               [formControl]="searchTerm"
-               [disabled]="!multiSelect && selectedGroups.length > 0 || field.readOnly"
-               [placeholder]="field.placeholder"
-               (blur)="markAsTouched()"
-               [matAutocomplete]="auto"
-               #inputValue>
+            <input
+                matInput
+                class="adf-input"
+                type="text"
+                data-automation-id="adf-group-search-input"
+                [matChipInputFor]="chipGrid"
+                [id]="field.id"
+                [formControl]="searchTerm"
+                [disabled]="!multiSelect && selectedGroups.length > 0 || field.readOnly"
+                [placeholder]="field.placeholder"
+                (blur)="markAsTouched()"
+                [matAutocomplete]="auto"
+                #inputValue
+            />
         </mat-chip-grid>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateOption($event.option.value)" [displayWith]="getDisplayName">
-            <mat-option *ngFor="let item of groups$ | async; let i = index"
-                        id="adf-group-widget-user-{{i}}"
-                        [id]="field.id +'-'+item.id"
-                        [value]="item"
-                        [disabled]="isGroupAlreadySelected(item)">
+            <mat-option
+                *ngFor="let item of groups$ | async; let i = index"
+                id="adf-group-widget-user-{{i}}"
+                [id]="field.id +'-'+item.id"
+                [value]="item"
+                [disabled]="isGroupAlreadySelected(item)"
+            >
                 <span id="adf-group-label-name">{{item.name}}</span>
             </mat-option>
         </mat-autocomplete>
-
     </mat-form-field>
     <error-widget [error]="field.validationSummary" />
     <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />

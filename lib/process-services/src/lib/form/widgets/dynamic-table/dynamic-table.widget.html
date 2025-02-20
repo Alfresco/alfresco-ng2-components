@@ -1,5 +1,5 @@
 <div class="adf-dynamic-table-scrolling {{field.className}}" [class.adf-invalid]="!isValid()">
-    <div class="adf-label">{{content.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></div>
+    <div class="adf-label">{{content.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></div>
 
     <div *ngIf="!editMode">
         <div class="adf-table-container">

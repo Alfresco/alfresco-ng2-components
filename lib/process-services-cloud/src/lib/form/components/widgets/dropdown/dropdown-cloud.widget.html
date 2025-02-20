@@ -6,13 +6,13 @@
 >
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
     </div>
     <div>
         <mat-form-field>
             <label *ngIf="!field.leftLabels" class="adf-label" [attr.for]="field.id">
-                {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+                {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
             </label>
             <mat-select
                 class="adf-select"

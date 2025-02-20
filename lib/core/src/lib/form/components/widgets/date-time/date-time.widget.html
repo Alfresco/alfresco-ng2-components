@@ -4,7 +4,7 @@
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
     </div>
     <div>
@@ -12,7 +12,7 @@
                         [class.adf-left-label-input-datepicker]="field.leftLabels"
                         [hideRequiredMarker]="true">
             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
-                {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+                {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
             </label>
             <input matInput
                    [matDatetimepicker]="datetimePicker"

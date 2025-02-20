@@ -1,7 +1,8 @@
-<div class="adf-radio-buttons-widget {{field.className}}"
-    [class.adf-readonly]="field.readOnly" [id]="field.id">
+<div class="adf-radio-buttons-widget {{field.className}}" [class.adf-readonly]="field.readOnly" [id]="field.id">
     <div class="adf-radio-button-container">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id"
+            >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+        >
         <mat-radio-group class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
             <mat-radio-button
                 [title]="field.tooltip"
@@ -11,7 +12,9 @@
                 [checked]="field.value === opt.id"
                 (change)="onOptionClick(opt.id)"
                 color="primary"
-                class="adf-radio-button" *ngFor="let opt of field.options" >
+                class="adf-radio-button"
+                *ngFor="let opt of field.options"
+            >
                 {{opt.name}}
             </mat-radio-button>
         </mat-radio-group>

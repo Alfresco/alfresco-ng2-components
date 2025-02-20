@@ -1,27 +1,27 @@
-<div class="adf-attach-folder-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid"
-     [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate}}<span *ngIf="isRequired()">*</span></label>
+<div class="adf-attach-folder-widget {{ field.className }}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id"
+        >{{ field.name | translate }}<span [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+    >
     <div class="adf-attach-folder-widget-container">
         <div *ngIf="hasFolder" class="adf-attach-folder-result">
             <mat-icon>folder</mat-icon>
             <div class="adf-attach-folder-files-row">
-                <span matLine id="{{'folder-'+field?.id}}"
-                        role="button" tabindex="0" class="adf-folder">{{selectedFolderName}}</span>
-                <button *ngIf="!field.readOnly" mat-icon-button [id]="'folder-'+field?.id+'-remove'"
-                        (click)="removeFolder();">
+                <span matLine id="{{ 'folder-' + field?.id }}" role="button" tabindex="0" class="adf-folder">{{ selectedFolderName }}</span>
+                <button *ngIf="!field.readOnly" mat-icon-button [id]="'folder-' + field?.id + '-remove'" (click)="removeFolder()">
                     <mat-icon class="mat-24">highlight_off</mat-icon>
                 </button>
             </div>
         </div>
 
         <div *ngIf="!hasFolder && !field.readOnly">
-            <button mat-raised-button
+            <button
+                mat-raised-button
                 color="primary"
                 (click)="openSelectDialogFromFileSource()"
-                [id]="'folder-'+field?.id+'-button'"
-                class="adf-attach-folder-menu-trigger">
-                    {{ 'FORM.FIELD.UPLOAD' | translate }}
+                [id]="'folder-' + field?.id + '-button'"
+                class="adf-attach-folder-menu-trigger"
+            >
+                {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>cloud_upload</mat-icon>
             </button>
         </div>
