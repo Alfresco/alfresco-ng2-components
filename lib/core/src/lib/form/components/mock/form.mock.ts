@@ -1686,3 +1686,9 @@ export const mockFormWithSections = {
         }
     }
 };
+
+export const fakeValidatorMock = {
+    supportedTypes: ['test'],
+    isSupported: () => true,
+    validate: () => true
+};

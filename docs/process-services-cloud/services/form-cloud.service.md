@@ -92,6 +92,36 @@ class MyComponent {
     -   _values:_ [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) values object
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/models/task-details-cloud.model.ts)`>` - Updated task details
 
+### Properties
+| Name | Type      | Description |
+| ---- | --------- | ----------- |
+| fieldValidators | FormFieldValidator[] | Array of Field Validators injected with token and then passed to FormModel |
+
+
+### Inject Preference service
+
+Token: [`FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN`]
+A DI token that allows to inject additional form field validators.
+
+```ts
+import { NgModule } from '@angular/core';
+import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN } from '@alfresco/adf-process-services-cloud';
+
+@NgModule({
+    imports: [
+        ...Import Required Modules
+    ],
+    providers: [
+        { 
+            provide: FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, 
+            useValue: [new AdditionalFormFieldValidator()]
+        }
+    ]
+})
+export class ExampleModule {}
+```
+
+
 ## See also
 
 -   [Form cloud component](../components/form-cloud.component.md)
