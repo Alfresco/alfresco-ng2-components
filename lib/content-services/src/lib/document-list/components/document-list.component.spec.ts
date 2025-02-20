@@ -25,7 +25,8 @@ import {
     DataTableComponent,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService
+    ThumbnailService,
+    UnitTestingUtils
 } from '@alfresco/adf-core';
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -63,7 +64,6 @@ import { FileAutoDownloadComponent } from './file-auto-download/file-auto-downlo
 import { DocumentListComponent } from './document-list.component';
 import { CustomResourcesService, DocumentListService } from '../public-api';
 import { CommonModule } from '@angular/common';
-import { UnitTestingUtils } from '../../../../../core';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
