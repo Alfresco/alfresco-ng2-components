@@ -371,6 +371,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     displayCheckboxesOnHover = false;
 
+    /** Display drag and drop hint. */
+    @Input()
+    displayDragAndDropHint = true;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();

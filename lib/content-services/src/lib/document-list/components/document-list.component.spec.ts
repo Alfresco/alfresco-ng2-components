@@ -25,21 +25,13 @@ import {
     DataTableComponent,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService
+    ThumbnailService,
+    UnitTestingUtils
 } from '@alfresco/adf-core';
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-    Component,
-    CUSTOM_ELEMENTS_SCHEMA,
-    Injector,
-    QueryList,
-    runInInjectionContext,
-    SimpleChange,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -94,6 +86,12 @@ describe('DocumentList', () => {
     let spyFolderNode: any;
     let authenticationService: AuthenticationService;
     let injector: Injector;
+    let unitTestingUtils: UnitTestingUtils;
+
+    const getEmptyFolderDragDropTitle = (): string => unitTestingUtils.getByCSS('.adf-empty-folder-drag-drop')?.nativeElement?.textContent;
+
+    const getEmptyFolderDragDropSubtitle = (): string =>
+        unitTestingUtils.getByCSS('.adf-empty-folder-any-files-here-to-add')?.nativeElement?.textContent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -109,6 +107,7 @@ describe('DocumentList', () => {
 
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         documentListService = TestBed.inject(DocumentListService);
         customResourcesService = TestBed.inject(CustomResourcesService);
@@ -1139,7 +1138,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
         runInInjectionContext(injector, () => {
             documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
-        })
+        });
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
     });
@@ -1160,7 +1159,7 @@ describe('DocumentList', () => {
     it('should empty folder NOT show the pagination', () => {
         runInInjectionContext(injector, () => {
             documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
-        })
+        });
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
@@ -1649,6 +1648,44 @@ describe('DocumentList', () => {
         await fixture.whenStable();
 
         expect(dialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true, data: node });
+    });
+
+    it('should display drag and drop title by default', () => {
+        fixture.detectChanges();
+        expect(getEmptyFolderDragDropTitle()).toBe('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE');
+    });
+
+    it('should display drag and drop title if displayDragAndDropHint is set to true', () => {
+        documentList.displayDragAndDropHint = true;
+
+        fixture.detectChanges();
+        expect(getEmptyFolderDragDropTitle()).toBe('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE');
+    });
+
+    it('should not display drag and drop title if displayDragAndDropHint is set to false', () => {
+        documentList.displayDragAndDropHint = false;
+
+        fixture.detectChanges();
+        expect(getEmptyFolderDragDropTitle()).toBeUndefined();
+    });
+
+    it('should display drag and drop subtitle by default', () => {
+        fixture.detectChanges();
+        expect(getEmptyFolderDragDropSubtitle()).toBe('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE');
+    });
+
+    it('should display drag and drop subtitle if displayDragAndDropHint is set to true', () => {
+        documentList.displayDragAndDropHint = true;
+
+        fixture.detectChanges();
+        expect(getEmptyFolderDragDropSubtitle()).toBe('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE');
+    });
+
+    it('should not display drag and drop subtitle if displayDragAndDropHint is set to false', () => {
+        documentList.displayDragAndDropHint = false;
+
+        fixture.detectChanges();
+        expect(getEmptyFolderDragDropSubtitle()).toBeUndefined();
     });
 
     describe('Preselect nodes', () => {
