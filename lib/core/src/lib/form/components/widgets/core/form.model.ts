@@ -85,7 +85,7 @@ export class FormModel implements ProcessFormModel {
     tabs: TabModel[] = [];
     fields: (ContainerModel | FormFieldModel)[] = [];
     outcomes: FormOutcomeModel[] = [];
-    fieldValidators: FormFieldValidator[] = [];
+    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     customFieldTemplates: FormFieldTemplates = {};
     theme?: ThemeModel;
 
@@ -100,8 +100,7 @@ export class FormModel implements ProcessFormModel {
         formValues?: FormValues,
         readOnly: boolean = false,
         protected formService?: FormValidationService,
-        enableFixedSpace?: boolean,
-        injectedFieldValidators?: FormFieldValidator[]
+        enableFixedSpace?: boolean
     ) {
         this.readOnly = readOnly;
         this.json = json;
@@ -134,7 +133,6 @@ export class FormModel implements ProcessFormModel {
             this.parseOutcomes();
         }
 
-        this.loadInjectedFieldValidators(injectedFieldValidators);
         this.validateForm();
     }
 
@@ -502,9 +500,5 @@ export class FormModel implements ProcessFormModel {
         if (variable) {
             variable.value = value;
         }
-    }
-
-    private loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {
-        this.fieldValidators = injectedFieldValidators ? [...FORM_FIELD_VALIDATORS, ...injectedFieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 }

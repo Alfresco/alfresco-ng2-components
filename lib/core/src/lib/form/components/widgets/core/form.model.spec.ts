@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
+import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections } from '../../mock/form.mock';
 import { CoreTestingModule } from '../../../../testing';
 import { TestBed } from '@angular/core/testing';
 
@@ -431,13 +431,6 @@ describe('FormModel', () => {
 
         expect(form.fieldValidators.length).toBe(defaultLength + 1);
         expect(FORM_FIELD_VALIDATORS.length).toBe(defaultLength);
-    });
-
-    it('should include injected field validators', () => {
-        const form = new FormModel({}, null, false, formService, undefined, [fakeValidatorMock]);
-        const defaultLength = FORM_FIELD_VALIDATORS.length;
-
-        expect(form.fieldValidators.length).toBe(defaultLength + 1);
     });
 
     describe('variables', () => {

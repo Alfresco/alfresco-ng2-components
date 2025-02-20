@@ -17,23 +17,15 @@
 
 import { TestBed } from '@angular/core/testing';
 import { formModelTabs } from '../../mock';
-import { FORM_SERVICE_FIELD_VALIDATORS_TOKEN, FormService } from './form.service';
+import { FormService } from './form.service';
 import { CoreTestingModule } from '../../testing';
-import { FORM_FIELD_VALIDATORS, FormFieldValidator } from '../public-api';
-
-const fakeValidator = {
-    supportedTypes: ['test'],
-    isSupported: () => true,
-    validate: () => true
-} as FormFieldValidator;
 
 describe('Form service', () => {
     let service: FormService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: FORM_SERVICE_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(FormService);
     });
@@ -43,12 +35,6 @@ describe('Form service', () => {
             expect(formModelTabs.formRepresentation.formDefinition).toBeDefined();
             const formParsed = service.parseForm(formModelTabs);
             expect(formParsed).toBeDefined();
-        });
-
-        it('should return form with injected field validators', () => {
-            expect(formModelTabs.formRepresentation.formDefinition).toBeDefined();
-            const formParsed = service.parseForm(formModelTabs);
-            expect(formParsed.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, fakeValidator]);
         });
     });
 });

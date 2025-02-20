@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ContentLinkModel } from '../components/widgets/core/content-link.model';
 import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
@@ -30,15 +30,12 @@ import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { FormValidationService } from './form-validation-service.interface';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormSpinnerEvent } from '../events';
-import { FormFieldModel, FormFieldValidator } from '../components/widgets';
-
-export const FORM_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_SERVICE_FIELD_VALIDATORS_TOKEN');
+import { FormFieldModel } from '../components/widgets';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FormService implements FormValidationService {
-    private fieldValidators: FormFieldValidator[];
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
     formFieldValueChanged = new Subject<FormFieldEvent>();
@@ -62,9 +59,7 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor(@Optional() @Inject(FORM_SERVICE_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]) {
-        this.fieldValidators = injectedFieldValidators || [];
-    }
+    constructor() {}
 
     /**
      * Parses JSON data to create a corresponding Form model.
@@ -77,7 +72,7 @@ export class FormService implements FormValidationService {
      */
     parseForm(json: any, data?: FormValues, readOnly: boolean = false, fixedSpace?: boolean): FormModel {
         if (json) {
-            const form = new FormModel(json, data, readOnly, this, fixedSpace, this.fieldValidators);
+            const form = new FormModel(json, data, readOnly, this, fixedSpace);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
