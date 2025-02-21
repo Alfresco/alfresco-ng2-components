@@ -1514,6 +1514,7 @@ describe('Accessibility', () => {
     let dataTable: DataTableComponent;
     let columnCustomTemplate: TemplateRef<any>;
     let testingUtils: UnitTestingUtils;
+
     const focusTrapFactory = jasmine.createSpyObj('ConfigurableFocusTrapFactory', ['create']);
     const focusTrap = jasmine.createSpyObj('ConfigurableFocusTrap', ['focusInitialElement', 'destroy']);
 
