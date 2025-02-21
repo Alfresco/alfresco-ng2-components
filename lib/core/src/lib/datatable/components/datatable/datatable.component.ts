@@ -348,11 +348,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     constructor(
-        private elementRef: ElementRef,
+        private readonly elementRef: ElementRef,
         differs: IterableDiffers,
-        private matIconRegistry: MatIconRegistry,
-        private sanitizer: DomSanitizer,
-        private focusTrapFactory: ConfigurableFocusTrapFactory
+        private readonly matIconRegistry: MatIconRegistry,
+        private readonly sanitizer: DomSanitizer,
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
     ) {
         if (differs) {
             this.differ = differs.find([]).create(null);
