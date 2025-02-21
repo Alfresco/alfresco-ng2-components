@@ -38,10 +38,11 @@ import {
     SimpleChange,
     SimpleChanges,
     TemplateRef,
+    ViewChild,
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { FocusKeyManager } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, Observer, Subscription } from 'rxjs';
@@ -132,6 +133,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
+
+    @ViewChild('mainMenuTemplate')
+    mainMenuTemplate: ElementRef;
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -324,6 +328,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     hoveredHeaderColumnIndex = -1;
     resizingColumnIndex = -1;
     isDraggingRow = false;
+    focusTrap: ConfigurableFocusTrap;
 
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
@@ -342,7 +347,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.keyManager.onKeydown(event);
     }
 
-    constructor(private elementRef: ElementRef, differs: IterableDiffers, private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+    constructor(
+        private elementRef: ElementRef,
+        differs: IterableDiffers,
+        private matIconRegistry: MatIconRegistry,
+        private sanitizer: DomSanitizer,
+        private focusTrapFactory: ConfigurableFocusTrapFactory
+    ) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -463,6 +474,20 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             return new DataSorting(sorting[0], sorting[1], sorting[2]);
         }
         return null;
+    }
+
+    onMainMenuOpen() {
+        if (this.mainMenuTemplate && !this.focusTrap) {
+            this.focusTrap = this.focusTrapFactory.create(this.mainMenuTemplate.nativeElement);
+            this.focusTrap.focusInitialElement();
+        }
+    }
+
+    onMainMenuClosed() {
+        if (this.focusTrap) {
+            this.focusTrap.destroy();
+            this.focusTrap = null;
+        }
     }
 
     private initAndSubscribeClickStream() {

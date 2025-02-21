@@ -1,8 +1,7 @@
 <div
     class="adf-columns-selector"
+    role="none"
     data-automation-id="adf-columns-selector"
-    tabindex="0"
-    role="button"
     (keyup.enter)="$event.stopPropagation()"
     (click)="$event.stopPropagation();"
 >
@@ -14,6 +13,8 @@
         <button
             data-automation-id="adf-columns-selector-close-button"
             mat-icon-button
+            role="menuitem"
+            [attr.aria-label]="'CLOSE' | translate"
             (click)="closeMenu()"
         >
             <mat-icon>close</mat-icon>
@@ -33,6 +34,7 @@
             class="adf-columns-selector-search-input"
             data-automation-id="adf-columns-selector-search-input"
             type="text"
+            role="menuitem"
             [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
     </div>
 
@@ -43,7 +45,9 @@
                 class="adf-columns-selector-column-checkbox"
                 [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
                 [checked]="!column.isHidden"
+                role="menuitem"
                 [disabled]="isCheckboxDisabled(column)"
+                (keydown.enter)="changeColumnVisibility(column)"
                 (change)="changeColumnVisibility(column)">
                 <div class="adf-columns-selector-list-content">
                     {{column.title | translate}}
@@ -68,6 +72,7 @@
     <div class="adf-columns-selector-footer">
         <button
             mat-flat-button
+            role="menuitem"
             data-automation-id="adf-columns-selector-apply-button"
             color="primary"
             (click)="apply()">
