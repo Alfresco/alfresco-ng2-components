@@ -59,13 +59,14 @@ import {
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudService } from '../services/form-cloud.service';
 import { DisplayModeService } from '../services/display-mode.service';
-import { FormCloudComponent } from './form-cloud.component';
+import { FORM_CLOUD_FIELD_VALIDATORS_TOKEN, FormCloudComponent } from './form-cloud.component';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
+import { FormFieldValidator } from '../../../../../core/src/public-api';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -74,6 +75,12 @@ const mockOauth2Auth: any = {
     isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn'),
     reply: jasmine.createSpy('reply')
 };
+
+const fakeValidator = {
+    supportedTypes: ['test'],
+    isSupported: () => true,
+    validate: () => true
+} as FormFieldValidator;
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
@@ -113,7 +120,8 @@ describe('FormCloudComponent', () => {
                     provide: VersionCompatibilityService,
                     useValue: {}
                 },
-                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+                { provide: FormRenderingService, useClass: CloudFormRenderingService },
+                { provide: FORM_CLOUD_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }
             ]
         });
         const apiService = TestBed.inject(AlfrescoApiService);
@@ -1174,6 +1182,13 @@ describe('FormCloudComponent', () => {
         formComponent.onOutcomeClicked(outcome);
 
         expect(formComponent.disableSaveButton).toBeTrue();
+    });
+
+    it('should set field validators with injected validators', () => {
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
+        const form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
+        expect(formComponent.fieldValidators.length).toBe(1);
+        expect(form.fieldValidators.length).toBe(10);
     });
 
     describe('form validations', () => {

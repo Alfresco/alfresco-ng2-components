@@ -161,6 +161,46 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBe(false);
         });
+
+        it('should succeed for file viewer', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.ALFRESCO_FILE_VIEWER,
+                value: [{ sys_id: '123', sys_name: 'screenshot_123' }],
+                required: true
+            });
+
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should fail if file viewer has no value', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.ALFRESCO_FILE_VIEWER,
+                value: null,
+                required: true
+            });
+
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should succeed for properties viewer', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.PROPERTIES_VIEWER,
+                value: [{ sys_id: '123', sys_name: 'screenshot_123' }],
+                required: true
+            });
+
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should fail for properties viewer with no value', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.PROPERTIES_VIEWER,
+                value: null,
+                required: true
+            });
+
+            expect(validator.validate(field)).toBe(false);
+        });
     });
 
     describe('NumberFieldValidator', () => {

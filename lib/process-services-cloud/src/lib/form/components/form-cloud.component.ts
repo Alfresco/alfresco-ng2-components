@@ -21,10 +21,13 @@ import {
     DestroyRef,
     EventEmitter,
     HostListener,
+    Inject,
     inject,
+    InjectionToken,
     Input,
     OnChanges,
     OnInit,
+    Optional,
     Output,
     SimpleChanges
 } from '@angular/core';
@@ -33,7 +36,6 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import {
     ConfirmDialogComponent,
     ContentLinkModel,
-    FORM_FIELD_VALIDATORS,
     FormatSpacePipe,
     FormBaseComponent,
     FormEvent,
@@ -65,6 +67,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { A11yModule } from '@angular/cdk/a11y';
+
+export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
 
 @Component({
     selector: 'adf-cloud-form',
@@ -110,10 +114,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     data: TaskVariableCloud[];
 
-    /** FormFieldValidator allow to override the form field validators provided. */
-    @Input()
-    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
-
     /**
      * The available display configurations for the form
      */
@@ -151,6 +151,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
     formCloudRepresentationJSON: any;
+    fieldValidators: FormFieldValidator[] = [];
 
     readonly id: string;
     displayMode: string;
@@ -167,9 +168,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor() {
+    constructor(@Optional() @Inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]) {
         super();
-
+        this.loadInjectedFieldValidators(injectedFieldValidators);
         this.spinnerService.initSpinnerHandling(this.destroyRef);
 
         this.id = uuidGeneration();
@@ -410,12 +411,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 formValues[variable.name] = variable.value;
             });
 
-            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService);
+            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService, undefined, this.fieldValidators);
             if (!form) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
-            }
-            if (this.fieldValidators && this.fieldValidators.length > 0) {
-                form.fieldValidators = this.fieldValidators;
             }
             return form;
         }
@@ -505,5 +503,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     findDisplayConfiguration(displayMode?: string): FormCloudDisplayModeConfiguration {
         return this.displayModeService.findConfiguration(FormCloudDisplayMode[displayMode], this.displayModeConfigurations);
+    }
+
+    loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {
+        if (injectedFieldValidators && injectedFieldValidators?.length) {
+            this.fieldValidators = [...this.fieldValidators, ...injectedFieldValidators];
+        }
     }
 }
