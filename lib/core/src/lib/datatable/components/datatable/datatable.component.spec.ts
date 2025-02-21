@@ -35,7 +35,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-// import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-custom-column-template-component',
