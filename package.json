@@ -147,7 +147,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-preset-angular": "14.4.2",
     "js-yaml": "^4.0.0",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "karma": "6.4.4",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
