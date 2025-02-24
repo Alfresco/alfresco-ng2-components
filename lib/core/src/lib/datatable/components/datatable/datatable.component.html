@@ -241,10 +241,9 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect"
+                <th *ngIf="multiselect"
                         (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                         (click)="onCheckboxLabelClick(row, $event)"
-                        [for]="'select-file-' + idx"
                         role="gridcell"
                         class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
                         tabindex="-1">
@@ -262,7 +261,7 @@
                         class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
-                </label>
+                </th>
 
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
