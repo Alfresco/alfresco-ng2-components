@@ -41,7 +41,9 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.DYNAMIC_TABLE,
         FormFieldTypes.ATTACH_FOLDER,
         FormFieldTypes.DECIMAL,
-        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+        FormFieldTypes.ALFRESCO_FILE_VIEWER,
+        FormFieldTypes.PROPERTIES_VIEWER
     ];
 
     isSupported(field: FormFieldModel): boolean {

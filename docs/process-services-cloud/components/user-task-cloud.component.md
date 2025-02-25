@@ -15,7 +15,6 @@ Based on property taskDetails: TaskDetailsCloudModel shows a form or a screen.
 <adf-cloud-user-task
     [appName]="appName"
     [displayModeConfigurations]="displayConfigurations"
-    [fieldValidators]="formFieldValidators"
     [showTitle]="false"
     [showValidationIcon]="false"
     [taskId]="taskId"
@@ -38,7 +37,6 @@ Based on property taskDetails: TaskDetailsCloudModel shows a form or a screen.
 |---------------------------|---------------------------------------|---------------|---------------------------------------------------|
 | appName                   | `string`                              | ""            | App id to fetch corresponding form and values.    |
 | readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                |
-| fieldValidators           | `FormFieldValidator[]`                |               | Allows to provide additional validators to the form field.                |
 | showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.          |
 | showCompleteButton        | `boolean`                             | true          | Toggle rendering of the `Complete` button.        |
 | showTitle                 | `boolean`                             | true          | Toggle rendering of the form title.               |

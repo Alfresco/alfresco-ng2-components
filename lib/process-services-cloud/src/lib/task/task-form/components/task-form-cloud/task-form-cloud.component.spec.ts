@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FORM_FIELD_VALIDATORS, FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { FormCustomOutcomesComponent } from '@alfresco/adf-process-services-cloud';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
@@ -50,16 +50,6 @@ const taskDetails: TaskDetailsCloudModel = {
     status: TASK_ASSIGNED_STATE,
     permissions: [TASK_VIEW_PERMISSION]
 };
-
-class MockFormFieldValidator implements FormFieldValidator {
-    isSupported(_field: FormFieldModel): boolean {
-        return true;
-    }
-
-    validate(_field: FormFieldModel): boolean {
-        return true;
-    }
-}
 
 describe('TaskFormCloudComponent', () => {
     let taskCloudService: TaskCloudService;
@@ -200,21 +190,6 @@ describe('TaskFormCloudComponent', () => {
 
             const canUnclaimTask = component.canUnclaimTask();
             expect(canUnclaimTask).toBe(false);
-        });
-
-        it('should append additional field validators to the default ones when provided', () => {
-            const mockFirstCustomFieldValidator = new MockFormFieldValidator();
-            const mockSecondCustomFieldValidator = new MockFormFieldValidator();
-            fixture.componentRef.setInput('fieldValidators', [mockFirstCustomFieldValidator, mockSecondCustomFieldValidator]);
-            fixture.detectChanges();
-
-            expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, mockFirstCustomFieldValidator, mockSecondCustomFieldValidator]);
-        });
-
-        it('should use default field validators when no additional validators are provided', () => {
-            fixture.detectChanges();
-
-            expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS]);
         });
     });
 
