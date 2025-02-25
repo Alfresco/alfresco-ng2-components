@@ -3,7 +3,7 @@
      [class.adf-readonly]="field.readOnly">
     <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true">
         <label class="adf-label" [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
         <textarea matInput
                   class="adf-input"

@@ -1,9 +1,16 @@
-<div class="adf-file-viewer-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
-    [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk"
-            *ngIf="isRequired()">*</span></label>
-    <ng-template #properties [ngTemplateOutlet]="properties" let-properties="properties" [ngTemplateOutletContext]="{ properties: field.params?.propertiesViewerOptions }">
-        <adf-properties-viewer-wrapper *ngIf="field.value" [nodeId]="field.value"
+<div class="adf-file-viewer-widget {{field.className}}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id"
+        >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+    >
+    <ng-template
+        #properties
+        [ngTemplateOutlet]="properties"
+        let-properties="properties"
+        [ngTemplateOutletContext]="{ properties: field.params?.propertiesViewerOptions }"
+    >
+        <adf-properties-viewer-wrapper
+            *ngIf="field.value"
+            [nodeId]="field.value"
             [displayDefaultProperties]="properties?.displayDefaultProperties !== undefined ?  properties?.displayDefaultProperties : true"
             [expanded]="properties?.expanded !== undefined ? properties?.expanded : true"
             [preset]="properties?.preset"
@@ -13,7 +20,8 @@
             [displayAspect]="properties?.displayAspect !== undefined ? properties?.displayAspect : null"
             [copyToClipboardAction]="properties?.copyToClipboardAction !== undefined ? properties?.copyToClipboardAction : true"
             [useChipsForMultiValueProperty]="properties?.useChipsForMultiValueProperty !== undefined ? properties?.useChipsForMultiValueProperty : true"
-            (nodeContentLoaded)="onNodeContentLoaded($event)" />
+            (nodeContentLoaded)="onNodeContentLoaded($event)"
+        />
     </ng-template>
     <error-widget [error]="field.validationSummary" />
 </div>

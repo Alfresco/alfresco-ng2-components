@@ -3,7 +3,7 @@
      [class.adf-readonly]="field.readOnly">
     <label class="adf-label" [attr.for]="field.id">
         {{ field.name | translate }}
-        <span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+        <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
     <adf-viewer [urlFile]="field.value.urlFile"
                 [blobFile]="field.value.blobFile"
                 [fileName]="field.value.fileName"

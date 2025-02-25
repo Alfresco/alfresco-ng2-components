@@ -1,18 +1,39 @@
-<div class="adf-upload-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
-    [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}<span class="adf-asterisk"
-            *ngIf="isRequired()">*</span></label>
+<div class="adf-upload-widget {{field.className}}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id"
+        >{{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
+    >
     <div class="adf-cloud-upload-widget-container">
         <div>
             <mat-list *ngIf="hasFile">
                 <mat-list-item class="adf-upload-files-row" *ngFor="let file of uploadedFiles">
-                    <img matListItemLine class="adf-upload-widget__icon" [id]="'file-'+file.id+'-icon'"
-                        [src]="getIcon(file.content.mimeType)" [alt]="mimeTypeIcon" (click)="fileClicked(file)"
-                        (keyup.enter)="fileClicked(file)" role="button" tabindex="0" />
-                    <span class="adf-upload-widget__button adf-file" matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
-                        role="button" tabindex="0">{{file.name}}</span>
-                    <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.id+'-remove'"
-                        (click)="removeFile(file);" (keyup.enter)="removeFile(file);">
+                    <img
+                        matListItemLine
+                        class="adf-upload-widget__icon"
+                        [id]="'file-'+file.id+'-icon'"
+                        [src]="getIcon(file.content.mimeType)"
+                        [alt]="mimeTypeIcon"
+                        (click)="fileClicked(file)"
+                        (keyup.enter)="fileClicked(file)"
+                        role="button"
+                        tabindex="0"
+                    />
+                    <span
+                        class="adf-upload-widget__button adf-file"
+                        matLine
+                        id="{{'file-'+file.id}}"
+                        (click)="fileClicked(file)"
+                        (keyup.enter)="fileClicked(file)"
+                        role="button"
+                        tabindex="0"
+                        >{{file.name}}</span
+                    >
+                    <button
+                        *ngIf="!field.readOnly"
+                        mat-icon-button
+                        [id]="'file-'+file.id+'-remove'"
+                        (click)="removeFile(file);"
+                        (keyup.enter)="removeFile(file);"
+                    >
                         <mat-icon class="mat-24">highlight_off</mat-icon>
                     </button>
                 </mat-list-item>
@@ -22,15 +43,11 @@
         <div *ngIf="(!hasFile || multipleOption) && !field.readOnly">
             <button mat-raised-button color="primary" (click)="uploadFiles.click()" [title]="field.tooltip">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
-                <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.form.nodeId"
-                    (change)="onFileChanged($event)" />
+                <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.form.nodeId" (change)="onFileChanged($event)" />
             </button>
         </div>
 
-        <div *ngIf="!hasFile && field.readOnly">
-            {{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}
-        </div>
-
+        <div *ngIf="!hasFile && field.readOnly">{{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}</div>
     </div>
     <error-widget [error]="field.validationSummary" />
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
