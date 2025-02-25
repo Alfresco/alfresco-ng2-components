@@ -161,16 +161,18 @@
                         title="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
                         mat-icon-button
                         #mainMenuTrigger="matMenuTrigger"
-                        (keydown.enter)="mainMenuTrigger.openMenu()"
+                        (click)="onMainMenuOpen()"
                         [matMenuTriggerFor]="mainMenu">
                         <mat-icon>view_week_outline</mat-icon>
                     </button>
-                    <mat-menu #mainMenu>
-                        <ng-container
-                            [ngTemplateOutlet]="mainActionTemplate"
-                            [ngTemplateOutletContext]="{
-                                $implicit: mainMenuTrigger
-                            }" />
+                    <mat-menu #mainMenu (closed)="onMainMenuClosed()">
+                        <div #mainMenuTemplate role="presentation" (keydown.tab)="$event.stopPropagation()">
+                            <ng-container
+                                [ngTemplateOutlet]="mainActionTemplate"
+                                [ngTemplateOutletContext]="{
+                                    $implicit: mainMenuTrigger
+                                }" />
+                        </div>
                     </mat-menu>
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
                 </ng-container>

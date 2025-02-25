@@ -34,6 +34,7 @@ import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1508,15 +1509,19 @@ describe('DataTable', () => {
     });
 });
 
-describe('Accesibility', () => {
+describe('Accessibility', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let columnCustomTemplate: TemplateRef<any>;
     let testingUtils: UnitTestingUtils;
 
+    const focusTrapFactory = jasmine.createSpyObj('ConfigurableFocusTrapFactory', ['create']);
+    const focusTrap = jasmine.createSpyObj('ConfigurableFocusTrap', ['focusInitialElement', 'destroy']);
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule, CustomColumnTemplateComponent],
+            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }],
             schemas: [NO_ERRORS_SCHEMA]
         });
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
@@ -1707,6 +1712,36 @@ describe('Accesibility', () => {
 
         const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
         expect(cell?.nativeElement.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should create focus trap on main menu open', () => {
+        dataTable.showHeader = ShowHeaderMode.Always;
+        dataTable.showMainDatatableActions = true;
+        dataTable.mainActionTemplate = columnCustomTemplate;
+        focusTrapFactory.create.and.returnValue(focusTrap);
+        spyOn(dataTable, 'onMainMenuOpen').and.callThrough();
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, [{ name: 'test1' }, { name: 'test2' }], false)
+        });
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        testingUtils.clickByDataAutomationId('adf-datatable-main-menu-button');
+        fixture.detectChanges();
+
+        expect(dataTable.onMainMenuOpen).toHaveBeenCalled();
+        expect(focusTrapFactory.create).toHaveBeenCalledWith(dataTable.mainMenuTemplate.nativeElement);
+        expect(focusTrap.focusInitialElement).toHaveBeenCalled();
+    });
+
+    it('should destroy focus trap on main menu closed', () => {
+        dataTable.focusTrap = focusTrap;
+
+        dataTable.onMainMenuClosed();
+
+        expect(focusTrap.destroy).toHaveBeenCalled();
+        expect(dataTable.focusTrap).toBeNull();
     });
 });
 

@@ -1137,7 +1137,7 @@ describe('DocumentList', () => {
     it('should display [empty folder] template ', () => {
         fixture.detectChanges();
         runInInjectionContext(injector, () => {
-            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock, null);
         });
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
@@ -1158,7 +1158,7 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         runInInjectionContext(injector, () => {
-            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock, null);
         });
 
         expect(documentList.isEmpty()).toBeTruthy();
