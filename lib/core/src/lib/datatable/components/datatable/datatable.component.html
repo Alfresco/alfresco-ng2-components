@@ -28,16 +28,15 @@
             </div>
 
             <!-- Columns -->
-            <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
+            <th *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox" role="columnheader">
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
                               [checked]="isSelectAllChecked"
                               (change)="onSelectAllClick($event)"
-                              role="columnheader"
                               class="adf-checkbox-sr-only"
                               [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate">
                     {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
                 </mat-checkbox>
-            </div>
+            </th>
 
             <ng-container
                 *ngFor="
@@ -150,14 +149,14 @@
             </ng-container>
 
             <!-- Header actions (right) -->
-            <div
+            <td
                 *ngIf="(actions && actionsPosition === 'right') ||
                        (mainActionTemplate && showMainDatatableActions)"
                 class="adf-actions-column adf-datatable-actions-menu adf-datatable-cell-header adf-datatable__actions-cell"
                 [class.adf-datatable-actions-menu-provided]="showProvidedActions"
             >
                 <ng-container *ngIf="mainActionTemplate">
-                    <div role="gridcell">
+                    <td role="gridcell">
                         <button
                             data-automation-id="adf-datatable-main-menu-button"
                             title="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
@@ -177,7 +176,7 @@
                                     }" />
                             </div>
                         </mat-menu>
-                    </div>
+                    </td>
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
                 </ng-container>
             </div>
@@ -241,7 +240,7 @@
                     </mat-menu>
                 </div>
 
-                <th *ngIf="multiselect"
+                <td *ngIf="multiselect"
                         (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                         (click)="onCheckboxLabelClick(row, $event)"
                         role="gridcell"
@@ -261,7 +260,7 @@
                         class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
-                </th>
+                </td>
 
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
