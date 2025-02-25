@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentLinkModel, EmptyContentComponent, FormFieldValidator, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
+import { ContentLinkModel, EmptyContentComponent, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
@@ -71,10 +71,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     /** The available display configurations for the form */
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
-
-    /** FormFieldValidator allow to provide additional validators to the form field. */
-    @Input()
-    fieldValidators: FormFieldValidator[];
 
     /** Toggle readonly state of the task. */
     @Input()

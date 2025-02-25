@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ContentLinkModel, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
 import { AttachFileCloudWidgetComponent } from '../../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DateCloudWidgetComponent } from '../../../../form/components/widgets/date/date-cloud.widget';
@@ -36,7 +36,7 @@ import { FormCustomOutcomesComponent } from '../../../../form/components/form-cl
     styleUrls: ['./task-form-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskFormCloudComponent implements OnInit {
+export class TaskFormCloudComponent {
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -82,10 +82,6 @@ export class TaskFormCloudComponent implements OnInit {
      */
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
-
-    /** FormFieldValidator allow to provide additional validators to the form field. */
-    @Input()
-    fieldValidators: FormFieldValidator[];
 
     /** Task details. */
     @Input()
@@ -147,14 +143,6 @@ export class TaskFormCloudComponent implements OnInit {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
-    }
-
-    ngOnInit() {
-        this.initFieldValidators();
-    }
-
-    private initFieldValidators() {
-        this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 
     hasForm(): boolean {

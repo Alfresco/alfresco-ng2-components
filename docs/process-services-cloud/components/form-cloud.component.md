@@ -252,12 +252,28 @@ There are two other functions that can be very useful when you need to control f
 
 ### Field Validators
 
-You can supply a set of validator objects to the form using the `fieldValidators`
-property. Each validator implements a check for a particular type of data (eg, a
-date validator might check that the date in the field falls between 1980 and 2017).
+You can supply a set of validator objects to the form using the `fieldValidators` property. To do this you must use Token  `FORM_CLOUD_FIELD_VALIDATORS_TOKEN`. This is a A DI token that allows to inject additional form field validators. Each validator implements a check for a particular type of data (eg, a date validator might check that the date in the field falls between 1980 and 2017).
 ADF supplies a standard set of validators that handle most common cases but you can
 also implement your own custom validators to replace or extend the set. See the
 [Form Field Validator](../../core/interfaces/form-field-validator.interface.md) interface for full details and examples.
+
+```ts
+ import { NgModule } from '@angular/core';
+ import { FORM_SERVICE_FIELD_VALIDATORS_TOKEN } from '@alfresco/adf-core';
+
+ @NgModule({
+     imports: [
+         ...Import Required Modules
+     ],
+     providers: [
+         { 
+             provide: FORM_SERVICE_FIELD_VALIDATORS_TOKEN, 
+             useValue: [new AdditionalFormFieldValidator()]
+         }
+     ]
+ })
+ export class ExampleModule {}
+ ```
 
 ### Common scenarios
 

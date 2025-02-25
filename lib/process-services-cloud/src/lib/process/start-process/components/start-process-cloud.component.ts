@@ -29,15 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {
-    ContentLinkModel,
-    FORM_FIELD_VALIDATORS,
-    FormFieldValidator,
-    FormModel,
-    InplaceFormInputComponent,
-    LocalizedDatePipe,
-    TranslationService
-} from '@alfresco/adf-core';
+import { ContentLinkModel, FormModel, InplaceFormInputComponent, LocalizedDatePipe, TranslationService } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { catchError, debounceTime } from 'rxjs/operators';
@@ -117,10 +109,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     /** Parameter to pass form field values in the start form if one is associated. */
     @Input()
     values: TaskVariableCloud[];
-
-    /** FormFieldValidator allow to provide additional validators to the form field. */
-    @Input()
-    fieldValidators: FormFieldValidator[];
 
     /** Show/hide the process dropdown list. */
     @Input()
@@ -235,8 +223,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        this.initFieldValidators();
-
         this.processDefinition.setValue(this.processDefinitionName);
         this.processDefinition.valueChanges
             .pipe(debounceTime(PROCESS_DEFINITION_DEBOUNCE))
@@ -268,10 +254,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     onFormLoaded(form: FormModel) {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
-    }
-
-    private initFieldValidators(): void {
-        this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 
     private getMaxNameLength(): number {
