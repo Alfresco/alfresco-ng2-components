@@ -26,18 +26,28 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
 
         .adf-aspect-list-check-button {
             margin-right: 5px;
+            height: 48px;
             align-items: center;
             display: flex;
         }
 
-        .adf-aspect-list-element-title {
-            font-size: smaller;
+        .adf-accordion-aspect-list-item {
+            padding-left: 14px;
             display: flex;
-            align-items: center;
+            box-shadow: 0 2px 2px -1px var(--adf-theme-foreground-text-color-007);
+
+            &.adf-hover {
+                &:hover {
+                    background-color: var(--adf-theme-background-hover-color);
+                }
+            }
         }
 
         .adf-accordion-aspect-list-expansion-panel {
             margin: 0;
+            width: 100%;
+            box-shadow: none;
+            background: border-box;
 
             #{$mat-checkbox-background} {
                 height: 16px;
@@ -46,11 +56,12 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
 
             &-header {
                 font-size: smaller;
-                padding-left: 12px;
+                padding-left: 0;
+                height: 48px;
             }
 
             &-header-title {
-                flex: 1 1 0;
+                color: var(--theme-secondary-text);
             }
 
             &-header-description {
@@ -92,5 +103,15 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
                 padding-left: 10px;
             }
         }
+    }
+}
+
+.adf-accordion-aspect-list
+    .adf-accordion-aspect-list-item
+    .adf-accordion-aspect-list-expansion-panel
+    .adf-accordion-aspect-list-expansion-panel-header {
+    &:hover,
+    &:focus {
+        background: none;
     }
 }

@@ -60,6 +60,7 @@ export class AspectListComponent implements OnInit {
     nodeAspectStatus: string[] = [];
     notDisplayedAspects: string[] = [];
     hasEqualAspect: boolean = true;
+    isPanelOpen: boolean[] = [];
 
     private readonly destroyRef = inject(DestroyRef);
 

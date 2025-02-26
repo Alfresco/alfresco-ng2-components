@@ -1,44 +1,51 @@
 <div id="aspect-list-container" class="adf-aspect-list-container" *ngIf="aspects$ | async as aspects; else loading">
     <mat-accordion class="adf-accordion-aspect-list">
-        <mat-expansion-panel *ngFor="let aspect of aspects; let colIndex = index"
-                             [id]="'aspect-list-'+getId(aspect)"
-                             class="adf-accordion-aspect-list-expansion-panel">
-            <mat-expansion-panel-header class='adf-accordion-aspect-list-expansion-panel-header'
-                                        [id]="'aspect-list-'+(getId(aspect))+'header'">
-                <mat-panel-title class="adf-accordion-aspect-list-expansion-panel-header-title">
-                    <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"
-                                  [checked]="nodeAspects?.includes(aspect?.entry?.id)"
-                                  (click)="onCheckBoxClick($event)"
-                                  (change)="onChange($event, aspect?.entry?.id)">
-                                  <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
-                    </mat-checkbox>
-                </mat-panel-title>
-                <mat-panel-description
-                    class="adf-accordion-aspect-list-expansion-panel-header-description"
-                    [id]="'aspect-list-'+colIndex+'-title'"
-                    [title]="getTitle(aspect)">
-                    {{getTitle(aspect)}}
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p class="adf-property-paragraph" [id]="'aspect-list-'+colIndex+'-description'"> {{aspect?.entry?.description}}</p>
+        <div class="adf-accordion-aspect-list-item"
+             *ngFor="let aspect of aspects; let colIndex = index"
+             [ngClass]="{'adf-hover' : !isPanelOpen[colIndex]}">
+            <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"
+                          [checked]="nodeAspects?.includes(aspect?.entry?.id)"
+                          (click)="onCheckBoxClick($event)"
+                          [aria-label]="getTitle(aspect)"
+                          (change)="onChange($event, aspect?.entry?.id)"/>
+            <mat-expansion-panel
+                                 [id]="'aspect-list-'+getId(aspect)"
+                                 class="adf-accordion-aspect-list-expansion-panel"
+                                 (opened)="isPanelOpen[colIndex] = true"
+                                 (afterCollapse)="isPanelOpen[colIndex] = false"
+            >
+                <mat-expansion-panel-header class='adf-accordion-aspect-list-expansion-panel-header'
+                                            [id]="'aspect-list-'+(getId(aspect))+'header'">
+                    <mat-panel-title class="adf-accordion-aspect-list-expansion-panel-header-title">
+                        {{getTitle(aspect)}}
+                    </mat-panel-title>
+                    <mat-panel-description
+                        class="adf-accordion-aspect-list-expansion-panel-header-description"
+                        [id]="'aspect-list-'+colIndex+'-title'"
+                        [title]="getTitle(aspect)">
+                        {{getTitle(aspect)}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p class="adf-property-paragraph" [id]="'aspect-list-'+colIndex+'-description'"> {{aspect?.entry?.description}}</p>
 
-            <table mat-table [dataSource]="aspect?.entry?.properties" *ngIf="aspect?.entry?.properties?.length > 0" class="adf-aspect-property-table" [id]="'aspect-list-'+colIndex+'-properties-table'">
-                <ng-container matColumnDef="name">
-                  <th class="adf-aspect-property-table-column-name" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.PROPERTY_NAME' | translate}} </th>
-                  <td class="adf-aspect-property-table-column-name adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.id}} </td>
-                </ng-container>
-                <ng-container matColumnDef="title">
-                  <th class="adf-aspect-property-table-column-title" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.DESCRIPTION' | translate}} </th>
-                  <td class="adf-aspect-property-table-column-title adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.title}} </td>
-                </ng-container>
-                <ng-container matColumnDef="dataType">
-                  <th class="adf-aspect-property-table-column-data-type" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.DATA_TYPE' | translate}} </th>
-                  <td class="adf-aspect-property-table-column-data-type adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.dataType}} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="propertyColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: propertyColumns;"></tr>
-              </table>
-        </mat-expansion-panel>
+                <table mat-table [dataSource]="aspect?.entry?.properties" *ngIf="aspect?.entry?.properties?.length > 0" class="adf-aspect-property-table" [id]="'aspect-list-'+colIndex+'-properties-table'">
+                    <ng-container matColumnDef="name">
+                      <th class="adf-aspect-property-table-column-name" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.PROPERTY_NAME' | translate}} </th>
+                      <td class="adf-aspect-property-table-column-name adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="title">
+                      <th class="adf-aspect-property-table-column-title" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.DESCRIPTION' | translate}} </th>
+                      <td class="adf-aspect-property-table-column-title adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.title}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="dataType">
+                      <th class="adf-aspect-property-table-column-data-type" mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.DATA_TYPE' | translate}} </th>
+                      <td class="adf-aspect-property-table-column-data-type adf-aspect-property-table-cell" mat-cell *matCellDef="let property"> {{property.dataType}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="propertyColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: propertyColumns;"></tr>
+                  </table>
+            </mat-expansion-panel>
+        </div>
     </mat-accordion>
 </div>
 
