@@ -180,7 +180,9 @@ describe('AspectListComponent', () => {
             });
 
             it('should show aspect id when name or title is not set', () => {
-                const noNameAspect = fixture.nativeElement.querySelector('#aspect-list-cst-nonamedAspect .adf-aspect-list-element-title');
+                const noNameAspect = fixture.nativeElement.querySelector(
+                    '#aspect-list-cst-nonamedAspect .adf-accordion-aspect-list-expansion-panel-header-title'
+                );
                 expect(noNameAspect).toBeDefined();
                 expect(noNameAspect).not.toBeNull();
                 expect(noNameAspect.innerText).toBe('cst:nonamedAspect');
@@ -203,14 +205,12 @@ describe('AspectListComponent', () => {
             });
 
             it('should show node aspects as checked', async () => {
-                const panel = await loader.getHarness(MatExpansionPanelHarness);
-                const checkbox = await panel.getHarness(MatCheckboxHarness);
+                const checkbox = await loader.getHarness(MatCheckboxHarness);
                 expect(await checkbox.isChecked()).toBe(true);
             });
 
             it('should add checked and remove unchecked aspects', async () => {
-                const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
-                const checkbox = await panel.getHarness(MatCheckboxHarness);
+                const checkbox = (await loader.getAllHarnesses(MatCheckboxHarness))[1];
                 expect(await checkbox.isChecked()).toBe(false);
 
                 await checkbox.toggle();
@@ -223,8 +223,7 @@ describe('AspectListComponent', () => {
             });
 
             it('should reset aspects on reset', async () => {
-                const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
-                const checkbox = await panel.getHarness(MatCheckboxHarness);
+                const checkbox = (await loader.getAllHarnesses(MatCheckboxHarness))[1];
                 expect(await checkbox.isChecked()).toBe(false);
 
                 await checkbox.toggle();
@@ -246,8 +245,7 @@ describe('AspectListComponent', () => {
 
                 spyOn(component.valueChanged, 'emit');
                 spyOn(component.updateCounter, 'emit');
-                const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
-                const checkbox = await panel.getHarness(MatCheckboxHarness);
+                const checkbox = (await loader.getAllHarnesses(MatCheckboxHarness))[1];
                 await checkbox.toggle();
                 fixture.detectChanges();
                 expect(component.valueChanged.emit).toHaveBeenCalledWith(['frs:AspectOne', 'frs:SecondAspect', ...storedAspect]);
