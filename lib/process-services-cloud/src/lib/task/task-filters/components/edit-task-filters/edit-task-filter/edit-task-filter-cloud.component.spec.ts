@@ -22,7 +22,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../../services/local-preference-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from '../../../../../app/mock/app-model.mock';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
@@ -56,6 +55,11 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { PeopleCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { ADF_DATE_FORMATS, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -73,8 +77,21 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, PeopleCloudComponent, MatIconTestingModule, EditTaskFilterCloudComponent],
-            providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            imports: [
+                NoopAuthModule,
+                NoopAnimationsModule,
+                NoopTranslateModule,
+                PeopleCloudComponent,
+                MatIconTestingModule,
+                EditTaskFilterCloudComponent,
+                ApolloTestingModule
+            ],
+            providers: [
+                MatDialog,
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] },
+                { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
+            ]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;

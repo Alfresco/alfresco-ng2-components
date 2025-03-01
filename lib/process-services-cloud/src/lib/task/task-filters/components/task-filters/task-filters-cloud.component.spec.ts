@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { defaultTaskFiltersMock, fakeGlobalFilter, taskNotifications } from '../../mock/task-filters-cloud.mock';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
@@ -31,6 +30,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatActionListItemHarness } from '@angular/material/list/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
@@ -46,7 +47,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudComponent],
+            imports: [NoopAuthModule, NoopAnimationsModule, NoopTranslateModule, TaskFiltersCloudComponent, ApolloTestingModule],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);

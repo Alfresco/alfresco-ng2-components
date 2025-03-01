@@ -34,9 +34,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-import { ApolloModule } from 'apollo-angular';
 import { StorageService } from '@alfresco/adf-core';
 import { TaskStatusFilter } from '../public-api';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -56,7 +56,7 @@ describe('TaskFilterCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
+            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloTestingModule],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
@@ -265,7 +265,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
+            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloTestingModule],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
