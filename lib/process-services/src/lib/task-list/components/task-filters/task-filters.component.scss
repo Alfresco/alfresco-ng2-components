@@ -23,6 +23,12 @@ adf-task-filters {
                     color: var(--theme-action-button-text-color);
                 }
             }
+
+            &.adf-active {
+                .adf-filter-action-button__label {
+                    color: var(--adf-sidenav-active-text-color);
+                }
+            }
         }
     }
 }
