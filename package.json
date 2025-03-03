@@ -184,6 +184,9 @@
     "webpack": "5.97.1",
     "webpack-cli": "^5.1.4"
   },
+  "overrides": {
+    "esbuild": "^0.25.0"
+  },
   "license": "Apache-2.0",
   "engines": {
     "node": ">=18.0.0"
