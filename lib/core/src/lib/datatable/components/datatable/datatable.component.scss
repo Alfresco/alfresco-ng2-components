@@ -104,9 +104,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-datatable-row {
-        &:hover,
-        &:focus {
-            background-color: var(--adf-theme-background-hover-color);
+        &:not(.adf-datatable-data-loading) {
+            &:hover,
+            &:focus {
+                background-color: var(--adf-theme-background-hover-color);
+            }
         }
 
         &:focus {
