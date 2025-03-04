@@ -44,21 +44,21 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     parsedHTML: any;
 
     private static readonly CUSTOM_PARSER = {
-        header: ({ data, tunes }): string => {
-            const paragraphAlign = data.alignment || data.align || tunes?.anyTuneName?.alignment;
+        header: (block: any): string => {
+            const paragraphAlign = block.data.alignment || block.data.align || block.tunes?.anyTuneName?.alignment;
             if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center'].includes(paragraphAlign)) {
-                return `<h${data.level} class="ce-tune-alignment--${paragraphAlign}">${data.text}</h${data.level}>`;
+                return `<h${block.data.level} class="ce-tune-alignment--${paragraphAlign}">${block.data.text}</h${block.data.level}>`;
             } else {
-                return `<h${data.level}>${data.text}</h${data.level}>`;
+                return `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
             }
         },
-        paragraph: ({ data, tunes }): string => {
-            const paragraphAlign = data.alignment || data.align || tunes?.anyTuneName?.alignment;
+        paragraph: (block: any): string => {
+            const paragraphAlign = block.data.alignment || block.data.align || block.tunes?.anyTuneName?.alignment;
 
             if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center', 'justify'].includes(paragraphAlign)) {
-                return `<p class="ce-tune-alignment--${paragraphAlign}">${data.text}</p>`;
+                return `<p class="ce-tune-alignment--${paragraphAlign}">${block.data.text}</p>`;
             } else {
-                return `<p>${data.text}</p>`;
+                return `<p>${block.data.text}</p>`;
             }
         }
     };
@@ -68,7 +68,7 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     }
 
     ngOnInit(): void {
-        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER).parseStrict(this.field.value);
+        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER, { strict: true }).parse(this.field.value);
 
         if (!(this.parsedHTML instanceof Error)) {
             this.sanitizeHtmlContent();
@@ -78,6 +78,6 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     }
 
     private sanitizeHtmlContent(): void {
-        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML.join(''));
+        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML);
     }
 }
