@@ -60,6 +60,7 @@ describe('UserTaskCloudComponent', () => {
     let getCurrentUserSpy: jasmine.Spy;
     let loader: HarnessLoader;
     let identityUserService: IdentityUserService;
+    let errorEmitSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -67,6 +68,7 @@ describe('UserTaskCloudComponent', () => {
         });
         fixture = TestBed.createComponent(UserTaskCloudComponent);
         component = fixture.componentInstance;
+        errorEmitSpy = spyOn(component.error, 'emit');
         loader = TestbedHarnessEnvironment.loader(fixture);
         taskCloudService = TestBed.inject(TaskCloudService);
         identityUserService = TestBed.inject(IdentityUserService);
@@ -295,7 +297,7 @@ describe('UserTaskCloudComponent', () => {
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             await fixture.whenStable();
 
-            expect(component.error.emit).toHaveBeenCalledWith('getTaskyById error');
+            expect(errorEmitSpy).toHaveBeenCalledWith('getTaskyById error');
         });
     });
 
@@ -353,12 +355,11 @@ describe('UserTaskCloudComponent', () => {
         });
 
         it('should emit error when error occurs', async () => {
-            spyOn(component.error, 'emit').and.stub();
             component.onError({});
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.error.emit).toHaveBeenCalled();
+            expect(errorEmitSpy).toHaveBeenCalled();
         });
 
         it('should reload when task is completed', async () => {
