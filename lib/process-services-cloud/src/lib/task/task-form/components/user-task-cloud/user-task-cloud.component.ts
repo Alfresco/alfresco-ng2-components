@@ -254,15 +254,30 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         this.taskCloudService
             .getTaskById(this.appName, this.taskId)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((details) => {
-                this.taskDetails = details;
-                this.getTaskType();
-                this.loading = false;
-                this.onTaskLoaded.emit(this.taskDetails);
+            .subscribe({
+                next: (details) => {
+                    this.loadCandidates();
+                    this.taskDetails = details;
+                    this.getTaskType();
+                    this.loading = false;
+                    this.onTaskLoaded.emit(this.taskDetails);
+                },
+                error: (error) => {
+                    this.onError(error);
+                    this.loading = false;
+                }
             });
+    }
 
-        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users) => (this.candidateUsers = users || []));
-        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups) => (this.candidateGroups = groups || []));
+    private loadCandidates(): void {
+        this.taskCloudService
+            .getCandidateUsers(this.appName, this.taskId)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((users) => (this.candidateUsers = users || []));
+        this.taskCloudService
+            .getCandidateGroups(this.appName, this.taskId)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((groups) => (this.candidateGroups = groups || []));
     }
 
     public switchToDisplayMode(newDisplayMode?: string): void {

@@ -33,7 +33,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
 
@@ -287,6 +287,15 @@ describe('UserTaskCloudComponent', () => {
             component.ngOnChanges({ taskId: new SimpleChange(null, 'task1', false) });
 
             expect(getTaskSpy).not.toHaveBeenCalled();
+        });
+
+        it('should emit error when getTaskById fails', async () => {
+            getTaskSpy.and.returnValue(throwError(() => 'getTaskyById error'));
+            component.taskId = 'task1';
+            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            await fixture.whenStable();
+
+            expect(component.error.emit).toHaveBeenCalledWith('getTaskyById error');
         });
     });
 
