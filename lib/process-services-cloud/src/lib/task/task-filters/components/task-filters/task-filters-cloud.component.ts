@@ -261,11 +261,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number) {
-        if (!this.currentFiltersValues[filterKey]) {
-            this.currentFiltersValues[filterKey] = filterValue;
-            return;
-        }
-        if (this.currentFiltersValues[filterKey] !== filterValue) {
+        if (this.currentFiltersValues || this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
             this.updatedFilter.emit(filterKey);
             this.updatedCountersSet.add(filterKey);

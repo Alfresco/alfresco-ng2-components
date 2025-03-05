@@ -578,7 +578,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 expect(getProcessNotificationSubscriptionSpy).toHaveBeenCalled();
             });
 
-            it('should not emit filter key when filter counter is set for first time', () => {
+            it('should emit filter key when filter counter is set for first time', () => {
                 component.currentFiltersValues = {};
                 const fakeFilterKey = 'testKey';
                 const fakeFilterValue = 10;
@@ -588,7 +588,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
                 expect(component.currentFiltersValues).not.toEqual({});
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
-                expect(updatedFilterSpy).not.toHaveBeenCalled();
+                expect(updatedFilterSpy).toHaveBeenCalled();
             });
 
             it('should not emit filter key when filter counter has not changd', () => {
@@ -604,24 +604,26 @@ describe('ProcessFiltersCloudComponent', () => {
 
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
-                expect(updatedFilterSpy).not.toHaveBeenCalled();
+                expect(updatedFilterSpy).toHaveBeenCalledTimes(1);
             });
 
             it('should emit filter key when filter counter is increased', () => {
                 component.currentFiltersValues = {};
                 const fakeFilterKey = 'testKey';
+                const fakeFilterValueInitial = 10;
+                const fakeFilterValueSecondary = 20;
                 const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
-                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
-                fixture.detectChanges();
-
-                expect(updatedFilterSpy).not.toHaveBeenCalledWith(fakeFilterKey);
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(10);
-
-                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 20);
+                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValueInitial);
                 fixture.detectChanges();
 
                 expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(20);
+                expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValueInitial);
+
+                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValueSecondary);
+                fixture.detectChanges();
+
+                expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
+                expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValueSecondary);
             });
 
             it('should emit filter key when filter counter is decreased', () => {
@@ -631,7 +633,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
                 fixture.detectChanges();
 
-                expect(updatedFilterSpy).not.toHaveBeenCalledWith(fakeFilterKey);
+                expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(10);
 
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 5);
