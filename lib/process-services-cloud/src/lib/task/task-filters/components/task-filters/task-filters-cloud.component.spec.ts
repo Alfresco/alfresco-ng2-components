@@ -17,7 +17,7 @@
 
 import { AppConfigService } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, of, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
@@ -468,7 +468,23 @@ describe('TaskFiltersCloudComponent', () => {
             expect(component.getFilters).toHaveBeenCalledWith(appName);
         });
 
-        it('should not emit filter key when filter counter is set for first time', () => {
+        it('should emit filter key when filter counter is set for first time', (done) => {
+            component.currentFiltersValues = {};
+            const fakeFilterKey = 'testKey';
+            const fakeFilterValue = 10;
+
+            component.updatedFilter.pipe(first()).subscribe((updateFilter: string) => {
+                expect(updateFilter).toBe(fakeFilterKey);
+                expect(component.currentFiltersValues).not.toEqual({});
+                expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
+                done();
+            });
+
+            component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
+            fixture.detectChanges();
+        });
+
+        it('should not emit filter key when filter counter has not changd', fakeAsync(() => {
             component.currentFiltersValues = {};
             const fakeFilterKey = 'testKey';
             const fakeFilterValue = 10;
@@ -478,24 +494,16 @@ describe('TaskFiltersCloudComponent', () => {
 
             expect(component.currentFiltersValues).not.toEqual({});
             expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
-            expect(updatedFilterSpy).not.toHaveBeenCalled();
-        });
+            expect(updatedFilterSpy).toHaveBeenCalled();
 
-        it('should not emit filter key when filter counter has not changd', () => {
-            component.currentFiltersValues = {};
-            const fakeFilterKey = 'testKey';
-            const fakeFilterValue = 10;
-            const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
-            component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
-            fixture.detectChanges();
-
-            expect(component.currentFiltersValues).not.toEqual({});
-            expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
+            component.updatedFilter.pipe(first()).subscribe(() => {
+                fail('Should not have emitted filter key if there is no change in the filter value');
+            });
 
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
             expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
-            expect(updatedFilterSpy).not.toHaveBeenCalled();
-        });
+            flush();
+        }));
 
         it('should emit filter key when filter counter is increased', (done) => {
             component.currentFiltersValues = {};
