@@ -24,3 +24,7 @@ import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@ang
 getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
     teardown: { destroyAfterEach: true }
 });
+
+(window as any).pdfjsLib = (window as any).pdfjsLib || require('pdfjs-dist/build/pdf.min.mjs');
+(window as any).pdfjsViewer = (window as any).pdfjsViewer || require('pdfjs-dist/web/pdf_viewer.mjs');
+(window as any).pdfjsLib.GlobalWorkerOptions.workerSrc = 'base/pdfjs-dist/build/pdf.worker.min.mjs';
