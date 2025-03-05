@@ -33,7 +33,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
 
@@ -60,6 +60,7 @@ describe('UserTaskCloudComponent', () => {
     let getCurrentUserSpy: jasmine.Spy;
     let loader: HarnessLoader;
     let identityUserService: IdentityUserService;
+    let errorEmitSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -67,6 +68,7 @@ describe('UserTaskCloudComponent', () => {
         });
         fixture = TestBed.createComponent(UserTaskCloudComponent);
         component = fixture.componentInstance;
+        errorEmitSpy = spyOn(component.error, 'emit');
         loader = TestbedHarnessEnvironment.loader(fixture);
         taskCloudService = TestBed.inject(TaskCloudService);
         identityUserService = TestBed.inject(IdentityUserService);
@@ -288,6 +290,15 @@ describe('UserTaskCloudComponent', () => {
 
             expect(getTaskSpy).not.toHaveBeenCalled();
         });
+
+        it('should emit error when getTaskById fails', async () => {
+            getTaskSpy.and.returnValue(throwError(() => 'getTaskyById error'));
+            component.taskId = 'task1';
+            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            await fixture.whenStable();
+
+            expect(errorEmitSpy).toHaveBeenCalledWith('getTaskyById error');
+        });
     });
 
     describe('Events', () => {
@@ -344,12 +355,11 @@ describe('UserTaskCloudComponent', () => {
         });
 
         it('should emit error when error occurs', async () => {
-            spyOn(component.error, 'emit').and.stub();
             component.onError({});
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.error.emit).toHaveBeenCalled();
+            expect(errorEmitSpy).toHaveBeenCalled();
         });
 
         it('should reload when task is completed', async () => {

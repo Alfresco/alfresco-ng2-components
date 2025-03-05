@@ -30,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
 import { CompleteTaskDirective } from './complete-task/complete-task.directive';
+import { catchError, EMPTY, forkJoin } from 'rxjs';
 
 const TaskTypes = {
     Form: 'form',
@@ -251,18 +252,29 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     private loadTask(): void {
         this.loading = true;
-        this.taskCloudService
-            .getTaskById(this.appName, this.taskId)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((details) => {
-                this.taskDetails = details;
+        const tasks$ = this.taskCloudService.getTaskById(this.appName, this.taskId);
+        const candidateUsers$ = this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
+        const candidateGroups$ = this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
+        forkJoin({
+            tasks: tasks$,
+            candidateUsers: candidateUsers$,
+            candidateGroups: candidateGroups$
+        })
+            .pipe(
+                takeUntilDestroyed(this.destroyRef),
+                catchError((error) => {
+                    this.onError(error);
+                    return EMPTY;
+                })
+            )
+            .subscribe(({ tasks, candidateGroups, candidateUsers }) => {
+                this.taskDetails = tasks;
                 this.getTaskType();
+                this.candidateUsers = candidateUsers;
+                this.candidateGroups = candidateGroups;
                 this.loading = false;
                 this.onTaskLoaded.emit(this.taskDetails);
             });
-
-        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users) => (this.candidateUsers = users || []));
-        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups) => (this.candidateGroups = groups || []));
     }
 
     public switchToDisplayMode(newDisplayMode?: string): void {
