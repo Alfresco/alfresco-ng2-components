@@ -50,7 +50,11 @@ export abstract class CardViewBaseItemModel<T = any> {
             for (const constraint of props.constraints) {
                 if (constraint.type !== 'LIST') {
                     const validatorFactory = validatorsMap[constraint.type.toLowerCase()];
-                    this.validators.push(validatorFactory(constraint.parameters));
+                    if (validatorFactory !== undefined) {
+                        this.validators.push(validatorFactory(constraint.parameters));
+                    } else {
+                        console.warn(`Validator for type ${constraint.type} is not supported`);
+                    }
                 }
             }
         }
