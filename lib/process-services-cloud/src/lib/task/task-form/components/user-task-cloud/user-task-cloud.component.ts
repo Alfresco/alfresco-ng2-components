@@ -30,7 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
 import { CompleteTaskDirective } from './complete-task/complete-task.directive';
-import { catchError, forkJoin, of } from 'rxjs';
+import { catchError, EMPTY, forkJoin } from 'rxjs';
 
 const TaskTypes = {
     Form: 'form',
@@ -264,7 +264,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
                 takeUntilDestroyed(this.destroyRef),
                 catchError((error) => {
                     this.onError(error);
-                    return of();
+                    return EMPTY;
                 })
             )
             .subscribe(({ tasks, candidateGroups, candidateUsers }) => {
