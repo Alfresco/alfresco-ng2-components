@@ -103,6 +103,10 @@ export abstract class FormBaseComponent {
      */
     formStyle: string = '';
 
+    get hasVisibleOutcomes(): boolean {
+        return this.form?.outcomes?.some((outcome) => this.isOutcomeButtonVisible(outcome, this.form.readOnly));
+    }
+
     get form(): FormModel {
         return this._form;
     }

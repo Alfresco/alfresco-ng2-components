@@ -86,6 +86,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
+    @ViewChild('startForm') startForm: FormCloudComponent;
+
     /** (required) Name of the app. */
     @Input()
     appName: string = '';
@@ -163,7 +165,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     isFormCloudLoading = false;
     processDefinitionLoaded = false;
 
-    showStartProcessButton = true;
+    startEnabledConstant: string;
     startProcessButtonLabel: string;
     cancelButtonLabel: string;
 
@@ -294,7 +296,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
 
             if (displayStart) {
-                this.showStartProcessButton = displayStart?.value === 'true';
+                this.startEnabledConstant = displayStart.value;
             }
             if (startLabel) {
                 this.startProcessButtonLabel = startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
@@ -529,5 +531,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
         }
         return processName;
+    }
+
+    shouldShowStartProcessButton(): boolean {
+        if (this.startEnabledConstant) return this.startEnabledConstant === 'true';
+
+        return !this.startForm?.hasVisibleOutcomes;
     }
 }
