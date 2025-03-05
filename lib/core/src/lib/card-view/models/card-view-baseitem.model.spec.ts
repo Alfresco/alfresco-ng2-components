@@ -185,5 +185,23 @@ describe('CardViewBaseItemModel', () => {
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
             expect(itemModel.isValid(itemModel.value)).toBe(true);
         });
+
+        it('should log warning when validator type is not supported by validatorsMap', () => {
+            spyOn(console, 'warn');
+            const constrainedProperties: CardViewItemProperties = {
+                ...properties,
+                value: 'test.',
+                constraints: [
+                    {
+                        id: 'custom-constraint-id',
+                        type: 'org.test.constraint'
+                    }
+                ]
+            };
+
+            const itemModel = new CarViewCustomItemModel(constrainedProperties);
+            expect(itemModel.isValid(itemModel.value)).toBe(true);
+            expect(console.warn).toHaveBeenCalledWith('Validator for type org.test.constraint is not supported');
+        });
     });
 });
