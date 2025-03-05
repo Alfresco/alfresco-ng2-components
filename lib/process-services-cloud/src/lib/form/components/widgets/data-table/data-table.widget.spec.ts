@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataColumn, DataRow, FormFieldModel, FormFieldTypes, FormModel, VariableConfig } from '@alfresco/adf-core';
+import { DataColumn, DataRow, FormFieldModel, FormFieldTypes, FormModel, FormService, ObjectDataRow, VariableConfig } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DataTableWidgetComponent } from './data-table.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -46,6 +46,7 @@ describe('DataTableWidgetComponent', () => {
     let widget: DataTableWidgetComponent;
     let fixture: ComponentFixture<DataTableWidgetComponent>;
     let formCloudService: FormCloudService;
+    let formService: FormService;
 
     const errorIcon: string = 'error_outline';
 
@@ -90,6 +91,7 @@ describe('DataTableWidgetComponent', () => {
         widget = fixture.componentInstance;
 
         formCloudService = TestBed.inject(FormCloudService);
+        formService = TestBed.inject(FormService);
 
         widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
             type: FormFieldTypes.DATA_TABLE,
@@ -194,6 +196,32 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         assertData(mockCountryColumns, mockEuropeCountriesRows);
+    });
+
+    it('should reinitialize data source when variable value changed', () => {
+        const field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
+        widget.field = field;
+
+        const newDataSource = {
+            id: 'SE',
+            name: 'Sweden'
+        };
+
+        fixture.detectChanges();
+
+        field.form.changeVariableValue('json-form-variable', [newDataSource]);
+
+        formService.onFormVariableChanged.next({
+            field
+        });
+
+        fixture.detectChanges();
+
+        const expectedDataSource: DataRow[] = [new ObjectDataRow({ id: newDataSource.id, name: newDataSource.name })];
+        expectedDataSource.forEach((row) => (row.cssClass = ''));
+
+        const widgetRows = widget.dataSource.getRows();
+        expect(widgetRows).toEqual(expectedDataSource);
     });
 
     it('should NOT display data table with data source if form is in preview state', () => {

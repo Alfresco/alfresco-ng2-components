@@ -61,6 +61,16 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     ngOnInit(): void {
+        this.init();
+
+        this.formService.onFormVariableChanged.subscribe(({ field }) => {
+            if (field.id === this.field.id) {
+                this.init();
+            }
+        });
+    }
+
+    private init(): void {
         this.setPreviewState();
         this.getTableData();
         this.initDataTable();
@@ -74,6 +84,8 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private initDataTable(): void {
+        this.dataTableLoadFailed = false;
+
         if (this.rowsData?.length) {
             this.dataSource = new WidgetDataTableAdapter(this.rowsData, this.columnsSchema);
 
