@@ -296,7 +296,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
 
             if (displayStart) {
-                this.startEnabledConstant = displayStart.value;
+                this.startEnabledConstant = displayStart?.value;
             }
             if (startLabel) {
                 this.startProcessButtonLabel = startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
