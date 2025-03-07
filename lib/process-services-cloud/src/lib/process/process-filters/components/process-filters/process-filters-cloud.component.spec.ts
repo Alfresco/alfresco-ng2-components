@@ -16,8 +16,8 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { first, of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -585,62 +585,53 @@ describe('ProcessFiltersCloudComponent', () => {
                 const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
                 fixture.detectChanges();
-
                 expect(component.currentFiltersValues).not.toEqual({});
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
                 expect(updatedFilterSpy).toHaveBeenCalled();
             });
-
-            it('should not emit filter key when filter counter has not changd', () => {
+            it('should not emit filter key when filter counter has not changed', fakeAsync(() => {
                 component.currentFiltersValues = {};
                 const fakeFilterKey = 'testKey';
                 const fakeFilterValue = 10;
-                const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
+
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
                 fixture.detectChanges();
-
                 expect(component.currentFiltersValues).not.toEqual({});
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
 
+                component.updatedFilter.pipe(first()).subscribe(() => {
+                    fail('Should not have been called if the filterKey value is already there');
+                });
+
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
+                fixture.detectChanges();
+
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
-                expect(updatedFilterSpy).toHaveBeenCalledTimes(1);
-            });
+                flush();
+            }));
 
-            it('should emit filter key when filter counter is increased', () => {
+            it('should emit filter key when filter counter is increased', (done) => {
                 component.currentFiltersValues = {};
                 const fakeFilterKey = 'testKey';
-                const fakeFilterValueInitial = 10;
-                const fakeFilterValueSecondary = 20;
-                const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
-                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValueInitial);
-                fixture.detectChanges();
-
-                expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValueInitial);
-
-                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValueSecondary);
-                fixture.detectChanges();
-
-                expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValueSecondary);
-            });
-
-            it('should emit filter key when filter counter is decreased', () => {
-                component.currentFiltersValues = {};
-                const fakeFilterKey = 'testKey';
-                const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
+                component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
+                    expect(updatedFilter).toBe(fakeFilterKey);
+                    expect(component.currentFiltersValues[fakeFilterKey]).toBe(20);
+                    done();
+                });
+                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 20);
                 fixture.detectChanges();
-
-                expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(10);
-
+            });
+            it('should emit filter key when filter counter is decreased', (done) => {
+                component.currentFiltersValues = {};
+                const fakeFilterKey = 'testKey';
+                component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
+                component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
+                    expect(updatedFilter).toBe(fakeFilterKey);
+                    done();
+                });
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 5);
                 fixture.detectChanges();
-
-                expect(updatedFilterSpy).toHaveBeenCalledWith(fakeFilterKey);
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(5);
             });
         });
     });
