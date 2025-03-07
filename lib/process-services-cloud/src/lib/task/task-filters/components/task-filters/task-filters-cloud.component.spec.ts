@@ -468,39 +468,34 @@ describe('TaskFiltersCloudComponent', () => {
             expect(component.getFilters).toHaveBeenCalledWith(appName);
         });
 
-        it('should emit filter key when filter counter is set for first time', (done) => {
-            component.currentFiltersValues = {};
-            const fakeFilterKey = 'testKey';
-            const fakeFilterValue = 10;
-
-            component.updatedFilter.pipe(first()).subscribe((updateFilter: string) => {
-                expect(updateFilter).toBe(fakeFilterKey);
-                expect(component.currentFiltersValues).not.toEqual({});
-                expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
-                done();
-            });
-
-            component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
-            fixture.detectChanges();
-        });
-
-        it('should not emit filter key when filter counter has not changd', fakeAsync(() => {
+        it('should emit filter key when filter counter is set for first time', () => {
             component.currentFiltersValues = {};
             const fakeFilterKey = 'testKey';
             const fakeFilterValue = 10;
             const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
             fixture.detectChanges();
-
             expect(component.currentFiltersValues).not.toEqual({});
             expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
             expect(updatedFilterSpy).toHaveBeenCalled();
+        });
+        it('should not emit filter key when filter counter has not changed', fakeAsync(() => {
+            component.currentFiltersValues = {};
+            const fakeFilterKey = 'testKey';
+            const fakeFilterValue = 10;
+
+            component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
+            fixture.detectChanges();
+            expect(component.currentFiltersValues).not.toEqual({});
+            expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
 
             component.updatedFilter.pipe(first()).subscribe(() => {
-                fail('Should not have emitted filter key if there is no change in the filter value');
+                fail('Should not have been called if the filterKey value is already there');
             });
 
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
+            fixture.detectChanges();
+
             expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
             flush();
         }));
@@ -509,7 +504,6 @@ describe('TaskFiltersCloudComponent', () => {
             component.currentFiltersValues = {};
             const fakeFilterKey = 'testKey';
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
-
             component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
                 expect(updatedFilter).toBe(fakeFilterKey);
                 expect(component.currentFiltersValues[fakeFilterKey]).toBe(20);
@@ -518,17 +512,14 @@ describe('TaskFiltersCloudComponent', () => {
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 20);
             fixture.detectChanges();
         });
-
         it('should emit filter key when filter counter is decreased', (done) => {
             component.currentFiltersValues = {};
             const fakeFilterKey = 'testKey';
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
-
             component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
                 expect(updatedFilter).toBe(fakeFilterKey);
                 done();
             });
-
             component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 5);
             fixture.detectChanges();
         });
