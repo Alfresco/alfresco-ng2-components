@@ -109,7 +109,7 @@
             {{ cancelButtonLabel }}
         </button>
         <button
-            *ngIf="shouldShowStartProcessButton()"
+            *ngIf="showStartProcessButton$ | async"
             color="primary"
             mat-raised-button
             [disabled]="disableStartButton || !isProcessFormValid"
