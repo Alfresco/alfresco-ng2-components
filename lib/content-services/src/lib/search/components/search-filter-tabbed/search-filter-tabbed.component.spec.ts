@@ -58,9 +58,8 @@ describe('SearchFilterTabbedComponent', () => {
             selectedIndexSpy = spyOnProperty(tabGroup, 'selectedIndex', 'set');
             searchFilterTabbedElement.style.position = 'absolute';
         });
-        // flaky test - alone it works, but when run with other tests it fails
-        //eslint-disable-next-line
-        xit('should double change selectedIndex when element becomes not visible on screen', (done) => {
+
+        it('should double change selectedIndex when element becomes not visible on screen', (done) => {
             searchFilterTabbedElement.style.top = '200%';
             setTimeout(() => {
                 expect(selectedIndexSpy).toHaveBeenCalledTimes(2);
