@@ -31,13 +31,6 @@ import { AnnotationMode } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
 
-// @Component({
-//     selector: 'adf-test-dialog-component',
-//     standalone: true,
-//     template: ''
-// })
-// class TestDialogComponent {}
-
 @Component({
     selector: 'adf-url-test-component',
     standalone: true,
