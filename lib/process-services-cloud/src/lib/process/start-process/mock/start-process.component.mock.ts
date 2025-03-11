@@ -199,6 +199,26 @@ export const fakeStartForm = {
     }
 };
 
+export const fakeStartFormWithOutcomes = {
+    formRepresentation: {
+        ...fakeStartForm.formRepresentation,
+        formDefinition: {
+            ...fakeStartForm.formRepresentation.formDefinition,
+            outcomes: [
+                {
+                    id: 'c5676ca7-8ad4-421c-9538-aaf8560bd5fc',
+                    name: 'Option 1',
+                    visibilityCondition: null
+                },
+                {
+                    id: '48e9c1f8-50b9-4d2f-998c-7836c132986f',
+                    name: 'Option 2',
+                    visibilityCondition: null
+                }
+            ]
+        }
+    }
+};
 export const fakeStartFormNotValid = {
     formRepresentation: {
         id: 'form-a5d50817-5183-4850-802d-17af54b2632f',

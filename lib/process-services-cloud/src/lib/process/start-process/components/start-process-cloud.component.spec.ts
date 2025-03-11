@@ -31,7 +31,8 @@ import {
     fakeNoNameProcessDefinitions,
     fakeSingleProcessDefinition,
     fakeSingleProcessDefinitionWithoutForm,
-    fakeFormModelJson
+    fakeFormModelJson,
+    fakeStartFormWithOutcomes
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -69,6 +70,8 @@ describe('StartProcessCloudComponent', () => {
 
         const panel = await loader.getHarness(MatAutocompleteHarness);
         await panel.selectOption({ text: name });
+        fixture.detectChanges();
+        await fixture.whenStable();
     };
 
     const typeValueInto = (selector: any, value: string) => {
@@ -185,8 +188,6 @@ describe('StartProcessCloudComponent', () => {
             component.name = 'My new process';
             component.processDefinitionName = 'process';
             await selectOptionByName('processwithoutform2');
-            fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(component.processDefinitionCurrent.name).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[1])).name);
             const startBtn = fixture.nativeElement.querySelector('#button-start');
@@ -537,8 +538,6 @@ describe('StartProcessCloudComponent', () => {
             await fixture.whenStable();
 
             await selectOptionByName('processwithform');
-            fixture.detectChanges();
-            await fixture.whenStable();
 
             component.processDefinitionName = fakeProcessDefinitions[2].name;
             component.setProcessDefinitionOnForm(fakeProcessDefinitions[2].name);
@@ -569,9 +568,6 @@ describe('StartProcessCloudComponent', () => {
             component.appName = 'myApp';
             component.ngOnChanges({});
             await selectOptionByName('process');
-
-            fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(component.processDefinitionCurrent.name).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[3])).name);
             expect(component.processDefinitionCurrent.key).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[3])).key);
@@ -701,14 +697,36 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should see start button', async () => {
+        it('should show start button', () => {
             component.ngOnChanges({ appName: firstChange });
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).toBeDefined();
             expect(startButton).not.toBeNull();
+        });
+
+        it('should show start button when start process has form without outcomes', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartForm));
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+
+            await selectOptionByName('processwithform');
+
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).toBeDefined();
+            expect(startButton).not.toBeNull();
+        });
+
+        it('should NOT see start button when start process has form with outcomes', async () => {
+            formDefinitionSpy.and.returnValue(of(fakeStartFormWithOutcomes));
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+
+            await selectOptionByName('processwithform');
+
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).toBeNull();
         });
 
         it('should call service with the correct parameters when button is clicked and variables are defined and formCloud is undefined', async () => {
@@ -820,8 +838,6 @@ describe('StartProcessCloudComponent', () => {
             await fixture.whenStable();
 
             await selectOptionByName('processwithform');
-            fixture.detectChanges();
-            await fixture.whenStable();
 
             component.processDefinitionName = fakeProcessDefinitions[2].name;
             component.setProcessDefinitionOnForm(fakeProcessDefinitions[2].name);
@@ -941,8 +957,6 @@ describe('StartProcessCloudComponent', () => {
             await fixture.whenStable();
             component.processDefinitionName = 'processwithoutform1';
             await selectOptionByName(fakeProcessDefinitions[0].name);
-            fixture.detectChanges();
-            await fixture.whenStable();
             expect(emitSpy).toHaveBeenCalledOnceWith(fakeProcessDefinitions[0]);
         });
 

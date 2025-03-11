@@ -32,12 +32,12 @@ import {
 import { ContentLinkModel, FormModel, InplaceFormInputComponent, LocalizedDatePipe, TranslationService } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { catchError, debounceTime } from 'rxjs/operators';
+import { catchError, debounceTime, map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { forkJoin, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, combineLatest } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
@@ -85,6 +85,8 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 export class StartProcessCloudComponent implements OnChanges, OnInit {
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
+
+    @ViewChild('startForm') startForm: FormCloudComponent;
 
     /** (required) Name of the app. */
     @Input()
@@ -163,7 +165,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     isFormCloudLoading = false;
     processDefinitionLoaded = false;
 
-    showStartProcessButton = true;
+    showStartProcessButton$: Observable<boolean>;
     startProcessButtonLabel: string;
     cancelButtonLabel: string;
 
@@ -180,6 +182,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly startProcessCloudService = inject(StartProcessCloudService);
     private readonly localizedDatePipe = inject(LocalizedDatePipe);
+    private readonly displayStartSubject = new BehaviorSubject<string>(null);
+    private readonly hasVisibleOutcomesSubject = new BehaviorSubject<boolean>(false);
 
     get isProcessFormValid(): boolean {
         if (this.hasForm && this.isFormCloudLoaded) {
@@ -230,6 +234,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             .subscribe((processDefinitionName) => {
                 this.selectProcessDefinitionByProcessDefinitionName(processDefinitionName);
             });
+        this.showStartProcessButton$ = combineLatest([this.displayStartSubject, this.hasVisibleOutcomesSubject]).pipe(
+            map(([displayStart, hasVisibleOutcomes]) => (displayStart !== null ? displayStart === 'true' : !hasVisibleOutcomes))
+        );
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -254,6 +261,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     onFormLoaded(form: FormModel) {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
+
+        if (this.startForm) {
+            this.hasVisibleOutcomesSubject.next(this.startForm.hasVisibleOutcomes);
+        }
     }
 
     private getMaxNameLength(): number {
@@ -294,7 +305,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
 
             if (displayStart) {
-                this.showStartProcessButton = displayStart?.value === 'true';
+                this.displayStartSubject.next(displayStart?.value);
             }
             if (startLabel) {
                 this.startProcessButtonLabel = startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;

@@ -73,6 +73,7 @@
 
             <ng-container *ngIf="hasForm else taskFormCloudButtons">
                 <adf-cloud-form
+                    #startForm
                     [appName]="appName"
                     [appVersion]="processDefinitionCurrent.appVersion"
                     [data]="resolvedValues"
@@ -108,7 +109,7 @@
             {{ cancelButtonLabel }}
         </button>
         <button
-            *ngIf="showStartProcessButton"
+            *ngIf="showStartProcessButton$ | async"
             color="primary"
             mat-raised-button
             [disabled]="disableStartButton || !isProcessFormValid"
