@@ -187,7 +187,7 @@ jobs:
           - name: content-services
             exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
+            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api, extensions"
           - name: insights
             exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
           - name: process-services
