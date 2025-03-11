@@ -207,7 +207,7 @@ Component catalog
 [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the 
-[official documentation](http://docs.alfresco.com/)
+[official documentation](https://support.hyland.com/p/alfresco)
 for further details and suggestions.
 
 ## Issues addressed

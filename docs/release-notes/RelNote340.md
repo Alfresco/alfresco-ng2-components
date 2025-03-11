@@ -103,7 +103,7 @@ The following is a brief list of references to help you get started with the new
 -   [Official GitHub Project - alfresco-js-api](https://github.com/Alfresco/alfresco-js-api)
 -   [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](https://support.hyland.com/p/alfresco) for further details and suggestions.
 
 ## Issues addressed
 

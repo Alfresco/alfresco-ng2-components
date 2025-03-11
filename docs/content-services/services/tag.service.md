@@ -69,7 +69,7 @@ Manages tags in Content Services.
 ## Details
 
 Content Services supports
-[tagging](http://docs.alfresco.com/5.2/tasks/site-content-tag.html)
+[tagging](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Develop/REST-API-Guide/Searching-for-Content)
 of file and folder nodes to assist with searches. A tag is a short
 text string added to an item, rather like a hashtag in social media.
 
