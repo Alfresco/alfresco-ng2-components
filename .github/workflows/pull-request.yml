@@ -187,7 +187,7 @@ jobs:
           - name: content-services
             exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api, extensions"
+            exclude: "insights,extensions,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: insights
             exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
           - name: process-services
@@ -203,7 +203,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npx nx affected:test --exclude=${{ matrix.unit-tests.exclude }}
 
   lint:
     # long timeout required when cache has to be recreated
