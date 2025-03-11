@@ -293,7 +293,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     }
 
     checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number): void {
-        if (this.currentFiltersValues[filterKey] === undefined || this.currentFiltersValues[filterKey] !== filterValue) {
+        if (!this.currentFiltersValues[filterKey]) {
+            this.currentFiltersValues[filterKey] = filterValue;
+            return;
+        }
+        if (this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
             this.updatedFilter.emit(filterKey);
             this.updatedFiltersSet.add(filterKey);

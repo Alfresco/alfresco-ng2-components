@@ -19,7 +19,7 @@
     "@editorjs/marker": "1.4.0",
     "@editorjs/paragraph": "^2.11.6",
     "@editorjs/underline": "1.1.0",
-    "editorjs-html": "3.4.3",
+    "editorjs-html": "4.0.5",
     "editorjs-paragraph-with-alignment": "3.0.0",
     "editorjs-text-alignment-blocktune": "^1.0.3",
     "editorjs-text-color-plugin": "1.13.1",
