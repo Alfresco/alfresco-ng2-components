@@ -68,7 +68,7 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     }
 
     ngOnInit(): void {
-         this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER, { strict: true }).parse(this.field.value);
+        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER, { strict: true }).parse(this.field.value);
 
         if (!(this.parsedHTML instanceof Error)) {
             this.sanitizeHtmlContent();
@@ -78,6 +78,6 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     }
 
     private sanitizeHtmlContent(): void {
-        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML);
+        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML.join(''));
     }
 }
