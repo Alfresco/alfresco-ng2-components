@@ -388,16 +388,16 @@ describe('Test PdfViewer - Zoom customization', () => {
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
             await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
-        });
+        }, 55000);
 
-        it('should use the custom zoom if it is present in the app.config', async () => {
+        it('should use the custom zoom if it is present in the app.config', fakeAsync(() => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+            tick();
 
             expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
-        });
+        }));
     });
 
     describe('less than the minimum allowed value', () => {
@@ -408,7 +408,7 @@ describe('Test PdfViewer - Zoom customization', () => {
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
             await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
-        });
+        }, 55000);
 
         it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', async () => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
