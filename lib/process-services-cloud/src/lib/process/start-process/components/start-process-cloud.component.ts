@@ -261,7 +261,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     onFormLoaded(form: FormModel) {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
-        this.hasVisibleOutcomesSubject.next(this.startForm.hasVisibleOutcomes);
+
+        if (this.startForm) {
+            this.hasVisibleOutcomesSubject.next(this.startForm.hasVisibleOutcomes);
+        }
     }
 
     private getMaxNameLength(): number {
