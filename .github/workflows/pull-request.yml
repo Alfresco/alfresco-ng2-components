@@ -188,7 +188,7 @@ jobs:
           - name: core
           - name: insights
           - name: process-services
-          - name: process-cloud
+          - name: process-services-cloud
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -198,6 +198,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
+          xvfb-run --auto-servernum
           npx nx run ${{ matrix.unit-tests.name}}:test
 
   lint:
