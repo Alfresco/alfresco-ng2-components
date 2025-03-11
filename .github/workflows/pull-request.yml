@@ -27,44 +27,46 @@ on:
       - master-patch*
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 env:
-  BASE_REF: ${{ github.base_ref }}
-  HEAD_REF: ${{ github.head_ref }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  GITHUB_BRANCH: ${{ github.ref_name }}
-  GH_BUILD_DIR: ${{ github.workspace }}
-  GH_COMMIT: ${{ github.sha }}
-  BUILD_ID: ${{ github.run_id }}
-  GH_RUN_NUMBER: ${{ github.run_attempt }}
-  GH_BUILD_NUMBER: ${{ github.run_id }}
-  JOB_ID: ${{ github.run_id }}
+  BASE_REF: "${{ github.base_ref }}"
+  HEAD_REF: "${{ github.head_ref }}"
+  AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+  GITHUB_BRANCH: "${{ github.ref_name }}"
+  GH_BUILD_DIR: "${{ github.workspace }}"
+  GH_COMMIT: "${{ github.sha }}"
+  BUILD_ID: "${{ github.run_id }}"
+  GH_RUN_NUMBER: "${{ github.run_attempt }}"
+  GH_BUILD_NUMBER: "${{ github.run_id }}"
+  JOB_ID: "${{ github.run_id }}"
   LOG_LEVEL: "ERROR"
-  S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
+  S3_BUILD_BUCKET_SHORT_NAME: "${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}"
   NODE_OPTIONS: "--max-old-space-size=5120"
-  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
-  DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
-  DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
+  DOCKER_REPOSITORY_DOMAIN: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}"
+  DOCKER_REPOSITORY_USER: "${{ secrets.DOCKER_REPOSITORY_USER }}"
+  DOCKER_REPOSITORY_PASSWORD: "${{ secrets.DOCKER_REPOSITORY_PASSWORD }}"
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
   STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
-  REDIRECT_URI: /
+  REDIRECT_URI: "/"
 
 jobs:
   pre-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
 
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@25ed13d0628a1601b4b44048e63cc4328ed03633 # v3.0.22
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@25ed13d0628a1601b4b44048e63cc4328ed03633
 
       - name: Check package-lock.json version
         run: |
@@ -79,93 +81,79 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-         fetch-depth: 0
-
+          fetch-depth: 0
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@c1236aee36bb9b35c5972819fcf8a4d07572e6cd # v8.16.0
-
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@c1236aee36bb9b35c5972819fcf8a4d07572e6cd
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@c1236aee36bb9b35c5972819fcf8a4d07572e6cd # v8.16.0
-
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@c1236aee36bb9b35c5972819fcf8a4d07572e6cd
       - name: ci:force flag parser
         shell: bash
         run: |
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
-            echo -e "\033[32mci:force check can be skipped\033[0m"
+            echo "ci:force check can be skipped"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+              echo "[ci:force] flag detected. No need for approval."
               skip_check="true"
           fi
-
       - name: Get PR number
         if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-        uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
+        uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa
         id: action
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: show pr number
+      - name: Show PR number
         shell: bash
-        run: |
-          echo "PR: ${{ steps.action.outputs.number }}"
-
-      - name: check if pr is approved
+        run: echo "PR: ${{ steps.action.outputs.number }}"
+      - name: Check if PR is approved
         env:
-          DEVEL_FLAG: ${{ inputs.devel }}
-          GH_TOKEN: ${{ github.token }}
-          skip_check: "false"
+          DEVEL_FLAG: "${{ inputs.devel }}"
+          GH_TOKEN: "${{ github.token }}"
         run: |
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
-            echo -e "\033[32mci:force check can be skipped\033[0m"
-            skip_check="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-            skip_check="true"
+            echo "ci:force check can be skipped"
+            exit 0
           fi
-
+          if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+            echo "[ci:force] flag detected. No need for approval."
+            exit 0
+          fi
           if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
-            skip_check="true"
+            echo "Commit by ${{ github.actor }}. No need for approval."
+            exit 0
           fi
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo -e "\033[32mSchedule event\033[0m"
-            skip_check="true"
+            echo "Schedule event"
+            exit 0
           fi
-
           if [[ "$DEVEL_FLAG" == "true" ]]; then
-            echo -e "\033[32mDevel flag\033[0m"
-            skip_check="true"
+            echo "Devel flag"
+            exit 0
           fi
-
-          if [ "$skip_check" == "false" ]; then
-            echo "Checking PR approval"
-            prNumber=${{ steps.action.outputs.number }}
-            echo "PR: $prNumber"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
-            if [[ $checkApproval ]]; then
-              echo -e "\033[32mPR approved\033[0m"
-            else
-              echo -e "\033[31mPR NOT approved\033[0m"
-              exit 1
-            fi
+          prNumber=${{ steps.action.outputs.number }}
+          echo "Checking PR approval for PR $prNumber"
+          checkApproval=$(gh api /repos/${{ github.repository }}/pulls/$prNumber/reviews | jq '.[].state' | grep APPROVED)
+          if [ -n "$checkApproval" ]; then
+            echo "PR approved"
+          else
+            echo "PR NOT approved"
+            exit 1
           fi
 
   setup:
-    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-latest
     needs: [check-if-pr-is-approved, pre-checks]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0
       - uses: ./.github/actions/setup
-      - name: install
+      - name: Install dependencies
         run: |
           npm ci
           npx nx run js-api:bundle
@@ -179,62 +167,63 @@ jobs:
     needs: [setup]
     strategy:
       fail-fast: false
-      # max-parallel: 4
       matrix:
         unit-tests:
-          - name: js-api
+          - name: "js-api"
             exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: content-services
+          - name: "content-services"
             exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: core
+          - name: "core"
             exclude: "insights,extensions,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: insights
+          - name: "insights"
             exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
-          - name: process-services
+          - name: "process-services"
             exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
-          - name: process-services-cloud
-            exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
+          - name: "process-cloud"
+            exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular,js-api"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test --exclude=${{ matrix.unit-tests.exclude }}
+          echo "Running unit tests (excluding: ${{ matrix.unit-tests.exclude }})"
+          xvfb-run --auto-servernum npx nx affected:test --exclude="${{ matrix.unit-tests.exclude }}" --verbose
 
   lint:
-    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Lint"
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
 
   build-libs:
-    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Build libs"
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci
+      - run: |
+          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected:build $NX_CALCULATION_FLAGS --prod
+          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   PR-forbidden-labels:
@@ -243,26 +232,23 @@ jobs:
     steps:
       - id: checkoutRepo
         name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 1
       - name: PR contains forbidden labels
         id: pr-forbidden
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
         with:
           script: |
             const issueHasLabels = require('./scripts/github/update/check-issue-has-label.js');
             const checkLabels = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
-
-            const hasLabel = await issueHasLabels({github, context, checkLabels})
-
-            if(hasLabel) {
-              core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
+            const hasLabel = await issueHasLabels({github, context, checkLabels});
+            if (hasLabel) {
+              core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is removed.');
             }
       - name: Check value after
         run: |
-          echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
-          echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
+          echo "result: ${{ toJson(steps.pr-forbidden.result) }}"
 
   finalize:
     if: ${{ always() }}
@@ -270,27 +256,31 @@ jobs:
     name: Final Results
     needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: identify-slack-group
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Identify Slack group
         id: groups
         if: ${{ github.event_name == 'schedule' }}
         uses: ./.github/actions/slack-group-area
         with:
           affected: ${{ steps.e2e-result.outputs.result }}
-      - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
-        name: Nofify QA failure
+      - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d
+        name: Notify QA failure
         if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: "${{ secrets.SLACK_BOT_TOKEN }}"
         with:
-          channel-id: 'C016SMNNL8L' #guild-channel
-          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}\nArea: ${{ steps.groups.outputs.groups}}"
-      - name: workflow failure
+          channel-id: 'C016SMNNL8L'
+          slack-message: |
+            🔴 Warning: The daily ADF cronjob failed
+            Workflow run: <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>
+            Details: ${{ steps.e2e-result.outputs.result }}
+            Area: ${{ steps.groups.outputs.groups }}
+      - name: Workflow failure
         run: exit 1
         if: ${{ contains(needs.*.result, 'failure') }}
-      - name: workflow canceled
+      - name: Workflow canceled
         run: exit 1
         if: ${{ contains(needs.*.result, 'cancelled') }}
-      - name: workflow success
+      - name: Workflow success
         run: exit 0
         if: ${{ contains(needs.*.result, 'success') }}
