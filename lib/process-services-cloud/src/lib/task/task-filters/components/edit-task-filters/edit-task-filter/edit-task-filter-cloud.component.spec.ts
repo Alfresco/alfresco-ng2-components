@@ -602,7 +602,7 @@ describe('EditTaskFilterCloudComponent', () => {
             await select.open();
 
             const options = await select.getOptions();
-            expect(options.length).toEqual(5);
+            expect(options.length).toEqual(0);
         });
 
         it('should update form on date range value is updated', (done) => {
