@@ -22,6 +22,7 @@ import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, Favor
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { NotificationService } from '@alfresco/adf-core';
 
 @Directive({
     standalone: true,
@@ -52,7 +53,7 @@ export class NodeFavoriteDirective implements OnChanges {
         this.toggleFavorite();
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService, private notificationService: NotificationService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue.length) {
@@ -79,26 +80,38 @@ export class NodeFavoriteDirective implements OnChanges {
                 return from(this.favoritesApi.deleteFavorite('-me-', id));
             });
 
-            forkJoin(batch).subscribe(
-                () => {
+            forkJoin(batch).subscribe({
+                next: () => {
                     this.favorites.forEach((selected) => (selected.entry.isFavorite = false));
+                    if (this.favorites.length > 1) {
+                        this.notificationService.showInfo('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODES_REMOVED', null, { number: this.favorites.length });
+                    } else {
+                        this.notificationService.showInfo('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_REMOVED', null, {
+                            name: this.favorites[0].entry.name
+                        });
+                    }
                     this.toggle.emit();
                 },
-                (error) => this.error.emit(error)
-            );
+                error: (error) => this.error.emit(error)
+            });
         }
 
         if (!every) {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
             const body = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            from(this.favoritesApi.createFavorite('-me-', body as any)).subscribe(
-                () => {
+            from(this.favoritesApi.createFavorite('-me-', body as any)).subscribe({
+                next: () => {
                     notFavorite.forEach((selected) => (selected.entry.isFavorite = true));
+                    if (notFavorite.length > 1) {
+                        this.notificationService.showInfo('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODES_ADDED', null, { number: notFavorite.length });
+                    } else {
+                        this.notificationService.showInfo('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_ADDED', null, { name: notFavorite[0].entry.name });
+                    }
                     this.toggle.emit();
                 },
-                (error) => this.error.emit(error)
-            );
+                error: (error) => this.error.emit(error)
+            });
         }
     }
 
