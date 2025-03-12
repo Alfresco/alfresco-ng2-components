@@ -156,7 +156,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     initFilterCounterNotifications() {
-        if (this.appName && this.enableNotifications) {
+        if (!this.appName) {
+            return;
+        }
+        if (this.enableNotifications) {
             this.taskFilterCloudService
                 .getTaskNotificationSubscription(this.appName)
                 .pipe(debounceTime(1000))
@@ -168,6 +171,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                     this.updateFilterCounters();
                     this.filterCounterUpdated.emit(result);
                 });
+        } else {
+            this.counters = {};
         }
     }
 
@@ -261,11 +266,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number) {
-        if (!this.currentFiltersValues[filterKey]) {
-            this.currentFiltersValues[filterKey] = filterValue;
-            return;
-        }
-        if (this.currentFiltersValues[filterKey] !== filterValue) {
+        if (this.currentFiltersValues[filterKey] === undefined || this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
             this.updatedFilter.emit(filterKey);
             this.updatedCountersSet.add(filterKey);
