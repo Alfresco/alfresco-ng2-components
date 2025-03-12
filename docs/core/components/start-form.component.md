@@ -69,7 +69,7 @@ Displays the Start [`Form`](../../../lib/process-services/src/lib/task-list/mode
 
 The [Start Process component](../../process-services/components/start-process.component.md) uses the Start [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) component
 to display the
-[start form](http://docs.alfresco.com/process-services1.6/topics/none_start_event.html)
+[start form](https://support.hyland.com/r/Alfresco/Alfresco-Process-Services/24.3/Alfresco-Process-Services/Using/Process-Services/BPMN-Editor)
 for the process.
 
 The `outcomeClick` event is passed a string containing the ID of the outcome button that

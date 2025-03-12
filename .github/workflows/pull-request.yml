@@ -183,17 +183,13 @@ jobs:
       matrix:
         unit-tests:
           - name: js-api
-            exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
           - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
           - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
-          - name: process-cloud
-            exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular,js-api"
+          - name: process-services-cloud
+          - name: extensions
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -203,7 +199,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --project=${{ matrix.unit-tests.name }}
 
   lint:
     # long timeout required when cache has to be recreated

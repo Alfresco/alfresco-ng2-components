@@ -34,7 +34,7 @@ Creates a new Content Services document library/site.
 
 This component lets the user create a new document library/site with the usual
 name, ID, description and access restrictions. See the
-[Sites](https://docs.alfresco.com/6.0/concepts/sites-intro.html)
+[Sites](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Using/Sites)
 section of the Content Services documentation for more information.
 
 ## See also

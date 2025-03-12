@@ -65,7 +65,7 @@ For example, a raw text file might be converted to HTML to enable better formatt
 in a web browser or a PDF might be converted to an equivalent bitmap image. A
 _rendition_ is a prearranged conversion that is set up for an item for convenient
 repeated use. More information about renditions is available in the
-[Content Services documentation](https://docs.alfresco.com/5.2/references/dev-extension-points-content-transformer.html).
+[Content Services documentation](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Develop/In-Process-Platform-Extension-Points/Content-Transformers-and-Renditions?tocId=MzBswf2LNNDFaGmBgO1hfg).
 
 In the [Renditions service](renditions.service.md) methods, the `nodeId` is a string identifying the content
 node that the rendition applies to. This can be obtained from

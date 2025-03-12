@@ -125,7 +125,7 @@ The **[`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts
 
 ### Share link with expiry date
 
-Some extra information is now available for shared links: expiry date. The earliest date accepted is at least 24h after the time you created it (following the ACS specification : [here](https://docs.alfresco.com/5.2/concepts/repository-properties.html) is the link). This is embedded into the **[Share Dialog Component](../../lib/content-services/content-node-share/content-node-share.dialog.ts)** and will be automatically shown when the share dialog is displayed.
+Some extra information is now available for shared links: expiry date. The earliest date accepted is at least 24h after the time you created it (following the ACS specification : [here](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Administer/Content-stores) is the link). This is embedded into the **[Share Dialog Component](../../lib/content-services/content-node-share/content-node-share.dialog.ts)** and will be automatically shown when the share dialog is displayed.
 
 ![Expiry Share Link](images/ShareExpiryLink.gif)
 
@@ -159,7 +159,7 @@ Component catalog
 
 [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](https://support.hyland.com/p/alfresco) for further details and suggestions.
 
 ## Issues addressed
 

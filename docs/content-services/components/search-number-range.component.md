@@ -39,7 +39,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | field | string | Field to to use |
-| format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html). |
+| format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://support.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference/Search-for-ranges). |
 | hideDefaultAction | boolean | Show/hide the widget actions. By default is false. |
 
 ## Details
@@ -50,7 +50,7 @@ in a search query.
 
 #### Range query format
 
-See the [Search for ranges](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html) page in the ACS docs for more information about the date range format.
+See the [Search for ranges](https://support.hyland.com/r/Alfresco/Alfresco-Governance-Services/23.4/Alfresco-Governance-Services/Using/Searching-records/Advanced-search-options) page in the ACS docs for more information about the date range format.
 
 The `format` setting specifies how the date is displayed textually. Most of the format is
 displayed as-is but you can use `{FROM}` and `{TO}` markers to interpolate the range limits

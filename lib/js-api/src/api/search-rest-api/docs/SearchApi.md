@@ -28,7 +28,7 @@ JSON
 
 **Note:** These are the minimum possible query parameters.
 
-The default search language is **afts** ([Alfresco Full Text Search](http://docs.alfresco.com/5.1/concepts/rm-searchsyntax-intro.html)), but you can also specify **cmis**, and **lucene**.
+The default search language is **afts** ([Alfresco Full Text Search](https://support.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference)), but you can also specify **cmis**, and **lucene**.
 
 A basic CMIS query looks like this:
 

@@ -101,8 +101,8 @@ In the three steps you can specify the search configuration. i.e
 You may find it useful to check out the following resources for background information
 before customizing the search UI:
 
--   [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
--   [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
+-   [Search API](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Develop/REST-API-Guide/Searching-for-Content)
+-   [Alfresco Full Text Search Reference](https://support.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference)
 -   [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
 
 ### Configuration
