@@ -73,7 +73,7 @@ describe('DateFnsUtils', () => {
         const expectedParsedDate = new Date('2023-09-22T00:00:00Z');
 
         const result = DateFnsUtils.parseDate(dateString, dateFormat);
-        expect(result).toEqual(addMinutes(expectedParsedDate,expectedParsedDate.getTimezoneOffset()));
+        expect(result).toEqual(addMinutes(expectedParsedDate, expectedParsedDate.getTimezoneOffset()));
     });
 
     it('should parse alternative ISO datetime', () => {
