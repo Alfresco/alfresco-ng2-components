@@ -322,11 +322,10 @@ describe('TaskFiltersCloudComponent', () => {
         });
 
         it('should not update filter counter when notifications are disabled from app.config.json', () => {
-            fixture.detectChanges();
-            fixture.componentInstance.counters = {};
             spyOn(appConfigService, 'get').and.returnValue(false);
             fixture.detectChanges();
 
+            expect(fixture.componentInstance.counters).toBeDefined();
             const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
             expect(updatedFilterCounters.length).toBe(0);
         });

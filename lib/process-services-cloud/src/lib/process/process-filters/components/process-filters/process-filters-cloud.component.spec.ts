@@ -628,6 +628,7 @@ describe('ProcessFiltersCloudComponent', () => {
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
                 component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
                     expect(updatedFilter).toBe(fakeFilterKey);
+                    expect(component.currentFiltersValues[fakeFilterKey]).toBe(5);
                     done();
                 });
                 component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 5);
