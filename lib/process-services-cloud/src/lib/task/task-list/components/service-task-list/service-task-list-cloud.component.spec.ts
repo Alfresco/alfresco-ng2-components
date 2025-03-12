@@ -230,7 +230,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     describe('component changes', () => {
         beforeEach(() => {
-            component.rows = fakeServiceTask.list.entries;
+            component.rows = fakeServiceTask.list.entries.map((task) => task.entry);
             fixture.detectChanges();
         });
 
