@@ -1,18 +1,18 @@
 @use '@angular/material' as mat;
 
-$alfresco-typography: mat.define-typography-config(
+$alfresco-typography: mat.m2-define-typography-config(
     $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
-    $headline-1: mat.define-typography-level(112px, 112px, 300),
-    $headline-2: mat.define-typography-level(56px, 56px, 400),
-    $headline-3: mat.define-typography-level(45px, 48px, 400),
-    $headline-4: mat.define-typography-level(34px, 40px, 400),
-    $headline-5: mat.define-typography-level(24px, 32px, 400),
-    $headline-6: mat.define-typography-level(20px, 32px, 500),
-    $subtitle-1: mat.define-typography-level(16px, 28px, 400),
-    $body-1: mat.define-typography-level(15px, 24px, 400),
-    $subtitle-2: mat.define-typography-level(14px, 24px, 500),
-    $body-2: mat.define-typography-level(14px, 20px, 400),
-    $caption: mat.define-typography-level(12px, 20px, 400),
-    $button: mat.define-typography-level(14px, 14px, 500),
+    $headline-1: mat.m2-define-typography-level(112px, 112px, 300),
+    $headline-2: mat.m2-define-typography-level(56px, 56px, 400),
+    $headline-3: mat.m2-define-typography-level(45px, 48px, 400),
+    $headline-4: mat.m2-define-typography-level(34px, 40px, 400),
+    $headline-5: mat.m2-define-typography-level(24px, 32px, 400),
+    $headline-6: mat.m2-define-typography-level(20px, 32px, 500),
+    $subtitle-1: mat.m2-define-typography-level(16px, 28px, 400),
+    $body-1: mat.m2-define-typography-level(15px, 24px, 400),
+    $subtitle-2: mat.m2-define-typography-level(14px, 24px, 500),
+    $body-2: mat.m2-define-typography-level(14px, 20px, 400),
+    $caption: mat.m2-define-typography-level(12px, 20px, 400),
+    $button: mat.m2-define-typography-level(14px, 14px, 500),
     // Line-height must be unit-less fraction of the font-size.
 );
