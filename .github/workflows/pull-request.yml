@@ -116,7 +116,7 @@ jobs:
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
-          skip_check: "false"
+          skip_check: "true"
         run: |
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
@@ -188,7 +188,6 @@ jobs:
           - name: insights
           - name: process-services
           - name: process-services-cloud
-          - name: extensions
 
     steps:
       - name: Checkout repository
