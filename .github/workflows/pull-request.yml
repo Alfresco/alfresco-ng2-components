@@ -187,7 +187,7 @@ jobs:
       - name: Generate affected projects matrix
         id: set-matrix
         run: |
-          AFFECTED=$(npx nx print-affected --target=test --select=projects --plain)
+          AFFECTED=$(npx nx show projects --affected --target=test --select=projects --plain --exclude=stories,eslint-angular)
           echo "Affected projects: $AFFECTED"
           MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({project: .})')
           echo "Matrix JSON: $MATRIX_JSON"
