@@ -19,6 +19,7 @@ import { Directive, HostListener, Input, OnChanges, Output, EventEmitter, Simple
 import { FavoriteBodyCreate, FavoritesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
+import { NotificationService } from '@alfresco/adf-core';
 
 @Directive({
     standalone: true,
@@ -58,7 +59,7 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private readonly alfrescoApiService: AlfrescoApiService, private readonly notificationService: NotificationService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.library.currentValue) {
@@ -92,6 +93,7 @@ export class LibraryFavoriteDirective implements OnChanges {
             .createFavorite('-me-', favoriteBody)
             .then((libraryEntry) => {
                 this.targetLibrary.isFavorite = true;
+                this.notificationService.showInfo('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_ADDED', null, { name: this.library.entry.title });
                 this.toggle.emit(libraryEntry);
             })
             .catch((error) => this.error.emit(error));
@@ -102,6 +104,7 @@ export class LibraryFavoriteDirective implements OnChanges {
             .deleteFavorite('-me-', favoriteId)
             .then((libraryBody) => {
                 this.targetLibrary.isFavorite = false;
+                this.notificationService.showInfo('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_REMOVED', null, { name: this.library.entry.title });
                 this.toggle.emit(libraryBody);
             })
             .catch((error) => this.error.emit(error));

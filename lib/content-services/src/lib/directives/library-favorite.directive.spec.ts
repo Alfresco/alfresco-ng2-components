@@ -20,6 +20,8 @@ import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NotificationService } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 @Component({
     standalone: true,
@@ -38,11 +40,13 @@ describe('LibraryFavoriteDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
     let selection: LibraryEntity;
+    let notificationService: NotificationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TestComponent, LibraryFavoriteDirective]
+            imports: [HttpClientTestingModule, TestComponent, LibraryFavoriteDirective, ContentTestingModule]
         });
+        notificationService = TestBed.inject(NotificationService);
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         selection = { entry: { guid: 'guid', id: 'id', title: 'Site', visibility: 'PUBLIC' }, isLibrary: true, isFavorite: false };
@@ -80,9 +84,10 @@ describe('LibraryFavoriteDirective', () => {
         expect(component.directive.isFavorite()).toBe(false);
     });
 
-    it('should call addFavorite() on click event when selection is not a favorite', async () => {
+    it('should call addFavorite() and display snackbar message on click event when selection is not a favorite', async () => {
         spyOn(component.directive.favoritesApi, 'getFavoriteSite').and.returnValue(Promise.reject(new Error('error')));
         spyOn(component.directive.favoritesApi, 'createFavorite').and.returnValue(Promise.resolve(null));
+        spyOn(notificationService, 'showInfo');
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -90,13 +95,18 @@ describe('LibraryFavoriteDirective', () => {
         expect(component.directive.isFavorite()).toBeFalsy();
 
         fixture.nativeElement.querySelector('button').dispatchEvent(new MouseEvent('click'));
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(component.directive.favoritesApi.createFavorite).toHaveBeenCalled();
+        expect(notificationService.showInfo).toHaveBeenCalledWith('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_ADDED', null, { name: 'Site' });
     });
 
-    it('should call removeFavoriteSite() on click event when selection is favorite', async () => {
+    it('should call removeFavoriteSite() and display snackbar message on click event when selection is favorite', async () => {
         spyOn(component.directive.favoritesApi, 'getFavoriteSite').and.returnValue(Promise.resolve(null));
         spyOn(component.directive.favoritesApi, 'deleteFavorite').and.returnValue(Promise.resolve());
+        spyOn(notificationService, 'showInfo');
 
         selection.isFavorite = true;
 
@@ -111,5 +121,6 @@ describe('LibraryFavoriteDirective', () => {
         await fixture.whenStable();
 
         expect(component.directive.favoritesApi.deleteFavorite).toHaveBeenCalled();
+        expect(notificationService.showInfo).toHaveBeenCalledWith('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_REMOVED', null, { name: 'Site' });
     });
 });
