@@ -2,22 +2,19 @@
 @use '@angular/material' as mat;
 @import './theme/theme-data';
 
-$custom-theme: mat.define-light-theme(
+$custom-theme: mat.m2-define-light-theme(
     (
         color: (
             primary: map.get($palettes, primary),
             accent: map.get($palettes, accent),
-            warn: map.get($palettes, warning),
+            warn: map.get($palettes, warning)
         ),
-        typography: $app-typography,
+        typography: $app-typography
     )
 );
 
 @if $background-color {
-    $custom-theme: get-custom-background-color(
-        $background-color,
-        $custom-theme
-    );
+    $custom-theme: get-custom-background-color($background-color, $custom-theme);
 }
 
 @if $text-color {
