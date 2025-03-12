@@ -68,7 +68,7 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     }
 
     ngOnInit(): void {
-        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER).parse(this.field.value);
+        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER, { strict: true }).parse(this.field.value);
 
         if (!(this.parsedHTML instanceof Error)) {
             this.sanitizeHtmlContent();
