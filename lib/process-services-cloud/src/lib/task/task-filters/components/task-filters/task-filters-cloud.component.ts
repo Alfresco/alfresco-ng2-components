@@ -168,6 +168,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                     this.updateFilterCounters();
                     this.filterCounterUpdated.emit(result);
                 });
+        } else if (this.appName && !this.enableNotifications) {
+            this.counters = {};
         }
     }
 

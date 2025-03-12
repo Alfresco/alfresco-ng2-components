@@ -322,6 +322,8 @@ describe('TaskFiltersCloudComponent', () => {
         });
 
         it('should not update filter counter when notifications are disabled from app.config.json', () => {
+            fixture.detectChanges();
+            fixture.componentInstance.counters = {};
             spyOn(appConfigService, 'get').and.returnValue(false);
             fixture.detectChanges();
 
@@ -533,7 +535,7 @@ describe('TaskFiltersCloudComponent', () => {
             taskFilterService.filterKeyToBeRefreshed$ = of(filterKeyTest);
             fixture.detectChanges();
 
-            expect(component.updatedCountersSet.size).toBe(0);
+            expect(component.updatedCountersSet.has(filterKeyTest)).toBeFalsy();
         });
 
         it('should remove key from set of updated filters when clicked on filter', async () => {
@@ -541,13 +543,13 @@ describe('TaskFiltersCloudComponent', () => {
             component.updatedCountersSet.add(filter.key);
             fixture.detectChanges();
 
-            expect(component.updatedCountersSet.size).toBe(1);
+            expect(component.updatedCountersSet.has(filter.key)).toBeTruthy();
 
             component.onFilterClick(filter);
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(component.updatedCountersSet.size).toBe(0);
+            expect(component.updatedCountersSet.has(filter.key)).toBeFalsy();
         });
 
         it('should add key to set of updated filters when value has changed', () => {

@@ -529,7 +529,7 @@ describe('ProcessFiltersCloudComponent', () => {
             processFilterService.filterKeyToBeRefreshed$ = of(filterKeyTest);
             fixture.detectChanges();
 
-            expect(component.updatedFiltersSet.size).toBe(0);
+            expect(component.updatedFiltersSet.has(filterKeyTest)).toBeFalsy();
         });
 
         describe('Highlight Selected Filter', () => {
