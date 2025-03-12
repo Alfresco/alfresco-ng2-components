@@ -222,7 +222,7 @@ Below you can find a brief list of references to help you start using the new re
 -   [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 -   [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](https://support.hyland.com/p/alfresco) for further details and suggestions.
 
 ## Issues addressed
 

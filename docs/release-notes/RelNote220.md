@@ -124,7 +124,7 @@ In this release, the [Viewer component](../core/components/viewer.component.md) 
 -   Thumbnails for PDF view, with the option to provide your own Thumbnails template if needed
 -   Image view now features a floating action toolbar with extra actions: zoom in/out, rotate, reset to default size
 -   Image view now supports panning of the images. Hardware-accelerated styles were used to enable panning of zoomed in or large images with the highest performance and efficiency
--   The viewer has greatly improved maintenance of the Renditions (see possible conversion options here: [File types that support preview and thumbnail generation | Alfresco Documentation](https://docs.alfresco.com/5.2/references/valid-transformations-preview.html) )
+-   The viewer has greatly improved maintenance of the Renditions (see possible conversion options here: [File types that support preview and thumbnail generation | Alfresco Documentation](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Administer/Transformation/File-types-that-support-preview-and-thumbnail-generation) )
 -   Support for "carousel" modes and document navigation options (extra buttons you can enable and provide handlers for). This feature will be fully demonstrated in the upcoming "Alfresco Content Application" release.
 -   It is now possible to provide custom menu buttons for the Viewer toolbar. See more details in the docs: [alfresco-ng2-components/viewer.component.md at development · Alfresco/alfresco-ng2-components · GitHub ](../core/components/viewer.component.md#custom-toolbar-buttons)
 
@@ -293,7 +293,7 @@ Component catalog
 
 [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](https://support.hyland.com/p/alfresco) for further details and suggestions.
 
 ## Issues addressed
 
