@@ -304,7 +304,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     set fileName(fileName: string) {
         this._fileName = fileName;
         this._fileExtension = this.viewUtilsService.getFileExtension(this.fileName);
-        this._fileNameWithoutExtension = this.fileName.replace(new RegExp(`${this.fileExtension}$`), '');
+        this._fileNameWithoutExtension = this.fileName?.replace(new RegExp(`${this.fileExtension}$`), '') || '';
     }
 
     get fileName(): string {
