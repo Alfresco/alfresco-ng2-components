@@ -192,7 +192,7 @@ jobs:
           echo "Base ref is $BASE_REF"
           AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=stories,eslint-angular)
           echo "Affected projects: $AFFECTED"
-          MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({project: .})')
+          MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
           echo "Matrix JSON: $MATRIX_JSON"
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
   debug-step:
