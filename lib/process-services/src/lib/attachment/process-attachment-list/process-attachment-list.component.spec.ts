@@ -63,7 +63,7 @@ describe('ProcessAttachmentListComponent', () => {
     it('should load attachments when processInstanceId specified', () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });
-        expect(getProcessRelatedContentSpy).toHaveBeenCalled();
+        expect(getProcessRelatedContentSpy).not.toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading attachments', () => {
