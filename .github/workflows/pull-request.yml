@@ -204,7 +204,7 @@ jobs:
       - name: Debug step
         run: |
           echo "Matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}"
-          echo "Matrix JSON: ${{ fromJson(needs.generate-affected-matrix.outputs.matrix) }}
+          echo "Matrix JSON: ${{ fromJson(needs.generate-affected-matrix.outputs.matrix) }}"
   unit-tests:
     name: "Unit tests for affected project: ${{ matrix.project }}"
     runs-on: ubuntu-latest
