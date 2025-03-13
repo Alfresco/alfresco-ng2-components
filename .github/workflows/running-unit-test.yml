@@ -1,5 +1,3 @@
-name: "Running Unit Test Workflow"
-
 on:
   workflow_call:
     inputs:
