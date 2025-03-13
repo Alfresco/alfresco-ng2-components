@@ -195,7 +195,7 @@ jobs:
           MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
           MATRIX_JSON=$(echo "$MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
           echo "Matrix JSON: $MATRIX_JSON"
-          core.setOutput('matrix', matrix);
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
   unit-tests:
     if: ${{ needs.generate-affected-matrix.outputs.matrix != '' }}
     name: "Unit tests for affected project: ${{ matrix.project }}"
