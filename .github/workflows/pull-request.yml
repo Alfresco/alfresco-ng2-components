@@ -198,7 +198,7 @@ jobs:
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
   unit-tests:
     if: ${{ needs.generate-affected-matrix.outputs.matrix != '' }}
-    name: "Unit tests for affected project: ${{ matrix.project }}"
+    name: "Unit tests : ${{ matrix.project }}"
     runs-on: ubuntu-latest
     needs: [generate-affected-matrix]
     strategy:
