@@ -197,8 +197,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
-          xvfb-run --auto-servernum
-          npx nx run ${{ matrix.unit-tests.name}}:test --configuration=ci
+          xvfb-run --auto-servernum npx nx run ${{ matrix.unit-tests.name}}:test --configuration=ci
 
   lint:
     # long timeout required when cache has to be recreated
