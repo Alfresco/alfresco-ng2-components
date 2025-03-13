@@ -190,7 +190,7 @@ jobs:
         run: |
           BASE_REF="${{ github.event.pull_request.base.ref }}"
           echo "Base ref is $BASE_REF"
-          AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=stories,eslint-angular)
+          AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=cli,stories,eslint-angular)
           echo "Affected projects: $AFFECTED"
           MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
           MATRIX_JSON=$(echo "$MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
