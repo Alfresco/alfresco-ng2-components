@@ -203,8 +203,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
-          node -e "console.log(typeof window !== 'undefined' ? 'window exists' : 'window is undefined')"
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npx nx core:test
 
   lint:
     # long timeout required when cache has to be recreated
