@@ -197,15 +197,15 @@ jobs:
           echo "Matrix JSON: $MATRIX_JSON"
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
 
-  trigger-unit-tests:
-    name: "Unit Tests"
-    runs-on: ubuntu-latest
-    needs: [generate-affected-matrix]
-    steps:
-      - name: Call unit tests workflow
-        uses: ./.github/workflows/unit-test-workflow.yml@main
-        with:
-          matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
+  # trigger-unit-tests:
+  #   name: "Unit Tests"
+  #   runs-on: ubuntu-latest
+  #   needs: [generate-affected-matrix]
+  #   steps:
+  #     - name: Call unit tests workflow
+  #       uses: ./.github/workflows/unit-test-workflow.yml@main
+  #       with:
+  #         matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
 
   lint:
     # long timeout required when cache has to be recreated

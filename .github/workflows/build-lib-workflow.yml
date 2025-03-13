@@ -1,4 +1,4 @@
-name: "Unit Tests Workflow"
+name: "Build Lib Workflow"
 
 on:
   workflow_call:
@@ -21,8 +21,8 @@ jobs:
           fetch-depth: 0
       - name: Setup environment
         uses: ./.github/actions/setup
-      - name: Run unit tests for ${{ matrix.project }}
+      - name: Run build for ${{ matrix.project }}
         env:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
-          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
+          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:build:production
