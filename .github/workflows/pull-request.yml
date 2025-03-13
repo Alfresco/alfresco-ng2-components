@@ -215,7 +215,7 @@ jobs:
     needs: [generate-affected-matrix]
     steps:
       - name: Call unit tests workflow
-        uses: ./.github/workflows/running-unit-test.yml@v1
+        uses: ./.github/workflows/running-unit-test.yml@main
         with:
           matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
 
