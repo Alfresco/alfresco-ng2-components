@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  unit-tests:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
