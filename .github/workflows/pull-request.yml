@@ -202,7 +202,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [generate-affected-matrix]
     strategy:
-      matrix: ${{ fromJson(needs.generate-affected-matrix.outputs.matrix) }}
+      matrix:
+        include: ${{ fromJson(needs.generate-affected-matrix.outputs.matrix) }}
       max-parallel: 4
     steps:
       - name: Checkout repository
