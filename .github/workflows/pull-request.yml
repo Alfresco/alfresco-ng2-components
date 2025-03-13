@@ -209,6 +209,13 @@ jobs:
           echo "Matrix JSON: $MATRIX_JSON"
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
 
+  trigger-build:
+    name: "Build Libs"
+    needs: [generate-affected-matrix]
+    uses: ./.github/workflows/unit-test-workflow.yml
+    with:
+      matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
+
   trigger-unit-tests:
     name: "Unit Tests"
     needs: [generate-affected-matrix]
