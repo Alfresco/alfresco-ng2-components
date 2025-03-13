@@ -354,7 +354,7 @@ fdescribe('Test PdfViewer component', () => {
     });
 });
 
-describe('Test PdfViewer - Zoom customization', () => {
+fdescribe('Test PdfViewer - Zoom customization', () => {
     let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
     let componentUrlTestComponent: UrlTestComponent;
 
