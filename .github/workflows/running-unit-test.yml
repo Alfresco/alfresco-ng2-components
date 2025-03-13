@@ -1,0 +1,29 @@
+name: "Running Unit Test Workflow"
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        description: 'JSON Matrix of projects'
+        required: true
+        type: string
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJson(inputs.matrix) }}
+      max-parallel: 4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Run unit tests for ${{ matrix.project }}
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5120"
+        run: |
+          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
