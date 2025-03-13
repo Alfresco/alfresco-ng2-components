@@ -441,7 +441,7 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
     });
 });
 
-describe('Test PdfViewer - User interaction', () => {
+fdescribe('Test PdfViewer - User interaction', () => {
     let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
     let componentUrlTestComponent: UrlTestComponent;
     let testingUtils: UnitTestingUtils;
