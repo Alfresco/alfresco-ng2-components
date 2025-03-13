@@ -184,38 +184,40 @@ jobs:
           npx nx run cli:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  unit-tests:
-    timeout-minutes: 30
-    name: "Unit tests: ${{ matrix.unit-tests.name }}"
+  generate-affected-matrix:
+    name: "Generate affected matrix"
     runs-on: ubuntu-latest
     needs: [setup]
-    strategy:
-      fail-fast: false
-      # max-parallel: 4
-      matrix:
-        unit-tests:
-          - name: js-api
-            exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
-          - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
-          - name: process-services-cloud
-            exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Run unit tests
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate affected projects matrix
+        id: set-matrix
         run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          echo "Base ref is $BASE_REF"
+          AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=cli,stories,eslint-angular)
+          echo "Affected projects: $AFFECTED"
+          MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
+          MATRIX_JSON=$(echo "$MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
+          echo "Matrix JSON: $MATRIX_JSON"
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+
+  trigger-unit-tests:
+    name: "Unit Tests"
+    runs-on: ubuntu-latest
+    needs: [generate-affected-matrix]
+    steps:
+      - name: Call unit tests workflow
+        uses: ./.github/workflows/_unit-tests.yml
+        with:
+          matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
 
   lint:
     # long timeout required when cache has to be recreated
@@ -229,7 +231,6 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
 
   build-libs:
@@ -280,7 +281,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
+    needs: [check-if-pr-is-approved, pre-checks, setup, trigger-unit-tests, lint, build-libs]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: identify-slack-group
@@ -289,14 +290,6 @@ jobs:
         uses: ./.github/actions/slack-group-area
         with:
           affected: ${{ steps.e2e-result.outputs.result }}
-      - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
-        name: Nofify QA failure
-        if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        with:
-          channel-id: 'C016SMNNL8L' #guild-channel
-          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}\nArea: ${{ steps.groups.outputs.groups}}"
       - name: workflow failure
         run: exit 1
         if: ${{ contains(needs.*.result, 'failure') }}
