@@ -190,8 +190,10 @@ jobs:
             exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: insights
             exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
-          - name: process-services & process-services-cloud
-            exclude: "core,extensions,content-services,insights,eslint-plugin-eslint-angular,js-api"
+          - name: process-services
+            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
+          - name: process-services-cloud
+            exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
