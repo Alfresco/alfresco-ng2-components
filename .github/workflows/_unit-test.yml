@@ -1,0 +1,29 @@
+name: "Unit Tests for Affected Projects"
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        description: 'JSON Matrix of projects'
+        required: true
+        type: string
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJson(inputs.matrix) }}
+      max-parallel: 4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-node-modules-and-artifacts
+      - name: Run test for ${{ matrix.project }}
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5120"
+        run: |
+          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
