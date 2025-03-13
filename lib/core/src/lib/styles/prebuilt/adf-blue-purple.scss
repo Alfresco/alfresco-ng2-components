@@ -4,7 +4,7 @@
 @include mat.all-component-typographies;
 @include mat.core;
 
-$primary: mat.m2-define-palette(mat.$pink-palette, 700, 500, 900);
+$primary: mat.m2-define-palette(mat.$m2-pink-palette, 700, 500, 900);
 $accent: mat.m2-define-palette($alfresco-accent-purple);
 $warn: mat.m2-define-palette($alfresco-warn);
 $theme: mat.m2-define-light-theme(
