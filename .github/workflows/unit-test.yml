@@ -1,5 +1,3 @@
-name: "Unit Tests for Affected Projects"
-
 on:
   workflow_call:
     inputs:
@@ -20,10 +18,10 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
+      - name: Setup environment
+        uses: ./.github/actions/setup
       - name: Run test for ${{ matrix.project }}
         env:
           NODE_OPTIONS: "--max-old-space-size=5120"
         run: |
-          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test
+          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:test --parallel
