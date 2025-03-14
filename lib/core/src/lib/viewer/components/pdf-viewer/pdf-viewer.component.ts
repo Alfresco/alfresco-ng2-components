@@ -212,7 +212,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     executePdf(pdfOptions: any) {
         //eslint-disable-next-line
-        console.log('Worker', pdfjsLib.GlobalWorkerOptions.workerSrc);
+        console.log('Worker', (window as any).pdfWorkerSrc);
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);
         //eslint-disable-next-line
@@ -250,8 +250,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus,
-                annotationMode: AnnotationMode.DISABLE,
-                textLayerMode: 1
+                annotationMode: AnnotationMode.DISABLE
             });
 
             // cspell: disable-next
@@ -259,7 +258,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             // cspell: disable-next
             this.eventBus.on('pagesloaded', this.onPagesLoaded);
             // cspell: disable-next
-            this.eventBus.on('textlayerrendered', this.onPageRendered);
+            this.eventBus.on('textlayerrendered', () => {
+                //eslint-disable-next-line
+                console.log('EVENT textlayerrendered');
+                this.onPageRendered();
+            });
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
