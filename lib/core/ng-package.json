@@ -8,6 +8,11 @@
       "output": "./breadcrumbs/styles"
     },
     {
+      "glob": "pdf.worker.mjs",
+      "input": "./assets/pdfjs",
+      "output": "assets/pdfjs"
+    },
+    {
       "glob": "custom-theme/**/*",
       "input": "./",
       "output": "/"
