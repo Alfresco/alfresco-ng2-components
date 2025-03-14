@@ -87,7 +87,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe(
                     ([tasks]) => {
-                        this.rows = tasks.list.entries;
+                        this.rows = tasks.list.entries.map((task) => task.entry);
                         this.success.emit(tasks);
                         this.pagination.next(tasks.list.pagination);
                         this.isReloadingSubject$.next(false);
