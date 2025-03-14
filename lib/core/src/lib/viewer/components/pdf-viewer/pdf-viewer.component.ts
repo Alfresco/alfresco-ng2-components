@@ -213,10 +213,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
+        //eslint-disable-next-line
+        console.log('pdfjsLib', pdfjsLib);
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.mjs';
+        //eslint-disable-next-line
+        console.log('Worker', pdfjsLib.GlobalWorkerOptions.workerSrc);
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);
-
+        //eslint-disable-next-line
+        console.log('getdocument');
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
         };
@@ -560,6 +565,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * Page Rendered Event
      */
     onPageRendered() {
+        //eslint-disable-next-line
+        console.log('onPageRendered');
         this.rendered.emit();
     }
 
