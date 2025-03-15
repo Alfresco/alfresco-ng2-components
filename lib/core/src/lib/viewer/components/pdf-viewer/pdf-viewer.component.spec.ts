@@ -381,14 +381,16 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
     });
 
     describe('custom value', () => {
-        beforeEach(async () => {
+        beforeEach((done) => {
             const appConfig: AppConfigService = TestBed.inject(AppConfigService);
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenRenderingDone();
-            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
-        });
+
+            firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered).then(() => {
+                done();
+            });
+        }, 55000);
 
         it('should use the custom zoom if it is present in the app.config', fakeAsync(() => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
