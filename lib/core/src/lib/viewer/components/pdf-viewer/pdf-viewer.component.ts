@@ -139,7 +139,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
 
     constructor(private dialog: MatDialog, private renderingQueueServices: RenderingQueueServices, private appConfigService: AppConfigService) {
-        (window as any).pdfWorkerSrc = 'assets/pdfjs/pdf.worker.mjs';
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -214,8 +213,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.mjs';
         //eslint-disable-next-line
-        console.log('Worker', (window as any).pdfWorkerSrc);
+        console.log('Worker', pdfjsLib.GlobalWorkerOptions.workerSrc);
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);
         //eslint-disable-next-line
@@ -264,6 +264,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.eventBus.on('textlayerrendered', () => {
                 //eslint-disable-next-line
                 console.log('EVENT textlayerrendered');
+                this.onPageRendered();
+            });
+            this.eventBus.on('pagerendered', () => {
+                //eslint-disable-next-line
+                console.log('EVENT pagerendered');
                 this.onPageRendered();
             });
 
