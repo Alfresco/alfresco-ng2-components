@@ -107,43 +107,6 @@ xdescribe('Test PdfViewer component', () => {
     let dialog: MatDialog;
     let testingUtils: UnitTestingUtils;
 
-    const originalPdfjsLib = window['pdfjsLib'];
-
-    beforeAll(() => {
-        Object.defineProperty(window, 'pdfjsLib', {
-          configurable: true,
-          value: {
-            PasswordResponses: {
-              NEED_PASSWORD: 'NEED_PASSWORD',
-              INCORRECT_PASSWORD: 'INCORRECT_PASSWORD'
-            },
-            GlobalWorkerOptions: { workerSrc: 'fake-worker.js' },
-            getDocument: (_src: any) => {
-              const pdfDocument = {
-                numPages: 10,
-                getPage: (pageNumber: number) =>
-                  Promise.resolve({
-                    pageNumber,
-                    getTextContent: () => Promise.resolve({ items: [] })
-                  }),
-                eventBus: {
-                  dispatch: (_event: string, _args: any) => {}
-                }
-              };
-              return {
-                promise: Promise.resolve(pdfDocument),
-                destroy: () => {}  // dummy destroy method
-              };
-            }
-          }
-        });
-    });
-
-    afterAll(() => {
-        // Restore the original value
-        window['pdfjsLib'] = originalPdfjsLib;
-    });
-
     beforeEach(async () => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, NoopTranslateModule, PdfViewerComponent],
@@ -431,7 +394,7 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
-            tick();
+            tick(2000);
 
             expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
         }));
