@@ -29,7 +29,6 @@
   "allowedNonPeerDependencies": [
     "@apollo/client",
     "apollo-angular",
-    "subscriptions-transport-ws",
     "@editorjs/editorjs",
     "@editorjs/code",
     "@editorjs/header",

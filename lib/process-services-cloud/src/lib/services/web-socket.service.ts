@@ -16,7 +16,7 @@
  */
 
 import { createClient } from 'graphql-ws';
-import { inject, Inject, Injectable, Optional } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
@@ -37,9 +37,8 @@ import { Kind, OperationTypeNode } from 'graphql';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
-import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
 
 interface serviceOptions {
     apolloClientName: string;
@@ -53,16 +52,11 @@ interface serviceOptions {
 })
 export class WebSocketService {
     private appConfigService = inject(AppConfigService);
-    private subscriptionProtocol: 'graphql-ws' | 'transport-ws' = 'transport-ws';
+    private subscriptionProtocol = 'graphql-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
     private httpLinkHandler: HttpLinkHandler;
 
-    constructor(
-        private readonly apollo: Apollo,
-        private readonly httpLink: HttpLink,
-        private readonly authService: AuthenticationService,
-        @Optional() @Inject(FeaturesServiceToken) private featuresService: IFeaturesService
-    ) {}
+    constructor(private readonly apollo: Apollo, private readonly httpLink: HttpLink, private readonly authService: AuthenticationService) {}
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
         const { apolloClientName, subscriptionOptions } = options;
@@ -72,19 +66,10 @@ export class WebSocketService {
             }
         });
 
-        return this.featuresService.isOn$('studio-ws-graphql-subprotocol').pipe(
-            tap((isOn) => {
-                if (isOn) {
-                    this.subscriptionProtocol = 'graphql-ws';
-                }
-            }),
-            switchMap(() => {
-                if (this.apollo.use(apolloClientName) === undefined) {
-                    this.initSubscriptions(options);
-                }
-                return this.apollo.use(apolloClientName).subscribe<T>({ errorPolicy: 'all', ...subscriptionOptions });
-            })
-        );
+        if (this.apollo.use(apolloClientName) === undefined) {
+            this.initSubscriptions(options);
+        }
+        return this.apollo.use(apolloClientName).subscribe<T>({ errorPolicy: 'all', ...subscriptionOptions });
     }
 
     private get contextRoot() {
@@ -106,16 +91,7 @@ export class WebSocketService {
     }
 
     private initSubscriptions(options: serviceOptions): void {
-        switch (this.subscriptionProtocol) {
-            case 'graphql-ws':
-                this.createGraphQLWsLink(options);
-                break;
-            case 'transport-ws':
-                this.createTransportWsLink(options);
-                break;
-            default:
-                throw new Error('Unknown subscription protocol');
-        }
+        this.createGraphQLWsLink(options);
 
         this.createHttpLinkHandler(options);
 
@@ -172,20 +148,6 @@ export class WebSocketService {
             },
             link: from([authLink, retryLink, errorLink, link]),
             cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig)
-        });
-    }
-
-    private createTransportWsLink(options: serviceOptions): void {
-        this.wsLink = new WebSocketLink({
-            uri: this.createWsUrl(options.wsUrl) + '/ws/graphql',
-            options: {
-                reconnect: true,
-                lazy: true,
-                connectionParams: {
-                    kaInterval: 2000,
-                    'X-Authorization': 'Bearer ' + this.authService.getToken()
-                }
-            }
         });
     }
 
