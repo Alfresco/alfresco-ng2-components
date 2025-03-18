@@ -18,25 +18,28 @@
 import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock, NotificationService } from '@alfresco/adf-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../services';
 import { AlfrescoApiServiceMock } from '../mock';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('NodeFavoriteDirective', () => {
     let directive: NodeFavoriteDirective;
     let alfrescoApiService: AlfrescoApiService;
+    let notificationService: NotificationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, ContentTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
-        directive = new NodeFavoriteDirective(alfrescoApiService);
+        notificationService = TestBed.inject(NotificationService);
+        directive = new NodeFavoriteDirective(alfrescoApiService, notificationService);
     });
 
     describe('selection input change event', () => {
@@ -174,7 +177,8 @@ describe('NodeFavoriteDirective', () => {
             expect(addFavoriteSpy).not.toHaveBeenCalled();
         }));
 
-        it('should call addFavorite() if none is a favorite', () => {
+        it('should call addFavorite() and display snackbar message if none is a favorite', (done) => {
+            spyOn(notificationService, 'showInfo');
             addFavoriteSpy.and.returnValue(Promise.resolve());
 
             directive.favorites = [
@@ -182,12 +186,16 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '2', name: 'name2', isFavorite: false } }
             ];
 
+            directive.toggle.subscribe(() => {
+                expect(addFavoriteSpy.calls.argsFor(0)[1].length).toBe(2);
+                expect(notificationService.showInfo).toHaveBeenCalledWith('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODES_ADDED', null, { number: 2 });
+                done();
+            });
             directive.toggleFavorite();
-
-            expect(addFavoriteSpy.calls.argsFor(0)[1].length).toBe(2);
         });
 
-        it('should call addFavorite() on node that is not a favorite in selection', () => {
+        it('should call addFavorite() and display snackbar message on node that is not a favorite in selection', (done) => {
+            spyOn(notificationService, 'showInfo');
             addFavoriteSpy.and.returnValue(Promise.resolve());
 
             directive.favorites = [
@@ -195,96 +203,111 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '2', name: 'name2', isFile: true, isFolder: false, isFavorite: true } }
             ];
 
+            directive.toggle.subscribe(() => {
+                const callArgs = addFavoriteSpy.calls.argsFor(0)[1];
+                const callParameter = callArgs[0];
+
+                expect(callArgs.length).toBe(1);
+                expect(callParameter.target.file.guid).toBe('1');
+                expect(notificationService.showInfo).toHaveBeenCalledWith('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_ADDED', null, { name: 'name1' });
+                done();
+            });
             directive.toggleFavorite();
-
-            const callArgs = addFavoriteSpy.calls.argsFor(0)[1];
-            const callParameter = callArgs[0];
-
-            expect(callArgs.length).toBe(1);
-            expect(callParameter.target.file.guid).toBe('1');
         });
 
-        it('should call removeFavoriteSite() if all are favorites', () => {
+        it('should call removeFavoriteSite() and display snackbar message if all are favorites', (done) => {
+            spyOn(notificationService, 'showInfo');
             removeFavoriteSpy.and.returnValue(Promise.resolve());
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }, { entry: { id: '2', name: 'name2', isFavorite: true } }];
 
+            directive.toggle.subscribe(() => {
+                expect(removeFavoriteSpy.calls.count()).toBe(2);
+                expect(notificationService.showInfo).toHaveBeenCalledWith('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODES_REMOVED', null, { number: 2 });
+                done();
+            });
             directive.toggleFavorite();
-
-            expect(removeFavoriteSpy.calls.count()).toBe(2);
         });
 
-        it('should emit event when removeFavoriteSite() is done', fakeAsync(() => {
+        it('should emit event and display snackbar message when removeFavoriteSite() is done', (done) => {
+            spyOn(notificationService, 'showInfo');
             removeFavoriteSpy.and.returnValue(Promise.resolve());
-            spyOn(directive.toggle, 'emit');
+            spyOn(directive.toggle, 'emit').and.callThrough();
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
+            directive.toggle.subscribe(() => {
+                expect(directive.toggle.emit).toHaveBeenCalled();
+                expect(notificationService.showInfo).toHaveBeenCalledWith('NODE_FAVORITE_DIRECTIVE.MESSAGES.NODE_REMOVED', null, { name: 'name1' });
+                done();
+            });
             directive.toggleFavorite();
-            tick();
+        });
 
-            expect(directive.toggle.emit).toHaveBeenCalled();
-        }));
-
-        it('should emit event when addFavorite() is done', fakeAsync(() => {
+        it('should emit event when addFavorite() is done', (done) => {
             addFavoriteSpy.and.returnValue(Promise.resolve());
-            spyOn(directive.toggle, 'emit');
+            spyOn(directive.toggle, 'emit').and.callThrough();
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: false } }];
 
+            directive.toggle.subscribe(() => {
+                expect(directive.toggle.emit).toHaveBeenCalled();
+                done();
+            });
             directive.toggleFavorite();
-            tick();
+        });
 
-            expect(directive.toggle.emit).toHaveBeenCalled();
-        }));
-
-        it('should emit error event when removeFavoriteSite() fails', fakeAsync(() => {
+        it('should emit error event when removeFavoriteSite() fails', (done) => {
             const error = new Error('error');
             removeFavoriteSpy.and.returnValue(Promise.reject(error));
-            spyOn(directive.error, 'emit');
+            spyOn(directive.error, 'emit').and.callThrough();
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
+            directive.error.subscribe(() => {
+                expect(directive.error.emit).toHaveBeenCalledWith(error);
+                done();
+            });
             directive.toggleFavorite();
-            tick();
+        });
 
-            expect(directive.error.emit).toHaveBeenCalledWith(error);
-        }));
-
-        it('should emit error event when addFavorite() fails', fakeAsync(() => {
+        it('should emit error event when addFavorite() fails', (done) => {
             const error = new Error('error');
             addFavoriteSpy.and.returnValue(Promise.reject(error));
-            spyOn(directive.error, 'emit');
+            spyOn(directive.error, 'emit').and.callThrough();
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: false } }];
 
+            directive.error.subscribe(() => {
+                expect(directive.error.emit).toHaveBeenCalledWith(error);
+                done();
+            });
             directive.toggleFavorite();
-            tick();
+        });
 
-            expect(directive.error.emit).toHaveBeenCalledWith(error);
-        }));
-
-        it('should set isFavorites items to false', fakeAsync(() => {
+        it('should set isFavorites items to false', (done) => {
             removeFavoriteSpy.and.returnValue(Promise.resolve());
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
+            directive.toggle.subscribe(() => {
+                expect(directive.hasFavorites()).toBe(false);
+                done();
+            });
             directive.toggleFavorite();
-            tick();
+        });
 
-            expect(directive.hasFavorites()).toBe(false);
-        }));
-
-        it('should set isFavorites items to true', fakeAsync(() => {
+        it('should set isFavorites items to true', (done) => {
             addFavoriteSpy.and.returnValue(Promise.resolve());
 
             directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: false } }];
 
+            directive.toggle.subscribe(() => {
+                expect(directive.hasFavorites()).toBe(true);
+                done();
+            });
             directive.toggleFavorite();
-            tick();
-
-            expect(directive.hasFavorites()).toBe(true);
-        }));
+        });
     });
 
     describe('getFavorite()', () => {
