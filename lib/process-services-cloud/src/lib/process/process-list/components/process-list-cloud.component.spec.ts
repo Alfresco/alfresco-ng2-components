@@ -272,6 +272,41 @@ describe('ProcessListCloudComponent', () => {
             configureTestingModule('GET');
         });
 
+        it('should load preferences and create datatable schema', () => {
+            const columnsOrder = ['startDate', 'id'];
+            const columnsVisibility = { startDate: true, id: false };
+            const columnsWidths = { startDate: 100, id: 200 };
+
+            spyOn(preferencesService, 'getPreferenceByKey').and.callFake((_, key) => {
+                switch (key) {
+                    case ProcessListCloudPreferences.columnOrder:
+                        return of(columnsOrder);
+                    case ProcessListCloudPreferences.columnsVisibility:
+                        return of(columnsVisibility);
+                    case ProcessListCloudPreferences.columnsWidths:
+                        return of(columnsWidths);
+                    default:
+                        return of(null);
+                }
+            });
+
+            fixture.detectChanges();
+
+            expect(preferencesService.getPreferenceByKey).toHaveBeenCalledWith(component.appName, ProcessListCloudPreferences.columnOrder);
+            expect(preferencesService.getPreferenceByKey).toHaveBeenCalledWith(component.appName, ProcessListCloudPreferences.columnsVisibility);
+            expect(preferencesService.getPreferenceByKey).toHaveBeenCalledWith(component.appName, ProcessListCloudPreferences.columnsWidths);
+
+            const firstColumn = component.columns[0];
+            expect(firstColumn.id).toBe('startDate');
+            expect(firstColumn.isHidden).toBe(false);
+            expect(firstColumn.width).toBe(100);
+
+            const secondColumn = component.columns[1];
+            expect(secondColumn.id).toBe('id');
+            expect(secondColumn.isHidden).toBe(true);
+            expect(secondColumn.width).toBe(200);
+        });
+
         it('should load spinner and show the content', async () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
