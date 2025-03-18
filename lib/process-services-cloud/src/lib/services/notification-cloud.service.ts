@@ -28,7 +28,7 @@ export class NotificationCloudService {
         return this.webSocketService.getSubscription({
             apolloClientName: appName,
             wsUrl: `${appName}/notifications`,
-            httpUrl: `${appName}/notifications/graphql`,
+            httpUrl: `${appName}/notifications/v2/ws/graphql`,
             subscriptionOptions: {
                 query: gql(gqlQuery)
             }
