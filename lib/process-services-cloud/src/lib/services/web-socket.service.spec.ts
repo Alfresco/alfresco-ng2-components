@@ -22,14 +22,12 @@ import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
-import { FeaturesServiceToken } from '@alfresco/adf-core/feature-flags';
 
 describe('WebSocketService', () => {
     let service: WebSocketService;
     const onLogoutSubject: Subject<void> = new Subject<void>();
 
     const apolloMock = jasmine.createSpyObj('Apollo', ['use', 'createNamed']);
-    const isOnSpy = jasmine.createSpy('isOn$');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -51,19 +49,11 @@ describe('WebSocketService', () => {
                         getToken: () => 'testToken',
                         onLogout: onLogoutSubject.asObservable()
                     }
-                },
-                {
-                    provide: FeaturesServiceToken,
-                    useValue: {
-                        isOn$: isOnSpy
-                    }
                 }
             ]
         });
         service = TestBed.inject(WebSocketService);
-        TestBed.inject(FeaturesServiceToken);
         apolloMock.use.and.returnValues(undefined, { subscribe: () => of({}) });
-        isOnSpy.and.returnValues(of(true));
     });
 
     afterEach(() => {
@@ -102,24 +92,6 @@ describe('WebSocketService', () => {
     it('should create named client with the right authentication token when FF is on', async () => {
         let headers = {};
         const expectedHeaders = { Authorization: 'Bearer testToken' };
-        const apolloClientName = 'testClient';
-        const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
-        const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
-        apolloMock.createNamed.and.callFake((_, options) => {
-            headers = options.headers;
-        });
-
-        await lastValueFrom(service.getSubscription(wsOptions));
-
-        expect(apolloMock.use).toHaveBeenCalledTimes(2);
-        expect(apolloMock.createNamed).toHaveBeenCalled();
-        expect(headers).toEqual(expectedHeaders);
-    });
-
-    it('should create named client with the right authentication token when FF is off', async () => {
-        isOnSpy.and.returnValues(of(false));
-        let headers = {};
-        const expectedHeaders = { 'X-Authorization': 'Bearer testToken' };
         const apolloClientName = 'testClient';
         const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
