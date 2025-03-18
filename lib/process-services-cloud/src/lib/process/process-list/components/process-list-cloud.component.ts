@@ -49,11 +49,11 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from '../models/process-list-sorting.model';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
@@ -390,40 +390,25 @@ export class ProcessListCloudComponent
     }
 
     ngAfterContentInit() {
-        this.cloudPreferenceService
-            .getPreferences(this.appName)
-            .pipe(
-                take(1),
-                map((preferences) => {
-                    const preferencesList = preferences?.list?.entries || [];
-                    const columnsOrder = preferencesList.find((preference) => preference.entry.key === ProcessListCloudPreferences.columnOrder);
-                    const columnsVisibility = preferencesList.find(
-                        (preference) => preference.entry.key === ProcessListCloudPreferences.columnsVisibility
-                    );
-                    const columnsWidths = preferencesList.find((preference) => preference.entry.key === ProcessListCloudPreferences.columnsWidths);
+        forkJoin([
+            this.cloudPreferenceService.getPreferenceByKey(this.appName, ProcessListCloudPreferences.columnOrder),
+            this.cloudPreferenceService.getPreferenceByKey(this.appName, ProcessListCloudPreferences.columnsVisibility),
+            this.cloudPreferenceService.getPreferenceByKey(this.appName, ProcessListCloudPreferences.columnsWidths)
+        ]).subscribe(([columnsOrder, columnsVisibility, columnsWidths]) => {
+            if (columnsOrder) {
+                this.columnsOrder = columnsOrder;
+            }
 
-                    return {
-                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
-                        columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
-                    };
-                })
-            )
-            .subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {
-                if (columnsVisibility) {
-                    this.columnsVisibility = columnsVisibility;
-                }
+            if (columnsVisibility) {
+                this.columnsVisibility = columnsVisibility;
+            }
 
-                if (columnsOrder) {
-                    this.columnsOrder = columnsOrder;
-                }
+            if (columnsWidths) {
+                this.columnsWidths = columnsWidths;
+            }
 
-                if (columnsWidths) {
-                    this.columnsWidths = columnsWidths;
-                }
-
-                this.createDatatableSchema();
-            });
+            this.createDatatableSchema();
+        });
     }
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
