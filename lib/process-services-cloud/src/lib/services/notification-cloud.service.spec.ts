@@ -17,12 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NotificationCloudService } from './notification-cloud.service';
-import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 import { WebSocketService } from './web-socket.service';
 import { Apollo } from 'apollo-angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
@@ -46,7 +45,6 @@ describe('NotificationCloudService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 WebSocketService,
-                provideMockFeatureFlags({ ['studio-ws-graphql-subprotocol']: false }),
                 {
                     provide: Apollo,
                     useValue: apolloMock
@@ -62,6 +60,7 @@ describe('NotificationCloudService', () => {
         });
         service = TestBed.inject(NotificationCloudService);
         wsService = TestBed.inject(WebSocketService);
+        apolloMock.use.and.returnValue(of({}));
     });
 
     it('should call getSubscription with the correct parameters', () => {
@@ -72,7 +71,7 @@ describe('NotificationCloudService', () => {
         expect(getSubscriptionSpy).toHaveBeenCalledWith({
             apolloClientName: 'myAppName',
             wsUrl: 'myAppName/notifications',
-            httpUrl: 'myAppName/notifications/graphql',
+            httpUrl: 'myAppName/notifications/v2/ws/graphql',
             subscriptionOptions: {
                 query: jasmine.any(Object)
             }
