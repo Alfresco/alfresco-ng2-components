@@ -46,8 +46,12 @@
                          [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
                          [src]="mimeTypeIconUrl"
                          data-automation-id="adf-file-thumbnail">
-                    <span class="adf-viewer__display-name"
-                          id="adf-viewer-display-name">{{ fileName }}</span>
+                    <div class="adf-viewer__display-name"
+                         id="adf-viewer-display-name"
+                         [title]="fileName">
+                        <span class="adf-viewer__display-name-without-extension">{{ fileNameWithoutExtension }}</span>
+                        <span class="adf-viewer__display-name-extension">{{ fileExtension }}</span>
+                    </div>
                     <button *ngIf="allowNavigate && canNavigateNext"
                             data-automation-id="adf-toolbar-next-file"
                             mat-icon-button

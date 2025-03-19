@@ -125,10 +125,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     blobFile: Blob;
 
-    /** Override Content filename. */
-    @Input()
-    fileName: string;
-
     /** Hide or show the viewer */
     @Input()
     showViewer = true;
@@ -292,12 +288,36 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
-    private isDialogVisible: boolean = false;
+    private isDialogVisible = false;
+    private _fileName: string;
+    private _fileNameWithoutExtension: string;
+    private _fileExtension: string;
+
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
     public mimeTypeIconUrl: string;
 
     private readonly destroyRef = inject(DestroyRef);
+
+    /** Override Content filename. */
+    @Input()
+    set fileName(fileName: string) {
+        this._fileName = fileName;
+        this._fileExtension = this.viewUtilsService.getFileExtension(this.fileName);
+        this._fileNameWithoutExtension = this.fileName?.replace(new RegExp(`${this.fileExtension}$`), '') || '';
+    }
+
+    get fileName(): string {
+        return this._fileName;
+    }
+
+    get fileExtension(): string {
+        return this._fileExtension;
+    }
+
+    get fileNameWithoutExtension(): string {
+        return this._fileNameWithoutExtension;
+    }
 
     constructor(
         private el: ElementRef,

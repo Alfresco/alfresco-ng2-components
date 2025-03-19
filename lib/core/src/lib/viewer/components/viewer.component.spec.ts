@@ -51,6 +51,8 @@ describe('ViewerComponent', () => {
     let thumbnailService: ThumbnailService;
     let testingUtils: UnitTestingUtils;
 
+    const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -122,6 +124,10 @@ describe('ViewerComponent', () => {
     });
 
     describe('File Name Test', () => {
+        const getFileNameWithoutExtension = (): string =>
+            testingUtils.getByCSS('.adf-viewer__display-name-without-extension').nativeElement.textContent;
+        const getExtension = (): string => testingUtils.getByCSS('.adf-viewer__display-name-extension').nativeElement.textContent;
+
         it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
             component.fileName = '';
             spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
@@ -130,7 +136,9 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent).toEqual('fakeFileName.jpeg');
+            expect(getFileName()).toEqual('fakeFileName.jpeg');
+            expect(getFileNameWithoutExtension()).toBe('fakeFileName.');
+            expect(getExtension()).toBe('jpeg');
         });
 
         it('should set fileName providing fileName input', () => {
@@ -142,7 +150,9 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             fixture.detectChanges();
 
-            expect(testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent).toEqual('testFileName.jpg');
+            expect(getFileName()).toEqual('testFileName.jpg');
+            expect(getFileNameWithoutExtension()).toBe('testFileName.');
+            expect(getExtension()).toBe('jpg');
         });
     });
 
@@ -403,7 +413,7 @@ describe('ViewerComponent', () => {
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
-                    expect(testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent).toEqual('fake-test-file.pdf');
+                    expect(getFileName()).toEqual('fake-test-file.pdf');
                 });
 
                 it('should Close button be present if overlay mode', async () => {
