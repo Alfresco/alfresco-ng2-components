@@ -272,7 +272,7 @@ describe('ProcessListCloudComponent', () => {
             configureTestingModule('GET');
         });
 
-        it('should load preferences and create datatable schema', () => {
+        it('should load preferences', () => {
             const columnsOrder = ['startDate', 'id'];
             const columnsVisibility = { startDate: true, id: false };
             const columnsWidths = { startDate: 100, id: 200 };
