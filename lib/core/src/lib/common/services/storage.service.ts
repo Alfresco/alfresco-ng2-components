@@ -61,7 +61,7 @@ export class StorageService {
         if (this.useLocalStorage) {
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
-                if (key && key.startsWith(this.prefix)) {
+                if (key?.startsWith(this.prefix)) {
                     const keyWithoutPrefix = key.slice(this.prefix.length);
                     items[keyWithoutPrefix] = localStorage.getItem(key);
                 }

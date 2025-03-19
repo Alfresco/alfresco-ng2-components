@@ -37,10 +37,10 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         }
 
         const items = this.storage.getItems();
-        const entries = Object.keys(items).map((key) => ({
+        const entries = Object.keys(items).map((k) => ({
             entry: {
-                key,
-                value: items[key] || '[]'
+                key: k,
+                value: items[k] || '[]'
             }
         }));
 
