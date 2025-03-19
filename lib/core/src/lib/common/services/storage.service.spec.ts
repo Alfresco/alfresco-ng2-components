@@ -26,42 +26,57 @@ describe('StorageService', () => {
     const key = 'test_key';
     const value = 'test_value';
 
-    describe('with prefix', () => {
-        beforeEach(() => {
+    describe('with local storage and prefix', () => {
+        beforeEach(async () => {
             TestBed.configureTestingModule({
                 imports: [NoopTranslateModule, NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
             storage = TestBed.inject(StorageService);
+            await appConfig.load();
+            storage.clear();
         });
 
-        it('should get the prefix for the storage from app config', async () => {
-            await appConfig.load();
+        it('should get the prefix for the storage from app config', () => {
             expect(storage.prefix).toBe('ADF_APP_');
         });
 
-        it('should set a property with the prefix in the local storage', async () => {
-            await appConfig.load();
-
-            storage.clear();
+        it('should set a property with the prefix in the local storage', () => {
             storage.setItem(key, value);
             const storageKey = localStorage.key(0);
             expect(storageKey).toBe('ADF_APP_' + key);
             expect(localStorage.getItem(storageKey)).toBe(value);
         });
 
-        it('should be able to get a property from the local storage', async () => {
-            storage.clear();
-
-            await appConfig.load();
+        it('should be able to get a property from the local storage', () => {
             storage.setItem(key, value);
 
             expect(storage.getItem(key)).toBe(value);
         });
+
+        it('should retrieve all items with the prefix from local storage', () => {
+            localStorage.setItem('ADF_APP_key1', 'value1');
+            localStorage.setItem('ADF_APP_key2', 'value2');
+
+            const items = storage.getItems();
+
+            expect(items).toEqual({
+                key1: 'value1',
+                key2: 'value2'
+            });
+        });
+
+        it('should return an empty object if no items match the prefix in local storage', () => {
+            localStorage.setItem('other_key', 'value');
+
+            const items = storage.getItems();
+
+            expect(items).toEqual({});
+        });
     });
 
-    describe('without prefix', () => {
-        beforeEach(() => {
+    describe('without local storage and prefix', () => {
+        beforeEach(async () => {
             TestBed.configureTestingModule({
                 imports: [NoopAuthModule]
             });
@@ -73,18 +88,64 @@ describe('StorageService', () => {
                 }
             };
             storage = TestBed.inject(StorageService);
+            await appConfig.load();
+            storage.clear();
         });
 
-        it('should set an empty prefix when the it is not defined in the app config', async () => {
-            await appConfig.load();
+        it('should set an empty prefix when the it is not defined in the app config', () => {
             expect(storage.prefix).toBe('');
         });
 
-        it('should set a property without a prefix in the local storage', async () => {
-            await appConfig.load();
+        it('should set a property without a prefix in the local storage', () => {
             storage.setItem(key, value);
 
             expect(localStorage.getItem(key)).toBe(value);
+        });
+
+        it('should retrieve all items without a prefix from local storage', () => {
+            localStorage.setItem('key1', 'value1');
+            localStorage.setItem('key2', 'value2');
+
+            const items = storage.getItems();
+            expect(items).toEqual({
+                key1: 'value1',
+                key2: 'value2'
+            });
+        });
+    });
+
+    describe('with memory storage', () => {
+        beforeEach(async () => {
+            Object.defineProperty(window, 'localStorage', {
+                value: undefined,
+                configurable: true
+            });
+
+            TestBed.configureTestingModule({
+                imports: [NoopTranslateModule, NoopAuthModule]
+            });
+            appConfig = TestBed.inject(AppConfigService);
+            storage = TestBed.inject(StorageService);
+            await appConfig.load();
+            storage.clear();
+        });
+
+        it('should be able to get a property from storage', () => {
+            storage.setItem(key, value);
+
+            expect(storage.getItem(key)).toBe(value);
+        });
+
+        it('should retrieve all items from storage', () => {
+            storage.setItem('key1', 'value1');
+            storage.setItem('key2', 'value2');
+
+            const items = storage.getItems();
+
+            expect(items).toEqual({
+                key1: 'value1',
+                key2: 'value2'
+            });
         });
     });
 });

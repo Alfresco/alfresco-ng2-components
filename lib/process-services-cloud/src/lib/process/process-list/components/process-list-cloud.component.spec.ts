@@ -33,7 +33,7 @@ import {
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
@@ -277,24 +277,34 @@ describe('ProcessListCloudComponent', () => {
             const columnsVisibility = { startDate: true, id: false };
             const columnsWidths = { startDate: 100, id: 200 };
 
-            spyOn(preferencesService, 'getPreferenceByKey').and.callFake((_, key) => {
-                switch (key) {
-                    case ProcessListCloudPreferences.columnOrder:
-                        return of(columnsOrder);
-                    case ProcessListCloudPreferences.columnsVisibility:
-                        return of(columnsVisibility);
-                    case ProcessListCloudPreferences.columnsWidths:
-                        return of(columnsWidths);
-                    default:
-                        return of(null);
-                }
-            });
+            spyOn(preferencesService, 'getPreferences').and.returnValue(
+                of({
+                    list: {
+                        entries: [
+                            {
+                                entry: {
+                                    key: ProcessListCloudPreferences.columnOrder,
+                                    value: JSON.stringify(columnsOrder)
+                                }
+                            },
+                            {
+                                entry: {
+                                    key: ProcessListCloudPreferences.columnsWidths,
+                                    value: JSON.stringify(columnsWidths)
+                                }
+                            },
+                            {
+                                entry: {
+                                    key: ProcessListCloudPreferences.columnsVisibility,
+                                    value: JSON.stringify(columnsVisibility)
+                                }
+                            }
+                        ]
+                    }
+                })
+            );
 
             fixture.detectChanges();
-
-            expect(preferencesService.getPreferenceByKey).toHaveBeenCalledWith(component.appName, ProcessListCloudPreferences.columnOrder);
-            expect(preferencesService.getPreferenceByKey).toHaveBeenCalledWith(component.appName, ProcessListCloudPreferences.columnsVisibility);
-            expect(preferencesService.getPreferenceByKey).toHaveBeenCalledWith(component.appName, ProcessListCloudPreferences.columnsWidths);
 
             const firstColumn = component.columns[0];
             expect(firstColumn.id).toBe('startDate');
@@ -305,6 +315,22 @@ describe('ProcessListCloudComponent', () => {
             expect(secondColumn.id).toBe('id');
             expect(secondColumn.isHidden).toBe(true);
             expect(secondColumn.width).toBe(200);
+        });
+
+        it('should load table when loading preferences throws an error', () => {
+            spyOn(preferencesService, 'getPreferences').and.returnValue(throwError(() => ({ status: 404 })));
+
+            fixture.detectChanges();
+
+            const firstColumn = component.columns[0];
+            expect(firstColumn.id).toBe('id');
+            expect(firstColumn.isHidden).toBe(false);
+            expect(firstColumn.width).toBe(undefined);
+
+            const secondColumn = component.columns[1];
+            expect(secondColumn.id).toBe('startDate');
+            expect(secondColumn.isHidden).toBe(false);
+            expect(secondColumn.width).toBe(undefined);
         });
 
         it('should load spinner and show the content', async () => {

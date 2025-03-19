@@ -52,6 +52,33 @@ export class StorageService {
     }
 
     /**
+     * Gets all items from the storage.
+     *
+     * @returns All items stored
+     */
+    getItems(): { [key: string]: any } {
+        const items: { [key: string]: any } = {};
+        if (this.useLocalStorage) {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith(this.prefix)) {
+                    const keyWithoutPrefix = key.slice(this.prefix.length);
+                    items[keyWithoutPrefix] = localStorage.getItem(key);
+                }
+            }
+        } else {
+            Object.keys(this.memoryStore).forEach((key) => {
+                if (key.startsWith(this.prefix)) {
+                    const unprefixedKey = key.slice(this.prefix.length);
+                    items[unprefixedKey] = this.memoryStore[key];
+                }
+            });
+        }
+
+        return items;
+    }
+
+    /**
      * Stores an item
      *
      * @param key Key to identify the item
