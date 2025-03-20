@@ -708,5 +708,13 @@
         "FOLDER_SELECTED": "Le cartelle non sono compatibili con gli agenti IA."
       }
     }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "Added {{ name }} to favorites",
+      "NODES_ADDED": "Added {{ number }} items to favorites",
+      "NODE_REMOVED": "Removed {{ name }} from favorites",
+      "NODES_REMOVED": "Removed {{ number }} items from favorites"
+    }
   }
 }
