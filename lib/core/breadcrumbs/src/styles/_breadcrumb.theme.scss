@@ -2,7 +2,7 @@
 @use '@angular/material' as mat;
 
 @mixin adf-breadcrumb-theme($theme) {
-    $config: mat.get-color-config($theme);
+    $config: mat.m2-get-color-config($theme);
     $foreground-palette: map.get($config, foreground);
     $primary-palette: map.get($config, primary);
     $text-color: mat.m2-get-color-from-palette($foreground-palette, text);
