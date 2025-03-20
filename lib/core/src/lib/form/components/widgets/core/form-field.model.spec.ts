@@ -1232,4 +1232,28 @@ describe('FormFieldModel', () => {
         expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
         expect(field.validate()).toBe(true);
     });
+
+    it('should set the tooltip correctly', () => {
+        const form = new FormModel();
+        const tooltipText = 'This is a tooltip';
+        const field = new FormFieldModel(form, {
+            id: 'field_with_tooltip',
+            name: 'Field with Tooltip',
+            type: 'text',
+            tooltip: tooltipText
+        });
+
+        expect(field.tooltip).toBe(tooltipText);
+    });
+
+    it('should set the tooltip to an empty string when not set', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'field_without_tooltip',
+            name: 'Field without Tooltip',
+            type: 'text'
+        });
+
+        expect(field.tooltip).toBe('');
+    });
 });

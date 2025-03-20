@@ -211,7 +211,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this.validationSummary = new ErrorMessageModel();
-            this.tooltip = json.tooltip;
+            this.tooltip = json.tooltip || '';
             this.selectionType = json.selectionType;
             this.alignmentType = json.alignmentType;
             this.rule = json.rule;
