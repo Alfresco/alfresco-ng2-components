@@ -708,5 +708,13 @@
         "FOLDER_SELECTED": "Ordner sind nicht kompatibel mit KI Agents."
       }
     }
+  },
+  "NODE_FAVORITE_DIRECTIVE": {
+    "MESSAGES": {
+      "NODE_ADDED": "{{ name }} zu Favoriten hinzugefügt",
+      "NODES_ADDED": "{{ number }} Elemente zu Favoriten hinzugefügt",
+      "NODE_REMOVED": "{{ name }} aus Favoriten entfernt",
+      "NODES_REMOVED": "{{ number }} Elemente aus Favoriten entfernt"
+    }
   }
 }
