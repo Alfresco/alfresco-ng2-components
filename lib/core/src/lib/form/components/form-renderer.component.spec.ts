@@ -29,6 +29,7 @@ import {
     customWidgetFormWithVisibility,
     dateWidgetFormVisibilityMock,
     displayBigDecimalWidgetMock,
+    displayMultiTabsForm,
     displayTextWidgetFormVisibilityMock,
     formDateVisibility,
     formDisplayValueCombinedVisibility,
@@ -763,6 +764,23 @@ describe('Form Renderer Component', () => {
         });
     });
 
+
+    describe('Display navigation buttons for multi-tab forms', () => {
+        it('should be able to display the navigation buttons for multi-tab forms', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(displayMultiTabsForm.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const nextButton = testingUtils.getByCSS('.adf-cloud-form-tab-navigation-next-btn').nativeElement;
+            const previousButton = testingUtils.getByCSS('.adf-cloud-form-tab-navigation-prev-btn').nativeElement;
+
+            expect(fixture.componentInstance.hasTabs()).toBe(true);
+            expect(fixture.componentInstance.tabCounts()).toBe(2);
+            expect(nextButton).toBeTruthy();
+            expect(previousButton).toBeTruthy();
+        });
+    });
+  
     describe('Section', () => {
         it('should be able to set visibility conditions for Section with fields', () => {
             const formDefinition = new FormModel(mockSectionVisibilityForm);
@@ -789,6 +807,7 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
 
             expectElementToBeVisible(testingUtils, mockSectionFieldId);
+
         });
     });
 });

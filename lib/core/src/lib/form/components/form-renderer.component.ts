@@ -76,6 +76,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     debugMode: boolean;
 
     fields: FormFieldModel[];
+    selectedTabIndex: number = 0;
 
     constructor(
         public formService: FormService,
@@ -98,6 +99,17 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     hasTabs(): boolean {
         return this.formDefinition.tabs && this.formDefinition.tabs.length > 0;
+    }
+
+    tabCounts(): number {
+        return this.formDefinition.tabs.length;
+    }
+    goToPreviousTab(currentTabIndex: number): void {
+        this.selectedTabIndex = currentTabIndex - 1;
+    }
+
+    goToNextTab(currentTabIndex: number): void {
+        this.selectedTabIndex = currentTabIndex + 1;
     }
 
     visibleTabs(): TabModel[] {
