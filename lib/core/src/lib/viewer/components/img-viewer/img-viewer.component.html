@@ -8,6 +8,7 @@
     <img #image id="viewer-image"
          [src]="urlFile"
          [alt]="fileName"
+         (load)="imageLoaded.emit()"
          (error)="onImageError()" />
 </div>
 

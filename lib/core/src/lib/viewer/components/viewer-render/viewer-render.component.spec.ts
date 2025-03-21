@@ -18,13 +18,13 @@
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { ViewerExtensionDirective } from '@alfresco/adf-core';
+import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -474,6 +474,77 @@ describe('ViewerComponent', () => {
 
                 expect(component.internalFileName).toEqual('blob file display name');
             });
+        });
+    });
+
+    describe('Spinner', () => {
+        const getMainLoader = (): DebugElement => testingUtils.getByCSS('.adf-viewer-render-main-loader');
+
+        it('should show spinner when isLoading is true', () => {
+            component.isLoading = true;
+            fixture.detectChanges();
+            expect(getMainLoader()).not.toBeNull();
+        });
+
+        it('should show spinner until content is ready when viewerType is media', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-file.mp4';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(getMainLoader()).not.toBeNull();
+
+            const mediaViewer = testingUtils.getByDirective(MediaPlayerComponent);
+            mediaViewer.triggerEventHandler('canPlay', null);
+            fixture.detectChanges();
+
+            expect(getMainLoader()).toBeNull();
+            expect(component.viewerType).toBe('media');
+        });
+
+        it('should show spinner until content is ready when viewerType is pdf', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-url.pdf';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(getMainLoader()).not.toBeNull();
+
+            const pdfViewer = testingUtils.getByDirective(PdfViewerComponent);
+            pdfViewer.triggerEventHandler('pagesLoaded', null);
+            fixture.detectChanges();
+
+            expect(getMainLoader()).toBeNull();
+            expect(component.viewerType).toBe('pdf');
+        });
+
+        it('should show spinner until content is ready when viewerType is image', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-url.png';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+            expect(getMainLoader()).not.toBeNull();
+
+            const imgViewer = testingUtils.getByDirective(ImgViewerComponent);
+            imgViewer.triggerEventHandler('imageLoaded', null);
+            fixture.detectChanges();
+
+            expect(getMainLoader()).toBeNull();
+            expect(component.viewerType).toBe('image');
+        });
+
+        it('should not show spinner when isLoading = false and isContentReady = false for other viewer types', () => {
+            component.isLoading = false;
+            component.urlFile = 'some-url.txt';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(getMainLoader()).toBeNull();
+            expect(component.isContentReady).toBeFalse();
         });
     });
 });
