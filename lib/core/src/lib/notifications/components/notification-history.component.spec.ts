@@ -16,13 +16,16 @@
  */
 
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { NoopAuthModule } from '../../testing/noop-auth.module';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('Notification History Component', () => {
     let fixture: ComponentFixture<NotificationHistoryComponent>;
@@ -40,7 +43,7 @@ describe('Notification History Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, NotificationHistoryComponent]
+            imports: [NoopAnimationsModule, NoopTranslateModule, NoopAuthModule, NotificationHistoryComponent, MatIconTestingModule]
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;

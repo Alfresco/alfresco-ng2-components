@@ -26,15 +26,13 @@ describe('DownloadService', () => {
 
     describe('Download blob', () => {
         it('Should use native msSaveOrOpenBlob if the browser is IE', () => {
-            const navigatorAny: any = window.navigator;
-
-            // eslint-disable-next-line no-underscore-dangle
-            navigatorAny.__defineGetter__('msSaveOrOpenBlob', (result) => {
-                expect(result).toBeUndefined();
-            });
+            const mockNavigator = jasmine.createSpyObj(['msSaveOrOpenBlob']);
+            spyOnProperty(window, 'navigator', 'get').and.returnValue(mockNavigator);
 
             const blob = new Blob([''], { type: 'text/html' });
             service.downloadBlob(blob, 'test_ie');
+
+            expect(mockNavigator.msSaveOrOpenBlob).toHaveBeenCalledOnceWith(blob, 'test_ie');
         });
     });
 });
