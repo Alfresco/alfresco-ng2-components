@@ -49,11 +49,11 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, of, Subject, throwError } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel, ProcessListRequestSortingModel } from '../models/process-list-sorting.model';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
@@ -407,6 +407,17 @@ export class ProcessListCloudComponent
                         columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
                         columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                     };
+                }),
+                catchError((error) => {
+                    if (error.status === 404) {
+                        return of({
+                            columnsOrder: undefined,
+                            columnsVisibility: this.columnsVisibility,
+                            columnsWidths: undefined
+                        });
+                    } else {
+                        return throwError(error);
+                    }
                 })
             )
             .subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {

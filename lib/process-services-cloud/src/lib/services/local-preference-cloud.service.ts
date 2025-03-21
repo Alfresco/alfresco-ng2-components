@@ -35,9 +35,18 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
+
+        const items = this.storage.getItems();
+        const entries = Object.keys(items).map((k) => ({
+            entry: {
+                key: k,
+                value: items[k] || '[]'
+            }
+        }));
+
         return of({
             list: {
-                entries: []
+                entries
             }
         });
     }
