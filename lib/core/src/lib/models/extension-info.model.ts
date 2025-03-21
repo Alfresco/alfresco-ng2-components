@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,23 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.service';
-export { AlfrescoApiFactory } from './alfresco-api.interface';
-export * from './extension-manager.service';
+import { ActionRef, RouteRef, RuleRef } from '@alfresco/adf-extensions';
+
+export class ExtensionInfoModel {
+    $id: string;
+    $name: string;
+    $version: string;
+    $vendor: string;
+    $license: string;
+    $description?: string;
+    $dependencies?: Array<string>;
+    $compatibilities?: Array<string>;
+
+    extensionId: string;
+    rules?: Array<RuleRef>;
+    routes?: Array<RouteRef>;
+    actions?: Array<ActionRef>;
+    features?: {
+        [key: string]: any;
+    };
+}

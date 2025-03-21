@@ -26,6 +26,7 @@ https://localhost/alfresco/api/-default-/public/alfresco/versions/1
 - [RatingsApi](docs/RatingsApi.md)
 - [RenditionsApi](docs/RenditionsApi.md)
 - [SharedlinksApi](docs/SharedlinksApi.md)
+- [SettingsApi](docs/SettingsApi.md)
 - [SitesApi](docs/SitesApi.md)
 - [TagsApi](docs/TagsApi.md)
 - [TrashcanApi](docs/TrashcanApi.md)

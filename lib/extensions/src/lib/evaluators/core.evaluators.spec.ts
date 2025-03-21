@@ -19,7 +19,6 @@ import { every, not, some } from './core.evaluators';
 import { RuleParameter } from '../config/rule.extensions';
 
 describe('Core Evaluators', () => {
-
     const context: any = {
         getEvaluator: (key: string) => {
             switch (key) {

@@ -27,6 +27,7 @@ export * from './activity';
 export * from './activityEntry';
 export * from './activityPaging';
 export * from './activityPagingList';
+export * from './appConfigPluginRef';
 export * from './agent';
 export * from './agentEntry';
 export * from './agentPaging';

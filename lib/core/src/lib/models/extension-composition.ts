@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,15 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.service';
-export { AlfrescoApiFactory } from './alfresco-api.interface';
-export * from './extension-manager.service';
+import { AppConfigPluginRef } from './app-config-plugin-ref';
+import { RouteRef, RuleRef, ActionRef } from '@alfresco/adf-extensions';
+
+export class ExtensionComposition {
+    appConfig: AppConfigPluginRef = new AppConfigPluginRef();
+    rules?: Array<RuleRef> = [];
+    routes?: Array<RouteRef> = [];
+    actions?: Array<ActionRef> = [];
+    features?: {
+        [key: string]: any;
+    } = {};
+}

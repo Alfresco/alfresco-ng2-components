@@ -110,15 +110,15 @@ export class ExtensionService {
         return config;
     }
 
-    appendConfig(partialConfig: ExtensionConfig) {
-        this.config = { ...this.config,
+    appendConfig(partialConfig: any) {
+        this.setup({
+            ...this.config,
             rules: mergeArrays(this.config.rules, partialConfig.rules),
-            features: mergeObjects(this.config.features, partialConfig.features),
+            features: this.config.features ? mergeObjects(this.config.features, partialConfig.features) : partialConfig.features,
             routes: mergeArrays(this.config.routes, partialConfig.routes),
             actions: mergeArrays(this.config.actions, partialConfig.actions),
-            appConfig: mergeObjects(this.config.appConfig, partialConfig.appConfig)
-        };
-        this.setup(this.config);
+            appConfig: this.config.appConfig ? mergeObjects(this.config.appConfig, partialConfig.appConfig) : partialConfig.appConfig
+        });
     }
 
     /**
