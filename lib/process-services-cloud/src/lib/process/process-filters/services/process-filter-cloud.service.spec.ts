@@ -32,6 +32,7 @@ import {
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -51,7 +52,7 @@ describe('ProcessFilterCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule, ApolloTestingModule],
             providers: [{ provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(ProcessFilterCloudService);

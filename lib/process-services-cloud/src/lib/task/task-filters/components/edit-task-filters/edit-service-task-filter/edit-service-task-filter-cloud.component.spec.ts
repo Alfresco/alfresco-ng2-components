@@ -21,7 +21,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../../services/local-preference-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../../../../../app/mock/app-model.mock';
 import { ServiceTaskFilterCloudService } from '../../../services/service-task-filter-cloud.service';
@@ -38,6 +37,11 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -53,8 +57,19 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatIconTestingModule, EditServiceTaskFilterCloudComponent],
-            providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            imports: [
+                MatIconTestingModule,
+                NoopAnimationsModule,
+                EditServiceTaskFilterCloudComponent,
+                NoopTranslateModule,
+                ApolloTestingModule,
+                NoopAuthModule
+            ],
+            providers: [
+                MatDialog,
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] }
+            ]
         });
         fixture = TestBed.createComponent(EditServiceTaskFilterCloudComponent);
         component = fixture.componentInstance;
