@@ -89,7 +89,7 @@
     "@nx/angular": "17.3.1",
     "@nx/eslint-plugin": "20.6.0",
     "@nx/js": "17.3.1",
-    "@nx/node": "17.3.1",
+    "@nx/node": "20.6.2",
     "@nx/storybook": "17.3.1",
     "@nx/workspace": "17.3.1",
     "@paperist/types-remark": "0.1.3",
