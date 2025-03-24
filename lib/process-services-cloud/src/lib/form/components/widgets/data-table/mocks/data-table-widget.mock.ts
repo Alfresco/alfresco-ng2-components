@@ -173,7 +173,7 @@ export const mockAmericaCountriesRows: DataRow[] = [
     new ObjectDataRow({ id: 'US', name: 'United States' })
 ];
 
-export const mockCountriesIncorrectData = [
+export const mockIncompleteCountriesData = [
     {
         id: 'PL'
     },
@@ -182,8 +182,10 @@ export const mockCountriesIncorrectData = [
     }
 ];
 
-export const mockJsonFormVariableWithIncorrectData = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesIncorrectData, type: 'json', id: 'fake-id-1' })
+export const mockJsonFormVariableWithEmptyData = [new TaskVariableCloud({ name: 'json-form-variable', value: [], type: 'json', id: 'fake-id-1' })];
+
+export const mockJsonFormVariableWithIncompleteData = [
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockIncompleteCountriesData, type: 'json', id: 'fake-id-1' })
 ];
 
 export const mockJsonFormVariable = [

@@ -18,7 +18,7 @@
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
     mockEuropeCountriesData,
-    mockCountriesIncorrectData,
+    mockIncompleteCountriesData,
     mockInvalidSchemaDefinition,
     mockSchemaDefinition
 } from './mocks/data-table-widget.mock';
@@ -42,13 +42,13 @@ describe('WidgetDataTableAdapter', () => {
         ]);
     });
 
-    it('should return an empty array if not all columns are linked to data', () => {
-        widgetDataTableAdapter = new WidgetDataTableAdapter(mockCountriesIncorrectData, mockSchemaDefinition);
+    it('should return rows if columns are partially linked to data', () => {
+        widgetDataTableAdapter = new WidgetDataTableAdapter(mockIncompleteCountriesData, mockSchemaDefinition);
         const rows = widgetDataTableAdapter.getRows();
         const isDataSourceValid = widgetDataTableAdapter.isDataSourceValid();
 
-        expect(rows).toEqual([]);
-        expect(isDataSourceValid).toBeFalse();
+        expect(rows).toEqual([new ObjectDataRow({ id: 'IT' }), new ObjectDataRow({ id: 'PL' })]);
+        expect(isDataSourceValid).toBeTrue();
     });
 
     it('should return an empty array if columns have invalid structure', () => {
