@@ -186,4 +186,15 @@ describe('ProcessContentService', () => {
             done();
         });
     });
+
+    it('should return a Blob as preview', (done) => {
+        const blob = createFakeBlob();
+        spyOn(service, 'getContentRenditionTypePreview').and.returnValue(of(blob));
+        service.getContentRenditionTypePreview(999).subscribe((result) => {
+            expect(result).toEqual(jasmine.any(Blob));
+            expect(result.size).toEqual(48);
+            expect(result.type).toEqual('image/png');
+            done();
+        });
+    });
 });
