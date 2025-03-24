@@ -42,7 +42,7 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the thumbnail image
 -   **getContentRenditionTypePreview**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
     Gets the preview rendition for a related content file.
-    -   _contentId:_ `number`  - ID of the related content
+    -   _contentId:_ `number` - ID of the related content
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the related content
 -   **getFileContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
     Gets the metadata for a related content item.
