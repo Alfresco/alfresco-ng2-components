@@ -63,7 +63,6 @@ const createFakeBlob = () => {
 
 describe('ProcessContentService', () => {
     let service: ProcessContentService;
-    // let contentApi: ContentApiService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -71,7 +70,6 @@ describe('ProcessContentService', () => {
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(ProcessContentService);
-        // contentApi = TestBed.inject(ContentApiService);
     });
 
     beforeEach(() => {
