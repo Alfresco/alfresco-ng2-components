@@ -67,6 +67,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     updateReactiveFormControl(): void {
+        this.setFormControlValue();
         this.updateFormControlState();
         this.validateField();
     }
