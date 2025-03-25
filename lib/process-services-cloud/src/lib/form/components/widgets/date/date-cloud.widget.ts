@@ -87,6 +87,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     updateReactiveFormControl(): void {
+        this.setFormControlValue();
         this.updateFormControlState();
         this.validateField();
     }
