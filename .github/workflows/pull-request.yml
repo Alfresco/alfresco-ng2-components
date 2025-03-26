@@ -25,6 +25,8 @@ on:
       - master
       - develop-patch*
       - master-patch*
+  pull_request_review:
+    types: [submitted]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -147,6 +149,7 @@ jobs:
             checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
+              echo "::set-output name=rerun::true"
             else
               echo -e "\033[31mPR NOT approved\033[0m"
               exit 1
