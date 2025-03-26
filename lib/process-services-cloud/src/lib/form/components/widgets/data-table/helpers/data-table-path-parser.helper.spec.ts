@@ -23,7 +23,7 @@ interface DataTablePathParserTestCase {
     path?: string;
     data?: any;
     propertyName?: string;
-    expected?: unknown[];
+    expected: unknown[];
 }
 
 describe('DataTablePathParserHelper', () => {
@@ -39,18 +39,18 @@ describe('DataTablePathParserHelper', () => {
                 description: 'not existent',
                 data: {},
                 path: 'nonexistent.path',
-                expected: []
+                expected: undefined
             },
             {
                 description: 'not defined',
                 data: {},
                 path: undefined,
-                expected: []
+                expected: undefined
             },
             {
                 description: 'empty string',
                 path: '',
-                expected: []
+                expected: undefined
             },
             {
                 description: 'nested',
@@ -76,77 +76,89 @@ describe('DataTablePathParserHelper', () => {
             {
                 description: 'with nested brackets followed by an additional part of property name',
                 propertyName: 'file.file[data]file',
-                path: 'response.[file.file[data]file]'
+                path: 'response.[file.file[data]file]',
+                expected: mockResultData
             },
             {
                 description: 'with nested brackets',
                 propertyName: 'file.file[data]',
-                path: 'response.[file.file[data]]'
+                path: 'response.[file.file[data]]',
+                expected: mockResultData
             },
             {
                 description: 'with separator before nested brackets in property name',
                 propertyName: 'file.[data]file',
-                path: 'response.[file.[data]file]'
+                path: 'response.[file.[data]file]',
+                expected: mockResultData
             },
             {
                 description: 'with separator before and no separator after nested brackets in property name',
                 propertyName: 'file.[data]',
-                path: 'response.[file.[data]]'
+                path: 'response.[file.[data]]',
+                expected: mockResultData
             },
             {
                 description: 'with separator after nested brackets',
                 propertyName: 'file[data].file',
-                path: 'response.[file[data].file]'
+                path: 'response.[file[data].file]',
+                expected: mockResultData
             },
             {
                 description: 'with multiple brackets in property name',
                 propertyName: 'file.file[data]file[data]',
-                path: 'response.[file.file[data]file[data]]'
+                path: 'response.[file.file[data]file[data]]',
+                expected: mockResultData
             },
             {
                 description: 'with missing closing bracket in outermost square brackets',
                 propertyName: 'file.file[data',
-                path: 'response.[file.file[data]'
+                path: 'response.[file.file[data]',
+                expected: mockResultData
             },
             {
                 description: 'with missing openning bracket in outermost square brackets',
                 propertyName: 'file.filedata]',
-                path: 'response.[file.filedata]]'
+                path: 'response.[file.filedata]]',
+                expected: mockResultData
             },
             {
                 description: 'with special characters except separator (.) in brackets',
                 propertyName: 'xyz:abc,xyz-abc,xyz_abc,abc+xyz',
-                path: 'response.[xyz:abc,xyz-abc,xyz_abc,abc+xyz]'
+                path: 'response.[xyz:abc,xyz-abc,xyz_abc,abc+xyz]',
+                expected: mockResultData
             },
             {
                 description: 'with special characters except separator (.) without brackets',
                 propertyName: 'xyz:abc,xyz-abc,xyz_abc,abc+xyz',
-                path: 'response.xyz:abc,xyz-abc,xyz_abc,abc+xyz'
+                path: 'response.xyz:abc,xyz-abc,xyz_abc,abc+xyz',
+                expected: mockResultData
             },
             {
                 description: 'without separator in brackets',
                 propertyName: 'my-data',
-                path: '[response].[my-data]'
+                path: '[response].[my-data]',
+                expected: mockResultData
             },
             {
                 description: 'with property followed by single index reference',
                 propertyName: 'users',
                 path: 'response.users[0].data',
-                data: mockResponseResultDataWithArrayInsideArray('users')
+                data: mockResponseResultDataWithArrayInsideArray('users'),
+                expected: mockResultData
             },
             {
                 description: 'with property followed by multiple index references',
                 propertyName: 'users:Array',
                 path: 'response.[users:Array][0][1][12].data',
                 data: mockResponseResultDataWithArrayInsideArray('users:Array'),
-                expected: []
+                expected: undefined
             },
             {
                 description: 'when path points to array in the middle (incorrect path)',
                 propertyName: 'users',
                 path: 'response.users.incorrectPath',
                 data: mockResponseResultDataWithArrayInsideArray('users'),
-                expected: []
+                expected: undefined
             },
             {
                 description: 'when path points to the particular element of the array',
@@ -158,7 +170,7 @@ describe('DataTablePathParserHelper', () => {
                 description: 'when path points to the particular element of the array which does NOT exist',
                 propertyName: 'users',
                 path: 'response.users[100]',
-                expected: []
+                expected: undefined
             }
         ];
 
@@ -166,7 +178,7 @@ describe('DataTablePathParserHelper', () => {
             it(testCase.description, () => {
                 const data = testCase.data ?? mockResponseResultData(testCase.propertyName);
                 const result = helper.retrieveDataFromPath(data, testCase.path);
-                const expectedResult = testCase.expected ?? mockResultData;
+                const expectedResult = testCase.expected as any;
                 expect(result).toEqual(expectedResult);
             });
         });

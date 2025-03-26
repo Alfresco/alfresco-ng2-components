@@ -128,16 +128,10 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
     }
 
     isDataSourceValid(): boolean {
-        return this.hasAllColumnsLinkedToData() && this.allMandatoryColumnPropertiesHaveValues();
+        return this.allColumnsHaveKeys();
     }
 
-    private allMandatoryColumnPropertiesHaveValues(): boolean {
+    private allColumnsHaveKeys(): boolean {
         return this.adapter.getColumns().every((column) => !!column.key);
-    }
-
-    private hasAllColumnsLinkedToData(): boolean {
-        const availableColumnKeys: string[] = this.adapter.getColumns().map((column) => column.key);
-
-        return availableColumnKeys.every((columnKey) => this.adapter.getRows().some((row) => Object.keys(row.obj).includes(columnKey)));
     }
 }
