@@ -27,11 +27,11 @@ export class FormCloudSpinnerService {
     private formService = inject(FormService);
     private overlay = inject(Overlay);
 
-    private overlayRef?: OverlayRef;
+    private overlayRef?: OverlayRef = null;
 
     initSpinnerHandling(destroyRef: DestroyRef): void {
         this.formService.toggleFormSpinner.pipe(takeUntilDestroyed(destroyRef)).subscribe((event: FormSpinnerEvent) => {
-            if (event?.payload.showSpinner) {
+            if (event?.payload.showSpinner && this.overlayRef === null) {
                 this.overlayRef = this.overlay.create({
                     hasBackdrop: true
                 });
@@ -41,6 +41,7 @@ export class FormCloudSpinnerService {
                 componentRef.instance.message = event.payload.message;
             } else if (event?.payload.showSpinner === false) {
                 this.overlayRef?.detach();
+                this.overlayRef = null;
             }
         });
     }
