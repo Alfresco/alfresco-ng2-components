@@ -105,10 +105,18 @@ jobs:
               skip_check="true"
           fi
 
+      - name: show pull request debug info
+        id: debug-info
+        run: |
+          echo "All labels:"
+          for label in "${{ github.event.pull_request.labels[*] }}"; do
+            echo "- $label"
+          done
+
       - name: check if pr is labeled
         id: check-label
         run: |
-          if [[ "${{ github.event.labels[*] }}" == *"do not merge"* ]]; then
+          if [[ "${{ github.event.pull_request.labels[*] }}" == *"do not merge"* ]]; then
             echo "PR is labeled as 'do not merge'"
             echo "skip_check=true" >> $GITHUB_ENV
           else
