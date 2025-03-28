@@ -63,6 +63,7 @@ env:
 
 jobs:
   pre-checks:
+    name: "${{ github.event.pull_request.title }}"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
