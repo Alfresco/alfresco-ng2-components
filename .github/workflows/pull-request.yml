@@ -107,7 +107,7 @@ jobs:
         id: check-label
         run: |
           for label in "${{ github.event.pull_request.labels[*] }}"; do
-          if [[ "$label" == *"do not merge"* ]]; then
+          if [[ "$label" == *"do not merge 🙅🏻‍♂️"* ]]; then
             echo "PR is labeled as 'do not merge'"
             echo "skip_check=true" >> $GITHUB_ENV
             exit 0
