@@ -110,14 +110,19 @@ jobs:
         run: |
           if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))' > /dev/null; then
             echo "PR is labeled as 'do not merge'"
-            echo "skip_check=true" >> $GITHUB_ENV
+            echo "isLabeldWithDoNotMerge=true" >> $GITHUB_ENV
           else
             echo "PR is not labeled as 'do not merge'"
-            echo "skip_check=false" >> $GITHUB_ENV
+            echo "isLabeldWithDoNotMerge=false" >> $GITHUB_ENV
           fi
 
+      - name: debug info
+        id: debug-info
+        run: |
+          echo "isLabeldWithDoNotMerge: ${{ env.isLabeldWithDoNotMerge }}"
+
       - name: check if pr is approved
-        if: env.skip_check == 'false'
+        if: env.isLabeldWithDoNotMerge == 'false'
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
