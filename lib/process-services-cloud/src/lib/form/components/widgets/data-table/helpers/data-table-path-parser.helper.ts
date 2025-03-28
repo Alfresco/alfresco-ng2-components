@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
+import { DataRow } from '@alfresco/adf-core';
+
 export class DataTablePathParserHelper {
     private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
     private readonly indexReferencesRegEx = /(\[\d+\])+$/;
 
-    retrieveDataFromPath(data: any, path: string): any[] {
+    retrieveDataFromPath(data: any, path: string): DataRow[] | undefined {
         if (!path) {
-            return [];
+            return undefined;
         }
 
         const properties = this.splitPathIntoProperties(path);
@@ -31,7 +33,7 @@ export class DataTablePathParserHelper {
         const isPropertyWithMultipleIndexReferences = propertyIndexReferences.length > 1;
 
         if (isPropertyWithMultipleIndexReferences || !this.isPropertyExistsInData(data, purePropertyName)) {
-            return [];
+            return undefined;
         }
 
         const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;

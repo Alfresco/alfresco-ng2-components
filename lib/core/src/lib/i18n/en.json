@@ -51,6 +51,7 @@
       "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
       "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "DATA_TABLE_EMPTY_CONTENT": "No data found",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
       "FILE_NAME": "File Name",
       "TITLE": "Title",

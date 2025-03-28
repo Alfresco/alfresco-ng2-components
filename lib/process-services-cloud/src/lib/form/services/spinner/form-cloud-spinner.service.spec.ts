@@ -83,4 +83,16 @@ describe('FormCloudSpinnerService', () => {
         hasSpinner = await rootLoader.hasHarness(MatProgressSpinnerHarness);
         expect(hasSpinner).toBeFalse();
     });
+
+    it('should show only one spinner at time', async () => {
+        spinnerService.initSpinnerHandling(destroyRef);
+        formService.toggleFormSpinner.next(showSpinnerEvent);
+        const otherShowSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: true, message: 'ANOTHER' });
+        formService.toggleFormSpinner.next(otherShowSpinnerEvent);
+
+        fixture.detectChanges();
+
+        const spinners = await rootLoader.getAllHarnesses(MatProgressSpinnerHarness);
+        expect(spinners.length).toBe(1);
+    });
 });

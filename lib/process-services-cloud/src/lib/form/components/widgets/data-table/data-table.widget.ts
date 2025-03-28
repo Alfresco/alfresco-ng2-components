@@ -18,8 +18,17 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, FormBaseModule, DataRow, DataColumn, DataTableComponent } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+import {
+    WidgetComponent,
+    FormService,
+    FormBaseModule,
+    DataRow,
+    DataColumn,
+    DataTableComponent,
+    NoContentTemplateDirective,
+    EmptyContentComponent
+} from '@alfresco/adf-core';
+import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
@@ -28,7 +37,7 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
 
 @Component({
     standalone: true,
-    imports: [CommonModule, TranslateModule, FormBaseModule, DataTableComponent],
+    imports: [NgIf, TranslateModule, FormBaseModule, DataTableComponent, NoContentTemplateDirective, EmptyContentComponent],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',
     styleUrls: ['./data-table.widget.scss'],
@@ -71,6 +80,8 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private init(): void {
+        this.dataTableLoadFailed = false;
+
         this.setPreviewState();
         this.getTableData();
         this.initDataTable();
@@ -84,40 +95,50 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private initDataTable(): void {
-        this.dataTableLoadFailed = false;
+        this.dataSource = new WidgetDataTableAdapter(this.rowsData, this.columnsSchema);
 
-        if (this.rowsData?.length) {
-            this.dataSource = new WidgetDataTableAdapter(this.rowsData, this.columnsSchema);
-
-            if (this.dataSource.isDataSourceValid()) {
-                this.field.updateForm();
-            } else {
-                this.handleError('Data source has corrupted model or structure');
-            }
-        } else {
-            this.handleError('Data source not found or it is not an array/object');
+        if (!this.dataSource.isDataSourceValid()) {
+            this.handleError();
+            return;
         }
+
+        this.field.updateForm();
     }
 
     private getRowsData(): void {
         const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultResponseProperty;
         const fieldValue = this.field?.value;
+
         const rowsData = fieldValue || this.getDataFromVariable();
 
-        if (rowsData) {
-            const dataFromPath = this.pathParserHelper.retrieveDataFromPath(rowsData, optionsPath);
-            this.rowsData = (dataFromPath?.length ? dataFromPath : rowsData) as DataRow[];
+        if (!rowsData) {
+            this.handleError();
+            return;
         }
+
+        this.rowsData = this.extractRowsData(rowsData, optionsPath);
+
+        if (!this.rowsData) {
+            this.handleError();
+        }
+    }
+
+    private extractRowsData(rowsData: any, optionsPath: string): DataRow[] | undefined {
+        if (Array.isArray(rowsData)) {
+            return rowsData;
+        }
+
+        return this.pathParserHelper.retrieveDataFromPath(rowsData, optionsPath);
     }
 
     private getDataFromVariable(): any {
         const processVariables = this.field?.form?.processVariables;
         const formVariables = this.field?.form?.variables;
 
-        const processVariableDropdownOptions = this.getVariableValueByName(processVariables, this.variableName);
-        const formVariableDropdownOptions = this.getVariableValueByName(formVariables, this.variableName);
+        const processVariableData = this.getVariableValueByName(processVariables, this.variableName);
+        const formVariableData = this.getVariableValueByName(formVariables, this.variableName);
 
-        return processVariableDropdownOptions ?? formVariableDropdownOptions;
+        return processVariableData ?? formVariableData;
     }
 
     private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
@@ -129,10 +150,9 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         this.previewState = this.formCloudService.getPreviewState();
     }
 
-    private handleError(error: any) {
+    private handleError(): void {
         if (!this.previewState) {
             this.dataTableLoadFailed = true;
-            this.widgetError.emit(error);
         }
     }
 }
