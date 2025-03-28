@@ -99,22 +99,19 @@ jobs:
             echo -e "\033[32mci:force check can be skipped\033[0m"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-            skip_check="true"
+              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+              skip_check="true"
           fi
 
       - name: check if pr is labeled
         id: check-label
-        run: |
-          for label in "${{ github.event.pull_request.labels[*] }}"; do
-          if [[ "$label" == *"do not merge 🙅🏻‍♂️"* ]]; then
-            echo "PR is labeled as 'do not merge'"
-            echo "skip_check=true" >> $GITHUB_ENV
-            exit 0
-          fi
-          done
+        run: if [[ "${{ github.event.pull_request.labels[*] }}" == *"do not merge"* ]]; then
+          echo "PR is labeled as 'do not merge'"
+          echo "skip_check=true" >> $GITHUB_ENV
+          else
           echo "PR is not labeled as 'do not merge'"
           echo "skip_check=false" >> $GITHUB_ENV
+          fi
 
       - name: check if pr is approved
         if: env.skip_check == 'false'
