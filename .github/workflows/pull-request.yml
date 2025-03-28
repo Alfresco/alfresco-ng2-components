@@ -106,10 +106,21 @@ jobs:
               skip_check="true"
           fi
 
-      - name: check if pr is labeled
+      - name: Check if PR is already approved
+        id: check-approval
+        run: |
+          if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
+            echo "PR already approved"
+            echo "pr_already_approved=true" >> $GITHUB_ENV
+          else
+            echo "PR not approved yet"
+            echo "pr_already_approved=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check if PR is labeled
         id: check-label
         run: |
-          if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))' > /dev/null; then
+          if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))'; then
             echo "PR is labeled as 'do not merge'"
             echo "isLabeldWithDoNotMerge=true" >> $GITHUB_ENV
           else
@@ -117,43 +128,24 @@ jobs:
             echo "isLabeldWithDoNotMerge=false" >> $GITHUB_ENV
           fi
 
-      - name: check if pr is approved
-        if: env.isLabeldWithDoNotMerge == 'false'
+      - name: Check if PR is approved
+        if: env.isLabeldWithDoNotMerge == 'false' && env.pr_already_approved == 'false'
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
-            echo -e "\033[32mci:force check can be skipped\033[0m"
-            skip_check="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-            skip_check="true"
-          fi
-
-          if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
-            skip_check="true"
-          fi
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo -e "\033[32mSchedule event\033[0m"
-            skip_check="true"
-          fi
-
-          if [[ "$DEVEL_FLAG" == "true" ]]; then
-            echo -e "\033[32mDevel flag\033[0m"
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ] || [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]] || [ "${{ github.actor }}" == "alfresco-build" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ] || [[ "$DEVEL_FLAG" == "true" ]]; then
+            echo "Skipping approval check"
             skip_check="true"
           fi
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            echo "PR: ${{ env.GITHUB_PR_NUMBER }}"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
-            if [[ $checkApproval ]]; then
-              echo -e "\033[32mPR approved\033[0m"
+            if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
+              echo "PR approved"
             else
-              echo -e "\033[31mPR NOT approved\033[0m"
+              echo "PR NOT approved"
               exit 1
             fi
           fi
