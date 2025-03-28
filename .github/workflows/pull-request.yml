@@ -105,12 +105,18 @@ jobs:
               skip_check="true"
           fi
 
-      - name: show pr number
-        shell: bash
-        run: |
-          echo "PR: ${{ env.GITHUB_PR_NUMBER }}"
+      - name: check if pr is labeled
+        id: check-label
+        run: if [[ "${{ github.event.pull_request.labels[*] }}" == *"do not merge"* ]]; then
+          echo "PR is labeled as 'do not merge'"
+          echo "skip_check=true" >> $GITHUB_ENV
+          else
+          echo "PR is not labeled as 'do not merge'"
+          echo "skip_check=false" >> $GITHUB_ENV
+          fi
 
       - name: check if pr is approved
+        if: env.skip_check == 'false'
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
@@ -140,8 +146,7 @@ jobs:
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            prNumber=${{ steps.action.outputs.number }}
-            echo "PR: $prNumber"
+            echo "PR: ${{ env.GITHUB_PR_NUMBER }}"
             checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GITHUB_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
