@@ -26,8 +26,6 @@ on:
       - develop-patch*
       - master-patch*
   pull_request_review:
-    permissions:
-      contents: read
     types: [submitted]
 
 concurrency:
@@ -150,7 +148,6 @@ jobs:
             checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GITHUB_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
-              echo "rerun=true" >> $GITHUB_ENV
             else
               echo -e "\033[31mPR NOT approved\033[0m"
               exit 1
