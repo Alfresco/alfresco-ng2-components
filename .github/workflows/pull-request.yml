@@ -99,8 +99,8 @@ jobs:
             echo -e "\033[32mci:force check can be skipped\033[0m"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-              skip_check="true"
+            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+            skip_check="true"
           fi
 
       - name: check if pr is labeled
