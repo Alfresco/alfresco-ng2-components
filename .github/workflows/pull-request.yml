@@ -1,4 +1,4 @@
-name: "pull-request"
+name: "${{ github.event.pull_request.title }}"
 
 on:
   workflow_call:
@@ -122,14 +122,14 @@ jobs:
         run: |
           if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))'; then
             echo "PR is labeled as 'do not merge'"
-            echo "isLabeldWithDoNotMerge=true" >> $GITHUB_ENV
+            echo "isLabeledWithDoNotMerge=true" >> $GITHUB_ENV
           else
             echo "PR is not labeled as 'do not merge'"
-            echo "isLabeldWithDoNotMerge=false" >> $GITHUB_ENV
+            echo "isLabeledWithDoNotMerge=false" >> $GITHUB_ENV
           fi
 
       - name: Check if PR is approved
-        if: env.isLabeldWithDoNotMerge == 'false' && env.pr_already_approved == 'false'
+        if: env.isLabeledWithDoNotMerge == 'false' && env.pr_already_approved == 'false'
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
