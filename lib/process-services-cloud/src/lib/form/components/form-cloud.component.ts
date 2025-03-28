@@ -67,6 +67,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { A11yModule } from '@angular/cdk/a11y';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
 
@@ -83,7 +84,8 @@ export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldVal
         MatIconModule,
         ToolbarDividerComponent,
         ToolbarComponent,
-        A11yModule
+        A11yModule,
+        MatCheckboxModule
     ],
     providers: [FormCloudSpinnerService],
     templateUrl: './form-cloud.component.html',
@@ -114,11 +116,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     data: TaskVariableCloud[];
 
-    /**
-     * The available display configurations for the form
-     */
+    /** The available display configurations for the form */
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
+
+    /** Toggle rendering of the `Open next task` checkbox. */
+    @Input()
+    showNextTaskCheckbox = false;
+
+    /** Whether the `Open next task` checkbox is checked by default or not. */
+    @Input()
+    isNextTaskCheckboxChecked = false;
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
@@ -147,6 +155,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /** Emitted when a display mode configuration is turned off. */
     @Output()
     displayModeOff = new EventEmitter<FormCloudDisplayModeConfiguration>();
+
+    /** Emitted when the `Open next task` checkbox was toggled. */
+    @Output()
+    nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
@@ -509,5 +521,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (injectedFieldValidators && injectedFieldValidators?.length) {
             this.fieldValidators = [...this.fieldValidators, ...injectedFieldValidators];
         }
+    }
+
+    onNextTaskCheckboxCheckedChanged(event: MatCheckboxChange) {
+        this.nextTaskCheckboxCheckedChanged.emit(event);
     }
 }
