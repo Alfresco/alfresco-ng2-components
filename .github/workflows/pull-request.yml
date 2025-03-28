@@ -45,6 +45,7 @@ env:
   BUILD_ID: ${{ github.run_id }}
   GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
+  GH_PR_NUMBER: ${{github.event.pull_request.number}}
   JOB_ID: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
@@ -59,7 +60,6 @@ env:
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   REDIRECT_URI: /
-  GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
 
 jobs:
   pre-checks:
@@ -108,10 +108,8 @@ jobs:
       - name: show pull request debug info
         id: debug-info
         run: |
-          echo "All labels:"
-          for label in "${{ github.event.pull_request.labels[*] }}"; do
-            echo "- $label"
-          done
+          echo "Raw label data:"
+          echo '${{ toJson(github.event.pull_request.labels) }}'
 
       - name: check if pr is labeled
         id: check-label
@@ -156,7 +154,7 @@ jobs:
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
             echo "PR: ${{ env.GITHUB_PR_NUMBER }}"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GITHUB_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
+            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
             else
