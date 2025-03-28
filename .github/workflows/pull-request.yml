@@ -105,16 +105,10 @@ jobs:
               skip_check="true"
           fi
 
-      - name: show pull request debug info
-        id: debug-info
-        run: |
-          echo "Raw label data:"
-          echo '${{ toJson(github.event.pull_request.labels) }}'
-
       - name: check if pr is labeled
         id: check-label
         run: |
-          if [[ "${{ github.event.pull_request.labels[*] }}" == *"do not merge"* ]]; then
+          if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))' > /dev/null; then
             echo "PR is labeled as 'do not merge'"
             echo "skip_check=true" >> $GITHUB_ENV
           else
