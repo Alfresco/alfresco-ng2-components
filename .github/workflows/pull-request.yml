@@ -116,11 +116,6 @@ jobs:
             echo "isLabeldWithDoNotMerge=false" >> $GITHUB_ENV
           fi
 
-      - name: debug info
-        id: debug-info
-        run: |
-          echo "isLabeldWithDoNotMerge: ${{ env.isLabeldWithDoNotMerge }}"
-
       - name: check if pr is approved
         if: env.isLabeldWithDoNotMerge == 'false'
         env:
