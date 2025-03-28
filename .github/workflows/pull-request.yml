@@ -59,6 +59,7 @@ env:
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   REDIRECT_URI: /
+  GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
 
 jobs:
   pre-checks:
@@ -104,17 +105,10 @@ jobs:
               skip_check="true"
           fi
 
-      - name: Get PR number
-        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-        uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
-        id: action
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: show pr number
         shell: bash
         run: |
-          echo "PR: ${{ steps.action.outputs.number }}"
+          echo "PR: ${{ env.GITHUB_PR_NUMBER }}"
 
       - name: check if pr is approved
         env:
@@ -148,7 +142,7 @@ jobs:
             echo "Checking PR approval"
             prNumber=${{ steps.action.outputs.number }}
             echo "PR: $prNumber"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
+            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GITHUB_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
               echo "rerun=true" >> $GITHUB_ENV
