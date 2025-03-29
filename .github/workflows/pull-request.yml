@@ -187,9 +187,10 @@ jobs:
   generate-affected-matrix:
     name: "Generate affected matrix"
     runs-on: ubuntu-latest
-    needs: []
+    needs: ["pre-checks", "check-if-pr-is-approved"]
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      unitMatrix: ${{ steps.set-matrix.outputs.unitMatrix }}
+      buildMatrix: ${{ steps.set-matrix.outputs.buildMatrix }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -209,16 +210,21 @@ jobs:
         run: |
           BASE_REF="${{ github.event.pull_request.base.ref }}"
           echo "Base ref is $BASE_REF"
-          AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=cli,stories,eslint-angular)
-          echo "Affected projects: $AFFECTED"
-          MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
-          MATRIX_JSON=$(echo "$MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
-          echo "Matrix JSON: $MATRIX_JSON"
-          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+          AFFECTED_BUILD=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=stories)
+          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=cli,stories,eslint-angular)
+          echo "Affected projects for BUILD : $AFFECTED_BUILD"
+          BUILD_MATRIX_JSON=$(echo $AFFECTED_BUILD | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
+          BUILD_MATRIX_JSON=$(echo "$BUILD_MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
+          echo "Matrix BUILD: $BUILD_MATRIX_JSON"
+          echo "buildMatrix=$BUILD_MATRIX_JSON" >> $GITHUB_OUTPUT
+
+          echo "Affected projects for UNIT : $AFFECTED_UNIT"
+          UNIT_MATRIX_JSON=$(echo $AFFECTED_BUILD | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
+          UNIT_MATRIX_JSON=$(echo "$UNIT_MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
+          echo "Matrix UNIT: $UNIT_MATRIX_JSON"
+          echo "unitMatrix=$UNIT_MATRIX_JSON" >> $GITHUB_OUTPUT
 
   lint:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
     name: "Lint"
     runs-on: ubuntu-latest
     needs: ["generate-affected-matrix"]
@@ -242,7 +248,7 @@ jobs:
     needs: [generate-affected-matrix]
     uses: ./.github/workflows/build-lib-workflow.yml
     with:
-      matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
+      matrix: ${{ needs.generate-affected-matrix.outputs.buildMatrix }}
 
   build-storybook:
     name: "Build Storybook"
@@ -271,4 +277,20 @@ jobs:
     needs: [generate-affected-matrix]
     uses: ./.github/workflows/unit-test-workflow.yml
     with:
-      matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
+      matrix: ${{ needs.generate-affected-matrix.outputs.unitMatrix }}
+
+  finalize:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    name: Final Results
+    needs: [check-if-pr-is-approved, pre-checks, trigger-unit-tests, lint, trigger-build, build-storybook]
+    steps:
+      - name: workflow failure
+        run: exit 1
+        if: ${{ contains(needs.*.result, 'failure') }}
+      - name: workflow canceled
+        run: exit 1
+        if: ${{ contains(needs.*.result, 'cancelled') }}
+      - name: workflow success
+        run: exit 0
+        if: ${{ contains(needs.*.result, 'success') }}
