@@ -219,7 +219,7 @@ jobs:
           echo "buildMatrix=$BUILD_MATRIX_JSON" >> $GITHUB_OUTPUT
 
           echo "Affected projects for UNIT : $AFFECTED_UNIT"
-          UNIT_MATRIX_JSON=$(echo $AFFECTED_BUILD | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
+          UNIT_MATRIX_JSON=$(echo $AFFECTED_UNIT | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
           UNIT_MATRIX_JSON=$(echo "$UNIT_MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
           echo "Matrix UNIT: $UNIT_MATRIX_JSON"
           echo "unitMatrix=$UNIT_MATRIX_JSON" >> $GITHUB_OUTPUT
