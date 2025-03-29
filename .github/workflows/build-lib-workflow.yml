@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache node modules
-        uses: actions/cache@b6169c87f9e6bf273d48cf12c10f7e9ac07e412a
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
