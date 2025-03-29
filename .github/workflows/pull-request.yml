@@ -196,7 +196,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@b6169c87f9e6bf273d48cf12c10f7e9ac07e412a
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
@@ -228,7 +228,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@b6169c87f9e6bf273d48cf12c10f7e9ac07e412a
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
@@ -254,7 +254,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@b6169c87f9e6bf273d48cf12c10f7e9ac07e412a
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
