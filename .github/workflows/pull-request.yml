@@ -195,6 +195,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
       - name: Install dependencies
         run: npm ci
       - name: Generate affected projects matrix
@@ -202,7 +209,7 @@ jobs:
         run: |
           BASE_REF="${{ github.event.pull_request.base.ref }}"
           echo "Base ref is $BASE_REF"
-          AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=cli,stories,eslint-angular)
+          AFFECTED=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain)
           echo "Affected projects: $AFFECTED"
           MATRIX_JSON=$(echo $AFFECTED | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
           MATRIX_JSON=$(echo "$MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
@@ -220,13 +227,20 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+           ${{ runner.os }}-node-modules-
       - uses: ./.github/actions/setup
       - run: npx nx affected --target=lint
 
   trigger-build:
     name: "Build Libs"
     needs: [generate-affected-matrix]
-    uses: ./.github/workflows/unit-test-workflow.yml
+    uses: ./.github/workflows/build-lib-workflow.yml
     with:
       matrix: ${{ needs.generate-affected-matrix.outputs.matrix }}
 
@@ -239,6 +253,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
       - name: Setup environment
         uses: ./.github/actions/setup
       - name: Build Storybook
