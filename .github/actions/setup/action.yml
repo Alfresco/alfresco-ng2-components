@@ -26,30 +26,7 @@ runs:
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@45bb8b664779b691f8a21d9fd49e360916726c11 # v8.18.1
-# CACHE
-      - name: Node Modules cache
-        id: node-modules-cache
-        if: ${{ inputs.enable-node-modules-cache == 'true' }}
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        env:
-          cache-name: node-modules-cache
-        with:
-          path: |
-            node_modules
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
-            node_modules-${{ runner.os }}-build-
-            node_modules-${{ runner.os }}-
-      - name: pip cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        if: ${{ inputs.enable-cache == 'true' }}
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@a3d5beb67a8b8d96398435e01686a9a9185380ab # v8.18.0
       - name: load "NPM TAG"
         uses: ./.github/actions/set-npm-tag
       - name: before install script

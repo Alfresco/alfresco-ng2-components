@@ -235,7 +235,7 @@ jobs:
           restore-keys: |
            ${{ runner.os }}-node-modules-
       - uses: ./.github/actions/setup
-      - run: npx nx affected --target=lint
+      - run: npx nx affected --target=lint --base=origin/develop --head=HEAD
 
   trigger-build:
     name: "Build Libs"
