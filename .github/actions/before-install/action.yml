@@ -29,6 +29,20 @@ runs:
           echo NODE_VERSION=$(node -v);
         } >> $GITHUB_ENV
 
+    - name: vars debug
+      shell: bash
+      run: |
+        echo "GIT_HASH=${{ env.GIT_HASH }}";
+        echo "BASE_HASH=${{ env.BASE_HASH }}";
+        echo "HEAD_HASH=${{ env.HEAD_HASH }}";
+        echo "HEAD_COMMIT_HASH=${{ env.HEAD_COMMIT_HASH }}";
+        echo "NX_CALCULATION_FLAGS=${{ env.NX_CALCULATION_FLAGS }}";
+        echo "BUILD_OPTS=${{ env.BUILD_OPTS }}";
+        echo "NODE_VERSION=${{ env.NODE_VERSION }}";
+        echo "GH_PULLREQUEST_MERGED=${{ github.event.pull_request.merged }}";
+        echo "GH_EVENT_NAME=${{ github.event_name }}";
+        echo "BREAK_ACTION=${{ env.BREAK_ACTION }}";
+
     - name: affected:* flag parser
       shell: bash
       if: ${{ contains(github.event.head_commit.message , '[affected:*]') }}
