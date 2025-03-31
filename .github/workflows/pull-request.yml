@@ -129,7 +129,7 @@ jobs:
           fi
 
       - name: Check if PR is approved
-        if: env.isLabeledWithDoNotMerge == 'false' && env.pr_already_approved == 'false'
+        if: env.pr_already_approved == 'false'
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
