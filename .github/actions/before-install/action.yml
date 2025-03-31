@@ -36,19 +36,8 @@ runs:
         echo "Setting up CI to run with commit flag [affected:*] flag."
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
-    - name: debug gh infos
-      shell: bash
-      run: |
-          echo "github.event_name=${{ github.event_name }}"
-          echo "github.event.action=${{ github.event.action }}"
-          echo "github.event.pull_request.merged=${{ github.event.pull_request.merged }}"
-          echo "github.event.pull_request.base.ref=${{ github.event.pull_request.base.ref }}"
-          echo "github.event.pull_request.head.ref=${{ github.event.pull_request.head.ref }}"
-          echo "github.event.pull_request.number=${{ github.event.pull_request.number }}"
-          echo "github.actor=${{ github.actor }}"
-
     - name: PULL_REQUEST event
-      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
+      if: ${{ env.BREAK_ACTION == false && (github.event_name == 'pull_request' || github.event_name == 'pull_request_review') && !github.event.pull_request.merged }}
       shell: bash
       run: |
         echo "Setting up CI flags for Pull Request event"
