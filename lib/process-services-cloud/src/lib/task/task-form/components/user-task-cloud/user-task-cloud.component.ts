@@ -196,15 +196,19 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     getTaskType(): void {
-        if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
-            this.taskType = this.taskTypeEnum.Form;
-        } else if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
-            this.taskType = this.taskTypeEnum.Screen;
-            const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
-            this.screenId = screenId;
-        } else {
-            this.taskType = this.taskTypeEnum.None;
+        if (this.taskDetails && !!this.taskDetails.formKey) {
+            if (this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
+                this.taskType = this.taskTypeEnum.Form;
+                return;
+            } else if (this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
+                this.taskType = this.taskTypeEnum.Screen;
+                const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
+                this.screenId = screenId;
+                return;
+            }
         }
+
+        this.taskType = this.taskTypeEnum.None;
     }
 
     hasCandidateUsers(): boolean {

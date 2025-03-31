@@ -36,6 +36,8 @@ import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src
 import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
+import { By } from '@angular/platform-browser';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -475,5 +477,39 @@ describe('UserTaskCloudComponent', () => {
 
         const noFormTemplateTitleText = await matCard.getTitleText();
         expect(noFormTemplateTitleText).toBe('');
+    });
+
+    it('should allow controlling [open next task] checkbox visibility', () => {
+        // Make sure the task-related UI is shown
+        taskDetails.formKey = 'form';
+        component.getTaskType();
+
+        // Show checkbox
+        component.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+        let checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+        expect(checkbox).not.toBeNull();
+
+        // Hide checkbox
+        component.showNextTaskCheckbox = false;
+        fixture.detectChanges();
+        checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+        expect(checkbox).toBeNull();
+    });
+
+    it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
+        // Make sure the task-related UI is shown
+        taskDetails.formKey = 'form';
+        component.getTaskType();
+
+        // Show checkbox
+        component.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+        const checkbox = await loader.getHarnessOrNull(MatCheckboxHarness);
+
+        spyOn(component.nextTaskCheckboxCheckedChanged, 'emit');
+        await checkbox.check();
+
+        expect(component.nextTaskCheckboxCheckedChanged.emit).toHaveBeenCalled();
     });
 });

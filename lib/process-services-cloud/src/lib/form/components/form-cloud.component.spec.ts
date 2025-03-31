@@ -67,6 +67,7 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 import { FormFieldValidator } from '../../../../../core/src/public-api';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -1189,6 +1190,40 @@ describe('FormCloudComponent', () => {
         const form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
         expect(formComponent.fieldValidators.length).toBe(1);
         expect(form.fieldValidators.length).toBe(10);
+    });
+
+    it('should allow controlling [open next task] checkbox visibility', () => {
+        // Add outcomes to make sure the checkbox can be shown
+        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
+        formComponent.form = formModel;
+
+        // Show checkbox
+        formComponent.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+        let checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+        expect(checkbox).not.toBeNull();
+
+        // Hide checkbox
+        formComponent.showNextTaskCheckbox = false;
+        fixture.detectChanges();
+        checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+        expect(checkbox).toBeNull();
+    });
+
+    it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
+        // Add outcomes to make sure the checkbox can be shown
+        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
+        formComponent.form = formModel;
+
+        // Show checkbox
+        formComponent.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+        const checkbox = await documentRootLoader.getHarnessOrNull(MatCheckboxHarness);
+
+        spyOn(formComponent.nextTaskCheckboxCheckedChanged, 'emit');
+        await checkbox.check();
+
+        expect(formComponent.nextTaskCheckboxCheckedChanged.emit).toHaveBeenCalled();
     });
 
     describe('form validations', () => {
