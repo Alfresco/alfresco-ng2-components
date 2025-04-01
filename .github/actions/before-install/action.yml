@@ -13,11 +13,12 @@ runs:
       shell: bash
       run: |
         echo "**********************************"
-        echo "BASE_REF=${{ github.base_ref }}"
-        echo "HEAD_REF=${{ github.head_ref }}"
-        echo "BASE_REF=${{ github.ref }}"
-        echo "Base Branch: ${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
-        echo "Head Branch: ${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+        echo "BASE_REF=${{ github.base_ref }}" >> $GITHUB_ENV
+        echo "HEAD_REF=${{ github.head_ref }}" >> $GITHUB_ENV
+        echo "Base Branch: ${{ github.event.pull_request.base.ref }}"
+        echo "Head Branch: ${{ github.event.pull_request.head.ref }}"
+        echo "GITHUB_BASE_REF: ${{ GITHUB_BASE_REF }}"
+        echo "HEAD_HASH=HEAD"
         echo "**********************************"
 
     - name: Before install
