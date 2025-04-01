@@ -23,7 +23,7 @@ export const defaultValueValidator =
     (filed: FormFieldModel): ValidatorFn =>
     (control: AbstractControl): ValidationErrors | null => {
         const optionsWithNoDefaultValue = filed.options.filter((dropdownOption) => {
-            const isDefaultValue = dropdownOption.id === DEFAULT_OPTION.id && dropdownOption.name === DEFAULT_OPTION.name;
+            const isDefaultValue = dropdownOption.id === DEFAULT_OPTION.id;
 
             return !isDefaultValue;
         });
