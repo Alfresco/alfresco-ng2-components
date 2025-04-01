@@ -199,20 +199,32 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private updateFormControlState(): void {
+        this.updateDropdownValidationRules();
+        this.updateDropdownReadonlyRules();
+        this.dropdownControl.updateValueAndValidity({ emitEvent: false });
+    }
+
+    private updateDropdownValidationRules() {
         this.dropdownControl.setValidators([]);
 
-        if (this.isRequired() && this.field?.isVisible) {
+        if (!this.field?.isVisible) {
+            return;
+        }
+
+        if (this.isRequired()) {
             this.dropdownControl.addValidators([Validators.required]);
             if (this.field.hasEmptyValue) {
                 this.dropdownControl.addValidators([defaultValueValidator(this.field)]);
             }
         }
+    }
 
-        this.field?.readOnly || this.readOnly
-            ? this.dropdownControl.disable({ emitEvent: false })
-            : this.dropdownControl.enable({ emitEvent: false });
-
-        this.dropdownControl.updateValueAndValidity({ emitEvent: false });
+    private updateDropdownReadonlyRules() {
+        if (this.field?.readOnly || this.readOnly) {
+            this.dropdownControl.disable({ emitEvent: false });
+        } else {
+            this.dropdownControl.enable({ emitEvent: false });
+        }
     }
 
     private handleErrors(): void {
