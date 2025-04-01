@@ -9,15 +9,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Use REFs
-      shell: bash
-      run: |
-        echo "**********************************"
-        echo "Base Branch: ${{ github.event.pull_request.base.ref }}"
-        echo "Head Branch: ${{ github.event.pull_request.head.ref }}"
-        echo "${GITHUB_BASE_REF}"
-        echo "**********************************"
-
     - name: Before install
       if: ${{ ! env.ACT }}
       shell: bash
@@ -29,9 +20,9 @@ runs:
       run: |
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
+          echo "BASE_HASH=$(git merge-base origin/${${{ github.event.pull_request.base.ref }}} HEAD)";
           echo "HEAD_HASH=HEAD";
-          echo "BASE_REF=$BASE_REF";
+          echo "BASE_REF=${{ github.event.pull_request.base.ref }}";
           echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
           echo "BUILD_OPTS=--configuration production";
