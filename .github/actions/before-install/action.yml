@@ -10,7 +10,7 @@ runs:
   using: "composite"
   steps:
     - name: Use REFs
-      shell: pwsh
+      shell: bash
       run: |
         echo "BASE_REF=${{ github.base_ref }}" >> $GITHUB_ENV
         echo "HEAD_REF=${{ github.head_ref }}" >> $GITHUB_ENV
@@ -28,6 +28,7 @@ runs:
           echo "GIT_HASH=$(git rev-parse HEAD)";
           echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
           echo "HEAD_HASH=HEAD";
+          echo "BASE_REF=$BASE_REF";
           echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
           echo "BUILD_OPTS=--configuration production";
