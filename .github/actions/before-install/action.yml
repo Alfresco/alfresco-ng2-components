@@ -39,9 +39,9 @@ runs:
         echo "NX_CALCULATION_FLAGS=${{ env.NX_CALCULATION_FLAGS }}";
         echo "BUILD_OPTS=${{ env.BUILD_OPTS }}";
         echo "NODE_VERSION=${{ env.NODE_VERSION }}";
+        echo "BREAK_ACTION=${{ env.BREAK_ACTION }}";
         echo "GH_PULLREQUEST_MERGED=${{ github.event.pull_request.merged }}";
         echo "GH_EVENT_NAME=${{ github.event_name }}";
-        echo "BREAK_ACTION=${{ env.BREAK_ACTION }}";
 
     - name: affected:* flag parser
       shell: bash
