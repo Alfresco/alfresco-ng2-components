@@ -24,6 +24,7 @@ runs:
               echo "BASE_HASH=$(git merge-base origin/${${{ github.event.pull_request.base.ref }}} HEAD)";
               echo "HEAD_HASH=HEAD";
               echo "BASE_REF=${{ github.event.pull_request.base.ref }}";
+              echo "HEAD_REF=${{ github.event.pull_request.head.ref }}";
               echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
               echo "NX_CALCULATION_FLAGS=--all";
               echo "BUILD_OPTS=--configuration production";
@@ -33,9 +34,9 @@ runs:
         else
           {
               echo "GIT_HASH=$(git rev-parse HEAD)";
-              echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
+              echo "BASE_HASH=$(git merge-base origin/${BASE_REF} HEAD)";
               echo "HEAD_HASH=HEAD";
-              echo "BASE_REF=${GITHUB_BASE_REF}";
+              echo "BASE_REF=${BASE_REF}";
               echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
               echo "NX_CALCULATION_FLAGS=--all";
               echo "BUILD_OPTS=--configuration production";
