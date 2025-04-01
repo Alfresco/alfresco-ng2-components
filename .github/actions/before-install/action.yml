@@ -12,8 +12,13 @@ runs:
     - name: Use REFs
       shell: bash
       run: |
-        echo "Base Branch: ${{ github.event.pull_request.base.ref }}"
-        echo "Head Branch: ${{ github.event.pull_request.head.ref }}"
+        echo "**********************************"
+        echo "BASE_REF=${{ github.base_ref }}"
+        echo "HEAD_REF=${{ github.head_ref }}"
+        echo "BASE_REF=${{ github.ref }}"
+        echo "Base Branch: ${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+        echo "Head Branch: ${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+        echo "**********************************"
 
     - name: Before install
       if: ${{ ! env.ACT }}
