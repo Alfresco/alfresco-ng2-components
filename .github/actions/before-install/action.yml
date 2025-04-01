@@ -20,9 +20,9 @@ runs:
       run: |
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
+          echo "BASE_HASH=$(git merge-base origin/${{ env.BASE_REF }} HEAD)";
           echo "HEAD_HASH=HEAD";
-          echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
+          echo "HEAD_COMMIT_HASH=${{ env.GH_COMMIT }}";
           echo "NX_CALCULATION_FLAGS=--all";
           echo "BUILD_OPTS=--configuration production";
           echo CI_FORCE_RUN=false;
@@ -42,11 +42,11 @@ runs:
       run: |
         echo "Setting up CI flags for Pull Request event"
         if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
-            NX_CALCULATION_FLAGS="--base=origin/${{ github.event.pull_request.base.ref }} --head=$HEAD_HASH"
-            BASE_HASH="origin/${{ github.event.pull_request.base.ref }}"
+            NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_REF_PR }} --head=$HEAD_HASH"
+            BASE_HASH="origin/${{ env.BASE_REF_PR }}"
         else
-            NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
-            BASE_HASH="origin/${GITHUB_BASE_REF}"
+            NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_REF }} --head=$HEAD_HASH"
+            BASE_HASH="origin/${{ env.BASE_REF }}"
         fi
         {
             echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
