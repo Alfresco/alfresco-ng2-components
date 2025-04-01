@@ -9,6 +9,14 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Use REFs
+      shell: bash
+      run: |
+        echo "**********************************"
+        echo "Base Branch: ${{ github.event.pull_request.base.ref }}"
+        echo "Head Branch: ${{ github.event.pull_request.head.ref }}"
+        echo "**********************************"
+
     - name: Before install
       if: ${{ ! env.ACT }}
       shell: bash
@@ -18,31 +26,31 @@ runs:
     - name: base vars
       shell: bash
       run: |
-        {
-          echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${${{ github.event.pull_request.base.ref }}} HEAD)";
-          echo "HEAD_HASH=HEAD";
-          echo "BASE_REF=${{ github.event.pull_request.base.ref }}";
-          echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
-          echo "NX_CALCULATION_FLAGS=--all";
-          echo "BUILD_OPTS=--configuration production";
-          echo CI_FORCE_RUN=false;
-          echo NODE_VERSION=$(node -v);
-        } >> $GITHUB_ENV
-
-    - name: vars debug
-      shell: bash
-      run: |
-        echo "GIT_HASH=${{ env.GIT_HASH }}";
-        echo "BASE_HASH=${{ env.BASE_HASH }}";
-        echo "HEAD_HASH=${{ env.HEAD_HASH }}";
-        echo "HEAD_COMMIT_HASH=${{ env.HEAD_COMMIT_HASH }}";
-        echo "NX_CALCULATION_FLAGS=${{ env.NX_CALCULATION_FLAGS }}";
-        echo "BUILD_OPTS=${{ env.BUILD_OPTS }}";
-        echo "NODE_VERSION=${{ env.NODE_VERSION }}";
-        echo "BREAK_ACTION=${{ env.BREAK_ACTION }}";
-        echo "GH_PULLREQUEST_MERGED=${{ github.event.pull_request.merged }}";
-        echo "GH_EVENT_NAME=${{ github.event_name }}";
+        if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
+          {
+            echo "GIT_HASH=$(git rev-parse HEAD)";
+            echo "BASE_HASH=$(git merge-base origin/${${{ github.event.pull_request.base.ref }}} HEAD)";
+            echo "HEAD_HASH=HEAD";
+            echo "BASE_REF=${{ github.event.pull_request.base.ref }}";
+            echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
+            echo "NX_CALCULATION_FLAGS=--all";
+            echo "BUILD_OPTS=--configuration production";
+            echo CI_FORCE_RUN=false;
+            echo NODE_VERSION=$(node -v);
+          } >> $GITHUB_ENV
+        else
+            {
+                echo "GIT_HASH=$(git rev-parse HEAD)";
+                echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
+                echo "HEAD_HASH=HEAD";
+                echo "BASE_REF=${GITHUB_BASE_REF}";
+                echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
+                echo "NX_CALCULATION_FLAGS=--all";
+                echo "BUILD_OPTS=--configuration production";
+                echo CI_FORCE_RUN=false;
+                echo NODE_VERSION=$(node -v);
+            } >> $GITHUB_ENV
+        fi
 
     - name: affected:* flag parser
       shell: bash
@@ -55,13 +63,19 @@ runs:
       if: ${{ env.BREAK_ACTION == false && (github.event_name == 'pull_request' || github.event_name == 'pull_request_review') && !github.event.pull_request.merged }}
       shell: bash
       run: |
-        echo "Setting up CI flags for Pull Request event"
-        NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
-        {
-          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
-          echo "BASE_HASH=origin/${GITHUB_BASE_REF}";
-          echo "BREAK_ACTION=true";
-        } >> $GITHUB_ENV
+          echo "Setting up CI flags for Pull Request event"
+          if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
+            NX_CALCULATION_FLAGS="--base=origin/${{ github.event.pull_request.base.ref }} --head=$HEAD_HASH"
+            BASE_HASH="origin/${{ github.event.pull_request.base.ref }}"
+          else
+            NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
+            BASE_HASH="origin/${GITHUB_BASE_REF}"
+          fi
+          {
+            echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
+            echo "BASE_HASH=$BASE_HASH";
+            echo "BREAK_ACTION=true";
+          } >> $GITHUB_ENV
 
     - name: RELEASE on master/develop patch branch
       if: ${{ env.BREAK_ACTION == false && github.event.pull_request.merged }}
