@@ -36,9 +36,9 @@ concurrency:
 
 env:
   BASE_REF: ${{ github.base_ref }}
-  BASE_REF_PR: ${{ github.event.pull_request.base.ref }}
+  BASE_PR_REF: ${{ github.event.pull_request.base.ref }}
   HEAD_REF: ${{ github.head_ref }}
-  HEAD_REF_PR: ${{ github.event.pull_request.head.ref }}
+  HEAD_PR_REF: ${{ github.event.pull_request.head.ref }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GITHUB_BRANCH: ${{ github.ref_name }}

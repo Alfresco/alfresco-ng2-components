@@ -18,9 +18,13 @@ runs:
     - name: base vars
       shell: bash
       run: |
+        if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
+          echo "BASE_HASH=$(git merge-base origin/${{ env.BASE_PR_REF }} HEAD) >> $GITHUB_ENV";
+        else
+          echo "BASE_HASH=$(git merge-base origin/${{ env.BASE_REF }} HEAD) >> $GITHUB_ENV";
+        fi
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${{ env.BASE_REF }} HEAD)";
           echo "HEAD_HASH=HEAD";
           echo "HEAD_COMMIT_HASH=${{ env.GH_COMMIT }}";
           echo "NX_CALCULATION_FLAGS=--all";
