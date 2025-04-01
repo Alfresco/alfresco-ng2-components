@@ -388,19 +388,14 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
             });
 
-            describe('and has default option', () => {
-                beforeEach(() => {
-                    widget.field.hasEmptyValue = true;
-                });
+            it('should be invalid with default option selected', () => {
+                widget.field.hasEmptyValue = true;
+                widget.field.value = DEFAULT_OPTION;
+                fixture.detectChanges();
 
-                it('should be invalid with default option selected', () => {
-                    widget.field.value = DEFAULT_OPTION;
-                    fixture.detectChanges();
-
-                    expect(widget.field.isValid).toBeFalse();
-                    expect(widget.dropdownControl.valid).toBeFalse();
-                    expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
-                });
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.dropdownControl.valid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
             });
         });
 
