@@ -329,7 +329,7 @@ export class FormFieldModel extends FormWidgetModel {
                     this.options.unshift(this.emptyOption);
                 }
 
-                const isEmptyValue = !value || value === this.emptyOption.id;
+                const isEmptyValue = !value || [this.emptyOption.id, this.emptyOption.name].includes(value);
                 if (isEmptyValue) {
                     return this.emptyOption.id;
                 }
