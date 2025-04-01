@@ -9,6 +9,27 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Get Pull Request Info
+      id: get_pr_info
+      shell: pwsh
+      run: |
+        PR_NUMBER=$(echo "${{ github.event.pull_request.number }}" | jq -r .)
+        REPO="${{ github.repository }}"
+        TOKEN="${{ secrets.GITHUB_TOKEN }}"
+
+        PR_DATA=$(curl -s -H "Authorization: token $TOKEN" "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER")
+        BASE_REF=$(echo "$PR_DATA" | jq -r .base.ref)
+        HEAD_REF=$(echo "$PR_DATA" | jq -r .head.ref)
+
+        echo "BASE_REF=$BASE_REF" >> $GITHUB_ENV
+        echo "HEAD_REF=$HEAD_REF" >> $GITHUB_ENV
+
+    - name: Use BASE_REF and HEAD_REF
+      shell: pwsh
+      run: |
+        echo "Base Ref: $BASE_REF"
+        echo "Head Ref: $HEAD_REF"
+
     - name: Before install
       if: ${{ ! env.ACT }}
       shell: bash
