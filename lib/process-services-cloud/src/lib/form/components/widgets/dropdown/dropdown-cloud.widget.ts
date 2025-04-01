@@ -199,13 +199,13 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private updateFormControlState(): void {
-        const isFieldRequired = this.isRequired();
+        this.dropdownControl.setValidators([]);
 
-        this.dropdownControl.setValidators(isFieldRequired && this.field?.isVisible ? [Validators.required] : []);
-
-        const addSelectDefaultOptionValidator = isFieldRequired && this.field.hasEmptyValue;
-        if (addSelectDefaultOptionValidator) {
-            this.dropdownControl.addValidators([defaultValueValidator(this.field)]);
+        if (this.isRequired() && this.field?.isVisible) {
+            this.dropdownControl.addValidators([Validators.required]);
+            if (this.field.hasEmptyValue) {
+                this.dropdownControl.addValidators([defaultValueValidator(this.field)]);
+            }
         }
 
         this.field?.readOnly || this.readOnly
