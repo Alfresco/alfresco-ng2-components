@@ -9,14 +9,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Use REFs
-      shell: bash
-      run: |
-        echo "**********************************"
-        echo "Base Branch: ${{ github.event.pull_request.base.ref }}"
-        echo "Head Branch: ${{ github.event.pull_request.head.ref }}"
-        echo "**********************************"
-
     - name: Before install
       if: ${{ ! env.ACT }}
       shell: bash
