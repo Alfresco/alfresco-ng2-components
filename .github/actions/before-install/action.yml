@@ -46,8 +46,8 @@ runs:
       run: |
         echo "Setting up CI flags for Pull Request event"
         if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
-            NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_REF_PR }} --head=$HEAD_HASH"
-            BASE_HASH="origin/${{ env.BASE_REF_PR }}"
+            NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_PR_REF }} --head=$HEAD_HASH"
+            BASE_HASH="origin/${{ env.BASE_PR_REF }}"
         else
             NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_REF }} --head=$HEAD_HASH"
             BASE_HASH="origin/${{ env.BASE_REF }}"
