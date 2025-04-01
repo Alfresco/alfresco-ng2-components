@@ -416,6 +416,16 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.dropdownControl.valid).toBeTrue();
                 expect(widget.field.validationSummary.message).toBe('');
             });
+
+            it('should be valid with default option selected', () => {
+                widget.field.hasEmptyValue = true;
+                widget.field.value = DEFAULT_OPTION;
+                fixture.detectChanges();
+
+                expect(widget.field.isValid).toBeTrue();
+                expect(widget.dropdownControl.valid).toBeTrue();
+                expect(widget.field.validationSummary.message).toBe('');
+            });
         });
     });
 
