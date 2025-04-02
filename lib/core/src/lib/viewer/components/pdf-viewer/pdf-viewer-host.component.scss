@@ -133,8 +133,10 @@
 
         .page {
             direction: ltr;
-            width: 816px;
-            height: 1056px;
+            /* stylelint-disable-next-line declaration-no-important */
+            width: calc(var(--scale-factor) * 612px) !important;
+            /* stylelint-disable-next-line declaration-no-important */
+            height: calc(var(--scale-factor) * 792px) !important;
             margin: 1px auto -8px;
             position: relative;
             overflow: visible;
