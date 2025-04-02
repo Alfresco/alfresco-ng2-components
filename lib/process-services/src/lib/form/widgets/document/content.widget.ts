@@ -112,7 +112,7 @@ export class ContentWidgetComponent implements OnChanges {
     }
 
     openViewer(content: ContentLinkModel): void {
-        let fetch = this.processContentService.getContentPreview(content.id);
+        let fetch = this.processContentService.getContentRenditionTypePreview(content.id);
         if (content.isTypeImage() || content.isTypePdf()) {
             fetch = this.processContentService.getFileRawContent(content.id);
         }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -27,4 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [MatIconModule, TranslateModule],
     encapsulation: ViewEncapsulation.None
 })
-export class UnknownFormatComponent {}
+export class UnknownFormatComponent {
+    /** Custom error message to be displayed . */
+    @Input()
+    customError: string;
+}

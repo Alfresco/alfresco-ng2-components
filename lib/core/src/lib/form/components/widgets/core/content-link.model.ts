@@ -33,6 +33,7 @@ export class ContentLinkModel {
     contentRawUrl: string;
     contentBlob: Blob;
     thumbnailStatus: string;
+    sourceId: string;
 
     constructor(obj?: any) {
         this.contentAvailable = obj?.contentAvailable;
