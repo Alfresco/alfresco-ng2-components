@@ -114,7 +114,7 @@ jobs:
             echo "PR already approved"
             echo "pr_already_approved=true" >> $GITHUB_ENV
           else
-            echo "PR not approved yet"
+            echo "PR was not approved yet"
             echo "pr_already_approved=false" >> $GITHUB_ENV
           fi
 
