@@ -40,6 +40,10 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     Gets the thumbnail for a related content file.
     -   _contentId:_ `number`  - ID of the related content
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the thumbnail image
+-   **getContentRenditionTypePreview**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
+    Gets the preview rendition for a related content file.
+    -   _contentId:_ `number` - ID of the related content
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the related content
 -   **getFileContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
     Gets the metadata for a related content item.
     -   _contentId:_ `number`  - ID of the content item
@@ -324,6 +328,26 @@ The response looks like in this sample:
 `Blob(13780) {size: 13780, type: "image/png"}`
 
 See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the `contentId`.
+
+#### getContentRenditionTypePreview(contentId: number): Observable`<Blob>`
+
+Get the preview type rendition for a related content file. A content file might be for example an
+MS Word document. This method would give you the PDF preview for this document,
+if it has been generated:
+
+```ts
+const contentId = 1;
+this.contentService.getContentRenditionTypePreview(contentId).subscribe(
+   res  => {
+     console.log('Response Preview BLOB: ', res);
+   }, error => {
+     console.log('Error: ', error);
+   });
+```
+
+The preview BLOB response looks something like this:
+
+`Blob(44101) {size: 44101, type: "application/pdf"}`
 
 #### getProcessRelatedContent(processId: string): Observable`<any>`
 

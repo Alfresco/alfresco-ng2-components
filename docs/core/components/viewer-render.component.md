@@ -64,6 +64,7 @@ Using with file [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob):
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | viewerTemplateExtensions | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. |
 | nodeId | `string` | null | Identifier of a node opened by a viewer. |
+| customError | `string` | undefined | Custom error message to be displayed in the viewer. |
 
 ### Events
 

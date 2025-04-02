@@ -90,6 +90,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | viewerExtensions | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. |
 | nodeId | `string` | null | Identifier of a node opened by a viewer. |
 | nodeMimeType | `string` | undefined | Original node mime type, should be provided when renditiona mime type is different. |
+| customError | `string` | undefined | Custom error message to be displayed in the viewer. |
 
 ### Events
 
