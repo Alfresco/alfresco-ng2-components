@@ -26,8 +26,6 @@ on:
       - develop-patch*
       - master-patch*
   pull_request_review:
-    permissions:
-      contents: read
     types: [submitted]
 
 concurrency:
