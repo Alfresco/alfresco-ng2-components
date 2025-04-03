@@ -125,7 +125,7 @@ jobs:
         id: check-label
         run: |
           if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))'; then
-            echo "PR is labeled as 'do not merge'"
+            echo "warning::PR is labeled as 'do not merge'"
             echo "isLabeledWithDoNotMerge=true" >> $GITHUB_ENV
             echo "isLabeledWithDoNotMerge=true" >> $GITHUB_OUTPUT
           else
