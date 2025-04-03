@@ -186,7 +186,7 @@ jobs:
           fi
 
           echo "github repo: ${{ github.repository }}"
-          echo "github ref: ${{ github.ref }}"
+          echo "github ref: ${{ github.event.pull_request.ref }}"
 
           curl -X POST \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
