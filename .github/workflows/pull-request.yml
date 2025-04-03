@@ -180,21 +180,19 @@ jobs:
           echo "Run ID: $RUN_ID"
           echo "Commit SHA: $COMMIT_SHA"
 
-          # Falls keine Run-ID gefunden wurde, abbrechen
           if [[ "$RUN_ID" == "null" || -z "$RUN_ID" ]]; then
             echo "❌ No failed workflow run found!"
             exit 1
           fi
 
-           echo "github repo: ${{ github.repository }}"
-           echo "github ref: ${{ github.ref }}"
+          echo "github repo: ${{ github.repository }}"
+          echo "github ref: ${{ github.ref }}"
 
-            # start rerun
-            curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pull_request.yml/dispatches" \
-            -d "{\"ref\": \"${{ github.ref }}\", \"inputs\": { \"commit\": \"$COMMIT_SHA\" }}"
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          "https://api.github.com/repos/${{ github.repository }}/workflows/pull_request.yml/dispatches" \
+          -d "{\"ref\": \"${{ github.ref }}\", \"inputs\": { \"commit\": \"$COMMIT_SHA\" }}"
 
   setup:
     # long timeout required when cache has to be recreated
