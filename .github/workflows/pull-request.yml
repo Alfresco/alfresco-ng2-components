@@ -186,12 +186,15 @@ jobs:
             exit 1
           fi
 
-          # start rerun
-          curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pull_request.yml/dispatches" \
-          -d "{\"ref\": \"${{ github.ref }}\", \"inputs\": { \"commit\": \"$COMMIT_SHA\" }}"
+           echo "github repo: ${{ github.repository }}"
+           echo "github ref: ${{ github.ref }}"
+
+            # start rerun
+            curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pull_request.yml/dispatches" \
+            -d "{\"ref\": \"${{ github.ref }}\", \"inputs\": { \"commit\": \"$COMMIT_SHA\" }}"
 
   setup:
     # long timeout required when cache has to be recreated
