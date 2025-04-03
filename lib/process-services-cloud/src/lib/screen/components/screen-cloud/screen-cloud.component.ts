@@ -64,6 +64,10 @@ export class TaskScreenCloudComponent implements OnInit {
     @Input()
     readOnly = false;
 
+    /** Toggle readonly state of the task. */
+    @Input()
+    rootProcessInstanceId: string = '';
+
     /** Emitted when the task is saved. */
     @Output()
     taskSaved = new EventEmitter();
@@ -132,6 +136,9 @@ export class TaskScreenCloudComponent implements OnInit {
         }
         if (this.showCancelButton && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showCancelButton')) {
             this.componentRef.setInput('showCancelButton', this.showCancelButton);
+        }
+        if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'rootProcessInstanceId')) {
+            this.componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
         }
     }
 

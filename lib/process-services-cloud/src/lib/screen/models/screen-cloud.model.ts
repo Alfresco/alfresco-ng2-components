@@ -22,10 +22,11 @@ export interface UserTaskCustomUi {
     canClaimTask: boolean;
     canUnclaimTask: boolean;
     processInstanceId: string;
-    taskName: string;
-    taskId: string;
+    rootProcessInstanceId: string;
     screenId: string;
     showCancelButton: boolean;
+    taskName: string;
+    taskId: string;
     cancelTask: EventEmitter<any>;
     claimTask: EventEmitter<any>;
     error: EventEmitter<any>;
