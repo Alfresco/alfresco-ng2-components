@@ -186,7 +186,7 @@ jobs:
             exit 1
           fi
 
-          # Rerun starten
+          # start rerun
           curl -X POST \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
