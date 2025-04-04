@@ -153,9 +153,8 @@ jobs:
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            echo "PR: $prNumber"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
-            if [[ $checkApproval ]]; then
+            echo "PR: $GH_PR_NUMBER"
+            if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
              echo -e "\033[32mPR approved\033[0m"
               echo "pr_approved=true" >> $GITHUB_OUTPUT
             else
