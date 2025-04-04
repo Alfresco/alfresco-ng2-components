@@ -111,10 +111,6 @@ jobs:
       - name: Check if PR is already approved
         id: check-approval
         run: |
-
-          echo "*******************************************"
-          echo "REVIEW STATE:
-          echo "*******************************************"
           if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
             echo "PR already approved"
             echo "pr_already_approved=true" >> $GITHUB_ENV
