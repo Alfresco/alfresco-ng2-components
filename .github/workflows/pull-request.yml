@@ -113,7 +113,7 @@ jobs:
         run: |
 
           echo "*******************************************"
-          echo "REVIEW STATE: ${{github.event.review.state}}"
+          echo "REVIEW STATE: (gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")')"
           echo "*******************************************"
           if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
             echo "PR already approved"
