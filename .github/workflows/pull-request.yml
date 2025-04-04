@@ -154,6 +154,7 @@ jobs:
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
             echo "PR: $GH_PR_NUMBER"
+
             if gh pr view $GH_PR_NUMBER --json reviews | jq -e '.reviews[] | select(.state == "APPROVED")'; then
               echo -e "\033[32mPR approved\033[0m"
               echo "pr_approved=true" >> $GITHUB_OUTPUT
