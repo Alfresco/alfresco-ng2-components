@@ -151,7 +151,7 @@ jobs:
             if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
               echo -e "\033[32mPR approved\033[0m"
             else
-              echo "::warning::PR NOT approved"
+              echo "::error::PR NOT approved"
               echo -e "\033[31mPR NOT approved\033[0m"
               exit 0
             fi
