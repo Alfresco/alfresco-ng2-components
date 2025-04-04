@@ -19,6 +19,7 @@ import { Pagination } from '@alfresco/js-api';
 import { IdentityGroupModel } from '../group/models/identity-group.model';
 import { IdentityUserModel } from '../people/models/identity-user.model';
 import { ProcessInstanceVariable } from './process-instance-variable.model';
+import { ConstantValues } from './constant-values.type';
 
 export class TaskCloudNodePaging {
     list: TaskCloudPagingList;
@@ -57,4 +58,5 @@ export interface TaskCloudModel {
     status: string;
     taskDefinitionKey: string;
     processVariables?: ProcessInstanceVariable[];
- }
+    constantValues?: ConstantValues;
+}

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ConstantValues } from './constant-values.type';
 import { ProcessVariableDefinition } from './variable-definition';
 
 export class ProcessDefinitionCloud {
@@ -28,6 +29,7 @@ export class ProcessDefinitionCloud {
     category: string;
     description: string;
     variableDefinitions?: ProcessVariableDefinition[];
+    constantValues?: ConstantValues;
 
     constructor(obj?: any) {
         this.id = obj?.id;
@@ -40,5 +42,6 @@ export class ProcessDefinitionCloud {
         this.category = obj?.category || '';
         this.description = obj?.description || '';
         this.variableDefinitions = obj?.variableDefinitions ?? [];
+        this.constantValues = obj?.constantValues ?? {};
     }
 }
