@@ -17,10 +17,11 @@
 
 import { ExtensionManagerService } from './extension-manager.service';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { ExtensionComposition, ExtensionCompositionEntry } from '@alfresco/js-api';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { first } from 'rxjs/operators';
+import { ExtensionCompositionEntry } from '../models/extension-composition-entry';
+import { ExtensionComposition } from '../models/extension-composition';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('ExtensionManagerService', () => {
     let extensionManagerService: ExtensionManagerService;
@@ -51,7 +52,7 @@ describe('ExtensionManagerService', () => {
         expect(putSpy).toHaveBeenCalledOnceWith('test-instance-id', extensionComposition);
     });
 
-    it('should fetch extension info from pluginInfo.json of a running instance of ADW', (done) => {
+    it('should fetch extension info from pluginInfo.json', (done) => {
         extensionManagerService
             .getPluginInfo('test-adw-url')
             .pipe(first())
@@ -65,7 +66,7 @@ describe('ExtensionManagerService', () => {
         httpTestingController.verify();
     });
 
-    it('should fetch extension defaults from appConfig.json of a running instance of ADW', (done) => {
+    it('should fetch extension defaults from appConfig.json', (done) => {
         extensionManagerService
             .getDefaultPluginState('test-adw-url')
             .pipe(first())

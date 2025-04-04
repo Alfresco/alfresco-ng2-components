@@ -34,14 +34,26 @@ export class ExtensionManagerService {
     private _settingsApi: SettingsApi;
 
     get settingsApi(): SettingsApi {
-        this._settingsApi = this._settingsApi ?? new SettingsApi(this.apiService.getInstance());
+        this._settingsApi ??= new SettingsApi(this.apiService.getInstance());
         return this._settingsApi;
     }
 
+    /**
+     * Fetches the extension configuration from a running application
+     *
+     * @param instanceUrl URL of the running application
+     * @returns Observable<ExtensionInfoModel>
+     */
     getPluginInfo(instanceUrl: string): Observable<ExtensionInfoModel[]> {
         return this.httpClient.get<ExtensionInfoModel[]>(`${instanceUrl}/pluginInfo.json`);
     }
 
+    /**
+     * Fetches the saved extension configuration from the database
+     *
+     * @param instanceId Unique id under which the extension configuration is saved
+     * @returns Observable<ExtensionCompositionEntry>
+     */
     getSavedPluginState(instanceId: string): Observable<ExtensionCompositionEntry> {
         // TODO: Update below code once backend APIs are working
         // eslint-disable-next-line no-console
@@ -50,10 +62,23 @@ export class ExtensionManagerService {
         // return from(this.settingsApi.getSavedExtensionState(instanceId));
     }
 
+    /**
+     * Fetches the states of plugins from a running application
+     *
+     * @param instanceUrl URL of the running application
+     * @returns Observable<AppConfigPluginRef>
+     */
     getDefaultPluginState(instanceUrl: string): Observable<AppConfigPluginRef> {
         return this.httpClient.get<AppConfigPluginRef>(`${instanceUrl}/app.config.json`);
     }
 
+    /**
+     * Publishes the extensions configuration to the database
+     *
+     * @param instanceId Id to use to identify the application
+     * @param pluginConfig The extension configuration to be saved
+     * @returns void
+     */
     publishExtensionConfig(instanceId: string, pluginConfig: ExtensionComposition): Observable<void> {
         return from(this.settingsApi.publishExtensionConfig(instanceId, pluginConfig));
     }

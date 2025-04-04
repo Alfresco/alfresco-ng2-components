@@ -22,8 +22,7 @@ export class SettingsApi extends BaseApi {
     /**
      * Gets the published extension configuration from
      * the database
-     * @param instanceId Unique ID for a running instance of ADW
-     * for which configuration is to be fetched
+     * @param instanceId Unique ID for which configuration is to be fetched
      */
     getSavedExtensionState(instanceId: string): Promise<any> {
         throwIfNotDefined(instanceId, 'instanceId');
@@ -39,12 +38,9 @@ export class SettingsApi extends BaseApi {
     }
 
     /**
-     * Publish the extension configuration for an ADW instance
-     * in the database
-     * @param instanceId Unique ID for a running instance of ADW
-     * for which configuration is to be published
-     * @param extensionConfig Extension configuration that is to
-     * be saved
+     * Publish the extension configuration in the database
+     * @param instanceId Unique ID for which configuration is to be published
+     * @param extensionConfig Extension configuration that is to be saved
      */
     publishExtensionConfig(instanceId: string, extensionConfig: any): Promise<void> {
         throwIfNotDefined(instanceId, 'instanceId');
