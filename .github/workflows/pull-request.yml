@@ -151,28 +151,10 @@ jobs:
             skip_check="true"
           fi
 
-          gh api "/repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews" || echo "::error::gh api command failed!"
-
-          gh api "/repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews" | jq '.[] | select(.state == "APPROVED")'
-
-          gh api "/repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews" | jq -e '.[] | select(.state == "APPROVED")'
-          EXIT_CODE=$?
-          if [[ $EXIT_CODE -eq 0 ]]; then
-            echo "Befehl war erfolgreich (Exit Code 0) -> Approval(s) gefunden."
-            # Hier Logik für 'approved'
-            echo "pr_already_approved=true" >> $GITHUB_ENV # Beispiel
-            echo "pr_already_approved=true" >> $GITHUB_OUTPUT # Beispiel
-          else
-            echo "Befehl fehlgeschlagen (Exit Code $EXIT_CODE) -> Keine Approvals gefunden oder Fehler."
-            # Hier Logik für 'not approved'
-            echo "pr_already_approved=false" >> $GITHUB_ENV # Beispiel
-            echo "pr_already_approved=false" >> $GITHUB_OUTPUT # Beispiel
-          fi
-
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
             echo "PR: $GH_PR_NUMBER"
-            if gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED")'; then
+            if gh pr view $GH_PR_NUMBER --json reviews | jq -e '.reviews[] | select(.state == "APPROVED")'; then
               echo -e "\033[32mPR approved\033[0m"
               echo "pr_approved=true" >> $GITHUB_OUTPUT
             else
