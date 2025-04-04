@@ -1197,17 +1197,50 @@ describe('FormCloudComponent', () => {
         const formModel = new FormModel({ fields: [{ id: 'field2' }] });
         formComponent.form = formModel;
 
+        const isCheckboxShown = () => {
+            const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+            return !!checkbox;
+        };
+
+        // Default: Checkbox is not shown
+        fixture.detectChanges();
+        expect(isCheckboxShown()).toBeFalse();
+
         // Show checkbox
         formComponent.showNextTaskCheckbox = true;
         fixture.detectChanges();
-        let checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-        expect(checkbox).not.toBeNull();
+        expect(isCheckboxShown()).toBeTrue();
 
         // Hide checkbox
         formComponent.showNextTaskCheckbox = false;
         fixture.detectChanges();
-        checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-        expect(checkbox).toBeNull();
+        expect(isCheckboxShown()).toBeFalse();
+    });
+
+    it('should allow controlling [open next task] checkbox value', async () => {
+        // Add outcomes to make sure the checkbox can be shown
+        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
+        formComponent.form = formModel;
+        formComponent.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+
+        const isCheckboxChecked = async () => {
+            const checkbox = await documentRootLoader.getHarness(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
+            return checkbox.isChecked();
+        };
+
+        // Default: Unchecked checkbox
+        expect(await isCheckboxChecked()).toBeFalse();
+
+        // Checked checkbox
+        formComponent.isNextTaskCheckboxChecked = true;
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeTrue();
+
+        // Unchecked checkbox
+        formComponent.isNextTaskCheckboxChecked = false;
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeFalse();
     });
 
     it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {

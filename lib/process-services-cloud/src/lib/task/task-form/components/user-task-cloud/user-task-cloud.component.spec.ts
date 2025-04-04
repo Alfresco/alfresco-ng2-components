@@ -484,17 +484,50 @@ describe('UserTaskCloudComponent', () => {
         taskDetails.formKey = 'form';
         component.getTaskType();
 
+        const isCheckboxShown = () => {
+            const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+            return !!checkbox;
+        };
+
+        // Default: Checkbox is hidden
+        fixture.detectChanges();
+        expect(isCheckboxShown()).toBeFalse();
+
         // Show checkbox
         component.showNextTaskCheckbox = true;
         fixture.detectChanges();
-        let checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-        expect(checkbox).not.toBeNull();
+        expect(isCheckboxShown()).toBeTrue();
 
         // Hide checkbox
         component.showNextTaskCheckbox = false;
         fixture.detectChanges();
-        checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-        expect(checkbox).toBeNull();
+        expect(isCheckboxShown()).toBeFalse();
+    });
+
+    it('should allow controlling [open next task] checkbox value', async () => {
+        // Make sure the task-related UI is shown
+        taskDetails.formKey = 'form';
+        component.getTaskType();
+        component.showNextTaskCheckbox = true;
+
+        const isCheckboxChecked = async () => {
+            const checkbox = await loader.getHarness(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
+            return checkbox.isChecked();
+        };
+
+        // Default: Checkbox is unchecked
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeFalse();
+
+        // Check checkbox
+        component.isNextTaskCheckboxChecked = true;
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeTrue();
+
+        // Uncheck checkbox
+        component.isNextTaskCheckboxChecked = false;
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeFalse();
     });
 
     it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
