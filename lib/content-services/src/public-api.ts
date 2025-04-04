@@ -51,6 +51,7 @@ export * from './lib/api-factories';
 export * from './lib/mock/alfresco-api.service.mock';
 export * from './lib/agent/index';
 export * from './lib/search-ai/index';
+export * from './lib/extensions-manager/index';
 
 export * from './lib/content.module';
 export * from './lib/material.module';
