@@ -157,59 +157,59 @@ jobs:
           fi
 
 
-  rerun-failed-pull-request:
-    if: ${{ github.event_name == 'pull_request_review' }}
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    steps:
-      - name: Check if review was an approval
-        id: check_review
-        run: |
-          if [[ "${{ github.event.review.state }}" == "approved" ]]; then
-            echo "Approval received. Proceeding to find failed run."
-            echo "is_approved=true" >> $GITHUB_OUTPUT
-          else
-            echo "Review was not an approval (${{ github.event.review.state }}). Skipping re-run."
-            echo "is_approved=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Find latest failed 'pull_request' workflow run for this commit
-        if: steps.check_review.outputs.is_approved == 'true'
-        id: find_run
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-          REPO: ${{ github.repository }}
-          WORKFLOW_FILE_NAME: "pull-request.yml" # Name deiner Workflow-Datei
-        run: |
-          echo "Searching for failed run for SHA $COMMIT_SHA on event 'pull_request'..."
-          FAILED_RUN_ID=$(gh api "repos/$REPO/actions/workflows/$WORKFLOW_FILE_NAME/runs?event=pull_request&status=failure&head_sha=$COMMIT_SHA" --jq '.workflow_runs[0].id')
-
-          if [[ -z "$FAILED_RUN_ID" || "$FAILED_RUN_ID" == "null" ]]; then
-            echo "No relevant failed workflow run found for SHA $COMMIT_SHA."
-            echo "run_id=" >> $GITHUB_OUTPUT
-          else
-            echo "Found failed run ID: $FAILED_RUN_ID"
-            echo "run_id=$FAILED_RUN_ID" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Trigger re-run of failed jobs
-        if: steps.check_review.outputs.is_approved == 'true' && steps.find_run.outputs.run_id != ''
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_ID: ${{ steps.find_run.outputs.run_id }}
-          REPO: ${{ github.repository }}
-        run: |
-          echo "Attempting to re-run failed jobs for run ID $RUN_ID..."
-          RESPONSE_CODE=$(gh api --method POST "repos/$REPO/actions/runs/$RUN_ID/rerun-failed-jobs" -o /dev/null -w "%{http_code}")
-
-          if [[ "$RESPONSE_CODE" -ge 200 && "$RESPONSE_CODE" -lt 300 ]]; then
-            echo "Successfully triggered re-run for failed jobs in run $RUN_ID."
-          else
-            echo "::error::Failed to trigger re-run. API responded with code $RESPONSE_CODE."
-            # exit 1
-          fi
+#  rerun-failed-pull-request:
+#    if: ${{ github.event_name == 'pull_request_review' }}
+#    runs-on: ubuntu-latest
+#    permissions:
+#      actions: write
+#    steps:
+#      - name: Check if review was an approval
+#        id: check_review
+#        run: |
+#          if [[ "${{ github.event.review.state }}" == "approved" ]]; then
+#            echo "Approval received. Proceeding to find failed run."
+#            echo "is_approved=true" >> $GITHUB_OUTPUT
+#          else
+#            echo "Review was not an approval (${{ github.event.review.state }}). Skipping re-run."
+#            echo "is_approved=false" >> $GITHUB_OUTPUT
+#          fi
+#
+#      - name: Find latest failed 'pull_request' workflow run for this commit
+#        if: steps.check_review.outputs.is_approved == 'true'
+#        id: find_run
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+#          REPO: ${{ github.repository }}
+#          WORKFLOW_FILE_NAME: "pull-request.yml" # Name deiner Workflow-Datei
+#        run: |
+#          echo "Searching for failed run for SHA $COMMIT_SHA on event 'pull_request'..."
+#          FAILED_RUN_ID=$(gh api "repos/$REPO/actions/workflows/$WORKFLOW_FILE_NAME/runs?event=pull_request&status=failure&head_sha=$COMMIT_SHA" --jq '.workflow_runs[0].id')
+#
+#          if [[ -z "$FAILED_RUN_ID" || "$FAILED_RUN_ID" == "null" ]]; then
+#            echo "No relevant failed workflow run found for SHA $COMMIT_SHA."
+#            echo "run_id=" >> $GITHUB_OUTPUT
+#          else
+#            echo "Found failed run ID: $FAILED_RUN_ID"
+#            echo "run_id=$FAILED_RUN_ID" >> $GITHUB_OUTPUT
+#          fi
+#
+#      - name: Trigger re-run of failed jobs
+#        if: steps.check_review.outputs.is_approved == 'true' && steps.find_run.outputs.run_id != ''
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          RUN_ID: ${{ steps.find_run.outputs.run_id }}
+#          REPO: ${{ github.repository }}
+#        run: |
+#          echo "Attempting to re-run failed jobs for run ID $RUN_ID..."
+#          RESPONSE_CODE=$(gh api --method POST "repos/$REPO/actions/runs/$RUN_ID/rerun-failed-jobs" -o /dev/null -w "%{http_code}")
+#
+#          if [[ "$RESPONSE_CODE" -ge 200 && "$RESPONSE_CODE" -lt 300 ]]; then
+#            echo "Successfully triggered re-run for failed jobs in run $RUN_ID."
+#          else
+#            echo "::error::Failed to trigger re-run. API responded with code $RESPONSE_CODE."
+#            # exit 1
+#          fi
 
   setup:
     # long timeout required when cache has to be recreated
