@@ -121,6 +121,16 @@ export class ProcessContentService {
     }
 
     /**
+     * Gets the preview rendition for a related content file.
+     *
+     * @param contentId ID of the related content
+     * @returns Binary data of the related content
+     */
+    getContentRenditionTypePreview(contentId: number): Observable<Blob> {
+        return from(this.contentApi.getRawContent(contentId, 'preview')).pipe(catchError((err) => this.handleError(err)));
+    }
+
+    /**
      * Gets related content items for a task instance.
      *
      * @param taskId ID of the target task

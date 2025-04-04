@@ -244,6 +244,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     nodeMimeType: string = undefined;
 
+    /** Custom error message to be displayed in the viewer. */
+    @Input()
+    customError: string = undefined;
+
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */

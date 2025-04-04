@@ -28,6 +28,7 @@ import { TaskScreenCloudComponent } from './screen-cloud.component';
         <div class="adf-cloud-test-container">
             test component
             <div class="adf-cloud-test-container-taskId">{{ taskId }}</div>
+            <div class="adf-cloud-test-container-rootProcessInstanceId">{{ rootProcessInstanceId }}</div>
             <button class="adf-cloud-test-container-complete-btn" (click)="onComplete()">complete</button>
         </div>
     `,
@@ -37,6 +38,7 @@ import { TaskScreenCloudComponent } from './screen-cloud.component';
 class TestComponent {
     @Input() taskId = '';
     @Input() screenId = '';
+    @Input() rootProcessInstanceId = '';
     @Output() taskCompleted = new EventEmitter();
     displayMode: string;
     onComplete() {
@@ -49,7 +51,15 @@ class TestComponent {
 
 @Component({
     selector: 'adf-cloud-test-actions-component',
-    template: ` <adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'" (taskCompleted)="onTaskCompleted()" /> `,
+    template: `
+        <adf-cloud-task-screen
+            [taskId]="'1'"
+            [appName]="'app-name-test'"
+            [screenId]="'test'"
+            [rootProcessInstanceId]="'abcd-1234'"
+            (taskCompleted)="onTaskCompleted()"
+        />
+    `,
     imports: [CommonModule, TaskScreenCloudComponent],
     standalone: true
 })
@@ -89,6 +99,11 @@ describe('TaskScreenCloudComponent', () => {
     it('should set input property for dynamic component', () => {
         const inputValueFromDynamicComponent = fixture.debugElement.query(By.css('.adf-cloud-test-container-taskId'));
         expect((inputValueFromDynamicComponent.nativeElement as HTMLElement).textContent).toBe('1');
+    });
+
+    it('should set input property rootProcessInstanceId for dynamic component', () => {
+        const inputValueFromDynamicComponent = fixture.debugElement.query(By.css('.adf-cloud-test-container-rootProcessInstanceId'));
+        expect((inputValueFromDynamicComponent.nativeElement as HTMLElement).textContent).toBe('abcd-1234');
     });
 
     it('should subscribe to the output of dynamic component', () => {
