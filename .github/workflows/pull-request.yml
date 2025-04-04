@@ -129,23 +129,40 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ] || [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]] || [ "${{ github.actor }}" == "alfresco-build" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ] || [[ "$DEVEL_FLAG" == "true" ]]; then
-            echo "Skipping approval check"
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+            echo -e "\033[32mci:force check can be skipped\033[0m"
+            skip_check="true"
+          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+            skip_check="true"
+          fi
+
+          if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
+            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
+            skip_check="true"
+          fi
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo -e "\033[32mSchedule event\033[0m"
+            skip_check="true"
+          fi
+
+          if [[ "$DEVEL_FLAG" == "true" ]]; then
+            echo -e "\033[32mDevel flag\033[0m"
             skip_check="true"
           fi
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$GH_PR_NUMBER/reviews | jq -e '.[] | select(.state == "APPROVED") | .user.login')
-
+            prNumber=${{ steps.action.outputs.number }}
+            echo "PR: $prNumber"
+            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
-              echo -e "\033[32mPR approved\033[0m"
+             echo -e "\033[32mPR approved\033[0m"
               echo "pr_approved=true" >> $GITHUB_OUTPUT
             else
               echo "::error::PR NOT approved"
               echo -e "\033[31mPR NOT approved\033[0m"
               echo "pr_approved=false" >> $GITHUB_OUTPUT
-              exit 0
             fi
           fi
 
