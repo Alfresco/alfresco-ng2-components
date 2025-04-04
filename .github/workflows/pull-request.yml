@@ -150,7 +150,6 @@ jobs:
             echo -e "\033[32mDevel flag\033[0m"
             skip_check="true"
           fi
-
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
             echo "PR: $GH_PR_NUMBER"
