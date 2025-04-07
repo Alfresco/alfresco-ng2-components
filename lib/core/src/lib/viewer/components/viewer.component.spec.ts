@@ -121,6 +121,26 @@ describe('ViewerComponent', () => {
             expect(thumbnailService.getMimeTypeIcon).toHaveBeenCalledWith('application/pdf');
             expect(component.mimeTypeIconUrl).toBe('application/pdf');
         });
+
+        it('should reset urlFile and blobFile on onNavigateBeforeClick', () => {
+            component.urlFile = 'some-url';
+            component.blobFile = new Blob(['content'], { type: 'text/plain' });
+
+            component.onNavigateBeforeClick(new MouseEvent('click'));
+
+            expect(component.urlFile).toBe('');
+            expect(component.blobFile).toBeNull();
+        });
+
+        it('should reset urlFile and blobFile on onNavigateNextClick', () => {
+            component.urlFile = 'some-url';
+            component.blobFile = new Blob(['content'], { type: 'text/plain' });
+
+            component.onNavigateNextClick(new MouseEvent('click'));
+
+            expect(component.urlFile).toBe('');
+            expect(component.blobFile).toBeNull();
+        });
     });
 
     describe('File Name Test', () => {

@@ -103,6 +103,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Output()
     close = new EventEmitter<any>();
 
+    @Output()
+    pagesLoaded = new EventEmitter<void>();
+
     page: number;
     displayPage: number;
     totalPages: number;
@@ -565,6 +568,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      */
     onPagesLoaded() {
+        this.pagesLoaded.emit();
         this.isPanelDisabled = false;
     }
 

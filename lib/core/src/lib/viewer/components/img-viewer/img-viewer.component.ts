@@ -80,6 +80,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Output()
     isSaving = new EventEmitter<boolean>();
 
+    @Output()
+    imageLoaded = new EventEmitter<void>();
+
     @ViewChild('image', { static: false })
     imageElement: ElementRef;
 
