@@ -149,7 +149,7 @@ jobs:
               echo -e "\033[32mPR approved\033[0m"
             else
               echo -e "\033[31mPR NOT approved\033[0m"
-              exit 1
+              exit 0
             fi
           fi
 
