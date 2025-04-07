@@ -480,7 +480,6 @@ describe('UserTaskCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox visibility', () => {
-        // Make sure the task-related UI is shown
         taskDetails.formKey = 'form';
         component.getTaskType();
 
@@ -489,23 +488,19 @@ describe('UserTaskCloudComponent', () => {
             return !!checkbox;
         };
 
-        // Default: Checkbox is hidden
         fixture.detectChanges();
         expect(isCheckboxShown()).toBeFalse();
 
-        // Show checkbox
         component.showNextTaskCheckbox = true;
         fixture.detectChanges();
         expect(isCheckboxShown()).toBeTrue();
 
-        // Hide checkbox
         component.showNextTaskCheckbox = false;
         fixture.detectChanges();
         expect(isCheckboxShown()).toBeFalse();
     });
 
     it('should allow controlling [open next task] checkbox value', async () => {
-        // Make sure the task-related UI is shown
         taskDetails.formKey = 'form';
         component.getTaskType();
         component.showNextTaskCheckbox = true;
@@ -515,27 +510,22 @@ describe('UserTaskCloudComponent', () => {
             return checkbox.isChecked();
         };
 
-        // Default: Checkbox is unchecked
         fixture.detectChanges();
         expect(await isCheckboxChecked()).toBeFalse();
 
-        // Check checkbox
         component.isNextTaskCheckboxChecked = true;
         fixture.detectChanges();
         expect(await isCheckboxChecked()).toBeTrue();
 
-        // Uncheck checkbox
         component.isNextTaskCheckboxChecked = false;
         fixture.detectChanges();
         expect(await isCheckboxChecked()).toBeFalse();
     });
 
     it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
-        // Make sure the task-related UI is shown
         taskDetails.formKey = 'form';
         component.getTaskType();
 
-        // Show checkbox
         component.showNextTaskCheckbox = true;
         fixture.detectChanges();
         const checkbox = await loader.getHarnessOrNull(MatCheckboxHarness);

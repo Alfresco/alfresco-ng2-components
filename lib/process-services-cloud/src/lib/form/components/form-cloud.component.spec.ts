@@ -1193,7 +1193,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox visibility', () => {
-        // Add outcomes to make sure the checkbox can be shown
+        // Add fields to make sure the components are shown which contain the the checkbox
         const formModel = new FormModel({ fields: [{ id: 'field2' }] });
         formComponent.form = formModel;
 
@@ -1202,23 +1202,20 @@ describe('FormCloudComponent', () => {
             return !!checkbox;
         };
 
-        // Default: Checkbox is not shown
         fixture.detectChanges();
         expect(isCheckboxShown()).toBeFalse();
 
-        // Show checkbox
         formComponent.showNextTaskCheckbox = true;
         fixture.detectChanges();
         expect(isCheckboxShown()).toBeTrue();
 
-        // Hide checkbox
         formComponent.showNextTaskCheckbox = false;
         fixture.detectChanges();
         expect(isCheckboxShown()).toBeFalse();
     });
 
     it('should allow controlling [open next task] checkbox value', async () => {
-        // Add outcomes to make sure the checkbox can be shown
+        // Add fields to make sure the components are shown which contain the the checkbox
         const formModel = new FormModel({ fields: [{ id: 'field2' }] });
         formComponent.form = formModel;
         formComponent.showNextTaskCheckbox = true;
@@ -1229,26 +1226,22 @@ describe('FormCloudComponent', () => {
             return checkbox.isChecked();
         };
 
-        // Default: Unchecked checkbox
         expect(await isCheckboxChecked()).toBeFalse();
 
-        // Checked checkbox
         formComponent.isNextTaskCheckboxChecked = true;
         fixture.detectChanges();
         expect(await isCheckboxChecked()).toBeTrue();
 
-        // Unchecked checkbox
         formComponent.isNextTaskCheckboxChecked = false;
         fixture.detectChanges();
         expect(await isCheckboxChecked()).toBeFalse();
     });
 
     it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
-        // Add outcomes to make sure the checkbox can be shown
+        // Add fields to make sure the components are shown which contain the the checkbox
         const formModel = new FormModel({ fields: [{ id: 'field2' }] });
         formComponent.form = formModel;
 
-        // Show checkbox
         formComponent.showNextTaskCheckbox = true;
         fixture.detectChanges();
         const checkbox = await documentRootLoader.getHarnessOrNull(MatCheckboxHarness);
