@@ -37,9 +37,11 @@ Starts a process.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | (required) Name of the app. |
+| isNextTaskCheckboxChecked | `boolean` | false | Whether the `Open next task` checkbox is checked by default or not. |
 | maxNameLength | `number` | MAX_NAME_LENGTH | Maximum length of the process name. |
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
+| showNextTaskCheckbox | `boolean` | false | Toggle rendering of the `Open next task` checkbox. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
 | showTitle | `boolean` | true | Show/hide title. |
 | values | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Parameter to pass form field values in the start form if one is associated. |
@@ -52,6 +54,7 @@ Starts a process.
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` | Emitted when the starting process is cancelled |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` | Emitted when an error occurs. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/src/lib/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
+| nextTaskCheckboxCheckedChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MatCheckboxChange`](https://material.angular.io/components/checkbox/api#MatCheckboxChange)`>` | Emitted when the `Open next task` checkbox was toggled. |
 | processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`>` | Emitted when process definition selection changes. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` | Emitted when the process is successfully started. |
 

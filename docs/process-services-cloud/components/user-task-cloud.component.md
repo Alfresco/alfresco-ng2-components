@@ -33,31 +33,33 @@ Based on property taskDetails: TaskDetailsCloudModel shows a form or a screen.
 
 ### Properties
 
-| Name                      | Type                                  | Default value | Description                                       |
-|---------------------------|---------------------------------------|---------------|---------------------------------------------------|
-| appName                   | `string`                              | ""            | App id to fetch corresponding form and values.    |
-| readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                |
-| showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.          |
-| showCompleteButton        | `boolean`                             | true          | Toggle rendering of the `Complete` button.        |
-| showTitle                 | `boolean`                             | true          | Toggle rendering of the form title.               |
-| showValidationIcon        | `boolean`                             | true          | Toggle rendering of the `Validation` icon.        |
-| taskId                    | `string`                              |               | Task id to fetch corresponding form and values.   |
-| displayModeConfigurations | `FormCloudDisplayModeConfiguration[]` |               | The available display configurations for the form |
+| Name                      | Type                                  | Default value | Description                                                         |
+| ------------------------- | ------------------------------------- | ------------- | ------------------------------------------------------------------- |
+| appName                   | `string`                              | ""            | App id to fetch corresponding form and values.                      |
+| isNextTaskCheckboxChecked | `boolean`                             | false         | Whether the `Open next task` checkbox is checked by default or not. |
+| readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                                  |
+| showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.                            |
+| showCompleteButton        | `boolean`                             | true          | Toggle rendering of the `Complete` button.                          |
+| showNextTaskCheckbox      | `boolean`                             | false         | Toggle rendering of the `Open next task` checkbox.                  |
+| showTitle                 | `boolean`                             | true          | Toggle rendering of the form title.                                 |
+| showValidationIcon        | `boolean`                             | true          | Toggle rendering of the `Validation` icon.                          |
+| taskId                    | `string`                              |               | Task id to fetch corresponding form and values.                     |
+| displayModeConfigurations | `FormCloudDisplayModeConfiguration[]` |               | The available display configurations for the form                   |
 
 ### Events
 
-| Name               | Type                                              | Description                                                                                            |
-|--------------------|---------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| cancelClick        | `EventEmitter<string>`                            | Emitted when the cancel button is clicked.                                                             |
-| error              | `EventEmitter<any>`                               | Emitted when any error occurs.                                                                         |
-| executeOutcome     | `EventEmitter<FormOutcomeEvent>`                  | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formContentClicked | `EventEmitter<ContentLinkModel>`                  | Emitted when form content is clicked.                                                                  |
-| formSaved          | `EventEmitter<FormModel>`                         | Emitted when the form is saved.                                                                        |
-| onTaskLoaded       | `EventEmitter<TaskDetailsCloudModel>`             | Emitted when a task is loaded.                                                                         |
-| taskClaimed        | `EventEmitter<string>`                            | Emitted when the task is claimed.                                                                      |
-| taskCompleted      | `EventEmitter<string>`                            | Emitted when the task is completed.                                                                    |
-| taskUnclaimed      | `EventEmitter<string>`                            | Emitted when the task is unclaimed.                                                                    |
-                                              |
+| Name                           | Type                                  | Description                                                                                            |
+| ------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| cancelClick                    | `EventEmitter<string>`                | Emitted when the cancel button is clicked.                                                             |
+| error                          | `EventEmitter<any>`                   | Emitted when any error occurs.                                                                         |
+| executeOutcome                 | `EventEmitter<FormOutcomeEvent>`      | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formContentClicked             | `EventEmitter<ContentLinkModel>`      | Emitted when form content is clicked.                                                                  |
+| formSaved                      | `EventEmitter<FormModel>`             | Emitted when the form is saved.                                                                        |
+| nextTaskCheckboxCheckedChanged | `EventEmitter<MatCheckboxChange>`     | Emitted when the `Open next task` checkbox was toggled.                                                |
+| onTaskLoaded                   | `EventEmitter<TaskDetailsCloudModel>` | Emitted when a task is loaded.                                                                         |
+| taskClaimed                    | `EventEmitter<string>`                | Emitted when the task is claimed.                                                                      |
+| taskCompleted                  | `EventEmitter<string>`                | Emitted when the task is completed.                                                                    |
+| taskUnclaimed                  | `EventEmitter<string>`                | Emitted when the task is unclaimed.                                                                    |
 
 #### Enabling fullscreen display for the form of the task
 

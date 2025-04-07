@@ -85,11 +85,13 @@ The template defined inside `empty-form` will be shown when no form definition i
 | fieldValidators | [`FormFieldValidator`](../../../lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)`[]` |  | [FormFieldValidator](../../../lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) allow to override the form field validators provided. |
 | form | [`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts) |  | Underlying form model instance. |
 | formId | `string` |  | Task id to fetch corresponding form and values. |
+| isNextTaskCheckboxChecked | `boolean` | false | Whether the `Open next task` checkbox is checked by default or not. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | path | `string` |  | Path of the folder where the metadata will be stored. |
 | processInstanceId | `string` |  | ProcessInstanceId id to fetch corresponding form and values. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
+| showNextTaskCheckbox | `boolean` | false | Toggle rendering of the `Open next task` checkbox. |
 | showRefreshButton | `boolean` | true | Toggle rendering of the `Refresh` button. |
 | showSaveButton | `boolean` | true | Toggle rendering of the `Save` outcome button. |
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
@@ -111,6 +113,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 | displayModeOn | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned on. |
 | displayModeOff | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned off. |
+| nextTaskCheckboxCheckedChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MatCheckboxChange`](https://material.angular.io/components/checkbox/api#MatCheckboxChange)`>` | Emitted when the `Open next task` checkbox was toggled. |
 
 ## Details
 
