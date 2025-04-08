@@ -1193,7 +1193,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox visibility', () => {
-        // Add fields to make sure the components are shown which contain the the checkbox
+        // Add fields to the model to make sure the component which contains the checkbox is shown
         const formModel = new FormModel({ fields: [{ id: 'field2' }] });
         formComponent.form = formModel;
 
@@ -1215,7 +1215,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox value', async () => {
-        // Add fields to make sure the components are shown which contain the the checkbox
+        // Add fields to the model to make sure the component which contains the checkbox is shown
         const formModel = new FormModel({ fields: [{ id: 'field2' }] });
         formComponent.form = formModel;
         formComponent.showNextTaskCheckbox = true;
