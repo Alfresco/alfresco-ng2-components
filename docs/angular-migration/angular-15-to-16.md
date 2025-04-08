@@ -1,6 +1,6 @@
 # Migrating from Angular 15 to Angular 16
 
-This guide will help you migrate your Angular application from version 15 to version 16. Follow these steps to ensure a smooth transition.
+This guide for migrating ADF from Angular version 15 to version 16. Follow these steps to ensure a smooth transition.
 
 ## 1. Update Nx
 
@@ -14,6 +14,7 @@ Updated Nx dependencies:
 
 ```json
 {
+    "nx": "16.10.0",
     "@nx/angular": "16.10.0",
     "@nx/eslint-plugin": "16.10.0",
     "@nx/js": "16.10.0",
