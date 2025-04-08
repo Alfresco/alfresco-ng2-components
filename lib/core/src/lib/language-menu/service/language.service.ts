@@ -37,6 +37,7 @@ export class LanguageService implements LanguageServiceInterface {
     changeLanguage(language: LanguageItem) {
         this.userPreferencesService.locale = language.key;
         this.userPreferencesService.set('textOrientation', language.direction || 'ltr');
+        document.documentElement.setAttribute('lang', language.key);
     }
 
     setLanguages(items: LanguageItem[]) {
