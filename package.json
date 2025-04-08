@@ -58,7 +58,7 @@
     "material-icons": "^1.13.12",
     "minimatch": "^10.0.1",
     "ng2-charts": "^4.1.1",
-    "pdfjs-dist": "4.10.38",
+    "pdfjs-dist": "5.1.91",
     "raphael": "2.3.0",
     "rxjs": "7.8.1",
     "superagent": "^9.0.1",

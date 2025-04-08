@@ -100,7 +100,7 @@ class BlobTestComponent {
     }
 }
 //eslint-disable-next-line
-xdescribe('Test PdfViewer component', () => {
+fdescribe('Test PdfViewer component', () => {
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
     let change: any;
@@ -353,7 +353,7 @@ xdescribe('Test PdfViewer component', () => {
         });
     });
 });
-
+// eslint-disable-next-line
 fdescribe('Test PdfViewer - Zoom customization', () => {
     let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
     let componentUrlTestComponent: UrlTestComponent;
@@ -381,35 +381,33 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
     });
 
     describe('custom value', () => {
-        beforeEach((done) => {
+        beforeEach(async () => {
             const appConfig: AppConfigService = TestBed.inject(AppConfigService);
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
 
             fixtureUrlTestComponent.detectChanges();
-
-            firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered).then(() => {
-                done();
-            });
-        }, 55000);
+            await fixtureUrlTestComponent.whenStable();
+            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
+        });
 
         it('should use the custom zoom if it is present in the app.config', fakeAsync(() => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
-            tick(2000);
+            tick();
 
             expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
         }));
     });
 
-    xdescribe('less than the minimum allowed value', () => {
+    describe('less than the minimum allowed value', () => {
         beforeEach(async () => {
             const appConfig: AppConfigService = TestBed.inject(AppConfigService);
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
-
+            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
         });
 
         it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', async () => {
@@ -422,18 +420,18 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
         });
     });
 
-    xdescribe('greater than the maximum allowed value', () => {
+    describe('greater than the maximum allowed value', () => {
         beforeEach(async () => {
             const appConfig: AppConfigService = TestBed.inject(AppConfigService);
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 5555;
 
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
-
+            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
         });
 
         it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', async () => {
-
+            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
@@ -442,8 +440,8 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
         });
     });
 });
-
-xdescribe('Test PdfViewer - User interaction', () => {
+// eslint-disable-next-line
+fdescribe('Test PdfViewer - User interaction', () => {
     let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
     let componentUrlTestComponent: UrlTestComponent;
     let testingUtils: UnitTestingUtils;
@@ -471,7 +469,7 @@ xdescribe('Test PdfViewer - User interaction', () => {
 
         fixtureUrlTestComponent.detectChanges();
         await fixtureUrlTestComponent.whenStable();
-
+        await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
     });
 
     afterEach(() => {
