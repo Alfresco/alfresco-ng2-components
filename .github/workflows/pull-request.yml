@@ -84,10 +84,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@a3d5beb67a8b8d96398435e01686a9a9185380ab # v8.18.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@45bb8b664779b691f8a21d9fd49e360916726c11 # v8.18.1
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@a3d5beb67a8b8d96398435e01686a9a9185380ab # v8.18.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@45bb8b664779b691f8a21d9fd49e360916726c11 # v8.18.1
 
       - name: ci:force flag parser
         shell: bash
