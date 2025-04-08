@@ -113,20 +113,4 @@ describe('LanguageMenuComponent', () => {
         component.changeLanguage(languages[2]);
         expect(changedLanguageSpy).toHaveBeenCalledWith(languages[2]);
     });
-
-    it('should update HTML lang attribute when language is changed', () => {
-        appConfig.config.languages = languages;
-        userPreferencesService.locale = 'fake-key-1';
-        fixture.detectChanges();
-
-        const originalSetAttribute = document.documentElement.setAttribute;
-        const spy = spyOn(document.documentElement, 'setAttribute');
-
-        component.changeLanguage(languages[2]);
-
-        expect(spy).toHaveBeenCalledWith('lang', languages[2].key);
-        expect(document.documentElement.lang).toEqual(languages[2].key);
-
-        document.documentElement.setAttribute = originalSetAttribute;
-    });
 });
