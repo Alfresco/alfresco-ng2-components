@@ -52,21 +52,23 @@ describe('LanguageService', () => {
         userPreferencesService = TestBed.inject(UserPreferencesService) as jasmine.SpyObj<UserPreferencesService>;
     });
 
-    it('should initialize with default languages when no custom languages are provided', () => {
+    it('should initialize with default languages when no custom languages are provided', (done) => {
         appConfigService.get.and.returnValue(null);
         service = new LanguageService(appConfigService, userPreferencesService);
 
         service.languages$.subscribe((languages) => {
             expect(languages).toEqual(DEFAULT_LANGUAGE_LIST);
+            done();
         });
     });
 
-    it('should initialize with custom languages when provided', () => {
+    it('should initialize with custom languages when provided', (done) => {
         appConfigService.get.and.returnValue(customLanguages);
         service = new LanguageService(appConfigService, userPreferencesService);
 
         service.languages$.subscribe((languages) => {
             expect(languages).toEqual(customLanguages);
+            done();
         });
     });
 
