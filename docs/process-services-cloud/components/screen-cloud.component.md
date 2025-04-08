@@ -37,6 +37,7 @@ export class YourService extends ScreenRenderingService {
     [canClaimTask]="canClaimTask()"
     [canUnclaimTask]="canUnclaimTask()"
     [processInstanceId]="taskDetails.processInstanceId"
+    [rootProcessInstanceId]="taskDetails.rootProcessInstanceId"
     [screenId]="screenId"
     [showCancelButton]="showCancelButton"
     [taskName]="taskDetails.name"
@@ -60,6 +61,7 @@ export class YourService extends ScreenRenderingService {
 | canClaimTask              | `boolean`                             |               | Boolean informing if a task can be claimed.       |
 | canUnclaimTask            | `boolean`                             |               | Boolean informing if a task can be unclaimed.     |
 | processInstanceId         | `string`                              |               | Process Instance Id to fetch corresponding data.  |
+| rootProcessInstanceId     | `string`                              |               | Root Process Instance Id to fetch corresponding data.  |
 | readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                |
 | showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.          |
 | screenId                  | `string`                              |               | Screen id to create dynamic component             |
@@ -94,6 +96,7 @@ Dynamic component must implement logic for method switchToDisplayMode.
     [canClaimTask]="canClaimTask()"
     [canUnclaimTask]="canUnclaimTask()"
     [processInstanceId]="taskDetails.processInstanceId"
+    [rootProcessInstanceId]="taskDetails.rootProcessInstanceId"
     [screenId]="screenId"
     [showCancelButton]="showCancelButton"
     [taskName]="taskDetails.name"

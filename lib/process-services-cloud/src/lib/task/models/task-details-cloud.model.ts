@@ -37,6 +37,7 @@ export interface TaskDetailsCloudModel {
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
+    rootProcessInstanceId?: string;
     status?: TaskStatus;
     standalone?: boolean;
     candidateUsers?: string[];

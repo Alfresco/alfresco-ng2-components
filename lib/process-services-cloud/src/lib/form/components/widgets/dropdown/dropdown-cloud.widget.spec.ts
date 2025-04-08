@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
+import { DEFAULT_OPTION, DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import { FormFieldModel, FormModel, FormService, FormFieldEvent, FormFieldTypes } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -375,22 +375,52 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
         });
 
-        it('should be valid when field is hidden with empty value', () => {
-            widget.field.isVisible = false;
-            fixture.detectChanges();
+        describe('and visible', () => {
+            beforeEach(() => {
+                widget.field.isVisible = true;
+            });
 
-            expect(widget.field.isValid).toBeTrue();
-            expect(widget.dropdownControl.valid).toBeTrue();
-            expect(widget.field.validationSummary.message).toBe('');
+            it('should be invalid with no option selected', () => {
+                fixture.detectChanges();
+
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.dropdownControl.valid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+            });
+
+            it('should be invalid with default option selected', () => {
+                widget.field.hasEmptyValue = true;
+                widget.field.value = DEFAULT_OPTION;
+                fixture.detectChanges();
+
+                expect(widget.field.isValid).toBeFalse();
+                expect(widget.dropdownControl.valid).toBeFalse();
+                expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+            });
         });
 
-        it('should be invalid when field is hidden with empty value', () => {
-            widget.field.isVisible = true;
-            fixture.detectChanges();
+        describe('and NOT visible', () => {
+            beforeEach(() => {
+                widget.field.isVisible = false;
+            });
 
-            expect(widget.field.isValid).toBeFalse();
-            expect(widget.dropdownControl.valid).toBeFalse();
-            expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+            it('should be valid with no option selected', () => {
+                fixture.detectChanges();
+
+                expect(widget.field.isValid).toBeTrue();
+                expect(widget.dropdownControl.valid).toBeTrue();
+                expect(widget.field.validationSummary.message).toBe('');
+            });
+
+            it('should be valid with default option selected', () => {
+                widget.field.hasEmptyValue = true;
+                widget.field.value = DEFAULT_OPTION;
+                fixture.detectChanges();
+
+                expect(widget.field.isValid).toBeTrue();
+                expect(widget.dropdownControl.valid).toBeTrue();
+                expect(widget.field.validationSummary.message).toBe('');
+            });
         });
     });
 

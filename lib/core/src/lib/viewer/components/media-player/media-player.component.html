@@ -1,4 +1,4 @@
-<video controls class="adf-video-player"
+<video controls class="adf-video-player" (canplay)="canPlay.emit()"
        [ngClass]="{ 'adf-audio-file': mimeType && mimeType.startsWith('audio') }">
     <source [src]="urlFile"
             [type]="mimeType"

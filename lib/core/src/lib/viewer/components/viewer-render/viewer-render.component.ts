@@ -117,6 +117,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     @Input()
     viewerTemplateExtensions: TemplateRef<any>;
 
+    /** Custom error message to be displayed in the viewer. */
+    @Input()
+    customError: string = undefined;
+
     /** Emitted when the filename extension changes. */
     @Output()
     extensionChange = new EventEmitter<string>();
@@ -138,6 +142,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     extension: string;
     internalFileName: string;
     viewerType: string = 'unknown';
+    isContentReady = false;
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -180,6 +185,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
+        this.isContentReady = false;
         this.isLoading = !this.blobFile && !this.urlFile;
 
         if (this.blobFile) {

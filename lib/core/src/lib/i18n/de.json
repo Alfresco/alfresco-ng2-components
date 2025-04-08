@@ -51,7 +51,7 @@
       "REST_API_FAILED": "Der Server '{{ hostname }}' ist nicht erreichbar",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Beim Laden von Dropdown-Elementen ist ein Problem aufgetreten. Bitte kontaktieren Sie den Administrator.",
       "DATA_TABLE_LOAD_FAILED": "Beim Laden der Tabellenelemente ist ein Problem aufgetreten. Bitte wenden Sie sich an den Administrator.",
-      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "DATA_TABLE_EMPTY_CONTENT": "Keine Daten gefunden",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Beim Laden eines externen Objekts ist ein Problem aufgetreten. Bitte kontaktieren Sie den Administrator.",
       "FILE_NAME": "Dateiname",
       "TITLE": "Titel",

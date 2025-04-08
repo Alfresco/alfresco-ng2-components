@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { ProcessContentService } from './process-content.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
@@ -176,10 +175,24 @@ describe('ProcessContentService', () => {
     });
 
     it('should return a Blob as thumbnail', (done) => {
-        const contentId: number = 999;
-        const blob = createFakeBlob();
-        spyOn(service, 'getContentThumbnail').and.returnValue(of(blob));
+        const contentId = 999;
+        spyOn(service.contentApi, 'getRawContent').and.returnValue(Promise.resolve(createFakeBlob()));
+
         service.getContentThumbnail(contentId).subscribe((result) => {
+            expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId, 'thumbnail');
+            expect(result).toEqual(jasmine.any(Blob));
+            expect(result.size).toEqual(48);
+            expect(result.type).toEqual('image/png');
+            done();
+        });
+    });
+
+    it('should return a Blob as preview', (done) => {
+        const contentId = 999;
+        spyOn(service.contentApi, 'getRawContent').and.returnValue(Promise.resolve(createFakeBlob()));
+
+        service.getContentRenditionTypePreview(contentId).subscribe((result) => {
+            expect(service.contentApi.getRawContent).toHaveBeenCalledWith(contentId, 'preview');
             expect(result).toEqual(jasmine.any(Blob));
             expect(result.size).toEqual(48);
             expect(result.type).toEqual('image/png');

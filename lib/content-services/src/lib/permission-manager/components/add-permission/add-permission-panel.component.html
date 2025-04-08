@@ -7,6 +7,7 @@
         type="text"
         title="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}"
         placeholder="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}"
+        [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate"
         [value]="searchedWord"
     />
 
@@ -40,6 +41,8 @@
         <mat-selection-list
             class="adf-permission-result-list-elements"
             title="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate }}"
+            tabindex="0"
+            [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate"
             (selectionChange)="onSelectionChange()"
         >
             <mat-list-option id="adf-add-permission-group-everyone" #eveyone [disableRipple]="true" [value]="EVERYONE">
