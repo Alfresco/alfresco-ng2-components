@@ -131,15 +131,15 @@ describe('NotificationService', () => {
     it('should open a message notification bar', async () => {
         fixture.componentInstance.sendMessage();
         fixture.detectChanges();
-
-        expect(await testingUtils.checkIfMatSnackbarExists()).toBe(true);
+        const isLoaded = await testingUtils.checkIfMatSnackbarExists();
+        expect(isLoaded).toBe(true);
     });
 
     it('should open a message notification bar without custom configuration', async () => {
         fixture.componentInstance.sendMessageWithoutConfig();
         fixture.detectChanges();
-
-        expect(await testingUtils.checkIfMatSnackbarExists()).toBe(true);
+        const isLoaded = await testingUtils.checkIfMatSnackbarExists();
+        expect(isLoaded).toBe(true);
     });
 
     it('should open a message notification bar with custom configuration', async () => {
