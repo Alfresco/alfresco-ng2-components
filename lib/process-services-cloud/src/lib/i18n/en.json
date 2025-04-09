@@ -379,7 +379,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path",
       "DESTINATION_FOLDER_PATH_ERROR": "The destination path is incorrect or does not exist, rollback to -my- location"
-    }
+    },
+    "OPEN_NEXT_TASK": {"LABEL": "Open next task"}
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Autofill Form"

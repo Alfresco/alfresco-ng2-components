@@ -67,6 +67,7 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 import { FormFieldValidator } from '../../../../../core/src/public-api';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -1189,6 +1190,64 @@ describe('FormCloudComponent', () => {
         const form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
         expect(formComponent.fieldValidators.length).toBe(1);
         expect(form.fieldValidators.length).toBe(10);
+    });
+
+    it('should allow controlling [open next task] checkbox visibility', () => {
+        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
+        formComponent.form = formModel;
+
+        const isCheckboxShown = () => {
+            const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+            return !!checkbox;
+        };
+
+        fixture.detectChanges();
+        expect(isCheckboxShown()).toBeFalse();
+
+        formComponent.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+        expect(isCheckboxShown()).toBeTrue();
+
+        formComponent.showNextTaskCheckbox = false;
+        fixture.detectChanges();
+        expect(isCheckboxShown()).toBeFalse();
+    });
+
+    it('should allow controlling [open next task] checkbox value', async () => {
+        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
+        formComponent.form = formModel;
+        formComponent.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+
+        const isCheckboxChecked = async () => {
+            const checkbox = await documentRootLoader.getHarness(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
+            return checkbox.isChecked();
+        };
+
+        expect(await isCheckboxChecked()).toBeFalse();
+
+        formComponent.isNextTaskCheckboxChecked = true;
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeTrue();
+
+        formComponent.isNextTaskCheckboxChecked = false;
+        fixture.detectChanges();
+        expect(await isCheckboxChecked()).toBeFalse();
+    });
+
+    it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
+        // Add fields to make sure the components are shown which contain the the checkbox
+        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
+        formComponent.form = formModel;
+
+        formComponent.showNextTaskCheckbox = true;
+        fixture.detectChanges();
+        const checkbox = await documentRootLoader.getHarnessOrNull(MatCheckboxHarness);
+
+        spyOn(formComponent.nextTaskCheckboxCheckedChanged, 'emit');
+        await checkbox.check();
+
+        expect(formComponent.nextTaskCheckboxCheckedChanged.emit).toHaveBeenCalled();
     });
 
     describe('form validations', () => {

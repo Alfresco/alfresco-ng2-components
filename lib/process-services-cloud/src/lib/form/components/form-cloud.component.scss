@@ -18,6 +18,10 @@
             flex-direction: column;
             display: flex;
         }
+
+        .adf-card-actions-spacer {
+            flex: 1 1 auto;
+        }
     }
 
     &-fullscreen-container {

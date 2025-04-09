@@ -31,6 +31,7 @@ import { MatCardModule } from '@angular/material/card';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
 import { CompleteTaskDirective } from './complete-task/complete-task.directive';
 import { catchError, EMPTY, forkJoin } from 'rxjs';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 
 const TaskTypes = {
     Form: 'form',
@@ -53,7 +54,8 @@ type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
         EmptyContentComponent,
         TaskScreenCloudComponent,
         TaskFormCloudComponent,
-        CompleteTaskDirective
+        CompleteTaskDirective,
+        MatCheckboxModule
     ],
     templateUrl: './user-task-cloud.component.html',
     styleUrls: ['./user-task-cloud.component.scss']
@@ -85,6 +87,14 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     showCompleteButton = true;
 
+    /** Toggle rendering of the `Open next task` checkbox. */
+    @Input()
+    showNextTaskCheckbox = false;
+
+    /** Whether the `Open next task` checkbox is checked by default or not. */
+    @Input()
+    isNextTaskCheckboxChecked = false;
+
     /** Toggle rendering of the form title. */
     @Input()
     showTitle: boolean = true;
@@ -104,6 +114,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     /** Emitted when any error occurs. */
     @Output()
     error = new EventEmitter<any>();
+
+    /** Emitted when the `Open next task` checkbox was toggled. */
+    @Output()
+    nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
     /**
      * Emitted when any outcome is executed. Default behaviour can be prevented
@@ -182,15 +196,19 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     getTaskType(): void {
-        if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
-            this.taskType = this.taskTypeEnum.Form;
-        } else if (this.taskDetails && !!this.taskDetails.formKey && this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
-            this.taskType = this.taskTypeEnum.Screen;
-            const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
-            this.screenId = screenId;
-        } else {
-            this.taskType = this.taskTypeEnum.None;
+        if (this.taskDetails && !!this.taskDetails.formKey) {
+            if (this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
+                this.taskType = this.taskTypeEnum.Form;
+                return;
+            } else if (this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
+                this.taskType = this.taskTypeEnum.Screen;
+                const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
+                this.screenId = screenId;
+                return;
+            }
         }
+
+        this.taskType = this.taskTypeEnum.None;
     }
 
     hasCandidateUsers(): boolean {
@@ -248,6 +266,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     onUnclaimTask(): void {
         this.loadTask();
         this.taskUnclaimed.emit(this.taskId);
+    }
+
+    onNextTaskCheckboxCheckedChanged(event: MatCheckboxChange) {
+        this.nextTaskCheckboxCheckedChanged.emit(event);
     }
 
     private loadTask(): void {
