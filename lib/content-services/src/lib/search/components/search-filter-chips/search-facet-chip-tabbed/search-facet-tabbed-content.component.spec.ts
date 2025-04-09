@@ -62,6 +62,10 @@ describe('SearchFacetTabbedContentComponent', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     /**
      * Get the tab label content
      *

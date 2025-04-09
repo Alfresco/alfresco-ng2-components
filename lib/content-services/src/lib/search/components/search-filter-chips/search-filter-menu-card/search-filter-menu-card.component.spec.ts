@@ -32,6 +32,10 @@ describe('SearchFilterMenuComponent', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should emit on close click', () => {
         const spyCloseEvent = spyOn(component.close, 'emit');
         const closeButton = fixture.debugElement.nativeElement.querySelector('.adf-search-filter-title-action');
