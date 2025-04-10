@@ -213,7 +213,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.mjs';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
         //eslint-disable-next-line
         console.log('Worker', pdfjsLib.GlobalWorkerOptions.workerSrc);
 
