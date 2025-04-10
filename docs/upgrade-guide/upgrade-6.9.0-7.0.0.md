@@ -1,5 +1,5 @@
 ---
-Title: Upgrading from ADF v5.0 to v6.0
+Title: Upgrading from ADF v6.9 to v7.0
 ---
 
 # Upgrading from ADF v6.9 to v7.0
@@ -19,7 +19,7 @@ nx reset && rm -rf .angular .nx dist node_modules nxcache tmp
 
 Node version used is now 20.18.1.
 
-Breaking changes with libraries:
+### Breaking changes with libraries:
 
 - Angular: 17.1.3
 - Angular Material: 17.1.2
@@ -29,14 +29,14 @@ Breaking changes with libraries:
 
 Angular updates can be done with "Update Guide" from Angular documentation.
 
-Added libraries:
+### Added libraries:
 - eslint-plugin-storybook
 - jasmine-marbles
 - @editorjs/paragraph
 - editorjs-text-alignment-blocktune
 - graphql-ws
 
-Deleted libraries:
+### Deleted libraries:
 - protractor
 - selenium-webdriver
 - webdriver-manager
@@ -48,9 +48,9 @@ Deleted libraries:
 - protractor-screenshoter-plugin
 - protractor-smartrunner
 
-Reinstall your dependencies and make initial build
+Reinstall your dependencies and make initial build:
 
-```sh
+```shell
 npm i --legacy-peer-deps
 npm run build
 ```
@@ -58,15 +58,15 @@ npm run build
 Review your applications as some styles and classes of Angular Material components might have changed.
 
 
-### Demo-Shell and e2e
-Demo shell and it's e2e tests have been deleted. Protractor e2e tests have been refactored to Playwright.
+## Demo-Shell and e2e
+Demo shell and its e2e tests have been deleted. Protractor e2e tests have been refactored to Playwright.
 
 
-#### Material module
-Material module is deprecated and will be removed in a future release. Please import components and modules independently. 
+## Material module
+Material module is deprecated and will be removed in a future release. Please import components and modules independently.
 
 
-#### Standalone components
+## Standalone components
 Most components have been changed to "standalone" and their modules have been deleted. Please import components directly.
 
 | Deleted modules                |
@@ -98,12 +98,12 @@ Most components have been changed to "standalone" and their modules have been de
 | ProcessServicesCloudPipeModule |
 | StartTaskCloudModule           |
 | ProcessDirectiveModule         |
-| StartProcessCloudModule         |
-| TaskDirectiveModule         |
+| StartProcessCloudModule        |
+| TaskDirectiveModule            |
 
 
 
-#### Removed components, directives and pipes
+## Removed components, directives and pipes
 | Deleted components, directives and pipes |
 |------------------------------------------|
 | IsIncludedPipe                           |
@@ -120,7 +120,7 @@ Most components have been changed to "standalone" and their modules have been de
 | MomentDatePipe                           |
 
 
-#### A11y changes
+## A11y changes
 Components have been reviewed and changed to fix most important issues with accessibility. Please test your application thoroughly to ensure that everything is working as expected, as some components have changed their structure, html roles or attributes.
 
 | Components changed             | Description of changes                                               |
@@ -132,21 +132,54 @@ Components have been reviewed and changed to fix most important issues with acce
 | Aspect List                    | structure of html changed                                            |
 
 
-#### Guards
-All guards have been converted to functional. Please review your usages.
+## Guards
+All guards have been converted to functional guards (using the new Angular functional route guard pattern). Please review any custom guards in your application and adapt them to the functional pattern as needed.
 
-### Update code
+Example of converting a class-based guard to a functional guard:
+
+```typescript
+// Before (class-based)
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+  
+  canActivate() {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    }
+    this.router.navigate(['/login']);
+    return false;
+  }
+}
+
+// After (functional)
+export const authGuard = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  
+  if (authService.isLoggedIn()) {
+    return true;
+  }
+  return router.parseUrl('/login');
+};
+```
+
+## Model and interface changes
 
 Some models and interfaces have changed:
 
-| Before                        | After             |
-|-------------------------------|-------------------|
-| TaskDetailsModel              | TaskRepresentation |
-| IdentityUserFilterInterface   | ---               |
-| IdentityUserServiceInterface  | ---               |
-| TaskCloudServiceInterface  | ---               |
+| Before                        | After                 | Notes                        |
+|-------------------------------|-----------------------|------------------------------|
+| TaskDetailsModel              | TaskRepresentation    | Rename all instances         |
+| IdentityUserFilterInterface   | Removed               | Use type definitions instead |
+| IdentityUserServiceInterface  | Removed               | Use type definitions instead |
+| TaskCloudServiceInterface     | Removed               | Use type definitions instead |
 
 
 ## Final steps
 
-After you have updated the code, make sure to test your application thoroughly to ensure that everything is working as expected.
+After you have updated the code, make sure to test your application thoroughly to ensure that everything is working as expected. Pay special attention to areas that use the renamed models or interfaces, and make sure all components are properly imported as standalone components.
+
+If you encounter any issues during the upgrade process, refer to the Angular update guide or the ADF community for assistance.
