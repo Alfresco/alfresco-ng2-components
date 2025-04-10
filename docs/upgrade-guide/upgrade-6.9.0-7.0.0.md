@@ -59,7 +59,7 @@ Review your applications as some styles and classes of Angular Material componen
 
 
 ## Demo-Shell and e2e
-Demo shell and its e2e tests have been deleted. Protractor e2e tests have been refactored to Playwright.
+Demo shell and its e2e tests have been deleted.
 
 
 ## Material module
@@ -85,7 +85,6 @@ Most components have been changed to "standalone" and their modules have been de
 | DiagramsModule                 |
 | ButtonsMenuModule              |
 | SitesDropdownModule            |
-| ButtonsMenuModule              |
 | DataColumnModule               |
 | ContentUserInfoModule          |
 | AppCardViewModule              |
