@@ -45,9 +45,9 @@ import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 
 declare const pdfjsLib: any;
-declare const pdfjsViewer: any;
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -129,7 +129,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
-    private eventBus = new pdfjsViewer.EventBus();
+    private eventBus = new EventBus();
     private pdfjsDefaultOptions = {
         disableAutoFetch: true,
         disableStream: true,
@@ -248,7 +248,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const container = this.getDocumentContainer();
 
         if (viewer && container) {
-            this.pdfViewer = new pdfjsViewer.PDFViewer({
+            this.pdfViewer = new PDFViewer({
                 container,
                 viewer,
                 renderingQueue: this.renderingQueueServices,
@@ -281,11 +281,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         if (this.pdfViewer) {
             // cspell: disable-next
-            this.eventBus.off('pagechanging');
+            this.eventBus.off('pagechanging', () => {});
             // cspell: disable-next
-            this.eventBus.off('pagesloaded');
+            this.eventBus.off('pagesloaded', () => {});
             // cspell: disable-next
-            this.eventBus.off('textlayerrendered');
+            this.eventBus.off('textlayerrendered', () => {});
         }
 
         if (this.loadingTask) {
@@ -382,8 +382,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return document.getElementById(`${this.randomPdfId}-viewer-main-container`);
     }
 
-    private getDocumentContainer(): HTMLElement {
-        return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+    private getDocumentContainer(): HTMLDivElement {
+        return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`) as HTMLDivElement;
     }
 
     private getViewer(): HTMLElement {
