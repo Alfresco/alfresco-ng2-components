@@ -48,9 +48,12 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../../services/form-fields.interfaces';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;
+    let documentRootLoader: HarnessLoader;
     let component: StartProcessCloudComponent;
     let fixture: ComponentFixture<StartProcessCloudComponent>;
     let processService: StartProcessCloudService;
@@ -97,6 +100,7 @@ describe('StartProcessCloudComponent', () => {
         getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
         getStartEventConstantSpy = spyOn(processService, 'getStartEventConstants').and.returnValue(of([]));
         loader = TestbedHarnessEnvironment.loader(fixture);
+        documentRootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
     });
 
     afterEach(() => {
@@ -917,6 +921,42 @@ describe('StartProcessCloudComponent', () => {
                 done();
             });
             component.startProcess();
+        });
+
+        it('should open confirmation dialog on start process if confirmMessage.show is true', async () => {
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            let dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+            expect(dialogs.length).toBe(0);
+
+            component.startProcess();
+
+            dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+            expect(dialogs.length).toBe(1);
+        });
+
+        it('should start process when user confirms', () => {
+            const matDialog = TestBed.inject(MatDialog);
+            spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) } as never);
+            fixture.detectChanges();
+
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            component.startProcess();
+
+            expect(startProcessSpy).toHaveBeenCalled();
+        });
+
+        it('should not start process if user rejects', () => {
+            const matDialog = TestBed.inject(MatDialog);
+            spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as never);
+            fixture.detectChanges();
+
+            component.formCloud = new FormModel({ confirmMessage: { show: true } });
+
+            component.startProcess();
+
+            expect(startProcessSpy).not.toHaveBeenCalled();
         });
 
         it('should emit error when process name field is empty', () => {
