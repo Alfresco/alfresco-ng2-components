@@ -20,7 +20,7 @@ import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { firstValueFrom, of } from 'rxjs';
+import { of } from 'rxjs';
 import { AppConfigService } from '../../../app-config';
 import { EventMock } from '../../../mock';
 import { NoopAuthModule, NoopTranslateModule, UnitTestingUtils } from '../../../testing';
@@ -387,7 +387,6 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
 
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
-            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
         });
 
         it('should use the custom zoom if it is present in the app.config', fakeAsync(() => {
@@ -407,7 +406,6 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
 
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
-            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
         });
 
         it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', async () => {
@@ -427,11 +425,9 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
 
             fixtureUrlTestComponent.detectChanges();
             await fixtureUrlTestComponent.whenStable();
-            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
         });
 
         it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', async () => {
-            await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
@@ -469,7 +465,6 @@ fdescribe('Test PdfViewer - User interaction', () => {
 
         fixtureUrlTestComponent.detectChanges();
         await fixtureUrlTestComponent.whenStable();
-        await firstValueFrom(componentUrlTestComponent.pdfViewerComponent.rendered);
     });
 
     afterEach(() => {
