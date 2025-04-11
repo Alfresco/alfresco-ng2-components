@@ -55,10 +55,6 @@ describe('SearchFacetChipTabbedComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     /**
      * Get the filter display value
      *

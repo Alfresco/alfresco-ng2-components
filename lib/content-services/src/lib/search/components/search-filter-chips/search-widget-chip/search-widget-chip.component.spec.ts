@@ -47,10 +47,6 @@ describe('SearchWidgetChipComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     it('should update search query on apply click', async () => {
         const chip = await loader.getHarness(MatChipHarness);
         await (await chip.host()).click();

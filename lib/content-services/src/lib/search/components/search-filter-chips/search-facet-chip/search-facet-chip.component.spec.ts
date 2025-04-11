@@ -47,10 +47,6 @@ describe('SearchFacetChipComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     it('should update search query on apply click', async () => {
         const menu = await loader.getHarness(MatMenuHarness);
         await menu.open();
