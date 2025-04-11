@@ -20,7 +20,7 @@ import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { firstValueFrom, of, Subject } from 'rxjs';
 import { AppConfigService } from '../../../app-config';
 import { EventMock } from '../../../mock';
 import { NoopAuthModule, NoopTranslateModule, UnitTestingUtils } from '../../../testing';
@@ -35,16 +35,21 @@ declare const pdfjsLib: any;
     selector: 'adf-url-test-component',
     standalone: true,
     imports: [PdfViewerComponent],
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" (rendered)="handleRendered()" /> `
 })
 class UrlTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
+    rendered$ = new Subject<void>();
 
     constructor() {
         this.urlFile = './fake-test-file.pdf';
+    }
+
+    handleRendered() {
+        this.rendered$.next();
     }
 }
 
@@ -386,7 +391,7 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+            await firstValueFrom(componentUrlTestComponent.rendered$);
         });
 
         it('should use the custom zoom if it is present in the app.config', fakeAsync(() => {
@@ -405,14 +410,13 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+            await firstValueFrom(componentUrlTestComponent.rendered$);
         });
 
         it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', async () => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
 
             expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue).toBe('0.25');
         });
@@ -424,14 +428,14 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
             appConfig.config['adf-viewer.pdf-viewer-scaling'] = 5555;
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+            await firstValueFrom(componentUrlTestComponent.rendered$);
         });
 
         it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', async () => {
             spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
             fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+
             expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(10);
         });
     });
@@ -464,7 +468,7 @@ fdescribe('Test PdfViewer - User interaction', () => {
         componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
 
         fixtureUrlTestComponent.detectChanges();
-        await fixtureUrlTestComponent.whenStable();
+        await firstValueFrom(componentUrlTestComponent.rendered$);
     });
 
     afterEach(() => {
