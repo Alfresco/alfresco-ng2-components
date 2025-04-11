@@ -51,7 +51,7 @@ Angular updates can be done with "Update Guide" from Angular documentation.
 Reinstall your dependencies and make initial build:
 
 ```shell
-npm i --legacy-peer-deps
+npm i
 npm run build
 ```
 
