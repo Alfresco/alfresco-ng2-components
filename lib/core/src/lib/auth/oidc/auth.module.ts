@@ -55,7 +55,7 @@ export function oauthStorageFactory(): OAuthStorage {
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useFactory: oauthStorageFactory },
-        { provide: AuthenticationService },
+        AuthenticationService,
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,

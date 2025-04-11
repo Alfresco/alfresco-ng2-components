@@ -24,9 +24,7 @@ import { AuthenticationServiceInterface } from '../interfaces/authentication-ser
 import ee from 'event-emitter';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
