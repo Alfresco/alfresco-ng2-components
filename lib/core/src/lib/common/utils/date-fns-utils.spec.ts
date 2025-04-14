@@ -78,7 +78,6 @@ describe('DateFnsUtils', () => {
 
     it('should parse alternative ISO datetime', () => {
         const result = DateFnsUtils.parseDate('1982-03-13T10:00:000Z', `yyyy-MM-dd'T'HH:mm:sssXXX`);
-
         expect(result.toISOString()).toBe('1982-03-13T10:00:00.000Z');
     });
 
