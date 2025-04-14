@@ -26,4 +26,3 @@ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDyn
 });
 
 (window as any).pdfjsLib = (window as any).pdfjsLib || require('pdfjs-dist/build/pdf.min.mjs');
-(window as any).pdfjsViewer = (window as any).pdfjsViewer || require('pdfjs-dist/web/pdf_viewer.mjs');

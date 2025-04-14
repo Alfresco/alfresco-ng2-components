@@ -17,17 +17,16 @@
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { firstValueFrom, of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { AppConfigService } from '../../../app-config';
 import { EventMock } from '../../../mock';
 import { NoopAuthModule, NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
-import { PdfViewerComponent } from './pdf-viewer.component';
-import { AnnotationMode } from 'pdfjs-dist';
+import { PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
 
 declare const pdfjsLib: any;
 
@@ -35,21 +34,16 @@ declare const pdfjsLib: any;
     selector: 'adf-url-test-component',
     standalone: true,
     imports: [PdfViewerComponent],
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" (rendered)="handleRendered()" /> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
 class UrlTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
-    rendered$ = new Subject<void>();
 
     constructor() {
         this.urlFile = './fake-test-file.pdf';
-    }
-
-    handleRendered() {
-        this.rendered$.next();
     }
 }
 
@@ -360,12 +354,12 @@ fdescribe('Test PdfViewer component', () => {
 });
 // eslint-disable-next-line
 fdescribe('Test PdfViewer - Zoom customization', () => {
-    let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
-    let componentUrlTestComponent: UrlTestComponent;
+    let fixture: ComponentFixture<PdfViewerComponent>;
+    let component: PdfViewerComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, NoopTranslateModule, UrlTestComponent, PdfViewerComponent],
+            imports: [NoopAuthModule, NoopTranslateModule, PdfViewerComponent],
             providers: [
                 {
                     provide: MatDialog,
@@ -377,78 +371,54 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
             ]
         });
 
-        fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
-        componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+        fixture = TestBed.createComponent(PdfViewerComponent);
+        component = fixture.componentInstance;
     });
 
-    afterEach(() => {
-        fixtureUrlTestComponent.destroy();
+    it('should use the custom zoom if it is present in the app.config', () => {
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
+        appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
+
+        expect(component.getUserScaling()).toBe(0.8);
     });
 
-    describe('custom value', () => {
-        beforeEach(async () => {
-            const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-            appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
+    it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', () => {
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
+        appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
-            fixtureUrlTestComponent.detectChanges();
-            await firstValueFrom(componentUrlTestComponent.rendered$);
-        });
+        fixture.detectChanges();
 
-        it('should use the custom zoom if it is present in the app.config', fakeAsync(() => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
-
-            fixtureUrlTestComponent.detectChanges();
-            tick();
-
-            expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
-        }));
+        expect(component.getUserScaling()).toBe(0.25);
     });
 
-    describe('less than the minimum allowed value', () => {
-        beforeEach(async () => {
-            const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-            appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
+    it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', () => {
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
+        appConfig.config['adf-viewer.pdf-viewer-scaling'] = 5555;
 
-            fixtureUrlTestComponent.detectChanges();
-            await firstValueFrom(componentUrlTestComponent.rendered$);
-        });
+        fixture.detectChanges();
 
-        it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', async () => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
-
-            fixtureUrlTestComponent.detectChanges();
-
-            expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue).toBe('0.25');
-        });
-    });
-
-    describe('greater than the maximum allowed value', () => {
-        beforeEach(async () => {
-            const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-            appConfig.config['adf-viewer.pdf-viewer-scaling'] = 5555;
-
-            fixtureUrlTestComponent.detectChanges();
-            await firstValueFrom(componentUrlTestComponent.rendered$);
-        });
-
-        it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', async () => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
-
-            fixtureUrlTestComponent.detectChanges();
-
-            expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(10);
-        });
+        expect(component.getUserScaling()).toBe(10);
     });
 });
 // eslint-disable-next-line
 fdescribe('Test PdfViewer - User interaction', () => {
-    let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
-    let componentUrlTestComponent: UrlTestComponent;
+    let fixture: ComponentFixture<PdfViewerComponent>;
+    let component: PdfViewerComponent;
     let testingUtils: UnitTestingUtils;
+    let pdfViewerSpy: jasmine.Spy;
 
-    beforeEach(async () => {
+    beforeEach(fakeAsync(() => {
+        pdfViewerSpy = jasmine.createSpy('PDFViewer').and.returnValue({
+            setDocument: jasmine.createSpy(),
+            forceRendering: jasmine.createSpy(),
+            update: jasmine.createSpy(),
+            currentScaleValue: 1,
+            _currentPageNumber: 1,
+            _pages: [{ width: 100, height: 100, scale: 1 }]
+        });
+
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, NoopTranslateModule, UrlTestComponent, PdfViewerComponent],
+            imports: [NoopAuthModule, NoopTranslateModule, PdfViewerComponent],
             providers: [
                 {
                     provide: MatDialog,
@@ -456,213 +426,198 @@ fdescribe('Test PdfViewer - User interaction', () => {
                         open: () => {}
                     }
                 },
-                RenderingQueueServices
+                RenderingQueueServices,
+                { provide: PDFJS_VIEWER_MODULE, useValue: pdfViewerSpy }
             ]
         });
 
-        fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
-        testingUtils = new UnitTestingUtils(fixtureUrlTestComponent.debugElement);
+        fixture = TestBed.createComponent(PdfViewerComponent);
+        component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
-        componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+        component.urlFile = './fake-test-file.pdf';
+        fixture.detectChanges();
+        component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
 
-        fixtureUrlTestComponent.detectChanges();
-        await firstValueFrom(componentUrlTestComponent.rendered$);
-    });
-
-    afterEach(() => {
-        fixtureUrlTestComponent.destroy();
-    });
-
-    it('should init the viewer with annotation mode disabled', async () => {
-        fixtureUrlTestComponent.detectChanges();
-        await fixtureUrlTestComponent.whenStable();
-        expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.annotationEditorMode).toBe(AnnotationMode.DISABLE);
-    });
-
-    it('should Total number of pages be loaded', fakeAsync(() => {
-        fixtureUrlTestComponent.detectChanges();
-        tick(400);
-        expect(componentUrlTestComponent.pdfViewerComponent.totalPages).toBe(6);
+        flush();
     }));
 
-    it('should nextPage move to the next page', fakeAsync(() => {
+    it('should init the viewer with annotation mode disabled', () => {
+        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 0 }));
+    });
+
+    it('should Total number of pages be loaded', () => {
+        fixture.detectChanges();
+
+        expect(component.totalPages).toBe(6);
+    });
+
+    it('should nextPage move to the next page', () => {
         testingUtils.clickByCSS('#viewer-next-page-button');
 
-        fixtureUrlTestComponent.detectChanges();
-        tick(400);
+        fixture.detectChanges();
 
-        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
-    }));
+        expect(component.displayPage).toBe(2);
+    });
 
     it('should event RIGHT_ARROW keyboard change pages', fakeAsync(() => {
-        fixtureUrlTestComponent.whenStable();
-        fixtureUrlTestComponent.detectChanges();
+        fixture.detectChanges();
         EventMock.keyDown(RIGHT_ARROW);
 
         tick(250);
 
-        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+        expect(component.displayPage).toBe(2);
     }));
 
     it('should event LEFT_ARROW keyboard change pages', async () => {
-        componentUrlTestComponent.pdfViewerComponent.inputPage('2');
+        component.inputPage('2');
 
-        fixtureUrlTestComponent.detectChanges();
+        fixture.detectChanges();
 
-        await fixtureUrlTestComponent.whenStable();
+        await fixture.whenStable();
         EventMock.keyDown(LEFT_ARROW);
 
-        fixtureUrlTestComponent.detectChanges();
-        await fixtureUrlTestComponent.whenStable();
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(1);
+        expect(component.displayPage).toBe(1);
     });
 
     it('should previous page move to the previous page', async () => {
         testingUtils.clickByCSS('#viewer-next-page-button');
         testingUtils.clickByCSS('#viewer-next-page-button');
         testingUtils.clickByCSS('#viewer-previous-page-button');
-        fixtureUrlTestComponent.detectChanges();
-        await fixtureUrlTestComponent.whenStable();
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+        expect(component.displayPage).toBe(2);
     });
 
     it('should previous page not move to the previous page if is page 1', async () => {
-        componentUrlTestComponent.pdfViewerComponent.previousPage();
-        fixtureUrlTestComponent.detectChanges();
-        await fixtureUrlTestComponent.whenStable();
+        component.previousPage();
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(1);
+        expect(component.displayPage).toBe(1);
     });
 
     it('should Input page move to the inserted page', async () => {
-        componentUrlTestComponent.pdfViewerComponent.inputPage('2');
-        fixtureUrlTestComponent.detectChanges();
-        await fixtureUrlTestComponent.whenStable();
+        component.inputPage('2');
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+        expect(component.displayPage).toBe(2);
     });
 
     describe('Zoom', () => {
         it('should zoom in increment the scale value', async () => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
-
-            const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
+            const zoomBefore = component.pdfViewer.currentScaleValue;
             testingUtils.clickByCSS('#viewer-zoom-in-button');
-            fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenRenderingDone();
+            fixture.detectChanges();
+            await fixture.whenRenderingDone();
 
-            expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-            const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
+            expect(component.currentScaleMode).toBe('auto');
+            const currentZoom = component.pdfViewer.currentScaleValue;
             expect(zoomBefore < currentZoom).toBe(true);
         });
 
         it('should zoom out decrement the scale value', async () => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
             testingUtils.clickByCSS('#viewer-zoom-in-button');
-            fixtureUrlTestComponent.detectChanges();
-            const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
+            fixture.detectChanges();
+            const zoomBefore = component.pdfViewer.currentScaleValue;
 
             testingUtils.clickByCSS('#viewer-zoom-out-button');
-            fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenRenderingDone();
+            fixture.detectChanges();
+            await fixture.whenRenderingDone();
 
-            expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-            const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
+            expect(component.currentScaleMode).toBe('auto');
+            const currentZoom = component.pdfViewer.currentScaleValue;
             expect(zoomBefore > currentZoom).toBe(true);
         });
 
         it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
             tick(250);
 
-            expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('init');
+            expect(component.currentScaleMode).toBe('init');
             testingUtils.clickByCSS('#viewer-scale-page-button');
-            expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
+            expect(component.currentScaleMode).toBe('page-fit');
             testingUtils.clickByCSS('#viewer-scale-page-button');
-            expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+            expect(component.currentScaleMode).toBe('auto');
             testingUtils.clickByCSS('#viewer-scale-page-button');
-            expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
+            expect(component.currentScaleMode).toBe('page-fit');
         }), 300);
     });
 
     describe('Resize interaction', () => {
         it('should resize event trigger setScaleUpdatePages', async () => {
-            spyOn(componentUrlTestComponent.pdfViewerComponent, 'onResize');
+            spyOn(component, 'onResize');
             EventMock.resizeMobileView();
-            await fixtureUrlTestComponent.whenStable();
+            await fixture.whenStable();
 
-            expect(componentUrlTestComponent.pdfViewerComponent.onResize).toHaveBeenCalled();
+            expect(component.onResize).toHaveBeenCalled();
         });
     });
 
     describe('Thumbnails', () => {
         it('should have own context', async () => {
-            fixtureUrlTestComponent.detectChanges();
+            fixture.detectChanges();
 
-            await fixtureUrlTestComponent.whenStable();
-            expect(componentUrlTestComponent.pdfViewerComponent.pdfThumbnailsContext.viewer).not.toBeNull();
+            await fixture.whenStable();
+            expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
         });
 
         it('should open thumbnails panel', async () => {
             expect(testingUtils.getByCSS('.adf-pdf-viewer__thumbnails')).toBeNull();
 
-            componentUrlTestComponent.pdfViewerComponent.toggleThumbnails();
+            component.toggleThumbnails();
 
-            fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+            fixture.detectChanges();
+            await fixture.whenStable();
             expect(testingUtils.getByCSS('.adf-pdf-viewer__thumbnails')).not.toBeNull();
         });
 
         it('should not render PdfThumbListComponent during initialization of new pdfViewer', () => {
-            componentUrlTestComponent.pdfViewerComponent.toggleThumbnails();
-            componentUrlTestComponent.urlFile = 'file.pdf';
-            fixtureUrlTestComponent.detectChanges();
-            expect(fixtureUrlTestComponent.debugElement.query(By.directive(PdfThumbListComponent))).toBeNull();
+            component.toggleThumbnails();
+            component.urlFile = 'file.pdf';
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.directive(PdfThumbListComponent))).toBeNull();
         });
     });
 
     describe('Viewer events', () => {
-        it('should react on the emit of pageChange event', async () => {
-            fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
+        it('should react on the emit of pageChange event', () => {
             const args = {
                 pageNumber: 6,
                 source: {
-                    container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
+                    container: document.getElementById(`${component.randomPdfId}-viewer-pdf-viewer`)
                 }
             };
 
-            /* cspell:disable-next-line */
-            componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagechanging', args);
-            fixtureUrlTestComponent.detectChanges();
-
-            await fixtureUrlTestComponent.whenStable();
-            expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(6);
-            expect(componentUrlTestComponent.pdfViewerComponent.page).toBe(6);
+            component.onPageChange(args);
+            expect(component.displayPage).toBe(6);
+            expect(component.page).toBe(6);
         });
 
         it('should react on the emit of pagesLoaded event', async () => {
-            fixtureUrlTestComponent.detectChanges();
-            await fixtureUrlTestComponent.whenStable();
-            expect(componentUrlTestComponent.pdfViewerComponent.isPanelDisabled).toBeFalsy();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expect(component.isPanelDisabled).toBeFalsy();
 
             const args = {
                 pagesCount: 10,
                 source: {
-                    container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
+                    container: document.getElementById(`${component.randomPdfId}-viewer-pdf-viewer`)
                 }
             };
 
             /* cspell:disable-next-line */
-            componentUrlTestComponent.pdfViewerComponent.pdfViewer.eventBus.dispatch('pagesloaded', args);
-            fixtureUrlTestComponent.detectChanges();
+            component.pdfViewer.eventBus.dispatch('pagesloaded', args);
+            fixture.detectChanges();
 
-            await fixtureUrlTestComponent.whenStable();
-            expect(componentUrlTestComponent.pdfViewerComponent.isPanelDisabled).toBe(false);
+            await fixture.whenStable();
+            expect(component.isPanelDisabled).toBe(false);
         });
     });
 });

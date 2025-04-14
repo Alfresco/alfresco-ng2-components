@@ -24,6 +24,8 @@ import {
     Component,
     EventEmitter,
     HostListener,
+    inject,
+    InjectionToken,
     Input,
     OnChanges,
     OnDestroy,
@@ -37,7 +39,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { AnnotationMode, OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
@@ -46,10 +47,13 @@ import { RenderingQueueServices } from '../../services/rendering-queue.services'
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 declare const pdfjsLib: any;
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
+
+export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => PDFViewer });
 
 @Component({
     selector: 'adf-pdf-viewer',
@@ -108,7 +112,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     page: number;
     displayPage: number;
-    totalPages: number;
+    _totalPages: number;
+    set totalPages(value: number) {
+        this._totalPages = value;
+    }
+    get totalPages(): number {
+        return this._totalPages;
+    }
     loadingPercent: number;
     pdfViewer: any;
     currentScaleMode: PdfScaleMode = 'init';
@@ -138,7 +148,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     };
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
 
-    constructor(private dialog: MatDialog, private renderingQueueServices: RenderingQueueServices, private appConfigService: AppConfigService) {
+    private dialog = inject(MatDialog);
+    private renderingQueueServices = inject(RenderingQueueServices);
+    private appConfigService = inject(AppConfigService);
+    private pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
+
+    constructor() {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -218,6 +233,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         console.log('Worker', pdfjsLib.GlobalWorkerOptions.workerSrc);
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);
+
         //eslint-disable-next-line
         console.log('getdocument');
         this.loadingTask.onPassword = (callback, reason) => {
@@ -230,6 +246,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         };
 
         this.isPanelDisabled = true;
+
         this.loadingTask.promise
             .then((pdfDocument) => {
                 this.totalPages = pdfDocument.numPages;
@@ -248,12 +265,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const container = this.getDocumentContainer();
 
         if (viewer && container) {
-            this.pdfViewer = new PDFViewer({
+            this.pdfViewer = new this.pdfjsViewer({
                 container,
                 viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus,
-                annotationMode: AnnotationMode.DISABLE
+                annotationMode: 0
             });
 
             // cspell: disable-next
