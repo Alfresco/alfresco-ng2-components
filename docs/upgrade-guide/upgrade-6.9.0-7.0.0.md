@@ -57,7 +57,6 @@ npm run build
 
 Review your applications as some styles and classes of Angular Material components might have changed.
 
-
 ## Demo-Shell and e2e
 Demo shell and its e2e tests have been deleted.
 
