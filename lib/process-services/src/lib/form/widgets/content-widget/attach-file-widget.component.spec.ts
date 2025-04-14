@@ -202,7 +202,6 @@ describe('AttachFileWidgetComponent', () => {
         unitTestingUtils.clickByCSS(`#file-${fileId}-option-menu`);
         fixture.detectChanges();
         await fixture.whenStable();
-        await menu.open();
         const items = await menu.getItems();
         const showFileButton = items[0];
         return showFileButton.isDisabled();
@@ -639,6 +638,103 @@ describe('AttachFileWidgetComponent', () => {
             widget.ngOnInit();
             expect(widget.isStartProcessPage).toBeFalse();
         });
+
+        it('should disable preview button when file is external', async () => {
+            const testFile = {
+                id: '123',
+                isExternal: true,
+                mimeType: 'application/pdf',
+                contentAvailable: true
+            };
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [testFile]
+            });
+
+            expect(await isPreviewButtonDisabled('123')).toBeTrue();
+        });
+
+        it('should disable preview button when file has no mime type', async () => {
+            const testFile = {
+                id: '123',
+                isExternal: false,
+                mimeType: null,
+                contentAvailable: true
+            };
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [testFile]
+            });
+
+            expect(await isPreviewButtonDisabled('123')).toBeTrue();
+        });
+
+        it('should disable preview button when content is not available and is start process page', async () => {
+            const testFile = {
+                id: '123',
+                isExternal: false,
+                mimeType: 'application/pdf',
+                contentAvailable: false,
+                sourceId: null
+            };
+            widget.isStartProcessPage = true;
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [testFile]
+            });
+
+            expect(await isPreviewButtonDisabled('123')).toBeTrue();
+        });
+
+        it('should enable preview button when all conditions are met', async () => {
+            const testFile = {
+                id: '123',
+                isExternal: false,
+                mimeType: 'application/pdf',
+                contentAvailable: true,
+                sourceId: '456'
+            };
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [testFile]
+            });
+
+            expect(await isPreviewButtonDisabled('123')).toBeFalse();
+        });
+
+        it('should enable preview button and ignore start process page check when content is available', async () => {
+            const testFile = {
+                id: '123',
+                isExternal: false,
+                mimeType: 'application/pdf',
+                contentAvailable: true,
+                sourceId: '1234'
+            };
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [testFile]
+            });
+            widget.isStartProcessPage = true;
+            fixture.detectChanges();
+
+            expect(await isPreviewButtonDisabled('123')).toBeFalse();
+        });
+
+        it('should enable preview button when sourceId exists even if content is not available', async () => {
+            const testFile = {
+                id: '123',
+                isExternal: false,
+                mimeType: 'application/pdf',
+                contentAvailable: false,
+                sourceId: '456'
+            };
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [testFile]
+            });
+
+            expect(await isPreviewButtonDisabled('123')).toBeFalse();
+        });
     });
 
     it('should be able to upload files when a defined folder from external content service', async () => {
@@ -697,101 +793,5 @@ describe('AttachFileWidgetComponent', () => {
         widget.openSelectDialog({ repositoryUrl: 'repositoryUrl' });
         await fixture.whenStable();
         expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
-    });
-
-    it('should disable preview button when file is external', async () => {
-        const testFile = {
-            id: '123',
-            isExternal: true,
-            mimeType: 'application/pdf',
-            contentAvailable: true
-        };
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [testFile]
-        });
-
-        expect(await isPreviewButtonDisabled('123')).toBeTrue();
-    });
-
-    it('should disable preview button when file has no mime type', async () => {
-        const testFile = {
-            id: '123',
-            isExternal: false,
-            mimeType: null,
-            contentAvailable: true
-        };
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [testFile]
-        });
-
-        expect(await isPreviewButtonDisabled('123')).toBeTrue();
-    });
-
-    it('should disable preview button when content is not available and is start process page', async () => {
-        const testFile = {
-            id: '123',
-            isExternal: false,
-            mimeType: 'application/pdf',
-            contentAvailable: false,
-            sourceId: null
-        };
-        widget.isStartProcessPage = true;
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [testFile]
-        });
-
-        expect(await isPreviewButtonDisabled('123')).toBeTrue();
-    });
-
-    it('should enable preview button when all conditions are met', async () => {
-        const testFile = {
-            id: '123',
-            isExternal: false,
-            mimeType: 'application/pdf',
-            contentAvailable: true,
-            sourceId: '456'
-        };
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [testFile]
-        });
-
-        expect(await isPreviewButtonDisabled('123')).toBeFalse();
-    });
-
-    it('should enable preview button and ignore start process page check when content is available', async () => {
-        const testFile = {
-            id: '123',
-            isExternal: false,
-            mimeType: 'application/pdf',
-            contentAvailable: true,
-            sourceId: null
-        };
-        widget.isStartProcessPage = true;
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [testFile]
-        });
-
-        expect(await isPreviewButtonDisabled('123')).toBeFalse();
-    });
-
-    it('should enable preview button when sourceId exists even if content is not available', async () => {
-        const testFile = {
-            id: '123',
-            isExternal: false,
-            mimeType: 'application/pdf',
-            contentAvailable: false,
-            sourceId: '456'
-        };
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [testFile]
-        });
-
-        expect(await isPreviewButtonDisabled('123')).toBeFalse();
     });
 });
