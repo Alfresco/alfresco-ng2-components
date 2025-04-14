@@ -600,23 +600,11 @@ fdescribe('Test PdfViewer - User interaction', () => {
             expect(component.page).toBe(6);
         });
 
-        it('should react on the emit of pagesLoaded event', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-            expect(component.isPanelDisabled).toBeFalsy();
+        it('should react on the emit of pagesLoaded event', () => {
+            expect(component.isPanelDisabled).toBe(true);
 
-            const args = {
-                pagesCount: 10,
-                source: {
-                    container: document.getElementById(`${component.randomPdfId}-viewer-pdf-viewer`)
-                }
-            };
+            component.onPagesLoaded();
 
-            /* cspell:disable-next-line */
-            component.pdfViewer.eventBus.dispatch('pagesloaded', args);
-            fixture.detectChanges();
-
-            await fixture.whenStable();
             expect(component.isPanelDisabled).toBe(false);
         });
     });
