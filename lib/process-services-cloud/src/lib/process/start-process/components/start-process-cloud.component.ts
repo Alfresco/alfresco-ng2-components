@@ -29,7 +29,14 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { ContentLinkModel, FormModel, InplaceFormInputComponent, LocalizedDatePipe, TranslationService } from '@alfresco/adf-core';
+import {
+    ConfirmDialogComponent,
+    ContentLinkModel,
+    FormModel,
+    InplaceFormInputComponent,
+    LocalizedDatePipe,
+    TranslationService
+} from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { catchError, debounceTime, map } from 'rxjs/operators';
@@ -54,6 +61,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -197,6 +205,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly localizedDatePipe = inject(LocalizedDatePipe);
     private readonly displayStartSubject = new BehaviorSubject<string>(null);
     private readonly hasVisibleOutcomesSubject = new BehaviorSubject<boolean>(false);
+    private readonly dialog = inject(MatDialog);
 
     get isProcessFormValid(): boolean {
         if (this.hasForm && this.isFormCloudLoaded) {
@@ -422,7 +431,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.startProcess();
     }
 
-    startProcess() {
+    startProcessWithoutConfirmation() {
         this.isProcessStarting = true;
 
         const action = this.hasForm
@@ -459,6 +468,25 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.isProcessStarting = false;
             }
         });
+    }
+
+    startProcess() {
+        if (!this.formCloud?.confirmMessage?.show) {
+            this.startProcessWithoutConfirmation();
+        } else {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    message: this.formCloud.confirmMessage.message
+                },
+                minWidth: '450px'
+            });
+
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result) {
+                    this.startProcessWithoutConfirmation();
+                }
+            });
+        }
     }
 
     private unifyErrorResponse(err: any) {
