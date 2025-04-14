@@ -379,6 +379,9 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Nieprawidłowa ścieżka folderu docelowego",
       "DESTINATION_FOLDER_PATH_ERROR": "Ścieżka docelowa jest nieprawidłowa lub nie istnieje. Cofnij do mojej lokalizacji"
+    },
+    "OPEN_NEXT_TASK": {
+      "LABEL": "Open next task"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
