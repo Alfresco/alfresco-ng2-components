@@ -98,8 +98,8 @@ class BlobTestComponent {
         return new Blob([pdfData], { type: 'application/pdf' });
     }
 }
-//eslint-disable-next-line
-fdescribe('Test PdfViewer component', () => {
+
+describe('Test PdfViewer component', () => {
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
     let change: any;
@@ -352,8 +352,8 @@ fdescribe('Test PdfViewer component', () => {
         });
     });
 });
-// eslint-disable-next-line
-fdescribe('Test PdfViewer - Zoom customization', () => {
+
+describe('Test PdfViewer - Zoom customization', () => {
     let fixture: ComponentFixture<PdfViewerComponent>;
     let component: PdfViewerComponent;
 
@@ -400,8 +400,8 @@ fdescribe('Test PdfViewer - Zoom customization', () => {
         expect(component.getUserScaling()).toBe(10);
     });
 });
-// eslint-disable-next-line
-fdescribe('Test PdfViewer - User interaction', () => {
+
+describe('Test PdfViewer - User interaction', () => {
     let fixture: ComponentFixture<PdfViewerComponent>;
     let component: PdfViewerComponent;
     let testingUtils: UnitTestingUtils;
@@ -449,88 +449,65 @@ fdescribe('Test PdfViewer - User interaction', () => {
     });
 
     it('should Total number of pages be loaded', () => {
-        fixture.detectChanges();
-
         expect(component.totalPages).toBe(6);
     });
 
     it('should nextPage move to the next page', () => {
         testingUtils.clickByCSS('#viewer-next-page-button');
 
-        fixture.detectChanges();
-
         expect(component.displayPage).toBe(2);
     });
 
-    it('should event RIGHT_ARROW keyboard change pages', fakeAsync(() => {
+    it('should event RIGHT_ARROW keyboard change pages', () => {
         fixture.detectChanges();
         EventMock.keyDown(RIGHT_ARROW);
 
-        tick(250);
-
         expect(component.displayPage).toBe(2);
-    }));
+    });
 
-    it('should event LEFT_ARROW keyboard change pages', async () => {
+    it('should event LEFT_ARROW keyboard change pages', () => {
         component.inputPage('2');
 
-        fixture.detectChanges();
-
-        await fixture.whenStable();
         EventMock.keyDown(LEFT_ARROW);
-
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.displayPage).toBe(1);
     });
 
-    it('should previous page move to the previous page', async () => {
+    it('should previous page move to the previous page', () => {
         testingUtils.clickByCSS('#viewer-next-page-button');
         testingUtils.clickByCSS('#viewer-next-page-button');
         testingUtils.clickByCSS('#viewer-previous-page-button');
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.displayPage).toBe(2);
     });
 
-    it('should previous page not move to the previous page if is page 1', async () => {
+    it('should previous page not move to the previous page if is page 1', () => {
         component.previousPage();
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.displayPage).toBe(1);
     });
 
-    it('should Input page move to the inserted page', async () => {
+    it('should Input page move to the inserted page', () => {
         component.inputPage('2');
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.displayPage).toBe(2);
     });
 
     describe('Zoom', () => {
-        it('should zoom in increment the scale value', async () => {
+        it('should zoom in increment the scale value', () => {
             const zoomBefore = component.pdfViewer.currentScaleValue;
             testingUtils.clickByCSS('#viewer-zoom-in-button');
-            fixture.detectChanges();
-            await fixture.whenRenderingDone();
 
             expect(component.currentScaleMode).toBe('auto');
             const currentZoom = component.pdfViewer.currentScaleValue;
             expect(zoomBefore < currentZoom).toBe(true);
         });
 
-        it('should zoom out decrement the scale value', async () => {
+        it('should zoom out decrement the scale value', () => {
             testingUtils.clickByCSS('#viewer-zoom-in-button');
-            fixture.detectChanges();
             const zoomBefore = component.pdfViewer.currentScaleValue;
 
             testingUtils.clickByCSS('#viewer-zoom-out-button');
-            fixture.detectChanges();
-            await fixture.whenRenderingDone();
 
             expect(component.currentScaleMode).toBe('auto');
             const currentZoom = component.pdfViewer.currentScaleValue;
@@ -551,30 +528,25 @@ fdescribe('Test PdfViewer - User interaction', () => {
     });
 
     describe('Resize interaction', () => {
-        it('should resize event trigger setScaleUpdatePages', async () => {
+        it('should resize event trigger setScaleUpdatePages', () => {
             spyOn(component, 'onResize');
             EventMock.resizeMobileView();
-            await fixture.whenStable();
 
             expect(component.onResize).toHaveBeenCalled();
         });
     });
 
     describe('Thumbnails', () => {
-        it('should have own context', async () => {
-            fixture.detectChanges();
-
-            await fixture.whenStable();
+        it('should have own context', () => {
             expect(component.pdfThumbnailsContext.viewer).not.toBeNull();
         });
 
-        it('should open thumbnails panel', async () => {
+        it('should open thumbnails panel', () => {
             expect(testingUtils.getByCSS('.adf-pdf-viewer__thumbnails')).toBeNull();
 
             component.toggleThumbnails();
-
             fixture.detectChanges();
-            await fixture.whenStable();
+
             expect(testingUtils.getByCSS('.adf-pdf-viewer__thumbnails')).not.toBeNull();
         });
 
