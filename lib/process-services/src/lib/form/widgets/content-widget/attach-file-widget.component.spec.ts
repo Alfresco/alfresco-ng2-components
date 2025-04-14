@@ -26,7 +26,8 @@ import {
     FormFieldMetadata,
     DownloadService,
     AppConfigService,
-    AppConfigValues
+    AppConfigValues,
+    UnitTestingUtils
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
@@ -149,6 +150,7 @@ describe('AttachFileWidgetComponent', () => {
     let widget: AttachFileWidgetComponent;
     let fixture: ComponentFixture<AttachFileWidgetComponent>;
     let loader: HarnessLoader;
+    let unitTestingUtils: UnitTestingUtils;
     let element: HTMLInputElement;
     let activitiContentService: ActivitiContentService;
     let router: Router;
@@ -178,6 +180,7 @@ describe('AttachFileWidgetComponent', () => {
         fixture = TestBed.createComponent(AttachFileWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         element = fixture.nativeElement;
         router = TestBed.inject(Router);
         activatedRoute = TestBed.inject(ActivatedRoute);
@@ -196,7 +199,7 @@ describe('AttachFileWidgetComponent', () => {
 
     const isPreviewButtonDisabled = async (fileId: string): Promise<boolean> => {
         const menu = await loader.getHarness(MatMenuHarness);
-        await fixture.debugElement.query(By.css(`#file-${fileId}-option-menu`)).nativeElement.click();
+        unitTestingUtils.clickByCSS(`#file-${fileId}-option-menu`);
         fixture.detectChanges();
         await fixture.whenStable();
         await menu.open();

@@ -68,6 +68,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
     isStartProcessPage = false;
+
     private tempFilesList = [];
 
     private readonly destroyRef = inject(DestroyRef);
