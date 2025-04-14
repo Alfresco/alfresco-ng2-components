@@ -72,6 +72,12 @@ export class WebSocketService {
         return this.apollo.use(apolloClientName).subscribe<T>({ errorPolicy: 'all', ...subscriptionOptions });
     }
 
+    private removeApolloClientIfExists(apolloClientName: string) {
+        if (this.apollo.use(apolloClientName)) {
+            this.apollo.removeClient(apolloClientName);
+        }
+    }
+
     private get contextRoot() {
         return this.appConfigService.get('bpmHost', '');
     }
@@ -155,10 +161,13 @@ export class WebSocketService {
         this.wsLink = new GraphQLWsLink(
             createClient({
                 url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
-                connectionParams: {
+                connectionParams: () => ({
                     Authorization: 'Bearer ' + this.authService.getToken()
-                },
+                }),
                 on: {
+                    closed: () => {
+                        this.removeApolloClientIfExists(options.apolloClientName);
+                    },
                     error: () => {
                         this.apollo.removeClient(options.apolloClientName);
                         this.initSubscriptions(options);
