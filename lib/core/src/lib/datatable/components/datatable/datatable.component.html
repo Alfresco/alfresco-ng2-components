@@ -314,8 +314,7 @@
                                 *ngSwitchCase="'date'"
                                 class="adf-cell-value adf-cell-date"
                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
-                                [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') "
-                            >
+                                [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">
                                 <adf-date-cell class="adf-datatable-center-date-column-ie"
                                     [data]="data"
                                     [column]="col"
