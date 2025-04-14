@@ -18,21 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    AppConfigService,
-    AppConfigValues,
-    DownloadService,
-    ErrorWidgetComponent,
-    FormService,
-    ThumbnailService
-} from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
 import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
-import {
-    AlfrescoEndpointRepresentation,
-    Node,
-    NodeChildAssociation,
-    RelatedContentRepresentation
-} from '@alfresco/js-api';
+import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, zip } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -79,6 +67,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
+    isStartProcessPage = false;
     private tempFilesList = [];
 
     private readonly destroyRef = inject(DestroyRef);
@@ -101,7 +90,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     ngOnInit() {
         super.ngOnInit();
-
+        this.isStartProcessPage = this.router.url.split('?')[0].includes('start-process');
         if (Array.isArray(this.field.value) && this.isFileSourceConfigured()) {
             this.tempFilesList.push(...this.field.value);
         }
@@ -185,7 +174,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     onAttachFileClicked(file: any) {
-        if (file.isExternal || !file.contentAvailable) {
+        if (file.isExternal || (!file.sourceId && (this.isStartProcessPage || !file.contentAvailable))) {
             return;
         }
         if (this.isTemporaryFile(file)) {
@@ -292,16 +281,12 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             );
     }
 
-
     private updateNodesParams(): void {
-        this.router.navigate(
-            [],
-            {
-                relativeTo: this.activatedRoute,
-                queryParams: { nodes: this.tempFilesList.map(file => file.id).join(',') },
-                queryParamsHandling: 'merge'
-            }
-        );
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { nodes: this.tempFilesList.map((file) => file.id).join(',') },
+            queryParamsHandling: 'merge'
+        });
     }
 
     private getDomainHost(urlToCheck: string): string {

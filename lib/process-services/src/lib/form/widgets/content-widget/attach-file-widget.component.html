@@ -83,7 +83,7 @@
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
                 <button
                     id="{{ 'file-' + file.id + '-show-file' }}"
-                    [disabled]="file.isExternal || !file.contentAvailable || !file.mimeType"
+                    [disabled]="file.isExternal || !file.mimeType || (!file.sourceId && (isStartProcessPage || !file.contentAvailable))"
                     mat-menu-item
                     (click)="onAttachFileClicked(file)"
                 >
