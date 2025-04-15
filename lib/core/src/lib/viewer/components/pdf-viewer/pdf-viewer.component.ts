@@ -46,13 +46,13 @@ import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+import * as pdfjsLib from 'pdfjs-dist';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
-declare const pdfjsLib: any;
-
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
+export const PDFJS_MODULE = new InjectionToken('PDFJS_MODULE', { factory: () => pdfjsLib });
 export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => PDFViewer });
 
 @Component({
@@ -152,6 +152,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private renderingQueueServices = inject(RenderingQueueServices);
     private appConfigService = inject(AppConfigService);
     private pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
+    private pdfjsLib = inject(PDFJS_MODULE);
 
     constructor() {
         // needed to preserve "this" context
@@ -228,9 +229,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
+        this.pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
 
-        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
+        this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);

@@ -26,7 +26,8 @@ import { EventMock } from '../../../mock';
 import { NoopAuthModule, NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
-import { PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
+import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
+import pdfjsLibMock from '../mock/pdfjs-lib.mock';
 
 declare const pdfjsLib: any;
 
@@ -411,7 +412,17 @@ describe('Test PdfViewer - User interaction', () => {
 
     beforeEach(fakeAsync(() => {
         pdfViewerSpy = jasmine.createSpy('PDFViewer').and.returnValue({
-            setDocument: jasmine.createSpy(),
+            setDocument: jasmine.createSpy().and.returnValue({
+                loadingTask: () => ({
+                    destroy: () => Promise.resolve()
+                }),
+                promise: new Promise((resolve) => {
+                    resolve({
+                        numPages: 6,
+                        getPage: () => 'fakePage'
+                    });
+                })
+            }),
             forceRendering: jasmine.createSpy(),
             update: jasmine.createSpy(),
             currentScaleValue: 1,
@@ -429,7 +440,8 @@ describe('Test PdfViewer - User interaction', () => {
                     }
                 },
                 RenderingQueueServices,
-                { provide: PDFJS_VIEWER_MODULE, useValue: pdfViewerSpy }
+                { provide: PDFJS_VIEWER_MODULE, useValue: pdfViewerSpy },
+                { provide: PDFJS_MODULE, useValue: pdfjsLibMock }
             ]
         });
 
