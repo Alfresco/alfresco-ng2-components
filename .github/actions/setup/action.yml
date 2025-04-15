@@ -19,24 +19,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: install NPM
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
-        with:
-          node-version-file: '.nvmrc'
-          cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
         uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@a3d5beb67a8b8d96398435e01686a9a9185380ab # v8.18.0
       - name: load "NPM TAG"
         uses: ./.github/actions/set-npm-tag
-      - name: pip cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        if: ${{ inputs.enable-cache == 'true' }}
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}
       - name: Cache node modules
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
         with:
