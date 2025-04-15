@@ -200,20 +200,20 @@ describe('ViewerComponent', () => {
 
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'fake-test-file.pdf';
-            component.ngOnChanges();
             fixture.detectChanges();
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(testingUtils.getByCSS('.adf-viewer-render-content-pdf')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         });
 
         it('should  extension file png be loaded', (done) => {
             component.urlFile = 'fake-url-file.png';
-            component.ngOnChanges();
             fixture.detectChanges();
+            component.ngOnChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -372,7 +372,7 @@ describe('ViewerComponent', () => {
 
             fixture.getDeferBlocks().then(() => {
                 fixture.detectChanges();
-                expect(testingUtils.getByCSS('.adf-viewer-render-content-pdf')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         }, 25000);
@@ -384,7 +384,7 @@ describe('ViewerComponent', () => {
             component.ngOnChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(testingUtils.getByCSS('.adf-viewer-render-content-pdf')).not.toBeNull();
+                expect(testingUtils.getByCSS('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         }, 25000);
