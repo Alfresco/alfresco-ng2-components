@@ -24,8 +24,7 @@ jobs:
         run: |
           BASE_REF="${{ github.event.pull_request.base.ref }}"
           echo "Base ref is $BASE_REF"
-          AFFECTED_BUILD=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=stories)
-          AFFECTED_UNIT=$(npx nx show projects --affected --target=test --base=origin/$BASE_REF --select=projects --plain --exclude=cli,stories,eslint-angular)
+          AFFECTED_BUILD=$(npx nx show projects --affected --target=build --base=origin/$BASE_REF --select=projects --plain --exclude=stories)
           echo "Affected projects for BUILD : $AFFECTED_BUILD"
           BUILD_MATRIX_JSON=$(echo $AFFECTED_BUILD | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
           BUILD_MATRIX_JSON=$(echo "$BUILD_MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
