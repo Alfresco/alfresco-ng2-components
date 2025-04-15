@@ -182,7 +182,6 @@ jobs:
           npm ci
           npx nx run js-api:bundle
           npx nx run cli:bundle
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   lint:
     name: "Lint"
