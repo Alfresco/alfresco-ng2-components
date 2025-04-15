@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, ViewEncapsulation } from '@angular/core';
 import {
     AdfDateFnsAdapter,
     AppConfigService,
@@ -74,7 +74,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
     styleUrls: ['./task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {
+export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> implements AfterViewInit {
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
      * "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group
@@ -279,7 +279,9 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         private viewModelCreator: VariableMapperService
     ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
+    }
 
+    ngAfterViewInit() {
         combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
                 tap(() => this.isReloadingSubject$.next(true)),
