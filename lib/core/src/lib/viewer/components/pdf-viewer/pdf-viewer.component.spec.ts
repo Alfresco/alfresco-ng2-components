@@ -131,7 +131,7 @@ describe('Test PdfViewer component', () => {
         await fixture.whenStable();
     });
 
-    afterEach(() => {
+    afterAll(() => {
         fixture.destroy();
     });
 
@@ -172,7 +172,6 @@ describe('Test PdfViewer component', () => {
 
         afterEach(() => {
             document.body.removeChild(elementUrlTestComponent);
-            fixture.destroy();
         });
 
         it('should Canvas be present', async () => {
@@ -218,7 +217,6 @@ describe('Test PdfViewer component', () => {
 
         afterEach(() => {
             document.body.removeChild(elementBlobTestComponent);
-            fixture.destroy();
         });
 
         it('should Canvas be present', async () => {
@@ -375,6 +373,10 @@ describe('Test PdfViewer - Zoom customization', () => {
         component = fixture.componentInstance;
     });
 
+    afterAll(() => {
+        fixture.destroy();
+    });
+
     it('should use the custom zoom if it is present in the app.config', () => {
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
@@ -443,6 +445,10 @@ describe('Test PdfViewer - User interaction', () => {
 
         flush();
     }));
+
+    afterAll(() => {
+        fixture.destroy();
+    });
 
     it('should init the viewer with annotation mode disabled', () => {
         expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 0 }));

@@ -39,8 +39,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { catchError, delay } from 'rxjs/operators';
+import { from, Subject, switchMap } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
 import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
@@ -163,9 +163,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$
             .pipe(
                 catchError(() => null),
-                delay(700)
+                switchMap(() => from(this.destroyPdJsWorker()))
             )
-            .subscribe(() => this.destroyPdJsWorker());
+            .subscribe(() => {});
     }
 
     getUserScaling(): number {
@@ -303,8 +303,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$.complete();
     }
 
-    private destroyPdJsWorker() {
-        this.loadingTask.destroy();
+    private async destroyPdJsWorker() {
+        if (this.loadingTask.destroy) {
+            await this.loadingTask.destroy();
+        }
         this.loadingTask = null;
     }
 

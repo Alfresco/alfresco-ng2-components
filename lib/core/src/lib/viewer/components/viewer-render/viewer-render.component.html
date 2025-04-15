@@ -26,15 +26,19 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'pdf'">
-                <adf-pdf-viewer [thumbnailsTemplate]="thumbnailsTemplate"
-                                [allowThumbnails]="allowThumbnails"
-                                [blobFile]="blobFile"
-                                [urlFile]="urlFile"
-                                [fileName]="internalFileName"
-                                [cacheType]="cacheTypeForContent"
-                                (pagesLoaded)="isContentReady = true"
-                                (close)="onClose()"
-                                (error)="onUnsupportedFile()" />
+                <div class="adf-viewer-render-content-pdf">
+                @defer {
+                    <adf-pdf-viewer [thumbnailsTemplate]="thumbnailsTemplate"
+                                    [allowThumbnails]="allowThumbnails"
+                                    [blobFile]="blobFile"
+                                    [urlFile]="urlFile"
+                                    [fileName]="internalFileName"
+                                    [cacheType]="cacheTypeForContent"
+                                    (pagesLoaded)="isContentReady = true"
+                                    (close)="onClose()"
+                                    (error)="onUnsupportedFile()" />
+                    }
+                </div>
             </ng-container>
 
             <ng-container *ngSwitchCase="'image'">

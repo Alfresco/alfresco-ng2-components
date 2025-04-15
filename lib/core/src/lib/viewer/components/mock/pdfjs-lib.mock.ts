@@ -19,6 +19,9 @@ export default {
     GlobalWorkerOptions: {},
     getDocument() {
         return {
+            loadingTask: () => ({
+                destroy: () => Promise.resolve()
+            }),
             promise: new Promise((resolve) => {
                 resolve({
                     numPages: 6,
