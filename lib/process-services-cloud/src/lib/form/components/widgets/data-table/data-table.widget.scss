@@ -1,3 +1,11 @@
 .adf-data-table-widget-failed-message {
     margin: 10px;
 }
+
+.adf-preview-placeholder {
+    background-color: var(--adf-theme-mat-grey-color-50);
+    height: 100%;
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 10px;
+}
