@@ -24,7 +24,6 @@ import { DiagramEventComponent } from './diagram-event.component';
 
 @Component({
     selector: 'diagram-end-event',
-    standalone: true,
     imports: [DiagramEventComponent],
     templateUrl: './diagram-end-event.component.html'
 })

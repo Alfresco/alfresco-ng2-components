@@ -24,7 +24,6 @@ import { DiagramIconMuleTaskComponent } from '../icons/diagram-icon-mule-task.co
 
 @Component({
     selector: 'diagram-mule-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconMuleTaskComponent],
     templateUrl: './diagram-mule-task.component.html'
 })

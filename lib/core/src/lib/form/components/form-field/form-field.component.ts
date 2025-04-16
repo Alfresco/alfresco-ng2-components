@@ -41,7 +41,6 @@ declare const adf: any;
 
 @Component({
     selector: 'adf-form-field',
-    standalone: true,
     templateUrl: './form-field.component.html',
     encapsulation: ViewEncapsulation.None,
     imports: [FieldStylePipe]

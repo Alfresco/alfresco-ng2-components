@@ -51,7 +51,6 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
 
 @Component({
     selector: 'adf-version-list',
-    standalone: true,
     imports: [
         CommonModule,
         MatProgressBarModule,

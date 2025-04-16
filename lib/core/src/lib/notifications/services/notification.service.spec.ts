@@ -28,7 +28,8 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 @Component({
     template: '',
-    providers: [NotificationService]
+    providers: [NotificationService],
+    standalone: false
 })
 class ProvidesNotificationServiceComponent {
     constructor(public notificationService: NotificationService) {}

@@ -26,7 +26,8 @@ import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
-    template: ``
+    template: ``,
+    standalone: false
 })
 class TestPaginatedComponent implements PaginatedComponent {
     private _pagination: BehaviorSubject<PaginationModel>;

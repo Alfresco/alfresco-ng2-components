@@ -53,7 +53,6 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [CommonModule, SidebarActionMenuComponent, MatIconModule, MatMenuModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `

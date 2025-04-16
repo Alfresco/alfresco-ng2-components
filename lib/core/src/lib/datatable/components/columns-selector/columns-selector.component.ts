@@ -31,7 +31,6 @@ import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 
 @Component({
     selector: 'adf-datatable-column-selector',
-    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,

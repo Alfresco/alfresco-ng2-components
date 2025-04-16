@@ -27,9 +27,8 @@ import { By } from '@angular/platform-browser';
 describe('ClaimTaskCloudDirective', () => {
     @Component({
         selector: 'adf-cloud-claim-test-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock" (error)="onError($event)"></button>'
+        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock" (error)="onError($event)">Task</button>'
     })
     class TestComponent {
         taskMock = 'test1234';
@@ -97,9 +96,8 @@ describe('ClaimTaskCloudDirective', () => {
 describe('Claim Task Directive validation errors', () => {
     @Component({
         selector: 'adf-cloud-claim-no-fields-validation-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
-        template: '<button adf-cloud-claim-task></button>'
+        template: '<button adf-cloud-claim-task>Task</button>'
     })
     class ClaimTestMissingInputDirectiveComponent {
         appName = 'simple-app';
@@ -112,9 +110,8 @@ describe('Claim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-no-taskid-validation-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
-        template: '<button adf-cloud-claim-task [appName]="appName"></button>'
+        template: '<button adf-cloud-claim-task [appName]="appName">Task</button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {
         appName = 'simple-app';
@@ -125,9 +122,8 @@ describe('Claim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-undefined-appname-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
+        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined">Task</button>'
     })
     class ClaimTestInvalidAppNameUndefinedDirectiveComponent {
         appNameUndefined = undefined;
@@ -139,9 +135,8 @@ describe('Claim Task Directive validation errors', () => {
 
     @Component({
         selector: 'adf-cloud-claim-null-appname-component',
-        standalone: true,
         imports: [ClaimTaskCloudDirective],
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
+        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull">Task</button>'
     })
     class ClaimTestInvalidAppNameNullDirectiveComponent {
         appNameNull = null;

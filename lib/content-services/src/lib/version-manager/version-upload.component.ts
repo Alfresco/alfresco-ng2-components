@@ -32,7 +32,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-version-upload',
-    standalone: true,
     imports: [
         CommonModule,
         MatRadioModule,

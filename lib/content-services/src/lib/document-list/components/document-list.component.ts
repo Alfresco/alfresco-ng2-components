@@ -92,7 +92,6 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
 @Component({
     selector: 'adf-document-list',
-    standalone: true,
     imports: [
         CommonModule,
         DataTableComponent,

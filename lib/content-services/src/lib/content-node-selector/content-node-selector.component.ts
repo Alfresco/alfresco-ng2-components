@@ -41,7 +41,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-content-node-selector',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

@@ -1925,7 +1925,6 @@ describe('DocumentList', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
     template: `
         <adf-document-list #customDocumentList>

@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-node-path-column',
-    standalone: true,
     imports: [CommonModule],
     template: `
         <span class="adf-user-name-column adf-datatable-cell-value" title="{{ displayText$ | async }}">

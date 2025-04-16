@@ -52,7 +52,6 @@ import { MatInputModule } from '@angular/material/input';
         { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
     selector: 'adf-card-view-dateitem',
-    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,

@@ -45,7 +45,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
-    standalone: true,
     imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
     template: ` <adf-cloud-task-list #taskListCloud>
         <data-columns>
@@ -74,7 +73,6 @@ class CustomTaskListComponent {
 }
 
 @Component({
-    standalone: true,
     imports: [CustomEmptyContentTemplateDirective, TaskListCloudComponent],
     template: `
         <adf-cloud-task-list>
@@ -87,7 +85,6 @@ class CustomTaskListComponent {
 class EmptyTemplateComponent {}
 
 @Component({
-    standalone: true,
     imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
     template: ` <adf-cloud-task-list>
         <data-columns>

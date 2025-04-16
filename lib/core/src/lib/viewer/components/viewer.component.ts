@@ -68,7 +68,6 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
 
 @Component({
     selector: 'adf-viewer',
-    standalone: true,
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: { class: 'adf-viewer' },

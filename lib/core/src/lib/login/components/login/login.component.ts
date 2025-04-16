@@ -57,7 +57,6 @@ interface LoginFormValues {
 
 @Component({
     selector: 'adf-login',
-    standalone: true,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,

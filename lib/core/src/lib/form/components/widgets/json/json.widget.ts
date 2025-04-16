@@ -25,7 +25,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    standalone: true,
     templateUrl: './json.widget.html',
     styleUrls: ['./json.widget.scss'],
     host: {

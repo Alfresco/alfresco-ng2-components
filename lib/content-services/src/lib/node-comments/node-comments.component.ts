@@ -21,7 +21,6 @@ import { NodeCommentsService } from './services/node-comments.service';
 
 @Component({
     selector: 'adf-node-comments',
-    standalone: true,
     imports: [CommentsComponent],
     templateUrl: './node-comments.component.html',
     encapsulation: ViewEncapsulation.None,

@@ -32,7 +32,8 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
                 <span id="custom-no-result">{{ customMessage }}</span>
             </adf-empty-search-result>
         </adf-search-control>
-    `
+    `,
+    standalone: false
 })
 export class SimpleSearchTestCustomEmptyComponent {
     customMessage = '';

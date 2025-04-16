@@ -25,7 +25,6 @@ import { DiagramComponent } from '../../diagram/components/diagram.component';
 
 @Component({
     selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
-    standalone: true,
     imports: [CommonModule, ReactiveFormsModule, DropdownWidgetAnalyticsComponent, DiagramComponent],
     templateUrl: './analytics-report-heat-map.component.html'
 })

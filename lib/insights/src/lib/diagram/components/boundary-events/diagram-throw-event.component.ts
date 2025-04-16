@@ -26,7 +26,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-throw-event',
-    standalone: true,
     imports: [RaphaelCircleDirective, DiagramContainerIconEventTaskComponent, DiagramTooltipComponent],
     templateUrl: './diagram-throw-event.component.html'
 })

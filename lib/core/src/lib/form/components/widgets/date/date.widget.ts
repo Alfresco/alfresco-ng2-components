@@ -36,7 +36,6 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
 
 @Component({
     selector: 'date-widget',
-    standalone: true,
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }

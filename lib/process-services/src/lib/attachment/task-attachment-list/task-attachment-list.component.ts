@@ -45,7 +45,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-task-attachment-list',
-    standalone: true,
     imports: [
         CommonModule,
         MatProgressSpinnerModule,

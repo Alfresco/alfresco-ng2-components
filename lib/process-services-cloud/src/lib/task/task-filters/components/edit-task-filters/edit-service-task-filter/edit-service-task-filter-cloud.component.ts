@@ -40,7 +40,6 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
-    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,

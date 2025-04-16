@@ -24,7 +24,6 @@ import { DiagramIconUserTaskComponent } from '../icons/diagram-icon-user-task.co
 
 @Component({
     selector: 'diagram-user-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconUserTaskComponent],
     templateUrl: './diagram-user-task.component.html'
 })

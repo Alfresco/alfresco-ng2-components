@@ -23,7 +23,6 @@ import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 
 @Component({
     selector: 'adf-trashcan-name-column',
-    standalone: true,
     imports: [CommonModule, NodeNameTooltipPipe],
     template: `
         <ng-container *ngIf="!isLibrary">

@@ -35,7 +35,6 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
 
 @Component({
     selector: 'amount-widget',
-    standalone: true,
     templateUrl: './amount.widget.html',
     styleUrls: ['./amount.widget.scss'],
     host: {

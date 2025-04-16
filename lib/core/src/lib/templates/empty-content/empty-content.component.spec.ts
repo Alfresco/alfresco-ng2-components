@@ -25,7 +25,6 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component',
-    standalone: true,
     imports: [EmptyContentComponent],
     template: `
         <adf-empty-content icon="delete" [title]="'CUSTOM_TITLE'" [subtitle]="'CUSTOM_SUBTITLE'">

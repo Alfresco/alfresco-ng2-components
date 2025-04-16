@@ -29,7 +29,6 @@ declare const pdfjsLib: any;
 
 @Component({
     selector: 'adf-pdf-viewer-password-dialog',
-    standalone: true,
     templateUrl: './pdf-viewer-password-dialog.html',
     styleUrls: ['./pdf-viewer-password-dialog.scss'],
     imports: [MatDialogModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, NgIf, MatButtonModule],

@@ -47,7 +47,6 @@ const PADDING_HEIGHT: number = 60;
 
 @Component({
     selector: 'adf-diagram',
-    standalone: true,
     imports: [
         CommonModule,
         DiagramStartEventComponent,

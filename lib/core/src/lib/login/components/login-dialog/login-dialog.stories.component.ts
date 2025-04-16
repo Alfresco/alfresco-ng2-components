@@ -24,12 +24,8 @@ import { LoginDialogComponentData } from './login-dialog-component-data.interfac
 
 @Component({
     selector: 'adf-login-dialog-storybook',
-    standalone: true,
     imports: [MatButtonModule],
-    template: `
-        <button mat-raised-button (click)="openLoginDialog()">
-            Open dialog
-        </button>`
+    template: ` <button mat-raised-button (click)="openLoginDialog()">Open dialog</button>`
 })
 export class LoginDialogStorybookComponent {
     @Output() executeSubmit = new EventEmitter<string>();

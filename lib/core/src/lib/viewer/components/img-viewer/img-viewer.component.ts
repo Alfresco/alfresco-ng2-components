@@ -40,7 +40,6 @@ import { ToolbarComponent } from '../../../toolbar';
 
 @Component({
     selector: 'adf-img-viewer',
-    standalone: true,
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },

@@ -23,7 +23,6 @@ import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'adf-form-section',
-    standalone: true,
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./form-section.component.scss'],

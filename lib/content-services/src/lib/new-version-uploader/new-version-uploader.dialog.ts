@@ -28,7 +28,6 @@ import { VersionListComponent } from '../version-manager/version-list.component'
 
 @Component({
     selector: 'adf-new-version-uploader-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

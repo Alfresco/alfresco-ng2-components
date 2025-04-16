@@ -38,7 +38,6 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
 
 @Component({
     selector: 'adf-apps',
-    standalone: true,
     imports: [
         CommonModule,
         MatListModule,

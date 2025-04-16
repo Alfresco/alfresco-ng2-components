@@ -33,7 +33,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-notification-history',
-    standalone: true,
     templateUrl: 'notification-history.component.html',
     styleUrls: ['./notification-history.component.scss'],
     imports: [

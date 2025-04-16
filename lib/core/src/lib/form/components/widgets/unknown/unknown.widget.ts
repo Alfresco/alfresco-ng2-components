@@ -25,7 +25,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'unknown-widget',
-    standalone: true,
     template: `
         <mat-list class="adf-unknown-widget">
             <mat-list-item>

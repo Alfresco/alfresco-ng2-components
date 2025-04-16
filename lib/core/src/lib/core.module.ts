@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
@@ -137,12 +137,15 @@ export class CoreModule {
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
                 MomentDateAdapter,
                 StoragePrefixFactory,
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: loadAppConfig,
-                    deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
-                    multi: true
-                },
+                provideAppInitializer(() => {
+                    const initializerFn = loadAppConfig(
+                        inject(AppConfigService),
+                        inject(StorageService),
+                        inject(AdfHttpClient),
+                        inject(StoragePrefixFactory)
+                    );
+                    return initializerFn();
+                }),
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
                 { provide: Authentication, useClass: AuthenticationService },
                 {

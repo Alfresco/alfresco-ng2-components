@@ -66,7 +66,6 @@ class UrlTestPasswordComponent {
 }
 
 @Component({
-    standalone: true,
     imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile" /> `
 })
