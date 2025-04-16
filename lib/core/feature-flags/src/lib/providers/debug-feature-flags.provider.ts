@@ -22,7 +22,8 @@ import {
     QaFeaturesHelperConfig,
     WritableFeaturesServiceConfig,
     WritableFeaturesServiceConfigToken,
-    WritableFeaturesServiceToken
+    WritableFeaturesServiceToken,
+    IFeaturesService
 } from '../interfaces/features.interface';
 import { StorageFeaturesService } from '../services/storage-features.service';
 import { DebugFeaturesService } from '../services/debug-features.service';
@@ -43,13 +44,13 @@ export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig &
         { provide: QaFeaturesHelper, useClass: QaFeaturesHelper },
         provideAppInitializer(() => {
             const initializerFn = (
-                (featuresService: StorageFeaturesService) => () =>
+                (featuresService: IFeaturesService) => () =>
                     featuresService.init()
             )(inject(WritableFeaturesServiceToken));
             return initializerFn();
         }),
         provideAppInitializer(() => {
-            const initializerFn = ((qaFeaturesHelper: QaFeaturesHelper, document: Document & { [key: string]: QaFeaturesHelper }) => () => {
+            const initializerFn = ((qaFeaturesHelper: QaFeaturesHelper, document: Document) => () => {
                 document[config.helperExposeKeyOnDocument ?? 'featureOverrides'] = qaFeaturesHelper;
             })(inject(QaFeaturesHelper), inject(DOCUMENT));
             return initializerFn();
