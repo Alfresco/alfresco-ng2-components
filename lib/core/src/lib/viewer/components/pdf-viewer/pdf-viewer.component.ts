@@ -47,13 +47,13 @@ import { RenderingQueueServices } from '../../services/rendering-queue.services'
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
-import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
 export const PDFJS_MODULE = new InjectionToken('PDFJS_MODULE', { factory: () => pdfjsLib });
-export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => PDFViewer });
+export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => pdfjsViewer });
 
 @Component({
     selector: 'adf-pdf-viewer',
@@ -139,7 +139,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
-    private eventBus = new EventBus();
+    private pdfjsLib = inject(PDFJS_MODULE);
+    private pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
+
+    private eventBus = new this.pdfjsViewer.EventBus();
     private pdfjsDefaultOptions = {
         disableAutoFetch: true,
         disableStream: true,
@@ -151,8 +154,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private dialog = inject(MatDialog);
     private renderingQueueServices = inject(RenderingQueueServices);
     private appConfigService = inject(AppConfigService);
-    private pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
-    private pdfjsLib = inject(PDFJS_MODULE);
 
     constructor() {
         // needed to preserve "this" context
@@ -262,7 +263,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const container = this.getDocumentContainer();
 
         if (viewer && container) {
-            this.pdfViewer = new this.pdfjsViewer({
+            this.pdfViewer = new this.pdfjsViewer.PDFViewer({
                 container,
                 viewer,
                 renderingQueue: this.renderingQueueServices,
