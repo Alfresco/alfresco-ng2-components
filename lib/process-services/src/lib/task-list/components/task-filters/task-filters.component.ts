@@ -140,16 +140,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                     const migratedFilters = this.migrateObsoleteFilters(res);
                     if (migratedFilters.length > 0) {
                         forkJoin(migratedFilters).subscribe(() => {
-                            this.resetFilter();
-                            this.filters = res;
-                            this.selectFilter(this.filterParam);
-                            this.success.emit(res);
+                            this.setTaskFilters(res);
                         });
                     } else {
-                        this.resetFilter();
-                        this.filters = res;
-                        this.selectFilter(this.filterParam);
-                        this.success.emit(res);
+                        this.setTaskFilters(res);
                     }
                 }
             },
@@ -183,10 +177,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private createFiltersByAppId(appId?: number): void {
         this.taskFilterService.createDefaultFilters(appId).subscribe(
             (resDefault) => {
-                this.resetFilter();
-                this.filters = resDefault;
-                this.selectFilter(this.filterParam);
-                this.success.emit(resDefault);
+                this.setTaskFilters(resDefault);
             },
             (errDefault: any) => {
                 this.error.emit(errDefault);
@@ -312,5 +303,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             }
         });
         return migratedFilters;
+    }
+
+    private setTaskFilters(taskFilters: UserTaskFilterRepresentation[]): void {
+        this.resetFilter();
+        this.filters = taskFilters;
+        this.selectFilter(this.filterParam);
+        this.success.emit(taskFilters);
     }
 }
