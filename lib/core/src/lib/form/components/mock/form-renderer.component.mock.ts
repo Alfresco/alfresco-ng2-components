@@ -2345,3 +2345,70 @@ export const mockSectionVisibilityForm = {
         variables: []
     }
 };
+
+export const displayDynamicTableMock = {
+    id: 1,
+    name: 'Dynamic Table Form',
+    processDefinitionId: 'TestDynamicTable:0:00000',
+    processDefinitionName: 'Test Dynamic Table',
+    processDefinitionKey: 'TestDynamicTable',
+    taskId: 'fake-id',
+    taskName: 'Task Name',
+    taskDefinitionKey: 'sid-fake-id',
+    tabs: [],
+    fields: [
+        {
+            fieldType: 'FormFieldRepresentation',
+            id: 'dynamic-table-id',
+            name: 'Label1',
+            type: 'readonly',
+            value: [
+                {
+                    name: 'name',
+                    desc: 'desc'
+                }
+            ],
+            required: false,
+            readOnly: false,
+            overrideId: false,
+            colspan: 1,
+            placeholder: null,
+            minLength: 0,
+            maxLength: 0,
+            className: null,
+            params: {
+                existingColspan: 1,
+                maxColspan: 1,
+                field: {
+                    id: 'dynamic-table-id',
+                    name: 'Label1',
+                    type: 'dynamic-table',
+                    columnDefinitions: [
+                        {
+                            id: 'name',
+                            name: 'Name',
+                            type: 'String'
+                        },
+                        {
+                            id: 'desc',
+                            name: 'Desc',
+                            type: 'String'
+                        }
+                    ]
+                }
+            },
+            layout: {
+                row: -1,
+                column: -1,
+                colspan: 2
+            },
+            sizeX: 2,
+            sizeY: 2,
+            row: -1,
+            col: -1
+        }
+    ],
+    outcomes: [],
+    metadata: {},
+    variables: []
+};
