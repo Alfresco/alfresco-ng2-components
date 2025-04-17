@@ -30,8 +30,8 @@ Manage Task Filters, which are pre-configured Task Instance queries.
     -   _appId:_ `number`  - ID of the target app
     -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** `UserTaskFilterRepresentation` - The newly created filter
--   **getInvolvedTasksFilterInstance**(appId: `number`, index?: `number`): `UserTaskFilterRepresentation`<br/>
-    Creates and returns a filter for "Involved" task instances.
+-   **getOverdueTasksFilterInstance**(appId: `number`, index?: `number`): `UserTaskFilterRepresentation`<br/>
+    Creates and returns a filter for "Overdue" task instances.
     -   _appId:_ `number`  - ID of the target app
     -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** `UserTaskFilterRepresentation` - The newly created filter
@@ -40,8 +40,8 @@ Manage Task Filters, which are pre-configured Task Instance queries.
     -   _appId:_ `number`  - ID of the target app
     -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** `UserTaskFilterRepresentation` - The newly created filter
--   **getQueuedTasksFilterInstance**(appId: `number`, index?: `number`): `UserTaskFilterRepresentation`<br/>
-    Creates and returns a filter for "Queued Tasks" task instances.
+-   **getUnassignedTasksFilterInstance**(appId: `number`, index?: `number`): `UserTaskFilterRepresentation`<br/>
+    Creates and returns a filter for "Unassigned Tasks" task instances.
     -   _appId:_ `number`  - ID of the target app
     -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** `UserTaskFilterRepresentation` - The newly created filter
@@ -55,6 +55,11 @@ Manage Task Filters, which are pre-configured Task Instance queries.
     -   _taskName:_ `string`  - Name of the filter
     -   _appId:_ `number`  - (Optional) ID of the app for the filter
     -   **Returns** `ObservableUserTaskFilterRepresentation>` - Details of task filter
+-   **updateTaskFilter**(filterId: `number`, updatedFilter: `UserTaskFilterRepresentation`): `Observable<UserTaskFilterRepresentation>`<br/>
+    Updates the instance of the filter.
+    -   filterId:_ `number`  - ID of a filter to update
+    -   updatedFilter:_ `UserTaskFilterRepresentation`  - new filter body
+    -   **Returns** `Observable<UserTaskFilterRepresentation>` - Updated filter instance.
 -   **getTaskListFilters**(appId?: `number`): `UserTaskFilterRepresentation[]>`<br/>
     Gets all task filters for a process app.
     -   _appId:_ `number`  - (Optional) Optional ID for a specific app
@@ -84,16 +89,16 @@ The response is an array of `UserTaskFilterRepresentation` objects:
     filters:  
         0: {id: 10, appId: 2, name: "Involved Tasks", recent: true, icon: "glyphicon-align-left", …}
         1: {id: 9, appId: 2, name: "My Tasks", recent: false, icon: "glyphicon-inbox", …}
-        2: {id: 11, appId: 2, name: "Queued Tasks", recent: false, icon: "glyphicon-record", …}
+        2: {id: 11, appId: 2, name: "Unassigned Tasks", recent: false, icon: "glyphicon-record", …}
         3: {id: 12, appId: 2, name: "Completed Tasks", recent: false, icon: "glyphicon-ok-sign", …}
         4: {id: 4004, appId: 2, name: "Completed Tasks", recent: false, icon: "glyphicon-ok-sign", …}
         5: {id: 4005, appId: 2, name: "My Tasks", recent: false, icon: "glyphicon-inbox", …}
-        6: {id: 4006, appId: 2, name: "Queued Tasks", recent: false, icon: "glyphicon-record", …}
+        6: {id: 4006, appId: 2, name: "Unassigned Tasks", recent: false, icon: "glyphicon-record", …}
         7: {id: 4007, appId: 2, name: "Involved Tasks", recent: false, icon: "glyphicon-align-left", …}
 ```
 
 These filters can now be used to get matching task instances for the process app with ID 2,
-such as 'Involved Tasks', 'My Tasks', 'Queued Tasks', and 'Completed Tasks'.
+such as 'Involved Tasks', 'My Tasks', 'Unassigned Tasks', and 'Completed Tasks'.
 
 ### Importing
 

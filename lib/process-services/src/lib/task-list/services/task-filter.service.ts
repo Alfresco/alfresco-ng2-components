@@ -43,25 +43,25 @@ export class TaskFilterService {
         const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
         const myTaskObservable = this.addFilter(myTasksFilter);
 
-        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId, 1);
-        const involvedObservable = this.addFilter(involvedTasksFilter);
+        const overdueTasksFilter = this.getOverdueTasksFilterInstance(appId, 1);
+        const overdueObservable = this.addFilter(overdueTasksFilter);
 
-        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId, 2);
-        const queuedObservable = this.addFilter(queuedTasksFilter);
+        const unassignedTasksFilter = this.getUnassignedTasksFilterInstance(appId, 2);
+        const unassignedObservable = this.addFilter(unassignedTasksFilter);
 
         const completedTasksFilter = this.getCompletedTasksFilterInstance(appId, 3);
         const completeObservable = this.addFilter(completedTasksFilter);
 
         return new Observable((observer) => {
-            forkJoin([myTaskObservable, involvedObservable, queuedObservable, completeObservable]).subscribe((res) => {
+            forkJoin([myTaskObservable, overdueObservable, unassignedObservable, completeObservable]).subscribe((res) => {
                 const filters: UserTaskFilterRepresentation[] = [];
                 res.forEach((filter) => {
                     if (!this.isFilterAlreadyExisting(filters, filter.name)) {
-                        if (filter.name === involvedTasksFilter.name) {
+                        if (filter.name === overdueTasksFilter.name) {
                             filters.push(
                                 new UserTaskFilterRepresentation({
                                     ...filter,
-                                    filter: involvedTasksFilter.filter,
+                                    filter: overdueTasksFilter.filter,
                                     appId
                                 })
                             );
@@ -73,11 +73,11 @@ export class TaskFilterService {
                                     appId
                                 })
                             );
-                        } else if (filter.name === queuedTasksFilter.name) {
+                        } else if (filter.name === unassignedTasksFilter.name) {
                             filters.push(
                                 new UserTaskFilterRepresentation({
                                     ...filter,
-                                    filter: queuedTasksFilter.filter,
+                                    filter: unassignedTasksFilter.filter,
                                     appId
                                 })
                             );
@@ -163,6 +163,17 @@ export class TaskFilterService {
     }
 
     /**
+     * Update a task filter
+     *
+     * @param filterId existing filter id
+     * @param updatedFilter updated filter body
+     * @returns Observable<UserTaskFilterRepresentation>
+     */
+    updateTaskFilter(filterId: number, updatedFilter: UserTaskFilterRepresentation): Observable<UserTaskFilterRepresentation> {
+        return from(this.userFiltersApi.updateUserTaskFilter(filterId, updatedFilter));
+    }
+
+    /**
      * Calls `getUserTaskFilters` from the Alfresco JS API.
      *
      * @param appId ID of the target app
@@ -200,33 +211,33 @@ export class TaskFilterService {
     }
 
     /**
-     * Creates and returns a filter for "Involved" task instances.
+     * Creates and returns a filter for "Overdue" task instances.
      *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getInvolvedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+    getOverdueTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Involved Tasks',
+            name: 'Overdue Tasks',
             appId,
             recent: false,
             icon: 'glyphicon-align-left',
-            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'involved' },
+            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'assignee' },
             index
         });
     }
 
     /**
-     * Creates and returns a filter for "Queued Tasks" task instances.
+     * Creates and returns a filter for "Unassigned Tasks" task instances.
      *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+    getUnassignedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Queued Tasks',
+            name: 'Unassigned Tasks',
             appId,
             recent: false,
             icon: 'glyphicon-record',

@@ -117,6 +117,50 @@ describe('TaskFiltersComponent', () => {
         expect(createDefaultFiltersSpy).toHaveBeenCalledWith(appId);
     });
 
+    it('should migrate obsolete filters to their new instances', () => {
+        const involvedFilter = new UserTaskFilterRepresentation({
+            name: 'Involved Tasks',
+            icon: 'glyphicon-align-left',
+            id: 10,
+            filter: { state: 'open', assignment: 'involved' }
+        });
+        const queuedFilter = new UserTaskFilterRepresentation({
+            name: 'Queued Tasks',
+            icon: 'glyphicon-ok-sign',
+            id: 11,
+            filter: { state: 'open', assignment: 'candidate' }
+        });
+        const taskFilters = [involvedFilter, queuedFilter];
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(taskFilters));
+        spyOn(taskFilterService, 'updateTaskFilter').and.returnValue(of({}));
+        component.getFiltersByAppId(1);
+        fixture.detectChanges();
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledTimes(2);
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(10, taskFilterService.getOverdueTasksFilterInstance(undefined));
+        expect(taskFilterService.updateTaskFilter).toHaveBeenCalledWith(11, taskFilterService.getUnassignedTasksFilterInstance(undefined));
+    });
+
+    it('should not migrate other filters', () => {
+        const myTasksFilter = new UserTaskFilterRepresentation({
+            name: 'My Tasks',
+            icon: 'glyphicon-align-left',
+            id: 10,
+            filter: { state: 'open', assignment: 'assignee' }
+        });
+        const completedFilter = new UserTaskFilterRepresentation({
+            name: 'Completed Tasks',
+            icon: 'glyphicon-ok-sign',
+            id: 11,
+            filter: { state: 'completed', assignment: 'involved' }
+        });
+        const taskFilters = [myTasksFilter, completedFilter];
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(taskFilters));
+        spyOn(taskFilterService, 'updateTaskFilter').and.returnValue(of({}));
+        component.getFiltersByAppId(1);
+        fixture.detectChanges();
+        expect(taskFilterService.updateTaskFilter).not.toHaveBeenCalled();
+    });
+
     it('should return the filter task list, filtered By Name', () => {
         const deployApp = spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(of({} as any));
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
