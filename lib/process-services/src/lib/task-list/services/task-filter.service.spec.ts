@@ -22,6 +22,7 @@ import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-conten
 
 describe('TaskListService', () => {
     let service: TaskFilterService;
+
     const mockTaskFilters = [
         { id: 1, name: 'first one' },
         { id: 2, name: 'second one' },
