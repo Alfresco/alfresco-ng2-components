@@ -28,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
     selector: 'adf-task-filters',
@@ -136,10 +137,20 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                 if (res.length === 0 && this.isFilterListEmpty()) {
                     this.createFiltersByAppId(appId);
                 } else {
-                    this.resetFilter();
-                    this.filters = res;
-                    this.selectFilter(this.filterParam);
-                    this.success.emit(res);
+                    const migratedFilters = this.migrateObsoleteFilters(res);
+                    if (migratedFilters.length > 0) {
+                        forkJoin(migratedFilters).subscribe(() => {
+                            this.resetFilter();
+                            this.filters = res;
+                            this.selectFilter(this.filterParam);
+                            this.success.emit(res);
+                        });
+                    } else {
+                        this.resetFilter();
+                        this.filters = res;
+                        this.selectFilter(this.filterParam);
+                        this.success.emit(res);
+                    }
                 }
             },
             (err: any) => {
@@ -271,5 +282,35 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    /**
+     * Migrate "Involved" and "Queued" filters to "Overdue" and "Unassigned" filters
+     *
+     * @param filters - list of filters to migrate
+     * @returns list of observables for each migrated filter
+     */
+    private migrateObsoleteFilters(filters: UserTaskFilterRepresentation[]): Observable<UserTaskFilterRepresentation>[] {
+        const migratedFilters: Observable<UserTaskFilterRepresentation>[] = [];
+        filters.forEach((filterToMigrate) => {
+            switch (filterToMigrate.name) {
+                case 'Involved Tasks':
+                    migratedFilters.push(
+                        this.taskFilterService.updateTaskFilter(filterToMigrate.id, this.taskFilterService.getOverdueTasksFilterInstance(this.appId))
+                    );
+                    break;
+                case 'Queued Tasks':
+                    migratedFilters.push(
+                        this.taskFilterService.updateTaskFilter(
+                            filterToMigrate.id,
+                            this.taskFilterService.getUnassignedTasksFilterInstance(this.appId)
+                        )
+                    );
+                    break;
+                default:
+                    break;
+            }
+        });
+        return migratedFilters;
     }
 }
