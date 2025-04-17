@@ -237,6 +237,18 @@ describe('DataTableWidgetComponent', () => {
         expect(dataTable).toBeNull();
     });
 
+    it('should display data table placeholder if form is in preview state', () => {
+        widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
+        spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
+        fixture.detectChanges();
+
+        const previewDataTable = getPreview();
+        const dataTablePlaceholder = fixture.nativeElement.querySelector('.adf-preview-placeholder');
+
+        expect(previewDataTable).toBeTruthy();
+        expect(dataTablePlaceholder).toBeTruthy();
+    });
+
     describe('should NOT display error message if', () => {
         it('form is in preview state', () => {
             widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithIncompleteData);
