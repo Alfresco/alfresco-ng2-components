@@ -110,6 +110,12 @@ describe('DynamicTableWidgetComponent', () => {
         expect(row.selected).toBeFalsy();
     });
 
+    it('should set readOnly to true when field type is readonly', () => {
+        widget.field.type = 'readonly';
+        widget.ngOnInit();
+        expect(widget.readOnly).toBeTrue();
+    });
+
     it('should reset selected row', () => {
         const row = { selected: false } as DynamicTableRow;
         widget.content.rows.push(row);

@@ -29,6 +29,7 @@ import {
     customWidgetFormWithVisibility,
     dateWidgetFormVisibilityMock,
     displayBigDecimalWidgetMock,
+    displayDynamicTableMock,
     displayTextWidgetFormVisibilityMock,
     formDateVisibility,
     formDisplayValueCombinedVisibility,
@@ -244,6 +245,13 @@ describe('Form Renderer Component', () => {
             typeIntoInput(testingUtils, '#Text0bq3ar', 'aaa');
             expectInputElementValueIs(testingUtils, '#TextTwo', 'bbb');
             expectElementToBeVisible(testingUtils, 'Displayvalue0g6092');
+        });
+
+        it('should render display value of dynamic-table widget', () => {
+            formRendererComponent.formDefinition = formService.parseForm(displayDynamicTableMock);
+            fixture.detectChanges();
+
+            expectElementToBeVisible(testingUtils, 'dynamic-table-id');
         });
     });
 
