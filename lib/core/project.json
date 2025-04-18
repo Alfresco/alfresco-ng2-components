@@ -92,7 +92,7 @@
         "styles": [
           "node_modules/cropperjs/dist/cropper.min.css",
           "node_modules/pdfjs-dist/web/pdf_viewer.css",
-          "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss"
+          "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
         ],
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
