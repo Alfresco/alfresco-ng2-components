@@ -8,17 +8,13 @@ workspace.xml
 .env.*
 .env
 dist
-!./.github/actions/**/dist
 e2e/.env.cloud
 tmp
 temp
 /nxcache
 *.npmrc
 .history
-/ng2-components/ng2-alfresco-core/prebuilt-themes/
 .ng_pkg_build/
-/lib/export-new.json
-/lib/config/exportCheck.js
 /docs/sourceinfo
 /docs/docs.json
 coverage/

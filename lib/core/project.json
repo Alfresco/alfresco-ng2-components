@@ -124,19 +124,9 @@
         ]
       }
     },
-    "pretheme": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
-          }
-        ]
-      }
-    },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build", "pretheme", "build-schematics"],
+      "dependsOn": ["build", "build-schematics"],
       "options": {
         "cwd": "dist/libs/core",
         "commands": [
