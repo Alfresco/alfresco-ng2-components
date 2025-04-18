@@ -63,7 +63,7 @@
             <adf-form-field [field]="currentRootElement" />
         </div>
         <div class="adf-container-widget"
-             *ngIf="currentRootElement.type === 'readonly' && currentRootElement.field.params.field.type == 'dynamic-table'">
+             *ngIf="currentRootElement.type === 'readonly' && currentRootElement.field.params.field.type === 'dynamic-table'">
             <adf-form-field [field]="currentRootElement.field"/>
         </div>
     </div>
