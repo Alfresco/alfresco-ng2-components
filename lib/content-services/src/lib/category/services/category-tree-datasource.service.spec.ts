@@ -18,7 +18,7 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from '../services/category.service';
 import { CategoryServiceMock } from '../mock/category-mock.service';
-import { TreeNodeType, TreeResponse } from '../../tree';
+import { TreeNodeType } from '../../tree';
 import { EMPTY, of } from 'rxjs';
 import { Pagination } from '@alfresco/js-api';
 import { CategoryTreeDatasourceService } from './category-tree-datasource.service';
@@ -39,7 +39,7 @@ describe('CategoryTreeDatasourceService', () => {
 
     it('should get root level categories', fakeAsync(() => {
         spyOn(categoryTreeDatasourceService, 'getParentNode').and.returnValue(undefined);
-        categoryTreeDatasourceService.getSubNodes(null, 0, 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
+        categoryTreeDatasourceService.getSubNodes(null, 0, 100).subscribe((treeResponse) => {
             expect(treeResponse.entries.length).toBe(1);
             expect(treeResponse.entries[0].level).toBe(0);
             expect(treeResponse.entries[0].nodeType).toBe(TreeNodeType.RegularNode);
@@ -57,7 +57,7 @@ describe('CategoryTreeDatasourceService', () => {
             nodeType: TreeNodeType.RegularNode
         };
         spyOn(categoryTreeDatasourceService, 'getParentNode').and.returnValue(parentNode);
-        categoryTreeDatasourceService.getSubNodes(parentNode.id, 0, 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
+        categoryTreeDatasourceService.getSubNodes(parentNode.id, 0, 100).subscribe((treeResponse) => {
             expect(treeResponse.entries.length).toBe(2);
             expect(treeResponse.entries[0].parentId).toBe(parentNode.id);
             expect(treeResponse.entries[0].level).toBe(1);
