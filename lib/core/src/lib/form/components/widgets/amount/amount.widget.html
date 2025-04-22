@@ -14,7 +14,7 @@
             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id"
                 >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
             >
-            <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }} &nbsp;</span>
+            <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>
             <input
                 matInput
                 [title]="field.tooltip"
