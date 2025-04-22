@@ -32,36 +32,6 @@ an [online palette design tool](http://mcg.mbitson.com/).
 See the [Material Design Style page](https://material.io/guidelines/style/color.html#) for
 more information about color concepts.
 
-## Using a pre-built theme
-
-Angular Material comes prepackaged with several pre-built theme css files. These theme files also
-include all of the styles for core (styles common to all components), so you only have to include a
-single css file for Angular Material in your app.
-
-You can include a theme file directly into your application from
-`@alfresco/adf-core/prebuilt-themes`
-
-Available pre-built themes:
-* `adf-blue-orange.css`
-* `adf-blue-purple.css`
-* `adf-cyan-orange.css`
-* `adf-cyan-purple.css`
-* `adf-green-orange.css`
-* `adf-green-purple.css`
-* `adf-indigo-pink.css`
-* `adf-pink-bluegrey.css`
-* `adf-purple-green.css`
-
-If you're using Angular CLI you can include one of the prebuilt themes in your `styles.scss` file:
-```css
-@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';
-```
-Or you can add it directly in your index.html
-
-```html
-<link href="node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css" rel="stylesheet">
-```
-
 ## Defining a custom theme
 
 When you want more customization than a pre-built theme offers, you can create your own theme file. You only need to include the packages you actually use in your application.
@@ -91,8 +61,6 @@ $theme:   mat.define-light-theme((
 @include angular-material-theme($theme);
 @include alfresco-material-theme($theme);
 ```
-
-Notes: if you are using the Generator or the demo shell you need only to change the`/src/custom-style.scss` with your set of colors
 
 ### Multiple themes
 
@@ -135,7 +103,7 @@ $dark-theme:   mat.define-dark-theme((
     ...like above
 }
 ```
-Any component with the  `add-dark-theme` class will use the dark theme, while other components will fall back to the default.
+Any component with the `add-dark-theme` class will use the dark theme, while other components will fall back to the default.
 
 
 ## Default reusable class

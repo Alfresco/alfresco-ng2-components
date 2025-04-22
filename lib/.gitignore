@@ -37,14 +37,6 @@ process-services-cloud/**/*.d.ts
 !config/karma-test-shim.js!
 
 *.tgzf
-core/prebuilt-themes/
 /package/
 /bundles/
 index.d.ts
-/.happypack
-
-process-services/_theming.scss
-content-services/_theming.scss
-core/_theming.scss
-insights/_theming.scss
-process-services-cloud/_theming.scss

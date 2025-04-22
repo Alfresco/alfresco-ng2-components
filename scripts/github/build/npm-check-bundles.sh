@@ -44,15 +44,6 @@ do
         fi
     fi
 
-    if [ $PACKAGE == 'adf-core' ]; then
-        if [ ! -f package/lib/prebuilt-themes/'adf-blue-orange.css' ]; then
-            error_out '31;1' "$PACKAGE prebuilt-theme: adf-blue-orange.css not found!" >&2
-            exit 1
-        else
-            echo "prebuilt-theme: ok"
-        fi
-    fi
-
     if [ $PACKAGE != 'js-api' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
         if [ ! -f package/fesm2022/$PACKAGE'.mjs' ]; then
             error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2

@@ -136,7 +136,6 @@ jobs:
       - name: build libraries
         run: |
           npx nx run-many -t build --prod --skip-nx-cache
-          npx nx run-many -t pretheme
           npx nx run-many -t build-schematics
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         name: release libraries GH registry
