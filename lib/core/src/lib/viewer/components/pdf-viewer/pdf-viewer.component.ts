@@ -112,13 +112,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     page: number;
     displayPage: number;
-    _totalPages: number;
-    set totalPages(value: number) {
-        this._totalPages = value;
-    }
-    get totalPages(): number {
-        return this._totalPages;
-    }
+    totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
     currentScaleMode: PdfScaleMode = 'init';
