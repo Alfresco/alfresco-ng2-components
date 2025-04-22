@@ -169,8 +169,8 @@ jobs:
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-latest
-    needs: [check-if-pr-is-approved, pre-checks]
-    if: ${{ needs.check-if-pr-is-approved.outputs.isLabeledWithDoNotMerge == 'false' && needs.check-if-pr-is-approved.outputs.pr_approved == 'true' }}
+    needs: []
+    # if: ${{ needs.check-if-pr-is-approved.outputs.isLabeledWithDoNotMerge == 'false' && needs.check-if-pr-is-approved.outputs.pr_approved == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -182,121 +182,50 @@ jobs:
           npm ci
           npx nx run js-api:bundle
           npx nx run cli:bundle
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  unit-tests:
-    timeout-minutes: 30
-    name: "Unit tests: ${{ matrix.unit-tests.name }}"
-    runs-on: ubuntu-latest
-    needs: [setup]
-    strategy:
-      fail-fast: false
-      # max-parallel: 4
-      matrix:
-        unit-tests:
-          - name: js-api
-            exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
-          - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
-          - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
-          - name: process-services-cloud
-            exclude: "insights,core,extensions,content-services,process-services$,eslint-plugin-eslint-angular,js-api"
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Run unit tests
-        run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
 
   lint:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
     name: "Lint"
     runs-on: ubuntu-latest
-    needs: [setup]
+    needs: [pre-checks,  setup]
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
+      - run: npx nx affected --target=lint --base=origin/develop --head=HEAD
 
-  build-libs:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Build libs"
+  trigger-build:
+    name: "Build Libs"
+    needs: [pre-checks,  setup]
+    uses: ./.github/workflows/build-lib-workflow.yml
+
+  build-storybook:
+    name: "Build Storybook"
+    needs: [pre-checks,  setup]
     runs-on: ubuntu-latest
-    needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  PR-forbidden-labels:
-    if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
-    runs-on: ubuntu-latest
-    steps:
-      - id: checkoutRepo
-        name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          fetch-depth: 1
-      - name: PR contains forbidden labels
-        id: pr-forbidden
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
-        with:
-          script: |
-            const issueHasLabels = require('./scripts/github/update/check-issue-has-label.js');
-            const checkLabels = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
-
-            const hasLabel = await issueHasLabels({github, context, checkLabels})
-
-            if(hasLabel) {
-              core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
-            }
-      - name: Check value after
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Build Storybook
         run: |
-          echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
-          echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
+          NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci
+
+  trigger-unit-tests:
+    name: "Unit Tests"
+    needs: [pre-checks,  setup]
+    uses: ./.github/workflows/unit-test-workflow.yml
 
   finalize:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
+    needs: [check-if-pr-is-approved, pre-checks, trigger-unit-tests, lint, trigger-build, build-storybook]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: identify-slack-group
-        id: groups
-        if: ${{ github.event_name == 'schedule' }}
-        uses: ./.github/actions/slack-group-area
-        with:
-          affected: ${{ steps.e2e-result.outputs.result }}
-      - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
-        name: Nofify QA failure
-        if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        with:
-          channel-id: 'C016SMNNL8L' #guild-channel
-          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}\nArea: ${{ steps.groups.outputs.groups}}"
       - name: workflow failure
         run: exit 1
         if: ${{ contains(needs.*.result, 'failure') }}

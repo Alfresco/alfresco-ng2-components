@@ -1,0 +1,51 @@
+name: "Build Lib Workflow"
+
+on:
+  workflow_call: {}
+
+jobs:
+
+  generate-affected-matrix:
+    name: "Generate affected matrix"
+    runs-on: ubuntu-latest
+    outputs:
+      buildMatrix: ${{ steps.set-matrix.outputs.buildMatrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate affected projects matrix
+        id: set-matrix
+        run: |
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          echo "Base ref is $BASE_REF"
+          AFFECTED_BUILD=$(npx nx show projects --affected --target=build --base=origin/$BASE_REF --select=projects --plain --exclude=stories)
+          echo "Affected projects for BUILD : $AFFECTED_BUILD"
+          BUILD_MATRIX_JSON=$(echo $AFFECTED_BUILD | xargs -n1 | jq -R -s -c 'split("\n")[:-1] | map({ "project": . })')
+          BUILD_MATRIX_JSON=$(echo "$BUILD_MATRIX_JSON" | tr -d '\n' | sed 's/"$//')
+          echo "Matrix BUILD: $BUILD_MATRIX_JSON"
+          echo "buildMatrix=$BUILD_MATRIX_JSON" >> $GITHUB_OUTPUT
+
+  build:
+    needs: generate-affected-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.generate-affected-matrix.outputs.buildMatrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Setup environment
+        uses: ./.github/actions/setup
+      - name: Run build for ${{ matrix.project }}
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5120"
+        run: |
+          xvfb-run --auto-servernum npx nx run ${{ matrix.project }}:build:production
