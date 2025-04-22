@@ -15,5 +15,23 @@
  * limitations under the License.
  */
 
-import 'jest-preset-angular/setup-jest';
-import 'resize-observer-polyfill/dist/ResizeObserver.global';
+export default {
+    GlobalWorkerOptions: {},
+    getDocument() {
+        return {
+            loadingTask: () => ({
+                destroy: () => Promise.resolve()
+            }),
+            promise: new Promise((resolve) => {
+                resolve({
+                    numPages: 6,
+                    getPage: () => 'fakePage'
+                });
+            })
+        };
+    },
+    PasswordResponses: {
+        NEED_PASSWORD: 1,
+        INCORRECT_PASSWORD: 2
+    }
+};

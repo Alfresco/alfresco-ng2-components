@@ -25,5 +25,4 @@ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDyn
     teardown: { destroyAfterEach: true }
 });
 
-declare const pdfjsLib: any;
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'base/pdfjs-dist/build/pdf.worker.min.js';
+(window as any).pdfjsLib = (window as any).pdfjsLib || require('pdfjs-dist/build/pdf.min.mjs');

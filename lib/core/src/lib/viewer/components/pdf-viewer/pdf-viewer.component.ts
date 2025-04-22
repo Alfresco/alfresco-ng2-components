@@ -24,6 +24,8 @@ import {
     Component,
     EventEmitter,
     HostListener,
+    inject,
+    InjectionToken,
     Input,
     OnChanges,
     OnDestroy,
@@ -37,19 +39,21 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { AnnotationMode, OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
-import { Subject } from 'rxjs';
-import { catchError, delay } from 'rxjs/operators';
+import { from, Subject, switchMap } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
 import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
-
-declare const pdfjsLib: any;
-declare const pdfjsViewer: any;
+import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
+import { PDFViewer, EventBus } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
+
+export const PDFJS_MODULE = new InjectionToken('PDFJS_MODULE', { factory: () => pdfjsLib });
+export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => PDFViewer });
 
 @Component({
     selector: 'adf-pdf-viewer',
@@ -129,7 +133,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
-    private eventBus = new pdfjsViewer.EventBus();
+    private pdfjsLib = inject(PDFJS_MODULE);
+    private pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
+
+    private eventBus = new EventBus();
     private pdfjsDefaultOptions = {
         disableAutoFetch: true,
         disableStream: true,
@@ -138,7 +145,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     };
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
 
-    constructor(private dialog: MatDialog, private renderingQueueServices: RenderingQueueServices, private appConfigService: AppConfigService) {
+    private dialog = inject(MatDialog);
+    private renderingQueueServices = inject(RenderingQueueServices);
+    private appConfigService = inject(AppConfigService);
+
+    constructor() {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -148,9 +159,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$
             .pipe(
                 catchError(() => null),
-                delay(700)
+                switchMap(() => from(this.destroyPdJsWorker()))
             )
-            .subscribe(() => this.destroyPdJsWorker());
+            .subscribe(() => {});
     }
 
     getUserScaling(): number {
@@ -213,9 +224,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
+        this.pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
 
-        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
+        this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
@@ -227,6 +238,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         };
 
         this.isPanelDisabled = true;
+
         this.loadingTask.promise
             .then((pdfDocument) => {
                 this.totalPages = pdfDocument.numPages;
@@ -245,12 +257,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const container = this.getDocumentContainer();
 
         if (viewer && container) {
-            this.pdfViewer = new pdfjsViewer.PDFViewer({
+            this.pdfViewer = new this.pdfjsViewer({
                 container,
                 viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus,
-                annotationMode: AnnotationMode.DISABLE
+                annotationMode: 0
             });
 
             // cspell: disable-next
@@ -258,7 +270,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             // cspell: disable-next
             this.eventBus.on('pagesloaded', this.onPagesLoaded);
             // cspell: disable-next
-            this.eventBus.on('textlayerrendered', this.onPageRendered);
+            this.eventBus.on('textlayerrendered', () => {
+                this.onPageRendered();
+            });
+            this.eventBus.on('pagerendered', () => {
+                this.onPageRendered();
+            });
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
@@ -269,11 +286,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         if (this.pdfViewer) {
             // cspell: disable-next
-            this.eventBus.off('pagechanging');
+            this.eventBus.off('pagechanging', () => {});
             // cspell: disable-next
-            this.eventBus.off('pagesloaded');
+            this.eventBus.off('pagesloaded', () => {});
             // cspell: disable-next
-            this.eventBus.off('textlayerrendered');
+            this.eventBus.off('textlayerrendered', () => {});
         }
 
         if (this.loadingTask) {
@@ -282,8 +299,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$.complete();
     }
 
-    private destroyPdJsWorker() {
-        this.loadingTask.destroy();
+    private async destroyPdJsWorker() {
+        if (this.loadingTask.destroy) {
+            await this.loadingTask.destroy();
+        }
         this.loadingTask = null;
     }
 
@@ -370,8 +389,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return document.getElementById(`${this.randomPdfId}-viewer-main-container`);
     }
 
-    private getDocumentContainer(): HTMLElement {
-        return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+    private getDocumentContainer(): HTMLDivElement {
+        return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`) as HTMLDivElement;
     }
 
     private getViewer(): HTMLElement {
