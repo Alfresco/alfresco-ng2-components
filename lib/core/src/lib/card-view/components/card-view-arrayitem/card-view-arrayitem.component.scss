@@ -43,7 +43,7 @@
         align-items: center;
         background: var(--adf-card-view-array-item-background);
         border-color: var(--adf-card-view-array-item-border-color);
-        border-radius: var(--adf-card-view-array-item-border-radius);
+        border-radius: 0;
 
         #{$mat-chip}:hover {
             cursor: pointer;

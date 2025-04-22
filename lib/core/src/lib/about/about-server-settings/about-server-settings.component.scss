@@ -2,14 +2,14 @@
     &__card {
         background: var(--adf-about-server-settings-background);
         color: var(--adf-about-server-settings-color);
-        border-radius: var(--adf-about-server-settings-border-radius);
-        padding: var(--adf-about-server-settings-padding);
+        border-radius: 4px;
+        padding: 16px;
 
         &:has(p) {
             border: none;
 
             p {
-                margin: 0 0 10px 0;
+                margin: 0 0 10px;
 
                 &:last-child {
                     margin: 0;

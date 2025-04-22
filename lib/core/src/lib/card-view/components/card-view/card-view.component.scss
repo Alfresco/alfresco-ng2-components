@@ -3,7 +3,7 @@
 .adf-property-list {
     border: var(--adf-card-view-border);
     border-color: var(--adf-card-view-border-color);
-    border-radius: var(--adf-card-view-border-radius);
+    border-radius: 0;
 
     .adf-property-label {
         color: var(--adf-metadata-property-panel-text-color);
