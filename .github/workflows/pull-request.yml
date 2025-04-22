@@ -25,8 +25,6 @@ on:
       - master
       - develop-patch*
       - master-patch*
-  pull_request_review:
-    types: [submitted, dismissed]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -34,9 +32,7 @@ concurrency:
 
 env:
   BASE_REF: ${{ github.base_ref }}
-  BASE_PR_REF: ${{ github.event.pull_request.base.ref }}
   HEAD_REF: ${{ github.head_ref }}
-  HEAD_PR_REF: ${{ github.event.pull_request.head.ref }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GITHUB_BRANCH: ${{ github.ref_name }}
@@ -45,7 +41,6 @@ env:
   BUILD_ID: ${{ github.run_id }}
   GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
-  GH_PR_NUMBER: ${{github.event.pull_request.number}}
   JOB_ID: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
@@ -82,9 +77,6 @@ jobs:
 
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
-    outputs:
-      isLabeledWithDoNotMerge: ${{ steps.check-label.outputs.isLabeledWithDoNotMerge }}
-      pr_approved: ${{ steps.check-approval.outputs.pr_approved }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -108,22 +100,19 @@ jobs:
               skip_check="true"
           fi
 
-      - name: Check if PR is labeled
-        id: check-label
-        run: |
-          if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -e '.[] | select(.name | contains("do not merge"))'; then
-            echo "::warning::PR is labeled as 'do not merge'"
-            echo "isLabeledWithDoNotMerge=true" >> $GITHUB_ENV
-            echo "isLabeledWithDoNotMerge=true" >> $GITHUB_OUTPUT
-          else
-            echo "PR is not labeled as 'do not merge'"
-            echo "isLabeledWithDoNotMerge=false" >> $GITHUB_ENV
-            echo "isLabeledWithDoNotMerge=false" >> $GITHUB_OUTPUT
-          fi
+      - name: Get PR number
+        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
+        uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
+        id: action
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check if PR is approved
-        id: check-approval
-        if: env.isLabeledWithDoNotMerge == 'false'
+      - name: show pr number
+        shell: bash
+        run: |
+          echo "PR: ${{ steps.action.outputs.number }}"
+
+      - name: check if pr is approved
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
@@ -150,17 +139,17 @@ jobs:
             echo -e "\033[32mDevel flag\033[0m"
             skip_check="true"
           fi
+
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            echo "PR: $GH_PR_NUMBER"
-
-            if gh pr view $GH_PR_NUMBER --json reviews | jq -e '.reviews[] | select(.state == "APPROVED")'; then
+            prNumber=${{ steps.action.outputs.number }}
+            echo "PR: $prNumber"
+            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
+            if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
-              echo "pr_approved=true" >> $GITHUB_OUTPUT
             else
-              echo "::error::PR NOT approved"
               echo -e "\033[31mPR NOT approved\033[0m"
-              echo "pr_approved=false" >> $GITHUB_OUTPUT
+              exit 1
             fi
           fi
 
@@ -170,7 +159,6 @@ jobs:
     name: "Setup"
     runs-on: ubuntu-latest
     needs: [check-if-pr-is-approved, pre-checks]
-    if: ${{ needs.check-if-pr-is-approved.outputs.isLabeledWithDoNotMerge == 'false' && needs.check-if-pr-is-approved.outputs.pr_approved == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2

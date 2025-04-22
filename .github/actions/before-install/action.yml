@@ -18,15 +18,11 @@ runs:
     - name: base vars
       shell: bash
       run: |
-        if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
-          echo "BASE_HASH=$(git merge-base origin/${{ env.BASE_PR_REF }} HEAD) >> $GITHUB_ENV";
-        else
-          echo "BASE_HASH=$(git merge-base origin/${{ env.BASE_REF }} HEAD) >> $GITHUB_ENV";
-        fi
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
+          echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
           echo "HEAD_HASH=HEAD";
-          echo "HEAD_COMMIT_HASH=${{ env.GH_COMMIT }}";
+          echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
           echo "BUILD_OPTS=--configuration production";
           echo CI_FORCE_RUN=false;
@@ -41,21 +37,15 @@ runs:
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
     - name: PULL_REQUEST event
-      if: ${{ env.BREAK_ACTION == false && (github.event_name == 'pull_request' || github.event_name == 'pull_request_review') && !github.event.pull_request.merged }}
+      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
       shell: bash
       run: |
         echo "Setting up CI flags for Pull Request event"
-        if [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
-            NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_PR_REF }} --head=$HEAD_HASH"
-            BASE_HASH="origin/${{ env.BASE_PR_REF }}"
-        else
-            NX_CALCULATION_FLAGS="--base=origin/${{ env.BASE_REF }} --head=$HEAD_HASH"
-            BASE_HASH="origin/${{ env.BASE_REF }}"
-        fi
+        NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
         {
-            echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
-            echo "BASE_HASH=$BASE_HASH";
-            echo "BREAK_ACTION=true";
+          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
+          echo "BASE_HASH=origin/${GITHUB_BASE_REF}";
+          echo "BREAK_ACTION=true";
         } >> $GITHUB_ENV
 
     - name: RELEASE on master/develop patch branch
@@ -69,10 +59,10 @@ runs:
             # into develop-patch*
             echo "Setting up CI flags for Push develop patch"
         else
-            echo "Setting up CI flags for Push on develop branch"
-            # base=$(git describe --tags $(git rev-list --tags --max-count=1))
-            # we publish always all the libs until we don't handle partial release
-            echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
+          echo "Setting up CI flags for Push on develop branch"
+          # base=$(git describe --tags $(git rev-list --tags --max-count=1))
+          # we publish always all the libs until we don't handle partial release
+          echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
         fi
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
