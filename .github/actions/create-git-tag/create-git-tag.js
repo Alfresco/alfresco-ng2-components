@@ -18,7 +18,7 @@
 module.exports = async ({ github, context, core, tagName }) => {
     const tagSHA = context.payload?.after ?? context.sha;
 
-    core.notice(`Creating a tag with title: ${tagName}, and SHA: ${tagSHA}`);
+    core.notice(`Creating tag with title: ${tagName}, and SHA: ${tagSHA}`);
 
     const createdTag = await github.rest.git.createTag({
         owner: context.repo.owner,
