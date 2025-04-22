@@ -1,0 +1,23 @@
+name: Git tag creation
+description: 'Creates a git tag in the specified repository for a given commit.'
+
+inputs:
+  tagName:
+    description: 'The github tag to be created'
+    required: true
+  releaseNote:
+    description: 'The github release note to be created'
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+      name: Create git tag
+      env:
+        TAG_NAME: ${{ inputs.tagName }}
+        RELEASE_NOTE: ${{ inputs.releaseNote }}
+      with:
+        script: |
+          const createGitTag = require('./.github/actions/create-git-tag/create-git-tag.js');
+          await createGitTag({ core, github, context, tagName: process.env.TAG_NAME });
