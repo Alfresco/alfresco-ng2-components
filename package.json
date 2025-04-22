@@ -57,6 +57,7 @@
     "material-icons": "^1.13.12",
     "minimatch-browser": "1.0.0",
     "ng2-charts": "^4.1.1",
+    "node-fetch": "^3.3.2",
     "pdfjs-dist": "5.1.91",
     "raphael": "2.3.0",
     "rxjs": "7.8.1",
