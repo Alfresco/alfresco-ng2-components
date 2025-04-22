@@ -2,7 +2,7 @@
     background: var(--adf-package-list-table-background);
 
     &__header-row {
-        min-height: var(--adf-package-list-table-header-min-height);
+        min-height: 56px;
     }
 
     &__header-cell {
@@ -10,7 +10,7 @@
     }
 
     &__row {
-        min-height: var(--adf-package-list-table-row-min-height);
+        min-height: 48px;
 
         &-cell {
             color: var(--adf-package-list-table-row-cell-color);

@@ -13,6 +13,7 @@
 
     &-userinfo-name {
         padding: 0 5px;
+
         @include layout-bp(lt-md) {
             display: none;
         }
@@ -21,15 +22,15 @@
     &-userinfo-pic {
         background: var(--adf-identity-user-info-background);
         display: inline-block;
-        width: var(--adf-identity-user-info-width);
-        height: var(--adf-identity-user-info-height);
+        width: 40px;
+        height: 40px;
         border-radius: 100px;
         text-align: center;
         font-weight: bolder;
         font-size: var(--adf-identity-user-info-font-size);
         text-transform: uppercase;
         vertical-align: middle;
-        line-height: var(--adf-identity-user-info-line-height);
+        line-height: 40px;
     }
 
     &-userinfo-profile-container {
@@ -90,7 +91,7 @@
     }
 }
 
-@media only screen and (min-device-width: 480px) {
+@media only screen and (device-width >= 480px) {
     .adf-identity-userinfo-menu.adf-userinfo-menu {
         max-height: 450px;
         min-width: 450px;

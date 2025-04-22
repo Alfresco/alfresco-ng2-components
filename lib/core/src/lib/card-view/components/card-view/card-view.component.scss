@@ -1,7 +1,7 @@
 @import 'styles/mat-selectors';
 
 .adf-property-list {
-    border: var(--adf-card-view-border);
+    border: unset;
     border-color: var(--adf-card-view-border-color);
     border-radius: 0;
 

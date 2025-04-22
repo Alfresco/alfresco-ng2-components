@@ -59,15 +59,15 @@ adf-layout-header .adf-toolbar-container-row {
     }
 
     .adf-header-icon-button {
-        color: var(--adf-header-icon-button-default-color);
-        border-radius: var(--adf-header-icon-button-default-border-radius);
+        color: inherit;
+        border-radius: 50%;
 
         &:hover {
-            color: var(--adf-header-icon-button-hover-color);
+            color: inherit;
         }
 
         &:active {
-            color: var(--adf-header-icon-button-pressed-color);
+            color: inherit;
         }
     }
 }
@@ -116,7 +116,7 @@ adf-layout-header .adf-toolbar-container-row {
     }
 
     .adf-userinfo-container {
-        margin-right: var(--adf-user-info-container-margin-right);
+        margin-right: 8px;
     }
 
     .adf-userinfo-name {
