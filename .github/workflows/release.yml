@@ -138,7 +138,7 @@ jobs:
           npx nx run-many -t build --prod --skip-nx-cache
           npx nx run-many -t pretheme
           npx nx run-many -t build-schematics
-      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
@@ -147,7 +147,7 @@ jobs:
       - run: npx nx run-many -t npm-publish --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
-      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         name: release libraries Npm registry
         with:
           node-version-file: '.nvmrc'
