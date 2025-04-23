@@ -165,9 +165,3 @@ Inside the `<adf-login-footer/>` or `<adf-login-header/>` tags, we can put anyth
 
 Are you up for a challenge? Explore the [Login component](../core/components/login.component.md)
 docs to find out how you can change the logo and background image!
-
-# Next steps
-
-We have some tutorials for you to explore. Here are a few suggested ones to try next:
-
--   [Basic theming](basic-theming.md)

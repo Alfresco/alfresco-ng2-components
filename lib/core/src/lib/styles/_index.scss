@@ -10,7 +10,6 @@
 @import '../clipboard/clipboard.theme';
 @import './snackbar.theme';
 @import './material.theme';
-@import './components-variables';
 @import '../../../../../node_modules/@mat-datetimepicker/core/datetimepicker/datetimepicker-theme';
 
 @mixin alfresco-material-theme($theme) {
@@ -93,7 +92,20 @@
         --adf-theme-mat-grey-color-a400: mat.get-color-from-palette(mat.$grey-palette, A400),
         --adf-theme-mat-grey-color-50: mat.get-color-from-palette(mat.$grey-palette, 50),
         // spacing
-        --adf-theme-spacing: map-get($custom-css-variables, 'theme-adf-spacing')
+        --adf-theme-spacing: map-get($custom-css-variables, 'theme-adf-spacing'),
+        // components
+        --adf-metadata-property-panel-border-color: rgba(0, 0, 0, 0.12),
+        --adf-metadata-buttons-background-color: rgba(33, 33, 33, 0.05),
+        --adf-metadata-action-button-clear-color: rgba(33, 35, 40, 0.698),
+        --adf-metadata-property-panel-text-color: rgba(33, 35, 40, 0.7),
+        --adf-metadata-property-panel-label-color: rgba(33, 33, 33, 0.24),
+        --adf-metadata-property-panel-title-color: rgb(33, 33, 33),
+        --adf-error-color: #ba1b1b,
+        --adf-secondary-button-background: #2121210d,
+        --adf-secondary-modal-text-color: #212121,
+        --adf-disabled-button-background: rgba(0, 0, 0, 0.12),
+        --adf-chip-border-color: #757575,
+        --adf-sidenav-active-text-color: rgba(0, 48, 100, 1)
     );
 
     // propagates SCSS variables into the CSS variables scope
@@ -106,7 +118,6 @@
     @include mat-datetimepicker-theme($theme);
     @include adf-snackbar-theme;
     @include adf-material-theme;
-    @include adf-components-variables($theme);
 }
 
 $adf-custom-theme-sizes: (

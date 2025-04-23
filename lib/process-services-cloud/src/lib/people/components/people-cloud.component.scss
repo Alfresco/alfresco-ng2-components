@@ -4,14 +4,14 @@
 
         &-option-not-active:not(&:active) {
             background: inherit;
-            color: var(--adf-group-cloud-autosuggest-result-disabled-color);
+            color: var(--adf-theme-foreground-secondary-text-color);
         }
 
         &-title {
-            color: var(--adf-people-cloud-input-label-default-color);
+            color: var(--adf-theme-foreground-secondary-text-color);
 
             &--focus {
-                color: var(--adf-people-cloud-input-label-focus-color);
+                color: var(--theme-primary-color);
             }
         }
     }
@@ -22,11 +22,11 @@
     }
 
     &-people-cloud-option-active:not(&:disabled) {
-        color: var(--adf-people-cloud-autosuggest-result-active-color);
+        color: var(--adf-theme-foreground-text-color);
     }
 
     &-people-cloud-option-not-active:not(&:active) {
-        color: var(--adf-people-cloud-autosuggest-result-disabled-color);
+        color: var(--adf-theme-foreground-secondary-text-color);
     }
 
     &-people-cloud-row {
@@ -62,6 +62,6 @@
     &-error,
     &-error-text,
     &-error-icon {
-        color: var(--adf-people-cloud-input-caption-error-color);
+        color: var(--theme-warn-color);
     }
 }
