@@ -1,19 +1,19 @@
 .adf-package-list-table {
-    background: var(--adf-package-list-table-background);
+    background: var(--adf-theme-background-card-color);
 
     &__header-row {
         min-height: 56px;
     }
 
     &__header-cell {
-        color: var(--adf-package-list-table-header-cell-color);
+        color: var(--adf-theme-foreground-secondary-text-color);
     }
 
     &__row {
         min-height: 48px;
 
         &-cell {
-            color: var(--adf-package-list-table-row-cell-color);
+            color: var(--adf-theme-foreground-text-color);
         }
     }
 }

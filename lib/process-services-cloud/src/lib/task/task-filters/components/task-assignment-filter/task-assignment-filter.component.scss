@@ -11,18 +11,18 @@
     }
 
     &-label {
-        color: var(--adf-task-assignment-filter-label-default-color);
+        color: var(--adf-theme-foreground-secondary-text-color);
 
         &.adf-task-assignment-filter-label--focus {
-            color: var(--adf-task-assignment-filter-label-focus-color);
+            color: var(--theme-primary-color);
         }
     }
 
     &-option {
-        color: var(--adf-task-assignment-filter-option-default-color);
+        color: var(--adf-theme-foreground-text-color);
 
         &.adf-task-assignment-filter-option--selected:not(&:disabled) {
-            color: var(--adf-task-assignment-filter-option-selected-color);
+            color: var(--theme-primary-color);
         }
     }
 }

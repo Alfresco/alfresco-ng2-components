@@ -20,14 +20,14 @@
     }
 
     &-userinfo-pic {
-        background: var(--adf-identity-user-info-background);
+        background: var(--adf-theme-primary-300);
         display: inline-block;
         width: 40px;
         height: 40px;
         border-radius: 100px;
         text-align: center;
         font-weight: bolder;
-        font-size: var(--adf-identity-user-info-font-size);
+        font-size: var(--theme-adf-picture-1-font-size);
         text-transform: uppercase;
         vertical-align: middle;
         line-height: 40px;
@@ -75,7 +75,7 @@
     }
 
     &-userinfo-profile-picture {
-        background: var(--adf-identity-user-info-background);
+        background: var(--adf-theme-primary-300);
         background-size: cover;
         border-radius: 50%;
         height: 80px;

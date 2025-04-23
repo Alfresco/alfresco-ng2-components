@@ -70,8 +70,8 @@
     }
 
     div[role='tab'].adf-info-drawer-tab {
-        color: var(--adf-info-drawer-tab-default-color);
-        background-color: var(--adf-info-drawer-tab-default-background);
+        color: var(--theme-accent-color);
+        background-color: var(--adf-theme-background-card-color);
         border-bottom: unset;
         opacity: 1;
 
@@ -84,19 +84,19 @@
         }
 
         &--active {
-            color: var(--adf-info-drawer-tab-active-unfocused-color);
-            background-color: var(--adf-info-drawer-tab-active-unfocused-background);
+            color: var(--theme-primary-color);
+            background-color: var(--adf-theme-background-card-color);
             border-bottom: 1px solid unset;
 
             &:focus {
-                color: var(--adf-info-drawer-tab-active-focused-color);
+                color: var(--adf-theme-foreground-text-color);
                 border-bottom: unset;
             }
         }
 
         &:hover:not([class*='--disabled'], [class*='--active']) {
-            color: var(--adf-info-drawer-tab-hover-color);
-            background-color: var(--adf-info-drawer-tab-hover-background);
+            color: var(--theme-accent-color);
+            background-color: var(--adf-theme-background-card-color);
             border-bottom: unset;
         }
 

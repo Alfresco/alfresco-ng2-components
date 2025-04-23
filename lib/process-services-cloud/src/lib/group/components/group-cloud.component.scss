@@ -22,24 +22,24 @@
         width: 100%;
 
         &-title {
-            color: var(--adf-group-cloud-input-label-default-color);
+            color: var(--adf-theme-foreground-secondary-text-color);
 
             &--focus {
-                color: var(--adf-group-cloud-input-label-focus-color);
+                color: var(--theme-primary-color);
             }
         }
 
         &-option-active:not(&:disabled) {
-            color: var(--adf-group-cloud-autosuggest-result-active-color);
+            color: var(--adf-theme-foreground-text-color);
         }
 
         &-option-not-active:not(&:active) {
             background: inherit;
-            color: var(--adf-group-cloud-autosuggest-result-disabled-color);
+            color: var(--adf-theme-foreground-secondary-text-color);
         }
 
         &-error {
-            color: var(--adf-group-cloud-input-caption-error-color);
+            color: var(--theme-warn-color);
             margin-top: -10px;
             position: absolute;
             height: 20px;

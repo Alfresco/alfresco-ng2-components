@@ -75,22 +75,22 @@
             height: 48px;
 
             &__title {
-                color: var(--adf-edit-task-and-service-filter-header-title-color);
+                color: var(--adf-theme-foreground-text-color);
             }
 
             &__description {
-                color: var(--adf-edit-task-and-service-filter-header-description-color);
+                color: var(--adf-theme-foreground-secondary-text-color);
                 place-content: center space-between;
             }
         }
 
         &-content {
             &__text-label {
-                color: var(--adf-edit-task-and-service-filter-content-text-label-color);
+                color: var(--adf-theme-foreground-secondary-text-color);
             }
 
             &__select-label {
-                color: var(--adf-edit-task-and-service-filter-content-select-label-color);
+                color: var(--adf-theme-foreground-secondary-text-color);
             }
         }
     }

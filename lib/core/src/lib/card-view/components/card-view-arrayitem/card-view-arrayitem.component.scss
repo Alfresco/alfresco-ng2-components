@@ -41,8 +41,8 @@
         display: flex;
         place-content: center space-between;
         align-items: center;
-        background: var(--adf-card-view-array-item-background);
-        border-color: var(--adf-card-view-array-item-border-color);
+        background: var(--adf-theme-background-card-color);
+        border-color: var(--adf-theme-foreground-divider-color);
         border-radius: 0;
 
         #{$mat-chip}:hover {
