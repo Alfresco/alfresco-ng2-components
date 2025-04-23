@@ -20,7 +20,6 @@ on an item below to see the corresponding guide page.
 -   [Theming](theming.md)
 -   [Right-to-left language support](rtl-support.md)
 -   [Transclusion](transclusion.md)
--   [Typography](typography.md)
 -   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
 -   [kerberos](kerberos.md)
 

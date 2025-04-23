@@ -61,7 +61,6 @@ A few other pages of information are also available:
 -   [Localization in ADF](user-guide/localization.md)
 -   [Theming](user-guide/theming.md)
 -   [Transclusion](user-guide/transclusion.md)
--   [Typography](user-guide/typography.md)
 -   [Walkthrough - adding indicators to highlight information about a node](user-guide/metadata-indicators.md)
 
 <!--guide end-->
