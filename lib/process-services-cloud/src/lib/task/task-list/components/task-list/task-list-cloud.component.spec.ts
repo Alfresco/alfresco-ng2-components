@@ -230,6 +230,9 @@ describe('TaskListCloudComponent', () => {
                 done();
             });
 
+            component.ngAfterContentInit();
+            spyOn(component, 'createDatatableSchema');
+            component.appName = 'fake-app-name';
             component.reload();
         });
 
@@ -375,6 +378,9 @@ describe('TaskListCloudComponent', () => {
                 done();
             });
 
+            component.ngAfterContentInit();
+            spyOn(component, 'createDatatableSchema');
+            component.appName = 'fake-app-name';
             component.reload();
         });
 
@@ -390,7 +396,7 @@ describe('TaskListCloudComponent', () => {
 
             fixture.detectChanges();
 
-            expect(fetchTaskListSpy).toHaveBeenCalledTimes(1);
+            expect(fetchTaskListSpy).toHaveBeenCalledTimes(2);
         });
         describe('component changes', () => {
             beforeEach(() => {

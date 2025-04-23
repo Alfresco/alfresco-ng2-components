@@ -280,10 +280,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
 
-        combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
+        combineLatest([this.isLoadingPreferences$, this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
                 tap(() => this.isReloadingSubject$.next(true)),
-                filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
+                filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
                 switchMap(() => {
                     if (this.searchApiMethod === 'POST') {
                         const requestNode = this.createTaskListRequestNode();
