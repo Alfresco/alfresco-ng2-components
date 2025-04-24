@@ -115,6 +115,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
+    pdfJsWorker: Worker;
     currentScaleMode: PdfScaleMode = 'init';
 
     MAX_AUTO_SCALE: number = 1.25;
@@ -159,7 +160,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$
             .pipe(
                 catchError(() => null),
-                switchMap(() => from(this.destroyPdJsWorker()))
+                switchMap(() => from(this.destroyPfdJsWorker()))
             )
             .subscribe(() => {});
     }
@@ -224,7 +225,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     async executePdf(pdfOptions: any) {
-        this.pdfjsLib.GlobalWorkerOptions.workerPort = await this.overridePdfWorkerContentType();
+        if (this.pdfJsWorker) {
+            await this.destroyPfdJsWorker();
+        }
+        this.pdfJsWorker = await this.overridePdfWorkerContentType();
+        this.pdfjsLib.GlobalWorkerOptions.workerPort = this.pdfJsWorker;
 
         this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
@@ -308,9 +313,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$.complete();
     }
 
-    private async destroyPdJsWorker() {
+    private async destroyPfdJsWorker() {
         if (this.loadingTask.destroy) {
             await this.loadingTask.destroy();
+        }
+        if (this.pdfJsWorker) {
+            this.pdfJsWorker.terminate();
         }
         this.loadingTask = null;
     }
