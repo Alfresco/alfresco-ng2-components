@@ -17,7 +17,7 @@
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -457,7 +457,7 @@ describe('Test PdfViewer - User interaction', () => {
         fixture.detectChanges();
         component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
 
-        tick(1000);
+        flush();
     }));
 
     afterAll(() => {
