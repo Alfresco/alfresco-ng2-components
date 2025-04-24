@@ -17,5 +17,6 @@
 
 export interface AiAnswerReference {
     referenceId: string;
-    referenceText: string;
+    rankScore: number;
+    rank: number;
 }

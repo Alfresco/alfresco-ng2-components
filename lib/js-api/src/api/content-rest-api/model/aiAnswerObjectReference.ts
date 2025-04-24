@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { AiAnswerObjectReference } from './aiAnswerObjectReference';
+import { AiAnswerReference } from './aiAnswerReference';
 
-export interface AiAnswer {
-    answer?: string;
-    question: string;
-    complete: boolean;
-    objectReferences: AiAnswerObjectReference[];
+export interface AiAnswerObjectReference {
+    objectId: string;
+    references: AiAnswerReference[];
 }
