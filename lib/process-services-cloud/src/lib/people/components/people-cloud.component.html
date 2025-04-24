@@ -73,7 +73,7 @@
 
     <mat-progress-bar *ngIf="validationLoading" mode="indeterminate" />
 
-    <div class="adf-error-container" *ngIf="showErrors">
+    <div class="adf-error-container adf-people-cloud-error-container" *ngIf="showErrors">
         <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: validateUsersMessage } }}</div>

@@ -35,6 +35,9 @@ import { WidgetComponent } from '../widget.component';
             .adf-checkbox {
                 word-break: break-word;
             }
+            .adf-checkbox-error-messages-container {
+                min-height: 35px;
+            }
         `
     ],
     host: {
