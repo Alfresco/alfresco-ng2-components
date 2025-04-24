@@ -114,7 +114,7 @@
         }
     }
 
-    @include mat-datetimepicker-theme($theme);
+    @include datetimepicker-theme.mat-datetimepicker-theme($theme);
     @include adf-snackbar-theme;
     @include adf-material-theme;
 }
