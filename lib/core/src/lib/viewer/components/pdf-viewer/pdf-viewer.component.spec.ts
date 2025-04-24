@@ -141,19 +141,19 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('Required values', () => {
-        it('should thrown an error If urlFile is not present', () => {
+        it('should thrown an error If urlFile is not present', async () => {
             change = new SimpleChange(null, null, true);
 
-            expect(() => {
-                component.ngOnChanges({ urlFile: change });
+            await expect(async () => {
+                await component.ngOnChanges({ urlFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('should If blobFile is not present thrown an error ', () => {
+        it('should If blobFile is not present thrown an error ', async () => {
             change = new SimpleChange(null, null, true);
 
-            expect(() => {
-                component.ngOnChanges({ blobFile: change });
+            await expect(async () => {
+                await component.ngOnChanges({ blobFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
     });
@@ -410,7 +410,7 @@ describe('Test PdfViewer - User interaction', () => {
     let testingUtils: UnitTestingUtils;
     let pdfViewerSpy: jasmine.Spy;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(fakeAsync(async () => {
         pdfViewerSpy = jasmine.createSpy('PDFViewer').and.returnValue({
             setDocument: jasmine.createSpy().and.returnValue({
                 loadingTask: () => ({
@@ -451,9 +451,11 @@ describe('Test PdfViewer - User interaction', () => {
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
+        component['overridePdfWorkerContentType'] = (() => {}) as any;
+
         component.urlFile = './fake-test-file.pdf';
         fixture.detectChanges();
-        component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
+        await component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
 
         flush();
     }));

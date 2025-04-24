@@ -197,7 +197,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined),
                     isEvalSupported: false
                 };
-                void this.executePdf(pdfOptions);
+                await this.executePdf(pdfOptions);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
@@ -215,7 +215,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     'Cache-Control': this.cacheType
                 };
             }
-            void this.executePdf(pdfOptions);
+            await this.executePdf(pdfOptions);
         }
 
         if (!this.urlFile && !this.blobFile) {
