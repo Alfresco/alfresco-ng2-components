@@ -26,7 +26,7 @@
                    [title]="field.tooltip"
                    (blur)="markAsTouched()">
         </mat-form-field>
-        <div class="adf-text-widget-error-messages-container">
+        <div class="adf-error-messages-container">
             <error-widget [error]="field.validationSummary" />
             <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
             required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />

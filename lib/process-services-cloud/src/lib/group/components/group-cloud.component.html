@@ -59,7 +59,7 @@
     </mat-form-field>
     <mat-progress-bar *ngIf="validationLoading" mode="indeterminate" />
 
-    <div class="adf-error-container adf-cloud-group-error-container">
+    <div class="adf-error-container adf-error-messages-container">
         <mat-error *ngIf="hasPreselectError() &&  !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>

@@ -43,7 +43,7 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
     ],
     styles: [
         `
-            .adf-date-widget-error-messages-container {
+            .adf-error-messages-container {
                 min-height: 35px;
             }
         `

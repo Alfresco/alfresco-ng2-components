@@ -30,7 +30,7 @@
                 (blur)="markAsTouched()"
             />
         </mat-form-field>
-        <div class="adf-amount-widget-error-messages-container">
+        <div class="adf-error-messages-container">
             <error-widget [error]="field.validationSummary" />
             <error-widget
                 *ngIf="isInvalidFieldRequired() && isTouched()"
