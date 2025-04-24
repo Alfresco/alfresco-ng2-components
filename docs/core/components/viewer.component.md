@@ -186,10 +186,9 @@ npm install pdfjs-dist
 
 ```ts
 // PDF.js
-require('pdfjs-dist/web/compatibility.js');
 const pdfjsLib = require('pdfjs-dist');
-pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
-require('pdfjs-dist/web/pdf_viewer.js');
+pdfjsLib.PDFJS.workerSrc = './pdf.worker.min.mjs';
+require('pdfjs-dist/legacy/web/pdf_viewer.mjs');
 ```
 
 - Update the `plugins` section of the `webpack.common.js` file with the following lines:
@@ -198,11 +197,13 @@ require('pdfjs-dist/web/pdf_viewer.js');
 new CopyWebpackPlugin([
     ...
     {
-        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-        to: 'pdf.worker.js'
+        from: 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
+        to: 'pdf.worker.min.mjs'
     }
 ])
 ```
+> We're using the legacy bundle to ensure compatibility with Node.js\
+> https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#legacy-build
 
 The [Viewer component](viewer.component.md) should now be able to display PDF files.
 

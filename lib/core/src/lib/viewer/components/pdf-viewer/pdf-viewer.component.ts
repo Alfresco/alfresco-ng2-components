@@ -47,7 +47,7 @@ import { RenderingQueueServices } from '../../services/rendering-queue.services'
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
-import { PDFViewer, EventBus } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import { EventBus, PDFViewer } from 'pdfjs-dist/legacy/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
@@ -185,7 +185,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    async ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile?.currentValue) {
@@ -197,7 +197,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined),
                     isEvalSupported: false
                 };
-                this.executePdf(pdfOptions);
+                void this.executePdf(pdfOptions);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
@@ -215,7 +215,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     'Cache-Control': this.cacheType
                 };
             }
-            this.executePdf(pdfOptions);
+            void this.executePdf(pdfOptions);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -223,8 +223,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(pdfOptions: any) {
-        this.pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
+    async executePdf(pdfOptions: any) {
+        this.pdfjsLib.GlobalWorkerOptions.workerPort = await this.overridePdfWorkerContentType();
 
         this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
@@ -250,6 +250,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             })
             .then(() => this.scalePage('init'))
             .catch(() => this.error.emit());
+    }
+
+    private async overridePdfWorkerContentType(): Promise<Worker> {
+        const response = await fetch('./pdf.worker.min.mjs');
+        const workerScript = await response.text();
+        const blob = new Blob([workerScript], { type: 'application/javascript' });
+        const blobUrl = URL.createObjectURL(blob);
+
+        return new Worker(blobUrl, { type: 'module' });
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
