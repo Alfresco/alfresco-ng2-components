@@ -115,7 +115,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
-    pdfJsWorker: Worker;
+    pdfJsWorkerUrl: string;
+    pdfJsWorkerInstance: Worker;
     currentScaleMode: PdfScaleMode = 'init';
 
     MAX_AUTO_SCALE: number = 1.25;
@@ -225,11 +226,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     async executePdf(pdfOptions: any) {
-        if (this.pdfJsWorker) {
+        if (this.pdfJsWorkerInstance) {
             await this.destroyPfdJsWorker();
+        } else if (!this.pdfJsWorkerUrl) {
+            this.pdfJsWorkerUrl = await this.getPdfJsWorker();
         }
-        this.pdfJsWorker = await this.overridePdfWorkerContentType();
-        this.pdfjsLib.GlobalWorkerOptions.workerPort = this.pdfJsWorker;
+        this.pdfJsWorkerInstance = new Worker(this.pdfJsWorkerUrl, { type: 'module' });
+        this.pdfjsLib.GlobalWorkerOptions.workerPort = this.pdfJsWorkerInstance;
 
         this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
@@ -257,13 +260,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             .catch(() => this.error.emit());
     }
 
-    private async overridePdfWorkerContentType(): Promise<Worker> {
+    private async getPdfJsWorker(): Promise<string> {
         const response = await fetch('./pdf.worker.min.mjs');
         const workerScript = await response.text();
         const blob = new Blob([workerScript], { type: 'application/javascript' });
-        const blobUrl = URL.createObjectURL(blob);
-
-        return new Worker(blobUrl, { type: 'module' });
+        return URL.createObjectURL(blob);
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
@@ -311,16 +312,21 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.pdfjsWorkerDestroy$.next(true);
         }
         this.pdfjsWorkerDestroy$.complete();
+        this.revokePdfJsWorkerUrl();
     }
 
     private async destroyPfdJsWorker() {
         if (this.loadingTask.destroy) {
             await this.loadingTask.destroy();
         }
-        if (this.pdfJsWorker) {
-            this.pdfJsWorker.terminate();
+        if (this.pdfJsWorkerInstance) {
+            this.pdfJsWorkerInstance.terminate();
         }
         this.loadingTask = null;
+    }
+
+    private revokePdfJsWorkerUrl(): void {
+        URL.revokeObjectURL(this.pdfJsWorkerUrl);
     }
 
     toggleThumbnails() {
