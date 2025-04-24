@@ -41,13 +41,6 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
-    styles: [
-        `
-            .adf-error-messages-container {
-                min-height: 35px;
-            }
-        `
-    ],
     templateUrl: './date.widget.html',
     host: {
         '(click)': 'event($event)',
