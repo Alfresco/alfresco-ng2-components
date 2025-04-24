@@ -451,6 +451,8 @@ describe('Test PdfViewer - User interaction', () => {
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
+        component['setupPdfJsWorker'] = () => Promise.resolve();
+
         component.urlFile = './fake-test-file.pdf';
         fixture.detectChanges();
         component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);

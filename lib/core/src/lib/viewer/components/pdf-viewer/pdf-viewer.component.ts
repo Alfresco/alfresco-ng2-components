@@ -47,7 +47,7 @@ import { RenderingQueueServices } from '../../services/rendering-queue.services'
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
-import { PDFViewer, EventBus } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
@@ -115,6 +115,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
+    pdfJsWorkerUrl: string;
+    pdfJsWorkerInstance: Worker;
     currentScaleMode: PdfScaleMode = 'init';
 
     MAX_AUTO_SCALE: number = 1.25;
@@ -159,7 +161,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.pdfjsWorkerDestroy$
             .pipe(
                 catchError(() => null),
-                switchMap(() => from(this.destroyPdJsWorker()))
+                switchMap(() => from(this.destroyPfdJsWorker()))
             )
             .subscribe(() => {});
     }
@@ -224,32 +226,49 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(pdfOptions: any) {
-        this.pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs';
+        this.setupPdfJsWorker().then(() => {
+            this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
-        this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
+            this.loadingTask.onPassword = (callback, reason) => {
+                this.onPdfPassword(callback, reason);
+            };
 
-        this.loadingTask.onPassword = (callback, reason) => {
-            this.onPdfPassword(callback, reason);
-        };
+            this.loadingTask.onProgress = (progressData: OnProgressParameters) => {
+                const level = progressData.loaded / progressData.total;
+                this.loadingPercent = Math.round(level * 100);
+            };
 
-        this.loadingTask.onProgress = (progressData: OnProgressParameters) => {
-            const level = progressData.loaded / progressData.total;
-            this.loadingPercent = Math.round(level * 100);
-        };
+            this.isPanelDisabled = true;
 
-        this.isPanelDisabled = true;
+            this.loadingTask.promise
+                .then((pdfDocument) => {
+                    this.totalPages = pdfDocument.numPages;
+                    this.page = 1;
+                    this.displayPage = 1;
+                    this.initPDFViewer(pdfDocument);
 
-        this.loadingTask.promise
-            .then((pdfDocument) => {
-                this.totalPages = pdfDocument.numPages;
-                this.page = 1;
-                this.displayPage = 1;
-                this.initPDFViewer(pdfDocument);
+                    return pdfDocument.getPage(1);
+                })
+                .then(() => this.scalePage('init'))
+                .catch(() => this.error.emit());
+        });
+    }
 
-                return pdfDocument.getPage(1);
-            })
-            .then(() => this.scalePage('init'))
-            .catch(() => this.error.emit());
+    private async setupPdfJsWorker(): Promise<void> {
+        if (this.pdfJsWorkerInstance) {
+            await this.destroyPfdJsWorker();
+        } else if (!this.pdfJsWorkerUrl) {
+            this.pdfJsWorkerUrl = await this.getPdfJsWorker();
+        }
+        this.pdfJsWorkerInstance = new Worker(this.pdfJsWorkerUrl, { type: 'module' });
+        this.pdfjsLib.GlobalWorkerOptions.workerPort = this.pdfJsWorkerInstance;
+    }
+
+    private async getPdfJsWorker(): Promise<string> {
+        const response = await fetch('./pdf.worker.min.mjs');
+        const workerScript = await response.text();
+        const blob = new Blob([workerScript], { type: 'application/javascript' });
+        return URL.createObjectURL(blob);
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
@@ -297,13 +316,21 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.pdfjsWorkerDestroy$.next(true);
         }
         this.pdfjsWorkerDestroy$.complete();
+        this.revokePdfJsWorkerUrl();
     }
 
-    private async destroyPdJsWorker() {
+    private async destroyPfdJsWorker() {
         if (this.loadingTask.destroy) {
             await this.loadingTask.destroy();
         }
+        if (this.pdfJsWorkerInstance) {
+            this.pdfJsWorkerInstance.terminate();
+        }
         this.loadingTask = null;
+    }
+
+    private revokePdfJsWorkerUrl(): void {
+        URL.revokeObjectURL(this.pdfJsWorkerUrl);
     }
 
     toggleThumbnails() {
