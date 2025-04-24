@@ -47,7 +47,7 @@ import { RenderingQueueServices } from '../../services/rendering-queue.services'
 import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
-import { EventBus, PDFViewer } from 'pdfjs-dist/legacy/web/pdf_viewer.mjs';
+import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
