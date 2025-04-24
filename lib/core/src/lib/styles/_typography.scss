@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 $alfresco-typography: mat.define-typography-config(
-    $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
+    $font-family: 'Roboto, "Helvetica Neue", sans-serif',
     $headline-1: mat.define-typography-level(112px, 112px, 300),
     $headline-2: mat.define-typography-level(56px, 56px, 400),
     $headline-3: mat.define-typography-level(45px, 48px, 400),

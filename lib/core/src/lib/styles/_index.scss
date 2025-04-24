@@ -1,16 +1,15 @@
 /* stylelint-disable value-keyword-case */
 @use '@angular/material' as mat;
+@use '@mat-datetimepicker/core/datetimepicker/datetimepicker-theme';
 /* stylelint-disable value-list-max-empty-lines */
 /* stylelint-disable scss/no-global-function-names */
 /* stylelint-disable scss/at-import-partial-extension */
-@import '../styles/colors';
-@import '../styles/mixins';
-@import '../styles/mat-selectors';
+@import './mixins';
+@import './mat-selectors';
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
 @import './snackbar.theme';
 @import './material.theme';
-@import '../../../../../node_modules/@mat-datetimepicker/core/datetimepicker/datetimepicker-theme';
 
 @mixin alfresco-material-theme($theme) {
     @include adf-core-theme($theme);
