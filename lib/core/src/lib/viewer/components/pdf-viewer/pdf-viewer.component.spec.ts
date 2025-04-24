@@ -17,7 +17,7 @@
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -141,19 +141,19 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('Required values', () => {
-        it('should thrown an error If urlFile is not present', async () => {
+        it('should thrown an error If urlFile is not present', () => {
             change = new SimpleChange(null, null, true);
 
-            await expect(async () => {
-                await component.ngOnChanges({ urlFile: change });
+            expect(() => {
+                component.ngOnChanges({ urlFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('should If blobFile is not present thrown an error ', async () => {
+        it('should If blobFile is not present thrown an error ', () => {
             change = new SimpleChange(null, null, true);
 
-            await expect(async () => {
-                await component.ngOnChanges({ blobFile: change });
+            expect(() => {
+                component.ngOnChanges({ blobFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
     });
@@ -410,7 +410,7 @@ describe('Test PdfViewer - User interaction', () => {
     let testingUtils: UnitTestingUtils;
     let pdfViewerSpy: jasmine.Spy;
 
-    beforeEach(fakeAsync(async () => {
+    beforeEach(fakeAsync(() => {
         pdfViewerSpy = jasmine.createSpy('PDFViewer').and.returnValue({
             setDocument: jasmine.createSpy().and.returnValue({
                 loadingTask: () => ({
@@ -451,13 +451,13 @@ describe('Test PdfViewer - User interaction', () => {
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
-        component['overridePdfWorkerContentType'] = (() => {}) as any;
+        component['setupPdfJsWorker'] = () => Promise.resolve();
 
         component.urlFile = './fake-test-file.pdf';
         fixture.detectChanges();
-        await component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
+        component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
 
-        flush();
+        tick(1000);
     }));
 
     afterAll(() => {

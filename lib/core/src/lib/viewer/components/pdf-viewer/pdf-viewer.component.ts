@@ -187,7 +187,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    async ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile?.currentValue) {
@@ -199,7 +199,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined),
                     isEvalSupported: false
                 };
-                await this.executePdf(pdfOptions);
+                this.executePdf(pdfOptions);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
@@ -217,7 +217,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     'Cache-Control': this.cacheType
                 };
             }
-            await this.executePdf(pdfOptions);
+            this.executePdf(pdfOptions);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -225,7 +225,36 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    async executePdf(pdfOptions: any) {
+    executePdf(pdfOptions: any) {
+        this.setupPdfJsWorker().then(() => {
+            this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
+
+            this.loadingTask.onPassword = (callback, reason) => {
+                this.onPdfPassword(callback, reason);
+            };
+
+            this.loadingTask.onProgress = (progressData: OnProgressParameters) => {
+                const level = progressData.loaded / progressData.total;
+                this.loadingPercent = Math.round(level * 100);
+            };
+
+            this.isPanelDisabled = true;
+
+            this.loadingTask.promise
+                .then((pdfDocument) => {
+                    this.totalPages = pdfDocument.numPages;
+                    this.page = 1;
+                    this.displayPage = 1;
+                    this.initPDFViewer(pdfDocument);
+
+                    return pdfDocument.getPage(1);
+                })
+                .then(() => this.scalePage('init'))
+                .catch(() => this.error.emit());
+        });
+    }
+
+    private async setupPdfJsWorker(): Promise<void> {
         if (this.pdfJsWorkerInstance) {
             await this.destroyPfdJsWorker();
         } else if (!this.pdfJsWorkerUrl) {
@@ -233,31 +262,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
         this.pdfJsWorkerInstance = new Worker(this.pdfJsWorkerUrl, { type: 'module' });
         this.pdfjsLib.GlobalWorkerOptions.workerPort = this.pdfJsWorkerInstance;
-
-        this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
-
-        this.loadingTask.onPassword = (callback, reason) => {
-            this.onPdfPassword(callback, reason);
-        };
-
-        this.loadingTask.onProgress = (progressData: OnProgressParameters) => {
-            const level = progressData.loaded / progressData.total;
-            this.loadingPercent = Math.round(level * 100);
-        };
-
-        this.isPanelDisabled = true;
-
-        this.loadingTask.promise
-            .then((pdfDocument) => {
-                this.totalPages = pdfDocument.numPages;
-                this.page = 1;
-                this.displayPage = 1;
-                this.initPDFViewer(pdfDocument);
-
-                return pdfDocument.getPage(1);
-            })
-            .then(() => this.scalePage('init'))
-            .catch(() => this.error.emit());
     }
 
     private async getPdfJsWorker(): Promise<string> {
