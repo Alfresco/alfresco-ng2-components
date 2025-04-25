@@ -68,11 +68,38 @@ describe('SearchAiApi', () => {
                 assert.deepStrictEqual(answer, {
                     entry: {
                         answer: 'Some answer 1',
-                        questionId: 'some id 1',
-                        references: [
+                        complete: true,
+                        question: 'Some question',
+                        objectReferences: [
                             {
-                                referenceId: 'some reference id 1',
-                                referenceText: 'some reference text 1'
+                                objectId: 'some id 1',
+                                references: [
+                                    {
+                                        referenceId: 'some reference id 1',
+                                        rank: 1,
+                                        rankScore: 0.005
+                                    },
+                                    {
+                                        referenceId: 'some reference id 2',
+                                        rank: 2,
+                                        rankScore: 0.004
+                                    }
+                                ]
+                            },
+                            {
+                                objectId: 'some id 2',
+                                references: [
+                                    {
+                                        referenceId: 'some reference id 3',
+                                        rank: 1,
+                                        rankScore: 0.005
+                                    },
+                                    {
+                                        referenceId: 'some reference id 4',
+                                        rank: 2,
+                                        rankScore: 0.004
+                                    }
+                                ]
                             }
                         ]
                     }
