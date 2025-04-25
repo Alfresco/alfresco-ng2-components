@@ -9,5 +9,7 @@
                 [fileName]="field.value.fileName"
                 [showViewer]="field.value?.blobFile || field.value?.urlFile"
                 [allowGoBack]="false" />
-    <error-widget [error]="field.validationSummary" />
+    <div class="adf-error-messages-container">
+        <error-widget [error]="field.validationSummary" />
+    </div>
 </div>

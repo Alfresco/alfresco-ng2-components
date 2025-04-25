@@ -23,9 +23,13 @@
     <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
         <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
     </div>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                  class="adf-multiline-required-message"
-                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <div class="adf-error-messages-container">
+        <error-widget [error]="field.validationSummary" />
+        <error-widget
+            *ngIf="isInvalidFieldRequired() && isTouched()"
+            class="adf-multiline-required-message"
+            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
+        />
+    </div>
 </div>
 

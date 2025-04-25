@@ -32,6 +32,8 @@
                 [timeInterval]="5"
                 [disabled]="field.readOnly" />
         </mat-form-field>
-        <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary" />
+        <div class="adf-error-messages-container">
+            <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary" />
+        </div>
     </div>
 </div>

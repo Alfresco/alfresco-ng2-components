@@ -12,7 +12,11 @@
         {{ field.name | translate }}
         <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
     </mat-checkbox>
-    <error-widget [error]="field.validationSummary" />
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+    <div class="adf-error-messages-container">
+        <error-widget [error]="field.validationSummary" />
+        <error-widget
+            *ngIf="isInvalidFieldRequired() && isTouched()"
+            required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
+        />
+    </div>
 </div>

@@ -18,5 +18,10 @@
                         [startAt]="startAt"
                         [disabled]="field.readOnly" />
     </mat-form-field>
-    <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary" />
+    <div class="adf-error-messages-container">
+        <error-widget
+            *ngIf="dateInputControl.invalid && dateInputControl.touched"
+            [error]="field.validationSummary"
+        />
+    </div>
 </div>
