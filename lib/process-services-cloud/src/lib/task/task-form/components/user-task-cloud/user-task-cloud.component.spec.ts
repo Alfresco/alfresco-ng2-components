@@ -482,28 +482,89 @@ describe('UserTaskCloudComponent', () => {
     it('should allow controlling [open next task] checkbox visibility', () => {
         taskDetails.formKey = 'form';
         component.getTaskType();
+        component.taskId = 'taskId';
+        component.appName = 'app';
+
+        const spy = spyOn(taskCloudService, 'canCompleteTask');
 
         const isCheckboxShown = () => {
             const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
             return !!checkbox;
         };
 
-        fixture.detectChanges();
+        const prepareTestCase = (testCase: {
+            showNextTaskCheckbox: boolean;
+            showCompleteButton: boolean;
+            readOnly: boolean;
+            canCompleteTask: boolean;
+        }): void => {
+            component.showNextTaskCheckbox = testCase.showNextTaskCheckbox;
+            component.showCompleteButton = testCase.showCompleteButton;
+            component.readOnly = testCase.readOnly;
+            spy.calls.reset();
+            spy.and.returnValue(testCase.canCompleteTask);
+            fixture.detectChanges();
+        };
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: false, canCompleteTask: false });
         expect(isCheckboxShown()).toBeFalse();
 
-        component.showNextTaskCheckbox = true;
-        fixture.detectChanges();
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: true });
         expect(isCheckboxShown()).toBeTrue();
-
-        component.showNextTaskCheckbox = false;
-        fixture.detectChanges();
-        expect(isCheckboxShown()).toBeFalse();
     });
 
     it('should allow controlling [open next task] checkbox value', async () => {
         taskDetails.formKey = 'form';
         component.getTaskType();
+
+        component.taskId = 'taskId';
+        component.appName = 'app';
         component.showNextTaskCheckbox = true;
+        component.showCompleteButton = true;
+        component.readOnly = false;
+        spyOn(taskCloudService, 'canCompleteTask').and.returnValue(true);
 
         const isCheckboxChecked = async () => {
             const checkbox = await loader.getHarness(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
@@ -526,7 +587,13 @@ describe('UserTaskCloudComponent', () => {
         taskDetails.formKey = 'form';
         component.getTaskType();
 
+        component.taskId = 'taskId';
+        component.appName = 'app';
         component.showNextTaskCheckbox = true;
+        component.showCompleteButton = true;
+        component.readOnly = false;
+        spyOn(taskCloudService, 'canCompleteTask').and.returnValue(true);
+
         fixture.detectChanges();
         const checkbox = await loader.getHarnessOrNull(MatCheckboxHarness);
 
