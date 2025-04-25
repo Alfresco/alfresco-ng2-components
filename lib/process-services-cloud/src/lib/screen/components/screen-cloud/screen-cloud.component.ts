@@ -21,6 +21,7 @@ import { ScreenRenderingService } from '../../../services/public-api';
 import { MatCardModule } from '@angular/material/card';
 import { UserTaskCustomUi } from '../../models/screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-cloud-task-screen',
@@ -68,6 +69,10 @@ export class TaskScreenCloudComponent implements OnInit {
     @Input()
     rootProcessInstanceId: string = '';
 
+    /** Whether the `Open next task` checkbox is checked by default or not. */
+    @Input()
+    isNextTaskCheckboxChecked = false;
+
     /** Emitted when the task is saved. */
     @Output()
     taskSaved = new EventEmitter();
@@ -91,6 +96,10 @@ export class TaskScreenCloudComponent implements OnInit {
     /** Emitted when the task is unclaimed. */
     @Output()
     unclaimTask = new EventEmitter<any>();
+
+    /** Emitted when the `Open next task` checkbox was toggled. */
+    @Output()
+    nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;

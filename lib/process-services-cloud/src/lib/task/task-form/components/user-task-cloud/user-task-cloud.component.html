@@ -1,4 +1,4 @@
-<div class="adf-user-task-cloud-container">
+ <div class="adf-user-task-cloud-container">
     <div *ngIf="!loading; else loadingTemplate">
         <ng-container [ngSwitch]="taskType">
             <ng-container *ngSwitchCase="taskTypeEnum.Form">
@@ -38,12 +38,14 @@
                     [showCancelButton]="showCancelButton"
                     [taskName]="taskDetails.name"
                     [taskId]="taskId"
+
                     (cancelTask)="onCancelClick()"
                     (claimTask)="onClaimTask()"
                     (error)="onError($event)"
                     (taskCompleted)="onCompleteTask()"
                     (taskSaved)="onFormSaved()"
                     (unclaimTask)="onUnclaimTask()"
+                    (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
                 />
             </ng-container>
 
