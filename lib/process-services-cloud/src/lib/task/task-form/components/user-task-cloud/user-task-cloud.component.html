@@ -38,7 +38,7 @@
                     [showCancelButton]="showCancelButton"
                     [taskName]="taskDetails.name"
                     [taskId]="taskId"
-                    [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
+                    [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked && canCompleteTask()"
 
                     (cancelTask)="onCancelClick()"
                     (claimTask)="onClaimTask()"
