@@ -58,20 +58,20 @@ A paginated list is returned in the response body. For example:
         "complete": true,
         "objectReferences": [
             {
-                "objectId": "b40356d4-a0b5-485d-8356-d4a0b5585dbd",
+                "objectId": "some-object-id",
                 "references": [
                     {
-                        "referenceId": "c85add01-4333-43c8-9680-7e6847c33807",
+                        "referenceId": "some-reference-id1",
                         "rankScore": 0.031,
                         "rank": 2
                     },
                     {
-                        "referenceId": "1f4f83ba-c1bd-4c48-8202-8c4dd6439294",
+                        "referenceId": "some-reference-id2",
                         "rankScore": 0.031,
                         "rank": 1
                     },
                     {
-                        "referenceId": "62926342-6894-4b79-bd45-c6aee9f482e1",
+                        "referenceId": "some-reference-id3",
                         "rankScore": 0.028,
                         "rank": 3
                     }
