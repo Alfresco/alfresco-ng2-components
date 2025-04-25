@@ -52,26 +52,30 @@ A paginated list is returned in the response body. For example:
 
 ```json
 {
-    "list": {
-        "pagination": {
-            "count": 2,
-            "hasMoreItems": false,
-            "totalItems": 2,
-            "skipCount": 0,
-            "maxItems": 100
-        },
-        "entries": [
+    "entry": {
+        "answer": "Some answer",
+        "question": "Some question",
+        "complete": true,
+        "objectReferences": [
             {
-                "entry": {
-                    "answer": "Some answer",
-                    "questionId": "Some question id",
-                    "references": [
-                        {
-                            "referenceId": "Some reference id",
-                            "referenceText": "Some reference text"
-                        }
-                    ]
-                }
+                "objectId": "some-object-id",
+                "references": [
+                    {
+                        "referenceId": "some-reference-id1",
+                        "rankScore": 0.031,
+                        "rank": 2
+                    },
+                    {
+                        "referenceId": "some-reference-id2",
+                        "rankScore": 0.031,
+                        "rank": 1
+                    },
+                    {
+                        "referenceId": "some-reference-id3",
+                        "rankScore": 0.028,
+                        "rank": 3
+                    }
+                ]
             }
         ]
     }
@@ -139,20 +143,31 @@ searchAiApi.getConfig().then((answer) => {
 
 **Properties**
 
+| Name                 | Type                                                  |
+|----------------------|-------------------------------------------------------|
+| **answer**           | string                                                |
+| **question**         | string                                                |
+| **complete**         | boolean                                               |
+| **objectReferences** | [AiAnswerObjectReference](#AiAnswerObjectReference)[] |
+
+## AiAnswerObjectReference
+
+**Properties**
+
 | Name           | Type                                      |
 |----------------|-------------------------------------------|
-| **answer**     | string                                    |
-| **questionId** | string                                    |
+| **objectId**   | string                                    |
 | **references** | [AiAnswerReference](#AiAnswerReference)[] |
 
 ## AiAnswerReference
 
 **Properties**
 
-| Name              | Type   |
-|-------------------|--------|
-| **referenceId**   | string |
-| **referenceText** | string |
+| Name            | Type   |
+|-----------------|--------|
+| **referenceId** | string |
+| **rankScore**   | number |
+| **rank**        | number |
 
 ## QuestionModel
 
