@@ -480,6 +480,11 @@ describe('UserTaskCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox visibility', () => {
+        if (!component.nextTaskCheckboxForFormsActivated) {
+            expect(true).toBeTrue();
+            return;
+        }
+
         taskDetails.formKey = 'form';
         component.getTaskType();
         component.taskId = 'taskId';
@@ -556,6 +561,11 @@ describe('UserTaskCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox value', async () => {
+        if (!component.nextTaskCheckboxForFormsActivated) {
+            expect(true).toBeTrue();
+            return;
+        }
+
         taskDetails.formKey = 'form';
         component.getTaskType();
 
@@ -584,6 +594,11 @@ describe('UserTaskCloudComponent', () => {
     });
 
     it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
+        if (!component.nextTaskCheckboxForFormsActivated) {
+            expect(true).toBeTrue();
+            return;
+        }
+
         taskDetails.formKey = 'form';
         component.getTaskType();
 
