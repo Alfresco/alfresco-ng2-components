@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
@@ -53,9 +52,7 @@ import { FormSectionComponent } from './form-section/form-section.component';
         MatIconModule,
         NgStyle,
         FormFieldComponent,
-        MatSlideToggleModule,
         FormsModule,
-        JsonPipe,
         NgClass,
         HeaderWidgetComponent,
         FormSectionComponent
@@ -63,10 +60,6 @@ import { FormSectionComponent } from './form-section/form-section.component';
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {
-    /** Toggle debug options. */
-    @Input()
-    showDebugButton: boolean = false;
-
     @Input({ required: true })
     formDefinition: FormModel;
 
