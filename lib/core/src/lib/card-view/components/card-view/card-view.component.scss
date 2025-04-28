@@ -28,11 +28,11 @@
         .adf-property-field {
             width: 100%;
 
-            #{ms.mat-form-field-underline} {
+            #{ms.$mat-form-field-underline} {
                 display: none;
             }
 
-            #{ms.mat-input-element} {
+            #{ms.$mat-input-element} {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
                 padding: 6px 0;
