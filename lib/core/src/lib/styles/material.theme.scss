@@ -1,18 +1,18 @@
-@import './mat-selectors';
+@use './mat-selectors' as ms;
 
 @mixin adf-material-theme() {
-    #{$mat-expansion-panel} {
-        & #{$mat-expansion-panel-header}.cdk-keyboard-focused,
-        & #{$mat-expansion-panel-header}.cdk-program-focused,
-        &:not(#{$mat-expanded}) #{$mat-expansion-panel-header}:hover {
+    #{ms.$mat-expansion-panel} {
+        & #{ms.$mat-expansion-panel-header}.cdk-keyboard-focused,
+        & #{ms.$mat-expansion-panel-header}.cdk-program-focused,
+        &:not(#{ms.$mat-expanded}) #{ms.$mat-expansion-panel-header}:hover {
             &:not([aria-disabled='true']) {
                 background-color: var(--adf-theme-background-hover-color);
             }
         }
     }
 
-    #{$mat-calendar} {
-        #{$mat-calendar-header} {
+    #{ms.$mat-calendar} {
+        #{ms.$mat-calendar-header} {
             button {
                 color: var(--adf-theme-foreground-text-color-087);
 
@@ -22,68 +22,69 @@
             }
         }
 
-        #{$mat-calendar-content} {
-            #{$mat-calendar-table-header} th {
+        #{ms.$mat-calendar-content} {
+            #{ms.$mat-calendar-table-header} th {
                 color: var(--adf-theme-foreground-text-color-054);
             }
 
-            #{$mat-calendar-body-disabled} > div {
+            #{ms.$mat-calendar-body-disabled} > div {
+                /* stylelint-disable-next-line declaration-no-important */
                 color: var(--adf-theme-foreground-text-color-054) !important;
             }
         }
     }
 
-    .mat-datetimepicker-calendar {
-        .mat-datetimepicker-calendar-header {
-            .mat-datetimepicker-calendar-header-year {
+    #{ms.$mat-datetimepicker-calendar} {
+        #{ms.mat-datetimepicker-calendar-header} {
+            #{ms.mat-datetimepicker-calendar-header-year} {
                 opacity: 1;
             }
 
-            .mat-datetimepicker-calendar-header-date {
+            #{ms.mat-datetimepicker-calendar-header-date} {
                 opacity: 1;
             }
 
-            .mat-datetimepicker-calendar-header-time {
+            #{ms.mat-datetimepicker-calendar-header-time} {
                 opacity: 1;
             }
         }
 
-        .mat-datetimepicker-calendar-content {
-            .mat-datetimepicker-calendar-table-header th {
+        #{ms.mat-datetimepicker-calendar-content} {
+            #{ms.mat-datetimepicker-calendar-table-header} th {
                 color: var(--adf-theme-foreground-text-color-054);
             }
 
-            .mat-datetimepicker-calendar-body-disabled > div {
+            #{ms.mat-datetimepicker-calendar-body-disabled} > div {
                 color: var(--adf-theme-foreground-text-color-054);
             }
         }
     }
 
-    #{$mat-snackbar} {
-        &#{$mat-snack-bar-container} {
+    #{ms.$mat-snackbar} {
+        &#{ms.$mat-snack-bar-container} {
             margin: 24px;
 
-            #{$mat-snackbar-label} {
+            #{ms.$mat-snackbar-label} {
                 line-height: unset;
             }
         }
     }
 
-    #{$mat-input-element} {
+    #{ms.$mat-input-element} {
         &:focus::placeholder {
             color: var(--theme-primary-color);
         }
     }
 
-    #{$mat-datetimepicker-dialog} {
-        #{$mat-dialog-container} {
-            #{$mat-dialog-surface} {
+    #{ms.$mat-datetimepicker-dialog} {
+        #{ms.$mat-dialog-container} {
+            #{ms.$mat-dialog-surface} {
                 padding: 0;
             }
         }
     }
 
-    #{$mat-button-base} {
+    #{ms.$mat-button-base} {
         -webkit-font-smoothing: antialiased;
     }
 }
