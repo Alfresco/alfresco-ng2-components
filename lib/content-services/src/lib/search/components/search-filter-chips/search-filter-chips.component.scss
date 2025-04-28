@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 .adf-search-filter-chip,
 .adf-search-filter-chip-tabbed {
@@ -52,15 +52,15 @@
     }
 }
 
-.adf-search-filter-chip#{$mat-evolution-chip}#{$mat-standard-chip} {
+.adf-search-filter-chip#{ms.$mat-evolution-chip}#{ms.$mat-standard-chip} {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-#{$mat-standard-chip} {
+#{ms.$mat-standard-chip} {
     -webkit-font-smoothing: unset;
 }
 
-#{$mat-evolution-chip-set} {
+#{ms.$mat-evolution-chip-set} {
     margin-top: -4px;
 }

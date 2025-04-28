@@ -1,10 +1,10 @@
 /* stylelint-disable selector-class-pattern */
-@import 'styles/mat-selectors';
+@use '../../../../mat-selectors' as ms;
 
 .adf {
     // eslint-disable-selector-class-pattern
     &-date-widget {
-        #{$mat-form-field-suffix} {
+        #{ms.$mat-form-field-suffix} {
             top: 26px;
         }
 
@@ -14,11 +14,11 @@
     }
 
     &-left-label-input-datepicker {
-        #{$mat-form-field-suffix} {
+        #{ms.$mat-form-field-suffix} {
             top: 0;
         }
 
-        #{$mat-form-text-field-infix} {
+        #{ms.$mat-form-text-field-infix} {
             width: 100%;
         }
     }

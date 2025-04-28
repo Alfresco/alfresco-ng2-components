@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors' as ms;
 
 /* cspell: disable-next-line */
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
@@ -38,7 +38,7 @@
     }
 
     &-toolbar {
-        #{$mat-toolbar} {
+        #{ms.$mat-toolbar} {
             background-color: var(--adf-theme-background-card-color-087);
         }
     }
@@ -83,7 +83,7 @@
                 flex-direction: column;
                 height: 100%;
 
-                #{$mat-card-content} {
+                #{ms.$mat-card-content} {
                     height: 100%;
                     overflow: hidden auto;
                 }

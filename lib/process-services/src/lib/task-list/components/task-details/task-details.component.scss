@@ -1,5 +1,5 @@
-@import 'styles/flex';
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
+@use '../../../styles/flex' as flex;
 
 adf-task-details {
     width: 100%;
@@ -55,7 +55,7 @@ adf-task-details {
 
             &-sidebar {
                 &-drawer {
-                    @include layout-bp(lt-lg) {
+                    @include flex.layout-bp(lt-lg) {
                         margin-left: 0;
                     }
                 }
@@ -76,7 +76,7 @@ adf-task-details {
                     flex-direction: column;
                     padding: 20px 0;
 
-                    #{$mat-slide-toggle} {
+                    #{ms.$mat-slide-toggle} {
                         margin-left: auto;
 
                         & + div {
@@ -89,7 +89,7 @@ adf-task-details {
                     }
                 }
 
-                & #{$mat-tab-label-text} {
+                & #{ms.$mat-tab-label-text} {
                     flex-grow: 1;
                 }
             }

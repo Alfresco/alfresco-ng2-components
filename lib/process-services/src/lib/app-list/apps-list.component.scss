@@ -1,21 +1,52 @@
-@import 'styles/flex';
-@import 'styles/mat-selectors';
+@use 'sass:map';
+@use '../styles/mat-selectors' as ms;
+@use '../styles/flex' as flex;
 
 .adf-app-list-item {
     cursor: pointer;
 }
 
 $tile-themes: (
-    theme-1: (bg: #269abc, color: #168aac),
-    theme-2: (bg: #7da9b0, color: #6d99a0),
-    theme-3: (bg: #7689ab, color: #66799b),
-    theme-4: (bg: #c74e3e, color: #b73e2e),
-    theme-5: (bg: #fab96c, color: #eaa95c),
-    theme-6: (bg: #759d4c, color: #658d3c),
-    theme-7: (bg: #b1b489, color: #a1a479),
-    theme-8: (bg: #a17299, color: #916289),
-    theme-9: (bg: #696c67, color: #595c57),
-    theme-10: (bg: #cabb33, color: #baab23)
+    theme-1: (
+        bg: #269abc,
+        color: #168aac
+    ),
+    theme-2: (
+        bg: #7da9b0,
+        color: #6d99a0
+    ),
+    theme-3: (
+        bg: #7689ab,
+        color: #66799b
+    ),
+    theme-4: (
+        bg: #c74e3e,
+        color: #b73e2e
+    ),
+    theme-5: (
+        bg: #fab96c,
+        color: #eaa95c
+    ),
+    theme-6: (
+        bg: #759d4c,
+        color: #658d3c
+    ),
+    theme-7: (
+        bg: #b1b489,
+        color: #a1a479
+    ),
+    theme-8: (
+        bg: #a17299,
+        color: #916289
+    ),
+    theme-9: (
+        bg: #696c67,
+        color: #595c57
+    ),
+    theme-10: (
+        bg: #cabb33,
+        color: #baab23
+    )
 );
 
 .adf-app-list-spinner,
@@ -26,7 +57,7 @@ $tile-themes: (
     flex-direction: column;
     height: 85vh;
 
-    #{$mat-progress-spinner} {
+    #{ms.$mat-progress-spinner} {
         margin: 0 auto;
     }
 }
@@ -46,12 +77,12 @@ $tile-themes: (
             flex: 1 1 33.3333%;
             max-width: 33.3333%;
 
-            @include layout-bp(lt-md) {
+            @include flex.layout-bp(lt-md) {
                 flex: 1 1 50%;
                 max-width: 50%;
             }
 
-            @include layout-bp(lt-sm) {
+            @include flex.layout-bp(lt-sm) {
                 flex: 1 1 100%;
                 max-width: 100%;
             }
@@ -59,12 +90,12 @@ $tile-themes: (
             &-card {
                 @for $i from 1 through 10 {
                     &.theme-#{$i} {
-                        $tile-theme: map-get($tile-themes, theme-#{$i});
+                        $tile-theme: map.get($tile-themes, theme-#{$i});
 
-                        background-color: map-get($tile-theme, bg);
+                        background-color: map.get($tile-theme, bg);
 
                         .adf-app-listgrid-item-card-logo-icon {
-                            color: map-get($tile-theme, color);
+                            color: map.get($tile-theme, color);
                         }
                     }
                 }
@@ -72,15 +103,12 @@ $tile-themes: (
                 outline: none;
                 flex-direction: column;
                 display: flex;
-                transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+                transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
                 min-height: 200px;
                 padding: 0;
 
                 &:hover {
-                    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                    0 3px 14px 2px rgba(0, 0, 0, 0.12),
-                    0 5px 5px -3px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
                     cursor: pointer;
                     transform: scale(1.015);
                 }

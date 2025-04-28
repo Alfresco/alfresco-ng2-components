@@ -1,8 +1,8 @@
-@import '../../../styles/mixins';
-@import 'styles/mat-selectors';
+@use '../../../styles/mixins' as mixins;
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-login {
-    @include flex-column;
+    @include mixins.flex-column;
 }
 
 .adf-login-content {
@@ -204,7 +204,7 @@
             padding-bottom: 16px;
             font-size: var(--theme-subheading-2-font-size);
 
-            #{$mat-form-field-infix} {
+            #{ms.$mat-form-field-infix} {
                 min-height: 0;
                 padding-bottom: 3px;
                 padding-top: 20px;
@@ -213,7 +213,7 @@
                     font-size: var(--theme-subheading-2-font-size);
                 }
 
-                #{$mat-floating-label-required} {
+                #{ms.$mat-floating-label-required} {
                     &::after {
                         font-size: var(--theme-subheading-2-font-size);
                     }

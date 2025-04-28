@@ -1,7 +1,7 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-attach-file-widget-dialog {
-    #{$mat-dialog-actions} {
+    #{ms.$mat-dialog-actions} {
         background-color: var(--theme-background-color);
         display: flex;
         justify-content: flex-end;
@@ -33,4 +33,3 @@
 #{$mat-dialog-surface} {
     overflow-x: hidden;
 }
-

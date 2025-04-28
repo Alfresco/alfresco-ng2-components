@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 :host {
     width: 100%;
@@ -8,7 +8,7 @@
     font-weight: bolder;
 }
 
-#{$mat-form-field} {
+#{ms.$mat-form-field} {
     width: 100%;
 }
 

@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-card-view-dateitem {
     .adf-property-value {
@@ -50,7 +50,7 @@
             align-items: center;
             justify-content: space-between;
 
-            #{$mat-icon} {
+            #{ms.$mat-icon} {
                 opacity: 0.5;
 
                 &:hover {

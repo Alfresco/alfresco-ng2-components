@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../mat-selectors.scss' as ms;
 
 .adf-new-version-radio-group {
     display: inline-flex;
@@ -26,11 +26,11 @@
         width: 100%;
         float: right;
 
-        #{$mat-floating-label} {
+        #{ms.$mat-floating-label} {
             padding-bottom: 10px;
         }
 
-        #{$mat-form-field-infix} {
+        #{ms.$mat-form-field-infix} {
             padding-top: 12px;
             padding-bottom: 0;
         }

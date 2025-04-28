@@ -1,23 +1,23 @@
-@import 'styles/mat-selectors';
+@use '../../styles/mat-selectors' as ms;
 
 .adf-form-container {
     max-width: 100%;
     max-height: 100%;
 
-    & #{$mat-card} {
+    & #{ms.$mat-card} {
         padding: 16px 24px;
         overflow: hidden;
     }
 
-    & #{$mat-card-header-text} {
+    & #{ms.$mat-card-header-text} {
         margin: 0;
     }
 
-    & #{$mat-tab-body-content} {
+    & #{ms.$mat-tab-body-content} {
         overflow: hidden;
     }
 
-    & #{$mat-tab-label-text} {
+    & #{ms.$mat-tab-label-text} {
         font-size: var(--theme-subheading-2-font-size);
         line-height: var(--theme-headline-line-height);
         letter-spacing: -0.4px;
@@ -26,79 +26,79 @@
         text-transform: uppercase;
     }
 
-    & #{$mat-tab-ink-bar} {
+    & #{ms.$mat-tab-ink-bar} {
         height: 4px;
     }
 
-    & #{$mat-form-field-wrapper} {
+    & #{ms.$mat-form-field-wrapper} {
         margin: 0 12px 0 0;
     }
 }
 
-    .adf-form-container-card {
-        .adf {
-            &-form-title {
-                font-size: var(--theme-title-font-size);
+.adf-form-container-card {
+    .adf {
+        &-form-title {
+            font-size: var(--theme-title-font-size);
+        }
+
+        &-form-debug-container {
+            padding: 10px;
+        }
+
+        &-form-debug-container .adf-debug-toggle-text {
+            padding-left: 15px;
+            cursor: pointer;
+        }
+
+        &-form-debug-container .adf-debug-toggle-text:hover {
+            font-weight: bold;
+        }
+
+        &-form-reload-button {
+            position: absolute;
+            right: 12px;
+            top: 30px;
+        }
+
+        &-form-validation-button {
+            position: absolute;
+            right: 50px;
+            top: 39px;
+            color: var(--theme-accent-color);
+
+            & .adf-invalid-color {
+                color: var(--theme-warn-color);
+            }
+        }
+
+        &-form-hide-button {
+            display: none;
+        }
+
+        &-task-title {
+            text-align: center;
+        }
+
+        &-label {
+            width: 32px;
+            height: 16px;
+            font-size: var(--theme-caption-font-size);
+            line-height: var(--theme-headline-line-height);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        &-form-mat-card-actions {
+            float: right;
+            padding-bottom: 25px;
+            padding-right: 25px;
+
+            & #{ms.$mat-button} {
+                height: 36px;
+                border-radius: 5px;
             }
 
-            &-form-debug-container {
-                padding: 10px;
-            }
-
-            &-form-debug-container .adf-debug-toggle-text {
-                padding-left: 15px;
-                cursor: pointer;
-            }
-
-            &-form-debug-container .adf-debug-toggle-text:hover {
-                font-weight: bold;
-            }
-
-            &-form-reload-button {
-                position: absolute;
-                right: 12px;
-                top: 30px;
-            }
-
-            &-form-validation-button {
-                position: absolute;
-                right: 50px;
-                top: 39px;
-                color: var(--theme-accent-color);
-
-                & .adf-invalid-color {
-                    color: var(--theme-warn-color);
-                }
-            }
-
-            &-form-hide-button {
-                display: none;
-            }
-
-            &-task-title {
-                text-align: center;
-            }
-
-            &-label {
-                width: 32px;
-                height: 16px;
-                font-size: var(--theme-caption-font-size);
-                line-height: var(--theme-headline-line-height);
-                text-align: left;
-                white-space: nowrap;
-            }
-
-            &-form-mat-card-actions {
-                float: right;
-                padding-bottom: 25px;
-                padding-right: 25px;
-
-                & #{$mat-button} {
-                    height: 36px;
-                    border-radius: 5px;
-                }
-
-            & #{$mat-button-label} {
+            & #{ms.$mat-button-label} {
                 width: 58px;
                 height: 20px;
                 opacity: 0.54;
@@ -109,11 +109,10 @@
     }
 }
 
-
 form-field {
     width: 100%;
 
-    #{$mat-input-element} {
+    #{ms.$mat-input-element} {
         font-size: var(--theme-body-2-font-size);
         padding-top: 8px;
         line-height: normal;

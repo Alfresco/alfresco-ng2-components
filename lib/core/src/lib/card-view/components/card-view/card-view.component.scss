@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-property-list {
     border: unset;
@@ -28,11 +28,11 @@
         .adf-property-field {
             width: 100%;
 
-            #{mat-form-field-underline} {
+            #{ms.mat-form-field-underline} {
                 display: none;
             }
 
-            #{mat-input-element} {
+            #{ms.mat-input-element} {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
                 padding: 6px 0;
@@ -40,28 +40,28 @@
             }
 
             .adf-card-view__key-value-pairs__row {
-                #{$mat-input-element} {
+                #{ms.$mat-input-element} {
                     margin-top: 0;
                     padding-left: 12px;
                 }
             }
 
-            #{$mat-form-text-field-infix} {
+            #{ms.$mat-form-text-field-infix} {
                 border-top-width: 0;
             }
 
-            #{$mat-form-field-flex} {
+            #{ms.$mat-form-field-flex} {
                 padding-top: 0;
             }
 
-            #{$mat-form-field-wrapper} {
+            #{ms.$mat-form-field-wrapper} {
                 background-color: inherit;
                 padding-bottom: 0;
                 padding-left: 0;
                 padding-right: 0;
             }
 
-            #{$mat-form-field-label} {
+            #{ms.$mat-form-field-label} {
                 padding: 0;
                 justify-content: center;
                 display: flex;
@@ -92,7 +92,7 @@
             height: 32px;
             padding-left: 10px;
 
-            #{$mat-input-element} {
+            #{ms.$mat-input-element} {
                 color: var(--adf-metadata-action-button-clear-color);
                 padding: 5px 0 6px 12px;
                 margin: 5px 0 0;
@@ -102,7 +102,7 @@
         &.adf-property-readonly-value {
             color: var(--adf-metadata-property-panel-label-color);
 
-            #{$mat-input-element} {
+            #{ms.$mat-input-element} {
                 color: var(--adf-metadata-property-panel-label-color);
             }
         }

@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf {
     &-array-item-icon {
@@ -22,7 +22,7 @@
     }
 
     &-array-item-more-chip-container {
-        &#{$mat-card} {
+        &#{ms.$mat-card} {
             box-shadow: none;
             max-height: 300px;
             overflow-y: auto;
@@ -30,7 +30,7 @@
     }
 
     &-property-value {
-        #{$mat-chip-list} {
+        #{ms.$mat-chip-list} {
             padding-top: 6px;
         }
     }
@@ -45,7 +45,7 @@
         border-color: var(--adf-theme-foreground-divider-color);
         border-radius: 0;
 
-        #{$mat-chip}:hover {
+        #{ms.$mat-chip}:hover {
             cursor: pointer;
         }
     }

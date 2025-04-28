@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 $panel-properties-height: 56px !default;
 
@@ -11,11 +11,11 @@ $panel-properties-height: 56px !default;
             margin: 12px;
 
             adf-card-view-textitem {
-                #{$mat-form-field-subscript-wrapper} {
+                #{ms.$mat-form-field-subscript-wrapper} {
                     display: none;
                 }
 
-                #{$mat-form-field-infix} {
+                #{ms.$mat-form-field-infix} {
                     padding-bottom: 0;
                 }
             }
@@ -47,7 +47,7 @@ $panel-properties-height: 56px !default;
             }
         }
 
-        #{$mat-expansion-panel-body} {
+        #{ms.$mat-expansion-panel-body} {
             padding-top: 16px;
 
             input {
@@ -64,7 +64,7 @@ $panel-properties-height: 56px !default;
             color: var(--adf-theme-foreground-text-color-054);
         }
 
-        #{$mat-chip} {
+        #{ms.$mat-chip} {
             &.metadata-properties-tag-chip {
                 // TODO: bug open https://github.com/angular/components/issues/26584
                 /* stylelint-disable selector-class-pattern */

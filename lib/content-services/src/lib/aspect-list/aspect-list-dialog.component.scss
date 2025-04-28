@@ -1,9 +1,9 @@
-@import 'styles/mat-selectors';
+@use '../mat-selectors.scss' as ms;
 
 adf-aspect-list-dialog {
     display: block;
 
-    #{$mat-expansion-panel-body} {
+    #{ms.$mat-expansion-panel-body} {
         margin-top: -2px;
     }
 }
@@ -35,7 +35,7 @@ adf-aspect-list-dialog {
         padding-right: 4px;
         padding-top: 0;
 
-        #{$mat-dialog-content} {
+        #{ms.$mat-dialog-content} {
             padding: 0;
         }
 

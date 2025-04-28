@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-task-form {
     &-container {
@@ -10,12 +10,12 @@
         padding-right: 25px;
         padding-bottom: 25px;
 
-        & #{$mat-button} {
+        & #{ms.$mat-button} {
             height: 36px;
             border-radius: 5px;
         }
 
-        & #{$mat-button-label} {
+        & #{ms.$mat-button-label} {
             width: 58px;
             height: 20px;
             opacity: 0.54;

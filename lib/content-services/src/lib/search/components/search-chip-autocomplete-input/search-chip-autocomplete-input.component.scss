@@ -1,21 +1,21 @@
 /* stylelint-disable selector-class-pattern */
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
     }
 
-    .adf-chip-list:has(#{$mat-notched-outline}) {
+    .adf-chip-list:has(#{ms.$mat-notched-outline}) {
         margin-top: 4px;
     }
 
-    #{$mat-form-text-field-infix} {
+    #{ms.$mat-form-text-field-infix} {
         border: none;
     }
 
-    .adf-chip-list#{$mat-form-field} {
-        #{$mat-form-field-infix} {
+    .adf-chip-list#{ms.$mat-form-field} {
+        #{ms.$mat-form-field-infix} {
             padding-top: 14px;
             padding-bottom: 14px;
             min-height: unset;
@@ -35,8 +35,8 @@ adf-search-chip-autocomplete-input {
         padding: 4px 0;
     }
 
-    #{$mat-evolution-chip-set} {
-        #{$mat-evolution-chip} {
+    #{ms.$mat-evolution-chip-set} {
+        #{ms.$mat-evolution-chip} {
             margin-left: 0;
             margin-right: 4px;
         }

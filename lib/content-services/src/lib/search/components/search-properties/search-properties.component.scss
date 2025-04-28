@@ -1,5 +1,5 @@
 /* stylelint-disable selector-class-pattern */
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 adf-search-properties {
     .adf-search-properties-form {
@@ -9,39 +9,39 @@ adf-search-properties {
                 display: block;
             }
 
-            #{$mat-text-field-no-label} {
-                #{$mat-form-field-infix} {
+            #{ms.$mat-text-field-no-label} {
+                #{ms.$mat-form-field-infix} {
                     padding-top: 9px;
                     padding-bottom: 9px;
                     display: inline-block;
                 }
             }
 
-            #{$mat-form-field-infix} {
+            #{ms.$mat-form-field-infix} {
                 height: 37.5px;
                 min-height: 37.5px;
                 display: inline-block;
             }
 
-            #{$mat-select-trigger} {
+            #{ms.$mat-select-trigger} {
                 height: 17.5px;
             }
 
-            #{$mat-select-arrow-wrapper} {
+            #{ms.$mat-select-arrow-wrapper} {
                 width: 16px;
             }
 
-            #{$mat-line-ripple} {
+            #{ms.$mat-line-ripple} {
                 &::before {
                     display: none;
                 }
             }
 
-            #{$mat-select-arrow} {
+            #{ms.$mat-select-arrow} {
                 margin-left: 5px;
             }
 
-            #{$mat-form-field} {
+            #{ms.$mat-form-field} {
                 margin-bottom: 18px;
             }
         }
@@ -49,7 +49,7 @@ adf-search-properties {
         adf-search-chip-autocomplete-input {
             display: block;
 
-            #{$mat-text-field-outlined} {
+            #{ms.$mat-text-field-outlined} {
                 &-start,
                 &-end {
                     border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
@@ -65,15 +65,15 @@ adf-search-properties {
                 }
             }
 
-            #{$mat-focused} {
-                #{$mat-text-field-outlined} {
+            #{ms.$mat-focused} {
+                #{ms.$mat-text-field-outlined} {
                     outline: 2px auto -webkit-focus-ring-color;
                 }
             }
 
-            #{$mat-form-field-appearance-outline} {
-                #{$mat-text-field-outlined-thick} {
-                    #{$mat-text-field-outlined} {
+            #{ms.$mat-form-field-appearance-outline} {
+                #{ms.$mat-text-field-outlined-thick} {
+                    #{ms.$mat-text-field-outlined} {
                         &-start,
                         &-end {
                             border-width: 1px;
@@ -82,11 +82,11 @@ adf-search-properties {
                 }
             }
 
-            #{$mat-notched-outline-leading} {
+            #{ms.$mat-notched-outline-leading} {
                 border-color: var(--adf-theme-foreground-text-color-027);
             }
 
-            #{$mat-notched-outline-trailing} {
+            #{ms.$mat-notched-outline-trailing} {
                 border-color: var(--adf-theme-foreground-text-color-027);
             }
         }
@@ -107,14 +107,14 @@ adf-search-properties {
 
     .adf-search-properties-file-size-operator,
     .adf-search-properties-file-size-unit {
-        #{$mat-form-field-infix} {
+        #{ms.$mat-form-field-infix} {
             border: 1px solid var(--adf-theme-mat-grey-color-a400);
             border-radius: 5px;
             padding: 9px;
         }
 
-        &#{$mat-focused} {
-            #{$mat-form-field-infix} {
+        &#{ms.$mat-focused} {
+            #{ms.$mat-form-field-infix} {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }

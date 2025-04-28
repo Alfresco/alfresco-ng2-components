@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../styles/mat-selectors' as ms;
 
 :host {
     display: flex;
@@ -20,7 +20,7 @@
         display: flex;
         flex-direction: row;
 
-        #{$mat-button} {
+        #{ms.$mat-button} {
             min-width: 0;
             margin: -8px;
             height: unset;

@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-card-view-textitem {
     .adf-textitem-error {
@@ -29,20 +29,20 @@
             color: var(--adf-theme-foreground-text-color);
         }
 
-        #{$mat-button-touch-target} {
+        #{ms.$mat-button-touch-target} {
             width: 30px;
             height: 30px;
         }
     }
 
-    #{$mat-form-field-icon-suffix} {
+    #{ms.$mat-form-field-icon-suffix} {
         position: absolute;
         right: 1px;
         bottom: 7px;
     }
 
     .adf-textitem-chip-list-container {
-        #{$mat-form-field-label} {
+        #{ms.$mat-form-field-label} {
             margin-top: 6px;
         }
     }
@@ -56,7 +56,7 @@
         }
 
         .adf-property-field {
-            #{$mat-input-element} {
+            #{ms.$mat-input-element} {
                 color: var(--theme-primary-color);
                 cursor: pointer;
             }
@@ -86,7 +86,7 @@
         white-space: nowrap;
     }
 
-    #{$mat-line-ripple} {
+    #{ms.$mat-line-ripple} {
         &::before,
         &::after {
             display: none;

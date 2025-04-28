@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 adf-layout-container {
     display: block;
@@ -34,8 +34,8 @@ adf-layout-container {
 }
 
 /* stylelint-disable selector-class-pattern, declaration-no-important */
-#{$mat-sidenav-content},
-#{$mat-drawer-transition} #{$mat-drawer-content} {
+#{ms.$mat-sidenav-content},
+#{ms.$mat-drawer-transition} #{ms.$mat-drawer-content} {
     margin-left: 0 !important;
     margin-right: 0 !important;
     transform: unset !important;

@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../styles/mat-selectors' as ms;
 
 .adf {
     &-info-drawer {
@@ -7,7 +7,7 @@
             margin: 0;
         }
 
-        #{$mat-tab-label-text} {
+        #{ms.$mat-tab-label-text} {
             min-width: 0;
         }
 
@@ -31,28 +31,28 @@
                 }
 
                 .adf-info-drawer-tabs {
-                    & #{$mat-tab-body-content} > * {
+                    & #{ms.$mat-tab-body-content} > * {
                         margin-bottom: 20px;
                         display: block;
                     }
 
-                    & #{$mat-tab-body-content} > *:last-child {
+                    & #{ms.$mat-tab-body-content} > *:last-child {
                         margin-bottom: 0;
                     }
 
-                    #{$mat-tab-label-text} {
+                    #{ms.$mat-tab-label-text} {
                         flex-grow: 1;
 
-                        #{$mat-icon} + span {
+                        #{ms.$mat-icon} + span {
                             padding-left: 5px;
                         }
                     }
 
-                    #{$mat-tab-body} {
+                    #{ms.$mat-tab-body} {
                         overflow-y: hidden;
                     }
 
-                    #{$mat-tab-body-content} {
+                    #{ms.$mat-tab-body-content} {
                         /* stylelint-disable */
                         overflow: auto;
                         /* stylelint-enable */
@@ -65,7 +65,7 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .adf-info-drawer-tabs {
-    #{$mat-tab-label-container} {
+    #{ms.$mat-tab-label-container} {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     }
 
@@ -75,7 +75,7 @@
         border-bottom: unset;
         opacity: 1;
 
-        &#{$mat-tab-label} {
+        &#{ms.$mat-tab-label} {
             flex-grow: 1;
         }
 

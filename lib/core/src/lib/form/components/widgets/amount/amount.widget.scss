@@ -1,5 +1,5 @@
 /* stylelint-disable selector-class-pattern */
-@import 'styles/mat-selectors';
+@use '../../../../styles/mat-selectors' as ms;
 
 .adf {
     &-amount-widget {
@@ -14,17 +14,17 @@
     &-amount-widget__input {
         margin-top: -15px;
 
-        #{$mat-focused} {
+        #{ms.$mat-focused} {
             transition: none;
         }
 
-        #{$mat-form-field-prefix} {
+        #{ms.$mat-form-field-prefix} {
             padding-top: 16px;
             padding-bottom: 16px;
             align-self: flex-end;
         }
 
-        &:not(#{$mat-focused}):not(#{$mat-form-field-invalid}) {
+        &:not(#{ms.$mat-focused}):not(#{ms.$mat-form-field-invalid}) {
             .adf-amount-widget__prefix-spacing {
                 color: var(--adf-theme-foreground-secondary-text-color);
             }

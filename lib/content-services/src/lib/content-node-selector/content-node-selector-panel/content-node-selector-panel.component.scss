@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors.scss' as ms;
 
 /* stylelint-disable no-descending-specificity */
 $content-node-selector-thumbnail-width: 35px !default;
@@ -15,8 +15,8 @@ h2.adf-search-results-label {
     color: var(--adf-theme-foreground-text-color-087);
 }
 
-#{$mdc-dialog} {
-    #{$mat-dialog-surface}:is(div) {
+#{ms.$mdc-dialog} {
+    #{ms.$mat-dialog-surface}:is(div) {
         padding-bottom: 0;
     }
 }
@@ -41,17 +41,17 @@ h2.adf-search-results-label {
     }
 
     &-content {
-        #{$mat-input-element} {
+        #{ms.$mat-input-element} {
             &:focus::placeholder {
                 color: var(--theme-primary-color);
             }
         }
 
-        #{$mat-form-field-wrapper} {
-            #{$mat-form-field-flex} {
+        #{ms.$mat-form-field-wrapper} {
+            #{ms.$mat-form-field-flex} {
                 align-items: center;
 
-                #{$mat-form-field-infix} {
+                #{ms.$mat-form-field-infix} {
                     padding-bottom: 0;
                 }
             }
@@ -59,13 +59,13 @@ h2.adf-search-results-label {
 
         .adf-sites-dropdown-form-field {
             label {
-                &#{$mat-form-field-label} {
+                &#{ms.$mat-form-field-label} {
                     top: 32px;
                 }
             }
         }
 
-        #{$mat-form-field-subscript-wrapper} {
+        #{ms.$mat-form-field-subscript-wrapper} {
             height: 16px;
         }
 
@@ -88,7 +88,7 @@ h2.adf-search-results-label {
                 }
             }
 
-            #{$mat-form-field-subscript-wrapper} {
+            #{ms.$mat-form-field-subscript-wrapper} {
                 display: none;
             }
         }

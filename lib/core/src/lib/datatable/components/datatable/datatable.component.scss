@@ -1,7 +1,7 @@
 /* stylelint-disable no-descending-specificity */
 @use '@angular/material' as mat;
-@import '../../../styles/mixins';
-@import 'styles/mat-selectors';
+@use '../../../styles/mixins' as mixins;
+@use '../../../styles/mat-selectors' as ms;
 
 $data-table-header-font-size: var(--theme-caption-font-size) !default;
 $data-table-header-sort-icon-size: var(--theme-subheading-2-font-size) !default;
@@ -53,7 +53,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 }
 
 .adf-datatable-list,
-#{$cdk-drag-preview} {
+#{ms.$cdk-drag-preview} {
     display: flex;
     flex-direction: column;
     background-color: var(--adf-theme-background-card-color);
@@ -145,14 +145,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         .adf-datatable-row {
-            @include material-animation-default(0.28s);
+            @include mixins.material-animation-default(0.28s);
 
             transition-property: background-color;
             border-top: 1px solid var(--adf-theme-foreground-text-color-007);
             min-height: $data-table-row-height;
             cursor: pointer;
 
-            @include adf-no-select;
+            @include mixins.adf-no-select;
 
             &.adf-is-selected,
             &.adf-is-selected:hover {
@@ -238,7 +238,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         button {
-            #{$mat-icon} {
+            #{ms.$mat-icon} {
                 margin-top: -10px;
             }
         }
@@ -512,7 +512,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 }
 
 .adf-datatable-cell-header {
-    @include adf-no-select;
+    @include mixins.adf-no-select;
 
     position: relative;
     display: flex;
@@ -532,7 +532,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     &.adf-sortable {
-        @include adf-no-select;
+        @include mixins.adf-no-select;
 
         display: flex;
         align-items: center;
@@ -544,7 +544,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         padding-right: 0.25rem;
 
         &::after {
-            @include typo-icon;
+            @include mixins.typo-icon;
 
             font-size: $data-table-header-sort-icon-size;
             content: '\e5d8';
@@ -626,7 +626,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
-#{$cdk-drag-preview} {
+#{ms.$cdk-drag-preview} {
     min-height: $data-table-row-height;
     display: flex;
     flex-direction: row;
@@ -646,7 +646,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 }
 
 /* [Accessibility] Material checkbox labels */
-.adf-checkbox-sr-only #{$mat-checkbox-label} {
+.adf-checkbox-sr-only #{ms.$mat-checkbox-label} {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -692,7 +692,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 }
 
 .adf-datatable--empty {
-    @include flex-column;
+    @include mixins.flex-column;
 
     justify-content: center;
     align-items: center;
@@ -719,7 +719,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-datatable-body {
-        @include flex-column;
+        @include mixins.flex-column;
 
         justify-content: center;
         align-items: center;

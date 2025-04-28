@@ -1,6 +1,6 @@
 @use '../../../styles/flex' as flex;
-@import '../../../styles/mixins';
-@import 'styles/mat-selectors';
+@use '../../../styles/mixins' as mixins;
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-sidenav-layout {
     &-full-space {
@@ -13,7 +13,7 @@
         width: 100%;
     }
 
-    @include flex-column;
+    @include mixins.flex-column;
 
     width: 100%;
 
@@ -25,15 +25,15 @@
         flex: 0 0;
     }
 
-    #{$mat-drawer-content} {
-        @include flex-column;
+    #{ms.$mat-drawer-content} {
+        @include mixins.flex-column;
 
         position: unset;
         overflow: auto;
     }
 
     .adf-layout-container-sidenav {
-        #{$mat-icon} {
+        #{ms.$mat-icon} {
             vertical-align: sub;
         }
     }

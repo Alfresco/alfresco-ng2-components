@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 .adf-search-check-list > div {
     display: flex;
@@ -21,7 +21,7 @@
             white-space: nowrap;
         }
 
-        #{$mat-checkbox-box} {
+        #{ms.$mat-checkbox-box} {
             margin-left: 4px;
             margin-top: 5px;
             margin-bottom: 4px;
