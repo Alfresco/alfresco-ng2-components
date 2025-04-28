@@ -35,26 +35,26 @@
     }
 
     #{ms.$mat-datetimepicker-calendar} {
-        #{ms.mat-datetimepicker-calendar-header} {
-            #{ms.mat-datetimepicker-calendar-header-year} {
+        #{ms.$mat-datetimepicker-calendar-header} {
+            #{ms.$mat-datetimepicker-calendar-header-year} {
                 opacity: 1;
             }
 
-            #{ms.mat-datetimepicker-calendar-header-date} {
+            #{ms.$mat-datetimepicker-calendar-header-date} {
                 opacity: 1;
             }
 
-            #{ms.mat-datetimepicker-calendar-header-time} {
+            #{ms.$mat-datetimepicker-calendar-header-time} {
                 opacity: 1;
             }
         }
 
-        #{ms.mat-datetimepicker-calendar-content} {
-            #{ms.mat-datetimepicker-calendar-table-header} th {
+        #{ms.$mat-datetimepicker-calendar-content} {
+            #{ms.$mat-datetimepicker-calendar-table-header} th {
                 color: var(--adf-theme-foreground-text-color-054);
             }
 
-            #{ms.mat-datetimepicker-calendar-body-disabled} > div {
+            #{ms.$mat-datetimepicker-calendar-body-disabled} > div {
                 color: var(--adf-theme-foreground-text-color-054);
             }
         }
