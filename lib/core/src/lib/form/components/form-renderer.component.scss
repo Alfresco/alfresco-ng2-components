@@ -150,19 +150,6 @@
         text-overflow: ellipsis;
     }
 
-    &-form-debug-container {
-        padding: 10px;
-    }
-
-    &-form-debug-container .adf-debug-toggle-text {
-        padding-left: 15px;
-        cursor: pointer;
-    }
-
-    &-form-debug-container .adf-debug-toggle-text:hover {
-        font-weight: bold;
-    }
-
     &-form-reload-button {
         position: absolute;
         right: 12px;

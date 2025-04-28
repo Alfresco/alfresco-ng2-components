@@ -68,18 +68,3 @@
         </div>
     </div>
 </ng-template>
-
-<!--
-For debugging and data visualisation purposes,
-will be removed during future revisions
--->
-<div *ngIf="showDebugButton" class="adf-form-debug-container">
-    <mat-slide-toggle [(ngModel)]="debugMode">Debug mode</mat-slide-toggle>
-    <div *ngIf="debugMode">
-        <h4>Values</h4>
-        <pre>{{ formDefinition.values | json }}</pre>
-
-        <h4>Form</h4>
-        <pre>{{ formDefinition.json | json }}</pre>
-    </div>
-</div>
