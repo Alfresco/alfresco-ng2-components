@@ -1,8 +1,8 @@
 @use '@angular/material' as mat;
-@import 'styles/flex';
+@use '../../flex' as flex;
 
-$mat-menu-overlay-min-width: 112px !default;   // 56 * 2
-$mat-menu-overlay-max-width: 280px !default;   // 56 * 5
+$mat-menu-overlay-min-width: 112px !default; // 56 * 2
+$mat-menu-overlay-max-width: 280px !default; // 56 * 5
 
 .adf {
     &-search-result-autocomplete {
@@ -24,7 +24,7 @@ $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
         background-color: var(--adf-theme-background-card-color);
         border-radius: 2px;
 
-        @include layout-bp(lt-md) {
+        @include flex.layout-bp(lt-md) {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;

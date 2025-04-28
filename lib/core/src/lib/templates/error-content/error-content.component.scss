@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../../styles/flex' as flex;
 
 .adf-error-content {
     color: var(--adf-theme-foreground-text-color-054);
@@ -36,7 +36,7 @@
     }
 }
 
-@include layout-bp(lt-md) {
+@include flex.layout-bp(lt-md) {
     .adf-error-content {
         &-code {
             margin-top: 100px;

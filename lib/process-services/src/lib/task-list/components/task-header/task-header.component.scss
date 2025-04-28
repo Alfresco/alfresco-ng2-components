@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../../../styles/flex' as flex;
 
 .adf {
     &-controls {
@@ -27,7 +27,7 @@
     }
 }
 
-@include layout-bp(lt-md) {
+@include flex.layout-bp(lt-md) {
     adf-card-view .adf-property-value {
         text-overflow: ellipsis;
         overflow: hidden;

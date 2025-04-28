@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../styles/flex' as flex;
 
 .adf {
     &-userinfo-container {
@@ -14,7 +14,7 @@
     &-userinfo-name {
         padding: 0 5px;
 
-        @include layout-bp(lt-md) {
+        @include flex.layout-bp(lt-md) {
             display: none;
         }
     }
@@ -65,7 +65,7 @@
         display: flex;
         flex-direction: column;
 
-        @include layout-bp(lt-sm) {
+        @include flex.layout-bp(lt-sm) {
             padding: 10px;
         }
     }
