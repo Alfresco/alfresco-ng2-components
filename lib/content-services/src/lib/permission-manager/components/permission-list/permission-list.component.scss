@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 .adf {
     &-permission-card {
@@ -88,7 +88,7 @@
         height: calc(100% - 63px);
     }
 
-    &-local-permission-container#{$mat-card-content} {
+    &-local-permission-container#{ms.$mat-card-content} {
         overflow: hidden;
         flex: 1 1 auto;
         padding: 0;

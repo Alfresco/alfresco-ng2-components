@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../../../../../flex' as flex;
 
 .adf-edit-task-filter-checkbox {
     font-size: var(--theme-subheading-2-font-size);
@@ -60,7 +60,7 @@
             flex: 1 1 23%;
         }
 
-        @include layout-bp(lt-sm) {
+        @include flex.layout-bp(lt-sm) {
             flex-flow: column;
 
             :not(:last-child) {

@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../../styles/flex' as flex;
 
 .app-shell {
     display: flex;
@@ -23,13 +23,13 @@
     }
 }
 
-@include layout-bp(lt-sm) {
+@include flex.layout-bp(lt-sm) {
     .adf-app-title {
         display: none;
     }
 }
 
-@media screen and (max-width: 719px) {
+@media screen and (width <= 719px) {
     .adf-app-logo {
         display: none;
     }

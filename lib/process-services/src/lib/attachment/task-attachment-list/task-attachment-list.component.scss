@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../../styles/flex' as flex;
 
 .adf-attachment-list-loading-margin {
     margin-left: calc((100% - 100px) / 2);
@@ -23,7 +23,7 @@
     word-break: break-all;
     white-space: pre-line;
 
-    @include layout-bp(lt-sm) {
+    @include flex.layout-bp(lt-sm) {
         font-size: 40px;
     }
 }
@@ -46,7 +46,7 @@
     object-fit: contain;
     margin-top: 17px;
 
-    @include layout-bp(lt-sm) {
+    @include flex.layout-bp(lt-sm) {
         width: 250px;
     }
 }

@@ -1,12 +1,12 @@
-@import 'styles/flex';
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
+@use '../../../styles/flex' as flex;
 
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
     padding-top: 12px;
     border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
 
-    #{$mat-card-title} {
+    #{ms.$mat-card-title} {
         font-weight: bold;
         font-size: var(--theme-adf-task-title-font-size);
     }
@@ -32,11 +32,11 @@
         }
 
         .adf-input-row {
-            @include layout-bp(lt-md) {
+            @include flex.layout-bp(lt-md) {
                 flex-direction: column;
             }
 
-            @include layout-bp(lt-md) {
+            @include flex.layout-bp(lt-md) {
                 mat-form-field {
                     margin-right: 20px;
                 }
@@ -48,7 +48,7 @@
             box-sizing: border-box;
             max-width: 48%;
 
-            @include layout-bp(lt-sm) {
+            @include flex.layout-bp(lt-sm) {
                 max-width: 100%;
             }
         }
@@ -69,20 +69,20 @@
 }
 
 adf-start-task {
-    #{$mat-button}.adf-uppercase {
+    #{ms.$mat-button}.adf-uppercase {
         text-transform: uppercase;
     }
 
     people-widget.adf-people-widget-content {
         width: 100%;
 
-        #{$mat-form-field-label} {
+        #{ms.$mat-form-field-label} {
             top: -14px;
         }
     }
 
     .adf-people-widget-content {
-        #{$mat-form-field} {
+        #{ms.$mat-form-field} {
             width: 100%;
         }
 
@@ -96,7 +96,7 @@ adf-start-task {
     }
 
     .adf {
-        &-start-task-input-container #{$mat-form-field-wrapper} {
+        &-start-task-input-container #{ms.$mat-form-field-wrapper} {
             padding-top: 8px;
         }
 
@@ -136,7 +136,7 @@ adf-start-task {
                 border-color: var(--theme-warn-color);
             }
 
-            #{$mat-form-field-prefix} {
+            #{ms.$mat-form-field-prefix} {
                 color: var(--theme-warn-color);
             }
 

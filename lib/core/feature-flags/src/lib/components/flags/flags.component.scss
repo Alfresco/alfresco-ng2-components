@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors' as ms;
 
 /* stylelint-disable selector-class-pattern */
 .adf-feature-flags-overrides-header {
@@ -36,8 +36,8 @@
         width: 100%;
         display: flex;
 
-        #{$mat-form-field-subscript-wrapper},
-        #{$mat-line-ripple} {
+        #{ms.$mat-form-field-subscript-wrapper},
+        #{ms.$mat-line-ripple} {
             display: none;
         }
     }

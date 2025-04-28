@@ -1,5 +1,5 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
-@import 'styles/mat-selectors';
+@use '../../styles/mat-selectors' as ms;
 
 .adf-full-screen {
     width: 100%;
@@ -12,7 +12,7 @@
     width: 100%;
     height: 100%;
 
-    #{$mat-toolbar} {
+    #{ms.$mat-toolbar} {
         color: var(--adf-theme-foreground-text-color-054);
 
         .adf-toolbar-title {
@@ -33,7 +33,7 @@
     }
 
     &-toolbar {
-        #{$mat-toolbar} {
+        #{ms.$mat-toolbar} {
             background-color: var(--adf-theme-background-card-color-087);
         }
     }

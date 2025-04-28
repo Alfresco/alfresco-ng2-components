@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors.scss' as ms;
 
 .adf-categories-management {
     .adf-category-name-field {
@@ -20,7 +20,7 @@
             box-sizing: content-box;
         }
 
-        #{$mat-form-field-error} {
+        #{ms.$mat-form-field-error} {
             padding-top: 5px;
         }
     }
@@ -56,7 +56,7 @@
         background-color: inherit;
         color: inherit;
 
-        &:not(#{$mat-list-item-disabled}):hover {
+        &:not(#{ms.$mat-list-item-disabled}):hover {
             cursor: pointer;
             background: var(--adf-theme-mat-grey-color-a200);
         }
@@ -86,7 +86,7 @@
         overflow-wrap: anywhere;
     }
 
-    #{$mat-list-item-disabled} #{$mat-list-item-primary-text} {
+    #{ms.$mat-list-item-disabled} #{ms.$mat-list-item-primary-text} {
         opacity: 1;
     }
 }

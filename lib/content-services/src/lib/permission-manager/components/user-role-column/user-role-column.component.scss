@@ -1,11 +1,11 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
-.adf-role-selector-field#{$mat-form-field} {
+.adf-role-selector-field#{ms.$mat-form-field} {
     width: 100%;
     max-width: 200px;
     height: 40px;
 
-    #{$mat-form-field-infix}:not(:disabled) {
+    #{ms.$mat-form-field-infix}:not(:disabled) {
         padding-top: 8px;
     }
 }

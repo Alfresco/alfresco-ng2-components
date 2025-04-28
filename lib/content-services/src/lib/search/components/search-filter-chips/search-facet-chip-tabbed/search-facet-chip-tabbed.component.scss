@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../../mat-selectors.scss' as ms;
 
 adf-search-facet-chip-tabbed {
     .adf-search-filter-chip-tabbed {
@@ -6,7 +6,7 @@ adf-search-facet-chip-tabbed {
             pointer-events: none;
         }
 
-        #{$mat-evolution-chip-graphic} {
+        #{ms.$mat-evolution-chip-graphic} {
             display: none;
         }
     }
@@ -16,6 +16,6 @@ adf-search-facet-chip-tabbed {
     }
 }
 
-.adf-search-widget-extra-width#{$mat-menu-panel} {
+.adf-search-widget-extra-width#{ms.$mat-menu-panel} {
     max-width: 500px;
 }

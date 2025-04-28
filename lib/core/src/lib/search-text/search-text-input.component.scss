@@ -1,11 +1,11 @@
-@import 'styles/mat-selectors';
+@use '../styles/mat-selectors' as ms;
 
 .adf-search-container {
     &:has(.adf-input-form-field-divider) {
         overflow: hidden;
     }
 
-    #{$mat-form-field-subscript-wrapper} {
+    #{ms.$mat-form-field-subscript-wrapper} {
         display: none;
     }
 

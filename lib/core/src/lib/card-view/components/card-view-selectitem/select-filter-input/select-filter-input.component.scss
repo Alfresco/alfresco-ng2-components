@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../../styles/mat-selectors' as ms;
 
 $select-filter-height: 4em !default;
 
@@ -17,7 +17,7 @@ $select-filter-height: 4em !default;
         background: var(--adf-theme-background-card-color);
     }
 
-    #{$mat-form-field} {
+    #{ms.$mat-form-field} {
         width: 100%;
     }
 
@@ -26,7 +26,7 @@ $select-filter-height: 4em !default;
     }
 }
 
-#{$mat-select-panel}.adf-select-filter {
+#{ms.$mat-select-panel}.adf-select-filter {
     transform: none;
     overflow-x: hidden;
     max-height: calc(256px + #{$select-filter-height});

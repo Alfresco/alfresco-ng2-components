@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-image-viewer {
     width: 100%;
@@ -33,7 +33,7 @@
         left: 50%;
         transform: translateX(-50%);
 
-        .adf-toolbar #{$mat-toolbar} {
+        .adf-toolbar #{ms.$mat-toolbar} {
             max-height: 48px;
             background-color: var(--adf-theme-background-card-color);
             border-width: 0;

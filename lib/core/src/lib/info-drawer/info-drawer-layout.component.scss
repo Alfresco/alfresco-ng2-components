@@ -1,5 +1,5 @@
-@import '../styles/mixins';
-@import 'styles/mat-selectors';
+@use '../styles/mixins' as mixins;
+@use '../styles/mat-selectors' as ms;
 
 $adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
@@ -7,25 +7,25 @@ $adf-info-drawer-icon-size-half: 24px !default;
 
 .adf {
     &-info-drawer {
-        @include flex-column;
+        @include mixins.flex-column;
     }
 
     &-info-drawer-layout {
-        @include flex-column;
+        @include mixins.flex-column;
 
         overflow: auto;
         width: 100%;
         background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
-        & #{$mat-tab-label-text} {
+        & #{ms.$mat-tab-label-text} {
             font-weight: bold;
             text-align: left;
             opacity: 1;
         }
 
-        #{$mat-tab-label}#{$mat-tab-label-active} {
-            & #{$mat-tab-label-text} {
+        #{ms.$mat-tab-label}#{ms.$mat-tab-label-active} {
+            & #{ms.$mat-tab-label-text} {
                 color: inherit;
             }
         }
@@ -75,7 +75,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 margin-bottom: 0;
             }
 
-            .adf-info-drawer-tabs #{$mat-tab-body-content} {
+            .adf-info-drawer-tabs #{ms.$mat-tab-body-content} {
                 .adf-manage-versions-empty,
                 .adf-manage-versions-no-permission {
                     margin: 0;

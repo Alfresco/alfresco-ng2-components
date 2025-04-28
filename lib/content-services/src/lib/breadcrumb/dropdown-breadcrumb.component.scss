@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../mat-selectors.scss' as ms;
 
 $dropdown-horizontal-offset: 30px;
 
@@ -98,6 +98,6 @@ $dropdown-horizontal-offset: 30px;
     }
 }
 
-#{$cdk-overlay-pane}:has(>.adf-breadcrumb-dropdown-panel){
+#{ms.$cdk-overlay-pane}:has(> .adf-breadcrumb-dropdown-panel) {
     min-width: fit-content;
 }

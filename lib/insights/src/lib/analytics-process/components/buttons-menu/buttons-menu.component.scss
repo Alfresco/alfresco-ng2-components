@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors' as ms;
 
 .adf-buttons-menu {
     margin-right: 10px;
@@ -23,7 +23,7 @@
             display: none;
         }
 
-        button > #{$material-icons} {
+        button > #{ms.$material-icons} {
             color: black;
             margin: 0 10px;
         }

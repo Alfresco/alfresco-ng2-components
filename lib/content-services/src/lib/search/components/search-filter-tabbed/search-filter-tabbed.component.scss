@@ -1,14 +1,14 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 adf-search-filter-tabbed {
-    #{$mat-tab-header} {
+    #{ms.$mat-tab-header} {
         margin-top: 0;
     }
 
     .adf-search-tab-label-active {
         border-bottom: 1px solid var(--theme-primary-color);
 
-        #{$mat-tab-label-text} {
+        #{ms.$mat-tab-label-text} {
             color: var(--adf-theme-foreground-secondary-text-color);
         }
     }

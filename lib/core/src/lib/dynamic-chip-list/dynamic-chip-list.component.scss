@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../styles/mat-selectors' as ms;
 
 .adf-dynamic-chip-list-container {
     display: flex;
@@ -60,10 +60,10 @@
         margin-bottom: 0;
         padding: 6px 11px;
 
-        #{$mat-evolution-chip-action} {
+        #{ms.$mat-evolution-chip-action} {
             padding: 2px 12px;
 
-            #{$mat-evolution-chip-text-label} {
+            #{ms.$mat-evolution-chip-text-label} {
                 color: var(--adf-theme-foreground-text-color-054);
             }
         }

@@ -1,5 +1,6 @@
 /* stylelint-disable no-descending-specificity */
-@import 'styles/mat-selectors';
+/* stylelint-disable declaration-no-important */
+@use '../../../styles/mat-selectors' as ms;
 
 ul > li > form-field > .adf-focus {
     .adf-label {
@@ -36,15 +37,15 @@ ul > li > form-field > .adf-focus {
     }
 
     &-invalid {
-        #{$mat-checkbox} {
+        #{ms.$mat-checkbox} {
             padding-bottom: 12px;
         }
 
-        #{$mat-line-ripple} {
+        #{ms.$mat-line-ripple} {
             background-color: var(--theme-warn-color) !important;
         }
 
-        #{$mat-select} {
+        #{ms.$mat-select} {
             &-arrow {
                 color: var(--adf-theme-foreground-secondary-text-color) !important;
             }
@@ -54,7 +55,7 @@ ul > li > form-field > .adf-focus {
             border-color: var(--theme-warn-color);
         }
 
-        #{$mat-form-field-prefix} {
+        #{ms.$mat-form-field-prefix} {
             color: var(--adf-theme-foreground-secondary-text-color);
         }
 
@@ -71,9 +72,9 @@ ul > li > form-field > .adf-focus {
 /* query for Microsoft IE 11 */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     adf-form-field {
-        #{$mat-input-element},
-        #{$mat-select},
-        #{$mat-form-field} {
+        #{ms.$mat-input-element},
+        #{ms.$mat-select},
+        #{ms.$mat-form-field} {
             display: block !important;
         }
     }

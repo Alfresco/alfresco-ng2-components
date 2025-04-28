@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../../mat-selectors' as ms;
 
 .adf-task-form-cloud-container {
     height: 100%;
@@ -16,7 +16,7 @@
                     border-radius: 5px;
                 }
 
-                #{$mat-button} {
+                #{ms.$mat-button} {
                     height: 36px;
                     border-radius: 5px;
                     width: auto;
@@ -25,7 +25,7 @@
                     white-space: nowrap;
                 }
 
-                #{$mat-button-label} {
+                #{ms.$mat-button-label} {
                     min-width: 58px;
                 }
             }
