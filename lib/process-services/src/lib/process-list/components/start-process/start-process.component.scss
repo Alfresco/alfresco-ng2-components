@@ -1,5 +1,5 @@
-@import 'styles/flex';
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
+@use '../../../styles/flex' as flex;
 
 .adf {
     &-start-process {
@@ -12,7 +12,7 @@
             width: 100%;
         }
 
-        #{$mat-form-field-label} {
+        #{ms.$mat-form-field-label} {
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
@@ -22,7 +22,7 @@
             text-align: right;
         }
 
-        #{$mat-button} {
+        #{ms.$mat-button} {
             width: auto;
             padding: 0 16px;
             margin: 0 8px;
@@ -40,7 +40,7 @@
         }
 
         &-process-name {
-            margin-top: 16px
+            margin-top: 16px;
         }
     }
 
@@ -62,11 +62,11 @@
     }
 
     &-start-form-container {
-        #{$mat-card-content} {
+        #{ms.$mat-card-content} {
             margin-bottom: 100px;
         }
 
-        #{$mat-card-header} {
+        #{ms.$mat-card-header} {
             display: none;
         }
 
@@ -81,7 +81,7 @@
         padding-bottom: 16px;
 
         button {
-            text-wrap: none;
+            text-wrap: nowrap;
         }
     }
 
@@ -92,11 +92,11 @@
         align-items: baseline;
 
         .adf-start-process-definition-select {
-            .mat-mdc-select-arrow-wrapper {
-                transform:  none;
+            #{ms.$mat-select-arrow-wrapper} {
+                transform: none;
 
                 svg {
-                    fill: initial;
+                    fill: currentcolor;
                 }
             }
         }
@@ -107,7 +107,7 @@
     }
 }
 
-@include layout-bp(lt-sm) {
+@include flex.layout-bp(lt-sm) {
     .adf-start-process {
         width: 90%;
         margin-left: auto;

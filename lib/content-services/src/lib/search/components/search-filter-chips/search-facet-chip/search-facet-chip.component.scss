@@ -1,7 +1,7 @@
-@import 'styles/mat-selectors';
+@use '../../../../mat-selectors.scss' as ms;
 
 .adf-search-filter-chip {
-    #{$mat-evolution-chip-graphic} {
+    #{ms.$mat-evolution-chip-graphic} {
         display: none;
     }
 

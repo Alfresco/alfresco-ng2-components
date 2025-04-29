@@ -1,6 +1,6 @@
 /* stylelint-disable selector-class-pattern */
-@import 'styles/flex';
-@import 'styles/mat-selectors';
+@use '../../styles/flex' as flex;
+@use '../../styles/mat-selectors' as ms;
 
 .adf-hidden {
     display: none;
@@ -18,7 +18,7 @@
         display: grid;
 
         &-column-view {
-            @include layout-bp(lt-md) {
+            @include flex.layout-bp(lt-md) {
                 display: flow;
             }
 
@@ -47,7 +47,7 @@
         }
     }
 
-    @include layout-bp(lt-md) {
+    @include flex.layout-bp(lt-md) {
         .adf-grid-list-item {
             flex: 1 0 100%;
         }
@@ -75,10 +75,10 @@
         top: 1.8em;
     }
 
-    #{$mat-focused} {
+    #{ms.$mat-focused} {
         width: 100%;
 
-        #{$mat-text-field-focused} {
+        #{ms.$mat-text-field-focused} {
             label {
                 color: var(--theme-primary-color);
             }
@@ -89,12 +89,12 @@
             background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
         }
 
-        #{$mat-form-field-prefix} {
+        #{ms.$mat-form-field-prefix} {
             color: var(--theme-primary-color);
         }
     }
 
-    #{$mat-grid-tile} {
+    #{ms.$mat-grid-tile} {
         overflow: visible;
         width: 80%;
     }
@@ -110,16 +110,16 @@
         max-width: 100%;
         max-height: 100%;
 
-        & #{$mat-card} {
+        & #{ms.$mat-card} {
             padding: 16px 24px;
             overflow: hidden;
         }
 
-        & #{$mat-card-header-text} {
+        & #{ms.$mat-card-header-text} {
             margin: 0;
         }
 
-        & #{$mat-tab-body-content} {
+        & #{ms.$mat-tab-body-content} {
             overflow: hidden;
         }
 
@@ -132,13 +132,13 @@
             text-transform: uppercase;
         }
 
-        & #{$mat-tab-ink-bar} {
-            #{$mat-tab-indicator-underline} {
+        & #{ms.$mat-tab-ink-bar} {
+            #{ms.$mat-tab-indicator-underline} {
                 border-top-width: 4px;
             }
         }
 
-        & #{$mat-form-field-wrapper} {
+        & #{ms.$mat-form-field-wrapper} {
             margin: 0 12px 0 0;
         }
     }
@@ -148,19 +148,6 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-
-    &-form-debug-container {
-        padding: 10px;
-    }
-
-    &-form-debug-container .adf-debug-toggle-text {
-        padding-left: 15px;
-        cursor: pointer;
-    }
-
-    &-form-debug-container .adf-debug-toggle-text:hover {
-        font-weight: bold;
     }
 
     &-form-reload-button {
@@ -201,7 +188,7 @@
         padding-bottom: 25px;
         padding-right: 25px;
 
-        & #{$mat-button} {
+        & #{ms.$mat-button} {
             height: 36px;
             border-radius: 5px;
             width: auto;
@@ -210,7 +197,7 @@
             white-space: nowrap;
         }
 
-        & #{$mat-button-label} {
+        & #{ms.$mat-button-label} {
             min-width: 58px;
         }
     }
@@ -223,7 +210,7 @@
         }
     }
 
-    &-left-label-input-container #{$mat-form-field-label} {
+    &-left-label-input-container #{ms.$mat-form-field-label} {
         top: auto;
         bottom: 0;
     }
@@ -237,7 +224,7 @@
 form-field {
     width: 100%;
 
-    #{$mat-input-element} {
+    #{ms.$mat-input-element} {
         font-size: var(--theme-body-2-font-size);
         padding-top: 8px;
         line-height: normal;

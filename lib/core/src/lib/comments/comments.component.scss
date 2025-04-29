@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../styles/mat-selectors' as ms;
 
 adf-comments {
     .adf-comments-container {
@@ -10,11 +10,11 @@ adf-comments {
             width: 100%;
             padding-bottom: 8px;
 
-            #{$mat-form-field} {
+            #{ms.$mat-form-field} {
                 width: 100%;
 
-                &#{$mat-form-field-invalid} {
-                    #{$mat-input-element} {
+                &#{ms.$mat-form-field-invalid} {
+                    #{ms.$mat-input-element} {
                         &::placeholder,
                         &:focus::placeholder {
                             color: var(--theme-warn-color);
@@ -23,15 +23,15 @@ adf-comments {
                 }
             }
 
-            #{$mat-form-field-wrapper} {
-                #{$mat-form-field-flex} {
-                    #{$mat-form-field-infix} {
+            #{ms.$mat-form-field-wrapper} {
+                #{ms.$mat-form-field-flex} {
+                    #{ms.$mat-form-field-infix} {
                         padding-bottom: 2px;
                         padding-top: 25px;
                     }
                 }
 
-                #{$mat-input-element} {
+                #{ms.$mat-input-element} {
                     &:focus::placeholder {
                         color: var(--theme-primary-color);
                         -webkit-font-smoothing: subpixel-antialiased;
@@ -62,7 +62,7 @@ adf-comments {
         justify-content: flex-end;
     }
 
-    #{$mat-list-item-unscoped-content} {
+    #{ms.$mat-list-item-unscoped-content} {
         display: flex;
         padding: 0 16px;
     }

@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../mat-selectors.scss' as ms;
 
 adf-content-node-selector {
     .adf-upload-dialog {
@@ -42,7 +42,7 @@ adf-content-node-selector {
 }
 
 .adf-content-node-selector-dialog {
-    #{$mat-form-field} {
+    #{ms.$mat-form-field} {
         width: 100%;
     }
 
@@ -50,7 +50,7 @@ adf-content-node-selector {
         color: var(--adf-theme-foreground-base-color-045);
     }
 
-    #{$mat-dialog-title} {
+    #{ms.$mat-dialog-title} {
         margin-bottom: 0;
         padding: 0;
 

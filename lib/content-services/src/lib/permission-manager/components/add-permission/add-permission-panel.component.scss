@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 $search-result-height: calc(100% - 60px);
 
@@ -9,7 +9,7 @@ $search-result-height: calc(100% - 60px);
         overflow: auto;
         border: 2px solid var(--adf-theme-foreground-text-color-007);
 
-        #{$mat-list-item-end} {
+        #{ms.$mat-list-item-end} {
             display: none;
         }
 
@@ -54,18 +54,18 @@ $search-result-height: calc(100% - 60px);
             padding-bottom: 0;
             padding-top: 12px;
 
-            #{$mat-form-field-wrapper} {
-                #{$mat-form-field-flex} {
+            #{ms.$mat-form-field-wrapper} {
+                #{ms.$mat-form-field-flex} {
                     align-items: center;
 
-                    #{$mat-form-field-infix} {
+                    #{ms.$mat-form-field-infix} {
                         padding-top: 0;
                         padding-bottom: 0;
                     }
                 }
             }
 
-            #{$mat-form-field-subscript-wrapper} {
+            #{ms.$mat-form-field-subscript-wrapper} {
                 height: 16px;
             }
 

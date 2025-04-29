@@ -1,7 +1,7 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
-#{$mdc-dialog} {
-    #{$mat-dialog-surface}:is(div) {
+#{ms.$mdc-dialog} {
+    #{ms.$mat-dialog-surface}:is(div) {
         padding-bottom: 0;
     }
 }
@@ -31,11 +31,11 @@
                 width: 100%;
                 justify-content: unset;
 
-                #{$mat-button-label} {
+                #{ms.$mat-button-label} {
                     padding-right: 0;
                 }
 
-                #{$mat-icon} {
+                #{ms.$mat-icon} {
                     font-size: 24px;
                     width: 24px;
                     height: 24px;

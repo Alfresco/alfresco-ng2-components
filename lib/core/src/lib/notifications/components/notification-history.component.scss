@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../styles/mat-selectors' as ms;
 
 $notification-item-height: 72px;
 
@@ -8,7 +8,7 @@ $notification-item-height: 72px;
         -webkit-font-smoothing: subpixel-antialiased;
     }
 
-    &-notification-history-menu_button#{$mat-button} {
+    &-notification-history-menu_button#{ms.$mat-button} {
         border-radius: 90%;
         padding: 0;
         min-width: 40px;
@@ -154,11 +154,11 @@ $notification-item-height: 72px;
     }
 }
 
-#{$mat-menu-panel}.adf-notification-history-menu.adf-notification-history-menu-panel {
+#{ms.$mat-menu-panel}.adf-notification-history-menu.adf-notification-history-menu-panel {
     min-width: 320px;
     max-height: 500px;
 
-    #{$mat-menu-content} {
+    #{ms.$mat-menu-content} {
         padding: 0;
     }
 }

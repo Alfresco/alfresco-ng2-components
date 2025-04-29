@@ -1,50 +1,50 @@
-@import "styles/mat-selectors";
+@use '../../../../mat-selectors' as ms;
 
 adf-search-date-range {
-  .adf-search-date-range-container {
-    margin-top: 20px;
-    padding: 10px;
+    .adf-search-date-range-container {
+        margin-top: 20px;
+        padding: 10px;
 
-    .adf-search-date-range-form-field-select {
-      width: 180px;
-      min-width: 180px;
-    }
-
-    &-row {
-      display: flex;
-      flex-direction: row;
-      padding-bottom: 21px;
-      align-items: center;
-
-      &-date {
-        margin-top: 8px;
-      }
-
-      #{$mat-select-arrow-wrapper} {
-        height: unset;
-      }
-
-      .adf-search-date-range-input-field {
-        width: 75px;
-      }
-
-      .adf-search-date-range-form-field {
-        padding-left: 10px;
-        flex: 1;
-        margin-bottom: 12px;
-
-        #{$mat-form-field-flex} {
-          align-items: center;
-
-          #{$mat-form-field-infix} {
-            padding: 0.375em 0 4px;
-          }
+        .adf-search-date-range-form-field-select {
+            width: 180px;
+            min-width: 180px;
         }
-      }
-    }
-  }
 
-  .adf-search-widget-extra-width {
-    max-width: 500px;
-  }
+        &-row {
+            display: flex;
+            flex-direction: row;
+            padding-bottom: 21px;
+            align-items: center;
+
+            &-date {
+                margin-top: 8px;
+            }
+
+            #{ms.$mat-select-arrow-wrapper} {
+                height: unset;
+            }
+
+            .adf-search-date-range-input-field {
+                width: 75px;
+            }
+
+            .adf-search-date-range-form-field {
+                padding-left: 10px;
+                flex: 1;
+                margin-bottom: 12px;
+
+                #{ms.$mat-form-field-flex} {
+                    align-items: center;
+
+                    #{ms.$mat-form-field-infix} {
+                        padding: 0.375em 0 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    .adf-search-widget-extra-width {
+        max-width: 500px;
+    }
 }

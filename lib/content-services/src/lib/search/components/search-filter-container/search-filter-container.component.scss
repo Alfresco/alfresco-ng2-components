@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 .adf-filter {
     &-button:has(.adf-filter-icon) {
@@ -73,7 +73,7 @@
             padding-right: 16px;
             -webkit-font-smoothing: subpixel-antialiased;
 
-            #{$mat-button-label} {
+            #{ms.$mat-button-label} {
                 font-weight: unset;
             }
         }

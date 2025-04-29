@@ -1,27 +1,27 @@
 /* stylelint-disable selector-class-pattern */
-@import 'styles/mat-selectors';
+@use '../../../../styles/mat-selectors' as ms;
 
 .adf {
     &-date-time-widget {
-        #{$mat-form-field-suffix} {
+        #{ms.$mat-form-field-suffix} {
             top: 26px;
         }
 
-        #{$mat-form-field-label} {
+        #{ms.$mat-form-field-label} {
             top: 20px;
         }
     }
 
     &-left-label-input-datepicker {
-        #{$mat-form-field-suffix} {
+        #{ms.$mat-form-field-suffix} {
             top: 0;
         }
-        #{$mat-form-text-field-infix} {
+        #{ms.$mat-form-text-field-infix} {
             width: 100%;
         }
     }
 }
 
-.mat-datetimepicker-toggle {
+#{ms.$mat-datetimepicker-toggle} {
     color: var(--adf-theme-foreground-icon-color);
 }

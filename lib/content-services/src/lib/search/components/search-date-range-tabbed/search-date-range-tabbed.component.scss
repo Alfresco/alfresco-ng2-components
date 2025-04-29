@@ -1,7 +1,7 @@
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 adf-search-date-range-tabbed {
-    #{$mat-tab-header} {
+    #{ms.$mat-tab-header} {
         margin-top: -5px;
     }
 }

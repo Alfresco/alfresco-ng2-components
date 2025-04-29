@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@use '../../../styles/flex' as flex;
 
 adf-layout-header .adf-toolbar-container-row {
     color: var(--theme-header-text-color);
@@ -51,7 +51,7 @@ adf-layout-header .adf-toolbar-container-row {
         padding: 0;
     }
 
-    @include layout-bp(lt-sm) {
+    @include flex.layout-bp(lt-sm) {
         .adf-app-logo,
         .adf-app-title {
             display: none;

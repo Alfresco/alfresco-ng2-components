@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf {
     &-upload-widget-container {
@@ -27,7 +27,7 @@
     }
 
     &-upload-files-row {
-        #{$mat-line} {
+        #{ms.$mat-line} {
             margin-bottom: 0;
         }
     }

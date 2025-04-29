@@ -1,10 +1,10 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf {
     &-people-widget {
         width: 100%;
 
-        #{$mat-form-field-label} {
+        #{ms.$mat-form-field-label} {
             top: 10px;
         }
 

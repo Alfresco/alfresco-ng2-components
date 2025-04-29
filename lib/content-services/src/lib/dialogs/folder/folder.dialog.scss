@@ -1,21 +1,21 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors.scss' as ms;
 
 .adf-folder-dialog {
     .adf-folder-dialog-content {
         padding: 0;
         overflow: unset;
 
-        #{$mat-form-field-infix} {
+        #{ms.$mat-form-field-infix} {
             padding-bottom: 3.5px;
         }
 
-        #{$mat-form-field-hide-placeholder} {
-            #{$mat-floating-label} {
+        #{ms.$mat-form-field-hide-placeholder} {
+            #{ms.$mat-floating-label} {
                 padding-top: 20px;
             }
         }
 
-        #{$mat-form-field-hint-wrapper} {
+        #{ms.$mat-form-field-hint-wrapper} {
             padding-left: 0;
             margin-left: -2px;
             color: var(--adf-theme-foreground-secondary-text-color);

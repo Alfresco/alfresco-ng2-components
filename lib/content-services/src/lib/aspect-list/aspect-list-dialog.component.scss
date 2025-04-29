@@ -1,66 +1,61 @@
-@import 'styles/mat-selectors';
+@use '../mat-selectors.scss' as ms;
 
 adf-aspect-list-dialog {
     display: block;
 
-    #{$mat-expansion-panel-body} {
+    #{ms.$mat-expansion-panel-body} {
         margin-top: -2px;
     }
 }
 
-.adf {
-    &-aspect-list-dialog-title {
-        font-size: large;
-        font-weight: 200;
-        margin-top: 0;
+.adf-aspect-list-dialog-title {
+    font-size: large;
+    font-weight: 200;
+    margin-top: 0;
+}
+
+.adf-aspect-list-dialog-description {
+    font-size: small;
+    line-height: normal;
+}
+
+.adf-aspect-list-dialog-information {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: small;
+}
+
+.adf-aspect-list-dialog {
+    justify-content: space-between;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 0;
+
+    &::before {
+        display: none;
     }
+}
 
-    &-aspect-list-dialog-description {
-        font-size: small;
-        line-height: normal;
-    }
+.adf-aspect-dialog-content {
+    padding: 0;
+    margin-bottom: 8px;
 
-    &-aspect-list-dialog-information {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 4px;
-        padding-left: 4px;
-        padding-right: 4px;
-        font-size: small;
-    }
-
-    &-aspect-list-dialog {
-        justify-content: space-between;
-        padding-left: 4px;
-        padding-right: 4px;
-        padding-top: 0;
-
-        #{$mat-dialog-content} {
-            padding: 0;
+    .adf-aspect-property-table {
+        .adf-aspect-property-table-cell {
+            font-size: smaller;
+            color: var(--adf-theme-foreground-text-color-087);
         }
 
-        &::before {
-            display: none;
-        }
-    }
-
-    &-aspect-dialog-content {
-        margin-bottom: 8px;
-
-        .adf-aspect-property-table {
-            .adf-aspect-property-table-cell {
-                font-size: smaller;
-                color: var(--adf-theme-foreground-text-color-087);
+        .adf-aspect-property-table-column {
+            &-name {
+                width: 30%;
             }
 
-            .adf-aspect-property-table-column {
-                &-name {
-                    width: 30%;
-                }
-
-                &-title {
-                    width: 50%;
-                }
+            &-title {
+                width: 50%;
             }
         }
     }

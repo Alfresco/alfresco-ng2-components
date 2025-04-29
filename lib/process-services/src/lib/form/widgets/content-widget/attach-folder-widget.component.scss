@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf {
     &-attach-folder-widget-container {
@@ -28,7 +28,7 @@
     &-attach-folder-files-row {
         padding-left: 8px;
 
-        #{$mat-line} {
+        #{ms.$mat-line} {
             margin-bottom: 0;
         }
     }
@@ -42,7 +42,7 @@
         display: flex;
         flex-direction: row-reverse;
 
-        #{$mat-icon} {
+        #{ms.$mat-icon} {
             margin-left: 4px;
             margin-right: 0;
         }

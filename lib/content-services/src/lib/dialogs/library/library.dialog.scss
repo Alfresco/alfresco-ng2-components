@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors.scss' as ms;
 
 .adf-library-dialog {
     .adf-library-dialog-content {
@@ -28,34 +28,34 @@
             padding-top: 4.5px;
         }
 
-        #{$mat-floating-label} {
+        #{ms.$mat-floating-label} {
             -webkit-font-smoothing: subpixel-antialiased;
         }
 
-        &#{$mat-form-field-hide-placeholder} {
-            #{$mat-floating-label} {
+        &#{ms.$mat-form-field-hide-placeholder} {
+            #{ms.$mat-floating-label} {
                 padding-top: 20px;
             }
         }
 
         &-description {
-            &#{$mat-form-field-hide-placeholder} {
-                #{$mat-floating-label} {
+            &#{ms.$mat-form-field-hide-placeholder} {
+                #{ms.$mat-floating-label} {
                     padding-top: 20px;
                 }
             }
         }
 
-        #{$mat-form-field-infix} {
+        #{ms.$mat-form-field-infix} {
             padding-bottom: 3.5px;
         }
 
-        #{$mat-form-field-error-wrapper} {
+        #{ms.$mat-form-field-error-wrapper} {
             margin-left: -2px;
             font-size: 10.5px;
             -webkit-font-smoothing: subpixel-antialiased;
 
-            #{$mat-form-field-error} {
+            #{ms.$mat-form-field-error} {
                 height: 13.125px;
             }
         }

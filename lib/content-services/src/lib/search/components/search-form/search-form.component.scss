@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import 'styles/mat-selectors';
+@use '../../../mat-selectors.scss' as ms;
 
 .adf-search-form {
     &.adf-search-form-button {
@@ -28,7 +28,7 @@
         text-align: left;
     }
 
-    .adf-search-form-icon#{$mat-icon} {
+    .adf-search-form-icon#{ms.$mat-icon} {
         font-size: 24px;
         height: 24px;
         width: 24px;

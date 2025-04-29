@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-card-view-selectitem {
     .adf-property-value {
@@ -17,23 +17,23 @@
     .adf-property-value-editable.adf-property-value-editable {
         padding-left: 0;
 
-        #{$mat-text-field-no-label} #{$mat-form-field-infix} {
+        #{ms.$mat-text-field-no-label} #{ms.$mat-form-field-infix} {
             padding: 0;
         }
 
-        #{$mat-form-field-wrapper} {
+        #{ms.$mat-form-field-wrapper} {
             background-color: unset;
         }
 
-        #{$mat-select} {
+        #{ms.$mat-select} {
             margin-top: 0;
             border-radius: 6px;
 
-            #{$mat-select-value} {
+            #{ms.$mat-select-value} {
                 color: var(--adf-metadata-action-button-clear-color);
             }
 
-            #{$mat-select-trigger} {
+            #{ms.$mat-select-trigger} {
                 padding: 6px 12px 6px 6px;
             }
         }
@@ -43,7 +43,7 @@
         padding-left: 10px;
     }
 
-    #{$mat-form-field-subscript-wrapper} {
+    #{ms.$mat-form-field-subscript-wrapper} {
         display: none;
     }
 
@@ -53,7 +53,7 @@
         color: var(--adf-metadata-property-panel-title-color);
     }
 
-    #{$mat-line-ripple} {
+    #{ms.$mat-line-ripple} {
         display: none;
     }
 

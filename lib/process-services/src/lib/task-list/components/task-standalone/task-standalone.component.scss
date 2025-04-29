@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-message-card {
     width: 60%;
@@ -49,7 +49,7 @@
                 border-radius: 5px;
             }
 
-            & #{$mat-button-label} {
+            & #{ms.$mat-button-label} {
                 opacity: 0.54;
                 font-size: var(--theme-button-font-size);
                 font-weight: bold;

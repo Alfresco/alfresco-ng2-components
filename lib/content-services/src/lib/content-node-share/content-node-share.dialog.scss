@@ -1,8 +1,8 @@
-@import 'styles/mat-selectors';
+@use '../mat-selectors.scss' as ms;
 
 .adf-share-link-dialog {
     .adf-share-link {
-        #{$mat-form-field-flex} {
+        #{ms.$mat-form-field-flex} {
             height: 48px;
         }
 
@@ -35,7 +35,7 @@
         &__form {
             padding-top: 8px;
 
-            #{$mat-form-field-infix}:has(.adf-share-link__input) {
+            #{ms.$mat-form-field-infix}:has(.adf-share-link__input) {
                 border-top: 0.9375em solid transparent;
                 border-bottom: 0.9375em solid transparent;
                 height: 16px;

@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf {
     &-dropdown-widget {
@@ -9,7 +9,7 @@
             width: 100%;
         }
 
-        #{$mat-select-value-text} {
+        #{ms.$mat-select-value-text} {
             font-size: var(--theme-body-1-font-size);
         }
 

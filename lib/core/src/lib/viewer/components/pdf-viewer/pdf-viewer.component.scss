@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../../styles/mat-selectors' as ms;
 
 .adf-pdf-viewer {
     width: 100%;
@@ -79,7 +79,7 @@
         max-height: 100px;
         max-width: 300px;
 
-        #{$mat-progress-bar} {
+        .adf-loader-item-progress-bar {
             max-width: 300px;
             margin: 0;
             position: absolute;
@@ -98,7 +98,7 @@
         left: 50%;
         transform: translateX(-50%);
 
-        .adf-toolbar #{$mat-toolbar} {
+        .adf-toolbar #{ms.$mat-toolbar} {
             max-height: 48px;
             background-color: var(--adf-theme-background-card-color);
             border-width: 0;

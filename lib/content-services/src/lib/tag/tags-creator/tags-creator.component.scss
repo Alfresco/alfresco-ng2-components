@@ -1,4 +1,4 @@
-@import 'styles/mat-selectors';
+@use '../../mat-selectors.scss' as ms;
 
 adf-tags-creator {
     display: block;
@@ -77,7 +77,7 @@ adf-tags-creator {
                 background-color: inherit;
                 color: inherit;
 
-                &:not(#{$mat-list-item-disabled}):hover {
+                &:not(#{ms.$mat-list-item-disabled}):hover {
                     cursor: pointer;
                     background: var(--adf-theme-mat-grey-color-a200);
                 }
@@ -93,7 +93,7 @@ adf-tags-creator {
                 min-height: 62px;
             }
 
-            #{$mat-list-item-disabled} #{$mat-list-item-primary-text} {
+            #{ms.$mat-list-item-disabled} #{ms.$mat-list-item-primary-text} {
                 opacity: 1;
             }
         }
