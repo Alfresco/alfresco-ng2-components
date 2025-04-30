@@ -16,8 +16,8 @@
  */
 
 import { Inject, Injectable, Optional } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { skip, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 import {
     IDebugFeaturesService,
     IFeaturesService,
@@ -29,12 +29,12 @@ import {
     FlagSet,
     IWritableFeaturesService
 } from '../interfaces/features.interface';
-import { StorageService } from '@alfresco/adf-core';
 
 @Injectable()
 export class DebugFeaturesService implements IDebugFeaturesService {
-    private isInDebugMode: BehaviorSubject<boolean>;
-    private isInDebugMode$: Observable<boolean>;
+    private readonly isInDebugModeSubject = new BehaviorSubject<boolean>(false);
+    private readonly isInDebugMode$ = this.isInDebugModeSubject.asObservable();
+    private readonly initSubject = new BehaviorSubject<boolean>(false);
 
     get storageKey(): string {
         return `${this.config?.storageKey || 'feature-flags'}-override`;
@@ -43,14 +43,15 @@ export class DebugFeaturesService implements IDebugFeaturesService {
     constructor(
         @Inject(OverridableFeaturesServiceToken) private overriddenFeaturesService: IFeaturesService,
         @Inject(WritableFeaturesServiceToken) private writableFeaturesService: IFeaturesService & IWritableFeaturesService,
-        private storageService: StorageService,
         @Optional() @Inject(WritableFeaturesServiceConfigToken) private config?: WritableFeaturesServiceConfig
     ) {
-        this.isInDebugMode = new BehaviorSubject<boolean>(JSON.parse(this.storageService.getItem(this.storageKey) || 'false'));
-        this.isInDebugMode$ = this.isInDebugMode.asObservable();
+        this.init();
 
-        this.isInDebugMode.pipe(skip(1)).subscribe((debugMode) => {
-            this.storageService.setItem(this.storageKey, JSON.stringify(debugMode));
+        combineLatest({
+            debugMode: this.isInDebugModeSubject,
+            init: this.waitForInitializationToFinish()
+        }).subscribe(({ debugMode }) => {
+            sessionStorage.setItem(this.storageKey, JSON.stringify(debugMode));
         });
     }
 
@@ -87,10 +88,20 @@ export class DebugFeaturesService implements IDebugFeaturesService {
     }
 
     enable(on: boolean): void {
-        this.isInDebugMode.next(on);
+        this.isInDebugModeSubject.next(on);
     }
 
     isEnabled$(): Observable<boolean> {
         return this.isInDebugMode$;
+    }
+
+    private init() {
+        const storedOverride = JSON.parse(sessionStorage.getItem(this.storageKey) || 'false');
+        this.isInDebugModeSubject.next(storedOverride);
+        this.initSubject.next(true);
+    }
+
+    private waitForInitializationToFinish(): Observable<boolean> {
+        return this.initSubject.pipe(filter((initialized) => !!initialized));
     }
 }

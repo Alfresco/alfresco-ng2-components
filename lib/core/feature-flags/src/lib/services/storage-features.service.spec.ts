@@ -17,17 +17,20 @@
 
 import { TestBed } from '@angular/core/testing';
 import { StorageFeaturesService } from './storage-features.service';
-import { StorageService } from '../../../../src/public-api';
 import { FlagSet, WritableFeaturesServiceConfigToken } from '../interfaces/features.interface';
 import { skip, take } from 'rxjs/operators';
 
 describe('StorageFeaturesService', () => {
     let storageFeaturesService: StorageFeaturesService;
 
-    describe('if flags are present in LocalStorage', () => {
-        const mockStorage = {
-            getItem: () =>
-                JSON.stringify({
+    describe('if flags are present in sessionStorage', () => {
+        let mockStorageKey: string;
+        let mockStorage;
+
+        beforeEach(() => {
+            mockStorageKey = 'storage-key-test';
+            mockStorage = {
+                [mockStorageKey]: {
                     feature1: {
                         current: true
                     },
@@ -35,21 +38,21 @@ describe('StorageFeaturesService', () => {
                         current: false,
                         fictive: true
                     }
-                }),
-            setItem: () => {}
-        };
+                }
+            };
 
-        beforeEach(() => {
             TestBed.configureTestingModule({
                 providers: [
-                    { provide: StorageService, useValue: mockStorage },
                     {
                         provide: WritableFeaturesServiceConfigToken,
-                        useValue: {
-                            storageKey: 'storage-key-test'
-                        }
+                        useValue: { storageKey: mockStorageKey }
                     }
                 ]
+            });
+
+            spyOn(sessionStorage, 'getItem').and.callFake((key) => JSON.stringify(mockStorage[key]));
+            spyOn(sessionStorage, 'setItem').and.callFake((key, value) => {
+                mockStorage[key] = value;
             });
 
             storageFeaturesService = TestBed.inject(StorageFeaturesService);

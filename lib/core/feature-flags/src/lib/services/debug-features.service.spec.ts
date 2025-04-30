@@ -17,37 +17,37 @@
 
 import { TestBed } from '@angular/core/testing';
 import { DebugFeaturesService } from './debug-features.service';
-import { StorageService } from '../../../../src/lib/common/services/storage.service';
-import { OverridableFeaturesServiceToken, WritableFeaturesServiceToken } from '../interfaces/features.interface';
+import { OverridableFeaturesServiceToken, WritableFeaturesServiceConfigToken, WritableFeaturesServiceToken } from '../interfaces/features.interface';
 import { DummyFeaturesService } from './dummy-features.service';
 import { StorageFeaturesService } from './storage-features.service';
 import { take } from 'rxjs/operators';
 
 describe('DebugFeaturesService', () => {
     let service: DebugFeaturesService;
-    const mockStorage = {
-        getItem: () =>
-            JSON.stringify({
-                feature1: {
-                    current: true
-                },
-                feature2: {
-                    current: false,
-                    fictive: true
-                }
-            }),
-        setItem: () => {}
-    };
+    let mockStorageKey: string;
+    let mockStorage;
 
     beforeEach(() => {
+        mockStorageKey = 'storage-key-test';
+        mockStorage = { [mockStorageKey]: true };
+
         TestBed.configureTestingModule({
             providers: [
                 DebugFeaturesService,
-                { provide: StorageService, useValue: mockStorage },
+                {
+                    provide: WritableFeaturesServiceConfigToken,
+                    useValue: { storageKey: mockStorageKey }
+                },
                 { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
                 { provide: OverridableFeaturesServiceToken, useClass: DummyFeaturesService }
             ]
         });
+
+        spyOn(sessionStorage, 'getItem').and.callFake((key) => JSON.stringify(mockStorage[key]));
+        spyOn(sessionStorage, 'setItem').and.callFake((key, value) => {
+            mockStorage[key] = value;
+        });
+
         service = TestBed.inject(DebugFeaturesService);
     });
 

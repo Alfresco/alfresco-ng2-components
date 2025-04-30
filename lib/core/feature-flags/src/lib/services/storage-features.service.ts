@@ -16,8 +16,8 @@
  */
 
 import { Inject, Injectable, Optional } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, skip } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import {
     FlagChangeset,
     IFeaturesService,
@@ -28,21 +28,21 @@ import {
     WritableFeaturesServiceConfig
 } from '../interfaces/features.interface';
 import { FlagSetParser } from './flagset.parser';
-import { StorageService } from '@alfresco/adf-core';
 
 @Injectable({ providedIn: 'root' })
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
     private currentFlagState: WritableFlagChangeset = {};
-    private flags = new BehaviorSubject<WritableFlagChangeset>({});
-    private flags$ = this.flags.asObservable();
+    private readonly flags = new BehaviorSubject<WritableFlagChangeset>({});
+    private readonly flags$ = this.flags.asObservable();
+    private readonly initSubject = new BehaviorSubject<boolean>(false);
 
-    constructor(
-        private storageService: StorageService,
-        @Optional() @Inject(WritableFeaturesServiceConfigToken) private config?: WritableFeaturesServiceConfig
-    ) {
-        this.flags.pipe(skip(1)).subscribe((flags) => {
+    constructor(@Optional() @Inject(WritableFeaturesServiceConfigToken) private config?: WritableFeaturesServiceConfig) {
+        combineLatest({
+            flags: this.flags,
+            init: this.waitForInitializationToFinish()
+        }).subscribe(({ flags }) => {
             this.currentFlagState = flags;
-            this.storageService.setItem(this.storageKey, JSON.stringify(FlagSetParser.serialize(flags)));
+            sessionStorage.setItem(this.storageKey, JSON.stringify(FlagSetParser.serialize(flags)));
         });
     }
 
@@ -51,9 +51,10 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
     }
 
     init(): Observable<WritableFlagChangeset> {
-        const storedFlags = JSON.parse(this.storageService.getItem(this.storageKey) || '{}');
+        const storedFlags = JSON.parse(sessionStorage.getItem(this.storageKey) || '{}');
         const initialFlagChangeSet = FlagSetParser.deserialize(storedFlags);
         this.flags.next(initialFlagChangeSet);
+        this.initSubject.next(true);
         return of(initialFlagChangeSet);
     }
 
@@ -132,5 +133,9 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
             });
 
         this.flags.next(mergedFlags);
+    }
+
+    private waitForInitializationToFinish(): Observable<boolean> {
+        return this.initSubject.pipe(filter((initialized) => !!initialized));
     }
 }
