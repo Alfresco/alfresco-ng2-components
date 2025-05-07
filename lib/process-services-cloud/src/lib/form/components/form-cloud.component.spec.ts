@@ -1712,7 +1712,7 @@ describe('retrieve metadata on submit', () => {
         expect(formComponent.disableSaveButton).toBeFalse();
     });
 
-    it('should not show next task checkbox when conditions are not met', () => {
+    it('should not show next task checkbox when complete button is not shown', () => {
         formComponent.showNextTaskCheckbox = false;
         formComponent.showCompleteButton = false;
         fixture.detectChanges();
