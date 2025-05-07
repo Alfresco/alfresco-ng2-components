@@ -15,20 +15,21 @@
 
 .alfresco-tabs-widget {
     width: 100%;
+    position: absolute;
 
     .adf-form-tab-group {
         width: 100%;
         z-index: 9999;
     }
 
-    .adf-form-tab-content {
-        overflow: scroll;
+    #{ms.$mat-tab-body} {
+        margin-bottom: 8em;
     }
 
     #{ms.$mat-tab-header} {
         z-index: 10;
         margin: 0;
-        background-color: #fdfdfd;
+        background-color: white;
         position: sticky;
         /* stylelint-disable-next-line value-no-vendor-prefix */
         position: -webkit-sticky; /* macOS/iOS Safari */
