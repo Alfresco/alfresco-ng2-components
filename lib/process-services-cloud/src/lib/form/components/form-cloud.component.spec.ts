@@ -1711,4 +1711,13 @@ describe('retrieve metadata on submit', () => {
 
         expect(formComponent.disableSaveButton).toBeFalse();
     });
+
+    it('should not show next task checkbox when conditions are not met', () => {
+        formComponent.showNextTaskCheckbox = false;
+        formComponent.showCompleteButton = false;
+        fixture.detectChanges();
+
+        const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
+        expect(checkbox).toBeNull();
+    });
 });
