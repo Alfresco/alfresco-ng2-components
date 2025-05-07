@@ -128,6 +128,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     isNextTaskCheckboxChecked = false;
 
+    /** Toggle rendering of the `Complete` button. */
+    @Input()
+    showCompleteButton = false;
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
