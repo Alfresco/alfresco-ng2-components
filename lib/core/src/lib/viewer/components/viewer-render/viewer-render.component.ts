@@ -185,7 +185,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
-        this.isContentReady = false;
+        this.isContentReady = !(this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image');
         this.isLoading = !this.blobFile && !this.urlFile;
 
         if (this.blobFile) {
