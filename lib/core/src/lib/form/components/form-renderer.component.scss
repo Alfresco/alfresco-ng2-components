@@ -13,6 +13,40 @@
     height: 100%;
 }
 
+.alfresco-tabs-widget {
+    width: 100%;
+    position: absolute;
+
+    .adf-form-tab-group {
+        width: 100%;
+        z-index: 9999;
+    }
+
+    #{ms.$mat-tab-body} {
+        margin-bottom: 8em;
+    }
+
+    #{ms.$mat-tab-header} {
+        z-index: 10;
+        margin: 0;
+        background-color: white;
+        position: sticky;
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        position: -webkit-sticky; /* macOS/iOS Safari */
+        /* stylelint-disable-next-line declaration-no-important */
+        margin-left: 0 !important;
+        top: 0;
+    }
+
+    #{ms.$mat-tab-body-wrapper} {
+        padding-top: 16px;
+    }
+}
+
+.mat-mdc-card-content:first-child {
+    padding-top: 0;
+}
+
 .adf-container-widget {
     .adf-grid-list {
         display: grid;
@@ -116,12 +150,18 @@
             overflow: hidden;
         }
 
+        & #{ms.$mat-tab-header} {
+            position: fixed;
+            z-index: 1000;
+        }
+
         & #{ms.$mat-card-header-text} {
             margin: 0;
         }
 
         & #{ms.$mat-tab-body-content} {
             overflow: hidden;
+            padding-top: 0;
         }
 
         & #{mat-tab-label-text} {
