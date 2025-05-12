@@ -185,14 +185,20 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
-        this.isContentReady = !(this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image');
-        this.isLoading = !this.blobFile && !this.urlFile;
+        this.checkIsLoaded();
 
         if (this.blobFile) {
             this.setUpBlobData();
+            this.checkIsLoaded();
         } else if (this.urlFile) {
             this.setUpUrlFile();
+            this.checkIsLoaded();
         }
+    }
+
+    private checkIsLoaded() {
+        this.isContentReady = !(this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image');
+        this.isLoading = !this.blobFile && !this.urlFile;
     }
 
     private setUpBlobData() {
