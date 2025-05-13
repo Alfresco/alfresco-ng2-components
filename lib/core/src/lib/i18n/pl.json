@@ -51,7 +51,7 @@
       "REST_API_FAILED": "Serwer '{{ hostname }}' jest nieosiągalny",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Wystąpił problem podczas ładowania elementów rozwijania. Skontaktuj się z administratorem.",
       "DATA_TABLE_LOAD_FAILED": "Wystąpił problem podczas ładowania elementów tabeli. Skontaktuj się z administratorem.",
-      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "DATA_TABLE_EMPTY_CONTENT": "Brak danych",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Wystąpił problem podczas ładowania właściwości zewnętrznej. Skontaktuj się z administratorem.",
       "FILE_NAME": "Nazwa pliku",
       "TITLE": "Tytuł",
