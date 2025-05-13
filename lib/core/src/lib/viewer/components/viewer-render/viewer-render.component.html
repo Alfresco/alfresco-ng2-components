@@ -15,7 +15,7 @@
 </div>
 
 <div
-    *ngIf="viewerType === 'media' || viewerType === 'pdf' || viewerType === 'image' ? (!isLoading && isContentReady) : !isLoading"
+    [hidden]="viewerType === 'media' || viewerType === 'pdf' || viewerType === 'image' ? (isLoading || !isContentReady) : isLoading"
     class="adf-viewer-render-main"
 >
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
