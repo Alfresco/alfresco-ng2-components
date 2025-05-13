@@ -27,6 +27,8 @@ export interface UserTaskCustomUi {
     showCancelButton: boolean;
     taskName: string;
     taskId: string;
+    isNextTaskCheckboxChecked: boolean;
+    showNextTaskCheckbox: boolean;
     cancelTask: EventEmitter<any>;
     claimTask: EventEmitter<any>;
     error: EventEmitter<any>;
@@ -34,4 +36,5 @@ export interface UserTaskCustomUi {
     taskCompleted: EventEmitter<string>;
     taskSaved: EventEmitter<string>;
     unclaimTask: EventEmitter<any>;
+    nextTaskCheckboxCheckedChanged: EventEmitter<any>;
 }

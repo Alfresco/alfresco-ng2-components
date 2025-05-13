@@ -153,6 +153,12 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'rootProcessInstanceId')) {
             this.componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
         }
+        if (this.showNextTaskCheckbox && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
+            this.componentRef.setInput('showNextTaskCheckbox', this.showNextTaskCheckbox);
+        }
+        if (this.isNextTaskCheckboxChecked && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'isNextTaskCheckboxChecked')) {
+            this.componentRef.setInput('isNextTaskCheckboxChecked', this.isNextTaskCheckboxChecked);
+        }
     }
 
     subscribeToOutputs() {
@@ -174,6 +180,11 @@ export class TaskScreenCloudComponent implements OnInit {
         }
         if (this.componentRef.instance?.cancelTask) {
             this.componentRef.instance.cancelTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
+        }
+        if (this.componentRef.instance?.nextTaskCheckboxCheckedChanged) {
+            this.componentRef.instance.nextTaskCheckboxCheckedChanged
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((data) => this.nextTaskCheckboxCheckedChanged.emit(data));
         }
     }
 
