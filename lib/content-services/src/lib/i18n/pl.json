@@ -711,10 +711,10 @@
   },
   "NODE_FAVORITE_DIRECTIVE": {
     "MESSAGES": {
-      "NODE_ADDED": "Added {{ name }} to favorites",
-      "NODES_ADDED": "Added {{ number }} items to favorites",
-      "NODE_REMOVED": "Removed {{ name }} from favorites",
-      "NODES_REMOVED": "Removed {{ number }} items from favorites"
+      "NODE_ADDED": "Dodano {{ name }} do ulubionych",
+      "NODES_ADDED": "Dodano {{ number }} elementy do ulubionych",
+      "NODE_REMOVED": "Usunięto {{ name }} z ulubionych",
+      "NODES_REMOVED": "Usunięto {{ number }} elementy z ulubionych"
     }
   }
 }
