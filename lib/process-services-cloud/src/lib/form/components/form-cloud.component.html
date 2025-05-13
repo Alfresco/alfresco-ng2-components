@@ -67,78 +67,7 @@
                                 </button>
                             </div>
                             <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName"
-                                >{{ form.taskName }}
-                                <ng-container *ngIf="!form.taskName">
-                                    {{ 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
-                                </ng-container>
-                            </span>
-                        </h4>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="adf-form-container-card-content">
-                    <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
-                </mat-card-content>
-                <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
-                    <mat-checkbox
-                        id="adf-form-open-next-task"
-                        *ngIf="showNextTaskCheckbox && showCompleteButton"
-                        [checked]="isNextTaskCheckboxChecked"
-                        (change)="onNextTaskCheckboxCheckedChanged($event)"
-                        >{{ 'ADF_CLOUD_TASK_FORM.OPEN_NEXT_TASK.LABEL' | translate }}</mat-checkbox
-                    >
-                    <span class="adf-card-actions-spacer"></span>
-                    <ng-content select="adf-cloud-form-custom-outcomes" />
-                    <ng-container *ngFor="let outcome of form.outcomes">
-                        <button
-                            *ngIf="outcome.isVisible"
-                            [id]="'adf-form-' + outcome.name | formatSpace"
-                            [color]="getColorForOutcome(outcome.name)"
-                            mat-button
-                            [disabled]="!isOutcomeButtonEnabled(outcome)"
-                            [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                            (click)="onOutcomeClicked(outcome)"
-                        >
-                            {{ outcome.name | translate | uppercase }}
-                        </button>
-                    </ng-container>
-                </mat-card-actions>
-            </div>
-        </mat-card>
-    </div>
-        <mat-card
-            appearance="outlined"
-            class="adf-cloud-form-content-card"
-            [class.adf-cloud-form-content-card-fullscreen]="displayMode === 'fullScreen'"
-        >
-            <div class="adf-cloud-form-content-card-container">
-                <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
-                    <mat-card-title>
-                        <h4>
-                            <div *ngIf="showValidationIcon" class="adf-form-validation-button">
-                                <i id="adf-valid-form-icon" class="material-icons" *ngIf="form.isValid; else no_valid_form">check_circle</i>
-                                <ng-template #no_valid_form>
-                                    <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
-                                </ng-template>
-                            </div>
-                            <div
-                                *ngIf="!displayConfiguration?.options?.fullscreen && findDisplayConfiguration('fullScreen')"
-                                class="adf-cloud-form-fullscreen-button"
-                            >
-                                <button
-                                    mat-icon-button
-                                    (click)="switchToDisplayMode('fullScreen')"
-                                    [attr.data-automation-id]="'adf-cloud-form-fullscreen-button'"
-                                >
-                                    <mat-icon>fullscreen</mat-icon>
-                                </button>
-                            </div>
-                            <div *ngIf="showRefreshButton" class="adf-cloud-form-reload-button" [title]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
-                                <button mat-icon-button (click)="onRefreshClicked()" [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
-                                    <mat-icon>refresh</mat-icon>
-                                </button>
-                            </div>
-                            <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName"
-                                >{{ form.taskName }}
+                            >{{ form.taskName }}
                                 <ng-container *ngIf="!form.taskName">
                                     {{ 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
                                 </ng-container>
@@ -153,10 +82,10 @@
                     <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
                         <mat-checkbox
                             id="adf-form-open-next-task"
-                            *ngIf="showNextTaskCheckbox"
+                            *ngIf="showNextTaskCheckbox && showCompleteButton"
                             [checked]="isNextTaskCheckboxChecked"
                             (change)="onNextTaskCheckboxCheckedChanged($event)"
-                            >{{ 'ADF_CLOUD_TASK_FORM.OPEN_NEXT_TASK.LABEL' | translate }}</mat-checkbox
+                        >{{ 'ADF_CLOUD_TASK_FORM.OPEN_NEXT_TASK.LABEL' | translate }}</mat-checkbox
                         >
                         <span class="adf-card-actions-spacer"></span>
                         <ng-content select="adf-cloud-form-custom-outcomes" />
