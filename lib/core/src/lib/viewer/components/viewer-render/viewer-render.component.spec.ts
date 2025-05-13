@@ -24,7 +24,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { ImgViewerComponent, MediaPlayerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
+import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -504,22 +504,23 @@ describe('ViewerComponent', () => {
 
             expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('media');
+            expect(component.isContentReady).toBeTrue();
         });
 
-        // eslint-disable-next-line ban/ban
-        xit('should show spinner until content is ready when viewerType is pdf', () => {
+        it('should show spinner until content is ready when viewerType is pdf', () => {
             component.isLoading = false;
             component.urlFile = 'some-url.pdf';
+            expect(getMainLoader()).toBeNull();
 
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(getMainLoader()).not.toBeNull();
-
+            const imgViewer = testingUtils.getByDirective(PdfViewerComponent);
+            imgViewer.triggerEventHandler('pagesLoaded', null);
             fixture.detectChanges();
 
-            expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('pdf');
+            expect(component.isContentReady).toBeTrue();
         });
 
         it('should show spinner until content is ready when viewerType is image', () => {
@@ -536,9 +537,10 @@ describe('ViewerComponent', () => {
 
             expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('image');
+            expect(component.isContentReady).toBeTrue();
         });
 
-        it('should not show spinner when isLoading = false and isContentReady = false for other viewer types', () => {
+        it('should not show spinner and set isContentReady = true for other viewer types different than media/pdf/image', () => {
             component.isLoading = false;
             component.urlFile = 'some-url.txt';
 
@@ -546,7 +548,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(getMainLoader()).toBeNull();
-            expect(component.isContentReady).toBeFalse();
+            expect(component.isContentReady).toBeTrue();
         });
     });
 });
