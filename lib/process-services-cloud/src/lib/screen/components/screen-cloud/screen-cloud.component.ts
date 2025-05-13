@@ -83,7 +83,7 @@ export class TaskScreenCloudComponent implements OnInit {
 
     /** Emitted when the task is completed. */
     @Output()
-    taskCompleted = new EventEmitter();
+    taskCompleted = new EventEmitter<any>();
 
     /** Emitted when there is an error. */
     @Output()
@@ -166,7 +166,9 @@ export class TaskScreenCloudComponent implements OnInit {
             this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
         }
         if (this.componentRef.instance?.taskCompleted) {
-            this.componentRef.instance.taskCompleted.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskCompleted.emit());
+            this.componentRef.instance.taskCompleted
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((openNextTask) => this.taskCompleted.emit(openNextTask));
         }
         if (this.componentRef.instance?.error) {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));

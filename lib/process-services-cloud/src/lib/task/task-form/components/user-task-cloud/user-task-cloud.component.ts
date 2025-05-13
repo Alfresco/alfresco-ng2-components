@@ -150,7 +150,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     /** Emitted when the task is completed. */
     @Output()
-    taskCompleted = new EventEmitter<string>();
+    taskCompleted = new EventEmitter<boolean>();
 
     candidateUsers: string[] = [];
     candidateGroups: string[] = [];
@@ -242,9 +242,9 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         this.taskClaimed.emit(this.taskId);
     }
 
-    onCompleteTask(): void {
+    onCompleteTask(openNextTask?: boolean): void {
         this.loadTask();
-        this.taskCompleted.emit(this.taskId);
+        this.taskCompleted.emit(openNextTask);
     }
 
     onCompleteTaskForm(): void {
