@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@4830be28ce81da52ec70d65c552a7403821d98d4 # v3.0.23
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@2d6823da4039243036c86d76f503c84e2ded2517 # v3.0.24
 
       - name: Check package-lock.json version
         run: |
@@ -84,10 +84,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@09293790e3d482b6376a602f607e009ef1025698 # v8.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@8cd8c3798c79d10540e2876ad7cf2a5311cbd1ae # v8.20.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@09293790e3d482b6376a602f607e009ef1025698 # v8.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@8cd8c3798c79d10540e2876ad7cf2a5311cbd1ae # v8.20.0
 
       - name: ci:force flag parser
         shell: bash
@@ -277,7 +277,7 @@ jobs:
         uses: ./.github/actions/slack-group-area
         with:
           affected: ${{ steps.e2e-result.outputs.result }}
-      - uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
+      - uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         name: Nofify QA failure
         if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
         env:

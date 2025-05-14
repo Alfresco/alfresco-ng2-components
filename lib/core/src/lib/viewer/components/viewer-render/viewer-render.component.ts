@@ -29,6 +29,8 @@ import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
+type ViewerType = 'media' | 'image' | 'pdf' | 'unknown';
+
 @Component({
     selector: 'adf-viewer-render',
     standalone: true,
@@ -141,7 +143,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     extensionsSupportedByTemplates: string[] = [];
     extension: string;
     internalFileName: string;
-    viewerType: string = 'unknown';
+    viewerType: ViewerType = 'unknown';
     isContentReady = false;
 
     /**
@@ -185,19 +187,25 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
-        this.isContentReady = false;
-        this.isLoading = !this.blobFile && !this.urlFile;
+        this.updateLoadingState();
 
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
+
+        this.updateLoadingState();
+    }
+
+    private updateLoadingState() {
+        this.isContentReady = !(this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image');
+        this.isLoading = !this.blobFile && !this.urlFile;
     }
 
     private setUpBlobData() {
         this.internalFileName = this.fileName;
-        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
+        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type) as ViewerType;
 
         this.extensionChange.emit(this.blobFile.type);
         this.scrollTop();
@@ -206,7 +214,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     private setUpUrlFile() {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
-        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates);
+        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates) as ViewerType;
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();

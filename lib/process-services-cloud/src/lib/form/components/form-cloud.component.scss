@@ -17,6 +17,7 @@
             flex: 1;
             flex-direction: column;
             display: flex;
+            position: relative;
         }
 
         .adf-card-actions-spacer {
@@ -71,14 +72,16 @@
     }
 
     &-content-card {
+        padding-bottom: 4em;
         overflow-y: auto;
+        position: static;
 
         &-fullscreen {
             padding: 0;
             height: 100%;
             width: 100%;
 
-            .adf-cloud-form-content-card-container {
+            &-container {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
@@ -88,6 +91,14 @@
                     overflow: hidden auto;
                 }
             }
+        }
+
+        &-actions {
+            position: fixed;
+            bottom: 0;
+            width: -webkit-fill-available;
+            z-index: 1;
+            background-color: white;
         }
     }
 
