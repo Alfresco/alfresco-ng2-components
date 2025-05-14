@@ -51,7 +51,7 @@ describe('defaultValueValidator', () => {
         expect(result).toEqual({ required: true });
     });
 
-    it('should return a required error when the default option is selected', () => {
+    it('should return a required error when the default "choose one" option is selected', () => {
         const validator = defaultValueValidator(mockField);
         const control = new FormControl(DEFAULT_OPTION.id);
 
