@@ -55,12 +55,7 @@
 
     &__display-name {
         font-size: var(--theme-subheading-2-font-size);
-        opacity: 0.87;
         line-height: 1.5;
-        letter-spacing: -0.4px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
         vertical-align: middle;
         color: var(--adf-theme-foreground-text-color);
 
@@ -69,6 +64,15 @@
             text-overflow: ellipsis;
             overflow: hidden;
             max-width: 400px;
+            white-space: nowrap;
+            vertical-align: bottom;
+        }
+
+        &-extension {
+            display: inline-block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 50px;
             white-space: nowrap;
             vertical-align: bottom;
         }
