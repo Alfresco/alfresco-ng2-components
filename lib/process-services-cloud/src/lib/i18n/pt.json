@@ -381,7 +381,7 @@
       "DESTINATION_FOLDER_PATH_ERROR": "O caminho de destino está incorreto ou não existe, reverter para a localização -meu- "
     },
     "OPEN_NEXT_TASK": {
-      "LABEL": "Open next task"
+      "LABEL": "Abrir a próxima tarefa"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
