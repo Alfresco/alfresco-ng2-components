@@ -51,7 +51,7 @@
       "REST_API_FAILED": "Le serveur '{{ hostname }}' n'est pas accessible",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Un problème est survenu lors du chargement des éléments de la liste déroulante. Veuillez contacter un administrateur.",
       "DATA_TABLE_LOAD_FAILED": "Un problème est survenu lors du chargement des éléments du tableau. Veuillez contacter un administrateur.",
-      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "DATA_TABLE_EMPTY_CONTENT": "Données introuvables",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Un problème est survenu lors du chargement de la propriété externe. Veuillez contacter un administrateur.",
       "FILE_NAME": "Nom de fichier",
       "TITLE": "Titre",
