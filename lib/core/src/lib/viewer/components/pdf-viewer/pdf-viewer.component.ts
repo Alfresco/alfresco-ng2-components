@@ -347,7 +347,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             let widthContainer: number;
             let heightContainer: number;
 
-            if (viewerContainer && (documentContainer.clientWidth === 0 || viewerContainer.clientWidth <= documentContainer.clientWidth)) {
+            if (viewerContainer && viewerContainer.clientWidth <= documentContainer.clientWidth) {
                 widthContainer = viewerContainer.clientWidth;
                 heightContainer = viewerContainer.clientHeight;
             } else {
