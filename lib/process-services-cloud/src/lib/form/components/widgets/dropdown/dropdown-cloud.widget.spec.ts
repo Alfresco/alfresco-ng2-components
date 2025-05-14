@@ -983,6 +983,20 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.field.options.length).toEqual(0);
         };
 
+        it('should set dropdownControl value without emitting events', () => {
+            widget.field = {
+                value: 'testValue',
+                options: [],
+                isVisible: true
+            } as any; // Mock field
+            spyOn(widget.dropdownControl, 'setValue').and.callThrough();
+
+            widget['setFormControlValue']();
+
+            expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'testValue', name: '' }, { emitEvent: false });
+            expect(widget.dropdownControl.value).toEqual({ id: 'testValue', name: '' });
+        });
+
         it('should display options persisted from process variable', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
