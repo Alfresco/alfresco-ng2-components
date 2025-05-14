@@ -387,9 +387,11 @@ export class FormModel implements ProcessFormModel {
     }
 
     private handleSingleField(field: FormFieldModel, formFieldModel: FormFieldModel[]): void {
-        formFieldModel.push(field);
-        if (field.fields) {
-            this.processFields(Object.values(field.fields), formFieldModel);
+        if (field instanceof FormFieldModel) {
+            formFieldModel.push(field);
+            if (field.fields) {
+                this.processFields(Object.values(field.fields), formFieldModel);
+            }
         }
     }
 
