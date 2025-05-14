@@ -22,12 +22,12 @@
         </div>
     </ng-container>
 
-    <div class="adf-pdf-viewer__content">
+    <div [id]="this.randomPdfId+ '-viewer-main-container'" class="adf-pdf-viewer__content">
         <div [id]="randomPdfId + '-viewer-pdf-viewer'"
              class="adf-viewer-pdf-viewer"
              (window:resize)="onResize()">
             <div [id]="randomPdfId + '-viewer-viewerPdf'"
-                 class="adf-pdfViewer"
+                 class="adf-pdfViewer pdfViewer"
                  role="document"
                  tabindex="0"
                  aria-expanded="true">

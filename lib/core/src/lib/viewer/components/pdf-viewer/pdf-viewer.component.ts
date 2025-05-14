@@ -352,7 +352,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             let widthContainer: number;
             let heightContainer: number;
 
-            if (viewerContainer && viewerContainer.clientWidth <= documentContainer.clientWidth) {
+            if (viewerContainer && (documentContainer.clientWidth === 0 || viewerContainer.clientWidth <= documentContainer.clientWidth)) {
                 widthContainer = viewerContainer.clientWidth;
                 heightContainer = viewerContainer.clientHeight;
             } else {
@@ -455,8 +455,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
                 this.pdfViewer.currentScaleValue = newScale;
             }
-
-            this.pdfViewer.update();
         }
         this.setDocumentOverflow();
     }
@@ -607,6 +605,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     onPageRendered() {
         this.rendered.emit();
+        this.scalePage('init');
     }
 
     /**
