@@ -249,7 +249,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
                     return pdfDocument.getPage(1);
                 })
-                .then(() => this.scalePage('init'))
                 .catch(() => this.error.emit());
         });
     }
