@@ -288,12 +288,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             // cspell: disable-next
             this.eventBus.on('pagesloaded', this.onPagesLoaded);
             // cspell: disable-next
-            this.eventBus.on('textlayerrendered', () => {
-                this.onPageRendered();
-            });
-            this.eventBus.on('pagerendered', () => {
-                this.onPageRendered();
-            });
+            this.eventBus.on('textlayerrendered', this.onPageRendered);
+            this.eventBus.on('pagerendered', this.onPageRendered);
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
@@ -453,6 +449,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.pdfViewer) {
             if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
                 this.pdfViewer.currentScaleValue = newScale;
+                this.pdfViewer.update();
             }
         }
         this.setDocumentOverflow();
@@ -604,7 +601,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     onPageRendered() {
         this.rendered.emit();
-        this.scalePage('init');
     }
 
     /**
@@ -614,6 +610,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     onPagesLoaded() {
         this.pagesLoaded.emit();
         this.isPanelDisabled = false;
+        setTimeout(() => this.scalePage('init'));
     }
 
     /**
