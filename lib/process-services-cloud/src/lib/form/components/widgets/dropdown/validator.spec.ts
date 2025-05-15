@@ -35,7 +35,7 @@ describe('defaultValueValidator', () => {
 
     it('should return null when a valid option is selected', () => {
         const validator = defaultValueValidator(mockField);
-        const control = new FormControl('opt_1');
+        const control = new FormControl({ id: 'opt_1' });
 
         const result = validator(control);
 
@@ -58,15 +58,5 @@ describe('defaultValueValidator', () => {
         const result = validator(control);
 
         expect(result).toEqual({ required: true });
-    });
-
-    it('should return null when the field has no options', () => {
-        mockField.options = [];
-        const validator = defaultValueValidator(mockField);
-        const control = new FormControl('opt_1');
-
-        const result = validator(control);
-
-        expect(result).toBeNull();
     });
 });

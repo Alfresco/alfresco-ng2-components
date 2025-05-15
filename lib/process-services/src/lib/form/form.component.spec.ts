@@ -941,7 +941,7 @@ describe('FormComponent', () => {
 
         let dropdownField = formFields.find((field) => field.id === 'dropdownId');
         let radioField = formFields.find((field) => field.id === 'radio');
-        expect(dropdownField.value).toBe('empty');
+        expect(dropdownField.value).toEqual({ id: 'empty', name: 'Choose one...' });
         expect(radioField.value).toBeNull();
 
         const formValues: any = {};
@@ -961,7 +961,7 @@ describe('FormComponent', () => {
         dropdownField = formFields.find((field) => field.id === 'dropdownId');
         radioField = formFields.find((field) => field.id === 'radio');
 
-        expect(dropdownField.value).toBe({
+        expect(dropdownField.value).toEqual({
             id: 'dropdown_option_2',
             name: 'Dropdown option 2'
         });

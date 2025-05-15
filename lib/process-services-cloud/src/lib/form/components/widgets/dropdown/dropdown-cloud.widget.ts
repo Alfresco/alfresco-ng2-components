@@ -195,8 +195,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private setFormControlValue(): void {
-        if (this.field?.value && typeof this.field?.value === 'object') {
+        if (Array.isArray(this.field.value)) {
+            this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
+        } else if (this.field?.value && typeof this.field?.value === 'object') {
             this.dropdownControl.setValue({ id: this.field?.value.id, name: this.field?.value.name }, { emitEvent: false });
+        } else if (this.field.value === null) {
+            this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
         } else {
             this.dropdownControl.setValue({ id: this.field?.value, name: '' }, { emitEvent: false });
         }

@@ -1008,7 +1008,7 @@ describe('DropdownCloudWidgetComponent', () => {
             widget['setFormControlValue']();
 
             expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'testValueObj', name: 'testValueObjName' }, { emitEvent: false });
-            expect(widget.dropdownControl.value).toEqual({ id: 'testValue', name: '' });
+            expect(widget.dropdownControl.value).toEqual({ id: 'testValueObj', name: 'testValueObjName' });
         });
 
         it('should display options persisted from process variable', async () => {
