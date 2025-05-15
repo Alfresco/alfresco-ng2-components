@@ -5,6 +5,9 @@ export default {
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     coverageDirectory: '../../../coverage/libs/js-api',
+    moduleMNameMapper: {
+        '^pdfjs-dist$': 'pdfjs-dist/legacy/build/pdf'
+    },
     transform: {
         '^.+\\.(ts|mjs|js|html)$': [
             'jest-preset-angular',
