@@ -37,6 +37,11 @@ export function loadAppConfig(
 ) {
     const init = () => {
         adfHttpClient.disableCsrf = appConfigService.get<boolean>(AppConfigValues.DISABLECSRF, true);
+        const withCredentials = appConfigService.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS);
+        if (withCredentials !== undefined && withCredentials !== null) {
+            adfHttpClient.setDefaultSecurityOption({ withCredentials });
+        }
+
         storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
 
         storagePrefixFactory.getPrefix().subscribe((property) => {
