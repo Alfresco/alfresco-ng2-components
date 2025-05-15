@@ -771,7 +771,7 @@ describe('FormFieldModel', () => {
                 ];
             });
 
-            it('should update form with selected option and options from which we chose when is a strign', () => {
+            it('should update form with selected option and options from which we chose when is a string', () => {
                 field.value = 'restOpt2';
                 field.updateForm();
 
