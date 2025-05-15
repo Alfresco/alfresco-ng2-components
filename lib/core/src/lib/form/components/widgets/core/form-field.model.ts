@@ -445,7 +445,7 @@ export class FormFieldModel extends FormWidgetModel {
 
                     const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value.id);
 
-                    this.form.values[this.id] = matchingOption || null;
+                    this.form.values[this.id] = matchingOption;
                 }
                 break;
             }
