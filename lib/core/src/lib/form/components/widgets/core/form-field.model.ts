@@ -436,6 +436,17 @@ export class FormFieldModel extends FormWidgetModel {
 
                     this.form.values[this.id] = matchingOption || null;
                 }
+
+                if (typeof this.value === 'object') {
+                    if (this.value.id === 'empty' || this.value.id === '') {
+                        this.form.values[this.id] = null;
+                        break;
+                    }
+
+                    const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value.id);
+
+                    this.form.values[this.id] = matchingOption || null;
+                }
                 break;
             }
             case FormFieldTypes.RADIO_BUTTONS: {

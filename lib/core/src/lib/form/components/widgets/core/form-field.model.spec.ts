@@ -785,7 +785,7 @@ describe('FormFieldModel', () => {
                 ];
             });
 
-            it('should update form with selected option and options from which we chose', () => {
+            it('should update form with selected option and options from which we chose when is a strign', () => {
                 field.value = 'restOpt2';
                 field.updateForm();
 
@@ -1040,6 +1040,15 @@ describe('FormFieldModel', () => {
 
         it('should selected option appear in form values', () => {
             const field = getFieldConfig('manual', staticOptions, 'opt2');
+
+            field.updateForm();
+
+            expect(field.value).toEqual('opt2');
+            expect(field.form.values['dropdown_field']).toEqual({ id: 'opt2', name: 'Option 2' });
+        });
+
+        it('should selected option appear in form values', () => {
+            const field = getFieldConfig('manual', staticOptions, { id: 'opt3', name: 'opt3' });
 
             field.updateForm();
 
