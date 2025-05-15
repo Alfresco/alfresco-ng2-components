@@ -29,7 +29,8 @@ export const defaultValueValidator =
         });
 
         const isSomeOptionSelected = optionsWithNoDefaultValue.some((dropdownOption) => {
-            const isOptionSelected = dropdownOption.id === control.value?.id;
+            const isOptionSelected = dropdownOption.id === control.value.id;
+
             return isOptionSelected;
         });
 

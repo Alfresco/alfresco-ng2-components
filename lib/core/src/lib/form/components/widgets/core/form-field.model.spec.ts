@@ -146,7 +146,7 @@ describe('FormFieldModel', () => {
             });
 
             expect(field.options).toEqual([{ id: 'id_one', name: 'One' }]);
-            expect(field.value).toEqual('id_one');
+            expect(field.value).toEqual([{ id: 'id_one', name: 'One' }]);
         });
 
         it('should add value (selected options) to field options if NOT present (multiple selection)', () => {
@@ -176,7 +176,22 @@ describe('FormFieldModel', () => {
 
             expect(field.hasEmptyValue).toBe(true);
             expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose one...' });
-            expect(field.value).toEqual('empty');
+            expect(field.value).toEqual({ id: 'empty', name: 'Chose one...' });
+        });
+
+        it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [
+                    { id: '', name: 'Chose one...' },
+                    { id: 'one', name: 'One' }
+                ],
+                value: null
+            });
+
+            expect(field.hasEmptyValue).toBe(true);
+            expect(field.emptyOption).toEqual({ id: '', name: 'Chose one...' });
+            expect(field.value).toEqual({ id: '', name: 'Chose one...' });
         });
 
         it('should set hasEmptyValue to true if "empty" option is present in options', () => {
@@ -272,7 +287,7 @@ describe('FormFieldModel', () => {
                     options: [],
                     value: { id: 'delayed-option-id', name: 'Delayed option' }
                 });
-                expect(field.value).toBe('delayed-option-id');
+                expect(field.value).toBe({ id: 'delayed-option-id', name: 'Delayed option' });
             });
         });
     });

@@ -983,7 +983,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.field.options.length).toEqual(0);
         };
 
-        it('should set dropdownControl value without emitting events', () => {
+        it('should set dropdownControl value without emitting events if the mapping is a string', () => {
             widget.field = {
                 value: 'testValue',
                 options: [],
@@ -994,6 +994,20 @@ describe('DropdownCloudWidgetComponent', () => {
             widget['setFormControlValue']();
 
             expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'testValue', name: '' }, { emitEvent: false });
+            expect(widget.dropdownControl.value).toEqual({ id: 'testValue', name: '' });
+        });
+
+        it('should set dropdownControl value without emitting events if is an object', () => {
+            widget.field = {
+                value: { id: 'testValueObj', name: 'testValueObjName' },
+                options: [],
+                isVisible: true
+            } as any; // Mock field
+            spyOn(widget.dropdownControl, 'setValue').and.callThrough();
+
+            widget['setFormControlValue']();
+
+            expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'testValueObj', name: 'testValueObjName' }, { emitEvent: false });
             expect(widget.dropdownControl.value).toEqual({ id: 'testValue', name: '' });
         });
 

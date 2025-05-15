@@ -331,13 +331,13 @@ export class FormFieldModel extends FormWidgetModel {
 
                 const isEmptyValue = !value || [this.emptyOption.id, this.emptyOption.name].includes(value);
                 if (isEmptyValue) {
-                    return this.emptyOption.id;
+                    return this.emptyOption;
                 }
             }
 
             if (this.isValidOption(value)) {
                 this.addOption({ id: value.id, name: value.name });
-                return value.id;
+                return value;
             }
 
             if (this.hasMultipleValues) {
