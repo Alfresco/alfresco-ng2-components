@@ -114,7 +114,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     displayPage: number;
     totalPages: number;
     loadingPercent: number;
-    pdfViewer: any;
+    pdfViewer: PDFViewer;
     pdfJsWorkerUrl: string;
     pdfJsWorkerInstance: Worker;
     currentScaleMode: PdfScaleMode = 'init';
@@ -132,7 +132,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     documentOverflow = false;
 
     get currentScaleText(): string {
-        return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
+        const currentScaleValueStr = this.pdfViewer?.currentScaleValue;
+        const scaleNumber = Number(currentScaleValueStr);
+
+        const currentScaleText = scaleNumber ? `${Math.round(scaleNumber * 100)}%` : '';
+
+        return currentScaleText;
     }
 
     private pdfjsLib = inject(PDFJS_MODULE);
@@ -249,6 +254,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
                     return pdfDocument.getPage(1);
                 })
+                .then(() => this.scalePage('init'))
                 .catch(() => this.error.emit());
         });
     }
@@ -288,8 +294,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             // cspell: disable-next
             this.eventBus.on('pagesloaded', this.onPagesLoaded);
             // cspell: disable-next
-            this.eventBus.on('textlayerrendered', this.onPageRendered);
-            this.eventBus.on('pagerendered', this.onPageRendered);
+            this.eventBus.on('textlayerrendered', () => {
+                this.onPageRendered();
+            });
+            this.eventBus.on('pagerendered', () => {
+                this.onPageRendered();
+            });
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
@@ -447,10 +457,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     setScaleUpdatePages(newScale: number) {
         if (this.pdfViewer) {
-            if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
-                this.pdfViewer.currentScaleValue = newScale;
-                this.pdfViewer.update();
+            if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale.toString())) {
+                this.pdfViewer.currentScaleValue = newScale.toString();
             }
+            this.pdfViewer.update();
         }
         this.setDocumentOverflow();
     }
@@ -462,7 +472,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param newScale - new scale page
      * @returns `true` if the scale is the same, otherwise `false`
      */
-    isSameScale(oldScale: number, newScale: number): boolean {
+    isSameScale(oldScale: string, newScale: string): boolean {
         return newScale === oldScale;
     }
 
@@ -610,7 +620,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     onPagesLoaded() {
         this.pagesLoaded.emit();
         this.isPanelDisabled = false;
-        setTimeout(() => this.scalePage('init'));
     }
 
     /**
