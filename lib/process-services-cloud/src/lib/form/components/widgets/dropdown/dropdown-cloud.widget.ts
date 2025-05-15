@@ -195,7 +195,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private setFormControlValue(): void {
-        this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
+        if (Array.isArray(this.field.value)) {
+            this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
+        } else if (this.field?.value && typeof this.field?.value === 'object') {
+            this.dropdownControl.setValue({ id: this.field?.value.id, name: this.field?.value.name }, { emitEvent: false });
+        } else if (this.field.value === null) {
+            this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
+        } else {
+            this.dropdownControl.setValue({ id: this.field?.value, name: '' }, { emitEvent: false });
+        }
     }
 
     private updateFormControlState(): void {
@@ -457,7 +465,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             const fieldValueIds = this.field.value.map((valueOption) => valueOption.id);
             return fieldValueIds.every((valueOptionId) => optionIdList.includes(valueOptionId));
         } else {
-            return [...this.field.options].map((option) => option.id).includes(this.field.value);
+            if (this.field?.value && typeof this.field?.value === 'object') {
+                return [...this.field.options].map((option) => option.id).includes(this.field.value.id);
+            } else {
+                return [...this.field.options].map((option) => option.id).includes(this.field.value);
+            }
         }
     }
 
