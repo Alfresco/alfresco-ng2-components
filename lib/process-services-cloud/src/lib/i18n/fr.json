@@ -381,7 +381,7 @@
       "DESTINATION_FOLDER_PATH_ERROR": "Le chemin de destination est incorrect ou n'existe pas. Revenir à 'mon emplacement'"
     },
     "OPEN_NEXT_TASK": {
-      "LABEL": "Open next task"
+      "LABEL": "Ouvrir la tâche suivante"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

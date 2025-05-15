@@ -51,7 +51,7 @@
       "REST_API_FAILED": "O servidor `{{ hostname }}` não pode ser acedido",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Problema ao carregar elementos suspensos. Entre em contacto com o administrador.",
       "DATA_TABLE_LOAD_FAILED": "Problema ao carregar os elementos da tabela. Entre em contacto com o administrador.",
-      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "DATA_TABLE_EMPTY_CONTENT": "Não foram encontrados dados",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Houve um problema ao carregar a propriedade externa. Entre em contacto com o administrador.",
       "FILE_NAME": "Nome do ficheiro",
       "TITLE": "Título",
