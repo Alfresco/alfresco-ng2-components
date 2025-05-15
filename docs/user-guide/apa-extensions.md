@@ -26,8 +26,10 @@ This is an example of replacing the standard `Text` with a custom component for 
     ```ts
     import { Component } from '@angular/core';
     import { WidgetComponent } from '@alfresco/adf-core';
+   
     @Component({
         selector: 'custom-editor',
+        standalone: true,
         template: `
             <div style="color: red">Look, I'm a APA custom editor!</div>
         `
@@ -35,35 +37,14 @@ This is an example of replacing the standard `Text` with a custom component for 
     export class CustomEditorComponent extends WidgetComponent {}
     ```
 
-2. Add it to the application module or any custom module that is imported into the application one:
+2. Import the [`FormRenderingService`](../core/services/form-rendering.service.md) in the feature module, or application module (recommended: `ProcessServicesExtensionModule`), and override the default mapping:
 
     ```ts
-    import { NgModule } from '@angular/core';
     import { CustomEditorComponent } from './custom-editor.component';
-    @NgModule({
-        declarations: [ CustomEditorComponent ],
-        exports: [ CustomEditorComponent ]
-    })
-    export class CustomEditorsModule {}
-    ```
-
-3. Every custom widget component should be added into the the collections `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library) don't forget to import it into the main application:
-
-    ```ts
-    @NgModule({
-        imports: [ CustomEditorsModule ],
-        bootstrap: [ AppComponent ]
-    })
-    export class AppModule {}
-    ```
-
-4. Import the [`FormRenderingService`](../core/services/form-rendering.service.md) into any of your Views and override the default mapping, for example:
-
-    ```ts
-    import { Component } from '@angular/core';
-    import { CustomEditorComponent } from './custom-editor.component';
-    @Component({...})
-    export class MyView {
+    import { FormRenderingService } from '@alfresco/adf-core';
+   
+    @NgModule({...})
+    export class ProcessServicesExtensionModule {
         constructor(formRenderingService: FormRenderingService) {
             this.formRenderingService.register({
                 'text': () => CustomEditorComponent
@@ -72,10 +53,12 @@ This is an example of replacing the standard `Text` with a custom component for 
     }
     ```
 
-5. At runtime the form should look similar to the following:
+> [!IMPORTANT]  
+> The widget should be registered outside the custom widget component, otherwise the widget will not be registered correctly.
 
-    ![custom text widget](../docassets/images/apa-simple-override-form.png)
+At runtime the form should look similar to the following:
 
+![custom text widget](../docassets/images/apa-simple-override-form.png)
 
 ## Replace custom form widgets with custom components
 
