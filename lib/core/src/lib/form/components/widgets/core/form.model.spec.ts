@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
+import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSectionsAndNestedGroup, fakeValidatorMock } from '../../mock/form.mock';
 import { CoreTestingModule } from '../../../../testing';
 import { TestBed } from '@angular/core/testing';
 
@@ -655,12 +655,12 @@ describe('FormModel', () => {
         let form: FormModel;
 
         beforeEach(() => {
-            form = new FormModel(mockFormWithSections);
+            form = new FormModel(mockFormWithSectionsAndNestedGroup);
         });
 
         it('should get all form fields (containers, sections, fields)', () => {
             const fields = form.getFormFields();
-            expect(fields.length).toBe(13);
+            expect(fields.length).toBe(14);
         });
 
         it('should filter form fields by type inside sections', () => {
@@ -712,6 +712,11 @@ describe('FormModel', () => {
             expect(fields[0].type).toBe(FormFieldTypes.AMOUNT);
             expect(fields[1].type).toBe(FormFieldTypes.DATE);
             expect(fields[2].type).toBe(FormFieldTypes.NUMBER);
+        });
+
+        it('should return fields without empty array from nested group', () => {
+            const fields = form.getFormFields();
+            expect(fields).not.toContain([] as any);
         });
     });
 });

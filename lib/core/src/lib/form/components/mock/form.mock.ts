@@ -1407,7 +1407,7 @@ export const fakeViewerForm = {
     }
 };
 
-export const mockFormWithSections = {
+export const mockFormWithSectionsAndNestedGroup = {
     id: 'form-970ddfcf-6d5d-4cbb-ae81-958ade65062c',
     name: 'simple section',
     key: 'simple-section-z54vk',
@@ -1428,6 +1428,21 @@ export const mockFormWithSections = {
             numberOfColumns: 1,
             fields: {
                 1: [
+                    {
+                        id: 'Group0bw66j',
+                        name: 'Group',
+                        type: 'group',
+                        tab: null,
+                        params: {
+                            hideHeader: false,
+                            allowCollapse: false,
+                            collapseByDefault: false
+                        },
+                        fields: {
+                            1: []
+                        },
+                        numberOfColumns: 1
+                    },
                     {
                         id: '4c0590a9-44e3-415f-9e69-3a3ffe99066b',
                         name: 'Section',
