@@ -40,13 +40,15 @@
                 <section class="adf-grid-list-column-view" *ngIf="currentRootElement?.isExpanded">
                     <div class="adf-grid-list-single-column"
                          *ngFor="let column of currentRootElement?.columns"
-                         [style.width.%]="getColumnWidth(currentRootElement)">
+                         [style.width.%]="getColumnWidth(currentRootElement)"
+                    >
                         <ng-container *ngFor="let field of column?.fields">
                             <ng-container *ngIf="field.type === 'section'; else formField">
                                 <adf-form-section [field]="field"/>
                             </ng-container>
                             <ng-template #formField>
                                 <div class="adf-grid-list-column-view-item">
+                                    {{field?.value ?? 'empty'}}
                                     <adf-form-field [field]="field"/>
                                 </div>
                             </ng-template>

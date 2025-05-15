@@ -24,8 +24,10 @@ import {
     inject,
     Input,
     NgModule,
+    OnChanges,
     OnDestroy,
     OnInit,
+    SimpleChanges,
     ViewChild,
     ViewContainerRef,
     ViewEncapsulation
@@ -46,7 +48,7 @@ declare const adf: any;
     encapsulation: ViewEncapsulation.None,
     imports: [FieldStylePipe]
 })
-export class FormFieldComponent implements OnInit, OnDestroy {
+export class FormFieldComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
 
@@ -73,6 +75,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         if (w.adf === undefined) {
             w.adf = {};
         }
+
         const originalField = this.getField();
         if (originalField) {
             const customTemplate = this.field.form.customFieldTemplates[originalField.type];
@@ -104,6 +107,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 }
             }
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('changes', changes);
     }
 
     private updateReactiveFormControlOnFormRulesEvent(instance: any): void {

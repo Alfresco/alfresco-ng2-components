@@ -676,6 +676,21 @@ describe('FormCloudComponent', () => {
         formComponent.ngOnChanges({ data: change });
     });
 
+    it('should not change form if custom form values is empty array', () => {
+        const formModel = new FormModel({
+            id: 'id',
+            taskId: 'task-id',
+            fields: [{ id: 'field1' }, { id: 'field2' }]
+        });
+        formComponent.form = formModel;
+
+        const formValues: TaskVariableCloud[] = [];
+        const change = new SimpleChange(null, formValues, false);
+        formComponent.ngOnChanges({ data: change });
+
+        expect(formComponent.form).toEqual(formModel);
+    });
+
     it('should save task form and raise corresponding event', () => {
         spyOn(formCloudService, 'saveTaskForm').and.callFake(
             () =>
