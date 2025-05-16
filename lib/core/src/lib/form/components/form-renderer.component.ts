@@ -16,19 +16,7 @@
  */
 
 import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import {
-    AfterContentInit,
-    Component,
-    Inject,
-    Injector,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Optional,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -71,7 +59,7 @@ import { FormSectionComponent } from './form-section/form-section.component';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnDestroy, OnChanges, AfterContentInit {
+export class FormRendererComponent<T> implements OnInit, OnDestroy {
     @Input({ required: true })
     formDefinition: FormModel;
 
@@ -90,17 +78,9 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy, OnChanges, A
         private middlewareServices?: FormFieldModelRenderMiddleware[]
     ) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log('FormRendererComponent', changes);
-    }
-
     ngOnInit(): void {
         this.runMiddlewareServices();
-    }
-
-    ngAfterContentInit(): void {
         if (!this.readOnly) {
-            console.log('formRulesManager.initialize');
             this.formRulesManager.initialize(this.formDefinition);
         }
     }
@@ -175,6 +155,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy, OnChanges, A
     private runMiddlewareServices(): void {
         if (this.middlewareServices && this.middlewareServices.length > 0) {
             const formFields = this.formDefinition.getFormFields();
+
             formFields.forEach((field) => {
                 this.middlewareServices.forEach((middlewareService) => {
                     if (middlewareService.type === field.type) {

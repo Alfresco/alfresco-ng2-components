@@ -114,7 +114,6 @@ export abstract class FormBaseComponent {
     /** Underlying form model instance. */
     @Input()
     set form(form: FormModel) {
-        console.log('FormBaseComponent: form input set', form);
         this._form = form;
 
         if (form) {

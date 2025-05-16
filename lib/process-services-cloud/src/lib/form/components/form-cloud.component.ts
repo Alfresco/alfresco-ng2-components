@@ -243,8 +243,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
 
         const data = changes['data']?.currentValue;
-        console.log('data', data);
-
         if (data?.length > 0) {
             this.refreshFormData();
             return;
@@ -347,7 +345,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     getFormById(appName: string, formId: string, appVersion?: number) {
-        console.log('----START request form ----');
         this.formCloudService
             .getForm(appName, formId, appVersion)
             .pipe(
@@ -360,19 +357,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             )
             .subscribe(
                 (form) => {
-                    console.log('Request form', form);
-                    console.log('Current form', this.form);
                     this.formCloudRepresentationJSON = form;
                     this.formCloudRepresentationJSON.processVariables = this.data || [];
                     const parsedForm = this.parseForm(form);
                     this.visibilityService.refreshVisibility(parsedForm);
                     parsedForm?.validateForm();
-                    console.log('New parsed form', this.form);
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
-                    console.log('onFormLoaded');
                     this.onFormLoaded(this.form);
-                    console.log('----END request form ----');
                 },
                 (error) => {
                     this.handleError(error);

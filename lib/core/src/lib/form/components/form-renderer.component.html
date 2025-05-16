@@ -48,7 +48,6 @@
                             </ng-container>
                             <ng-template #formField>
                                 <div class="adf-grid-list-column-view-item">
-                                    {{field?.value ?? 'empty'}}
                                     <adf-form-field [field]="field"/>
                                 </div>
                             </ng-template>
@@ -63,9 +62,11 @@
                 </div>
             </ng-template>
         </div>
+
         <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
             <adf-form-field [field]="currentRootElement" />
         </div>
+
         <div class="adf-container-widget"
              *ngIf="currentRootElement.type === 'readonly' && currentRootElement.field.params.field.type === 'dynamic-table'">
             <adf-form-field [field]="currentRootElement.field"/>
