@@ -8,6 +8,6 @@
     "source": "/**/**/i18n/en.json",
     "translation": "/%original_path%/%two_letters_code%.%file_extension%",
     "export_only_approved": "true",
-    "update_option": "update_as_unapproved"
+    "update_option": "update_without_changes"
   }
 ]

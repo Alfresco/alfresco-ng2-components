@@ -51,7 +51,7 @@
       "REST_API_FAILED": "No se puede acceder al servidor '{{ hostname }}'",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "Ha habido un problema al cargar elementos desplegables. Contacte con el administrador.",
       "DATA_TABLE_LOAD_FAILED": "Ha habido un problema al cargar elementos de tabla. Contacte con el administrador.",
-      "DATA_TABLE_EMPTY_CONTENT": "No data found",
+      "DATA_TABLE_EMPTY_CONTENT": "No se encontraron datos",
       "EXTERNAL_PROPERTY_LOAD_FAILED": "Ha habido un problema al cargar una propiedad externa. Contacte con el administrador.",
       "FILE_NAME": "Nombre del fichero",
       "TITLE": "Título",
