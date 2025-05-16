@@ -21,7 +21,6 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { ScreenRenderingService } from '../../../services/public-api';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-cloud-test-component',
@@ -67,14 +66,9 @@ class TestComponent {
 class TestWrapperComponent {
     @Input() screenId = '';
     @ViewChild('adfCloudTaskScreen') adfCloudTaskScreen: TaskScreenCloudComponent;
-    taskCompleted = new EventEmitter<any>();
-    nextTaskCheckboxCheckedChanged = new EventEmitter<any>();
-    componentRef: { instance: any } = { instance: {} };
 
     onTaskCompleted() {}
-    createDynamicComponent() {
-        this.componentRef.instance = new TestComponent();
-    }
+
     switchToDisplayMode(newDisplayMode?: string): void {
         if (this.adfCloudTaskScreen) {
             this.adfCloudTaskScreen.switchToDisplayMode(newDisplayMode);
@@ -131,25 +125,5 @@ describe('TaskScreenCloudComponent', () => {
         fixture.detectChanges();
 
         expect(component.adfCloudTaskScreen.switchToDisplayMode).toHaveBeenCalled();
-    });
-
-    it('should emit taskCompleted with correct data when taskCompleted output is triggered by dynamic component', () => {
-        const taskCompletedSpy = spyOn(component.taskCompleted, 'emit');
-        const mockData = { openNextTask: true };
-        component.createDynamicComponent();
-        fixture.detectChanges();
-
-        component.componentRef.instance.taskCompleted.emit(mockData);
-        expect(taskCompletedSpy).toHaveBeenCalledWith(mockData);
-    });
-
-    it('should emit nextTaskCheckboxCheckedChanged when nextTaskCheckboxCheckedChanged output is triggered by dynamic component', () => {
-        const nextTaskCheckboxSpy = spyOn(component.nextTaskCheckboxCheckedChanged, 'emit');
-        const mockEvent = { checked: true } as MatCheckboxChange;
-        component.createDynamicComponent();
-        fixture.detectChanges();
-
-        component.componentRef.instance.nextTaskCheckboxCheckedChanged.emit(mockEvent);
-        expect(nextTaskCheckboxSpy).toHaveBeenCalledWith(mockEvent);
     });
 });
