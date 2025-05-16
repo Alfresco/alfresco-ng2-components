@@ -66,9 +66,7 @@ class TestComponent {
 class TestWrapperComponent {
     @Input() screenId = '';
     @ViewChild('adfCloudTaskScreen') adfCloudTaskScreen: TaskScreenCloudComponent;
-
     onTaskCompleted() {}
-
     switchToDisplayMode(newDisplayMode?: string): void {
         if (this.adfCloudTaskScreen) {
             this.adfCloudTaskScreen.switchToDisplayMode(newDisplayMode);
