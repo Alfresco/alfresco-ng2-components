@@ -72,9 +72,10 @@
     }
 
     &-content-card {
-        padding-bottom: 4em;
+        padding-bottom: 2em;
         overflow-y: auto;
         position: static;
+        height: 76%;
 
         &-fullscreen {
             padding: 0;
@@ -94,11 +95,8 @@
         }
 
         &-actions {
-            position: fixed;
-            bottom: 0;
-            width: -webkit-fill-available;
-            z-index: 1;
-            background-color: white;
+            position: sticky;
+            z-index: 10;
         }
     }
 
