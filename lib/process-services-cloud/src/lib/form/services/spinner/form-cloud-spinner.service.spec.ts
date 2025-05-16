@@ -31,7 +31,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
     selector: 'adf-cloud-overlay-test',
-    template: `<div>adf-cloud-overlay-test</div>`
+    template: `<div>adf-cloud-overlay-test</div>`,
+    imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, FormSpinnerComponent]
 })
 class SpinnerTestComponent {
     destroyRef = inject(DestroyRef);
@@ -49,8 +50,7 @@ describe('FormCloudSpinnerService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot(), FormSpinnerComponent],
-            declarations: [SpinnerTestComponent],
+            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot(), FormSpinnerComponent, SpinnerTestComponent],
             providers: [
                 FormCloudSpinnerService,
                 {

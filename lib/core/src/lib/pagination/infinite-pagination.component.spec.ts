@@ -26,7 +26,8 @@ import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
-    template: ``
+    template: ``,
+    imports: [CoreTestingModule]
 })
 class TestPaginatedComponent implements PaginatedComponent {
     private _pagination: BehaviorSubject<PaginationModel>;
@@ -58,8 +59,7 @@ describe('InfinitePaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestPaginatedComponent]
+            imports: [CoreTestingModule, TestPaginatedComponent]
         });
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;

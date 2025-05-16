@@ -32,7 +32,8 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
                 <span id="custom-no-result">{{ customMessage }}</span>
             </adf-empty-search-result>
         </adf-search-control>
-    `
+    `,
+    imports: [ContentTestingModule]
 })
 export class SimpleSearchTestCustomEmptyComponent {
     customMessage = '';
@@ -59,8 +60,7 @@ describe('SearchControlComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [SimpleSearchTestCustomEmptyComponent]
+            imports: [ContentTestingModule, SimpleSearchTestCustomEmptyComponent]
         });
         fixture = TestBed.createComponent(SearchControlComponent);
         debugElement = fixture.debugElement;

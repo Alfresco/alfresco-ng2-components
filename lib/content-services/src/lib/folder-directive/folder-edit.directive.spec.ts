@@ -26,7 +26,8 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentService } from '../common/services/content.service';
 
 @Component({
-    template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
+    template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>',
+    imports: [ContentTestingModule, FolderEditDirective]
 })
 class TestComponent {
     folder = {};
@@ -51,8 +52,7 @@ describe('FolderEditDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, FolderEditDirective],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, FolderEditDirective, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));

@@ -28,7 +28,8 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 @Component({
     template: '',
-    providers: [NotificationService]
+    providers: [NotificationService],
+    imports: [NoopTranslateModule, MatSnackBarModule]
 })
 class ProvidesNotificationServiceComponent {
     constructor(public notificationService: NotificationService) {}
@@ -92,8 +93,7 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatSnackBarModule],
-            declarations: [ProvidesNotificationServiceComponent]
+            imports: [NoopTranslateModule, NoopAnimationsModule, MatSnackBarModule, ProvidesNotificationServiceComponent]
         });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);

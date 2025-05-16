@@ -23,8 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 @NgModule({
-    declarations: [ConfirmDialogComponent],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatDialogModule, MatButtonModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatDialogModule, MatButtonModule, ConfirmDialogComponent],
     exports: [ConfirmDialogComponent]
 })
 export class ConfirmDialogModule {}

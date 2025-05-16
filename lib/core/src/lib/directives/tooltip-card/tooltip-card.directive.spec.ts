@@ -34,7 +34,8 @@ const IMAGE_URL = 'alfresco-logo.svg';
         [width]="'400'"
         [htmlContent]="'this is the <b>html</b> raw code'"
         class="test-component"
-    ></span>`
+    ></span>`,
+    imports: [CommonModule, OverlayModule, TooltipCardDirective, TooltipCardComponent]
 })
 class TestComponent {
     @ViewChild(TooltipCardDirective, { static: true })
@@ -52,8 +53,7 @@ describe('TooltipCardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, OverlayModule, NoopAnimationsModule, TooltipCardDirective, TooltipCardComponent],
-            declarations: [TestComponent]
+            imports: [CommonModule, OverlayModule, NoopAnimationsModule, TooltipCardDirective, TooltipCardComponent, TestComponent]
         }).compileComponents();
     });
 

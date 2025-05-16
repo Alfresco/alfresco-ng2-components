@@ -287,7 +287,8 @@ describe('TaskAttachmentList', () => {
                 <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
             </adf-empty-list>
         </adf-task-attachment-list>
-    `
+    `,
+    imports: [ProcessTestingModule]
 })
 class CustomEmptyTemplateComponent {}
 
@@ -296,8 +297,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [CustomEmptyTemplateComponent],
+            imports: [ProcessTestingModule, CustomEmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);

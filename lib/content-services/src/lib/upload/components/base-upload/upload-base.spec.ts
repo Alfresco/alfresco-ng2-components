@@ -27,7 +27,8 @@ import { FileUploadErrorEvent } from '../../../common/events/file.event';
 
 @Component({
     selector: 'adf-upload-button-test',
-    template: 'test component'
+    template: 'test component',
+    imports: [ContentTestingModule]
 })
 export class UploadTestComponent extends UploadBase {}
 
@@ -40,8 +41,7 @@ describe('UploadBase', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [UploadTestComponent]
+            imports: [ContentTestingModule, UploadTestComponent]
         });
         fixture = TestBed.createComponent(UploadTestComponent);
         uploadService = TestBed.inject(UploadService);

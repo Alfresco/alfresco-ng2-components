@@ -24,8 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-    declarations: [DownloadZipDialogComponent],
-    imports: [CommonModule, MatDialogModule, MatProgressBarModule, MatButtonModule, TranslateModule],
+    imports: [CommonModule, MatDialogModule, MatProgressBarModule, MatButtonModule, TranslateModule, DownloadZipDialogComponent],
     exports: [DownloadZipDialogComponent]
 })
 export class DownloadZipDialogModule {}

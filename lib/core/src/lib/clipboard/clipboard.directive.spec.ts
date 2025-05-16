@@ -31,7 +31,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
         <button mat-button clipboard-notification="copy success" [adf-clipboard] [target]="ref">copy</button>
 
         <input #ref />
-    `
+    `,
+    imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective]
 })
 class TestTargetClipboardComponent {}
 
@@ -43,8 +44,7 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
-            declarations: [TestTargetClipboardComponent]
+            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective, TestTargetClipboardComponent]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
@@ -73,7 +73,8 @@ describe('ClipboardDirective', () => {
 describe('CopyClipboardDirective', () => {
     @Component({
         selector: 'adf-copy-conent-test-component',
-        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`
+        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`,
+        imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective]
     })
     class TestCopyClipboardComponent {
         mockText = 'text to copy';
@@ -88,8 +89,7 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
-            declarations: [TestCopyClipboardComponent]
+            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective, TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

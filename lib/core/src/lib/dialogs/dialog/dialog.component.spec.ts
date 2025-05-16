@@ -25,7 +25,8 @@ import { Component, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-dummy-component'
+    selector: 'adf-dummy-component',
+    imports: [CoreTestingModule]
 })
 class DummyComponent {
     data = inject(DIALOG_COMPONENT_DATA);
@@ -55,8 +56,7 @@ describe('DialogComponent', () => {
 
     const setupBeforeEach = (dialogOptions: DialogData = data) => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [DummyComponent],
+            imports: [CoreTestingModule, DummyComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: dialogOptions },
                 { provide: MatDialogRef, useValue: dialogRef }

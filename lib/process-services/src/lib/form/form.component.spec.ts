@@ -65,7 +65,7 @@ describe('FormComponent', () => {
     }
 
     @NgModule({
-        declarations: [CustomWidget],
+        imports: [CustomWidget],
         exports: [CustomWidget]
     })
     class CustomUploadModule {}

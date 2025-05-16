@@ -22,7 +22,8 @@ import { SearchFacetFiltersService } from '../services/search-facet-filters.serv
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
 
 @Component({
-    template: `<button adf-reset-search>Reset</button>`
+    template: `<button adf-reset-search>Reset</button>`,
+    imports: [ContentTestingModule]
 })
 class TestComponent {}
 
@@ -33,8 +34,7 @@ describe('Directive: ResetSearchDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);

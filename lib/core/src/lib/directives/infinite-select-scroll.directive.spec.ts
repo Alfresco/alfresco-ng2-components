@@ -29,7 +29,8 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
         <mat-option *ngFor="let option of options; let idx = index">
             {{ option.text }}
         </mat-option>
-    </mat-select>`
+    </mat-select>`,
+    imports: [MatSelectModule, InfiniteSelectScrollDirective]
 })
 class TestComponent {
     options = new Array(50).fill({ text: 'dummy' });
@@ -54,8 +55,7 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective],
-            declarations: [TestComponent]
+            imports: [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

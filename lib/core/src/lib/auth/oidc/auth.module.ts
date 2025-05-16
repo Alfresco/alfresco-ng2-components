@@ -51,8 +51,7 @@ export function oauthStorageFactory(): OAuthStorage {
 }
 
 @NgModule({
-    declarations: [AuthenticationConfirmationComponent],
-    imports: [AuthRoutingModule, OAuthModule.forRoot()],
+    imports: [AuthRoutingModule, OAuthModule.forRoot(), AuthenticationConfirmationComponent],
     providers: [
         { provide: OAuthStorage, useFactory: oauthStorageFactory },
         { provide: AuthenticationService },

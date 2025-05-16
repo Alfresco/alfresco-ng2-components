@@ -33,8 +33,7 @@ describe('InheritPermissionDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [SimpleInheritedPermissionTestComponent]
+            imports: [ContentTestingModule, SimpleInheritedPermissionTestComponent]
         });
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;

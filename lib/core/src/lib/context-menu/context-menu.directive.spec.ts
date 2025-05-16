@@ -25,7 +25,8 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component',
-    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="isEnabled"></div> `
+    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="isEnabled"></div> `,
+    imports: [CoreTestingModule, CONTEXT_MENU_DIRECTIVES]
 })
 class TestComponent {
     actions: any[] | (() => any[]);
@@ -118,8 +119,7 @@ testCases.forEach((testCase) => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, CONTEXT_MENU_DIRECTIVES],
-                declarations: [TestComponent]
+                imports: [CoreTestingModule, CONTEXT_MENU_DIRECTIVES, TestComponent]
             });
             fixture = TestBed.createComponent(TestComponent);
             fixture.componentInstance.isEnabled = false;

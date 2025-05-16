@@ -34,7 +34,8 @@ import { NewVersionUploaderService } from './new-version-uploader.service';
 import { Version, VersionPaging } from '@alfresco/js-api';
 
 @Component({
-    template: ''
+    template: '',
+    imports: [ContentTestingModule]
 })
 class TestDialogComponent {
     @Output()
@@ -55,8 +56,7 @@ describe('NewVersionUploaderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestDialogComponent]
+            imports: [ContentTestingModule, TestDialogComponent]
         });
     });
 

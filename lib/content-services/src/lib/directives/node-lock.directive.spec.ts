@@ -30,7 +30,8 @@ const fakeNode = {
 } as Node;
 
 @Component({
-    template: '<div [adf-node-lock]="node"></div>'
+    template: '<div [adf-node-lock]="node"></div>',
+    imports: [ContentTestingModule]
 })
 class TestComponent {
     node = null;
@@ -44,8 +45,7 @@ describe('NodeLock Directive', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

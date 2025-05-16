@@ -42,7 +42,8 @@ export class CustomContainerComponent {
 
 @Component({
     selector: 'adf-custom-empty-container',
-    template: `<adf-buttons-action-menu />`
+    template: `<adf-buttons-action-menu />`,
+    imports: [ButtonsMenuComponent]
 })
 export class CustomEmptyContainerComponent {}
 
@@ -95,8 +96,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ButtonsMenuComponent],
-                declarations: [CustomEmptyContainerComponent]
+                imports: [ButtonsMenuComponent, CustomEmptyContainerComponent]
             });
             fixture = TestBed.createComponent(CustomEmptyContainerComponent);
             element = fixture.nativeElement;

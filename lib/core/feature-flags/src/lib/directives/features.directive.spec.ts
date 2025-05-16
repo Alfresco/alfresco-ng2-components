@@ -27,7 +27,8 @@ import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
-    `
+    `,
+    imports: [CommonModule, FeaturesDirective]
 })
 class TestWithEnabledFlagComponent {
     features = 'feature1';
@@ -37,7 +38,8 @@ class TestWithEnabledFlagComponent {
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
-    `
+    `,
+    imports: [CommonModule, FeaturesDirective]
 })
 class TestWithDisabledFlagComponent {
     features = ['feature1', 'feature2'];
@@ -50,7 +52,7 @@ describe('FeaturesDirective', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, FeaturesDirective],
+            imports: [CommonModule, FeaturesDirective, TestWithEnabledFlagComponent, TestWithDisabledFlagComponent],
             providers: [
                 provideMockFeatureFlags({
                     feature1: true,
@@ -58,8 +60,7 @@ describe('FeaturesDirective', () => {
                     feature3: true
                 }),
                 FeaturesDirective
-            ],
-            declarations: [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent]
+            ]
         });
         enabledFixture = TestBed.createComponent(TestWithEnabledFlagComponent);
         enabledFixture.detectChanges();
