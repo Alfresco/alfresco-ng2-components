@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@import '../../../../../../core/src/lib/styles/mixins';
+@use '../../../../../../core/src/lib/styles/mixins' as mixins;
 
 $dynamic-table-font-size: var(--theme-body-1-font-size) !default;
 $dynamic-table-header-font-size: var(--theme-caption-font-size) !default;
@@ -43,7 +43,7 @@ dynamic-table-widget .adf-label {
                 position: relative;
                 height: $dynamic-table-row-height;
 
-                @include material-animation-default(0.28s);
+                @include mixins.material-animation-default(0.28s);
 
                 transition-property: background-color;
 
@@ -65,7 +65,7 @@ dynamic-table-widget .adf-label {
 
         td,
         th {
-            padding: 0 $dynamic-table-column-padding 12px $dynamic-table-column-padding;
+            padding: 0 $dynamic-table-column-padding 12px;
             text-align: center;
 
             &:first-of-type {
@@ -87,13 +87,13 @@ dynamic-table-widget .adf-label {
             padding-top: $dynamic-table-cell-top;
             box-sizing: border-box;
 
-            @include adf-no-select;
+            @include mixins.adf-no-select;
 
             cursor: default;
         }
 
         th {
-            @include adf-no-select;
+            @include mixins.adf-no-select;
 
             cursor: pointer;
             position: relative;
@@ -109,7 +109,7 @@ dynamic-table-widget .adf-label {
             box-sizing: border-box;
 
             &.adf-sortable {
-                @include adf-no-select;
+                @include mixins.adf-no-select;
 
                 &:hover {
                     cursor: pointer;
@@ -121,7 +121,7 @@ dynamic-table-widget .adf-label {
                 color: var(--adf-theme-foreground-text-color);
 
                 &::before {
-                    @include typo-icon;
+                    @include mixins.typo-icon;
 
                     font-size: $dynamic-table-header-sort-icon-size;
                     content: '\e5d8';

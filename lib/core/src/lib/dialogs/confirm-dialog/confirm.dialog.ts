@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { Component, Inject, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface ConfirmDialogComponentProps {
     title?: string;
@@ -33,6 +36,7 @@ export interface ConfirmDialogComponentProps {
     templateUrl: './confirm.dialog.html',
     styleUrls: ['./confirm.dialog.scss'],
     host: { class: 'adf-confirm-dialog' },
+    imports: [TranslateModule, MatDialogModule, MatButtonModule, CommonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class ConfirmDialogComponent {

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@use 'sass:map';
 /* stylelint-disable */
 
 // Non-overlapping Material Design breakpoints
@@ -23,7 +24,7 @@ $breakpoints: (
     xl: (
         begin: 1920px,
         end: 4999.99px
-    ),
+    )
 ) !default;
 
 // Overlapping breakpoints that are greater than defined
@@ -33,7 +34,7 @@ $overlapping-gt: (
     gt-xs: 600px,
     gt-sm: 960px,
     gt-md: 1280px,
-    gt-lg: 1920px,
+    gt-lg: 1920px
 ) !default;
 
 // Overlapping breakpoints that are less than defined
@@ -43,9 +44,8 @@ $overlapping-lt: (
     lt-sm: 599.9px,
     lt-md: 959.9px,
     lt-lg: 1279.9px,
-    lt-xl: 1919.9px,
+    lt-xl: 1919.9px
 ) !default;
-
 
 // Media Query Mixin, takes a breakpoint and returns a wrapping
 // media query statement
@@ -61,18 +61,22 @@ $overlapping-lt: (
 //   background-color: red;
 // }
 @mixin layout-bp($bp) {
-    @if map-has-key($breakpoints, $bp) {
-        $min: map-get(map-get($breakpoints, $bp), begin);
-        $max: map-get(map-get($breakpoints, $bp), end);
-        @media (min-width: $min) and (max-width: $max) { @content; }
-    }
-    @else if map-has-key($overlapping-gt, $bp) {
-        $min: map-get($overlapping-gt, $bp);
-        @media (min-width: $min) { @content; }
-    }
-    @else if map-has-key($overlapping-lt, $bp) {
-        $max: map-get($overlapping-lt, $bp);
-        @media (max-width: $max) { @content; }
+    @if map.has-key($breakpoints, $bp) {
+        $min: map.get(map.get($breakpoints, $bp), begin);
+        $max: map.get(map.get($breakpoints, $bp), end);
+        @media (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    } @else if map.has-key($overlapping-gt, $bp) {
+        $min: map.get($overlapping-gt, $bp);
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else if map.has-key($overlapping-lt, $bp) {
+        $max: map.get($overlapping-lt, $bp);
+        @media (max-width: $max) {
+            @content;
+        }
     }
 }
 /* stylelint-enable */

@@ -43,7 +43,7 @@
     "@apollo/client": "3.13.1",
     "@cspell/eslint-plugin": "8.16.1",
     "@mat-datetimepicker/core": "15.0.2",
-    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/core": "16.0.4",
     "@nx/webpack": "20.8.1",
     "angular-oauth2-oidc": "17.0.2",
     "angular-oauth2-oidc-jwks": "^17.0.2",

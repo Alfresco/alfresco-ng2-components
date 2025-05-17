@@ -52,13 +52,13 @@
         display: grid;
 
         &-column-view {
-            @include flex.layout-bp(lt-md) {
-                display: flow;
-            }
-
             display: flex;
             margin-right: -1%;
             width: 100%;
+
+            @include flex.layout-bp(lt-md) {
+                display: flow;
+            }
 
             &-item {
                 width: 100%;

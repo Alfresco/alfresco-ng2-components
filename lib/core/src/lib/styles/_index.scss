@@ -16,12 +16,12 @@
 }
 
 @mixin adf-core-theme($theme, $custom-css-variables: $adf-custom-theme-sizes) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $warn: map-get($theme, warn);
-    $accent: map-get($theme, accent);
-    $primary: map-get($theme, primary);
-    $typography: map-get($theme, typography);
+    $foreground: map.get($theme, foreground);
+    $background: map.get($theme, background);
+    $warn: map.get($theme, warn);
+    $accent: map.get($theme, accent);
+    $primary: map.get($theme, primary);
+    $typography: map.get($theme, typography);
 
     // map SCSS variables to expose as CSS variables
     $defaults: (
@@ -82,16 +82,16 @@
         --theme-button-font-size: mat.m2-font-size($typography, button),
         --theme-headline-font-size: mat.m2-font-size($typography, headline-5),
         --theme-headline-line-height: mat.m2-line-height($typography, headline-5),
-        --theme-adf-icon-1-font-size: map-get($custom-css-variables, 'theme-adf-icon-1-font-size'),
-        --theme-adf-picture-1-font-size: map-get($custom-css-variables, 'theme-adf-picture-1-font-size'),
-        --theme-adf-task-footer-font-size: map-get($custom-css-variables, 'theme-adf-task-footer-font-size'),
-        --theme-adf-task-title-font-size: map-get($custom-css-variables, 'theme-adf-task-title-font-size'),
+        --theme-adf-icon-1-font-size: map.get($custom-css-variables, 'theme-adf-icon-1-font-size'),
+        --theme-adf-picture-1-font-size: map.get($custom-css-variables, 'theme-adf-picture-1-font-size'),
+        --theme-adf-task-footer-font-size: map.get($custom-css-variables, 'theme-adf-task-footer-font-size'),
+        --theme-adf-task-title-font-size: map.get($custom-css-variables, 'theme-adf-task-title-font-size'),
         // specific colors
         --adf-theme-mat-grey-color-a200: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 'A200'),
         --adf-theme-mat-grey-color-a400: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 'A400'),
         --adf-theme-mat-grey-color-50: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 50),
         // spacing
-        --adf-theme-spacing: map-get($custom-css-variables, 'theme-adf-spacing'),
+        --adf-theme-spacing: map.get($custom-css-variables, 'theme-adf-spacing'),
         // components
         --adf-metadata-property-panel-border-color: rgba(0, 0, 0, 0.12),
         --adf-metadata-buttons-background-color: rgba(33, 33, 33, 0.05),

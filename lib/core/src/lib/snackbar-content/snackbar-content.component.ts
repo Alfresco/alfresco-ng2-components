@@ -18,9 +18,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { SnackBarData } from './snack-bar-data';
+import { MatIcon } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-snackbar-content',
+    imports: [MatIcon, TranslateModule],
     templateUrl: './snackbar-content.component.html',
     styleUrls: ['./snackbar-content.component.scss'],
     host: {

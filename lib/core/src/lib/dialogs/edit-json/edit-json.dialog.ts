@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface EditJsonDialogSettings {
     title?: string;
@@ -27,6 +30,7 @@ export interface EditJsonDialogSettings {
 @Component({
     templateUrl: './edit-json.dialog.html',
     styleUrls: ['./edit-json.dialog.scss'],
+    imports: [CommonModule, FormsModule, TranslateModule, MatDialogModule],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-edit-json-dialog' }
 })

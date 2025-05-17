@@ -16,14 +16,17 @@
  */
 
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from './edit-json.dialog';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-edit-json-dialog-storybook',
-    template: `<button mat-raised-button (click)="openDialog()">
-        Open dialog
-    </button>`
+    imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule, TranslateModule],
+    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
