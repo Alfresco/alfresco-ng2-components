@@ -483,14 +483,16 @@ describe('ViewerComponent', () => {
     describe('Spinner', () => {
         const getMainLoader = (): DebugElement => testingUtils.getByCSS('.adf-viewer-render-main-loader');
 
-        it('should show spinner when isLoading is true', () => {
-            component.isLoading = true;
-            fixture.detectChanges();
-            expect(getMainLoader()).not.toBeNull();
+        it('should not show spinner by default', (done) => {
+            component.isLoading$.subscribe((isLoading) => {
+                fixture.detectChanges();
+                expect(isLoading).toBeFalse();
+                expect(getMainLoader()).toBeNull();
+                done();
+            });
         });
 
-        it('should show spinner until content is ready when viewerType is media', () => {
-            component.isLoading = false;
+        it('should display spinner when viewerType is media', () => {
             component.urlFile = 'some-file.mp4';
 
             component.ngOnChanges();
@@ -504,11 +506,9 @@ describe('ViewerComponent', () => {
 
             expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('media');
-            expect(component.isContentReady).toBeTrue();
         });
 
-        it('should show spinner until content is ready when viewerType is pdf', () => {
-            component.isLoading = false;
+        it('should display spinner when viewerType is pdf', () => {
             component.urlFile = 'some-url.pdf';
             expect(getMainLoader()).toBeNull();
 
@@ -520,11 +520,9 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(component.viewerType).toBe('pdf');
-            expect(component.isContentReady).toBeTrue();
         });
 
-        it('should show spinner until content is ready when viewerType is image', () => {
-            component.isLoading = false;
+        it('should display spinner when viewerType is image', () => {
             component.urlFile = 'some-url.png';
 
             component.ngOnChanges();
@@ -537,18 +535,6 @@ describe('ViewerComponent', () => {
 
             expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('image');
-            expect(component.isContentReady).toBeTrue();
-        });
-
-        it('should not show spinner and set isContentReady = true for other viewer types different than media/pdf/image', () => {
-            component.isLoading = false;
-            component.urlFile = 'some-url.txt';
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-
-            expect(getMainLoader()).toBeNull();
-            expect(component.isContentReady).toBeTrue();
         });
     });
 });

@@ -14,97 +14,98 @@
     </div>
 </div>
 
-<h1>isLoading {{ isLoading$ | async }}</h1>
-<div
-    [hidden]="isLoading$ | async"
-    class="adf-viewer-render-main"
->
-    <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
-        <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
-            <ng-container *ngSwitchCase="'external'">
-                <adf-preview-extension
-                    *ngIf="!!externalViewer"
-                    [id]="externalViewer.component"
-                    [url]="urlFile"
-                    [extension]="externalViewer.fileExtension"
-                    [nodeId]="nodeId"
-                    [attr.data-automation-id]="externalViewer.component"
-                />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'pdf'">
-                <adf-pdf-viewer
-                    [thumbnailsTemplate]="thumbnailsTemplate"
-                    [allowThumbnails]="allowThumbnails"
-                    [blobFile]="blobFile"
-                    [urlFile]="urlFile"
-                    [fileName]="internalFileName"
-                    [cacheType]="cacheTypeForContent"
-                    (pagesLoaded)="markContentAsReady()"
-                    (close)="onClose()"
-                    (error)="onUnsupportedFile()"
-                />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'image'">
-                <adf-img-viewer
-                    [urlFile]="urlFile"
-                    [readOnly]="readOnly"
-                    [fileName]="internalFileName"
-                    [allowedEditActions]="allowedEditActions"
-                    [blobFile]="blobFile"
-                    (error)="onUnsupportedFile()"
-                    (submit)="onSubmitFile($event)"
-                    (imageLoaded)="markContentAsReady()"
-                    (isSaving)="isSaving.emit($event)"
-                />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'media'">
-                <adf-media-player
-                    id="adf-mdedia-player"
-                    [urlFile]="urlFile"
-                    [tracks]="tracks"
-                    [mimeType]="mimeType"
-                    [blobFile]="blobFile"
-                    [fileName]="internalFileName"
-                    (error)="onUnsupportedFile()"
-                    (canPlay)="markContentAsReady()"
-                />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'text'">
-                <adf-txt-viewer [urlFile]="urlFile" [blobFile]="blobFile" />
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'custom'">
-                <ng-container *ngFor="let ext of viewerExtensions">
+<ng-container *ngIf="urlFile || blobFile">
+    <div
+        [hidden]="isLoading$ | async"
+        class="adf-viewer-render-main"
+    >
+        <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
+            <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
+                <ng-container *ngSwitchCase="'external'">
                     <adf-preview-extension
-                        *ngIf="checkExtensions(ext.fileExtension)"
-                        [id]="ext.component"
+                        *ngIf="!!externalViewer"
+                        [id]="externalViewer.component"
                         [url]="urlFile"
-                        [extension]="extension"
+                        [extension]="externalViewer.fileExtension"
                         [nodeId]="nodeId"
-                        [attr.data-automation-id]="ext.component"
+                        [attr.data-automation-id]="externalViewer.component"
                     />
                 </ng-container>
 
-                <ng-container *ngFor="let extensionTemplate of extensionTemplates">
+                <ng-container *ngSwitchCase="'pdf'">
+                    <adf-pdf-viewer
+                        [thumbnailsTemplate]="thumbnailsTemplate"
+                        [allowThumbnails]="allowThumbnails"
+                        [blobFile]="blobFile"
+                        [urlFile]="urlFile"
+                        [fileName]="internalFileName"
+                        [cacheType]="cacheTypeForContent"
+                        (pagesLoaded)="markContentAsReady()"
+                        (close)="onClose()"
+                        (error)="onUnsupportedFile()"
+                    />
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'image'">
+                    <adf-img-viewer
+                        [urlFile]="urlFile"
+                        [readOnly]="readOnly"
+                        [fileName]="internalFileName"
+                        [allowedEditActions]="allowedEditActions"
+                        [blobFile]="blobFile"
+                        (error)="onUnsupportedFile()"
+                        (submit)="onSubmitFile($event)"
+                        (imageLoaded)="markContentAsReady()"
+                        (isSaving)="isSaving.emit($event)"
+                    />
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'media'">
+                    <adf-media-player
+                        id="adf-mdedia-player"
+                        [urlFile]="urlFile"
+                        [tracks]="tracks"
+                        [mimeType]="mimeType"
+                        [blobFile]="blobFile"
+                        [fileName]="internalFileName"
+                        (error)="onUnsupportedFile()"
+                        (canPlay)="markContentAsReady()"
+                    />
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'text'">
+                    <adf-txt-viewer [urlFile]="urlFile" [blobFile]="blobFile" />
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'custom'">
+                    <ng-container *ngFor="let ext of viewerExtensions">
+                        <adf-preview-extension
+                            *ngIf="checkExtensions(ext.fileExtension)"
+                            [id]="ext.component"
+                            [url]="urlFile"
+                            [extension]="extension"
+                            [nodeId]="nodeId"
+                            [attr.data-automation-id]="ext.component"
+                        />
+                    </ng-container>
+
+                    <ng-container *ngFor="let extensionTemplate of extensionTemplates">
                     <span *ngIf="extensionTemplate.isVisible" class="adf-viewer-render-custom-content">
                         <ng-template
                             [ngTemplateOutlet]="extensionTemplate.template"
                             [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension }"
                         />
                     </span>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
 
-            <ng-container *ngSwitchDefault>
-                <adf-viewer-unknown-format [customError]="customError" />
-            </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <adf-viewer-unknown-format [customError]="customError" />
+                </ng-container>
+            </div>
         </div>
     </div>
-</div>
+</ng-container>
 <ng-container *ngIf="viewerTemplateExtensions">
     <ng-template [ngTemplateOutlet]="viewerTemplateExtensions" [ngTemplateOutletInjector]="injector" />
 </ng-container>
