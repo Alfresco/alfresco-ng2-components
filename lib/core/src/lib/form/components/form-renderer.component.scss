@@ -28,16 +28,14 @@
         z-index: 10;
         margin: 0;
         background-color: white;
-        position: sticky;
-        /* stylelint-disable-next-line value-no-vendor-prefix */
-        position: -webkit-sticky; /* macOS/iOS Safari */
-        /* stylelint-disable-next-line declaration-no-important */
-        margin-left: 0 !important;
+        position: absolute;
+        width: 99%;
+        margin-left: 0;
         top: 0;
     }
 
     #{ms.$mat-tab-body-wrapper} {
-        padding-top: 16px;
+        padding-top: 5%;
     }
 }
 
