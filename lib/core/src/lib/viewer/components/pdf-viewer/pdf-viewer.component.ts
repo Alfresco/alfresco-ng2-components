@@ -614,7 +614,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      */
     onPagesLoaded() {
-        console.log('EMITED onPagesLoaded');
         this.pagesLoaded.emit();
         this.isPanelDisabled = false;
     }

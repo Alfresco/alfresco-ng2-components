@@ -1,7 +1,4 @@
-<div
-    *ngIf="isLoading$ | async"
-    class="adf-viewer-render-main-loader"
->
+<div *ngIf="isLoading$ | async" class="adf-viewer-render-main-loader">
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
         <div class="adf-viewer-render-content-container">
             <div class="adf-viewer-render__loading-screen">
@@ -15,10 +12,7 @@
 </div>
 
 <ng-container *ngIf="urlFile || blobFile">
-    <div
-        [hidden]="isLoading$ | async"
-        class="adf-viewer-render-main"
-    >
+    <div [hidden]="isLoading$ | async" class="adf-viewer-render-main">
         <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
             <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
                 <ng-container *ngSwitchCase="'external'">
@@ -90,12 +84,12 @@
                     </ng-container>
 
                     <ng-container *ngFor="let extensionTemplate of extensionTemplates">
-                    <span *ngIf="extensionTemplate.isVisible" class="adf-viewer-render-custom-content">
-                        <ng-template
-                            [ngTemplateOutlet]="extensionTemplate.template"
-                            [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension }"
-                        />
-                    </span>
+                        <span *ngIf="extensionTemplate.isVisible" class="adf-viewer-render-custom-content">
+                            <ng-template
+                                [ngTemplateOutlet]="extensionTemplate.template"
+                                [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension }"
+                            />
+                        </span>
                     </ng-container>
                 </ng-container>
 
