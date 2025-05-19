@@ -75,7 +75,7 @@
         padding-bottom: 2em;
         overflow-y: auto;
         position: static;
-        height: 76%;
+        height: 68%;
 
         &-fullscreen {
             padding: 0;
@@ -92,11 +92,6 @@
                     overflow: hidden auto;
                 }
             }
-        }
-
-        &-actions {
-            position: sticky;
-            z-index: 10;
         }
     }
 

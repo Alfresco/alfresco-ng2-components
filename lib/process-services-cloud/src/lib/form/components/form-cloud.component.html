@@ -78,8 +78,7 @@
                 <mat-card-content class="adf-form-container-card-content">
                     <adf-form-renderer [formDefinition]="form" [readOnly]="readOnly" />
                 </mat-card-content>
-                <div class="adf-cloud-form-content-card-actions">
-                    <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
+                    <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-cloud-form-content-card-actions" align="end">
                         <mat-checkbox
                             id="adf-form-open-next-task"
                             *ngIf="showNextTaskCheckbox && showCompleteButton"
@@ -103,7 +102,6 @@
                             </button>
                         </ng-container>
                     </mat-card-actions>
-                </div>
             </div>
         </mat-card>
     </div>
