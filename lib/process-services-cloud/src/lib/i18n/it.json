@@ -381,7 +381,7 @@
       "DESTINATION_FOLDER_PATH_ERROR": "Il percorso di destinazione non è corretto o non esiste: eseguire il ripristino alla posizione personale"
     },
     "OPEN_NEXT_TASK": {
-      "LABEL": "Open next task"
+      "LABEL": "Apri l'attività successiva"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

@@ -193,7 +193,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         }
     }
 
-    markContentAsReady() {
+    markAsLoaded() {
         this.isLoading$.next(false);
     }
 

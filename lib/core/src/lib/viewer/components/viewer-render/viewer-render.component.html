@@ -34,7 +34,7 @@
                         [urlFile]="urlFile"
                         [fileName]="internalFileName"
                         [cacheType]="cacheTypeForContent"
-                        (pagesLoaded)="markContentAsReady()"
+                        (pagesLoaded)="markAsLoaded()"
                         (close)="onClose()"
                         (error)="onUnsupportedFile()"
                     />
@@ -49,7 +49,7 @@
                         [blobFile]="blobFile"
                         (error)="onUnsupportedFile()"
                         (submit)="onSubmitFile($event)"
-                        (imageLoaded)="markContentAsReady()"
+                        (imageLoaded)="markAsLoaded()"
                         (isSaving)="isSaving.emit($event)"
                     />
                 </ng-container>
@@ -63,7 +63,7 @@
                         [blobFile]="blobFile"
                         [fileName]="internalFileName"
                         (error)="onUnsupportedFile()"
-                        (canPlay)="markContentAsReady()"
+                        (canPlay)="markAsLoaded()"
                     />
                 </ng-container>
 
