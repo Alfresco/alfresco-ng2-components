@@ -24,6 +24,7 @@ import { VersionsApi } from '@alfresco/js-api';
 import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';
 import { Observable } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -84,10 +85,13 @@ export class NewVersionUploaderService {
                 dialogRef.componentInstance.uploadError.asObservable().subscribe((error) => {
                     observer.error(error);
                 });
-                dialogRef.afterClosed().subscribe(() => {
-                    this.overlayContainer.getContainerElement().setAttribute('role', 'region');
-                    NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose);
-                });
+                dialogRef
+                    .afterClosed()
+                    .pipe(take(1))
+                    .subscribe(() => {
+                        this.overlayContainer.getContainerElement().setAttribute('role', 'region');
+                        NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose);
+                    });
                 this.overlayContainer.getContainerElement().setAttribute('role', 'main');
             });
         });
