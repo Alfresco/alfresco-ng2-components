@@ -30,7 +30,10 @@
         background-color: white;
         position: absolute;
         width: 99%;
-        margin-left: 0;
+        /* stylelint-disable-next-line declaration-no-important */
+        margin-left: 0 !important;
+        /* stylelint-disable-next-line declaration-no-important */
+        margin-right: 10px !important;
         top: 0;
     }
 
