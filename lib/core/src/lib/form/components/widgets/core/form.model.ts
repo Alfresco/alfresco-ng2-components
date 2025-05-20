@@ -358,7 +358,7 @@ export class FormModel implements ProcessFormModel {
                 this.handleSectionField(field, formFieldModel);
             } else if (this.isContainerField(field)) {
                 this.handleContainerField(field, formFieldModel);
-            } else {
+            } else if (this.isFormField(field)) {
                 this.handleSingleField(field, formFieldModel);
             }
         });
@@ -366,6 +366,10 @@ export class FormModel implements ProcessFormModel {
 
     private isContainerField(field: ContainerModel | FormFieldModel): field is ContainerModel {
         return field instanceof ContainerModel;
+    }
+
+    private isFormField(field: ContainerModel | FormFieldModel): field is FormFieldModel {
+        return field instanceof FormFieldModel;
     }
 
     private isSectionField(field: ContainerModel | FormFieldModel): field is FormFieldModel {
