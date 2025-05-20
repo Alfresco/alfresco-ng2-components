@@ -30,7 +30,7 @@ import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 import { BehaviorSubject } from 'rxjs';
 
-type ViewerType = 'media' | 'image' | 'pdf' | 'unknown';
+type ViewerType = 'media' | 'image' | 'pdf' | 'external' | 'text' | 'custom' | 'unknown';
 
 @Component({
     selector: 'adf-viewer-render',
@@ -238,12 +238,12 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         this.close.next(true);
     }
 
-    private isPreviewableType() {
+    private canBePreviewed(): boolean {
         return this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image';
     }
 
     private setDefaultLoadingState() {
-        if (this.isPreviewableType()) {
+        if (this.canBePreviewed()) {
             this.isLoading$.next(true);
         }
     }
