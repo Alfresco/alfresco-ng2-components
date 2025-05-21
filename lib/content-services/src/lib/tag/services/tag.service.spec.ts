@@ -89,7 +89,7 @@ describe('TagService', () => {
 
         describe('createTags', () => {
             it('should call createTags on tagsApi', () => {
-                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve([]));
+                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve({}));
                 const tag1 = new TagBody();
                 tag1.tag = 'Some tag 1';
                 const tag2 = new TagBody();
@@ -101,19 +101,17 @@ describe('TagService', () => {
             });
 
             it('should emit refresh when tags creation is success', async () => {
-                const tags: TagEntry[] = [
-                    {
-                        entry: {
-                            id: 'Some id 1',
-                            tag: 'Some tag 1'
-                        }
+                const tag: TagEntry = {
+                    entry: {
+                        id: 'Some id 1',
+                        tag: 'Some tag 1'
                     }
-                ];
+                };
                 spyOn(service.refresh, 'emit');
-                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve(tags));
+                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve(tag));
 
                 await service.createTags([]).toPromise();
-                expect(service.refresh.emit).toHaveBeenCalledWith(tags);
+                expect(service.refresh.emit).toHaveBeenCalledWith(tag);
             });
         });
 

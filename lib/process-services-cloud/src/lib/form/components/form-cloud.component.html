@@ -96,6 +96,7 @@
                                 mat-button
                                 [disabled]="!isOutcomeButtonEnabled(outcome)"
                                 [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                                class="adf-cloud-form-custom-outcome-button"
                                 (click)="onOutcomeClicked(outcome)"
                             >
                                 {{ outcome.name | translate | uppercase }}
