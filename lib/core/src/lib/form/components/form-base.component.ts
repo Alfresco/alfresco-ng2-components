@@ -166,7 +166,7 @@ export abstract class FormBaseComponent {
     }
 
     isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
-        return isOutcomeButtonVisible(outcome, isFormReadOnly, this.showCompleteButton, this.showSaveButton);
+        return isOutcomeButtonVisible(outcome, { isFormReadOnly, showCompleteButton: this.showCompleteButton, showSaveButton: this.showSaveButton });
     }
 
     /**

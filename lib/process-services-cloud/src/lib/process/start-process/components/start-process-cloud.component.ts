@@ -288,7 +288,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.formCloud = form;
 
         const anyOutcomeVisible = form?.outcomes?.some((outcome) =>
-            isOutcomeButtonVisible(outcome, form.readOnly, this.showCompleteButton, this.showSaveButton)
+            isOutcomeButtonVisible(outcome, {
+                isFormReadOnly: form.readOnly,
+                showCompleteButton: this.showCompleteButton,
+                showSaveButton: this.showSaveButton
+            })
         );
         this.hasVisibleOutcomesSubject.next(anyOutcomeVisible);
     }

@@ -17,12 +17,15 @@
 
 import { FormOutcomeModel } from '../widgets';
 
-export const isOutcomeButtonVisible = (
-    outcome: FormOutcomeModel,
-    isFormReadOnly: boolean,
-    showCompleteButton: boolean,
-    showSaveButton: boolean
-): boolean => {
+interface IsOutcomeButtonVisibleProps {
+    isFormReadOnly: boolean;
+    showCompleteButton: boolean;
+    showSaveButton: boolean;
+}
+
+export const isOutcomeButtonVisible = (outcome: FormOutcomeModel, props: IsOutcomeButtonVisibleProps): boolean => {
+    const { isFormReadOnly, showCompleteButton, showSaveButton } = props;
+
     if (outcome?.name) {
         if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
             return showCompleteButton;
