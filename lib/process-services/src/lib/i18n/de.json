@@ -73,7 +73,7 @@
       "BUTTON": {
         "COMPLETE": "Abschließen",
         "CLAIM": "Beanspruchen",
-        "UNCLAIM": "Anspruch aufheben",
+        "UNCLAIM": "Freigeben ",
         "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
         "UPLOAD-ATTACHMENT": "Anhang hochladen"
       },
@@ -343,7 +343,7 @@
         "COMPLETE": "Abschließen",
         "CANCEL": "Abbrechen",
         "CLAIM": "Beanspruchen",
-        "UNCLAIM": "Anspruch aufheben"
+        "UNCLAIM": "Freigeben "
       }
     },
     "COMPLETED_TASK": {
