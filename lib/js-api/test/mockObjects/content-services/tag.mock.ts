@@ -65,7 +65,7 @@ export class TagMock extends BaseMock {
     createTags201Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/tags')
-            .reply(201, [this.mockTagEntry(), this.mockTagEntry('tag-test-2', 'd79bdbd0-9f55-45bb-9521-811e15bf48f6')]);
+            .reply(201, this.getPaginatedListOfTags());
     }
 
     get201ResponseForAssigningTagsToNode(body: TagBody[]): void {

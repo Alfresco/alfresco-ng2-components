@@ -240,7 +240,7 @@ Create specified by **tags** list of tags.
 |----------|-----------------------|-------------------------|
 | **tags** | [TagBody[]](#TagBody) | List of tags to create. |
 
-**Return type**: [TagEntry[]](#TagEntry)
+**Return type**: [TagEntry](#TagEntry) | [TagPaging](#TagPaging)
 
 **Example**
 
