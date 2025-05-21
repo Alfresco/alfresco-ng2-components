@@ -35,7 +35,8 @@ import {
     FormModel,
     InplaceFormInputComponent,
     LocalizedDatePipe,
-    TranslationService
+    TranslationService,
+    isOutcomeButtonVisible
 } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -94,8 +95,6 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 export class StartProcessCloudComponent implements OnChanges, OnInit {
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
-
-    @ViewChild('startForm') startForm: FormCloudComponent;
 
     /** (required) Name of the app. */
     @Input()
@@ -207,6 +206,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly hasVisibleOutcomesSubject = new BehaviorSubject<boolean>(false);
     private readonly dialog = inject(MatDialog);
 
+    showSaveButton = false;
+    showCompleteButton = false;
+
     get isProcessFormValid(): boolean {
         if (this.hasForm && this.isFormCloudLoaded) {
             return (this.formCloud ? !Object.keys(this.formCloud.values).length : false) || this.formCloud?.isValid || this.isProcessStarting;
@@ -256,6 +258,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             .subscribe((processDefinitionName) => {
                 this.selectProcessDefinitionByProcessDefinitionName(processDefinitionName);
             });
+
         this.showStartProcessButton$ = combineLatest([this.displayStartSubject, this.hasVisibleOutcomesSubject]).pipe(
             map(([displayStart, hasVisibleOutcomes]) => (displayStart !== null ? displayStart === 'true' : !hasVisibleOutcomes))
         );
@@ -284,9 +287,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
 
-        if (this.startForm) {
-            this.hasVisibleOutcomesSubject.next(this.startForm.hasVisibleOutcomes);
-        }
+        const anyOutcomeVisible = form?.outcomes?.some((outcome) =>
+            isOutcomeButtonVisible(outcome, form.readOnly, this.showCompleteButton, this.showSaveButton)
+        );
+        this.hasVisibleOutcomesSubject.next(anyOutcomeVisible);
     }
 
     private getMaxNameLength(): number {

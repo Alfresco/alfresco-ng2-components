@@ -18,6 +18,7 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
+import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 
 @Directive({
     standalone: true
@@ -103,10 +104,6 @@ export abstract class FormBaseComponent {
      */
     formStyle: string = '';
 
-    get hasVisibleOutcomes(): boolean {
-        return this.form?.outcomes?.some((outcome) => this.isOutcomeButtonVisible(outcome, this.form.readOnly));
-    }
-
     get form(): FormModel {
         return this._form;
     }
@@ -169,22 +166,7 @@ export abstract class FormBaseComponent {
     }
 
     isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
-        if (outcome?.name) {
-            if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
-                return this.showCompleteButton;
-            }
-            if (isFormReadOnly) {
-                return outcome.isSelected;
-            }
-            if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
-                return this.showSaveButton;
-            }
-            if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
-                return false;
-            }
-            return true;
-        }
-        return false;
+        return isOutcomeButtonVisible(outcome, isFormReadOnly, this.showCompleteButton, this.showSaveButton);
     }
 
     /**
