@@ -158,4 +158,27 @@ export class FilePlansApi extends BaseApi {
             returnType: FilePlanEntry
         });
     }
+
+    /**
+     * Get a file plan
+     *
+     * Mandatory fields and the file plan's aspects and properties are returned by default.
+     * You can use the **include** parameter (include=allowableOperations) to return additional information.
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param opts Optional parameters
+     * @returns Promise<FilePlanEntry>
+     */
+    getFilePlanRoles(filePlanId: string, where?: string): Promise<any> {
+        throwIfNotDefined(filePlanId, 'filePlanId');
+
+        return this.get({
+            path: '/file-plans/{filePlanId}/roles',
+            pathParams: {
+                filePlanId
+            },
+            queryParams: {
+                where
+            }
+        });
+    }
 }
