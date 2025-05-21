@@ -40,7 +40,8 @@
                 <section class="adf-grid-list-column-view" *ngIf="currentRootElement?.isExpanded">
                     <div class="adf-grid-list-single-column"
                          *ngFor="let column of currentRootElement?.columns"
-                         [style.width.%]="getColumnWidth(currentRootElement)">
+                         [style.width.%]="getColumnWidth(currentRootElement)"
+                    >
                         <ng-container *ngFor="let field of column?.fields">
                             <ng-container *ngIf="field.type === 'section'; else formField">
                                 <adf-form-section [field]="field"/>
@@ -61,9 +62,11 @@
                 </div>
             </ng-template>
         </div>
+
         <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
             <adf-form-field [field]="currentRootElement" />
         </div>
+
         <div class="adf-container-widget"
              *ngIf="currentRootElement.type === 'readonly' && currentRootElement.field.params.field.type === 'dynamic-table'">
             <adf-form-field [field]="currentRootElement.field"/>
