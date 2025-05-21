@@ -670,7 +670,16 @@ describe('FormCloudComponent', () => {
             done();
         });
 
-        const formValues: any[] = [];
+        const formValues: TaskVariableCloud[] = [
+            {
+                name: 'var1',
+                value: 'value1',
+                id: 'var1',
+                type: 'string',
+                hasValue: () => true
+            }
+        ];
+
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ data: change });
