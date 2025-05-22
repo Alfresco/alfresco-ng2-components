@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi, TagBody, TagEntry, TagsApi } from '../../src';
+import { AlfrescoApi, TagBody, TagEntry, TagPaging, TagsApi } from '../../src';
 import { EcmAuthMock, TagMock } from '../mockObjects';
 
 describe('Tags', () => {
@@ -105,10 +105,10 @@ describe('Tags', () => {
     describe('createTags', () => {
         it('should return created tags', (done) => {
             tagMock.createTags201Response();
-            tagsApi.createTags([new TagBody(), new TagBody()]).then((tags) => {
-                assert.equal(tags.length, 2);
-                assert.equal(tags[0].entry.tag, 'tag-test-1');
-                assert.equal(tags[1].entry.tag, 'tag-test-2');
+            tagsApi.createTags([new TagBody(), new TagBody()]).then((tags: TagPaging) => {
+                assert.equal(tags.list.entries.length, 2);
+                assert.equal(tags.list.entries[0].entry.tag, 'tag-test-1');
+                assert.equal(tags.list.entries[1].entry.tag, 'tag-test-2');
                 done();
             });
         });

@@ -209,9 +209,9 @@ export class TagsApi extends BaseApi {
     /**
      * Create specified by **tags** list of tags.
      * @param tags List of tags to create.
-     * @returns Promise<TagEntry[]>
+     * @returns Promise<TagEntry | TagPaging>
      */
-    createTags(tags: TagBody[]): Promise<TagEntry[]> {
+    createTags(tags: TagBody[]): Promise<TagEntry | TagPaging> {
         throwIfNotDefined(tags, 'tags');
 
         return this.post({
