@@ -24,7 +24,6 @@ import { EMPTY, of } from 'rxjs';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 
 @Component({
-    standalone: true,
     imports: [NodeDeleteDirective],
     template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
 })
@@ -38,7 +37,6 @@ class TestComponent {
 }
 
 @Component({
-    standalone: true,
     imports: [NodeDeleteDirective, CheckAllowableOperationDirective],
     template: `<div id="delete-component" [adf-check-allowable-operation]="'delete'" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
 })
@@ -52,7 +50,6 @@ class TestWithPermissionsComponent {
 }
 
 @Component({
-    standalone: true,
     imports: [NodeDeleteDirective],
     template: ` delete permanent
         <div id="delete-permanent" [adf-delete]="selection" [permanent]="permanent" (delete)="onDelete($event)"></div>`

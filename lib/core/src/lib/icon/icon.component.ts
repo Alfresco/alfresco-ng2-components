@@ -22,7 +22,6 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-icon',
-    standalone: true,
     imports: [MatIconModule, NgIf],
     templateUrl: './icon.component.html',
     encapsulation: ViewEncapsulation.None,

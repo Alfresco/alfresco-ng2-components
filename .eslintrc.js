@@ -70,6 +70,7 @@ module.exports = {
                         style: 'kebab-case'
                     }
                 ],
+                '@angular-eslint/template/elements-content': 'off',
                 '@angular-eslint/no-host-metadata-property': 'off',
                 '@angular-eslint/no-input-prefix': 'error',
                 '@typescript-eslint/consistent-type-definitions': 'error',
@@ -107,7 +108,6 @@ module.exports = {
                 'prefer-arrow/prefer-arrow-functions': 'off',
                 'prefer-promise-reject-errors': 'error',
                 'brace-style': 'off',
-                '@typescript-eslint/brace-style': 'error',
                 'comma-dangle': 'error',
                 'default-case': 'error',
                 'import/order': 'off',
@@ -187,7 +187,8 @@ module.exports = {
             extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
             parser: '@angular-eslint/template-parser',
             rules: {
-                '@angular-eslint/template/prefer-self-closing-tags': 'error'
+                '@angular-eslint/template/prefer-self-closing-tags': 'error',
+                '@angular-eslint/template/elements-content': 'off'
             }
         },
         {

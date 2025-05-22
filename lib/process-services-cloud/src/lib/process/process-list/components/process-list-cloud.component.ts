@@ -68,11 +68,8 @@ import { NgIf } from '@angular/common';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
-/* eslint-disable @typescript-eslint/brace-style */
-
 @Component({
     selector: 'adf-cloud-process-list',
-    standalone: true,
     imports: [
         DataTableComponent,
         MatProgressSpinnerModule,

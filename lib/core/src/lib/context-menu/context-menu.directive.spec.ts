@@ -25,7 +25,8 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     selector: 'adf-test-component',
-    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="isEnabled"></div> `
+    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="isEnabled"></div> `,
+    standalone: false
 })
 class TestComponent {
     actions: any[] | (() => any[]);

@@ -24,7 +24,6 @@ import { DiagramIconServiceTaskComponent } from '../icons/diagram-icon-service-t
 
 @Component({
     selector: 'diagram-service-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconServiceTaskComponent],
     templateUrl: './diagram-service-task.component.html'
 })

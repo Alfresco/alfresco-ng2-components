@@ -32,7 +32,6 @@ import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-process-filters',
-    standalone: true,
     imports: [TranslateModule, IconComponent, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['./process-filters-cloud.component.scss'],

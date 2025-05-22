@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-avatar',
-    standalone: true,
     imports: [CommonModule],
     templateUrl: './avatar.component.html',
     styleUrls: ['./avatar.component.scss'],

@@ -26,7 +26,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-intermediate-catching-event',
-    standalone: true,
     imports: [RaphaelCircleDirective, DiagramContainerIconEventTaskComponent, DiagramTooltipComponent],
     templateUrl: './diagram-intermediate-catching-event.component.html'
 })

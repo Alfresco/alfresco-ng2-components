@@ -53,7 +53,6 @@ interface CategoryNameControlErrors {
 
 @Component({
     selector: 'adf-categories-management',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

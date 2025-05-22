@@ -50,7 +50,6 @@ import { IdentityGroupService } from '../services/identity-group.service';
 
 @Component({
     selector: 'adf-cloud-group',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

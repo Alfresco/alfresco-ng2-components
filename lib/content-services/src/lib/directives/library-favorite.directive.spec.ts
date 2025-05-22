@@ -24,7 +24,6 @@ import { NotificationService } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 @Component({
-    standalone: true,
     imports: [LibraryFavoriteDirective],
     selector: 'app-test-component',
     template: `<button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button>`

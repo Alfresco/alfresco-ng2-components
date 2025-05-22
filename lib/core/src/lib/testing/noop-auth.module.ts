@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { AuthModule, JWT_STORAGE_SERVICE } from '../auth/oidc/auth.module';
 import { RedirectAuthService } from '../auth/oidc/redirect-auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -43,12 +43,15 @@ export class NoopRedirectAuthService extends RedirectAuthService {
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: CookieService, useClass: CookieServiceMock },
         { provide: RedirectAuthService, useClass: NoopRedirectAuthService },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: loadAppConfig,
-            deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
-            multi: true
-        },
+        provideAppInitializer(() => {
+            const initializerFn = loadAppConfig(
+                inject(AppConfigService),
+                inject(StorageService),
+                inject(AdfHttpClient),
+                inject(StoragePrefixFactory)
+            );
+            return initializerFn();
+        }),
         { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
     ]
 })

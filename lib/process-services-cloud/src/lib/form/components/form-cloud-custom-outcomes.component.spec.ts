@@ -26,7 +26,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
-    standalone: true,
     imports: [FormCustomOutcomesComponent, FormCloudComponent, MatButtonModule],
     template: `<adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>

@@ -32,7 +32,6 @@ import { FormSectionComponent } from './form-section/form-section.component';
 
 @Component({
     selector: 'adf-form-renderer',
-    standalone: true,
     templateUrl: './form-renderer.component.html',
     styleUrls: ['./form-renderer.component.scss'],
     providers: [

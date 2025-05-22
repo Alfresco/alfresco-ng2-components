@@ -30,7 +30,6 @@ import { InputMaskDirective } from './text-mask.component';
 
 @Component({
     selector: 'text-widget',
-    standalone: true,
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.scss'],
     host: {

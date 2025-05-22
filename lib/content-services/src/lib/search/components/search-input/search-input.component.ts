@@ -25,7 +25,6 @@ import { SearchConfiguration } from '../../models';
 
 @Component({
     selector: 'adf-search-input',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule],
     templateUrl: `./search-input.component.html`,
     styleUrls: ['./search-input.component.scss'],

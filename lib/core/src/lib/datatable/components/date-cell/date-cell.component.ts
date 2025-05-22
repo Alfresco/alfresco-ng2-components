@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
-    standalone: true,
     imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
     selector: 'adf-date-cell',
     templateUrl: './date-cell.component.html',

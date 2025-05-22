@@ -25,7 +25,6 @@ import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 
 @Component({
     selector: 'diagram-inclusive-gateway',
-    standalone: true,
     imports: [DiagramGatewayComponent, RaphaelCircleDirective],
     templateUrl: './diagram-inclusive-gateway.component.html'
 })

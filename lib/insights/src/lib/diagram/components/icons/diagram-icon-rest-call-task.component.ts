@@ -23,7 +23,6 @@ import { RaphaelIconRestCallDirective } from '../raphael/icons/raphael-icon-rest
 
 @Component({
     selector: 'diagram-icon-rest-call-task',
-    standalone: true,
     imports: [RaphaelIconRestCallDirective],
     templateUrl: './diagram-icon-rest-call-task.component.html'
 })

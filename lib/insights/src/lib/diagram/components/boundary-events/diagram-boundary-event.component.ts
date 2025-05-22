@@ -26,7 +26,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-boundary-event',
-    standalone: true,
     imports: [RaphaelCircleDirective, DiagramContainerIconEventTaskComponent, DiagramTooltipComponent],
     templateUrl: './diagram-boundary-event.component.html'
 })

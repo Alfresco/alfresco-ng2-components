@@ -24,7 +24,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-filter-card',
-    standalone: true,
     imports: [CommonModule, SearchWidgetContainerComponent, TranslateModule, MatButtonModule],
     templateUrl: './search-filter-card.component.html',
     encapsulation: ViewEncapsulation.None

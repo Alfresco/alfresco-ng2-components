@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
@@ -29,12 +29,10 @@ import { AlfrescoApiServiceMock } from '../mock';
     imports: [NoopAnimationsModule, CoreModule, NoopAuthModule, NoopTranslateModule, ContentModule, MatIconTestingModule],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: versionCompatibilityFactory,
-            deps: [VersionCompatibilityService],
-            multi: true
-        }
+        provideAppInitializer((): any => {
+            const initializerFn = versionCompatibilityFactory(inject(VersionCompatibilityService));
+            return initializerFn();
+        })
     ],
     exports: [NoopAnimationsModule, CoreModule, ContentModule]
 })

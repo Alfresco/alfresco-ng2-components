@@ -23,7 +23,6 @@ import { AnalyticsReportParametersComponent } from './analytics-report-parameter
 
 @Component({
     selector: 'adf-analytics',
-    standalone: true,
     imports: [CommonModule, AnalyticsGeneratorComponent, AnalyticsReportParametersComponent],
     templateUrl: './analytics.component.html',
     styleUrls: ['./analytics.component.scss'],

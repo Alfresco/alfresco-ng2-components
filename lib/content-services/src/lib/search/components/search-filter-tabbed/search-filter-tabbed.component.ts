@@ -23,7 +23,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
-    standalone: true,
     imports: [CommonModule, MatTabsModule, TranslateModule],
     templateUrl: './search-filter-tabbed.component.html',
     styleUrls: ['./search-filter-tabbed.component.scss'],

@@ -23,7 +23,6 @@ import { ViewerMoreActionsComponent } from '../viewer-more-actions.component';
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
-    standalone: true,
     imports: [ViewerComponent, MatIconModule, MatMenuModule, ViewerMoreActionsComponent],
     template: `
         <adf-viewer>

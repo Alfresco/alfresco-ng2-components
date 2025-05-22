@@ -50,7 +50,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
     selector: 'adf-card-view-dateitem',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

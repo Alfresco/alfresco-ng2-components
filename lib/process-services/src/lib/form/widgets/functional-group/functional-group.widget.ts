@@ -33,7 +33,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'functional-group-widget',
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,

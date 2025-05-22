@@ -32,7 +32,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-upload-button',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],

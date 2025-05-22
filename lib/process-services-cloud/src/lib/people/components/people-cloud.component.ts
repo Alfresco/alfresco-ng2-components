@@ -52,7 +52,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'adf-cloud-people',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

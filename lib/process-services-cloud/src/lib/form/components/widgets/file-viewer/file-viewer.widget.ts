@@ -25,7 +25,6 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'file-viewer-widget',
-    standalone: true,
     imports: [NgIf, ErrorWidgetComponent, AlfrescoViewerComponent, TranslateModule],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],

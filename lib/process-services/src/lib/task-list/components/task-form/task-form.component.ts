@@ -41,7 +41,6 @@ import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
 
 @Component({
     selector: 'adf-task-form',
-    standalone: true,
     imports: [
         CommonModule,
         MatCardModule,

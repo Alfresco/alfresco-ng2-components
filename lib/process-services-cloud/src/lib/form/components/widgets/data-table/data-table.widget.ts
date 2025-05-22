@@ -36,7 +36,6 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
 
 @Component({
-    standalone: true,
     imports: [NgIf, TranslateModule, FormBaseModule, DataTableComponent, NoContentTemplateDirective, EmptyContentComponent],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',

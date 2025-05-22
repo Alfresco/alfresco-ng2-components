@@ -39,7 +39,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'dropdown-widget',
-    standalone: true,
     imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ErrorWidgetComponent],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],

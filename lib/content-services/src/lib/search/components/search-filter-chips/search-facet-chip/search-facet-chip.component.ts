@@ -29,7 +29,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-facet-chip',
-    standalone: true,
     imports: [
         CommonModule,
         MatChipsModule,

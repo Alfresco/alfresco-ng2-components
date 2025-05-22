@@ -25,7 +25,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-    standalone: true,
     imports: [CommonModule, TranslateModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
     selector: 'adf-cloud-display-external-property',
     templateUrl: './display-external-property.widget.html',

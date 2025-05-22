@@ -25,7 +25,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-cloud-task-screen',
-    standalone: true,
     imports: [CommonModule, MatCardModule],
     templateUrl: './screen-cloud.component.html'
 })

@@ -38,7 +38,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'attach-widget',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,

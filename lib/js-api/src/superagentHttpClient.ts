@@ -129,8 +129,7 @@ export class SuperagentHttpClient implements HttpClient {
         queryParams: { [key: string]: any },
         headerParams: { [key: string]: any },
         formParams: { [key: string]: any },
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        bodyParam: string | Object,
+        bodyParam: string | object,
         contentType: string,
         accept: string,
         responseType: string,

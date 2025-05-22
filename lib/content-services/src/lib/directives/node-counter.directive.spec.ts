@@ -22,7 +22,6 @@ import { By } from '@angular/platform-browser';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
-    standalone: true,
     imports: [NodeCounterDirective],
     template: `<div [adf-node-counter]="count"></div>`
 })

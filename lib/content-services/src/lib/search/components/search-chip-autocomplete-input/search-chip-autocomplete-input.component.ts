@@ -44,7 +44,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslateModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],

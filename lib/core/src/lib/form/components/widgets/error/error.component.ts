@@ -28,7 +28,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'error-widget',
-    standalone: true,
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.scss'],
     animations: [

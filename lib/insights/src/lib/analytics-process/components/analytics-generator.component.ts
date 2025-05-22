@@ -30,7 +30,6 @@ import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.com
 
 @Component({
     selector: 'adf-analytics-generator',
-    standalone: true,
     imports: [
         CommonModule,
         MatButtonModule,

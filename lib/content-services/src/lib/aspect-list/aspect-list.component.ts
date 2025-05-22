@@ -31,7 +31,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-aspect-list',
-    standalone: true,
     imports: [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslateModule, MatProgressSpinnerModule],
     templateUrl: './aspect-list.component.html',
     styleUrls: ['./aspect-list.component.scss'],

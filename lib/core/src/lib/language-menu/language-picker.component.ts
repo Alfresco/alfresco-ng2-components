@@ -25,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-picker-button',
-    standalone: true,
     imports: [CommonModule, MatMenuModule, TranslateModule, LanguageMenuComponent, MatIconModule],
     template: `
         <button mat-menu-item [matMenuTriggerFor]="langMenu">

@@ -27,7 +27,8 @@ import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
-    `
+    `,
+    standalone: false
 })
 class TestWithEnabledFlagComponent {
     features = 'feature1';
@@ -37,7 +38,8 @@ class TestWithEnabledFlagComponent {
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
-    `
+    `,
+    standalone: false
 })
 class TestWithDisabledFlagComponent {
     features = ['feature1', 'feature2'];

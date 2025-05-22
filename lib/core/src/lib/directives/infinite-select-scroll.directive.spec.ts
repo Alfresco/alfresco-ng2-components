@@ -29,7 +29,8 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
         <mat-option *ngFor="let option of options; let idx = index">
             {{ option.text }}
         </mat-option>
-    </mat-select>`
+    </mat-select>`,
+    standalone: false
 })
 class TestComponent {
     options = new Array(50).fill({ text: 'dummy' });

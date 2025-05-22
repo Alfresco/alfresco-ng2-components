@@ -29,13 +29,15 @@ import { ReplaySubject } from 'rxjs';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
-    template: ``
+    template: ``,
+    standalone: false
 })
 export class MockSearchFilterTabbedComponent {}
 
 @Component({
     selector: 'adf-search-date-range',
-    template: ``
+    template: ``,
+    standalone: false
 })
 export class MockSearchDateRangeComponent {
     @Input()

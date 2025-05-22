@@ -436,7 +436,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         if (this.isEcmConfiguration()) {
             const contentPromise = this.contentAuth.logout();
             contentPromise.then(
-                () => (this.config.ticket = undefined),
+                (): void => (this.config.ticket = undefined),
                 () => {}
             );
             return contentPromise;

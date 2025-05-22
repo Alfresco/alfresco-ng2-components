@@ -32,7 +32,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-dropdown-editor',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
     templateUrl: './dropdown.editor.html',
     styleUrls: ['./dropdown.editor.scss']

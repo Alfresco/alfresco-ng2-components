@@ -36,12 +36,11 @@ export enum LogicalSearchFields {
 }
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-empty-object-type
 export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
 
 @Component({
     selector: 'adf-search-logical-filter',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, TranslateModule, FormsModule],
     templateUrl: './search-logical-filter.component.html',
     styleUrls: ['./search-logical-filter.component.scss'],

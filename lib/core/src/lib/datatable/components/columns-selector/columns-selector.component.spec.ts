@@ -119,7 +119,7 @@ describe('ColumnsSelectorComponent', () => {
         const inputColumnsWithTitle = inputColumns.filter((column) => !!column.title);
         expect(checkboxes.length).toBe(inputColumnsWithTitle.length);
 
-        for await (const checkbox of checkboxes) {
+        for (const checkbox of checkboxes) {
             const checkboxLabel = await checkbox.getLabelText();
 
             const inputColumn = inputColumnsWithTitle.find((inputColumnWithTitle) => inputColumnWithTitle.title === checkboxLabel);

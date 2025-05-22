@@ -58,7 +58,6 @@ export class InfoDrawerTabComponent {
 
 @Component({
     selector: 'adf-info-drawer',
-    standalone: true,
     imports: [
         CommonModule,
         InfoDrawerLayoutComponent,

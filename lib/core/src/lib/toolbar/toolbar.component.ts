@@ -23,7 +23,6 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-toolbar',
-    standalone: true,
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

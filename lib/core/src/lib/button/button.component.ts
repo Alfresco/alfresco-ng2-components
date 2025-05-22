@@ -26,7 +26,6 @@ export type ButtonColor = ThemePalette;
 
 @Component({
     selector: 'adf-button',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatIconModule],
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],

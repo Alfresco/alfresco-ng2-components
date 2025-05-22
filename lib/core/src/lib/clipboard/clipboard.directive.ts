@@ -75,7 +75,6 @@ export class ClipboardDirective {
 
 @Component({
     selector: 'adf-copy-content-tooltip',
-    standalone: true,
     imports: [TranslateModule],
     template: `<span class="adf-copy-tooltip">{{ placeholder | translate }} </span>`,
     encapsulation: ViewEncapsulation.None

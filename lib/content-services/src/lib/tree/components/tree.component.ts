@@ -47,7 +47,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-tree',
-    standalone: true,
     imports: [
         CommonModule,
         TranslateModule,
