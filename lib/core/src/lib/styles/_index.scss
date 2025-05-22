@@ -8,7 +8,6 @@
 @import './mat-selectors';
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
-@import './snackbar.theme';
 @import './material.theme';
 
 @mixin alfresco-material-theme($theme) {
@@ -89,8 +88,7 @@
         // specific colors
         --adf-theme-mat-grey-color-a200: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 'A200'),
         --adf-theme-mat-grey-color-a400: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 'A400'),
-        --adf-theme-mat-grey-color-50: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 50),
-        --adf-theme-mat-yellow-color-700: mat.m2-get-color-from-palette(mat.$m2-yellow-palette, 700)
+        --adf-theme-mat-grey-color-50: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 50)
         // spacing
         --adf-theme-spacing: map-get($custom-css-variables, 'theme-adf-spacing'),
         // components
@@ -116,7 +114,6 @@
     }
 
     @include datetimepicker-theme.mat-datetimepicker-theme($theme);
-    @include adf-snackbar-theme;
     @include adf-material-theme;
 }
 
