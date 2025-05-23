@@ -27,11 +27,14 @@ export interface UserTaskCustomUi {
     showCancelButton: boolean;
     taskName: string;
     taskId: string;
+    isNextTaskCheckboxChecked: boolean;
+    showNextTaskCheckbox: boolean;
     cancelTask: EventEmitter<any>;
     claimTask: EventEmitter<any>;
     error: EventEmitter<any>;
     switchToDisplayMode?: (newDisplayMode?: string) => void;
-    taskCompleted: EventEmitter<string>;
+    taskCompleted: EventEmitter<any>;
     taskSaved: EventEmitter<string>;
     unclaimTask: EventEmitter<any>;
+    nextTaskCheckboxCheckedChanged: EventEmitter<any>;
 }
