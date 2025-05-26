@@ -531,6 +531,19 @@ describe('ProcessFiltersCloudComponent', () => {
             expect(component.updatedFiltersSet.has(filterKeyTest)).toBeFalsy();
         });
 
+        it('should call fetchProcessFilterCounter only if filter.showCounter is true', () => {
+            const filterWithCounter = { ...mockProcessFilters[0], showCounter: true };
+            const filterWithoutCounter = { ...mockProcessFilters[1], showCounter: false };
+            const fetchSpy = spyOn<any>(component, 'fetchProcessFilterCounter').and.returnValue(of(42));
+
+            component.filters = [filterWithCounter, filterWithoutCounter];
+            component.updateFilterCounters();
+
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(filterWithCounter);
+            expect(fetchSpy).not.toHaveBeenCalledWith(filterWithoutCounter);
+        });
+
         describe('Highlight Selected Filter', () => {
             const allProcessesFilterKey = mockProcessFilters[0].key;
             const runningProcessesFilterKey = mockProcessFilters[1].key;

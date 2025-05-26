@@ -49,6 +49,7 @@ export class ProcessFilterCloudModel {
     suspendedDateType: DateCloudFilterType;
     completedDate: Date;
     environmentId?: string;
+    showCounter: boolean;
 
     processDefinitionNames: string[] | null;
     processNames: string[] | null;
@@ -74,6 +75,7 @@ export class ProcessFilterCloudModel {
             this.name = obj.name || null;
             this.key = obj.key || null;
             this.environmentId = obj.environmentId;
+            this.showCounter = obj.showCounter || false;
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || obj.appName === '' ? obj.appName : null;

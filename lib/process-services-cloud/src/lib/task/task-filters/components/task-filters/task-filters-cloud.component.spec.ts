@@ -562,6 +562,19 @@ describe('TaskFiltersCloudComponent', () => {
             expect(component.updatedCountersSet.has(fakeFilterKey)).toBe(true);
         });
 
+        it('should call fetchTaskFilterCounter only if filter.showCounter is true', () => {
+            const filterWithCounter = { ...mockProcessFilters[0], showCounter: true };
+            const filterWithoutCounter = { ...mockProcessFilters[1], showCounter: false };
+            const fetchSpy = spyOn<any>(component, 'fetchTaskFilterCounter').and.returnValue(of(42));
+
+            component.filters = [filterWithCounter, filterWithoutCounter];
+            component.updateFilterCounters();
+
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(filterWithCounter);
+            expect(fetchSpy).not.toHaveBeenCalledWith(filterWithoutCounter);
+        });
+
         describe('Highlight Selected Filter', () => {
             const assignedTasksFilterKey = defaultTaskFiltersMock[1].key;
             const queuedTasksFilterKey = defaultTaskFiltersMock[0].key;
