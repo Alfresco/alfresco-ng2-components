@@ -171,7 +171,7 @@
     "shelljs": "^0.8.5",
     "spdx-license-list": "^6.9.0",
     "storybook": "^8.2.9",
-    "stylelint": "16.8.2",
+    "stylelint": "16.19.1",
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.1.1",
