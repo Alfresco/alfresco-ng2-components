@@ -18,7 +18,7 @@
 import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { BehaviorSubject } from 'rxjs';
-import { Site, SiteEntry } from '@alfresco/js-api';
+import { Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -62,24 +62,21 @@ export class LibraryStatusColumnComponent implements OnInit {
     }
 
     protected updateValue() {
-        const node: SiteEntry = this.context.row.node;
-        if (node?.entry) {
-            const visibility: string = node.entry.visibility;
+        const visibility = this.context.row.node?.entry.visibility || this.context.row.obj.visibility;
 
-            switch (visibility) {
-                case Site.VisibilityEnum.PUBLIC:
-                    this.displayText$.next('LIBRARY.VISIBILITY.PUBLIC');
-                    break;
-                case Site.VisibilityEnum.PRIVATE:
-                    this.displayText$.next('LIBRARY.VISIBILITY.PRIVATE');
-                    break;
-                case Site.VisibilityEnum.MODERATED:
-                    this.displayText$.next('LIBRARY.VISIBILITY.MODERATED');
-                    break;
-                default:
-                    this.displayText$.next('UNKNOWN');
-                    break;
-            }
+        switch (visibility) {
+            case Site.VisibilityEnum.PUBLIC:
+                this.displayText$.next('LIBRARY.VISIBILITY.PUBLIC');
+                break;
+            case Site.VisibilityEnum.PRIVATE:
+                this.displayText$.next('LIBRARY.VISIBILITY.PRIVATE');
+                break;
+            case Site.VisibilityEnum.MODERATED:
+                this.displayText$.next('LIBRARY.VISIBILITY.MODERATED');
+                break;
+            default:
+                this.displayText$.next('UNKNOWN');
+                break;
         }
     }
 }
