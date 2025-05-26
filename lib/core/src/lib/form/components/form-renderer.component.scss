@@ -15,11 +15,9 @@
 
 .alfresco-tabs-widget {
     width: 100%;
-    position: absolute;
 
     .adf-form-tab-group {
         width: 100%;
-        z-index: 9999;
     }
 
     #{ms.$mat-tab-body} {
@@ -30,16 +28,17 @@
         z-index: 10;
         margin: 0;
         background-color: white;
-        position: sticky;
-        /* stylelint-disable-next-line value-no-vendor-prefix */
-        position: -webkit-sticky; /* macOS/iOS Safari */
+        position: absolute;
+        width: 96%;
         /* stylelint-disable-next-line declaration-no-important */
         margin-left: 0 !important;
+        /* stylelint-disable-next-line declaration-no-important */
+        margin-right: 10px !important;
         top: 0;
     }
 
     #{ms.$mat-tab-body-wrapper} {
-        padding-top: 16px;
+        padding-top: 5%;
     }
 }
 

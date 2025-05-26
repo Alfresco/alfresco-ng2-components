@@ -21,6 +21,7 @@ import { ScreenRenderingService } from '../../../services/public-api';
 import { MatCardModule } from '@angular/material/card';
 import { UserTaskCustomUi } from '../../models/screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-cloud-task-screen',
@@ -68,13 +69,21 @@ export class TaskScreenCloudComponent implements OnInit {
     @Input()
     rootProcessInstanceId: string = '';
 
+    /** Whether the `Open next task` checkbox is checked by default or not. */
+    @Input()
+    isNextTaskCheckboxChecked = false;
+
+    /** Toggle rendering of the `Open next task` checkbox. */
+    @Input()
+    showNextTaskCheckbox = false;
+
     /** Emitted when the task is saved. */
     @Output()
     taskSaved = new EventEmitter();
 
     /** Emitted when the task is completed. */
     @Output()
-    taskCompleted = new EventEmitter();
+    taskCompleted = new EventEmitter<any>();
 
     /** Emitted when there is an error. */
     @Output()
@@ -91,6 +100,10 @@ export class TaskScreenCloudComponent implements OnInit {
     /** Emitted when the task is unclaimed. */
     @Output()
     unclaimTask = new EventEmitter<any>();
+
+    /** Emitted when the `Open next task` checkbox was toggled. */
+    @Output()
+    nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
@@ -140,6 +153,12 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'rootProcessInstanceId')) {
             this.componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
         }
+        if (this.showNextTaskCheckbox && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
+            this.componentRef.setInput('showNextTaskCheckbox', this.showNextTaskCheckbox);
+        }
+        if (this.isNextTaskCheckboxChecked && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'isNextTaskCheckboxChecked')) {
+            this.componentRef.setInput('isNextTaskCheckboxChecked', this.isNextTaskCheckboxChecked);
+        }
     }
 
     subscribeToOutputs() {
@@ -147,7 +166,9 @@ export class TaskScreenCloudComponent implements OnInit {
             this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
         }
         if (this.componentRef.instance?.taskCompleted) {
-            this.componentRef.instance.taskCompleted.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskCompleted.emit());
+            this.componentRef.instance.taskCompleted
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((openNextTask) => this.taskCompleted.emit(openNextTask));
         }
         if (this.componentRef.instance?.error) {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
@@ -161,6 +182,11 @@ export class TaskScreenCloudComponent implements OnInit {
         }
         if (this.componentRef.instance?.cancelTask) {
             this.componentRef.instance.cancelTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.cancelTask.emit(data));
+        }
+        if (this.componentRef.instance?.nextTaskCheckboxCheckedChanged) {
+            this.componentRef.instance.nextTaskCheckboxCheckedChanged
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((data) => this.nextTaskCheckboxCheckedChanged.emit(data));
         }
     }
 

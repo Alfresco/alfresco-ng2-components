@@ -23,10 +23,10 @@ Manages tags in Content Services.
     -   _nodeId:_ `string`  - Id of node to which tags should be assigned.
     -   _tags:_ `TagBody[]`  - List of tags to create and assign or just assign if they already exist.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`|`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>` - Just linked tags to node or single tag if linked only one tag.
--   **createTags**(tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`[]>`<br/>
+-   **createTags**(tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](../../../lib/js-api/src/api/content-rest-api/docs/TagsApi.md#TagEntry) `|` [`TagPaging`](../../../lib/js-api/src/api/content-rest-api/docs/TagsApi.md#TagPaging)`>`<br/>
     Creates tags.
     -   _tags:_ `TagBody[]`  - list of tags to create.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`[]>` - Created tags.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](../../../lib/js-api/src/api/content-rest-api/docs/TagsApi.md#TagEntry) `|` [`TagPaging`](../../../lib/js-api/src/api/content-rest-api/docs/TagsApi.md#TagPaging)`>` - Created tags.
 -   **deleteTag**(tagId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Deletes a tag with tagId. This will cause the tag to be removed from all nodes. You must have admin rights to delete a tag.
     -   _tagId:_ `string`  - of the tag to be deleted

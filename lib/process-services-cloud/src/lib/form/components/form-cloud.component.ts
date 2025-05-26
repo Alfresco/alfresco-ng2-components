@@ -242,13 +242,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             return;
         }
 
-        const data = changes['data'];
-        if (data?.currentValue) {
+        const data = changes['data']?.currentValue;
+        if (data?.length > 0) {
             this.refreshFormData();
             return;
         }
 
         const formRepresentation = changes['form'];
+
         if (formRepresentation?.currentValue) {
             this.form = formRepresentation.currentValue;
             this.onFormLoaded(this.form);

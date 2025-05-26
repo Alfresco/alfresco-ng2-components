@@ -312,7 +312,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Beanspruchen",
-      "RELEASE": "Anspruch aufheben"
+      "RELEASE": "Freigeben"
     },
     "PROPERTIES": {
       "TASK_NAME": "Aufgabe",
@@ -373,7 +373,7 @@
         "COMPLETE": "Abschließen",
         "CANCEL": "Abbrechen",
         "CLAIM": "Beanspruchen",
-        "UNCLAIM": "Anspruch aufheben"
+        "UNCLAIM": "Freigeben "
       }
     },
     "ERROR": {

@@ -334,7 +334,7 @@ describe('UserTaskCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.taskCompleted.emit).toHaveBeenCalledOnceWith('task1');
+            expect(component.taskCompleted.emit).toHaveBeenCalledOnceWith(false);
         });
 
         it('should emit taskClaimed when task is claimed', async () => {

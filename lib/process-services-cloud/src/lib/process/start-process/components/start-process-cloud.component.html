@@ -17,13 +17,16 @@
                     class="adf-process-input-container"
                     floatLabel="always"
                     *ngIf="showSelectProcessDropdown"
-                    data-automation-id="adf-select-cloud-process-dropdown">
+                    data-automation-id="adf-select-cloud-process-dropdown"
+                >
                         <mat-label class="adf-start-process-input-label">{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
                         <input
                             matInput
                             formControlName="processDefinition"
                             [matAutocomplete]="auto"
-                            id="processDefinitionName">
+                            id="processDefinitionName"
+                        >
+
                         <div class="adf-process-input-autocomplete">
                             <mat-autocomplete
                                 #auto="matAutocomplete"
@@ -37,6 +40,7 @@
                                             {{ getProcessDefinitionValue(processDef) }}
                                     </mat-option>
                             </mat-autocomplete>
+
                             <button
                                 id="adf-select-process-dropdown"
                                 title="{{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.SELECT_PROCESS_DROPDOWN' | translate}}"
@@ -44,6 +48,7 @@
                                 (click)="displayDropdown($event)">
                                     <mat-icon>arrow_drop_down</mat-icon>
                             </button>
+
                         </div>
                         <mat-error
                             *ngIf="processDefinition.hasError('required')"
@@ -79,8 +84,8 @@
                     [data]="resolvedValues"
                     [formId]="processDefinitionCurrent.formKey"
                     [displayModeConfigurations]="displayModeConfigurations"
-                    [showSaveButton]="false"
-                    [showCompleteButton]="false"
+                    [showSaveButton]="showSaveButton"
+                    [showCompleteButton]="showCompleteButton"
                     [showRefreshButton]="false"
                     [showValidationIcon]="false"
                     [showTitle]="false"

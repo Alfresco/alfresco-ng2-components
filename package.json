@@ -69,7 +69,7 @@
   "devDependencies": {
     "@alfresco/eslint-plugin-eslint-angular": "file:lib/eslint-angular",
     "@angular-devkit/architect": "0.1802.13",
-    "@angular-devkit/build-angular": "18.2.14",
+    "@angular-devkit/build-angular": "18.2.19",
     "@angular-devkit/core": "18.2.13",
     "@angular-devkit/schematics": "18.2.13",
     "@angular-eslint/eslint-plugin": "17.0.1",

@@ -99,7 +99,7 @@ export class TagService {
      * @param tags list of tags to create.
      * @returns Created tags.
      */
-    createTags(tags: TagBody[]): Observable<TagEntry[]> {
+    createTags(tags: TagBody[]): Observable<TagEntry | TagPaging> {
         return from(this.tagsApi.createTags(tags)).pipe(tap((tagEntries) => this.refresh.emit(tagEntries)));
     }
 
