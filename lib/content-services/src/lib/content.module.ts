@@ -49,6 +49,7 @@ import { AlfrescoIconComponent } from './alfresco-icon/alfresco-icon.component';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { AlfrescoApiNoAuthService } from './api-factories/alfresco-api-no-auth.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
+import { SecurityOptionsLoaderService } from './security-options-loader/security-options-loader.service';
 
 @NgModule({
     imports: [
@@ -132,7 +133,8 @@ export class ContentModule {
                     useFactory: createAlfrescoApiInstance,
                     deps: [AlfrescoApiLoaderService],
                     multi: true
-                }
+                },
+                SecurityOptionsLoaderService
             ]
         };
     }

@@ -19,6 +19,7 @@ import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues, StorageService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { SecurityOptionsLoaderService } from '../security-options-loader/security-options-loader.service';
 
 /**
  * Create a factory to resolve an api service instance
@@ -37,11 +38,12 @@ export class AlfrescoApiLoaderService {
     constructor(
         private readonly appConfig: AppConfigService,
         private readonly apiService: AlfrescoApiService,
+        private readonly securityOptionsLoaderService: SecurityOptionsLoaderService,
         private storageService: StorageService
     ) {}
 
     async init(): Promise<any> {
-        await this.appConfig.load();
+        await this.appConfig.load(this.securityOptionsLoaderService.load);
         return this.initAngularAlfrescoApi();
     }
 
