@@ -94,9 +94,17 @@ describe('DynamicExtensionComponent', () => {
         });
 
         it('should assign menuItem from dynamically generated component in ngAfterViewInit', () => {
-            getInnerElement().componentInstance.menuItem = new MatMenuItem(null, null, null, null, null);
+            component.menuItem = null;
+            const mockMenuItem = {
+                _uniqueId: 'menu-123',
+                disabled: false,
+                getLabel: () => 'Test Item',
+                trigger: null,
+                isSubmenu: false
+            };
+            getInnerElement().componentInstance.menuItem = mockMenuItem;
             component.ngAfterViewInit();
-            expect(component.menuItem).toBeInstanceOf(MatMenuItem);
+            expect(component.menuItem).toBe(mockMenuItem);
         });
     });
 

@@ -17,10 +17,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LanguagePickerComponent } from './language-picker.component';
-import { MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuItem, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { LanguageMenuComponent } from './language-menu.component';
 import { QueryList } from '@angular/core';
-import { CoreTestingModule, UnitTestingUtils } from '@alfresco/adf-core';
+import { NoopTranslateModule, UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('LanguagePickerComponent', () => {
     let component: LanguagePickerComponent;
@@ -29,7 +29,7 @@ describe('LanguagePickerComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, LanguagePickerComponent]
+            imports: [LanguagePickerComponent, NoopTranslateModule, MatMenuModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(LanguagePickerComponent);
@@ -42,8 +42,8 @@ describe('LanguagePickerComponent', () => {
         testingUtils.getByDirective(MatMenuTrigger).nativeElement.click();
         fixture.detectChanges();
         const languageMenuComponent = testingUtils.getByDirective(LanguageMenuComponent).componentInstance;
-        const menuItem1 = new MatMenuItem(null, null, null, null, null);
-        const menuItem2 = new MatMenuItem(null, null, null, null, null);
+        const menuItem1 = {} as MatMenuItem;
+        const menuItem2 = {} as MatMenuItem;
 
         languageMenuComponent.menuItems = new QueryList<MatMenuItem>();
         languageMenuComponent.menuItems.reset([menuItem1, menuItem2]);

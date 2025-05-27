@@ -17,8 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { AuthenticationService } from '@alfresco/adf-core';
-import { of } from 'rxjs';
+import { AuthenticationService, NoopAuthModule, NoopTranslateModule, SelectFilterInputComponent } from '@alfresco/adf-core';
+import { BehaviorSubject, of } from 'rxjs';
 import {
     getFakeSitePaging,
     getFakeSitePagingNoMoreItems,
@@ -26,12 +26,13 @@ import {
     getFakeSitePagingLastPage,
     getFakeSitePagingWithMembers
 } from '../../mock';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SitesService } from '../../common/services/sites.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { SiteEntry } from '@alfresco/js-api';
+import { MatSelect } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const customSiteList = {
     list: {
@@ -59,10 +60,17 @@ describe('DropdownSitesComponent', () => {
     let element: HTMLElement;
     let siteService: SitesService;
     let authService: AuthenticationService;
+    let mockMatSelect: jasmine.SpyObj<MatSelect>;
 
     beforeEach(() => {
+        const openedChangeSubject = new BehaviorSubject<boolean>(false);
+        mockMatSelect = jasmine.createSpyObj('MatSelect', [], {
+            openedChange: openedChangeSubject,
+            options: []
+        });
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAnimationsModule, NoopTranslateModule, NoopAuthModule, SelectFilterInputComponent],
+            providers: [{ provide: MatSelect, useValue: mockMatSelect }]
         });
     });
 

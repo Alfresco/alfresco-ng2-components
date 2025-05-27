@@ -20,27 +20,34 @@ import { SelectFilterInputComponent } from './select-filter-input.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
+import { BehaviorSubject } from 'rxjs';
 
 describe('SelectFilterInputComponent', () => {
     let fixture: ComponentFixture<SelectFilterInputComponent>;
     let component: SelectFilterInputComponent;
-    let matSelect: MatSelect;
+    let mockMatSelect;
 
     beforeEach(() => {
+        const openedChangeSubject = new BehaviorSubject<boolean>(false);
+
+        mockMatSelect = {
+            openedChange: openedChangeSubject,
+            options: []
+        };
+
         TestBed.configureTestingModule({
             imports: [NoopAnimationsModule, NoopTranslateModule, MatSelectModule],
-            providers: [MatSelect]
+            providers: [{ provide: MatSelect, useValue: mockMatSelect }]
         });
 
         fixture = TestBed.createComponent(SelectFilterInputComponent);
         component = fixture.componentInstance;
-        matSelect = TestBed.inject(MatSelect);
         fixture.detectChanges();
     });
 
     it('should focus input on initialization', async () => {
         spyOn(component.selectFilterInput.nativeElement, 'focus');
-        matSelect.openedChange.next(true);
+        mockMatSelect.openedChange.next(true);
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -52,7 +59,7 @@ describe('SelectFilterInputComponent', () => {
         component.onModelChange('some-search-term');
         expect(component.term).toBe('some-search-term');
 
-        matSelect.openedChange.next(false);
+        mockMatSelect.openedChange.next(false);
 
         fixture.detectChanges();
         await fixture.whenStable();
