@@ -22,11 +22,8 @@
             [preSelectGroups]="preSelectGroup"
             (blur)="markAsTouched()"
             [attr.title]="field.tooltip"
-        >
-            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id" label
-                >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
-            >
-        </adf-cloud-group>
+            [label] = "field.name | translate"
+        />
         <error-widget [error]="field.validationSummary" />
         <error-widget
             class="adf-dropdown-required-message"

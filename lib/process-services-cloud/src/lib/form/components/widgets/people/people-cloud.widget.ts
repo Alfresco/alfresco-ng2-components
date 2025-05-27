@@ -26,13 +26,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'people-cloud-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudComponent],
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudComponent, MatFormFieldModule],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

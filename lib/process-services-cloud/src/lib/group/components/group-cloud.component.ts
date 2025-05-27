@@ -75,6 +75,10 @@ import { IdentityGroupService } from '../services/identity-group.service';
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges {
+    /** Label for the user selection component. */
+    @Input()
+    label: string;
+
     /** Name of the application. If specified this shows the groups who have access to the app. */
     @Input()
     appName: string;
