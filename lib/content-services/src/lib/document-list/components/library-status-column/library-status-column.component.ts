@@ -62,7 +62,7 @@ export class LibraryStatusColumnComponent implements OnInit {
     }
 
     protected updateValue() {
-        const visibility = this.context.row.node?.entry.visibility || this.context.row.obj.visibility;
+        const visibility = this.context.row.node?.entry.visibility ?? this.context.row.obj.visibility;
 
         switch (visibility) {
             case Site.VisibilityEnum.PUBLIC:

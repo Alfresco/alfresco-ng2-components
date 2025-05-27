@@ -18,7 +18,7 @@
 import { LibraryStatusColumnComponent } from './library-status-column.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Site } from '@alfresco/js-api';
 
 describe('LibraryStatusColumnComponent', () => {
@@ -28,7 +28,7 @@ describe('LibraryStatusColumnComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule, LibraryStatusColumnComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(LibraryStatusColumnComponent);
         component = fixture.componentInstance;

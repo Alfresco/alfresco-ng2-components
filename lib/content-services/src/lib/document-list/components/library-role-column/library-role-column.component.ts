@@ -64,7 +64,7 @@ export class LibraryRoleColumnComponent implements OnInit {
     }
 
     protected updateValue() {
-        const role = this.context.row.node?.entry.role || this.context.row.obj.role;
+        const role = this.context.row.node?.entry.role ?? this.context.row.obj.role;
         switch (role) {
             case Site.RoleEnum.SiteManager:
                 this.displayText$.next('LIBRARY.ROLE.MANAGER');
