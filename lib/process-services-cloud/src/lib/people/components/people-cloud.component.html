@@ -5,10 +5,12 @@
         class="adf-people-cloud"
         [class.adf-invalid]="hasError() && isDirty()"
     >
-        <mat-label>
+        <mat-label *ngIf="!title">
             <span>{{label}}</span>
             <span class="adf-asterisk" [style.visibility]="required ? 'visible' : 'hidden'">*</span>
         </mat-label>
+        <mat-label *ngIf="title">{{ title | translate }}</mat-label>
+
         <mat-chip-grid #userMultipleChipList data-automation-id="adf-cloud-people-chip-list">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
