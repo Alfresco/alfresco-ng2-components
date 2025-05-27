@@ -22,7 +22,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatMenuItem } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 
 @Component({
