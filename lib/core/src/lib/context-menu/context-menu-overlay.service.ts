@@ -26,7 +26,7 @@ import { ContextMenuListComponent } from './context-menu-list.component';
 const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     panelClass: 'cdk-overlay-pane',
     backdropClass: 'cdk-overlay-transparent-backdrop',
-    hasBackdrop: false
+    hasBackdrop: true
 };
 
 @Injectable({
@@ -49,7 +49,7 @@ export class ContextMenuOverlayService {
         // prevent native contextmenu on overlay element if config.hasBackdrop is true
         if (overlayConfig.hasBackdrop) {
             // eslint-disable-next-line no-underscore-dangle
-            (overlay as any)._backdropElement.addEventListener(
+            (overlay as any).backdropElement.addEventListener(
                 'contextmenu',
                 (event) => {
                     event.preventDefault();
