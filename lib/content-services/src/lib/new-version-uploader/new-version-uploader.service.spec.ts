@@ -57,7 +57,8 @@ describe('NewVersionUploaderService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule],
-            declarations: [TestDialogComponent]
+            declarations: [TestDialogComponent],
+            teardown: { destroyAfterEach: false }
         });
     });
 
