@@ -19,7 +19,9 @@ import { AppConfigService, AppConfigValues } from '@alfresco/adf-core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SecurityOptionsLoaderService {
     constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient) {}
 
