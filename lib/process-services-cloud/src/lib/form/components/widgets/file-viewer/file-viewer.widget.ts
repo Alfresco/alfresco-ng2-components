@@ -16,7 +16,8 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FormService, BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent } from '@alfresco/adf-core/viewer';
 import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';

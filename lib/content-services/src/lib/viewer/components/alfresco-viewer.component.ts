@@ -42,7 +42,7 @@ import {
     ViewerToolbarActionsComponent,
     ViewerToolbarComponent,
     ViewUtilService
-} from '@alfresco/adf-core';
+} from '@alfresco/adf-core/viewer';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { ContentApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';

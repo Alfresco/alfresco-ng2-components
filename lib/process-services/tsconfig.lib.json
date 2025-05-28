@@ -9,6 +9,7 @@
       "@alfresco/adf-extensions/*": ["../../../dist/libs/extensions/*"],
       "@alfresco/adf-core": ["../../../dist/libs/core"],
       "@alfresco/adf-core/*": ["../../../dist/libs/core/*"],
+      "@alfresco/adf-core/viewer": ["../../../dist/libs/core/viewer"],
       "@alfresco/adf-content-services": ["../../../dist/libs/content-services"],
       "@alfresco/adf-content-services/*": ["../../../dist/libs/content-services/*"],
       "@alfresco/js-api": ["../../../dist/libs/js-api"],

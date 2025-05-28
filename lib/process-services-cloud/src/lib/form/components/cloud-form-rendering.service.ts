@@ -28,6 +28,7 @@ import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.wid
 import { DisplayRichTextWidgetComponent } from './widgets/display-rich-text/display-rich-text.widget';
 import { DataTableWidgetComponent } from './widgets/data-table/data-table.widget';
 import { DisplayExternalPropertyWidgetComponent } from './widgets/display-external-property/display-external-property.widget';
+import { BaseViewerWidgetComponent } from '@alfresco/adf-core/viewer';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,7 @@ export class CloudFormRenderingService extends FormRenderingService {
 
         this.register(
             {
+                [FormFieldTypes.VIEWER]: () => BaseViewerWidgetComponent,
                 [FormFieldTypes.UPLOAD]: () => AttachFileCloudWidgetComponent,
                 [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent,
                 [FormFieldTypes.DATE]: () => DateCloudWidgetComponent,

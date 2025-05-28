@@ -17,7 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
-import { Track, TranslationService, ViewUtilService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
+import { Track, ViewUtilService } from '@alfresco/adf-core/viewer';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { BaseViewerWidgetComponent, ErrorWidgetComponent, FormService } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent } from '@alfresco/adf-core/viewer';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
