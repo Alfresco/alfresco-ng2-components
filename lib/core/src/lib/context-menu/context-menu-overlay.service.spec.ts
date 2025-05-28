@@ -26,6 +26,7 @@ describe('ContextMenuOverlayService', () => {
     let injector: Injector;
     const overlayConfig = {
         panelClass: 'test-panel',
+        hasBackdrop: false,
         source: {
             clientY: 1,
             clientX: 1
