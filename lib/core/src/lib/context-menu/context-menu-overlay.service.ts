@@ -26,7 +26,7 @@ import { ContextMenuListComponent } from './context-menu-list.component';
 const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     panelClass: 'cdk-overlay-pane',
     backdropClass: 'cdk-overlay-transparent-backdrop',
-    hasBackdrop: true
+    hasBackdrop: false
 };
 
 @Injectable({
