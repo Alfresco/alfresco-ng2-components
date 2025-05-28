@@ -21,13 +21,11 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { AppConfigService } from '../../../app-config';
-import { EventMock } from '../../../mock';
-import { NoopAuthModule, NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
 import pdfjsLibMock from '../mock/pdfjs-lib.mock';
+import { UnitTestingUtils, NoopAuthModule, NoopTranslateModule, AppConfigService, EventMock } from '@alfresco/adf-core';
 
 declare const pdfjsLib: any;
 

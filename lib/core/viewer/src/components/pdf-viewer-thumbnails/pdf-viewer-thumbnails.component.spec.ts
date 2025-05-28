@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;

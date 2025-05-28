@@ -1,5 +1,5 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
-@use 'mat-selectors' as ms;
+@use 'styles/mat-selectors' as ms;
 
 .adf-full-screen {
     width: 100%;
@@ -48,7 +48,7 @@
         flex-direction: row;
         align-items: center;
 
-        @media screen and (width <= 1450px) {
+        @media screen and (width <=1450px) {
             left: 30%;
         }
     }

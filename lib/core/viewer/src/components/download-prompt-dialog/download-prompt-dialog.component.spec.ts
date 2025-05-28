@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { DownloadPromptActions } from '../../models/download-prompt.actions';
 import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
 

@@ -21,7 +21,7 @@ import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ViewerRenderComponent } from '../components/viewer-render/viewer-render.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
-import { CoreTestingModule } from '../../testing';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('ExtensionViewerDirective', () => {
     let extensionViewerDirective: ViewerExtensionDirective;

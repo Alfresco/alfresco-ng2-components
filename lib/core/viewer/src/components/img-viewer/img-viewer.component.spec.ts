@@ -17,9 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AppConfigService } from '../../../app-config';
-import { UrlService } from '../../../common';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { AppConfigService, UrlService, CoreTestingModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { ImgViewerComponent } from './img-viewer.component';
 
 describe('Test Img viewer component ', () => {

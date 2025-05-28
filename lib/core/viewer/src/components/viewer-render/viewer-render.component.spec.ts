@@ -21,11 +21,14 @@ import { SpyLocation } from '@angular/common/testing';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, DeferBlockBehavior, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ViewerExtensionDirective } from '../../directives/viewer-extension.directive';
+import { NoopTranslateModule, UnitTestingUtils } from '@alfresco/adf-core';
+import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
+import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
+import { MediaPlayerComponent } from '../media-player/media-player.component';
 
 @Component({
     selector: 'adf-double-viewer',

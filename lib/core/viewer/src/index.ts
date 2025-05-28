@@ -35,6 +35,8 @@ export * from './components/viewer-render/viewer-render.component';
 export * from './components/viewer.component';
 export * from './components/download-prompt-dialog/download-prompt-dialog.component';
 
+export * from './widgets/base-viewer/base-viewer.widget';
+
 export * from './directives/viewer-extension.directive';
 
 export * from './viewer.module';

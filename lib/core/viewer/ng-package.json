@@ -2,7 +2,7 @@
   "lib": {
     "entryFile": "src/index.ts",
     "styleIncludePaths": [
-      "../src/lib/styles"
+      "../src/lib"
     ]
   }
 }

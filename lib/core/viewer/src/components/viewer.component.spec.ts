@@ -21,9 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
-import { AppConfigService } from '../../app-config';
-import { EventMock } from '../../mock';
-import { CoreTestingModule, UnitTestingUtils } from '../../testing';
+import { AppConfigService, EventMock, CoreTestingModule, UnitTestingUtils, ThumbnailService } from '@alfresco/adf-core';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 import { CloseButtonPosition } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
@@ -34,7 +32,6 @@ import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-si
 import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
 import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
 import { ViewerComponent } from './viewer.component';
-import { ThumbnailService } from '../../common/services/thumbnail.service';
 
 @Component({
     selector: 'adf-dialog-dummy',
