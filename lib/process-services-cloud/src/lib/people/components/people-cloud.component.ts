@@ -80,6 +80,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
+    /** Label for the user selection component. */
+    @Input()
+    label: string;
+
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
     appName: string;

@@ -15,13 +15,12 @@
     </div>
     <div>
         <mat-form-field class="adf-date-widget" [class.adf-left-label-input-datepicker]="field.leftLabels" [hideRequiredMarker]="true">
-            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id"
+            <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id"
                 >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
                     class="adf-asterisk"
                     [style.visibility]="isRequired() ? 'visible' : 'hidden'"
                     >*</span
-                ></label
-            >
+                ></mat-label>
             <input
                 matInput
                 [matDatepicker]="datePicker"

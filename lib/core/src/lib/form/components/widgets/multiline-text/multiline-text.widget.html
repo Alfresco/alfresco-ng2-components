@@ -2,9 +2,9 @@
      [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-readonly]="field.readOnly">
     <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true">
-        <label class="adf-label" [attr.for]="field.id">
+        <mat-label class="adf-label" [attr.for]="field.id">
             {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-        </label>
+        </mat-label>
         <textarea matInput
                   class="adf-input"
                   [cdkTextareaAutosize]="true"

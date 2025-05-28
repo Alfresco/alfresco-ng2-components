@@ -100,14 +100,6 @@ describe('PeopleCloudComponent', () => {
         expect(await inputField.getLabel()).toEqual('TITLE_KEY');
     });
 
-    it('should not populate label when title is not present', async () => {
-        fixture.detectChanges();
-
-        const inputField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-people-cloud' }));
-
-        expect(await inputField.getLabel()).toBeNull();
-    });
-
     describe('Search user', () => {
         beforeEach(() => {
             fixture.detectChanges();

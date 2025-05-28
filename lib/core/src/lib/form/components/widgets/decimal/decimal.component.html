@@ -10,9 +10,9 @@
 
     <div>
         <mat-form-field [hideRequiredMarker]="true">
-            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
+            <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
                 {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-            </label>
+            </mat-label>
 
             <input matInput
                    class="adf-input"
