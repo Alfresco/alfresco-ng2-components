@@ -24,6 +24,10 @@
             align-self: flex-end;
         }
 
+        .adf-input {
+            margin-top: 3px;
+        }
+
         &:not(#{ms.$mat-focused}):not(#{ms.$mat-form-field-invalid}) {
             .adf-amount-widget__prefix-spacing {
                 color: var(--adf-theme-foreground-secondary-text-color);
