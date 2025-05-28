@@ -462,6 +462,24 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.clearDownloadPromptTimeouts();
     }
 
+    displayFileName(): string {
+        const fullName = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
+        const maxLength = 50;
+
+        if (fullName.length <= maxLength) {
+            return fullName;
+        }
+
+        const amountOfTruncateDots = 5;
+        const availableSpace = maxLength - amountOfTruncateDots;
+        const endLength = 8;
+        const startLength = availableSpace - endLength;
+
+        const start = fullName.substring(0, startLength);
+        const end = fullName.substring(fullName.length - endLength);
+        return start + '.....' + end;
+    }
+
     private configureAndInitDownloadPrompt() {
         this.configureDownloadPromptProperties();
         if (this.enableDownloadPrompt) {

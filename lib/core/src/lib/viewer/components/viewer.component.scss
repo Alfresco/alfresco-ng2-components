@@ -58,24 +58,7 @@
         line-height: 1.5;
         vertical-align: middle;
         color: var(--adf-theme-foreground-text-color);
-
-        &-without-extension {
-            display: inline-block;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            max-width: 400px;
-            white-space: nowrap;
-            vertical-align: bottom;
-        }
-
-        &-extension {
-            display: inline-block;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            max-width: 50px;
-            white-space: nowrap;
-            vertical-align: bottom;
-        }
+        white-space: nowrap;
     }
 
     &-container {

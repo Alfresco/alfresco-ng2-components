@@ -143,36 +143,63 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('File Name Test', () => {
-        const getFileNameWithoutExtension = (): string =>
-            testingUtils.getByCSS('.adf-viewer__display-name-without-extension').nativeElement.textContent;
-        const getExtension = (): string => testingUtils.getByCSS('.adf-viewer__display-name-extension').nativeElement.textContent;
+    describe('File Name Display Tests', () => {
+        const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
 
-        it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
-            component.fileName = '';
-            spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-            const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
+        describe('displayFileName method', () => {
+            it('should return full filename when total length is 80 characters or less', () => {
+                const fileShortName = 'shortname.txt';
+                component.fileName = fileShortName;
+                fixture.detectChanges();
 
-            component.ngOnChanges(mockSimpleChanges);
-            fixture.detectChanges();
+                expect(component.displayFileName()).toBe(fileShortName);
+                expect(getFileName()).toBe(fileShortName);
+            });
 
-            expect(getFileName()).toEqual('fakeFileName.jpeg');
-            expect(getFileNameWithoutExtension()).toBe('fakeFileName.');
-            expect(getExtension()).toBe('jpeg');
+            it('should truncate filename when total length exceeds 80 characters', () => {
+                const longName =
+                    'verylongfilenamethatexceedsmaximumlengthallowedverylongfilenamethatexceedsmaximumlengthallowed.verylongextensionnamethatistoolongverylongextensionnamethatistoolong';
+
+                component.fileName = longName;
+                fixture.detectChanges();
+
+                const result = component.displayFileName();
+
+                expect(result).toContain('.....');
+                expect(result.length).toBe(50);
+            });
+
+            it('should handle empty filename', () => {
+                component.fileName = '';
+                fixture.detectChanges();
+
+                expect(component.displayFileName()).toBe('');
+                expect(getFileName()).toBe('');
+            });
         });
 
-        it('should set fileName providing fileName input', () => {
-            component.fileName = 'testFileName.jpg';
-            spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-            const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
+        describe('fileName setter integration', () => {
+            it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
+                component.fileName = '';
+                spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
+                const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
 
-            component.ngOnChanges(mockSimpleChanges);
-            fixture.detectChanges();
-            fixture.detectChanges();
+                component.ngOnChanges(mockSimpleChanges);
+                fixture.detectChanges();
 
-            expect(getFileName()).toEqual('testFileName.jpg');
-            expect(getFileNameWithoutExtension()).toBe('testFileName.');
-            expect(getExtension()).toBe('jpg');
+                expect(getFileName()).toEqual('fakeFileName.jpeg');
+            });
+
+            it('should set fileName providing fileName input', () => {
+                component.fileName = 'testFileName.jpg';
+                spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
+                const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
+
+                component.ngOnChanges(mockSimpleChanges);
+                fixture.detectChanges();
+
+                expect(getFileName()).toEqual('testFileName.jpg');
+            });
         });
     });
 
