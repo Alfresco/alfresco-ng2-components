@@ -28,6 +28,7 @@
       "@alfresco/adf-core/api": ["lib/core/api/src/index.ts"],
       "@alfresco/adf-core/auth": ["lib/core/auth/src/index.ts"],
       "@alfresco/adf-core/breadcrumbs": ["lib/core/breadcrumbs/src/index.ts"],
+      "@alfresco/adf-core/viewer": ["lib/core/viewer/src/index.ts"],
       "@alfresco/adf-core/feature-flags": ["lib/core/feature-flags/public-api.ts"],
       "@alfresco/adf-core/shell": ["lib/core/shell/src/index.ts"],
       "@alfresco/adf-extensions": ["lib/extensions/src/public-api.ts"],

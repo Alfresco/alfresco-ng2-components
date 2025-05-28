@@ -11,6 +11,8 @@
       "@alfresco/adf-core/shell": ["../shell/src/index.ts"],
       "@alfresco/adf-core/api": ["../api/src/index.ts"],
       "@alfresco/adf-core/feature-flags": ["../feature-flags/src/index.ts"],
+      "@alfresco/adf-core/viewer": ["../viewer/src/index.ts"],
+      "@alfresco/adf-core": ["../src/public-api.ts"],
       "@alfresco/js-api": ["../../../dist/libs/js-api"],
       "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
     },

@@ -19,7 +19,6 @@ export * from './lib/about/index';
 export * from './lib/avatar/avatar.component';
 export * from './lib/button/button.component';
 export * from './lib/progress/progress.component';
-export * from './lib/viewer/index';
 export * from './lib/toolbar/index';
 export * from './lib/header/index';
 export * from './lib/pagination/index';

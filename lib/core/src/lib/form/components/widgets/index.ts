@@ -29,7 +29,6 @@ import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
-import { BaseViewerWidgetComponent } from './base-viewer/base-viewer.widget';
 import { DecimalWidgetComponent } from './decimal/decimal.component';
 
 // core
@@ -50,7 +49,6 @@ export * from './amount/amount.widget';
 export * from './error/error.component';
 export * from './date-time/date-time.widget';
 export * from './json/json.widget';
-export * from './base-viewer/base-viewer.widget';
 export * from './text/text-mask.component';
 
 // widgets with schema
@@ -70,8 +68,7 @@ export const WIDGET_DIRECTIVES = [
     AmountWidgetComponent,
     ErrorWidgetComponent,
     DateTimeWidgetComponent,
-    JsonWidgetComponent,
-    BaseViewerWidgetComponent
+    JsonWidgetComponent
 ] as const;
 
 export const MASK_DIRECTIVE = [InputMaskDirective] as const;

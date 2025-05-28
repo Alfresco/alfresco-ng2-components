@@ -16,9 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../../testing';
-import { FormService } from '../../../services/form.service';
-import { FormFieldModel, FormModel } from '../core';
+// import { CoreTestingModule } from '../../../../src/lib/testing';
+// import { FormService } from '../../../../src/lib/form/services/form.service';
+// import { FormFieldModel, FormModel } from '../../../../src/lib/form/components/widgets/core';
+import { CoreTestingModule, FormService, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { BaseViewerWidgetComponent } from './base-viewer.widget';
 
 describe('BaseViewerWidgetComponent', () => {

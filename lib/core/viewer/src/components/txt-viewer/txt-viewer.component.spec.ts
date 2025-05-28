@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { CoreTestingModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 

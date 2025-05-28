@@ -18,10 +18,8 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { ViewerComponent } from '../../../../viewer';
-import { FormService } from '../../../services/form.service';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { WidgetComponent } from '../widget.component';
+import { ViewerComponent } from '@alfresco/adf-core/viewer';
+import { FormService, ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
 
 /* eslint-disable @angular-eslint/component-selector */
 

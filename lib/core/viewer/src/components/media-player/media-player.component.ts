@@ -17,7 +17,7 @@
 
 import { NgClass, NgForOf } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { UrlService } from '../../../common';
+import { UrlService } from '@alfresco/adf-core';
 import { Track } from '../../models/viewer.model';
 
 @Component({

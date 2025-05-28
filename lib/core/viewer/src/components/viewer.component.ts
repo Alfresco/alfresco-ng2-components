@@ -41,8 +41,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { fromEvent } from 'rxjs';
 import { filter, first, skipWhile } from 'rxjs/operators';
-import { AppConfigService } from '../../app-config';
-import { ToolbarComponent, ToolbarDividerComponent, ToolbarTitleComponent } from '../../toolbar';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 import { CloseButtonPosition, Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
@@ -54,8 +52,14 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
-import { IconComponent } from '../../icon';
-import { ThumbnailService } from '../../common';
+import {
+    ThumbnailService,
+    IconComponent,
+    ToolbarComponent,
+    ToolbarDividerComponent,
+    ToolbarTitleComponent,
+    AppConfigService
+} from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {

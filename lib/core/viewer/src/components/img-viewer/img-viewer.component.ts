@@ -34,9 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import Cropper from 'cropperjs';
-import { AppConfigService } from '../../../app-config';
-import { UrlService } from '../../../common';
-import { ToolbarComponent } from '../../../toolbar';
+import { AppConfigService, UrlService, ToolbarComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-img-viewer',

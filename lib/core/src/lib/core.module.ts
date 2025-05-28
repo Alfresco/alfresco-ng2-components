@@ -26,7 +26,6 @@ import { LANGUAGE_MENU_DIRECTIVES } from './language-menu/language-menu.module';
 import { LOGIN_DIRECTIVES } from './login/login.module';
 import { PAGINATION_DIRECTIVES } from './pagination/pagination.module';
 import { TOOLBAR_DIRECTIVES } from './toolbar/toolbar.module';
-import { VIEWER_DIRECTIVES } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { LAYOUT_DIRECTIVES } from './layout/layout.module';
 import { CommentsComponent } from './comments/comments.component';
@@ -61,7 +60,6 @@ import { MaterialModule } from './material.module';
     imports: [
         TranslateModule,
         ...ABOUT_DIRECTIVES,
-        ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
         IdentityUserInfoComponent,
@@ -97,7 +95,6 @@ import { MaterialModule } from './material.module';
     providers: [...CORE_PIPES],
     exports: [
         ...ABOUT_DIRECTIVES,
-        ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
         ...CORE_DIRECTIVES,

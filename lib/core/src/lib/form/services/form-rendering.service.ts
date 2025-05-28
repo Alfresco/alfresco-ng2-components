@@ -43,7 +43,6 @@ export class FormRenderingService extends DynamicComponentMapper {
         [FormFieldTypes.READONLY_TEXT]: DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponent),
         [FormFieldTypes.JSON]: DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
         [FormFieldTypes.DISPLAY_VALUE]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
-        [FormFieldTypes.DATETIME]: DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),
-        [FormFieldTypes.VIEWER]: DynamicComponentResolver.fromType(widgets.BaseViewerWidgetComponent)
+        [FormFieldTypes.DATETIME]: DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent)
     };
 }

@@ -17,7 +17,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { AppConfigService } from '../../../app-config';
+import { AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-txt-viewer',
