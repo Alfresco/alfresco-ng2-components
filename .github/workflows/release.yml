@@ -50,6 +50,11 @@ env:
   REDIRECT_URI: /
 
 jobs:
+  pre-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug github.ref_name
+        run: echo "github.ref_name=${{ github.ref_name }}"
   setup:
     timeout-minutes: 20
     if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
