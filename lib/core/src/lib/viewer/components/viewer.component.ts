@@ -297,6 +297,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private _fileNameWithoutExtension: string;
     private _fileExtension: string;
 
+    public displayName: string;
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
     public mimeTypeIconUrl: string;
@@ -309,6 +310,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this._fileName = fileName;
         this._fileExtension = this.viewUtilsService.getFileExtension(this.fileName);
         this._fileNameWithoutExtension = this.fileName?.replace(new RegExp(`${this.fileExtension}$`), '') || '';
+        this.displayName = this.getDisplayFileName();
     }
 
     get fileName(): string {
@@ -462,7 +464,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.clearDownloadPromptTimeouts();
     }
 
-    displayFileName(): string {
+    getDisplayFileName(): string {
         const fullName = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
         const maxLength = 50;
 

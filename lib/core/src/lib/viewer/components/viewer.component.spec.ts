@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -144,15 +144,13 @@ describe('ViewerComponent', () => {
     });
 
     describe('File Name Display Tests', () => {
-        const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
-
         describe('displayFileName method', () => {
             it('should return full filename when total length is 80 characters or less', () => {
                 const fileShortName = 'shortname.txt';
                 component.fileName = fileShortName;
                 fixture.detectChanges();
 
-                expect(component.displayFileName()).toBe(fileShortName);
+                expect(component.getDisplayFileName()).toBe(fileShortName);
                 expect(getFileName()).toBe(fileShortName);
             });
 
@@ -163,7 +161,7 @@ describe('ViewerComponent', () => {
                 component.fileName = longName;
                 fixture.detectChanges();
 
-                const result = component.displayFileName();
+                const result = component.getDisplayFileName();
 
                 expect(result).toContain('.....');
                 expect(result.length).toBe(50);
@@ -173,7 +171,7 @@ describe('ViewerComponent', () => {
                 component.fileName = '';
                 fixture.detectChanges();
 
-                expect(component.displayFileName()).toBe('');
+                expect(component.getDisplayFileName()).toBe('');
                 expect(getFileName()).toBe('');
             });
         });
@@ -182,7 +180,7 @@ describe('ViewerComponent', () => {
             it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
                 component.fileName = '';
                 spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-                const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
+                const mockSimpleChanges = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } } as SimpleChanges;
 
                 component.ngOnChanges(mockSimpleChanges);
                 fixture.detectChanges();
@@ -193,7 +191,7 @@ describe('ViewerComponent', () => {
             it('should set fileName providing fileName input', () => {
                 component.fileName = 'testFileName.jpg';
                 spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-                const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
+                const mockSimpleChanges = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } } as SimpleChanges;
 
                 component.ngOnChanges(mockSimpleChanges);
                 fixture.detectChanges();
