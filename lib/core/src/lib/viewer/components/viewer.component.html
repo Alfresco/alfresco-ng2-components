@@ -49,8 +49,7 @@
                     <div class="adf-viewer__display-name"
                          id="adf-viewer-display-name"
                          [title]="fileName">
-                        <span class="adf-viewer__display-name-without-extension">{{ fileNameWithoutExtension }}</span>
-                        <span class="adf-viewer__display-name-extension">{{ fileExtension }}</span>
+                        <span>{{ displayName }}</span>
                     </div>
                     <button *ngIf="allowNavigate && canNavigateNext"
                             data-automation-id="adf-toolbar-next-file"
