@@ -180,7 +180,7 @@ describe('ViewerComponent', () => {
             it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
                 component.fileName = '';
                 spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-                const mockSimpleChanges = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } } as SimpleChanges;
+                const mockSimpleChanges = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } } as unknown as SimpleChanges;
 
                 component.ngOnChanges(mockSimpleChanges);
                 fixture.detectChanges();
@@ -191,7 +191,7 @@ describe('ViewerComponent', () => {
             it('should set fileName providing fileName input', () => {
                 component.fileName = 'testFileName.jpg';
                 spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-                const mockSimpleChanges = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } } as SimpleChanges;
+                const mockSimpleChanges = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } } as unknown as SimpleChanges;
 
                 component.ngOnChanges(mockSimpleChanges);
                 fixture.detectChanges();
