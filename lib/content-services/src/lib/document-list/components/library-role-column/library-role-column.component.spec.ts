@@ -92,4 +92,19 @@ describe('LibraryRoleColumnComponent', () => {
         fixture.detectChanges();
         expect(value).toBe('LIBRARY.ROLE.NONE');
     });
+
+    it('should take role from obj when node entry role is not provided', () => {
+        component.context = {
+            row: {
+                node: { entry: {} },
+                obj: { role: 'SiteManager' }
+            }
+        };
+
+        let value = '';
+        component.displayText$.subscribe((val) => (value = val));
+
+        fixture.detectChanges();
+        expect(value).toBe('LIBRARY.ROLE.MANAGER');
+    });
 });

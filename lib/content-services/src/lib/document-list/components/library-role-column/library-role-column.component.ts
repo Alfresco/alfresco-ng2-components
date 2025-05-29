@@ -17,7 +17,7 @@
 
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Site, SiteEntry } from '@alfresco/js-api';
+import { Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { CommonModule } from '@angular/common';
@@ -64,26 +64,23 @@ export class LibraryRoleColumnComponent implements OnInit {
     }
 
     protected updateValue() {
-        const node: SiteEntry = this.context.row.node;
-        if (node?.entry) {
-            const role: string = node.entry.role;
-            switch (role) {
-                case Site.RoleEnum.SiteManager:
-                    this.displayText$.next('LIBRARY.ROLE.MANAGER');
-                    break;
-                case Site.RoleEnum.SiteCollaborator:
-                    this.displayText$.next('LIBRARY.ROLE.COLLABORATOR');
-                    break;
-                case Site.RoleEnum.SiteContributor:
-                    this.displayText$.next('LIBRARY.ROLE.CONTRIBUTOR');
-                    break;
-                case Site.RoleEnum.SiteConsumer:
-                    this.displayText$.next('LIBRARY.ROLE.CONSUMER');
-                    break;
-                default:
-                    this.displayText$.next('LIBRARY.ROLE.NONE');
-                    break;
-            }
+        const role = this.context.row.node?.entry.role ?? this.context.row.obj.role;
+        switch (role) {
+            case Site.RoleEnum.SiteManager:
+                this.displayText$.next('LIBRARY.ROLE.MANAGER');
+                break;
+            case Site.RoleEnum.SiteCollaborator:
+                this.displayText$.next('LIBRARY.ROLE.COLLABORATOR');
+                break;
+            case Site.RoleEnum.SiteContributor:
+                this.displayText$.next('LIBRARY.ROLE.CONTRIBUTOR');
+                break;
+            case Site.RoleEnum.SiteConsumer:
+                this.displayText$.next('LIBRARY.ROLE.CONSUMER');
+                break;
+            default:
+                this.displayText$.next('LIBRARY.ROLE.NONE');
+                break;
         }
     }
 }

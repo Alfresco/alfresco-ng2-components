@@ -16,9 +16,54 @@
  */
 
 import { LibraryStatusColumnComponent } from './library-status-column.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Site } from '@alfresco/js-api';
 
 describe('LibraryStatusColumnComponent', () => {
-  it('should be defined', () => {
-    expect(LibraryStatusColumnComponent).toBeDefined();
-  });
+    let fixture: ComponentFixture<LibraryStatusColumnComponent>;
+    let component: LibraryStatusColumnComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule, LibraryStatusColumnComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
+        fixture = TestBed.createComponent(LibraryStatusColumnComponent);
+        component = fixture.componentInstance;
+    });
+
+    it('should be defined', () => {
+        expect(LibraryStatusColumnComponent).toBeDefined();
+    });
+
+    it('should take default visibility from node entry', () => {
+        component.context = {
+            row: {
+                node: { entry: { visibility: Site.VisibilityEnum.PUBLIC } }
+            }
+        };
+
+        let value = '';
+        component.displayText$.subscribe((val) => (value = val));
+
+        fixture.detectChanges();
+        expect(value).toBe('LIBRARY.VISIBILITY.PUBLIC');
+    });
+
+    it('should take visibility from obj when node entry visibility is not provided', () => {
+        component.context = {
+            row: {
+                node: { entry: {} },
+                obj: { visibility: Site.VisibilityEnum.PUBLIC }
+            }
+        };
+
+        let value = '';
+        component.displayText$.subscribe((val) => (value = val));
+
+        fixture.detectChanges();
+        expect(value).toBe('LIBRARY.VISIBILITY.PUBLIC');
+    });
 });
