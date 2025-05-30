@@ -278,6 +278,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      * @param filter filter
      */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {
+        if (!filter?.showCounter) {
+            return;
+        }
+
         this.fetchProcessFilterCounter(filter)
             .pipe(
                 tap((filterCounter) => {

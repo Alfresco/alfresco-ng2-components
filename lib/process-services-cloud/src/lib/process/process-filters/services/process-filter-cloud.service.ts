@@ -378,7 +378,8 @@ export class ProcessFilterCloudService {
                 appName,
                 sort: 'startDate',
                 status: 'RUNNING',
-                order: 'DESC'
+                order: 'DESC',
+                showCounter: true
             }),
             new ProcessFilterCloudModel({
                 name: 'ADF_CLOUD_PROCESS_FILTERS.COMPLETED_PROCESSES',
@@ -387,7 +388,8 @@ export class ProcessFilterCloudService {
                 appName,
                 sort: 'startDate',
                 status: 'COMPLETED',
-                order: 'DESC'
+                order: 'DESC',
+                showCounter: false
             }),
             new ProcessFilterCloudModel({
                 name: 'ADF_CLOUD_PROCESS_FILTERS.ALL_PROCESSES',
@@ -396,7 +398,8 @@ export class ProcessFilterCloudService {
                 appName,
                 sort: 'startDate',
                 status: '',
-                order: 'DESC'
+                order: 'DESC',
+                showCounter: false
             })
         ];
     }

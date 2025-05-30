@@ -32,6 +32,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
@@ -560,6 +561,19 @@ describe('TaskFiltersCloudComponent', () => {
 
             expect(component.updatedCountersSet.size).toBe(1);
             expect(component.updatedCountersSet.has(fakeFilterKey)).toBe(true);
+        });
+
+        it('should call fetchTaskFilterCounter only if filter.showCounter is true', () => {
+            const filterWithCounter = new TaskFilterCloudModel({ ...defaultTaskFiltersMock[0], showCounter: true });
+            const filterWithoutCounter = new TaskFilterCloudModel({ ...defaultTaskFiltersMock[1], showCounter: false });
+            const fetchSpy = spyOn<any>(component, 'fetchTaskFilterCounter').and.returnValue(of(42));
+
+            component.filters = [filterWithCounter, filterWithoutCounter];
+            component.updateFilterCounters();
+
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(filterWithCounter);
+            expect(fetchSpy).not.toHaveBeenCalledWith(filterWithoutCounter);
         });
 
         describe('Highlight Selected Filter', () => {
