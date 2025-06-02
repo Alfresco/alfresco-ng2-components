@@ -24,6 +24,7 @@ import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';
 import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './types';
+import { FilePlanRolePaging, FilePlanRoleParameters } from '../model';
 
 /**
  * FilePlansApi service.
@@ -156,6 +157,28 @@ export class FilePlansApi extends BaseApi {
             queryParams,
             bodyParam: filePlanBodyUpdate,
             returnType: FilePlanEntry
+        });
+    }
+
+    /**
+     * Gets a list of roles for the specified file plan.
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param parameters Optional parameters
+     * @returns Promise<FilePlanEntry>
+     */
+    getFilePlanRoles(filePlanId: string, parameters?: FilePlanRoleParameters): Promise<FilePlanRolePaging> {
+        throwIfNotDefined(filePlanId, 'filePlanId');
+
+        return this.get({
+            path: '/file-plans/{filePlanId}/roles',
+            pathParams: {
+                filePlanId
+            },
+            queryParams: {
+                where: parameters?.where?.capabilityNames
+                    ? `(capabilityName in (${parameters.where.capabilityNames.map((value) => "'" + value + "'").join(', ')}))`
+                    : undefined
+            }
         });
     }
 }

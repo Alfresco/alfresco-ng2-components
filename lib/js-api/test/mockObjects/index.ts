@@ -34,6 +34,7 @@ export * from './content-services/version.mock';
 export * from './content-services/webscript.mock';
 
 export * from './goverance-services/authority-clearance.mock';
+export * from './goverance-services/file-plans.mock';
 export * from './goverance-services/gs-sites.mock';
 export * from './goverance-services/node-security-marks.mock';
 export * from './goverance-services/security-groups.mock';

@@ -2,13 +2,13 @@
 
 All URIs are relative to *https://localhost/alfresco/api/-default-/public/gs/versions/1*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createFilePlanCategories**](FilePlansApi.md#createFilePlanCategories) | **POST** /file-plans/{filePlanId}/categories | Create record categories for a file plan
-[**getFilePlan**](FilePlansApi.md#getFilePlan) | **GET** /file-plans/{filePlanId} | Get a file plan
-[**getFilePlanCategories**](FilePlansApi.md#getFilePlanCategories) | **GET** /file-plans/{filePlanId}/categories | List file plans's children
-[**updateFilePlan**](FilePlansApi.md#updateFilePlan) | **PUT** /file-plans/{filePlanId} | Update a file plan
-
+| Method                                                                   | HTTP request                                 | Description                                       |
+|--------------------------------------------------------------------------|----------------------------------------------|---------------------------------------------------|
+| [**createFilePlanCategories**](FilePlansApi.md#createFilePlanCategories) | **POST** /file-plans/{filePlanId}/categories | Create record categories for a file plan          |
+| [**getFilePlan**](FilePlansApi.md#getFilePlan)                           | **GET** /file-plans/{filePlanId}             | Get a file plan                                   |
+| [**getFilePlanCategories**](FilePlansApi.md#getFilePlanCategories)       | **GET** /file-plans/{filePlanId}/categories  | List file plans's children                        |
+| [**updateFilePlan**](FilePlansApi.md#updateFilePlan)                     | **PUT** /file-plans/{filePlanId}             | Update a file plan                                |
+| [**getFilePlanRoles**](FilePlansApi.md#getFilePlanRoles)                 | **GET** /file-plans/{filePlanId}/roles       | Gets a list of roles for the specified file plan. |
 
 <a name="createFilePlanCategories"></a>
 # **createFilePlanCategories**
@@ -402,3 +402,39 @@ parameter are returned in addition to those specified in the **fields** paramete
 
 [**FilePlanEntry**](FilePlanEntry.md)
 
+<a name="getFilePlanRoles"></a>
+# **getFilePlanRoles**
+> FilePlanEntry getFilePlanRoles(filePlanId, parameters)
+
+Gets a list of roles for the specified file plan.
+
+### Example
+```javascript
+import FilePlansApi from 'FilePlansApi';
+import { AlfrescoApi } from '@alfresco/js-api';
+
+this.alfrescoApi = new AlfrescoApi();
+this.alfrescoApi.setConfig({
+    hostEcm: 'http://127.0.0.1:8080'
+});
+
+let fileplansApi = new FilePlansApi(this.alfrescoApi);
+const filePlanId = 'some id';
+fileplansApi.updateFilePlan(filePlanId, {
+    where: {
+        capabilityNames: ['ViewRecords']
+    }
+}).then((data) => console.log('API called successfully. Returned data: ' + data))
+    .catch((error) => console.log(error));
+```
+
+### Parameters
+
+| Name           | Type                                                    | Description                                                           |
+|----------------|---------------------------------------------------------|-----------------------------------------------------------------------|
+| **filePlanId** | **string**                                              | The identifier of a file plan. You can also use the -filePlan- alias. |
+| **parameters** | [**FilePlanRoleParameters**](FilePlanRoleParameters.md) | Optional parameters.                                                  |
+
+### Return type
+
+[**FilePlanRolePaging**](FilePlanRolePaging.md)
