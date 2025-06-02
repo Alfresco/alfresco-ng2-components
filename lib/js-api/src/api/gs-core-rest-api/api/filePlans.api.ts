@@ -176,7 +176,7 @@ export class FilePlansApi extends BaseApi {
             },
             queryParams: {
                 where: parameters?.where?.capabilityNames
-                    ? `(capabilityName in (${parameters.where.capabilityNames.map((value) => `'${value}'`).join(', ')}))`
+                    ? `(capabilityName in (${parameters.where.capabilityNames.map((value) => "'" + value + "'").join(', ')}))`
                     : undefined
             }
         });
