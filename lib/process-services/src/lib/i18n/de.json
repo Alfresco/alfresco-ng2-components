@@ -343,7 +343,7 @@
         "COMPLETE": "Abschließen",
         "CANCEL": "Abbrechen",
         "CLAIM": "Beanspruchen",
-        "UNCLAIM": "Freigeben "
+        "UNCLAIM": "FREIGEBEN"
       }
     },
     "COMPLETED_TASK": {
