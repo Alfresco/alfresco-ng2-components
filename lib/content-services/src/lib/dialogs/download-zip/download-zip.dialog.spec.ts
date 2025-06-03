@@ -94,7 +94,7 @@ describe('DownloadZipDialogComponent', () => {
         spyOn(downloadZipService, 'createDownload').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -112,7 +112,7 @@ describe('DownloadZipDialogComponent', () => {
         const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -125,7 +125,7 @@ describe('DownloadZipDialogComponent', () => {
         spyOn(downloadZipService, 'createDownload').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -140,7 +140,7 @@ describe('DownloadZipDialogComponent', () => {
         spyOn(downloadZipService, 'createDownload').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );

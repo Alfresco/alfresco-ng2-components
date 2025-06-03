@@ -96,7 +96,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -115,7 +115,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -136,7 +136,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -157,7 +157,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -175,7 +175,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -196,7 +196,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -212,7 +212,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -236,7 +236,7 @@ describe('FolderActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
                 new Observable<any>((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
