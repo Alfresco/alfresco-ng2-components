@@ -79,7 +79,7 @@ After running the migration script, you may need to manually fix some issues. Ru
 npx nx run-many --target=build --skip-nx-cache
 ```
 
-Work through all the problems topic by topic. If blocked by linting issues, disable the linting rules in the affected files. You can re-enable them in the next step.
+If blocked by linting issues, disable the linting rules in the affected files. You can re-enable them in the next step.
 
 ### Lint jobs
 
