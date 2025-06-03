@@ -17,7 +17,7 @@
     "mdast-zone": "3.0.4",
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",
-    "rxjs": "^6.6.6",
+    "rxjs": "7.8.2",
     "typedoc": "^0.25.7",
     "typescript": "3.9.8",
     "unist-util-select": "2.0.0"
