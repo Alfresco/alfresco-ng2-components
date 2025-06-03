@@ -24,7 +24,7 @@
     "angular-oauth2-oidc": "17.0.2",
     "angular-oauth2-oidc-jwks": "17.0.2",
     "date-fns": "^2.30.0",
-    "rxjs": "7.8.1"
+    "rxjs": "7.8.2"
   },
   "peerDependencies": {
     "@angular/animations": ">=16.0.0",

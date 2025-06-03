@@ -225,7 +225,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'createEcmType').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -233,7 +233,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'addPropertyToAType').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -257,7 +257,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'createEcmTypeWithProperties').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -273,7 +273,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'searchEcmType').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -281,7 +281,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'createEcmTypeWithProperties').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -297,7 +297,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'searchActivitiEcmModel').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -305,7 +305,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'createActivitiEcmModel').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -329,7 +329,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'saveFomType').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );

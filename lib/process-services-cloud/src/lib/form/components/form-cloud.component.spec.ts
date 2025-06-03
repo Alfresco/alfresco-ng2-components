@@ -704,7 +704,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'saveTaskForm').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -797,7 +797,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'completeTaskForm').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );

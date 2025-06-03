@@ -565,7 +565,7 @@ describe('FormComponent', () => {
         spyOn(taskFormService, 'saveTaskForm').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
@@ -628,7 +628,7 @@ describe('FormComponent', () => {
         spyOn(taskFormService, 'completeTaskForm').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next();
+                    observer.next(undefined);
                     observer.complete();
                 })
         );
