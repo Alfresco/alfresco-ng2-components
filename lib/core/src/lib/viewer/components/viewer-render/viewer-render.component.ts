@@ -29,8 +29,6 @@ import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
-type ViewerType = 'media' | 'image' | 'pdf' | 'external' | 'text' | 'custom' | 'unknown';
-
 @Component({
     selector: 'adf-viewer-render',
     standalone: true,
@@ -139,7 +137,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     extensionsSupportedByTemplates: string[] = [];
     extension: string;
     internalFileName: string;
-    viewerType: ViewerType = 'unknown';
+    viewerType: string = 'unknown';
     isLoading = false;
 
     /**
@@ -197,7 +195,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     private setUpBlobData() {
         this.internalFileName = this.fileName;
-        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type) as ViewerType;
+        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
 
         this.extensionChange.emit(this.blobFile.type);
         this.scrollTop();
@@ -206,7 +204,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     private setUpUrlFile() {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
-        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates) as ViewerType;
+        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates);
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
