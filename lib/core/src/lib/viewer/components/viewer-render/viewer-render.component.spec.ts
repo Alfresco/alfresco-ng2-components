@@ -24,7 +24,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopTranslateModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { ImgViewerComponent, MediaPlayerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
+import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -506,19 +506,17 @@ describe('ViewerComponent', () => {
             expect(component.viewerType).toBe('media');
         });
 
-        // eslint-disable-next-line ban/ban
-        xit('should show spinner until content is ready when viewerType is pdf', () => {
-            component.isLoading = false;
+        it('should display spinner when viewerType is pdf', () => {
             component.urlFile = 'some-url.pdf';
+            expect(getMainLoader()).toBeNull();
 
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(getMainLoader()).not.toBeNull();
-
+            const imgViewer = testingUtils.getByDirective(PdfViewerComponent);
+            imgViewer.triggerEventHandler('pagesLoaded', null);
             fixture.detectChanges();
 
-            expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('pdf');
         });
 
@@ -546,7 +544,6 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(getMainLoader()).toBeNull();
-            expect(component.isContentReady).toBeFalse();
         });
     });
 });

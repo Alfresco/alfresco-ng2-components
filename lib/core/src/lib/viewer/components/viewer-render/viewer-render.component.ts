@@ -29,6 +29,8 @@ import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
+type ViewerType = 'media' | 'image' | 'pdf' | 'external' | 'text' | 'custom' | 'unknown';
+
 @Component({
     selector: 'adf-viewer-render',
     standalone: true,
@@ -86,10 +88,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     @Input()
     fileName: string;
 
-    /** Override loading status */
-    @Input()
-    isLoading = false;
-
     /** Enable when where is possible the editing functionalities  */
     @Input()
     readOnly = true;
@@ -141,8 +139,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     extensionsSupportedByTemplates: string[] = [];
     extension: string;
     internalFileName: string;
-    viewerType: string = 'unknown';
-    isContentReady = false;
+    viewerType: ViewerType = 'unknown';
+    isLoading = false;
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -182,12 +180,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';
+        this.setDefaultLoadingState();
     }
 
     ngOnChanges() {
-        this.isContentReady = false;
-        this.isLoading = !this.blobFile && !this.urlFile;
-
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
@@ -195,9 +191,13 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         }
     }
 
+    markAsLoaded() {
+        this.isLoading = false;
+    }
+
     private setUpBlobData() {
         this.internalFileName = this.fileName;
-        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
+        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type) as ViewerType;
 
         this.extensionChange.emit(this.blobFile.type);
         this.scrollTop();
@@ -206,7 +206,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     private setUpUrlFile() {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
-        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates);
+        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates) as ViewerType;
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
@@ -234,5 +234,15 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     onClose() {
         this.close.next(true);
+    }
+
+    private canBePreviewed(): boolean {
+        return this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image';
+    }
+
+    private setDefaultLoadingState() {
+        if (this.canBePreviewed()) {
+            this.isLoading = true;
+        }
     }
 }
