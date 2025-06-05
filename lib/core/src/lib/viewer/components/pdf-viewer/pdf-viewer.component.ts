@@ -114,7 +114,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     displayPage: number;
     totalPages: number;
     loadingPercent: number;
-    pdfViewer: PDFViewer;
+    pdfViewer: any;
     pdfJsWorkerUrl: string;
     pdfJsWorkerInstance: Worker;
     currentScaleMode: PdfScaleMode = 'init';
@@ -132,12 +132,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     documentOverflow = false;
 
     get currentScaleText(): string {
-        const currentScaleValueStr = this.pdfViewer?.currentScaleValue;
-        const scaleNumber = Number(currentScaleValueStr);
-
-        const currentScaleText = scaleNumber ? `${Math.round(scaleNumber * 100)}%` : '';
-
-        return currentScaleText;
+        return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
     private pdfjsLib = inject(PDFJS_MODULE);
@@ -457,9 +452,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     setScaleUpdatePages(newScale: number) {
         if (this.pdfViewer) {
-            if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale.toString())) {
-                this.pdfViewer.currentScaleValue = newScale.toString();
+            if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
+                this.pdfViewer.currentScaleValue = newScale;
             }
+
             this.pdfViewer.update();
         }
         this.setDocumentOverflow();
@@ -472,7 +468,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param newScale - new scale page
      * @returns `true` if the scale is the same, otherwise `false`
      */
-    isSameScale(oldScale: string, newScale: string): boolean {
+    isSameScale(oldScale: number, newScale: number): boolean {
         return newScale === oldScale;
     }
 
