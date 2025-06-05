@@ -254,6 +254,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
                     return pdfDocument.getPage(1);
                 })
+                .then(() => {
+                    setTimeout(() => this.scalePage('init'));
+                })
                 .catch(() => this.error.emit());
         });
     }
@@ -618,7 +621,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     onPagesLoaded() {
         this.isPanelDisabled = false;
-        setTimeout(() => this.scalePage('init'));
         this.pagesLoaded.emit();
     }
 
