@@ -35,6 +35,8 @@ describe('FilePlansApi', () => {
     });
 
     describe('getFilePlanRoles', () => {
+        const filePlanId = 'filePlanId123';
+
         let expectedRolePaging: FilePlanRolePaging;
 
         beforeEach(() => {
@@ -101,7 +103,6 @@ describe('FilePlansApi', () => {
         });
 
         it('should get file plan roles', (done) => {
-            const filePlanId = 'filePlanId123';
             filePlansApiMock.get200FilePlanRoles(filePlanId);
 
             filePlansApi.getFilePlanRoles(filePlanId).then((rolePaging) => {
@@ -111,12 +112,42 @@ describe('FilePlansApi', () => {
         });
 
         it('should get file plan roles with filtering by capability names', (done) => {
-            const filePlanId = 'filePlanId123';
             filePlansApiMock.get200FilePlanRolesWithFilteringByCapabilityNames(filePlanId);
 
             filePlansApi
                 .getFilePlanRoles(filePlanId, {
                     where: {
+                        capabilityNames: ['capability1', 'capability2']
+                    }
+                })
+                .then((rolePaging) => {
+                    expect(rolePaging).toEqual(expectedRolePaging);
+                    done();
+                });
+        });
+
+        it('should get file plan roles with filtering by person id', (done) => {
+            filePlansApiMock.get200FilePlanRolesWithFilteringByPersonId(filePlanId);
+
+            filePlansApi
+                .getFilePlanRoles(filePlanId, {
+                    where: {
+                        personId: 'someUser'
+                    }
+                })
+                .then((rolePaging) => {
+                    expect(rolePaging).toEqual(expectedRolePaging);
+                    done();
+                });
+        });
+
+        it('should get file plan roles with filtering by capability names', (done) => {
+            filePlansApiMock.get200FilePlanRolesWithFilteringByPersonIdAndCapabilityNames(filePlanId);
+
+            filePlansApi
+                .getFilePlanRoles(filePlanId, {
+                    where: {
+                        personId: 'someUser',
                         capabilityNames: ['capability1', 'capability2']
                     }
                 })
