@@ -16,5 +16,6 @@
  */
 
 export interface FilePlanRoleParametersWhere {
+    personId?: string;
     capabilityNames?: string[];
 }
