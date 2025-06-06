@@ -86,10 +86,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     @Input()
     fileName: string;
 
-    /** Override loading status */
-    @Input()
-    isLoading = false;
-
     /** Enable when where is possible the editing functionalities  */
     @Input()
     readOnly = true;
@@ -142,7 +138,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     extension: string;
     internalFileName: string;
     viewerType: string = 'unknown';
-    isContentReady = false;
+    isLoading = false;
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -182,17 +178,19 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';
+        this.setDefaultLoadingState();
     }
 
     ngOnChanges() {
-        this.isContentReady = false;
-        this.isLoading = !this.blobFile && !this.urlFile;
-
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
+    }
+
+    markAsLoaded() {
+        this.isLoading = false;
     }
 
     private setUpBlobData() {
@@ -234,5 +232,15 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     onClose() {
         this.close.next(true);
+    }
+
+    private canBePreviewed(): boolean {
+        return this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image';
+    }
+
+    private setDefaultLoadingState() {
+        if (this.canBePreviewed()) {
+            this.isLoading = true;
+        }
     }
 }
