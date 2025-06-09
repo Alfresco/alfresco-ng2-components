@@ -22,14 +22,12 @@ import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 @Component({
     template: '',
-    providers: [NotificationService],
-    standalone: false
+    providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
     constructor(public notificationService: NotificationService) {}
@@ -84,8 +82,8 @@ class ProvidesNotificationServiceComponent {
         return this.notificationService.openSnackMessageAction('with decorative icon', 'TestWarn', notificationConfig);
     }
 }
-//eslint-disable-next-line
-xdescribe('NotificationService', () => {
+
+describe('NotificationService', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
@@ -93,8 +91,7 @@ xdescribe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatSnackBarModule],
-            declarations: [ProvidesNotificationServiceComponent]
+            imports: [NoopTranslateModule, MatSnackBarModule, ProvidesNotificationServiceComponent]
         });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
@@ -135,7 +132,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(!isLoaded).toBe(true);
+        expect(isLoaded).toBe(true);
     });
 
     it('should open a message notification bar without custom configuration', async () => {

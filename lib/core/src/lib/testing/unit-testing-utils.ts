@@ -457,8 +457,8 @@ export class UnitTestingUtils {
 
     /** MatSnackbar related methods */
 
-    async checkIfMatSnackbarExists(): Promise<MatSnackBarHarness> {
-        return this.loader.getHarness(MatSnackBarHarness);
+    async checkIfMatSnackbarExists(): Promise<boolean> {
+        return this.loader.hasHarness(MatSnackBarHarness);
     }
 
     /** MatProgressBar related methods */
