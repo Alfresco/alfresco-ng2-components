@@ -123,7 +123,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
      */
     handleError(error: any): Observable<any> {
         this.onError.next(error || 'Server error');
-        return throwError(error || 'Server error');
+        return throwError(() => error || 'Server error');
     }
 
     isOauth(): boolean {
