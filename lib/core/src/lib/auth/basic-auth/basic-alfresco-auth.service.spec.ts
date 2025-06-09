@@ -112,7 +112,19 @@ describe('BasicAlfrescoAuthService', () => {
             expect(await onError).toBe('ECM login failed');
         });
 
-        it('should return login fail on BPM login failure', () => {});
+        it('should return login fail on BPM login failure', async () => {
+            appConfigSpy.withArgs(AppConfigValues.PROVIDERS).and.returnValue('BPM');
+            const mockError = 'BPM login failed';
+            processAuthSpy.and.returnValue(Promise.reject(mockError));
+
+            const onError = firstValueFrom(basicAlfrescoAuthService.onError.pipe(take(1)));
+
+            await expectAsync(firstValueFrom(basicAlfrescoAuthService.login('username', 'password'))).toBeRejectedWith(mockError);
+
+            expect(contentAuth.login).not.toHaveBeenCalled();
+            expect(processAuth.login).toHaveBeenCalledWith('username', 'password');
+            expect(await onError).toBe('BPM login failed');
+        });
     });
 
     it('isBpmLoggedIn should return value from processAuth', () => {
