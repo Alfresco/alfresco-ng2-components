@@ -277,12 +277,6 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should save the remember me cookie as a session cookie after successful login', async () => {
-            jasmine.Ajax.stubRequest(/\/app\/authentication/).andReturn({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
-
             await firstValueFrom(basicAlfrescoAuthService.login('fake-username', 'fake-password', false));
 
             expect(cookie.getItem('ALFRESCO_REMEMBER_ME')).toBe('1');
