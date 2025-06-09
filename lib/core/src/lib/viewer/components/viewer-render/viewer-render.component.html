@@ -13,7 +13,7 @@
     </div>
 }
 
-@if (urlFile || blobFile) {
+@if (!isFileLoading) {
     <div [hidden]="isLoading" class="adf-viewer-render-main">
         <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
             <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
