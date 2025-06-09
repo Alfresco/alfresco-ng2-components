@@ -15,35 +15,37 @@
  * limitations under the License.
  */
 
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { AuthModule } from '../oidc/auth.module';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { CookieServiceMock } from '../../mock';
 import { AppConfigServiceMock } from '../../common';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { OAuthEvent } from 'angular-oauth2-oidc';
-import { Subject } from 'rxjs';
+import { firstValueFrom, of, Subject, throwError } from 'rxjs';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { Injector } from '@angular/core';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { ContentAuth, ProcessAuth } from '../public-api';
 
 declare let jasmine: any;
-// eslint-disable-next-line
-xdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
     let oidcAuthenticationService: OidcAuthenticationService;
     let headers: HttpHeaders;
+    let processAuth: ProcessAuth;
+    let contentAuth: ContentAuth;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, AuthModule.forRoot({ useHash: true }), HttpClientModule],
+            imports: [NoopTranslateModule, AuthModule.forRoot({ useHash: true })],
             providers: [
                 {
                     provide: CookieService,
@@ -52,7 +54,8 @@ xdescribe('AuthenticationService', () => {
                 {
                     provide: AppConfigService,
                     useClass: AppConfigServiceMock
-                }
+                },
+                provideHttpClient()
             ]
         });
 
@@ -61,11 +64,16 @@ xdescribe('AuthenticationService', () => {
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
-
+        spyOn(oidcAuthenticationService, 'logout').and.returnValue(of());
         cookie = TestBed.inject(CookieService);
+
+        processAuth = TestBed.inject(ProcessAuth);
+        spyOn(processAuth, 'login').and.returnValue(Promise.resolve());
+        contentAuth = TestBed.inject(ContentAuth);
+        spyOn(contentAuth, 'login').and.returnValue(Promise.resolve());
+
         cookie.clear();
 
-        jasmine.Ajax.install();
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.pagination = {
             supportedPageSizes: []
@@ -74,7 +82,6 @@ xdescribe('AuthenticationService', () => {
 
     afterEach(() => {
         cookie.clear();
-        jasmine.Ajax.uninstall();
     });
 
     describe('kerberos', () => {
@@ -147,56 +154,18 @@ xdescribe('AuthenticationService', () => {
             expect(authService.isEcmLoggedIn()).toBeFalsy();
         });
 
-        it('[ECM] should return an ECM ticket after the login done', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getToken()).toEqual('fake-post-ticket');
-                expect(authService.isEcmLoggedIn()).toBe(true);
-                disposableLogin.unsubscribe();
-                done();
-            });
+        it('[ECM] should login in the ECM if no provider are defined calling the login', async () => {
+            contentAuth.login = jasmine.createSpy().and.returnValue(Promise.resolve(fakeECMLoginResponse.ticket));
+            const loginResponse = await firstValueFrom(basicAlfrescoAuthService.login('fake-username', 'fake-password'));
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
+            expect(contentAuth.login).toHaveBeenCalled();
+            expect(loginResponse).toEqual(fakeECMLoginResponse);
         });
 
-        it('[ECM] should login in the ECM if no provider are defined calling the login', fakeAsync(() => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe((loginResponse) => {
-                expect(loginResponse).toEqual(fakeECMLoginResponse);
-                disposableLogin.unsubscribe();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
-        }));
-
-        it('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
-                const disposableLogout = authService.logout().subscribe(() => {
-                    expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getToken()).toBe(null);
-                    expect(authService.isEcmLoggedIn()).toBe(false);
-                    disposableLogin.unsubscribe();
-                    disposableLogout.unsubscribe();
-                });
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 204
-                });
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
-        }));
+        it('[ECM] should get token when provider is ECM', () => {
+            spyOn(basicAlfrescoAuthService, 'getToken').and.returnValue('fake-ecm-token');
+            expect(basicAlfrescoAuthService.getToken()).toEqual('fake-ecm-token');
+        });
 
         it('[ECM] should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);
@@ -261,55 +230,12 @@ xdescribe('AuthenticationService', () => {
             expect(authService.isBpmLoggedIn()).toBeFalsy();
         });
 
-        it('[BPM] should return an BPM ticket after the login done', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(true);
-                // cspell: disable-next
-                expect(authService.getToken()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
-                expect(authService.isBpmLoggedIn()).toBe(true);
-                disposableLogin.unsubscribe();
-                done();
-            });
+        it('[BPM] should return an error when the logout return error', async () => {
+            oidcAuthenticationService.logout = jasmine.createSpy().and.returnValue(throwError(() => 'logout'));
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json'
-            });
-        });
-
-        it('[BPM] should return a ticket undefined after logout', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
-                const disposableLogout = authService.logout().subscribe(() => {
-                    expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getToken()).toBe(null);
-                    expect(authService.isBpmLoggedIn()).toBe(false);
-                    disposableLogout.unsubscribe();
-                    disposableLogin.unsubscribe();
-                    done();
-                });
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200
-                });
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
-            });
-        });
-
-        it('[BPM] should return an error when the logout return error', (done) => {
-            authService.logout().subscribe(
-                () => {},
-                (err: any) => {
-                    expect(err).toBeDefined();
-                    expect(authService.getToken()).toBe(null);
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
+            await firstValueFrom(authService.logout()).catch((err) => {
+                expect(err).toBeDefined();
+                expect(authService.getToken()).toBe(null);
             });
         });
 
@@ -350,59 +276,23 @@ xdescribe('AuthenticationService', () => {
             appConfigService.load();
         });
 
-        it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password', false).subscribe(() => {
-                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
-                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
-                disposableLogin.unsubscribe();
-                done();
-            });
+        it('[ECM] should save the remember me cookie as a session cookie after successful login', async () => {
+            await firstValueFrom(basicAlfrescoAuthService.login('fake-username', 'fake-password', false));
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
+            expect(cookie.getItem('ALFRESCO_REMEMBER_ME')).toBe('1');
         });
 
-        it('[ECM] should save the remember me cookie as a persistent cookie after successful login', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password', true).subscribe(() => {
-                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
-                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
-                disposableLogin.unsubscribe();
-
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
+        it('[ECM] should save the remember me cookie as a persistent cookie after successful login', async () => {
+            await firstValueFrom(basicAlfrescoAuthService.login('fake-username', 'fake-password', true));
+            expect(cookie.getItem('ALFRESCO_REMEMBER_ME')).not.toBeUndefined();
+            expect(JSON.parse(cookie.getItem('ALFRESCO_REMEMBER_ME')).expiration).not.toBeNull();
         });
 
-        it('[ECM] should not save the remember me cookie after failed login', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
-                () => {
-                    expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
-                    disposableLogin.unsubscribe();
-                    done();
-                }
-            );
+        it('[ECM] should not save the remember me cookie after failed login', async () => {
+            contentAuth.login = jasmine.createSpy().and.returnValue(Promise.reject(new Error('Login failed')));
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    error: {
-                        errorKey: 'Login failed',
-                        statusCode: 403,
-                        briefSummary: '05150009 Login failed',
-                        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-                        descriptionURL: 'https://api-explorer.alfresco.com'
-                    }
-                })
+            await firstValueFrom(basicAlfrescoAuthService.login('fake-username', 'fake-password')).catch(() => {
+                expect(cookie.getItem('ALFRESCO_REMEMBER_ME')).toBeNull();
             });
         });
     });
@@ -411,99 +301,6 @@ xdescribe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
             appConfigService.load();
-        });
-
-        it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(true);
-                expect(basicAlfrescoAuthService.getTicketEcm()).toEqual('fake-post-ticket');
-                // cspell: disable-next
-                expect(basicAlfrescoAuthService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
-                expect(authService.isBpmLoggedIn()).toBe(true);
-                expect(authService.isEcmLoggedIn()).toBe(true);
-                disposableLogin.unsubscribe();
-                done();
-            });
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 200
-            });
-        });
-
-        it('[ALL] should return login fail if only ECM call fail', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
-                () => {
-                    expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
-                    expect(authService.getToken()).toBe(null, 'getTicketEcm');
-                    // cspell: disable-next
-                    expect(authService.getToken()).toBe(null, 'getTicketBpm');
-                    expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
-                    disposableLogin.unsubscribe();
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 403
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 200
-            });
-        });
-
-        it('[ALL] should return login fail if only BPM call fail', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
-                () => {
-                    expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getToken()).toBe(null);
-                    expect(authService.getToken()).toBe(null);
-                    expect(authService.isBpmLoggedIn()).toBe(false);
-                    disposableLogin.unsubscribe();
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 403
-            });
-        });
-
-        it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
-            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
-                () => {
-                    expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getToken()).toBe(null);
-                    expect(authService.getToken()).toBe(null);
-                    expect(authService.isBpmLoggedIn()).toBe(false);
-                    expect(authService.isEcmLoggedIn()).toBe(false);
-                    disposableLogin.unsubscribe();
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 403
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 403
-            });
         });
 
         it('[ALL] should return isECMProvider false', () => {

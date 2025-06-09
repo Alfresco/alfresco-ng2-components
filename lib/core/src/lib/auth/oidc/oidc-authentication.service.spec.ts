@@ -20,7 +20,7 @@ import { OidcAuthenticationService } from './oidc-authentication.service';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AppConfigService, AuthService } from '@alfresco/adf-core';
 import { AUTH_MODULE_CONFIG } from './auth-config';
-import { of } from 'rxjs';
+import { firstValueFrom, of, take, throwError } from 'rxjs';
 
 interface MockAppConfigOAuth2 {
     oauth2: {
@@ -28,59 +28,99 @@ interface MockAppConfigOAuth2 {
     };
 }
 
-class MockAppConfigService {
-    config: MockAppConfigOAuth2 = {
+const mockAppConfigService = {
+    config: {
         oauth2: {
             logoutParameters: ['client_id', 'returnTo', 'response_type']
         }
-    };
+    } as MockAppConfigOAuth2,
 
     setConfig(newConfig: { logoutParameters: Array<string> }) {
         this.config.oauth2 = newConfig;
-    }
+    },
 
     get(key: string, defaultValue?: { logoutParameters: Array<string> }) {
         if (key === 'oauth2') {
             return this.config.oauth2;
         }
+
+        if (key === 'providers') {
+            return 'mock-providers';
+        }
         return defaultValue;
     }
-}
+};
 
-class MockOAuthService {
-    clientId = 'testClientId';
-    redirectUri = 'testRedirectUri';
-    logOut = jasmine.createSpy();
-}
+const mockOAuthService = {
+    clientId: 'testClientId',
+    redirectUri: 'testRedirectUri',
+    logOut: jasmine.createSpy(),
+    hasValidAccessToken: jasmine.createSpy(),
+    hasValidIdToken: jasmine.createSpy()
+};
+
+const mockAuthService = {
+    baseAuthLogin: jasmine.createSpy()
+};
 
 describe('OidcAuthenticationService', () => {
     let service: OidcAuthenticationService;
     let oauthService: OAuthService;
+    let appConfig: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 OidcAuthenticationService,
-                { provide: AppConfigService, useClass: MockAppConfigService },
-                { provide: OAuthService, useClass: MockOAuthService },
+                { provide: AppConfigService, useValue: mockAppConfigService },
+                { provide: OAuthService, useValue: mockOAuthService },
                 { provide: OAuthStorage, useValue: {} },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} },
-                { provide: AuthService, useValue: {} }
+                { provide: AuthService, useValue: mockAuthService }
             ]
         });
         service = TestBed.inject(OidcAuthenticationService);
         oauthService = TestBed.inject(OAuthService);
+        appConfig = TestBed.inject(AppConfigService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
 
+    describe('login', () => {
+        it('should call AuthService with credentials', async () => {
+            const appConfigSpy = spyOn(mockAppConfigService, 'get').and.callThrough();
+            const mockTokenResponse = { access_token: 'mock-token' };
+            mockAuthService.baseAuthLogin.and.returnValue(of(mockTokenResponse));
+            const onLogin = firstValueFrom(service.onLogin.pipe(take(1)));
+
+            const response = await firstValueFrom(service.login('username', 'password'));
+
+            expect(mockAuthService.baseAuthLogin).toHaveBeenCalledWith('username', 'password');
+            expect(await onLogin).toEqual(mockTokenResponse);
+            expect(response).toEqual({
+                type: 'mock-providers',
+                ticket: mockTokenResponse
+            });
+            expect(appConfigSpy).toHaveBeenCalledWith('providers');
+        });
+
+        it('should handle login errors', async () => {
+            const mockError = 'Login failed';
+            mockAuthService.baseAuthLogin.and.returnValue(throwError(() => mockError));
+            const onError = firstValueFrom(service.onError.pipe(take(1)));
+
+            await expectAsync(firstValueFrom(service.login('username', 'password'))).toBeRejectedWith(mockError);
+            expect(await onError).toEqual(mockError);
+        });
+    });
+
     describe('logout', () => {
-        let mockAppConfigService: MockAppConfigService;
+        let appConfigService: AppConfigService;
 
         beforeEach(() => {
-            mockAppConfigService = TestBed.inject(AppConfigService) as any;
+            appConfigService = TestBed.inject(AppConfigService) as any;
         });
 
         it('should handle logout with default parameters', () => {
@@ -93,7 +133,7 @@ describe('OidcAuthenticationService', () => {
         });
 
         it('should handle logout with additional parameter redirect_uri', () => {
-            mockAppConfigService.setConfig({
+            appConfigService['setConfig']({
                 logoutParameters: ['client_id', 'returnTo', 'redirect_uri', 'response_type']
             });
 
@@ -108,7 +148,7 @@ describe('OidcAuthenticationService', () => {
         });
 
         it('should handle logout with an empty configuration object', () => {
-            mockAppConfigService.setConfig({ logoutParameters: [] });
+            appConfigService['setConfig']({ logoutParameters: [] });
 
             service.logout();
 
@@ -116,7 +156,7 @@ describe('OidcAuthenticationService', () => {
         });
 
         it('should ignore undefined parameters', () => {
-            mockAppConfigService.setConfig({
+            appConfigService['setConfig']({
                 logoutParameters: ['client_id', 'unknown_param']
             });
             service.logout();
@@ -127,6 +167,82 @@ describe('OidcAuthenticationService', () => {
         });
     });
 
+    describe('loggedIn', () => {
+        it('should return true if has valid tokens', () => {
+            mockOAuthService.hasValidAccessToken.and.returnValue(true);
+            mockOAuthService.hasValidIdToken.and.returnValue(true);
+
+            expect(service.isLoggedIn()).toBeTrue();
+        });
+
+        it('should return false if does not have valid access token', () => {
+            mockOAuthService.hasValidAccessToken.and.returnValue(false);
+            mockOAuthService.hasValidIdToken.and.returnValue(true);
+
+            expect(service.isLoggedIn()).toBeFalse();
+        });
+
+        it('should return false if does not have valid id token', () => {
+            mockOAuthService.hasValidAccessToken.and.returnValue(true);
+            mockOAuthService.hasValidIdToken.and.returnValue(false);
+
+            expect(service.isLoggedIn()).toBeFalse();
+        });
+    });
+
+    describe('isEcmLoggedIn', () => {
+        beforeEach(() => {
+            mockOAuthService.hasValidAccessToken.and.returnValue(true);
+            mockOAuthService.hasValidIdToken.and.returnValue(true);
+        });
+
+        it('should return true if is ECM provider', () => {
+            spyOn(appConfig, 'get').and.returnValue('ECM');
+            expect(service.isEcmLoggedIn()).toBeTrue();
+        });
+
+        it('should return true if is all provider', () => {
+            spyOn(appConfig, 'get').and.returnValue('ALL');
+            expect(service.isEcmLoggedIn()).toBeTrue();
+        });
+
+        it('should return false if is not ECM provider', () => {
+            spyOn(appConfig, 'get').and.returnValue('BPM');
+            expect(service.isEcmLoggedIn()).toBeFalse();
+        });
+
+        it('should return false if provider is not defined', () => {
+            spyOn(appConfig, 'get').and.returnValue(undefined);
+            expect(service.isEcmLoggedIn()).toBeFalse();
+        });
+    });
+
+    describe('isBpmLoggedIn', () => {
+        beforeEach(() => {
+            mockOAuthService.hasValidAccessToken.and.returnValue(true);
+            mockOAuthService.hasValidIdToken.and.returnValue(true);
+        });
+
+        it('should return true if is BPM provider', () => {
+            spyOn(appConfig, 'get').and.returnValue('BPM');
+            expect(service.isBpmLoggedIn()).toBeTrue();
+        });
+
+        it('should return true if is all provider', () => {
+            spyOn(appConfig, 'get').and.returnValue('ALL');
+            expect(service.isBpmLoggedIn()).toBeTrue();
+        });
+
+        it('should return false if is not BPM provider', () => {
+            spyOn(appConfig, 'get').and.returnValue('ECM');
+            expect(service.isBpmLoggedIn()).toBeFalse();
+        });
+
+        it('should return false if provider is not defined', () => {
+            spyOn(appConfig, 'get').and.returnValue(undefined);
+            expect(service.isBpmLoggedIn()).toBeFalse();
+        });
+    });
 });
 
 describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
@@ -136,8 +252,8 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
         TestBed.configureTestingModule({
             providers: [
                 OidcAuthenticationService,
-                { provide: AppConfigService, useClass: MockAppConfigService },
-                { provide: OAuthService, useClass: MockOAuthService },
+                { provide: AppConfigService, useValue: mockAppConfigService },
+                { provide: OAuthService, useValue: mockOAuthService },
                 { provide: OAuthStorage, useValue: {} },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} },
                 { provide: AuthService, useValue: {} },
