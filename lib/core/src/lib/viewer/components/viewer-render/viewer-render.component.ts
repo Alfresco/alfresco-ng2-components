@@ -139,6 +139,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     internalFileName: string;
     viewerType: string = 'unknown';
     isLoading = false;
+    isFileLoading = false;
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -182,6 +183,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges() {
+        this.isFileLoading = !this.blobFile && !this.urlFile;
+
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {

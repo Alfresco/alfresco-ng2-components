@@ -1,15 +1,17 @@
-<div *ngIf="isLoading" class="adf-viewer-render-main-loader">
-    <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
-        <div class="adf-viewer-render-content-container">
-            <div class="adf-viewer-render__loading-screen">
-                <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
-                <div>
-                    <mat-spinner class="adf-viewer-render__loading-screen__spinner" />
+@if (isLoading || isFileLoading) {
+    <div class="adf-viewer-render-main-loader">
+        <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
+            <div class="adf-viewer-render-content-container">
+                <div class="adf-viewer-render__loading-screen">
+                    <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
+                    <div>
+                        <mat-spinner class="adf-viewer-render__loading-screen__spinner" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 @if (urlFile || blobFile) {
     <div [hidden]="isLoading" class="adf-viewer-render-main">

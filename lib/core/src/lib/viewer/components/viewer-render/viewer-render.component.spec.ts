@@ -489,6 +489,12 @@ describe('ViewerComponent', () => {
             expect(getMainLoader()).not.toBeNull();
         });
 
+        it('should show spinner when isFileLoading is true', () => {
+            component.isFileLoading = true;
+            fixture.detectChanges();
+            expect(getMainLoader()).not.toBeNull();
+        });
+
         it('should show spinner until content is ready when viewerType is media', () => {
             component.isLoading = false;
             component.urlFile = 'some-file.mp4';
@@ -540,6 +546,22 @@ describe('ViewerComponent', () => {
             component.isLoading = false;
             component.urlFile = 'some-url.txt';
 
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(getMainLoader()).toBeNull();
+        });
+
+        it('should not show spinner after url file is set', () => {
+            component.urlFile = 'some-url.txt';
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(getMainLoader()).toBeNull();
+        });
+
+        it('should not show spinner after blob file is set', () => {
+            component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
             component.ngOnChanges();
             fixture.detectChanges();
 
