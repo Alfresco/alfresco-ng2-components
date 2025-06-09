@@ -87,7 +87,7 @@
     "@editorjs/paragraph": "^2.11.7",
     "@editorjs/underline": "1.2.1",
     "@nx/angular": "19.2.0",
-    "@nx/eslint-plugin": "20.6.0",
+    "@nx/eslint-plugin": "21.1.3",
     "@nx/js": "18.3.5",
     "@nx/node": "20.6.2",
     "@nx/storybook": "20.6.4",
