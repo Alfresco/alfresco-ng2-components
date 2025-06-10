@@ -206,22 +206,24 @@ The Viewer supports dynamically-loaded viewer preview extensions, to know more a
 #### Code extension mechanism
 
 You can define your own custom handler to override supported file formats or handle other file formats that are not yet supported by
-the [Viewer render component](viewer.component.md). In order to do that first you need to define a template containing at least one `adf-viewer-extension`:
+the [Viewer render component](viewer.component.md). In order to do that first you need to define a template containing at least one `adf-viewer-extension`. `contentLoaded` should be an `EventEmitter` that will emit as soon as the component responsible for rendering finishes.
 
 ```html    
 <ng-template #viewerExtensions>
     <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
-        <ng-template let-urlFileContent="urlFileContent">
+        <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded">
             <my-custom-xls-component 
-                urlFileContent="urlFileContent">
+                urlFileContent="urlFileContent"
+                (contentLoaded)="markAsLoaded()">
             </my-custom-xls-component>
         </ng-template>
     </adf-viewer-extension>
 
     <adf-viewer-render-extension [supportedExtensions]="['txt']" #extension>
-        <ng-template let-urlFileContent="urlFileContent" >               
+        <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded">               
             <my-custom-txt-component 
-                urlFileContent="urlFileContent">
+                urlFileContent="urlFileContent"
+                (contentLoaded)="markAsLoaded()">
             </my-custom-txt-component>
         </ng-template>
     </adf-viewer-render-extension>

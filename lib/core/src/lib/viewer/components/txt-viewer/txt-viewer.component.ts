@@ -84,7 +84,6 @@ export class TxtViewerComponent implements OnChanges {
 
             reader.onload = () => {
                 this.content = reader.result;
-                resolve();
             };
 
             reader.onerror = (error: any) => {
@@ -93,6 +92,7 @@ export class TxtViewerComponent implements OnChanges {
 
             reader.onloadend = () => {
                 this.contentLoaded.emit();
+                resolve();
             };
 
             reader.readAsText(blob);

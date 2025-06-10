@@ -245,16 +245,17 @@ The Viewer supports dynamically-loaded viewer preview extensions, to know more a
 
 You can define your own custom handler to override supported file formats or handle other file formats that are not yet supported by
 the component. Below is an example that shows how to use the `adf-viewer-extension`
-to handle 3D data files:
+to handle 3D data files. `contentLoaded` should be an `EventEmitter` that will emit as soon as the component responsible for rendering finishes.
 
 ```html
 <adf-alfresco-viewer [nodeId]="nodeId">
     <ng-template #viewerExtensions>
         <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
-            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" let-markAsLoaded="markAsLoaded">
                 <threed-viewer
                     [urlFile]="urlFileContent"
-                    [extension]="extension">
+                    [extension]="extension"
+                    (contentLoaded)="markAsLoaded()">
                 </threed-viewer>
             </ng-template>
         </adf-viewer-extension>
@@ -270,17 +271,19 @@ You need to keep all instances of `adf-viewer-extension` inside `viewerExtension
 <adf-alfresco-viewer [nodeId]="nodeId">
     <ng-template #viewerExtensions>
         <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
-            <ng-template let-urlFileContent="urlFileContent">
+            <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded">
                 <my-custom-xls-component
-                    urlFileContent="urlFileContent">
+                    urlFileContent="urlFileContent"
+                    (contentLoaded)="markAsLoaded()">
                 </my-custom-xls-component>
             </ng-template>
         </adf-viewer-extension>
 
         <adf-viewer-extension [supportedExtensions]="['txt']" #extension>
-            <ng-template let-urlFileContent="urlFileContent" >
+            <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded">
                 <my-custom-txt-component
-                    urlFileContent="urlFileContent">
+                    urlFileContent="urlFileContent"
+                    (contentLoaded)="markAsLoaded()">
                 </my-custom-txt-component>
             </ng-template>
         </adf-viewer-extension>
