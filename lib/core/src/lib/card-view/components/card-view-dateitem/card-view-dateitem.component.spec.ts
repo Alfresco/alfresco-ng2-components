@@ -28,6 +28,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
 import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -38,7 +39,7 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, CardViewDateItemComponent]
+            imports: [NoopTranslateModule, CardViewDateItemComponent, NoopAnimationsModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {

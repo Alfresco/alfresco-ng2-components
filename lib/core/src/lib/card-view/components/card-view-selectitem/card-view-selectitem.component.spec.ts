@@ -173,10 +173,11 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({});
             component.editable = true;
             fixture.detectChanges();
-
+            const not_editable_label = fixture.nativeElement.querySelector('.adf-property-label-not-editable');
             const field = await testingUtils.getMatFormFieldByCSS('.adf-property-value');
 
-            expect(await field.hasLabel()).toBeFalse();
+            expect(await field.hasLabel()).toBeTrue();
+            expect(not_editable_label).toBeNull();
         });
     });
 
