@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { AppConfigService } from '../../../app-config';
 
 @Component({
@@ -33,6 +33,9 @@ export class TxtViewerComponent implements OnChanges {
 
     @Input()
     blobFile: Blob;
+
+    @Output()
+    contentLoaded = new EventEmitter<void>();
 
     content: string | ArrayBuffer;
 
@@ -67,6 +70,9 @@ export class TxtViewerComponent implements OnChanges {
                 },
                 (event) => {
                     reject(event);
+                },
+                () => {
+                    this.contentLoaded.emit();
                 }
             );
         });
@@ -83,6 +89,10 @@ export class TxtViewerComponent implements OnChanges {
 
             reader.onerror = (error: any) => {
                 reject(error);
+            };
+
+            reader.onloadend = () => {
+                this.contentLoaded.emit();
             };
 
             reader.readAsText(blob);

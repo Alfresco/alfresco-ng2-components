@@ -15,8 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, Input, ComponentRef, OnInit, ViewChild, ViewContainerRef, OnDestroy, OnChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    ComponentRef,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+    OnDestroy,
+    OnChanges,
+    EventEmitter,
+    Output,
+    DestroyRef,
+    inject
+} from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-preview-extension',
@@ -43,6 +57,10 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     extension: string;
 
+    @Output()
+    contentLoaded = new EventEmitter<void>();
+
+    private readonly destroyRef = inject(DestroyRef);
     private componentRef: ComponentRef<any>;
 
     constructor(private extensionService: ExtensionService) {}
@@ -73,11 +91,15 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
 
     private updateInstance() {
         if (this.componentRef?.instance) {
-            const instance = this.componentRef.instance;
+            this.componentRef.setInput('url', this.url);
+            this.componentRef.setInput('extension', this.extension);
+            this.componentRef.setInput('nodeId', this.nodeId);
 
-            instance.url = this.url;
-            instance.extension = this.extension;
-            instance.nodeId = this.nodeId;
+            if (this.componentRef.instance?.contentLoaded) {
+                this.componentRef.instance.contentLoaded.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+                    this.contentLoaded.emit();
+                });
+            }
         }
     }
 }
