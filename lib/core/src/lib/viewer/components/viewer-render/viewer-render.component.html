@@ -23,6 +23,7 @@
                         [extension]="externalViewer.fileExtension"
                         [nodeId]="nodeId"
                         [attr.data-automation-id]="externalViewer.component"
+                        (contentLoaded)="markAsLoaded()"
                     />
                 </ng-container>
 
@@ -68,7 +69,7 @@
                 </ng-container>
 
                 <ng-container *ngSwitchCase="'text'">
-                    <adf-txt-viewer [urlFile]="urlFile" [blobFile]="blobFile" />
+                    <adf-txt-viewer [urlFile]="urlFile" [blobFile]="blobFile" (contentLoaded)="markAsLoaded()" />
                 </ng-container>
 
                 <ng-container *ngSwitchCase="'custom'">
@@ -80,6 +81,7 @@
                             [extension]="extension"
                             [nodeId]="nodeId"
                             [attr.data-automation-id]="ext.component"
+                            (contentLoaded)="markAsLoaded()"
                         />
                     </ng-container>
 
@@ -87,7 +89,7 @@
                         <span *ngIf="extensionTemplate.isVisible" class="adf-viewer-render-custom-content">
                             <ng-template
                                 [ngTemplateOutlet]="extensionTemplate.template"
-                                [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension }"
+                                [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }"
                             />
                         </span>
                     </ng-container>
@@ -101,5 +103,5 @@
     </div>
 }
 <ng-container *ngIf="viewerTemplateExtensions">
-    <ng-template [ngTemplateOutlet]="viewerTemplateExtensions" [ngTemplateOutletInjector]="injector" />
+    <ng-template [ngTemplateOutlet]="viewerTemplateExtensions" [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }" [ngTemplateOutletInjector]="injector" />
 </ng-container>

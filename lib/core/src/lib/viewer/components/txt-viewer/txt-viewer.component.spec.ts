@@ -42,6 +42,7 @@ describe('Text View component', () => {
 
     describe('View', () => {
         it('Should text container be present with urlFile', async () => {
+            spyOn(component.contentLoaded, 'emit');
             fixture.detectChanges();
             const urlFile = './fake-test-file.txt';
             const change = new SimpleChange(null, urlFile, true);
@@ -52,9 +53,11 @@ describe('Text View component', () => {
             await fixture.whenStable();
 
             expect(testingUtils.getByCSS('.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
+            expect(component.contentLoaded.emit).toHaveBeenCalled();
         });
 
         it('Should text container be present with Blob file', async () => {
+            spyOn(component.contentLoaded, 'emit');
             const blobFile = new Blob(['text example'], { type: 'text/txt' });
 
             const change = new SimpleChange(null, blobFile, true);
@@ -65,6 +68,7 @@ describe('Text View component', () => {
             await fixture.whenStable();
 
             expect(testingUtils.getByCSS('.adf-txt-viewer-content').nativeElement.textContent).toContain('example');
+            expect(component.contentLoaded.emit).toHaveBeenCalled();
         });
     });
 });

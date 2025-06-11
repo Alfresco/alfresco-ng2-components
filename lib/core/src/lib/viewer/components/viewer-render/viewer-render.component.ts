@@ -178,10 +178,11 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';
-        this.setDefaultLoadingState();
+        this.isLoading = true;
     }
 
     ngOnChanges() {
+        this.isLoading = true;
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
@@ -196,6 +197,9 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     private setUpBlobData() {
         this.internalFileName = this.fileName;
         this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
+        if (this.viewerType === 'unknown') {
+            this.isLoading = false;
+        }
 
         this.extensionChange.emit(this.blobFile.type);
         this.scrollTop();
@@ -205,6 +209,9 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
         this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates);
+        if (this.viewerType === 'unknown') {
+            this.isLoading = false;
+        }
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
@@ -232,15 +239,5 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     onClose() {
         this.close.next(true);
-    }
-
-    private canBePreviewed(): boolean {
-        return this.viewerType === 'media' || this.viewerType === 'pdf' || this.viewerType === 'image';
-    }
-
-    private setDefaultLoadingState() {
-        if (this.canBePreviewed()) {
-            this.isLoading = true;
-        }
     }
 }
