@@ -23,16 +23,25 @@ import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
+import { DecimalNumberPipe } from '../../../../pipes';
 
 describe('NumberWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: NumberWidgetComponent;
     let fixture: ComponentFixture<NumberWidgetComponent>;
     let testingUtils: UnitTestingUtils;
+    let mockDecimalNumberPipe: DecimalNumberPipe;
 
     beforeEach(() => {
+        mockDecimalNumberPipe = jasmine.createSpyObj('DecimalNumberPipe', ['transform']);
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, MatIconModule]
+            imports: [CoreTestingModule, MatInputModule, MatIconModule],
+            providers: [
+                {
+                    provide: DecimalNumberPipe,
+                    useValue: mockDecimalNumberPipe
+                }
+            ]
         });
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;
@@ -40,12 +49,36 @@ describe('NumberWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
+    it('should create', () => {
+        expect(widget).toBeTruthy();
+    });
+
+    describe('with readonly true', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.NUMBER,
+                value: 123.45,
+                id: 'number-id',
+                readOnly: true
+            });
+            fixture.detectChanges();
+        });
+
+        it('should set displayValue using decimalNumberPipe', () => {
+            widget.ngOnInit();
+
+            expect(mockDecimalNumberPipe.transform).toHaveBeenCalledWith(123.45);
+            expect(widget.displayValue).toBe('123.45');
+        });
+    });
+
     describe('with default value', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.NUMBER,
                 value: 123,
-                id: 'number-id'
+                id: 'number-id',
+                readOnly: false
             });
             fixture.detectChanges();
         });
@@ -53,6 +86,7 @@ describe('NumberWidgetComponent', () => {
         it('should display the value', async () => {
             const input = await testingUtils.getMatInput();
 
+            expect(widget.displayValue).toBe(123);
             expect(await input.getValue()).toBe('123');
             expect(widget.field.value).toBe(123);
         });
