@@ -2,9 +2,10 @@
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
         <div class="adf-viewer-render-content-container">
             <div class="adf-viewer-render__loading-screen">
-                <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
+                <h2 id="loading-spinner-label">{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
                 <div>
-                    <mat-spinner class="adf-viewer-render__loading-screen__spinner" />
+                    <mat-spinner attr.aria-labelledby="loading-spinner-label"
+                                 class="adf-viewer-render__loading-screen__spinner" />
                 </div>
             </div>
         </div>
@@ -103,5 +104,7 @@
     </div>
 }
 <ng-container *ngIf="viewerTemplateExtensions">
-    <ng-template [ngTemplateOutlet]="viewerTemplateExtensions" [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }" [ngTemplateOutletInjector]="injector" />
+    <ng-template [ngTemplateOutlet]="viewerTemplateExtensions"
+                 [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }"
+                 [ngTemplateOutletInjector]="injector" />
 </ng-container>

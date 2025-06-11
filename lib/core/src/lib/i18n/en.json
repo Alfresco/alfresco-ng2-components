@@ -452,7 +452,8 @@
       "CANCEL": "Cancel",
       "RESET": "Reset",
       "THUMBNAILS": "Document thumbnails",
-      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel"
+      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
+      "LOADING": "Document is loading"
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",
