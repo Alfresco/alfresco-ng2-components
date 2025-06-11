@@ -61,6 +61,7 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     contentLoaded = new EventEmitter<void>();
 
     private readonly destroyRef = inject(DestroyRef);
+
     private componentRef: ComponentRef<any>;
 
     constructor(private extensionService: ExtensionService) {}
