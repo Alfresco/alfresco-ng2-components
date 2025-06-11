@@ -21,7 +21,7 @@
                    [required]="isRequired()"
                    [value]="displayValue"
                    [(ngModel)]="field.value"
-                   (ngModelChange)="onFieldChanged(field)"
+                   (ngModelChange)="onNumberChange($event)"
                    [disabled]="field.readOnly"
                    [placeholder]="field.placeholder"
                    [title]="field.tooltip"

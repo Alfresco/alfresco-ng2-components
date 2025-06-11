@@ -40,6 +40,45 @@ describe('NumberWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
+    describe('with default value', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.NUMBER,
+                value: 123,
+                id: 'number-id'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should display the value', async () => {
+            const input = await testingUtils.getMatInput();
+
+            expect(await input.getValue()).toBe('123');
+            expect(widget.field.value).toBe(123);
+        });
+
+        it('should have value null when field is cleared', async () => {
+            const input = await testingUtils.getMatInput();
+            await input.setValue('');
+
+            expect(widget.field.value).toBeNull();
+        });
+
+        it('should have value null when value is undefined', async () => {
+            const input = await testingUtils.getMatInput();
+            await input.setValue(undefined);
+
+            expect(widget.field.value).toBeNull();
+        });
+
+        it('should have value null when value is null', async () => {
+            const input = await testingUtils.getMatInput();
+            await input.setValue(null);
+
+            expect(widget.field.value).toBeNull();
+        });
+    });
+
     describe('when tooltip is set', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
