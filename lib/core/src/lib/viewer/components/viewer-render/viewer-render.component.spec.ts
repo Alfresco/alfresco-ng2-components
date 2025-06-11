@@ -520,7 +520,8 @@ describe('ViewerComponent', () => {
             expect(component.viewerType).toBe('pdf');
         });
 
-        it('should show spinner until content is ready when viewerType is image', () => {
+        it('should show spinner until renderer calls markAsLoaded', () => {
+            spyOn(component, 'markAsLoaded').and.callThrough();
             component.isLoading = false;
             component.urlFile = 'some-url.png';
 
@@ -534,16 +535,7 @@ describe('ViewerComponent', () => {
 
             expect(getMainLoader()).toBeNull();
             expect(component.viewerType).toBe('image');
-        });
-
-        it('should not show spinner when isLoading = false and isContentReady = false for other viewer types', () => {
-            component.isLoading = false;
-            component.urlFile = 'some-url.txt';
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-
-            expect(getMainLoader()).toBeNull();
+            expect(component.markAsLoaded).toHaveBeenCalled();
         });
     });
 });
