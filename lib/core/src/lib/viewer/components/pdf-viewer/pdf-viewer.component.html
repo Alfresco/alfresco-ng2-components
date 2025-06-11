@@ -33,7 +33,8 @@
                  aria-expanded="true">
                 <div id="loader-container" class="adf-loader-container">
                     <div class="adf-loader-item">
-                        <mat-progress-bar class="adf-loader-item-progress-bar" mode="indeterminate" />
+                        <mat-progress-bar [attr.aria-label]="'ADF_VIEWER.ARIA.LOADING' | translate"
+                                          class="adf-loader-item-progress-bar" mode="indeterminate" />
                     </div>
                 </div>
             </div>
