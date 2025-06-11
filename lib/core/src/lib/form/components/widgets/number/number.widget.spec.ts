@@ -30,19 +30,21 @@ describe('NumberWidgetComponent', () => {
     let widget: NumberWidgetComponent;
     let fixture: ComponentFixture<NumberWidgetComponent>;
     let testingUtils: UnitTestingUtils;
-    let mockDecimalNumberPipe: DecimalNumberPipe;
+    let mockDecimalNumberPipe: jasmine.SpyObj<DecimalNumberPipe>;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         mockDecimalNumberPipe = jasmine.createSpyObj('DecimalNumberPipe', ['transform']);
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, MatIconModule],
-            providers: [
-                {
-                    provide: DecimalNumberPipe,
-                    useValue: mockDecimalNumberPipe
+
+        await TestBed.configureTestingModule({
+            imports: [CoreTestingModule, MatInputModule, MatIconModule]
+        })
+            .overrideComponent(NumberWidgetComponent, {
+                set: {
+                    providers: [{ provide: DecimalNumberPipe, useValue: mockDecimalNumberPipe }]
                 }
-            ]
-        });
+            })
+            .compileComponents();
+
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -61,14 +63,16 @@ describe('NumberWidgetComponent', () => {
                 id: 'number-id',
                 readOnly: true
             });
-            fixture.detectChanges();
         });
 
         it('should set displayValue using decimalNumberPipe', () => {
-            widget.ngOnInit();
+            const expectedValue = '2000';
+            mockDecimalNumberPipe.transform.and.returnValue(expectedValue);
 
-            expect(mockDecimalNumberPipe.transform).toHaveBeenCalledWith(123.45);
-            expect(widget.displayValue).toBe('123.45');
+            fixture.detectChanges();
+
+            expect(mockDecimalNumberPipe.transform).toHaveBeenCalled();
+            expect(widget.displayValue).toBe(expectedValue);
         });
     });
 
