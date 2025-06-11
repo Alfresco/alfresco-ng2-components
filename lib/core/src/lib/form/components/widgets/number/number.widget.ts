@@ -62,4 +62,12 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             this.displayValue = this.field.value;
         }
     }
+
+    protected onNumberChange(value: string) {
+        if (value === null || value === undefined || value === '') {
+            this.field.value = null;
+        }
+
+        this.onFieldChanged(this.field);
+    }
 }

@@ -23,21 +23,98 @@ import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
+import { DecimalNumberPipe } from '../../../../pipes';
 
 describe('NumberWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: NumberWidgetComponent;
     let fixture: ComponentFixture<NumberWidgetComponent>;
     let testingUtils: UnitTestingUtils;
+    let mockDecimalNumberPipe: jasmine.SpyObj<DecimalNumberPipe>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        mockDecimalNumberPipe = jasmine.createSpyObj('DecimalNumberPipe', ['transform']);
+
+        await TestBed.configureTestingModule({
             imports: [CoreTestingModule, MatInputModule, MatIconModule]
-        });
+        })
+            .overrideComponent(NumberWidgetComponent, {
+                set: {
+                    providers: [{ provide: DecimalNumberPipe, useValue: mockDecimalNumberPipe }]
+                }
+            })
+            .compileComponents();
+
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+    });
+
+    it('should create', () => {
+        expect(widget).toBeTruthy();
+    });
+
+    describe('with readonly true', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.NUMBER,
+                value: 123.45,
+                id: 'number-id',
+                readOnly: true
+            });
+        });
+
+        it('should set displayValue using decimalNumberPipe', () => {
+            const expectedValue = '2000';
+            mockDecimalNumberPipe.transform.and.returnValue(expectedValue);
+
+            fixture.detectChanges();
+
+            expect(mockDecimalNumberPipe.transform).toHaveBeenCalled();
+            expect(widget.displayValue).toBe(expectedValue);
+        });
+    });
+
+    describe('with default value', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.NUMBER,
+                value: 123,
+                id: 'number-id',
+                readOnly: false
+            });
+            fixture.detectChanges();
+        });
+
+        it('should display the value', async () => {
+            const input = await testingUtils.getMatInput();
+
+            expect(widget.displayValue).toBe(123);
+            expect(await input.getValue()).toBe('123');
+            expect(widget.field.value).toBe(123);
+        });
+
+        it('should have value null when field is cleared', async () => {
+            const input = await testingUtils.getMatInput();
+            await input.setValue('');
+
+            expect(widget.field.value).toBeNull();
+        });
+
+        it('should have value null when value is undefined', async () => {
+            const input = await testingUtils.getMatInput();
+            await input.setValue(undefined);
+
+            expect(widget.field.value).toBeNull();
+        });
+
+        it('should have value null when value is null', async () => {
+            const input = await testingUtils.getMatInput();
+            await input.setValue(null);
+
+            expect(widget.field.value).toBeNull();
+        });
     });
 
     describe('when tooltip is set', () => {
