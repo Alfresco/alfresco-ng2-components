@@ -538,7 +538,7 @@ describe('ViewerComponent', () => {
             expect(component.markAsLoaded).toHaveBeenCalled();
         });
 
-        it('should not show spinner and set viewerType to unknow if subsequent renderer throws an error', () => {
+        it('should not show spinner and set viewerType to unknown if subsequent renderer throws an error', () => {
             component.urlFile = 'some-url.png';
             component.ngOnChanges();
             fixture.detectChanges();
