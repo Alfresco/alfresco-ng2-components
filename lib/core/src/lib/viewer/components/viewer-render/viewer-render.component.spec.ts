@@ -278,6 +278,9 @@ describe('ViewerComponent', () => {
             fixtureCustom.detectChanges();
             await fixtureCustom.whenStable();
 
+            fixtureCustom.componentInstance.viewer1.markAsLoaded();
+            fixtureCustom.detectChanges();
+
             let customContent = getCustomViewerContent(fixtureCustom);
             expect(customComponent.extensionsSupportedByTemplates).toEqual(['json', 'test']);
             expect(customComponent.extensionTemplates.length).toBe(2);
@@ -290,6 +293,9 @@ describe('ViewerComponent', () => {
 
             fixtureCustom.detectChanges();
             await fixtureCustom.whenStable();
+
+            fixtureCustom.componentInstance.viewer1.markAsLoaded();
+            fixtureCustom.detectChanges();
 
             customContent = getCustomViewerContent(fixtureCustom);
             expect(customComponent.extensionTemplates[0].isVisible).toBeFalse();
