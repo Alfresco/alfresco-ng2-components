@@ -235,6 +235,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     onUnsupportedFile() {
         this.viewerType = 'unknown';
+        this.isLoading = false;
     }
 
     onClose() {

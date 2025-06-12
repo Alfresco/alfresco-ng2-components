@@ -537,5 +537,17 @@ describe('ViewerComponent', () => {
             expect(component.viewerType).toBe('image');
             expect(component.markAsLoaded).toHaveBeenCalled();
         });
+
+        it('should not show spinner and set viewerType to unknow if subsequent renderer throws an error', () => {
+            component.urlFile = 'some-url.png';
+            component.ngOnChanges();
+            fixture.detectChanges();
+            expect(getMainLoader()).not.toBeNull();
+
+            component.onUnsupportedFile();
+            fixture.detectChanges();
+            expect(getMainLoader()).toBeNull();
+            expect(component.viewerType).toBe('unknown');
+        });
     });
 });
