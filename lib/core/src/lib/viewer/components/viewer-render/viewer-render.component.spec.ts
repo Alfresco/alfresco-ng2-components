@@ -410,6 +410,21 @@ describe('ViewerComponent', () => {
             expect(component.isSaving.emit).toHaveBeenCalledWith(true);
         });
 
+        it('should render invisible container during loading', async () => {
+            component.urlFile = 'fake-url-file.png';
+            component.viewerType = 'image';
+            fixture.detectChanges();
+            component.ngOnChanges();
+            component.isLoading = true;
+            await fixture.whenStable();
+
+            const container: HTMLDivElement = testingUtils.getByCSS('.adf-viewer-render-main')?.nativeElement;
+            expect(container).toBeDefined();
+            expect(container.style.display).not.toBe('none');
+            expect(container.clientWidth).toBe(0);
+            expect(container.clientHeight).toBeGreaterThan(0);
+        });
+
         describe('Attribute', () => {
             it('should  urlFile present not thrown any error ', () => {
                 expect(() => {
