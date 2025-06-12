@@ -122,7 +122,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
      */
     isEcmLoggedIn(): boolean {
         if (this.isOauth()) {
-            return this.oidcAuthenticationService.isEcmLoggedIn();
+            return this.oidcAuthenticationService.isLoggedIn();
         } else {
             return this.basicAlfrescoAuthService.isEcmLoggedIn();
         }
@@ -134,7 +134,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
      */
     isBpmLoggedIn(): boolean {
         if (this.isOauth()) {
-            return this.oidcAuthenticationService.isBpmLoggedIn();
+            return this.oidcAuthenticationService.isLoggedIn();
         } else {
             return this.basicAlfrescoAuthService.isBpmLoggedIn();
         }
