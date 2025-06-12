@@ -168,16 +168,22 @@ export class FilePlansApi extends BaseApi {
      */
     getFilePlanRoles(filePlanId: string, parameters?: FilePlanRoleParameters): Promise<FilePlanRolePaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
-
+        const whereConditions: string[] = [];
+        if (parameters?.where) {
+            if (parameters.where.personId) {
+                whereConditions.push(`personId='${parameters.where.personId}'`);
+            }
+            if (parameters.where.capabilityNames) {
+                whereConditions.push(`capabilityName in (${parameters.where.capabilityNames.map((value) => "'" + value + "'").join(', ')})`);
+            }
+        }
         return this.get({
             path: '/file-plans/{filePlanId}/roles',
             pathParams: {
                 filePlanId
             },
             queryParams: {
-                where: parameters?.where?.capabilityNames
-                    ? `(capabilityName in (${parameters.where.capabilityNames.map((value) => "'" + value + "'").join(', ')}))`
-                    : undefined
+                where: whereConditions.length ? `(${whereConditions.join(' and ')})` : undefined
             }
         });
     }
