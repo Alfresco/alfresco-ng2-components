@@ -101,6 +101,14 @@ describe('Test Img viewer component ', () => {
             fixture.componentInstance.ngAfterViewInit();
             expect(component.cropper).toBeDefined();
         });
+
+        it('should update canvas container after image is loaded', fakeAsync(() => {
+            spyOn(component, 'updateCanvasContainer');
+            component.imageLoaded.emit();
+            tick(200);
+
+            expect(component.updateCanvasContainer).toHaveBeenCalled();
+        }));
     });
 
     describe('Blob', () => {

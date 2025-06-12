@@ -19,9 +19,11 @@ import { NgIf } from '@angular/common';
 import {
     AfterViewInit,
     Component,
+    DestroyRef,
     ElementRef,
     EventEmitter,
     HostListener,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -37,6 +39,7 @@ import Cropper from 'cropperjs';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
 import { ToolbarComponent } from '../../../toolbar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-img-viewer',
@@ -125,6 +128,8 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
+    private readonly destroyRef = inject(DestroyRef);
+
     scale: number = 1.0;
     cropper: Cropper;
     isEditing: boolean = false;
@@ -156,6 +161,13 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     ngAfterViewInit() {
+        this.imageLoaded.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            // Ensure the canvas container is updated after the image is loaded and spinner is hidden
+            setTimeout(() => {
+                this.updateCanvasContainer();
+            }, 100);
+        });
+
         this.cropper = new Cropper(this.imageElement.nativeElement, {
             autoCrop: false,
             checkOrientation: false,
@@ -165,10 +177,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
             zoomOnWheel: true,
             toggleDragModeOnDblclick: false,
             viewMode: 1,
-            checkCrossOrigin: false,
-            ready: () => {
-                this.updateCanvasContainer();
-            }
+            checkCrossOrigin: false
         });
     }
 
