@@ -1,36 +1,14 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<label
-    class="adf-property-label"
-    [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-    *ngIf="showProperty || isEditable"
-    [attr.for]="'card-view-dateitem-' + property.key"
-    [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty, 'adf-property-value-editable': editable }"
-    [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
->
-    {{ property.label | translate }}
-</label>
-=======
 <mat-label
             class="adf-property-label"
             [attr.data-automation-id]="'card-dateitem-label-' + property.key"
             *ngIf="showProperty && !isEditable"
-=======
-<mat-label
-            class="adf-property-label"
-            [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-            *ngIf="showProperty || !isEditable"
->>>>>>> a1a9cc559c (AAE-34482 fix for label inconsistencies issue on modeling)
             [attr.for]="'card-view-dateitem-' + property.key"
             [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty, 'adf-property-value-editable': editable }"
             [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
         >
             {{ property.label | translate }}
 </mat-label>
-<<<<<<< HEAD
->>>>>>> d8445d6896 (fixing card view datetime component in adf using mat-label)
-=======
->>>>>>> a1a9cc559c (AAE-34482 fix for label inconsistencies issue on modeling)
+
 <div class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty }">
     <span *ngIf="!isEditable && !property.multivalued" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span
