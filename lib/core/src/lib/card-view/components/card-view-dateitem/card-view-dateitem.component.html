@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <label
     class="adf-property-label"
     [attr.data-automation-id]="'card-dateitem-label-' + property.key"
@@ -8,6 +9,18 @@
 >
     {{ property.label | translate }}
 </label>
+=======
+<mat-label
+            class="adf-property-label"
+            [attr.data-automation-id]="'card-dateitem-label-' + property.key"
+            *ngIf="showProperty && !isEditable"
+            [attr.for]="'card-view-dateitem-' + property.key"
+            [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty, 'adf-property-value-editable': editable }"
+            [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+        >
+            {{ property.label | translate }}
+</mat-label>
+>>>>>>> d8445d6896 (fixing card view datetime component in adf using mat-label)
 <div class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty }">
     <span *ngIf="!isEditable && !property.multivalued" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span
