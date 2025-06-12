@@ -51,19 +51,11 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
-    directory: "/.github/actions/print-affected-libs"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
     directory: "/.github/actions/set-npm-tag"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/setup"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/slack-group-area"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
