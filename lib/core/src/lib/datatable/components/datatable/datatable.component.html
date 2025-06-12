@@ -236,13 +236,13 @@
                         </button>
                     </mat-menu>
                 </div>
-                <div role="gridcell">
+                <div role="gridcell" style="border: 1px solid red;">
                     <label *ngIf="multiselect"
                         (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                         (click)="onCheckboxLabelClick(row, $event)"
                         [for]="'select-file-' + idx"
                         class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
-                        tabindex="0">
+                        tabindex="0"> This is label
                         <mat-checkbox
                             [id]="'select-file-' + idx"
                             [disabled]="!row?.isSelectable"
