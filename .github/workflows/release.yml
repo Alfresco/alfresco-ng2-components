@@ -228,12 +228,10 @@ jobs:
       name: Final Results
       needs: [release-storybook, release-npm, npm-check-bundle]
       steps:
-
-        - uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
-          name: Nofify FE eng-guild-front-end workflow failed
-          if: ${{ contains(toJson(needs.*.result), 'failure') }}
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          with:
-            channel-id: 'C016SMNNL8L' #eng-guild-front-end
-            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author username: ${{ github.event.pull_request.user.login }}\n Workflow run <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
+        - name: Check job execution status
+          if: >-
+            ${{
+                contains(needs.*.result, 'failure')
+              || contains(needs.*.result, 'cancelled')
+            }}
+          run: exit 1
