@@ -452,7 +452,8 @@
       "CANCEL": "Cancelar",
       "RESET": "Reiniciar",
       "THUMBNAILS": "Miniaturas de documento",
-      "THUMBNAILS_PANLEL_CLOSE": "Cerrar panel de miniaturas"
+      "THUMBNAILS_PANLEL_CLOSE": "Cerrar panel de miniaturas",
+      "LOADING": "Document is loading"
     },
     "PAGE_LABEL": {
       "SHOWING": "Mostrando",

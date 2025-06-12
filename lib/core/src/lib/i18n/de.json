@@ -452,7 +452,8 @@
       "CANCEL": "Abbrechen",
       "RESET": "Zurücksetzen",
       "THUMBNAILS": "Dokumenten-Miniaturansichten",
-      "THUMBNAILS_PANLEL_CLOSE": "Miniaturansichten-Fenster schließen"
+      "THUMBNAILS_PANLEL_CLOSE": "Miniaturansichten-Fenster schließen",
+      "LOADING": "Document is loading"
     },
     "PAGE_LABEL": {
       "SHOWING": "Angezeigt",
