@@ -540,7 +540,6 @@ describe('ViewerComponent', () => {
 
         it('should not show spinner and set viewerType to unknown if subsequent renderer throws an error', () => {
             component.urlFile = 'some-url.png';
-            component.ngOnChanges();
             fixture.detectChanges();
             expect(getMainLoader()).not.toBeNull();
 
