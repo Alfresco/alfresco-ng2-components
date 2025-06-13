@@ -18,12 +18,12 @@
 
 
             <!-- Drag -->
-            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column">
+            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column" role="columnheader" tabindex="0" aria-label="Drag">
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate }}</span>
             </div>
 
             <!-- Actions (left) -->
-            <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
+            <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header" role="columnheader" tabindex="0" aria-label="Actions">
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
             </div>
 
@@ -106,7 +106,14 @@
                         {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
                     </span>
 
-                    <span *ngIf="!col.title && !col.sortable && !headerFilterTemplate" [attr.title]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate"></span>
+                    <!--<span *ngIf="!col.title && !col.sortable && !headerFilterTemplate" [attr.title]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate"></span> -->
+                    <span
+                        class="adf-sr-only"
+                        [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate"
+                        tabindex="0">
+                        {{ 'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate }}
+                    </span>
+
                 </ng-container>
 
                 <div *ngIf="col.header" class="adf-datatable-cell-value">
@@ -124,6 +131,8 @@
                     *ngIf="col.draggable"
                     cdkDragHandle
                     [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }"
+                    aria-hidden="true"
+                    role="presentation"
                 >
                     <adf-icon
                         *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
@@ -141,7 +150,8 @@
                 (click)="$event.stopPropagation()"
                 (keyup.enter)="$event.stopPropagation()"
                 class="adf-datatable__resize-handle"
-                [resizableContainer]="resizableElement">
+                [resizableContainer]="resizableElement"
+                aria-label="Resize column">
                 <div class="adf-datatable__resize-handle--divider"></div>
             </div>
             <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
