@@ -278,6 +278,9 @@ describe('ViewerComponent', () => {
             fixtureCustom.detectChanges();
             await fixtureCustom.whenStable();
 
+            fixtureCustom.componentInstance.viewer1.markAsLoaded();
+            fixtureCustom.detectChanges();
+
             let customContent = getCustomViewerContent(fixtureCustom);
             expect(customComponent.extensionsSupportedByTemplates).toEqual(['json', 'test']);
             expect(customComponent.extensionTemplates.length).toBe(2);
@@ -290,6 +293,9 @@ describe('ViewerComponent', () => {
 
             fixtureCustom.detectChanges();
             await fixtureCustom.whenStable();
+
+            fixtureCustom.componentInstance.viewer1.markAsLoaded();
+            fixtureCustom.detectChanges();
 
             customContent = getCustomViewerContent(fixtureCustom);
             expect(customComponent.extensionTemplates[0].isVisible).toBeFalse();
@@ -408,6 +414,21 @@ describe('ViewerComponent', () => {
             imgViewer.triggerEventHandler('isSaving', true);
 
             expect(component.isSaving.emit).toHaveBeenCalledWith(true);
+        });
+
+        it('should render invisible container during loading', async () => {
+            component.urlFile = 'fake-url-file.png';
+            component.viewerType = 'image';
+            fixture.detectChanges();
+            component.ngOnChanges();
+            component.isLoading = true;
+            await fixture.whenStable();
+
+            const container: HTMLDivElement = testingUtils.getByCSS('.adf-viewer-render-main')?.nativeElement;
+            expect(container).toBeDefined();
+            expect(container.style.display).not.toBe('none');
+            expect(container.clientWidth).toBe(0);
+            expect(container.clientHeight).toBeGreaterThan(0);
         });
 
         describe('Attribute', () => {
