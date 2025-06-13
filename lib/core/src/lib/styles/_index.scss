@@ -8,7 +8,6 @@
 @import './mat-selectors';
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
-@import './snackbar.theme';
 @import './material.theme';
 
 @mixin alfresco-material-theme($theme) {
@@ -115,7 +114,6 @@
     }
 
     @include datetimepicker-theme.mat-datetimepicker-theme($theme);
-    @include adf-snackbar-theme;
     @include adf-material-theme;
 }
 
