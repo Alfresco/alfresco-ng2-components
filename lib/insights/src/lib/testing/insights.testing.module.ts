@@ -22,9 +22,8 @@ import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-conten
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule, HttpClientTestingModule],
+    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule],
     providers: [
-        { provide: JWT_STORAGE_SERVICE, useClass: StorageService },
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         // TODO: remove this as soon as unit test not using jasmine.Ajax

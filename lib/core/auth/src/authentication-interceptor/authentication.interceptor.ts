@@ -30,7 +30,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { Authentication } from '../authentication';
+import { Authentication } from '@alfresco/adf-core';
 
 export const SHOULD_ADD_AUTH_TOKEN = new HttpContextToken<boolean>(() => false);
 
