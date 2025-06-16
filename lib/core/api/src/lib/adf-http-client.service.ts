@@ -332,7 +332,9 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
 
     private createCSRFToken(a?: any): string {
         const randomValue = this.getSecureRandomValue();
-        return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
+        return a
+            ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16)
+            : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken.bind(this));
     }
 
     private getSecureRandomValue(): number {
