@@ -70,11 +70,11 @@ export class WidgetComponent implements AfterViewInit {
 
     // Note for developers:
     // returns <any> object to be able binding it to the <element required="required"> attribute
-    isRequired(): any {
+    isRequired(): boolean {
         if (this.field?.required) {
             return true;
         }
-        return null;
+        return false;
     }
 
     isValid(): boolean {

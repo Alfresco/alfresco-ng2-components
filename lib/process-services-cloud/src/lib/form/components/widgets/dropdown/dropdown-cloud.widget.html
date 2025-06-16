@@ -12,7 +12,7 @@
     <div>
         <mat-form-field>
             <mat-label *ngIf="!field.leftLabels" class="adf-label" [attr.for]="field.id">
-                {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+                {{ field.name | translate }}
             </mat-label>
             <mat-select
                 class="adf-select"
@@ -22,6 +22,7 @@
                 [title]="field.tooltip"
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
+                [required]="isRequired()"
             >
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
 
