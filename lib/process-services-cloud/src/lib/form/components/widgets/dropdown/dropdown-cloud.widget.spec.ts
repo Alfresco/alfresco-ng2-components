@@ -336,7 +336,13 @@ describe('DropdownCloudWidgetComponent', () => {
             });
         });
 
-        it('should be able to display label with asterisk', () => {
+        it('should be able to display label with asterisk when left-label is present', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: true }), {
+                id: 'dropdown-id',
+                name: 'option list',
+                type: FormFieldTypes.DROPDOWN,
+                options: filterOptionList
+            });
             fixture.detectChanges();
 
             const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
@@ -402,6 +408,7 @@ describe('DropdownCloudWidgetComponent', () => {
         describe('and NOT visible', () => {
             beforeEach(() => {
                 widget.field.isVisible = false;
+                widget.field.required = false;
             });
 
             it('should be valid with no option selected', () => {
