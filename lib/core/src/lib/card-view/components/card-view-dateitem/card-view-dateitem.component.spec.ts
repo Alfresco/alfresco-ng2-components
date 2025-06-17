@@ -67,6 +67,7 @@ describe('CardViewDateItemComponent', () => {
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
     const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
+    const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-toggle');
 
     it('should render the label and value', () => {
         fixture.detectChanges();
@@ -120,7 +121,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = true;
         fixture.detectChanges();
 
-        expect(getPropertyValue().trim()).toBe('FAKE-DEFAULT-KEY');
+        expect(getDateTime().trim()).toBe('FAKE-DEFAULT-KEY');
     });
 
     it('should render value when editable:true', () => {
@@ -129,7 +130,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = true;
         fixture.detectChanges();
 
-        expect(getPropertyValue().trim()).toBe('Jul 10, 2017');
+        expect(getDateTime().trim()).toBe('Jul 10, 2017');
     });
 
     it('should render the picker and toggle in case of editable:true', () => {
