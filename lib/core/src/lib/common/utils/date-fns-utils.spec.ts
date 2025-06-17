@@ -53,6 +53,7 @@ describe('DateFnsUtils', () => {
 
     it('should parse datetime', () => {
         const parsed = DateFnsUtils.parseDate('09-02-9999 09:10 AM', 'dd-MM-yyyy hh:mm aa');
+
         expect(isValid(parsed));
         expect(parsed.toISOString()).toBe('9999-02-09T09:10:00.000Z');
     });
