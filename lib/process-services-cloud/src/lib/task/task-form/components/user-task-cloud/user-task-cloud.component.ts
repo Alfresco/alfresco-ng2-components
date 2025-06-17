@@ -160,12 +160,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     taskType: TaskTypesType;
     taskTypeEnum = TaskTypes;
 
-    /**
-     * The `Open next task` feature is currently disabled for forms only.
-     * See https://hyland.atlassian.net/browse/AAE-34514 for further details.
-     */
-    readonly nextTaskCheckboxForFormsActivated = false;
-
     private taskCloudService: TaskCloudService = inject(TaskCloudService);
     private readonly destroyRef = inject(DestroyRef);
 
