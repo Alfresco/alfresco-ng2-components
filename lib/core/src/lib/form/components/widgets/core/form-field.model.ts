@@ -327,13 +327,13 @@ export class FormFieldModel extends FormWidgetModel {
 
                 const isEmptyValue = !value || [this.emptyOption.id, this.emptyOption.name].includes(value);
                 if (isEmptyValue) {
-                    return this.emptyOption.id;
+                    return this.emptyOption;
                 }
             }
 
             if (this.isValidOption(value)) {
                 this.addOption({ id: value.id, name: value.name });
-                return value.id;
+                return value;
             }
 
             if (this.hasMultipleValues) {
@@ -431,6 +431,17 @@ export class FormFieldModel extends FormWidgetModel {
                     const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value);
 
                     this.form.values[this.id] = matchingOption || null;
+                }
+
+                if (typeof this.value === 'object') {
+                    if (this.value.id === 'empty' || this.value.id === '') {
+                        this.form.values[this.id] = null;
+                        break;
+                    }
+
+                    const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value.id);
+
+                    this.form.values[this.id] = matchingOption;
                 }
                 break;
             }

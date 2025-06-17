@@ -146,7 +146,7 @@ describe('FormFieldModel', () => {
             });
 
             expect(field.options).toEqual([{ id: 'id_one', name: 'One' }]);
-            expect(field.value).toEqual('id_one');
+            expect(field.value).toEqual({ id: 'id_one', name: 'One' });
         });
 
         it('should add value (selected options) to field options if NOT present (multiple selection)', () => {
@@ -176,7 +176,7 @@ describe('FormFieldModel', () => {
 
             expect(field.hasEmptyValue).toBe(true);
             expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose one...' });
-            expect(field.value).toEqual('empty');
+            expect(field.value).toEqual({ id: 'empty', name: 'Chose one...' });
         });
 
         it('should set hasEmptyValue to true if "empty" option is present in options', () => {
@@ -238,7 +238,8 @@ describe('FormFieldModel', () => {
                     options: [],
                     value: { id: 'delayed-option-id', name: 'Delayed option' }
                 });
-                expect(field.value).toBe('delayed-option-id');
+
+                expect(field.value).toEqual({ id: 'delayed-option-id', name: 'Delayed option' });
             });
         });
     });
@@ -736,7 +737,7 @@ describe('FormFieldModel', () => {
                 ];
             });
 
-            it('should update form with selected option and options from which we chose', () => {
+            it('should update form with selected option and options from which we chose when is a string', () => {
                 field.value = 'restOpt2';
                 field.updateForm();
 
@@ -974,13 +975,22 @@ describe('FormFieldModel', () => {
             expect(field.options).toEqual(staticOptions);
         });
 
-        it('should selected option appear in form values', () => {
+        it('should selected option appear in form values string', () => {
             const field = getFieldConfig('manual', staticOptions, 'opt2');
 
             field.updateForm();
 
             expect(field.value).toEqual('opt2');
             expect(field.form.values['dropdown_field']).toEqual({ id: 'opt2', name: 'Option 2' });
+        });
+
+        it('should selected option appear in form values obj', () => {
+            const field = getFieldConfig('manual', staticOptions, { id: 'opt3', name: 'opt3' });
+
+            field.updateForm();
+
+            expect(field.value).toEqual({ id: 'opt3', name: 'opt3' });
+            expect(field.form.values['dropdown_field']).toEqual({ id: 'opt3', name: 'opt3' });
         });
     });
 
