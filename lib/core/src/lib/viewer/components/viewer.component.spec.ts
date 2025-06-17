@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -52,6 +52,7 @@ describe('ViewerComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
+    const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -363,6 +364,32 @@ describe('ViewerComponent', () => {
                 expect(testingUtils.getByDataAutomationId('adf-toolbar-left-back')).not.toBeNull();
                 done();
             });
+        });
+
+        it('should display two toolbar dividers by default when close button is visible', () => {
+            component.allowGoBack = true;
+            component.showToolbar = true;
+            component.closeButtonPosition = CloseButtonPosition.Right;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(2);
+        });
+
+        it('should display only one toolbar divider when close button is hidden', () => {
+            component.allowGoBack = false;
+            component.showToolbar = true;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(1);
+        });
+
+        it('should not display any toolbar dividers when showToolbarDividers param is set to false', () => {
+            component.showToolbarDividers = false;
+            component.showToolbar = true;
+            component.allowGoBack = true;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(0);
         });
     });
 
