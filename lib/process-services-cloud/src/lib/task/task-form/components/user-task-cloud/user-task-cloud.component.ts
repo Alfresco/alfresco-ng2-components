@@ -87,7 +87,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     showCompleteButton = true;
 
-    /** Toggle rendering of the `Open next task` checkbox. */
+    /** Toggle rendering of the `Open next task` checkbox (for screens only). */
     @Input()
     showNextTaskCheckbox = false;
 
