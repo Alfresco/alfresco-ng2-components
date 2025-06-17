@@ -1,12 +1,12 @@
 <mat-label
-            class="adf-property-label"
-            [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-            *ngIf="showProperty && !isEditable"
-            [attr.for]="'card-view-dateitem-' + property.key"
-            [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty, 'adf-property-value-editable': editable }"
-            [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-        >
-            {{ property.label | translate }}
+    class="adf-property-label"
+    [attr.data-automation-id]="'card-dateitem-label-' + property.key"
+    *ngIf="showProperty && !isEditable"
+    [attr.for]="'card-view-dateitem-' + property.key"
+    [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty, 'adf-property-value-editable': editable }"
+    [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+>
+    {{ property.label | translate }}
 </mat-label>
 
 <div class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty }">
@@ -19,7 +19,7 @@
             >{{ property.displayValue }}</span
         >
     </span>
-    <mat-form-field *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable">
+    <mat-form-field *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable hxp-input">
         <mat-label
             class="adf-property-label"
             [attr.data-automation-id]="'card-dateitem-label-' + property.key"
@@ -53,32 +53,31 @@
             (dateChange)="onDateChanged($event)"
             [attr.id]="'card-view-dateitem-' + property.key"
         />
+            <mat-icon
+                matIconSuffix
+                *ngIf="showClearAction"
+                class="adf-date-reset-icon"
+                (click)="onDateClear()"
+                [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
+                [attr.data-automation-id]="'datepicker-date-clear-' + property.key"
+            >
+                clear
+            </mat-icon>
+            <mat-datetimepicker-toggle
+                matIconSuffix
+                [attr.tabindex]="-1"
+                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                [attr.data-automation-id]="'datepickertoggle-' + property.key"
+                [for]="datetimePicker"
+            />
 
-        <mat-icon
-            matIconSuffix
-            *ngIf="showClearAction"
-            class="adf-date-reset-icon"
-            (click)="onDateClear()"
-            [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
-            [attr.data-automation-id]="'datepicker-date-clear-' + property.key"
-        >
-            clear
-        </mat-icon>
-        <mat-datetimepicker-toggle
-            matIconSuffix
-            [attr.tabindex]="-1"
-            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-            [attr.data-automation-id]="'datepickertoggle-' + property.key"
-            [for]="datetimePicker"
-        />
-
-        <mat-datetimepicker
-            #datetimePicker
-            [type]="$any(property).type"
-            [timeInterval]="5"
-            [attr.data-automation-id]="'datepicker-' + property.key"
-            [startAt]="valueDate"
-        />
+            <mat-datetimepicker
+                #datetimePicker
+                [type]="$any(property).type"
+                [timeInterval]="5"
+                [attr.data-automation-id]="'datepicker-' + property.key"
+                [startAt]="valueDate"
+            />
     </mat-form-field>
     <ng-template #elseEmptyValueBlock>
         {{ property.default | translate }}
