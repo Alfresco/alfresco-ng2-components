@@ -18,8 +18,9 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { AppConfigService } from '../../app-config';
 import { EventMock } from '../../mock';
@@ -694,5 +695,68 @@ describe('ViewerComponent', () => {
 
             expect(component.downloadFile.emit).toHaveBeenCalled();
         }));
+    });
+
+    describe('ViewerComponent toolbar separators', () => {
+        let component: ViewerComponent<any>;
+        let fixture: ComponentFixture<ViewerComponent<any>>;
+
+        beforeEach(async () => {
+            await TestBed.configureTestingModule({
+                imports: [MatButtonModule, MatIconModule, MatDialogModule],
+                declarations: [ViewerComponent]
+            }).compileComponents();
+        });
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ViewerComponent);
+            component = fixture.componentInstance;
+            component.showViewer = true;
+            fixture.detectChanges();
+        });
+
+        const createToolbarTest = (
+            allowRightSidebar: boolean,
+            hideInfoButton: boolean,
+            allowFullScreen: boolean,
+            allowGoBack: boolean,
+            expectedSeparatorCount: number
+        ) => {
+            it(`should have correct UI state when [R:${allowRightSidebar}, I:${hideInfoButton}, F:${allowFullScreen}, B:${allowGoBack}]`, () => {
+                component.allowRightSidebar = allowRightSidebar;
+                component.hideInfoButton = hideInfoButton;
+                component.allowFullScreen = allowFullScreen;
+                component.allowGoBack = allowGoBack;
+                fixture.detectChanges();
+
+                const separators = fixture.debugElement.queryAll(
+                    // .adf-toolbar-divider is the class used for separators
+                    // If your divider uses a different selector, update here
+                    By.css('adf-toolbar-divider')
+                );
+                expect(separators.length).toBe(expectedSeparatorCount);
+            });
+        };
+
+        describe('Toolbar state combinations', () => {
+            createToolbarTest(true, false, true, true, 2);
+            createToolbarTest(false, false, true, true, 1);
+            createToolbarTest(true, true, true, true, 1);
+            createToolbarTest(true, false, false, true, 1);
+            createToolbarTest(true, false, true, false, 2);
+            createToolbarTest(false, true, false, true, 0);
+            createToolbarTest(false, true, false, false, 0);
+        });
+
+        it('should not show unnecessary separator when close button is disabled but other controls exist', () => {
+            component.allowGoBack = false;
+            component.allowFullScreen = true;
+            component.allowRightSidebar = true;
+            component.hideInfoButton = false;
+            fixture.detectChanges();
+
+            const separators = fixture.debugElement.queryAll(By.css('adf-toolbar-divider'));
+            expect(separators.length).toBe(2);
+        });
     });
 });
