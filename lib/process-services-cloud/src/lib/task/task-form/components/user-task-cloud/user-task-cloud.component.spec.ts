@@ -524,9 +524,9 @@ describe('UserTaskCloudComponent', () => {
         const isCheckboxShown = () => {
             const screenElement = fixture.debugElement.query(By.css('adf-cloud-task-screen'));
             expect(screenElement).toBeTruthy();
-            const component: TaskScreenCloudMockComponent = screenElement.componentInstance;
-            expect(component).toBeTruthy();
-            return component.showNextTaskCheckbox;
+            const screenComponent: TaskScreenCloudMockComponent = screenElement.componentInstance;
+            expect(screenComponent).toBeTruthy();
+            return screenComponent.showNextTaskCheckbox;
         };
 
         const prepareTestCase = (testCase: {
