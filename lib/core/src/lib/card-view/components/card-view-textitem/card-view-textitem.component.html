@@ -5,7 +5,7 @@
             [ngClass]="{
                 'adf-property-read-only': !isEditable
             }"
-            [floatLabel]="'auto'"
+            [floatLabel]="property.default ? 'always' : 'auto'"
         >
             <mat-label
                 *ngIf="showProperty || isEditable"
