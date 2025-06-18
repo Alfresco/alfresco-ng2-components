@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
@@ -36,6 +36,9 @@ import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src
 import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
+import { By } from '@angular/platform-browser';
+import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -52,6 +55,34 @@ const taskDetails: TaskDetailsCloudModel = {
     permissions: [TASK_VIEW_PERMISSION]
 };
 
+@Component({
+    selector: 'adf-cloud-task-screen',
+    standalone: true,
+    template: ''
+})
+class TaskScreenCloudMockComponent {
+    @Input() taskId: string;
+    @Input() appName: string = '';
+    @Input() canClaimTask: boolean;
+    @Input() canUnclaimTask: boolean;
+    @Input() showCancelButton: boolean;
+    @Input() screenId: string = '';
+    @Input() processInstanceId: string = '';
+    @Input() taskName: string = '';
+    @Input() readOnly = false;
+    @Input() rootProcessInstanceId: string = '';
+    @Input() isNextTaskCheckboxChecked = false;
+    @Input() showNextTaskCheckbox = false;
+
+    @Output() taskSaved = new EventEmitter();
+    @Output() taskCompleted = new EventEmitter<any>();
+    @Output() error = new EventEmitter<any>();
+    @Output() cancelTask = new EventEmitter<any>();
+    @Output() claimTask = new EventEmitter<any>();
+    @Output() unclaimTask = new EventEmitter<any>();
+    @Output() nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
+}
+
 describe('UserTaskCloudComponent', () => {
     let component: UserTaskCloudComponent;
     let fixture: ComponentFixture<UserTaskCloudComponent>;
@@ -65,7 +96,11 @@ describe('UserTaskCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule, UserTaskCloudComponent, TaskFormCloudComponent]
+        }).overrideComponent(UserTaskCloudComponent, {
+            remove: { imports: [TaskScreenCloudComponent] },
+            add: { imports: [TaskScreenCloudMockComponent] }
         });
+
         fixture = TestBed.createComponent(UserTaskCloudComponent);
         component = fixture.componentInstance;
         errorEmitSpy = spyOn(component.error, 'emit');
@@ -475,5 +510,85 @@ describe('UserTaskCloudComponent', () => {
 
         const noFormTemplateTitleText = await matCard.getTitleText();
         expect(noFormTemplateTitleText).toBe('');
+    });
+
+    it('should allow controlling [open next task] checkbox visibility', () => {
+        taskDetails.formKey = 'my-screen';
+        component.taskDetails = { ...taskDetails };
+        component.getTaskType();
+        component.taskId = 'taskId';
+        component.appName = 'app';
+
+        const spy = spyOn(taskCloudService, 'canCompleteTask');
+
+        const isCheckboxShown = () => {
+            const screenElement = fixture.debugElement.query(By.css('adf-cloud-task-screen'));
+            expect(screenElement).toBeTruthy();
+            const component: TaskScreenCloudMockComponent = screenElement.componentInstance;
+            expect(component).toBeTruthy();
+            return component.showNextTaskCheckbox;
+        };
+
+        const prepareTestCase = (testCase: {
+            showNextTaskCheckbox: boolean;
+            showCompleteButton: boolean;
+            readOnly: boolean;
+            canCompleteTask: boolean;
+        }): void => {
+            component.showNextTaskCheckbox = testCase.showNextTaskCheckbox;
+            component.showCompleteButton = testCase.showCompleteButton;
+            component.readOnly = testCase.readOnly;
+            spy.calls.reset();
+            spy.and.returnValue(testCase.canCompleteTask);
+            fixture.detectChanges();
+        };
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: true, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: false });
+        expect(isCheckboxShown()).toBeFalse();
+
+        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeTrue();
     });
 });
