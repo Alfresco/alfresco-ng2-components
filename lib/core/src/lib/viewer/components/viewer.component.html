@@ -10,8 +10,6 @@
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
                 <adf-toolbar-title>
-                    <adf-toolbar-divider />
-
                     <ng-container *ngIf="allowLeftSidebar">
                         <button mat-icon-button
                                 [attr.aria-expanded]="showLeftSidebar"
