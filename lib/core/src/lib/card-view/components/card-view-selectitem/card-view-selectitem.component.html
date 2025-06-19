@@ -1,13 +1,9 @@
 <ng-container *ngIf="!property.isEmpty() || isEditable">
     <div [ngSwitch]="templateType">
         <div *ngSwitchDefault>
-            <div *ngIf="!isEditable"
+        <div *ngIf="!isEditable"
             [attr.data-automation-id]="'card-select-label-' + property.key"
-            class="adf-property-label adf-property-label-not-editable"
-            [ngClass]="{
-                'adf-property-value-editable': isEditable,
-                'adf-property-readonly-value': isReadonlyProperty
-            }"
+            class="adf-property-label"
             >{{ property.label | translate }}
         </div>
             <div class="adf-property-field">
