@@ -1,10 +1,7 @@
 <form>
     <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label>
-            <span>{{label}}</span>
-            <span class="adf-asterisk" [style.visibility]="required ? 'visible' : 'hidden'">*</span>
-        </mat-label>
-        <mat-chip-grid #groupChipList data-automation-id="adf-cloud-group-chip-list">
+        @if (label) { <mat-label><span>{{label}}</span></mat-label> }
+        <mat-chip-grid [required]="required" #groupChipList data-automation-id="adf-cloud-group-chip-list">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 [removable]="!(group.readonly)"

@@ -11,11 +11,15 @@
         <mat-form-field class="adf-date-time-widget adf-form-field-input"
                         [class.adf-left-label-input-datepicker]="field.leftLabels"
                         [hideRequiredMarker]="true" [floatLabel]="field.placeholder ? 'always' : null">
+            @if(field.name) {
             <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
-                {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+                {{ field.name | translate }} ({{ field.dateDisplayFormat }})
             </mat-label>
+            }
             <input matInput
                    [matDatetimepicker]="datetimePicker"
+                   [readonly]="field.readOnly"
+                   [required]="isRequired()"
                    [id]="field.id"
                    [formControl]="datetimeInputControl"
                    (keydown.enter)="datetimePicker.open()"
