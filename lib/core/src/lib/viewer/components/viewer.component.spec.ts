@@ -701,62 +701,50 @@ describe('ViewerComponent', () => {
         let component: ViewerComponent<any>;
         let fixture: ComponentFixture<ViewerComponent<any>>;
 
-        beforeEach(async () => {
-            await TestBed.configureTestingModule({
-                imports: [MatButtonModule, MatIconModule, MatDialogModule],
-                declarations: [ViewerComponent]
-            }).compileComponents();
-        });
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(ViewerComponent);
-            component = fixture.componentInstance;
-            component.showViewer = true;
-            fixture.detectChanges();
-        });
-
         const createToolbarTest = (
-            allowRightSidebar: boolean,
+            allowLeftSidebar: boolean,
             hideInfoButton: boolean,
             allowFullScreen: boolean,
             allowGoBack: boolean,
+            mnuOpenWith: any,
             expectedSeparatorCount: number
         ) => {
-            it(`should have correct UI state when [R:${allowRightSidebar}, I:${hideInfoButton}, F:${allowFullScreen}, B:${allowGoBack}]`, () => {
-                component.allowRightSidebar = allowRightSidebar;
+            it(`should have correct UI state when [L:${allowLeftSidebar}, I:${hideInfoButton}, F:${allowFullScreen}, B:${allowGoBack}, O:${!!mnuOpenWith}]`, () => {
+                component.allowLeftSidebar = allowLeftSidebar;
                 component.hideInfoButton = hideInfoButton;
                 component.allowFullScreen = allowFullScreen;
                 component.allowGoBack = allowGoBack;
+                component.mnuOpenWith = mnuOpenWith;
                 fixture.detectChanges();
 
-                const separators = fixture.debugElement.queryAll(
-                    // .adf-toolbar-divider is the class used for separators
-                    // If your divider uses a different selector, update here
-                    By.css('adf-toolbar-divider')
-                );
-                expect(separators.length).toBe(expectedSeparatorCount);
+                const separators = fixture.debugElement.queryAll(By.css('adf-toolbar-divider'));
+                const visibleSeparators = separators.filter((sep) => getComputedStyle(sep.nativeElement).display !== 'none');
+                expect(visibleSeparators.length).toBe(expectedSeparatorCount);
             });
         };
 
         describe('Toolbar state combinations', () => {
-            createToolbarTest(true, false, true, true, 2);
-            createToolbarTest(false, false, true, true, 1);
-            createToolbarTest(true, true, true, true, 1);
-            createToolbarTest(true, false, false, true, 1);
-            createToolbarTest(true, false, true, false, 2);
-            createToolbarTest(false, true, false, true, 0);
-            createToolbarTest(false, true, false, false, 0);
-        });
+            createToolbarTest(true, false, true, true, {}, 2);
+            createToolbarTest(false, false, true, true, null, 1);
+            createToolbarTest(true, true, true, true, {}, 1);
+            createToolbarTest(false, false, false, true, null, 1);
+            createToolbarTest(true, false, true, false, {}, 2);
+            createToolbarTest(false, true, false, true, null, 0);
+            createToolbarTest(false, true, false, false, null, 0);
 
-        it('should not show unnecessary separator when close button is disabled but other controls exist', () => {
-            component.allowGoBack = false;
-            component.allowFullScreen = true;
-            component.allowRightSidebar = true;
-            component.hideInfoButton = false;
-            fixture.detectChanges();
+            it('should not show unnecessary separator when close button is disabled but other controls exist', () => {
+                component.allowLeftSidebar = true;
+                component.hideInfoButton = false;
+                component.allowFullScreen = true;
+                component.allowGoBack = false;
+                component.mnuOpenWith = {};
 
-            const separators = fixture.debugElement.queryAll(By.css('adf-toolbar-divider'));
-            expect(separators.length).toBe(2);
+                fixture.detectChanges();
+
+                const separators = fixture.debugElement.queryAll(By.css('adf-toolbar-divider'));
+                const visibleSeparators = separators.filter((sep) => getComputedStyle(sep.nativeElement).display !== 'none');
+                expect(visibleSeparators.length).toBe(2);
+            });
         });
     });
 });

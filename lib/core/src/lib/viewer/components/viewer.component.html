@@ -9,7 +9,6 @@
         <ng-content select="adf-viewer-toolbar" />
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
-                <adf-toolbar-title>
 
                     <ng-container *ngIf="allowLeftSidebar">
                         <button mat-icon-button
@@ -22,6 +21,7 @@
                             <mat-icon>info_outline</mat-icon>
                         </button>
                     </ng-container>
+
                     <button *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Left"
                             class="adf-viewer-close-button"
                             data-automation-id="adf-toolbar-left-back"
@@ -31,23 +31,37 @@
                             (click)="onClose()">
                         <mat-icon>close</mat-icon>
                     </button>
-                    <button *ngIf="allowNavigate && canNavigateBefore"
-                            data-automation-id="adf-toolbar-pref-file"
-                            mat-icon-button
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
-                            title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
-                            (click)="onNavigateBeforeClick($event)">
-                        <mat-icon>navigate_before</mat-icon>
-                    </button>
-                    <button *ngIf="allowNavigate && canNavigateNext"
-                            data-automation-id="adf-toolbar-next-file"
-                            mat-icon-button
-                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
-                            title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
-                            (click)="onNavigateNextClick($event)">
-                        <mat-icon>navigate_next</mat-icon>
-                    </button>
-                </adf-toolbar-title>
+
+                    <div class="adf-viewer__file-title">
+                        <button *ngIf="allowNavigate && canNavigateBefore"
+                                data-automation-id="adf-toolbar-pref-file"
+                                mat-icon-button
+                                [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
+                                title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
+                                (click)="onNavigateBeforeClick($event)">
+                            <mat-icon>navigate_before</mat-icon>
+                        </button>
+
+                        <img class="adf-viewer__mimeicon"
+                             [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
+                             [src]="mimeTypeIconUrl"
+                             data-automation-id="adf-file-thumbnail">
+
+                        <div class="adf-viewer__display-name"
+                             id="adf-viewer-display-name"
+                             [title]="fileName">
+                            <span>{{ displayName }}</span>
+                        </div>
+
+                        <button *ngIf="allowNavigate && canNavigateNext"
+                                data-automation-id="adf-toolbar-next-file"
+                                mat-icon-button
+                                [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
+                                title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
+                                (click)="onNavigateNextClick($event)">
+                            <mat-icon>navigate_next</mat-icon>
+                        </button>
+                    </div>
 
                 <ng-content select="adf-viewer-toolbar-actions" />
 
@@ -66,6 +80,7 @@
                     </mat-menu>
                 </ng-container>
 
+                <adf-toolbar-divider />
 
                 <ng-content select="adf-viewer-toolbar-custom-actions" />
 
@@ -118,18 +133,6 @@
                         <mat-icon>close</mat-icon>
                     </button>
                 </ng-container>
-
-                <div class="adf-viewer__file-title">
-                    <img class="adf-viewer__mimeicon"
-                         [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
-                         [src]="mimeTypeIconUrl"
-                         data-automation-id="adf-file-thumbnail">
-                    <div class="adf-viewer__display-name"
-                         id="adf-viewer-display-name"
-                         [title]="fileName">
-                        <span>{{ displayName }}</span>
-                    </div>
-                </div>
             </adf-toolbar>
         </ng-container>
 
