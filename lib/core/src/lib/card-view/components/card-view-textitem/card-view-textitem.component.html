@@ -110,7 +110,7 @@
         (keyup.enter)="clicked()"
         (click)="clicked()"
     >
-        <mat-form-field class="adf-property-field adf-card-textitem-field" [floatLabel]="'auto'">
+        <mat-form-field class="adf-property-field adf-card-textitem-field" [floatLabel]="property.default ? 'always' : null">
             <mat-label
                 *ngIf="showProperty || isEditable"
                 [attr.data-automation-id]="'card-textitem-label-' + property.key"

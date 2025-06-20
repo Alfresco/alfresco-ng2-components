@@ -47,7 +47,7 @@
             <mat-form-field
                 class="adf-property-field adf-card-selectitem-autocomplete"
                 [ngClass]="{ 'adf-property-read-only': !isEditable }"
-                [floatLabel]="'always'"
+                [floatLabel]="property.default ? 'always' : null"
             >
                 <mat-label
                     *ngIf="showProperty || isEditable"
