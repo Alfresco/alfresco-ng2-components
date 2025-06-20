@@ -18,7 +18,7 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -698,9 +698,6 @@ describe('ViewerComponent', () => {
     });
 
     describe('ViewerComponent toolbar separators', () => {
-        let component: ViewerComponent<any>;
-        let fixture: ComponentFixture<ViewerComponent<any>>;
-
         const createToolbarTest = (
             allowLeftSidebar: boolean,
             hideInfoButton: boolean,
