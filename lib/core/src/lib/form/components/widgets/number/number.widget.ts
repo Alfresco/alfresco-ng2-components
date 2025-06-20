@@ -66,6 +66,11 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     protected onNumberChange(value: string) {
         if (value === null || value === undefined || value === '') {
             this.field.value = null;
+        } else {
+            const parsedValue = parseFloat(value);
+            if (!isNaN(parsedValue)) {
+                this.field.value = parsedValue;
+            }
         }
 
         this.onFieldChanged(this.field);
