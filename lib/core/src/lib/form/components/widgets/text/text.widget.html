@@ -8,7 +8,7 @@
         </label>
     </div>
     <div>
-        <mat-form-field [hideRequiredMarker]="true" class="adf-form-field-input" [floatLabel]="placeholder ? 'always' : 'auto'">
+        <mat-form-field [hideRequiredMarker]="true" class="adf-form-field-input" [floatLabel]="getFloatLabel()">
             <mat-label *ngIf="!field.leftLabels" class="adf-label" [attr.for]="field.id">
                 {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
             </mat-label>

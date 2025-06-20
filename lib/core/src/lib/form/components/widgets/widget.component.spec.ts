@@ -114,4 +114,14 @@ describe('WidgetComponent', () => {
         widget.field = new FormFieldModel(null, { required: true });
         expect(widget.isRequired()).toBeTruthy();
     });
+
+    it('should check the floatLabel of the field', () => {
+        widget.field = new FormFieldModel(null, { placeholder: 'Test Placeholder' });
+        fixture.detectChanges();
+        expect(widget.getFloatLabel()).toBe('always');
+
+        widget.field = new FormFieldModel(null, { placeholder: '' });
+        fixture.detectChanges();
+        expect(widget.getFloatLabel()).toBeNull();
+    });
 });

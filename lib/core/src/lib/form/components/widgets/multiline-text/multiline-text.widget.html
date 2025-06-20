@@ -1,7 +1,7 @@
 <div class="adf-multiline-text-widget {{ field.className }}"
      [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-readonly]="field.readOnly">
-    <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true" class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : 'auto'">
+    <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true" class="adf-form-field-input" [floatLabel]="getFloatLabel()">
         <mat-label class="adf-label" [attr.for]="field.id">
             {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </mat-label>

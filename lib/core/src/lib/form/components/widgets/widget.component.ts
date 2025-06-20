@@ -21,6 +21,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulatio
 import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
 import { FormFieldModel } from './core';
+import { MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 /**
  * Base widget component.
@@ -75,6 +76,13 @@ export class WidgetComponent implements AfterViewInit {
             return true;
         }
         return false;
+    }
+
+    getFloatLabel(): MatFormFieldDefaultOptions['floatLabel'] {
+        if (this.field?.placeholder && this.field.placeholder.trim().length > 0) {
+            return 'always';
+        }
+        return null;
     }
 
     isValid(): boolean {
