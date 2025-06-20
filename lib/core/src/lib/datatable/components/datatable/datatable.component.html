@@ -17,15 +17,18 @@
             role="row">
 
             <!-- Drag -->
-            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column">
+            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column" role="presentation">
+                <div cdkDragHandle 
+                    class="adf-drag-handle"
+                    aria-hidden="true">
+                </div>
             </div>
 
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'"
                 class="adf-actions-column adf-datatable-cell-header"
-                tabindex="0"
-                [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate">
-                <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
+                role="columnheader">
+                    <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
             </div>
 
 
@@ -109,9 +112,7 @@
                     </span>
 
                     <span *ngIf="!col.title && !col.sortable && !headerFilterTemplate"
-                        class="adf-sr-only"
                         [attr.title]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate">
-                    {{ 'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate }}
                     </span>
 
                 </ng-container>
