@@ -16,12 +16,11 @@
                     {{ property.displayValue | async | translate }}
                 </div>
                 <div *ngIf="isEditable">
-                    <mat-form-field class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': isEditable }">
+                    <mat-form-field class="adf-property-value">
                         <mat-label
                             [attr.data-automation-id]="'card-select-label-' + property.key"
-                            class="adf-property-label"
+                            class="adf-property-label adf-property-value-editable"
                             [ngClass]="{
-                                'adf-property-value-editable': isEditable,
                                 'adf-property-readonly-value': isReadonlyProperty
                             }"
                             >{{ property.label | translate }}
