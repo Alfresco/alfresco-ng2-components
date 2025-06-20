@@ -17,20 +17,16 @@
             role="row">
 
             <!-- Drag -->
-            <th *ngIf="enableDragRows"
-                class="adf-datatable-cell-header adf-drag-column"
-                tabindex="0"
-                [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate">
-                <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate }}</span>
-            </th>
+            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column">
+            </div>
 
             <!-- Actions (left) -->
-            <th *ngIf="actions && actionsPosition === 'left'"
+            <div *ngIf="actions && actionsPosition === 'left'"
                 class="adf-actions-column adf-datatable-cell-header"
                 tabindex="0"
                 [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate">
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
-            </th>
+            </div>
 
 
             <!-- Columns -->
@@ -112,11 +108,10 @@
                         {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
                     </span>
 
-                    <span
+                    <span *ngIf="!col.title && !col.sortable && !headerFilterTemplate"
                         class="adf-sr-only"
-                        [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate"
-                        tabindex="0">
-                        {{ 'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate }}
+                        [attr.title]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate">
+                    {{ 'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate }}
                     </span>
 
                 </ng-container>
@@ -136,7 +131,6 @@
                     *ngIf="col.draggable"
                     cdkDragHandle
                     [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }"
-                    aria-hidden="true"
                 >
                     <adf-icon
                         *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
@@ -147,7 +141,7 @@
             </div>
             <div
                 *ngIf="isResizingEnabled && col.resizable && !lastColumn"
-                [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable_resize-handle-visible' : 'adf-datatable_resize-handle-hidden'"
+                [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
                 adf-resize-handle
                 tabindex="0"
                 role="button"
@@ -199,7 +193,7 @@
     <div
         *ngIf="!loading; else loadingRowTemplate"
         class="adf-datatable-body"
-        [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing), 'adf-datatable-body_draggable': enableDragRows && !isDraggingRow, 'adf-datatable-body_dragging': isDraggingRow }"
+        [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing), 'adf-datatable-body__draggable': enableDragRows && !isDraggingRow, 'adf-datatable-body__dragging': isDraggingRow }"
         cdkDropList
         [cdkDropListDisabled]="!enableDragRows"
         role="rowgroup">
@@ -251,28 +245,28 @@
                         </button>
                     </mat-menu>
                 </div>
-                <td
+                
+                <label *ngIf="multiselect"
+                    (keydown.enter)="onEnterKeyPressed(row, $any($event))"
+                    (click)="onCheckboxLabelClick(row, $event)"
+                    [for]="'select-file-' + idx"
                     class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
-                    tabindex="0"
-                    [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
-                >
+                    tabindex="0">
+                    
                     <mat-checkbox
-                        *ngIf="multiselect"
                         [id]="'select-file-' + idx"
                         [disabled]="!row?.isSelectable"
                         [class.adf-datatable-checkbox-selected]="row.isSelected"
                         [class.adf-datatable-hover-only]="displayCheckboxesOnHover"
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
-                        [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
+                        [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
                         data-adf-datatable-row-checkbox
                         (change)="onCheckboxChange(row, $event)"
-                        class="adf-checkbox-sr-only"
-                    >
+                        class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
-                </td>
-
+                </label>
         
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
