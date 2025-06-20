@@ -78,7 +78,9 @@
                     </mat-menu>
                 </ng-container>
 
-                <adf-toolbar-divider />
+                @if (showToolbarDividers) {
+                    <adf-toolbar-divider />
+                }
 
                 <ng-content select="adf-viewer-toolbar-custom-actions" />
 
@@ -123,8 +125,9 @@
                 </ng-container>
 
                 <ng-container *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Right">
-                    <adf-toolbar-divider />
-
+                    @if (showToolbarDividers) {
+                        <adf-toolbar-divider />
+                    }
                     <button class="adf-viewer-close-button"
                             data-automation-id="adf-toolbar-right-back"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
