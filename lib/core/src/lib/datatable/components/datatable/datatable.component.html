@@ -17,7 +17,7 @@
             role="row"> 
 
             <!-- Drag -->
-            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column" role="presentation">
+            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column">
                 <div cdkDragHandle 
                     class="adf-drag-handle"
                     aria-hidden="true">
@@ -26,8 +26,7 @@
 
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'"
-                class="adf-actions-column adf-datatable-cell-header"
-                role="columnheader">
+                class="adf-actions-column adf-datatable-cell-header">
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
             </div>
 
