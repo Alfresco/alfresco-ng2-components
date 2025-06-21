@@ -5,11 +5,10 @@
 >
     <mat-form-field
         floatPlaceholder="never"
-        [hideRequiredMarker]="true"
         class="adf-form-field-input"
         [floatLabel]="field.placeholder ? 'always' : null"
     >
-        @if(field.name) {
+        @if(field.name || field.required) {
         <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
         }
         <textarea
