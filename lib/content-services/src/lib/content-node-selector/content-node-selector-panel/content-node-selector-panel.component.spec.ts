@@ -131,10 +131,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(lastValue).toBe('fake-site');
             });
 
-            it('should trigger siteChange event when a site is selected in sites-dropdown', async () => {
+            it('should trigger siteChange event when a site is selected in sites-dropdown', () => {
                 const fakeSiteEntry = new SiteEntry({ entry: new Site({ title: 'fake-new-site', guid: 'fake-new-site' }) });
+                component.ngOnInit();
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 let lastValue: string;
                 component.siteChange.subscribe((siteTitle: string) => (lastValue = siteTitle));
