@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, APP_INITIALIZER, Injectable } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
@@ -25,21 +25,7 @@ import { VersionCompatibilityService } from '../version-compatibility/version-co
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { AlfrescoApiServiceMock } from '../mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-
-@Injectable()
-export class MockAdfHttpClient {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    post(_url: string, _body: any): Promise<any> {
-        return Promise.resolve({ success: true, mockData: 'default response' });
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    get(_url: string): Promise<unknown> {
-        return Promise.resolve({ success: true, mockData: 'default get response' });
-    }
-
-    // Add other methods (put, delete, etc.) as needed with default mock behavior
-}
+import { AdfHttpClientMock } from 'lib/mock/adf-http-client.mock';
 
 @NgModule({
     imports: [NoopAnimationsModule, CoreModule, NoopAuthModule, NoopTranslateModule, ContentModule, MatIconTestingModule],
@@ -51,7 +37,7 @@ export class MockAdfHttpClient {
             deps: [VersionCompatibilityService],
             multi: true
         },
-        { provide: AdfHttpClient, useClass: MockAdfHttpClient }
+        { provide: AdfHttpClient, useClass: AdfHttpClientMock }
     ],
     exports: [NoopAnimationsModule, CoreModule, ContentModule]
 })
