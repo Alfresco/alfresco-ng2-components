@@ -34,7 +34,7 @@ import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/api';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-    constructor(private authService: Authentication) {}
+    constructor(private readonly authService: Authentication) {}
 
     intercept(
         req: HttpRequest<any>,
