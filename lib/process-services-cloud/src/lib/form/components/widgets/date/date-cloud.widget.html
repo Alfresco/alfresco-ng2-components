@@ -14,7 +14,7 @@
         >
     </div>
     <div>
-        <mat-form-field class="adf-date-widget" [class.adf-left-label-input-datepicker]="field.leftLabels">
+        <mat-form-field class="adf-date-widget adf-form-field-input" [class.adf-left-label-input-datepicker]="field.leftLabels">
             @if (field.name || field.required) {
                 <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
                     {{field.name | translate }} ({{field.dateDisplayFormat}})>
@@ -26,7 +26,7 @@
                 [id]="field.id"
                 [formControl]="dateInputControl"
                 [placeholder]="field.placeholder"
-                [required]="isRequired()"
+                [required]="field.required"
                 [min]="minDate"
                 [max]="maxDate"
                 [title]="field.tooltip"

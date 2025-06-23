@@ -17,9 +17,10 @@
             </mat-label>
             }
             <input matInput
+                   class="adf-input"
                    [matDatetimepicker]="datetimePicker"
                    [readonly]="field.readOnly"
-                   [required]="isRequired() && field.isVisible"
+                   [required]="field.required && field.isVisible"
                    [id]="field.id"
                    [formControl]="datetimeInputControl"
                    (keydown.enter)="datetimePicker.open()"

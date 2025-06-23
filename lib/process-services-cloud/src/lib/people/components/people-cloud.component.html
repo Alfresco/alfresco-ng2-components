@@ -2,7 +2,7 @@
     <mat-form-field
         [subscriptSizing]="formFieldSubscriptSizing"
         [floatLabel]="'auto'"
-        class="adf-people-cloud"
+        class="adf-people-cloud adf-form-field-input"
         [class.adf-invalid]="hasError() && isDirty()"
     >
         <mat-label *ngIf="!title">
@@ -37,6 +37,7 @@
                 [matChipInputFor]="userMultipleChipList"
                 [required]="required"
                 [placeholder]="placeholder"
+                [disabled]="isReadonly() || isValidationLoading()"
                 (focus)="setFocus(true)"
                 (blur)="setFocus(false); markAsTouched()"
                 class="adf-cloud-input"

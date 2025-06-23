@@ -17,7 +17,7 @@
                    class="adf-input"
                    type="text"
                    [id]="field.id"
-                   [required]="isRequired()"
+                   [required]="field.required"
                    [value]="field.value"
                    [(ngModel)]="field.value"
                    (ngModelChange)="onFieldChanged(field)"

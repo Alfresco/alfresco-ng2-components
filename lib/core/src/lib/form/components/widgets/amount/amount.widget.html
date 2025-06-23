@@ -19,7 +19,7 @@
                 class="adf-input"
                 type="text"
                 [id]="field.id"
-                [required]="isRequired() && field.isVisible"
+                [required]="field.required && field.isVisible"
                 [placeholder]="placeholder"
                 [value]="field.value"
                 [(ngModel)]="field.value"

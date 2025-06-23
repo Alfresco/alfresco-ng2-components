@@ -12,7 +12,7 @@
             [readOnly]="field.readOnly"
             [validate]="validate"
             [searchUserCtrl]="search"
-            [required]="isRequired()"
+            [required]="field.required"
             (changedUsers)="onChangedUser($event)"
             [roles]="roles"
             [mode]="mode"

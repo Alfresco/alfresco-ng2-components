@@ -10,8 +10,8 @@
         </label>
     </div>
     <div>
-        <mat-form-field>
-            @if (field.name) {  <mat-label *ngIf="!field.leftLabels" class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
+        <mat-form-field class="adf-form-field-input">
+            @if (field.name || field.required) {  <mat-label *ngIf="!field.leftLabels" class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
             <mat-select
                 class="adf-select"
                 [formControl]="dropdownControl"
@@ -21,7 +21,7 @@
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
                 [disabled]="field.readOnly"
-                [required]="isRequired()"
+                [required]="field.required "
             >
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
 
