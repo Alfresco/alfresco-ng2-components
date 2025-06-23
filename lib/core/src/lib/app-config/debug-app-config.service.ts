@@ -21,7 +21,7 @@ import { AppConfigService, AppConfigValues } from './app-config.service';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {
-    private storage = inject(StorageService);
+    private readonly storage = inject(StorageService);
 
     get<T>(key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {
