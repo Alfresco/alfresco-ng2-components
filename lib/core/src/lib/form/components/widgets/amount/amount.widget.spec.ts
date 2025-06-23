@@ -113,14 +113,14 @@ describe('AmountWidgetComponent', () => {
             expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
-        it('should be able to display label with asterisk', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
+        it('should be able to display label with asterisk and input field is required', async () => {
+            const formField = await testingUtils.getMatFormField();
+            const formControl = await formField.getControl();
 
-            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+            expect(formControl.isRequired).toBeTruthy();
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            const inputField = testingUtils.getByCSS('.adf-input').nativeElement;
+            expect(inputField.hasAttribute('required')).toBeTruthy();
         });
     });
 });
@@ -193,7 +193,7 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(await field.getPrefixText()).toBe('$');
 
         const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
-        expect(widgetLabel.textContent.trim()).toBe('Test Amount*');
+        expect(widgetLabel.textContent.trim()).toBe('Test Amount');
         expect(widget.field.isValid).toBe(false);
 
         const input = await testingUtils.getMatInput();
@@ -229,7 +229,7 @@ describe('AmountWidgetComponent - rendering', () => {
         await fixture.whenStable();
 
         const widgetLabel = testingUtils.getByCSS('.adf-label').nativeElement;
-        expect(widgetLabel.textContent.trim()).toBe('Test Amount*');
+        expect(widgetLabel.textContent.trim()).toBe('Test Amount');
 
         const field = await testingUtils.getMatFormField();
         expect(await field.getPrefixText()).toBe('£');
@@ -310,6 +310,24 @@ describe('AmountWidgetComponent - rendering', () => {
 
             expect(testingUtils.getByCSS('.adf-left-label-input-container')).toBeNull();
             expect(testingUtils.getByCSS('.adf-left-label')).toBeNull();
+        });
+
+        it('should be able to display label with  manually when left-labels are true', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'amount-id',
+                name: 'amount-name',
+                value: '',
+                type: FormFieldTypes.AMOUNT,
+                readOnly: false,
+                required: true
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
         });
     });
 });
