@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,6 +35,7 @@ import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-conta
 import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
 import { ViewerComponent } from './viewer.component';
 import { ThumbnailService } from '../../common/services/thumbnail.service';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -53,6 +53,7 @@ describe('ViewerComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
+    const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -366,335 +367,361 @@ describe('ViewerComponent', () => {
             });
         });
 
-        describe('Base component', () => {
-            beforeEach(() => {
-                component.mimeType = 'application/pdf';
+        it('should display two toolbar dividers by default when close button is visible', () => {
+            component.allowGoBack = true;
+            component.showToolbar = true;
+            component.closeButtonPosition = CloseButtonPosition.Right;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(2);
+        });
 
+        it('should display only one toolbar divider when close button is hidden', () => {
+            component.allowGoBack = false;
+            component.showToolbar = true;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(1);
+        });
+
+        it('should not display any toolbar dividers when showToolbarDividers param is set to false', () => {
+            component.showToolbarDividers = false;
+            component.showToolbar = true;
+            component.allowGoBack = true;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(0);
+        });
+    });
+
+    describe('Base component', () => {
+        beforeEach(() => {
+            component.mimeType = 'application/pdf';
+
+            fixture.detectChanges();
+        });
+
+        describe('SideBar Test', () => {
+            it('should NOT display sidebar if is not allowed', (done) => {
+                component.showRightSidebar = true;
+                component.allowRightSidebar = false;
                 fixture.detectChanges();
-            });
 
-            describe('SideBar Test', () => {
-                it('should NOT display sidebar if is not allowed', (done) => {
-                    component.showRightSidebar = true;
-                    component.allowRightSidebar = false;
-                    fixture.detectChanges();
-
-                    fixture.whenStable().then(() => {
-                        expect(testingUtils.getByCSS('#adf-right-sidebar')).toBeNull();
-                        done();
-                    });
-                });
-
-                it('should display sidebar on the right side', (done) => {
-                    component.allowRightSidebar = true;
-                    component.showRightSidebar = true;
-                    fixture.detectChanges();
-
-                    fixture.whenStable().then(() => {
-                        const sidebar = testingUtils.getByCSS('#adf-right-sidebar').nativeElement;
-                        expect(getComputedStyle(sidebar).order).toEqual('4');
-                        done();
-                    });
-                });
-
-                it('should NOT display left sidebar if is not allowed', (done) => {
-                    component.showLeftSidebar = true;
-                    component.allowLeftSidebar = false;
-                    fixture.detectChanges();
-
-                    fixture.whenStable().then(() => {
-                        expect(testingUtils.getByCSS('#adf-left-sidebar')).toBeNull();
-                        done();
-                    });
-                });
-
-                it('should display sidebar on the left side', (done) => {
-                    component.allowLeftSidebar = true;
-                    component.showLeftSidebar = true;
-                    fixture.detectChanges();
-
-                    fixture.whenStable().then(() => {
-                        const sidebar = testingUtils.getByCSS('#adf-left-sidebar').nativeElement;
-                        expect(getComputedStyle(sidebar).order).toEqual('1');
-                        done();
-                    });
+                fixture.whenStable().then(() => {
+                    expect(testingUtils.getByCSS('#adf-right-sidebar')).toBeNull();
+                    done();
                 });
             });
 
-            describe('Info Button', () => {
-                const infoButton = () => testingUtils.getByDataAutomationId('adf-toolbar-sidebar');
+            it('should display sidebar on the right side', (done) => {
+                component.allowRightSidebar = true;
+                component.showRightSidebar = true;
+                fixture.detectChanges();
 
-                it('should NOT display info button on the right side', () => {
-                    component.allowRightSidebar = true;
-                    component.hideInfoButton = true;
-                    fixture.detectChanges();
-
-                    expect(infoButton()).toBeNull();
-                });
-
-                it('should display info button on the right side', () => {
-                    component.allowRightSidebar = true;
-                    component.hideInfoButton = false;
-                    fixture.detectChanges();
-
-                    expect(infoButton()).not.toBeNull();
+                fixture.whenStable().then(() => {
+                    const sidebar = testingUtils.getByCSS('#adf-right-sidebar').nativeElement;
+                    expect(getComputedStyle(sidebar).order).toEqual('4');
+                    done();
                 });
             });
 
-            describe('View', () => {
-                describe('Overlay mode true', () => {
-                    beforeEach(() => {
-                        component.overlayMode = true;
-                        component.fileName = 'fake-test-file.pdf';
-                        fixture.detectChanges();
-                    });
+            it('should NOT display left sidebar if is not allowed', (done) => {
+                component.showLeftSidebar = true;
+                component.allowLeftSidebar = false;
+                fixture.detectChanges();
 
-                    it('should header be present if is overlay mode', () => {
-                        expect(testingUtils.getByCSS('.adf-viewer-toolbar')).not.toBeNull();
-                    });
-
-                    it('should file name be present if is overlay mode ', async () => {
-                        const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
-                        component.ngOnChanges(mockSimpleChanges);
-                        fixture.detectChanges();
-                        await fixture.whenStable();
-                        expect(getFileName()).toEqual('fake-test-file.pdf');
-                    });
-
-                    it('should Close button be present if overlay mode', async () => {
-                        fixture.detectChanges();
-                        await fixture.whenStable();
-                        expect(testingUtils.getByCSS('.adf-viewer-close-button')).not.toBeNull();
-                    });
-
-                    it('should Click on close button hide the viewer', async () => {
-                        testingUtils.clickByCSS('.adf-viewer-close-button');
-                        fixture.detectChanges();
-
-                        await fixture.whenStable();
-                        expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
-                    });
-
-                    it('should Esc button hide the viewer', async () => {
-                        EventMock.keyDown(27);
-
-                        fixture.detectChanges();
-
-                        await fixture.whenStable();
-                        expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
-                    });
-
-                    it('should not close the viewer on Escape event if dialog was opened', (done) => {
-                        const event = new KeyboardEvent('keydown', {
-                            bubbles: true,
-                            keyCode: 27
-                        } as KeyboardEventInit);
-
-                        const dialogRef = dialog.open(DummyDialogComponent);
-
-                        dialogRef.afterClosed().subscribe(() => {
-                            EventMock.keyDown(27);
-                            fixture.detectChanges();
-                            expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
-                            done();
-                        });
-
-                        fixture.detectChanges();
-
-                        document.body.dispatchEvent(event);
-                        fixture.detectChanges();
-                        expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
-                    });
-                });
-
-                describe('Overlay mode false', () => {
-                    beforeEach(() => {
-                        component.overlayMode = false;
-                        fixture.detectChanges();
-                    });
-
-                    it('should Esc button not hide the viewer if is not overlay mode', (done) => {
-                        EventMock.keyDown(27);
-
-                        fixture.detectChanges();
-
-                        fixture.whenStable().then(() => {
-                            expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
-                            done();
-                        });
-                    });
+                fixture.whenStable().then(() => {
+                    expect(testingUtils.getByCSS('#adf-left-sidebar')).toBeNull();
+                    done();
                 });
             });
 
-            describe('Attribute', () => {
-                it('should showViewer default value  be true', () => {
-                    expect(component.showViewer).toBe(true);
+            it('should display sidebar on the left side', (done) => {
+                component.allowLeftSidebar = true;
+                component.showLeftSidebar = true;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    const sidebar = testingUtils.getByCSS('#adf-left-sidebar').nativeElement;
+                    expect(getComputedStyle(sidebar).order).toEqual('1');
+                    done();
+                });
+            });
+        });
+
+        describe('Info Button', () => {
+            const infoButton = () => testingUtils.getByDataAutomationId('adf-toolbar-sidebar');
+
+            it('should NOT display info button on the right side', () => {
+                component.allowRightSidebar = true;
+                component.hideInfoButton = true;
+                fixture.detectChanges();
+
+                expect(infoButton()).toBeNull();
+            });
+
+            it('should display info button on the right side', () => {
+                component.allowRightSidebar = true;
+                component.hideInfoButton = false;
+                fixture.detectChanges();
+
+                expect(infoButton()).not.toBeNull();
+            });
+        });
+
+        describe('View', () => {
+            describe('Overlay mode true', () => {
+                beforeEach(() => {
+                    component.overlayMode = true;
+                    component.fileName = 'fake-test-file.pdf';
+                    fixture.detectChanges();
                 });
 
-                it('should viewer be hide if showViewer value is false', () => {
-                    component.showViewer = false;
+                it('should header be present if is overlay mode', () => {
+                    expect(testingUtils.getByCSS('.adf-viewer-toolbar')).not.toBeNull();
+                });
 
+                it('should file name be present if is overlay mode ', async () => {
+                    const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
+                    component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
+                    await fixture.whenStable();
+                    expect(getFileName()).toEqual('fake-test-file.pdf');
+                });
+
+                it('should Close button be present if overlay mode', async () => {
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+                    expect(testingUtils.getByCSS('.adf-viewer-close-button')).not.toBeNull();
+                });
+
+                it('should Click on close button hide the viewer', async () => {
+                    testingUtils.clickByCSS('.adf-viewer-close-button');
+                    fixture.detectChanges();
+
+                    await fixture.whenStable();
                     expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
                 });
+
+                it('should Esc button hide the viewer', async () => {
+                    EventMock.keyDown(27);
+
+                    fixture.detectChanges();
+
+                    await fixture.whenStable();
+                    expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
+                });
+
+                it('should not close the viewer on Escape event if dialog was opened', (done) => {
+                    const event = new KeyboardEvent('keydown', {
+                        bubbles: true,
+                        keyCode: 27
+                    } as KeyboardEventInit);
+
+                    const dialogRef = dialog.open(DummyDialogComponent);
+
+                    dialogRef.afterClosed().subscribe(() => {
+                        EventMock.keyDown(27);
+                        fixture.detectChanges();
+                        expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
+                        done();
+                    });
+
+                    fixture.detectChanges();
+
+                    document.body.dispatchEvent(event);
+                    fixture.detectChanges();
+                    expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
+                });
             });
 
-            describe('Close Button', () => {
-                const getRightCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-right-back');
-                const getLeftCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-left-back');
-
-                it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
-                    component.allowGoBack = true;
-                    component.closeButtonPosition = CloseButtonPosition.Left;
-                    fixture.detectChanges();
-
-                    expect(getLeftCloseButton()).not.toBeNull();
-                    expect(getRightCloseButton()).toBeNull();
-                });
-
-                it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
-                    component.allowGoBack = true;
-                    component.closeButtonPosition = CloseButtonPosition.Right;
-                    fixture.detectChanges();
-
-                    expect(getRightCloseButton()).not.toBeNull();
-                    expect(getLeftCloseButton()).toBeNull();
-                });
-
-                it('should hide close button allowGoBack is false', () => {
-                    component.allowGoBack = false;
-                    fixture.detectChanges();
-
-                    expect(getRightCloseButton()).toBeNull();
-                    expect(getLeftCloseButton()).toBeNull();
-                });
-            });
-
-            describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
+            describe('Overlay mode false', () => {
                 beforeEach(() => {
-                    fixture = TestBed.createComponent(ViewerComponent);
-                    component = fixture.componentInstance;
-                    component.showToolbar = true;
-                    component.mimeType = 'application/pdf';
+                    component.overlayMode = false;
                     fixture.detectChanges();
                 });
 
-                it('should request only if enabled', () => {
-                    const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
-                    spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+                it('should Esc button not hide the viewer if is not overlay mode', (done) => {
+                    EventMock.keyDown(27);
 
-                    component.allowFullScreen = false;
-                    component.enterFullScreen();
+                    fixture.detectChanges();
 
-                    expect(domElement.requestFullscreen).not.toHaveBeenCalled();
-                });
-
-                it('should use standard mode', () => {
-                    const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
-                    spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                    component.enterFullScreen();
-                    expect(domElement.requestFullscreen).toHaveBeenCalled();
-                });
-
-                it('should use webkit prefix', () => {
-                    const domElement = jasmine.createSpyObj('el', ['webkitRequestFullscreen']);
-                    spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                    component.enterFullScreen();
-                    expect(domElement.webkitRequestFullscreen).toHaveBeenCalled();
-                });
-
-                it('should use moz prefix', () => {
-                    const domElement = jasmine.createSpyObj('el', ['mozRequestFullScreen']);
-                    spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                    component.enterFullScreen();
-                    expect(domElement.mozRequestFullScreen).toHaveBeenCalled();
-                });
-
-                it('should use ms prefix', () => {
-                    const domElement = jasmine.createSpyObj('el', ['msRequestFullscreen']);
-                    spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                    component.enterFullScreen();
-                    expect(domElement.msRequestFullscreen).toHaveBeenCalled();
+                    fixture.whenStable().then(() => {
+                        expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
+                        done();
+                    });
                 });
             });
         });
 
-        describe('Download Prompt Dialog', () => {
-            let dialogOpenSpy: jasmine.Spy;
+        describe('Attribute', () => {
+            it('should showViewer default value  be true', () => {
+                expect(component.showViewer).toBe(true);
+            });
 
+            it('should viewer be hide if showViewer value is false', () => {
+                component.showViewer = false;
+
+                fixture.detectChanges();
+                expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
+            });
+        });
+
+        describe('Close Button', () => {
+            const getRightCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-right-back');
+            const getLeftCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-left-back');
+
+            it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
+                component.allowGoBack = true;
+                component.closeButtonPosition = CloseButtonPosition.Left;
+                fixture.detectChanges();
+
+                expect(getLeftCloseButton()).not.toBeNull();
+                expect(getRightCloseButton()).toBeNull();
+            });
+
+            it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
+                component.allowGoBack = true;
+                component.closeButtonPosition = CloseButtonPosition.Right;
+                fixture.detectChanges();
+
+                expect(getRightCloseButton()).not.toBeNull();
+                expect(getLeftCloseButton()).toBeNull();
+            });
+
+            it('should hide close button allowGoBack is false', () => {
+                component.allowGoBack = false;
+                fixture.detectChanges();
+
+                expect(getRightCloseButton()).toBeNull();
+                expect(getLeftCloseButton()).toBeNull();
+            });
+        });
+
+        describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
             beforeEach(() => {
-                appConfigService.config = {
-                    ...appConfigService.config,
-                    viewer: {
-                        enableDownloadPrompt: true,
-                        enableDownloadPromptReminder: true,
-                        downloadPromptDelay: 3,
-                        downloadPromptReminderDelay: 2
-                    }
-                };
-                dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
-                component.urlFile = undefined;
-                component.clearDownloadPromptTimeouts();
+                fixture = TestBed.createComponent(ViewerComponent);
+                component = fixture.componentInstance;
+                component.showToolbar = true;
+                component.mimeType = 'application/pdf';
+                fixture.detectChanges();
             });
 
-            it('should configure initial timeout to display non responsive dialog when initialising component', () => {
-                fixture.detectChanges();
-                expect(component.downloadPromptTimer).toBeDefined();
+            it('should request only if enabled', () => {
+                const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
+                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+                component.allowFullScreen = false;
+                component.enterFullScreen();
+
+                expect(domElement.requestFullscreen).not.toHaveBeenCalled();
             });
 
-            it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(() => {
-                dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
-                fixture.detectChanges();
-                tick(3000);
-                expect(component.downloadPromptReminderTimer).toBeDefined();
-                dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
-                flush();
-                discardPeriodicTasks();
-            }));
+            it('should use standard mode', () => {
+                const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
+                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
 
-            it('should show initial non responsive dialog after initial timeout', fakeAsync(() => {
-                fixture.detectChanges();
-                tick(3000);
-                fixture.detectChanges();
-                expect(dialogOpenSpy).toHaveBeenCalled();
-            }));
+                component.enterFullScreen();
+                expect(domElement.requestFullscreen).toHaveBeenCalled();
+            });
 
-            it('should not show non responsive dialog if blobFile was provided', fakeAsync(() => {
-                component.blobFile = new Blob(['mock content'], { type: 'text/plain' });
-                fixture.detectChanges();
-                tick(3000);
-                fixture.detectChanges();
-                expect(dialogOpenSpy).not.toHaveBeenCalled();
-            }));
+            it('should use webkit prefix', () => {
+                const domElement = jasmine.createSpyObj('el', ['webkitRequestFullscreen']);
+                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
 
-            it('should show reminder non responsive dialog after initial dialog', fakeAsync(() => {
-                dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
-                fixture.detectChanges();
-                tick(3000);
-                expect(dialogOpenSpy).toHaveBeenCalled();
+                component.enterFullScreen();
+                expect(domElement.webkitRequestFullscreen).toHaveBeenCalled();
+            });
 
-                dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
-                tick(2000);
-                expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
+            it('should use moz prefix', () => {
+                const domElement = jasmine.createSpyObj('el', ['mozRequestFullScreen']);
+                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
 
-                flush();
-                discardPeriodicTasks();
-            }));
+                component.enterFullScreen();
+                expect(domElement.mozRequestFullScreen).toHaveBeenCalled();
+            });
 
-            it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync(() => {
-                dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
-                spyOn(component.downloadFile, 'emit');
-                fixture.detectChanges();
-                tick(3000);
-                fixture.detectChanges();
+            it('should use ms prefix', () => {
+                const domElement = jasmine.createSpyObj('el', ['msRequestFullscreen']);
+                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
 
-                expect(component.downloadFile.emit).toHaveBeenCalled();
-            }));
+                component.enterFullScreen();
+                expect(domElement.msRequestFullscreen).toHaveBeenCalled();
+            });
         });
+    });
+
+    describe('Download Prompt Dialog', () => {
+        let dialogOpenSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            appConfigService.config = {
+                ...appConfigService.config,
+                viewer: {
+                    enableDownloadPrompt: true,
+                    enableDownloadPromptReminder: true,
+                    downloadPromptDelay: 3,
+                    downloadPromptReminderDelay: 2
+                }
+            };
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
+            component.urlFile = undefined;
+            component.clearDownloadPromptTimeouts();
+        });
+
+        it('should configure initial timeout to display non responsive dialog when initialising component', () => {
+            fixture.detectChanges();
+            expect(component.downloadPromptTimer).toBeDefined();
+        });
+
+        it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(() => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            fixture.detectChanges();
+            tick(3000);
+            expect(component.downloadPromptReminderTimer).toBeDefined();
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            flush();
+            discardPeriodicTasks();
+        }));
+
+        it('should show initial non responsive dialog after initial timeout', fakeAsync(() => {
+            fixture.detectChanges();
+            tick(3000);
+            fixture.detectChanges();
+            expect(dialogOpenSpy).toHaveBeenCalled();
+        }));
+
+        it('should not show non responsive dialog if blobFile was provided', fakeAsync(() => {
+            component.blobFile = new Blob(['mock content'], { type: 'text/plain' });
+            fixture.detectChanges();
+            tick(3000);
+            fixture.detectChanges();
+            expect(dialogOpenSpy).not.toHaveBeenCalled();
+        }));
+
+        it('should show reminder non responsive dialog after initial dialog', fakeAsync(() => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            fixture.detectChanges();
+            tick(3000);
+            expect(dialogOpenSpy).toHaveBeenCalled();
+
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            tick(2000);
+            expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
+
+            flush();
+            discardPeriodicTasks();
+        }));
+
+        it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync(() => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
+            spyOn(component.downloadFile, 'emit');
+            fixture.detectChanges();
+            tick(3000);
+            fixture.detectChanges();
+
+            expect(component.downloadFile.emit).toHaveBeenCalled();
+        }));
     });
     [
         [false, true, true, false, null, 0, 'only fullscreen button'],
