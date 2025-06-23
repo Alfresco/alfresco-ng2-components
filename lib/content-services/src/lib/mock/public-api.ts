@@ -25,3 +25,4 @@ export * from './search-query.mock';
 export * from './new-version-uploader.service.mock';
 export * from './date-range-search-filter.mock';
 export * from './alfresco-api.service.mock';
+export * from './adf-http-client.mock';
