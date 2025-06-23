@@ -133,7 +133,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should trigger siteChange event when a site is selected in sites-dropdown', () => {
                 const fakeSiteEntry = new SiteEntry({ entry: new Site({ title: 'fake-new-site', guid: 'fake-new-site' }) });
-                component.ngOnInit();
                 fixture.detectChanges();
 
                 let lastValue: string;
@@ -698,7 +697,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 contentNodeSelectorPanelService.customModels = undefined;
             });
 
-            it('should search panel be collapsed by default and expand when clicking the filter button', async () => {
+            it('should search panel be collapsed by default and expand when clicking the filter button', () => {
                 contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 
@@ -708,7 +707,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 toggleFiltersPanelButton.nativeElement.click();
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(component.searchPanelExpanded).toEqual(true);
             });
