@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, SimpleChanges } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,7 +53,6 @@ describe('ViewerComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
-    const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -700,12 +699,12 @@ describe('ViewerComponent', () => {
     [
         [false, true, true, false, null, 0, 'only fullscreen button'],
         [true, true, true, false, null, 1, 'left sidebar and fullscreen'],
-        [false, false, true, false, null, 1, 'info button and fullscreen'],
+        [false, false, true, false, null, 0, 'info button and fullscreen'],
         [false, true, true, true, null, 1, 'close button and fullscreen'],
-        [false, true, false, true, null, 0, 'only close button'],
+        [false, true, false, true, null, 1, 'only close button'],
         [false, true, false, false, {}, 0, 'only open with'],
-        [false, true, true, false, {}, 1, 'open with and fullscreen'],
-        [true, false, true, false, {}, 2, 'left sidebar, info, open with, fullscreen']
+        [false, true, true, false, {}, 0, 'open with and fullscreen'],
+        [true, false, true, false, {}, 1, 'left sidebar, info, open with, fullscreen']
     ].forEach(([allowLeftSidebar, hideInfoButton, allowFullScreen, allowGoBack, mnuOpenWith, expectedSeparatorCount, description]) => {
         it(`should show ${expectedSeparatorCount} separator(s) when ${description}`, () => {
             component.allowLeftSidebar = !!allowLeftSidebar;
