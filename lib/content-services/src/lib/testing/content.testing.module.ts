@@ -23,9 +23,8 @@ import { versionCompatibilityFactory } from '../version-compatibility/version-co
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
-import { AlfrescoApiServiceMock } from '../mock';
+import { AlfrescoApiServiceMock, AdfHttpClientMock } from '../mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { AdfHttpClientMock } from 'lib/mock/adf-http-client.mock';
 
 @NgModule({
     imports: [NoopAnimationsModule, CoreModule, NoopAuthModule, NoopTranslateModule, ContentModule, MatIconTestingModule],
