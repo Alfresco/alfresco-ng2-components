@@ -19,7 +19,7 @@
             <input matInput
                    [matDatetimepicker]="datetimePicker"
                    [readonly]="field.readOnly"
-                   [required]="isRequired()"
+                   [required]="isRequired() && field.isVisible"
                    [id]="field.id"
                    [formControl]="datetimeInputControl"
                    (keydown.enter)="datetimePicker.open()"

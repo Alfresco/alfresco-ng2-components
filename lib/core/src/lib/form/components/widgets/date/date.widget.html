@@ -12,7 +12,7 @@
                [placeholder]="field.placeholder"
                [min]="minDate"
                [max]="maxDate"
-               [required]="isRequired()"
+               [required]="isRequired() && field.isVisible"
                [readonly]="field.readOnly"
         />
         <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
