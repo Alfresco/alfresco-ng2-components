@@ -67,7 +67,7 @@ describe('CardViewDateItemComponent', () => {
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
     const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
-    const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-toggle');
+    const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
 
     it('should render the label and value', () => {
         fixture.detectChanges();

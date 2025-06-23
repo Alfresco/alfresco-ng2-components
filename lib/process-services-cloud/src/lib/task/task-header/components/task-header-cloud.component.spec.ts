@@ -143,7 +143,9 @@ describe('TaskHeaderCloudComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-toggle'));
+            const valueEl = fixture.debugElement.query(
+                By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-span-button')
+            );
             expect(valueEl.nativeElement.innerText.trim()).toBe('Monday, December 17, 2018 at 12:00:55 PM GMT+00:00');
         });
 
@@ -164,7 +166,9 @@ describe('TaskHeaderCloudComponent', () => {
             component.refreshData();
             fixture.detectChanges();
             await fixture.whenStable();
-            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-toggle'));
+            const valueEl = fixture.debugElement.query(
+                By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-span-button')
+            );
             expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT');
         });
 
