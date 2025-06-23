@@ -756,10 +756,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.getSelectedCount()).toBe(0);
             });
 
-            it('should not render component input if `showNodeCounter` is false', async () => {
+            it('should not render component input if `showNodeCounter` is false', () => {
                 component.showNodeCounter = false;
                 fixture.detectChanges();
-                await fixture.whenStable();
                 expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
             });
         });
