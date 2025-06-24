@@ -353,7 +353,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-span-button'));
         expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 3, 2016');
     });
 
@@ -364,7 +364,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-span-button'));
         expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT');
     });
 

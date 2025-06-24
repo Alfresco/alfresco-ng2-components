@@ -6,7 +6,6 @@
         padding-bottom: 6px;
         line-height: 20px;
         color: var(--adf-metadata-property-panel-title-color);
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         margin-top: 10px;
 
         &.adf-property-value-editable {
@@ -42,7 +41,6 @@
     .adf-dateitem-editable {
         cursor: pointer;
         width: 100%;
-        padding: 0 5px;
 
         /* stylelint-disable-next-line no-descending-specificity */
         &-controls {
@@ -62,7 +60,7 @@
                 transform: scale(0.8);
             }
 
-            .adf-datepicker-toggle {
+            .adf-datepicker-span-button {
                 flex: 1 0 auto;
                 font-size: 14px;
             }

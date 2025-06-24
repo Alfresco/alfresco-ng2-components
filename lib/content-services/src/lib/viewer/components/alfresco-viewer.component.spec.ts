@@ -874,10 +874,11 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         describe('Events', () => {
-            it('should update version when emitted by image-viewer and user has update permissions', () => {
+            it('should update version when emitted by image-viewer when user has update permissions and read only is set to false', () => {
                 spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 spyOn(uploadService, 'addToQueue');
                 component.readOnly = false;
+                component.canEditNode = true;
                 component.nodeEntry = new NodeEntry({
                     entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })
                 });
@@ -899,13 +900,31 @@ describe('AlfrescoViewerComponent', () => {
                 component.onSubmitFile(fakeBlob);
                 fixture.detectChanges();
 
+                expect(component.canEditNode).toBe(true);
                 expect(uploadService.addToQueue).toHaveBeenCalledWith(...[newFile]);
                 expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalled();
             });
 
-            it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
+            it('should not update version when emitted by image-viewer when user doesn`t have update permissions', () => {
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+                component.readOnly = false;
+                component.canEditNode = false;
+                component.nodeEntry = new NodeEntry({
+                    entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })
+                });
+                const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+                const fakeBlob = new Blob([data], { type: 'image/png' });
+
+                component.onSubmitFile(fakeBlob);
+                fixture.detectChanges();
+
+                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+            });
+
+            it('should not update version when emitted by image-viewer when user has update permissions and viewer is in read only mode', () => {
                 spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 component.readOnly = true;
+                component.canEditNode = true;
                 component.nodeEntry = new NodeEntry({
                     entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })
                 });

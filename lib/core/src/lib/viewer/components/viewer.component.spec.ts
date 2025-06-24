@@ -366,6 +366,9 @@ describe('ViewerComponent', () => {
             });
         });
 
+
+   
+
         it('should display toolbar dividers by default when close button is visible', () => {
             component.allowGoBack = true;
             component.showToolbar = true;
@@ -381,6 +384,14 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             const dividers = getDividers();
             expect(dividers.length).toBe(0);
+        });
+  it('should not display any toolbar dividers when showToolbarDividers param is set to false', () => {
+            component.showToolbarDividers = false;
+            component.showToolbar = true;
+            component.allowGoBack = true;
+            fixture.detectChanges();
+            const dividers = getDividers();
+            expect(dividers.length).toBe(1);
         });
 
         describe('Base component', () => {
