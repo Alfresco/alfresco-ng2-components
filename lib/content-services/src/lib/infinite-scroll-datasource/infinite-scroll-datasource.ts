@@ -51,7 +51,7 @@ export abstract class InfiniteScrollDatasource<T> extends DataSource<T> {
                 if (this.batchesFetched * this.batchSize <= range.end) {
                     forkJoin([
                         this.dataStream.asObservable().pipe(take(1)),
-                        this.getNextBatch({ skipCount: this.batchSize * this.batchesFetched, maxItems: this.batchSize }).pipe(
+                        this.getNextBatch({ skipCount: this._itemsCount, maxItems: this.batchSize }).pipe(
                             take(1),
                             tap((nextBatch) => (this._itemsCount += nextBatch.length))
                         )

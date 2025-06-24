@@ -23,6 +23,7 @@ import {
     DestroyRef,
     ElementRef,
     EventEmitter,
+    HostBinding,
     HostListener,
     inject,
     Input,
@@ -94,6 +95,11 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private thumbnailService = inject(ThumbnailService);
+
+    @HostBinding('class.adf-viewer-inline')
+    get isInline() {
+        return !this.overlayMode;
+    }
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -247,6 +253,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /** Custom error message to be displayed in the viewer. */
     @Input()
     customError: string = undefined;
+
+    /** Toggles dividers visibility */
+    @Input()
+    showToolbarDividers = true;
 
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.

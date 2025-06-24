@@ -41,6 +41,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     providers: [
@@ -57,9 +59,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatIconModule,
         MatDatetimepickerModule,
         MatChipsModule,
+        MatInputModule,
         MatFormFieldModule,
         MatDatepickerModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        ReactiveFormsModule
     ],
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],
@@ -77,6 +81,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     public datepicker: MatDatetimepickerComponent<any>;
 
     valueDate: Date;
+
+    cardViewDateTimeControl: FormControl<Date> = new FormControl<Date>(null);
 
     private readonly destroyRef = inject(DestroyRef);
 
