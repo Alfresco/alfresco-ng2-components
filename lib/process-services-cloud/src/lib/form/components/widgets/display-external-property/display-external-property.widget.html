@@ -12,8 +12,8 @@
 
     <div>
         <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
-            @if(field.name || field.required) {
-            <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
+            @if( (field.name || this.field?.required) && !field.leftLabels) {
+            <mat-label class="adf-label" [attr.for]="field.id">
                 {{ field.name | translate }}
             </mat-label>
                  }

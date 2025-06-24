@@ -518,8 +518,6 @@ describe('DateTimeWidgetComponent', () => {
             });
             fixture.detectChanges();
             const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
-
-            expect(asterisk).not.toBeNull();
             expect(asterisk?.textContent).toEqual('*');
         });
     });

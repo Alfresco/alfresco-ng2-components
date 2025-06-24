@@ -11,7 +11,7 @@
     </div>
     <div>
         <mat-form-field class="adf-amount-widget__input adf-form-field-input" [floatLabel]="placeholder ? 'always' : null">
-            @if (field.name || this.field?.required) { <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }}</mat-label> }
+            @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</mat-label> }
             <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>
             <input
                 matInput
@@ -26,7 +26,6 @@
                 (ngModelChange)="onFieldChanged(field)"
                 [disabled]="field.readOnly"
                 (blur)="markAsTouched()"
-                [required]="isRequired()"
             />
         </mat-form-field>
         <div class="adf-error-messages-container">
