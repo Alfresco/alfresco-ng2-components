@@ -288,13 +288,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     /* stylelint-disable-next-line no-duplicate-selectors */
     .adf-datatable-cell,
     .adf-datatable-cell-header {
-        flex: 1 1 0%;
+        flex: 1;
         padding: 0;
         align-items: center;
         display: flex;
         align-self: stretch;
-        min-width: 0;
-        min-height: 48px;
 
         &:first-child {
             margin-left: 15px;
@@ -302,65 +300,25 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         &.adf-drag-column {
-            flex: 0 0 24px;
-            width: 24px;
-            padding: 0;
-            min-height: 100%;
-            position: relative;
-        }
-    }
-
-    .adf-datatable-cell-container {
-        overflow: hidden;
-        min-height: inherit;
-        align-items: center;
-        display: flex;
-        width: 100%;
-        padding: 0 10px;
-    }
-
-    .adf-datatable-cell-value {
-        word-break: break-word;
-        display: block;
-        width: 100%;
-
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-            padding: 17px 10px 10px;
-        }
-    }
-
-    .adf-drag-handle {
-        cursor: grab;
-        width: 24px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0.6;
-        transition: opacity 0.2s ease, background-color 0.2s ease;
-        user-select: none;
-        touch-action: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-
-        &:hover {
-            opacity: 0.8;
-            background-color: rgba(0, 0, 0, 0.03);
+            flex: 0;
         }
 
-        &:active {
-            cursor: grabbing;
-            opacity: 1;
-            background-color: rgba(0, 0, 0, 0.08);
+        .adf-datatable-cell-container {
+            overflow: hidden;
+            min-height: inherit;
+            align-items: center;
+            display: flex;
+            width: 100%;
+            padding: 0 10px;
         }
 
-        &::after {
-            content: '⋮⋮';
-            font-size: 16px;
-            color: currentcolor;
-            opacity: 0.7;
-            line-height: 1;
+        .adf-datatable-cell-value {
+            word-break: break-word;
+            display: block;
+
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                padding: 17px 10px 10px;
+            }
         }
     }
 
