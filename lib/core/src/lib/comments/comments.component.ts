@@ -57,6 +57,10 @@ export class CommentsComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
+    /** Emits when a new comment is added */
+    @Output()
+    commentAdded = new EventEmitter<CommentModel>();
+
     comments: CommentModel[] = [];
     beingAdded: boolean = false;
 
@@ -113,6 +117,7 @@ export class CommentsComponent implements OnChanges {
             next: (res) => {
                 this.addToComments(res);
                 this.commentControl.reset();
+                this.commentAdded.emit(res);
             },
             error: (err) => {
                 this.error.emit(err);
