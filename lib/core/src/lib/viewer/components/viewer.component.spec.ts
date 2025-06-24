@@ -727,20 +727,29 @@ describe('ViewerComponent', () => {
                 [false, null, null, false, 'Left', 0, 'no elements at all (left close button not enabled)']
             ];
 
-            scenarios.forEach(
-                ([allowLeftSidebar, mnuOpenWith, mnuMoreActions, allowGoBack, closeButtonPosition, expectedSeparatorCount, description]) => {
-                    it(`should show ${expectedSeparatorCount} separator(s) when ${description}`, () => {
-                        component.allowLeftSidebar = allowLeftSidebar;
-                        component.mnuOpenWith = mnuOpenWith;
-                        component.mnuMoreActions = mnuMoreActions;
-                        component.allowGoBack = allowGoBack;
-                        component.closeButtonPosition = closeButtonPosition as any;
-                        fixture.detectChanges();
+            scenarios.forEach(([allowLeftSidebar, mnuOpenWith, mnuMoreActions, allowGoBack, expectedSeparatorCount, description]) => {
+                it(`should show ${expectedSeparatorCount} separator(s) when ${description}`, () => {
+                    component.allowLeftSidebar = allowLeftSidebar;
+                    component.mnuOpenWith = mnuOpenWith;
+                    component.mnuMoreActions = mnuMoreActions;
+                    component.allowGoBack = allowGoBack;
+                    scenarios.forEach(([allowLeftSidebar, mnuOpenWith, mnuMoreActions, allowGoBack, expectedSeparatorCount, description]) => {
+                        it(`should show ${expectedSeparatorCount} separator(s) when ${description}`, () => {
+                            component.allowLeftSidebar = allowLeftSidebar;
+                            component.mnuOpenWith = mnuOpenWith;
+                            component.mnuMoreActions = mnuMoreActions;
+                            component.allowGoBack = allowGoBack;
+                            component.closeButtonPosition = CloseButtonPosition.Left;
+                            fixture.detectChanges();
 
-                        expect(getVisibleDividers().length).toBe(expectedSeparatorCount);
+                            expect(getVisibleDividers().length).toBe(expectedSeparatorCount);
+                        });
                     });
-                }
-            );
+                    fixture.detectChanges();
+
+                    expect(getVisibleDividers().length).toBe(expectedSeparatorCount);
+                });
+            });
         });
     });
 });
