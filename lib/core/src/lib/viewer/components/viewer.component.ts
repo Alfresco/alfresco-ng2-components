@@ -109,7 +109,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     @ContentChild('viewerExtensions', { static: false })
     viewerTemplateExtensions: TemplateRef<any>;
-    showToolbarDividers: boolean;
 
     get CloseButtonPosition() {
         return CloseButtonPosition;
