@@ -9,7 +9,7 @@
         <ng-content select="adf-viewer-toolbar" />
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
-
+                <adf-toolbar-title>
                     <ng-container *ngIf="allowLeftSidebar">
                         <button mat-icon-button
                                 [attr.aria-expanded]="showLeftSidebar"
@@ -31,7 +31,35 @@
                             (click)="onClose()">
                         <mat-icon>close</mat-icon>
                     </button>
+                </adf-toolbar-title>
 
+                <div class="adf-viewer__file-title">
+                    <button *ngIf="allowNavigate && canNavigateBefore"
+                            data-automation-id="adf-toolbar-pref-file"
+                            mat-icon-button
+                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
+                            title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
+                            (click)="onNavigateBeforeClick($event)">
+                        <mat-icon>navigate_before</mat-icon>
+                    </button>
+                    <img class="adf-viewer__mimeicon"
+                         [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
+                         [src]="mimeTypeIconUrl"
+                         data-automation-id="adf-file-thumbnail">
+                    <div class="adf-viewer__display-name"
+                         id="adf-viewer-display-name"
+                         [title]="fileName">
+                        <span>{{ displayName }}</span>
+                    </div>
+                    <button *ngIf="allowNavigate && canNavigateNext"
+                            data-automation-id="adf-toolbar-next-file"
+                            mat-icon-button
+                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
+                            title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
+                            (click)="onNavigateNextClick($event)">
+                        <mat-icon>navigate_next</mat-icon>
+                    </button>
+                </div>
 
                 <ng-content select="adf-viewer-toolbar-actions" />
 
@@ -50,10 +78,13 @@
                     </mat-menu>
                 </ng-container>
 
-                <adf-toolbar-divider />
+@if (shouldShowDivider) {
+    <adf-toolbar-divider data-automation-id="adf-toolbar-divider-middle">
+
+    </adf-toolbar-divider>
+}
 
                 <ng-content select="adf-viewer-toolbar-custom-actions" />
-
                 <button id="adf-viewer-fullscreen"
                         *ngIf="allowFullScreen"
                         mat-icon-button
@@ -66,6 +97,7 @@
 
                 <ng-container *ngIf="allowRightSidebar && !hideInfoButton">
                     <adf-toolbar-divider />
+
                     <button mat-icon-button
                             [attr.aria-expanded]="showRightSidebar"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
@@ -75,6 +107,7 @@
                             (click)="toggleRightSidebar()">
                         <mat-icon>info_outline</mat-icon>
                     </button>
+
                 </ng-container>
 
                 <ng-container *ngIf="mnuMoreActions">
@@ -93,7 +126,8 @@
                 </ng-container>
 
                 <ng-container *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Right">
-                    <adf-toolbar-divider />
+                        <adf-toolbar-divider />
+
                     <button class="adf-viewer-close-button"
                             data-automation-id="adf-toolbar-right-back"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
@@ -103,40 +137,12 @@
                         <mat-icon>close</mat-icon>
                     </button>
                 </ng-container>
-                <div class="adf-viewer__file-title">
-                        <button *ngIf="allowNavigate && canNavigateBefore"
-                                data-automation-id="adf-toolbar-pref-file"
-                                mat-icon-button
-                                [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
-                                title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
-                                (click)="onNavigateBeforeClick($event)">
-                            <mat-icon>navigate_before</mat-icon>
-                        </button>
 
-                        <img class="adf-viewer__mimeicon"
-                             [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
-                             [src]="mimeTypeIconUrl"
-                             data-automation-id="adf-file-thumbnail">
-
-                        <div class="adf-viewer__display-name"
-                             id="adf-viewer-display-name"
-                             [title]="fileName">
-                            <span>{{ displayName }}</span>
-                        </div>
-
-                        <button *ngIf="allowNavigate && canNavigateNext"
-                                data-automation-id="adf-toolbar-next-file"
-                                mat-icon-button
-                                [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
-                                title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
-                                (click)="onNavigateNextClick($event)">
-                            <mat-icon>navigate_next</mat-icon>
-                        </button>
-                    </div>
             </adf-toolbar>
         </ng-container>
 
         <div class="adf-viewer-sidebars">
+
             <ng-container *ngIf="allowRightSidebar && showRightSidebar">
                 <div class="adf-viewer__sidebar adf-viewer__sidebar__right"
                      id="adf-right-sidebar">
@@ -172,6 +178,7 @@
                                [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions"
                                [nodeId]="nodeId"
                                [customError]="customError" />
+
         </div>
     </div>
 </div>

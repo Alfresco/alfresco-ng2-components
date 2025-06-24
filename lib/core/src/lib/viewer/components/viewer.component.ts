@@ -109,6 +109,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     @ContentChild('viewerExtensions', { static: false })
     viewerTemplateExtensions: TemplateRef<any>;
+    showToolbarDividers: boolean;
 
     get CloseButtonPosition() {
         return CloseButtonPosition;
@@ -240,7 +241,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     nodeId: string = null;
 
-    /** Original node mime type, should be provided when renditiona mime type is different. */
+    /** Original node mime type, should be provided when rendition mime type is different. */
     @Input()
     nodeMimeType: string = undefined;
 
@@ -548,5 +549,13 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private resetLoadingSpinner() {
         this.urlFile = '';
         this.blobFile = null;
+    }
+    get shouldShowDivider(): boolean {
+        const hasLeftSidebar = this.allowLeftSidebar;
+        const hasOpenWith = !!this.mnuOpenWith;
+        const hasMoreActions = !!this.mnuMoreActions;
+        const hasLeftCloseButton = this.allowGoBack && this.closeButtonPosition === CloseButtonPosition.Left;
+
+        return hasLeftSidebar || hasOpenWith || hasMoreActions || hasLeftCloseButton;
     }
 }

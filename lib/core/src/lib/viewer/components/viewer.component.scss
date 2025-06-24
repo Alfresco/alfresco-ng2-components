@@ -35,10 +35,6 @@
     &-toolbar {
         #{ms.$mat-toolbar} {
             background-color: var(--adf-theme-background-card-color-087);
-
-            adf-toolbar-divider:first-child {
-                display: none;
-            }
         }
     }
 
