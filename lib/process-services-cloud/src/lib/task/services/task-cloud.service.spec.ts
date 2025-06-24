@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import {
@@ -67,6 +67,7 @@ describe('Task Cloud Service', () => {
     let adfHttpClient: AdfHttpClient;
     let identityUserService: IdentityUserService;
     let translateService: TranslationService;
+    let appConfigService: AppConfigService;
     let requestSpy: jasmine.Spy;
 
     const returnFakeTaskCompleteResults = () => Promise.resolve(taskCompleteCloudMock);
@@ -86,10 +87,36 @@ describe('Task Cloud Service', () => {
         adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);
         translateService = TestBed.inject(TranslationService);
+        appConfigService = TestBed.inject(AppConfigService);
         service = TestBed.inject(TaskCloudService);
         spyOn(translateService, 'instant').and.callFake((key) => (key ? `${key}_translated` : null));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
         requestSpy = spyOn(adfHttpClient, 'request');
+    });
+
+    describe('get priorities', () => {
+        it('should return task priorities from app config if defined', () => {
+            spyOn(appConfigService, 'get').and.returnValue([
+                { label: 'Low', value: '1', key: '1' },
+                { label: 'Medium', value: '2', key: '2' },
+                { label: 'High', value: '3', key: '3' }
+            ]);
+            const priorities = service.priorities;
+
+            expect(priorities.map((p) => p.label)).toEqual(['Low', 'Medium', 'High']);
+        });
+
+        it('should return default task priorities if app config is not defined', () => {
+            spyOn(appConfigService, 'get').and.returnValue(null);
+            const priorities = service.priorities;
+
+            expect(priorities.map((p) => p.label)).toEqual([
+                'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE',
+                'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW',
+                'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL',
+                'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH'
+            ]);
+        });
     });
 
     it('should complete a task', (done) => {
