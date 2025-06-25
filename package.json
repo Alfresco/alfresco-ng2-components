@@ -29,7 +29,6 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/adf-core": "^7.0.1",
     "@angular/animations": "18.2.13",
     "@angular/cdk": "18.2.14",
     "@angular/common": "18.2.13",

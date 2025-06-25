@@ -122,6 +122,23 @@ describe('CommentsComponent', () => {
         expect(testingUtils.getByCSS('#comment-input')).not.toBeNull();
     });
 
+    it('should emit commentAdded when a new comment is added successfully', () => {
+        const emitSpy = spyOn(component.commentAdded, 'emit');
+        const mockComment = {
+            id: 'comment-123',
+            message: 'New test comment',
+            created: new Date().toISOString()
+        };
+
+        component.id = '123';
+        component.commentControl.setValue('New test comment');
+        addCommentSpy.and.returnValue(of(mockComment));
+
+        component.addComment();
+
+        expect(emitSpy).toHaveBeenCalledWith(mockComment);
+    });
+
     it('should not display comments input when the entity is readonly', async () => {
         component.readOnly = true;
 

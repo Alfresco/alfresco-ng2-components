@@ -33,3 +33,4 @@ Displays comments from users involved in a specified environment and allows an i
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while displaying/adding a comment. |
+| commentAdded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<CommentModel>`  | Emitted when a new comment is successfully added. |

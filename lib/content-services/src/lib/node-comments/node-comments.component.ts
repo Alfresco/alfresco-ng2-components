@@ -40,4 +40,8 @@ export class NodeCommentsComponent {
     /** make the comments component readOnly */
     @Input()
     readOnly: boolean;
+
+    /** Emits when a new comment is added */
+    @Output()
+    commentAdded = new EventEmitter<CommentModel>();
 }
