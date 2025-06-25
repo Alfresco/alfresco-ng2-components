@@ -26,6 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { MatError } from '@angular/material/form-field';
+import { CommentModel } from '../models';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -124,10 +125,19 @@ describe('CommentsComponent', () => {
 
     it('should emit commentAdded when a new comment is added successfully', () => {
         const emitSpy = spyOn(component.commentAdded, 'emit');
-        const mockComment = {
+        const mockComment: CommentModel = {
             id: 'comment-123',
             message: 'New test comment',
-            created: new Date().toISOString()
+            created: new Date(),
+            createdBy: {
+                id: 'user-1',
+                displayName: 'John Doe',
+                avatarId: 'avatar-001'
+            },
+            isSelected: false,
+            hasAvatarPicture: false,
+            userDisplayName: 'John Doe',
+            userInitials: 'JD'
         };
 
         component.id = '123';

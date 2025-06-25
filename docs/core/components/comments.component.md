@@ -15,7 +15,8 @@ Displays comments from users involved in a specified environment and allows an i
 ```html
 <adf-comments
     [id]="YOUR_ID"
-    [readOnly]="YOUR_READ_ONLY_FLAG">
+    [readOnly]="YOUR_READ_ONLY_FLAG"
+    (commentAdded)="onCommentAdded($event)">
 </adf-comments>
 ```
 
