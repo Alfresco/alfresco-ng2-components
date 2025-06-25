@@ -559,7 +559,11 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.urlFile = '';
         this.blobFile = null;
     }
+
     get shouldShowDivider(): boolean {
+        if (!this.showToolbarDividers) {
+            return false;
+        }
         const hasLeftSidebar = this.allowLeftSidebar;
         const hasOpenWith = !!this.mnuOpenWith;
         const hasMoreActions = !!this.mnuMoreActions;
