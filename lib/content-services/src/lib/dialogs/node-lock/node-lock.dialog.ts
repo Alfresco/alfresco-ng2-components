@@ -21,7 +21,7 @@ import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angu
 import { differenceInSeconds } from 'date-fns';
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
@@ -34,7 +34,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatDialogModule,
         ReactiveFormsModule,
         MatCheckboxModule,

@@ -26,12 +26,12 @@ import { CommonModule } from '@angular/common';
 import { VersionComparisonComponent } from './version-comparison.component';
 import { VersionUploadComponent } from './version-upload.component';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-manager',
     standalone: true,
-    imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslateModule, VersionListComponent],
+    imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslatePipe, VersionListComponent],
     templateUrl: './version-manager.component.html',
     styleUrls: ['./version-manager.component.scss'],
     animations: [

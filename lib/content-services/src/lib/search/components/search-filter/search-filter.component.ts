@@ -23,7 +23,7 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SearchFilterCardComponent } from './search-filter-card/search-filter-card.component';
 import { ResetSearchDirective } from '../reset-search.directive';
 import { SearchFacetFieldComponent } from '../search-facet-field';
@@ -36,7 +36,7 @@ import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
         CommonModule,
         MatExpansionModule,
         MatButtonModule,
-        TranslateModule,
+        TranslatePipe,
         SearchFilterCardComponent,
         ResetSearchDirective,
         SearchFacetFieldComponent,

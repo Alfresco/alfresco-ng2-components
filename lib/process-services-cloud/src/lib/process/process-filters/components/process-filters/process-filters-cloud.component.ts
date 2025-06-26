@@ -25,7 +25,7 @@ import { debounceTime, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
 import { ProcessFilterCloudAdapter } from '../../../process-list/models/process-cloud-query-request.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
@@ -33,7 +33,7 @@ import { MatListModule } from '@angular/material/list';
 @Component({
     selector: 'adf-cloud-process-filters',
     standalone: true,
-    imports: [TranslateModule, IconComponent, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
+    imports: [TranslatePipe, IconComponent, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['./process-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

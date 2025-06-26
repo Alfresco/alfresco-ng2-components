@@ -26,7 +26,7 @@ import { ReplaySubject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -38,7 +38,7 @@ export interface SearchRadioOption {
 @Component({
     selector: 'adf-search-radio',
     standalone: true,
-    imports: [CommonModule, MatRadioModule, FormsModule, TranslateModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,

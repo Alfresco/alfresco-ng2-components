@@ -23,7 +23,7 @@ import { IconModel } from '../../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CommonModule, Location } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,7 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-process-instance-filters',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconComponent],
     templateUrl: './process-filters.component.html',
     styleUrls: ['./process-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

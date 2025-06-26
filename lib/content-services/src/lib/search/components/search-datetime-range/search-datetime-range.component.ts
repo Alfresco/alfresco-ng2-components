@@ -17,31 +17,20 @@
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    ADF_DATE_FORMATS,
-    ADF_DATETIME_FORMATS,
-    AdfDateFnsAdapter,
-    AdfDateTimeFnsAdapter,
-    DateFnsUtils
-} from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-    DatetimeAdapter,
-    MAT_DATETIME_FORMATS,
-    MatDatetimepickerInputEvent,
-    MatDatetimepickerModule
-} from '@mat-datetimepicker/core';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { endOfMinute, isBefore, isValid, parseISO, startOfMinute } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface DatetimeRangeValue {
@@ -59,7 +48,7 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
 @Component({
     selector: 'adf-search-datetime-range',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslateModule, MatDatetimepickerModule],
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatDatetimepickerModule],
     templateUrl: './search-datetime-range.component.html',
     styleUrls: ['./search-datetime-range.component.scss'],
     providers: [

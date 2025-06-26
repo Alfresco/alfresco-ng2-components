@@ -35,7 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { UserPreferencesService } from '../common';
@@ -51,17 +51,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
-    imports: [
-        MatButtonModule,
-        MatIconModule,
-        TranslateModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        SearchTriggerDirective,
-        NgIf,
-        NgClass
-    ],
+    imports: [MatButtonModule, MatIconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
     host: {
         class: 'adf-search-text-input'
     }

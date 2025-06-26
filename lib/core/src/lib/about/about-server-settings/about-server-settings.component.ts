@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -27,7 +27,7 @@ import { MatCardModule } from '@angular/material/card';
     styleUrls: ['./about-server-settings.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatCardModule]
+    imports: [CommonModule, TranslatePipe, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {
     ecmHost = '';

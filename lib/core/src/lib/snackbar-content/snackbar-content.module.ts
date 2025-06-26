@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
+/** @deprecated use `SnackbarContentComponent` directly instead */
 @NgModule({
     imports: [CommonModule, MatIconModule, MatSnackBarModule, MatButtonModule, TranslateModule],
     declarations: [SnackbarContentComponent],

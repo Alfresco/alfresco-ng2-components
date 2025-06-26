@@ -47,7 +47,7 @@ import {
 } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 const PRESET_KEY = 'adf-process-list.presets';
 
@@ -76,7 +76,7 @@ export const processPresetsDefaultModel = {
         CommonModule,
         MatProgressSpinnerModule,
         EmptyContentComponent,
-        TranslateModule,
+        TranslatePipe,
         DataTableComponent,
         LoadingContentTemplateDirective,
         NoContentTemplateDirective

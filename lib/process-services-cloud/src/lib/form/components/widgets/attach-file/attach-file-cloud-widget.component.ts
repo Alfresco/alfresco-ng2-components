@@ -40,7 +40,7 @@ import {
     VersionManagerUploadData
 } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FilePropertiesTableCloudComponent } from './file-properties-table/file-properties-table-cloud.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -54,7 +54,7 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
     standalone: true,
-    imports: [CommonModule, ErrorWidgetComponent, TranslateModule, MatIconModule, FilePropertiesTableCloudComponent, MatButtonModule],
+    imports: [CommonModule, ErrorWidgetComponent, TranslatePipe, MatIconModule, FilePropertiesTableCloudComponent, MatButtonModule],
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],
     host: {

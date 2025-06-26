@@ -24,14 +24,14 @@ import { ReportParameterDetailsModel } from '../../../../diagram/models/report/r
 import { NumberWidgetAnalyticsComponent } from '../number/number.widget';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DropdownWidgetAnalyticsComponent } from '../dropdown/dropdown.widget';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'duration-widget',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
+    imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
     templateUrl: './duration.widget.html',
     styleUrls: ['./duration.widget.scss'],
     encapsulation: ViewEncapsulation.None

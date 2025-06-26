@@ -26,7 +26,7 @@ import { FormBuilder, ReactiveFormsModule, UntypedFormControl, Validators } from
 import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -42,7 +42,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
         CommonModule,
         MatRadioModule,
         ReactiveFormsModule,
-        TranslateModule,
+        TranslatePipe,
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,

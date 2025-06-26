@@ -34,13 +34,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { filter } from 'rxjs/operators';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'dropdown-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ErrorWidgetComponent],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
     host: {

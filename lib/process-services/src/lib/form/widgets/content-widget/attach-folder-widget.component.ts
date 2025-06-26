@@ -22,7 +22,7 @@ import { WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/ad
 import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'attach-folder-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatIconModule, MatLineModule, MatButtonModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslatePipe, MatIconModule, MatLineModule, MatButtonModule, ErrorWidgetComponent],
     templateUrl: './attach-folder-widget.component.html',
     styleUrls: ['./attach-folder-widget.component.scss'],
     host: {

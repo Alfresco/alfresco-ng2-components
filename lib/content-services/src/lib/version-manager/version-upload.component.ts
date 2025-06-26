@@ -23,7 +23,7 @@ import { FileUploadErrorEvent, FileUploadEvent } from '../common/events/file.eve
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         CommonModule,
         MatRadioModule,
         FormsModule,
-        TranslateModule,
+        TranslatePipe,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,

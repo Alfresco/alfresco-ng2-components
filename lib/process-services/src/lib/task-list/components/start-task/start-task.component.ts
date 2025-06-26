@@ -26,7 +26,7 @@ import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormCo
 import { isValid } from 'date-fns';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -45,7 +45,7 @@ const MAX_LENGTH = 255;
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatCardModule,
         ReactiveFormsModule,
         MatFormFieldModule,

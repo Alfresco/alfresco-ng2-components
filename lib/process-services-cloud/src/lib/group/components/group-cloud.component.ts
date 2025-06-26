@@ -37,7 +37,7 @@ import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -53,7 +53,7 @@ import { IdentityGroupService } from '../services/identity-group.service';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         MatFormFieldModule,
         MatProgressBarModule,

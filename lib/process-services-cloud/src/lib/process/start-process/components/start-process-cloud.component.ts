@@ -52,7 +52,7 @@ import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { getTime } from 'date-fns';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -74,7 +74,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatProgressSpinnerModule,
         MatCardModule,
         MatButtonModule,

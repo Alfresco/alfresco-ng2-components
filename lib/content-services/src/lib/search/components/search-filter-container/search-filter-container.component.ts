@@ -26,7 +26,7 @@ import { FilterSearch } from '../../models/filter-search.interface';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
@@ -39,7 +39,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         IconComponent,
         MatBadgeModule,
         SearchWidgetContainerComponent,
-        TranslateModule,
+        TranslatePipe,
         MatDialogModule
     ],
     templateUrl: './search-filter-container.component.html',

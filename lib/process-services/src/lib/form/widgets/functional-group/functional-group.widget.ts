@@ -25,7 +25,7 @@ import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
@@ -37,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
     imports: [
         CommonModule,
         MatFormFieldModule,
-        TranslateModule,
+        TranslatePipe,
         MatInputModule,
         ReactiveFormsModule,
         MatAutocompleteModule,

@@ -36,7 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { FlagsOverrideComponent } from '../feature-override-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -53,7 +53,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatButtonModule,
         MatInputModule,
         MatDialogModule,
-        TranslateModule
+        TranslatePipe
     ],
     templateUrl: './flags.component.html',
     styleUrls: ['./flags.component.scss'],

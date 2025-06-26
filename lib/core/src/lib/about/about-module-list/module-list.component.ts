@@ -17,7 +17,7 @@
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
 interface ModuleInfo {
@@ -31,7 +31,7 @@ interface ModuleInfo {
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule]
+    imports: [CommonModule, TranslatePipe, MatTableModule]
 })
 export class ModuleListComponent {
     columns = [

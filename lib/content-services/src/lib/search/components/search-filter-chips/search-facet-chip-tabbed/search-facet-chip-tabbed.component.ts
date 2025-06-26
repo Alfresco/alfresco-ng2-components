@@ -22,7 +22,7 @@ import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,7 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
         CommonModule,
         MatChipsModule,
         MatMenuModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         SearchFacetTabbedContentComponent,
         MatButtonModule,

@@ -16,7 +16,7 @@
  */
 
 import { Directive, Input, Component, OnInit, OnChanges, ViewContainerRef } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Directive({
     standalone: true,
@@ -45,7 +45,7 @@ export class NodeCounterDirective implements OnInit, OnChanges {
 
 @Component({
     standalone: true,
-    imports: [TranslateModule],
+    imports: [TranslatePipe],
     selector: 'adf-node-counter',
     template: ` <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate : { count: counter } }}</div> `
 })

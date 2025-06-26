@@ -26,7 +26,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatLineModule } from '@angular/material/core';
 
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
@@ -45,7 +45,7 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
         MatIconModule,
         MatCardModule,
         MatProgressSpinnerModule,
-        TranslateModule,
+        TranslatePipe,
         EmptyContentComponent,
         MatLineModule
     ],

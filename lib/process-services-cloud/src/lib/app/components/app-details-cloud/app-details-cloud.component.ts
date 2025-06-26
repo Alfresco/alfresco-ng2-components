@@ -18,14 +18,14 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../../models/application-instance.model';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-cloud-app-details',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatIconModule, MatCardModule],
+    imports: [CommonModule, TranslatePipe, MatIconModule, MatCardModule],
     templateUrl: './app-details-cloud.component.html',
     styleUrls: ['./app-details-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

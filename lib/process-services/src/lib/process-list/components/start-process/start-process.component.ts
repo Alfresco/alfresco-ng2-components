@@ -28,13 +28,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {
-    AppConfigService,
-    AppConfigValues,
-    EmptyContentComponent,
-    FormValues,
-    LocalizedDatePipe
-} from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, EmptyContentComponent, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../../services/apps-process.service';
 import { ProcessService } from '../../services/process.service';
 import { AbstractControl, FormsModule, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
@@ -55,7 +49,7 @@ import { ActivitiContentService } from '../../../form/services/activiti-alfresco
 import { getTime } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -72,7 +66,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     imports: [
         CommonModule,
         MatProgressSpinnerModule,
-        TranslateModule,
+        TranslatePipe,
         MatFormFieldModule,
         MatSelectModule,
         FormsModule,

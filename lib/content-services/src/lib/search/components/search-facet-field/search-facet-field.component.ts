@@ -29,13 +29,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-search-facet-field',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatCheckboxModule],
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatCheckboxModule],
     templateUrl: './search-facet-field.component.html',
     styleUrls: ['./search-facet-field.component.scss'],
     encapsulation: ViewEncapsulation.None

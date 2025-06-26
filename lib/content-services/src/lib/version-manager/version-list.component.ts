@@ -17,18 +17,7 @@
 
 import { ConfirmDialogComponent } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ContentApi, ContentPagingQuery, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentVersionService } from './content-version.service';
@@ -42,7 +31,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { VersionCompatibilityDirective } from '../version-compatibility';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -72,7 +61,7 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
         CdkVirtualForOf,
         MatIconModule,
         MatMenuModule,
-        TranslateModule,
+        TranslatePipe,
         MatButtonModule,
         VersionCompatibilityDirective
     ],
@@ -165,7 +154,6 @@ export class VersionListComponent implements OnChanges, OnInit {
             this.loadVersionHistory();
         }
     }
-
 
     canUpdate(): boolean {
         return this.contentService.hasAllowableOperations(this.node, 'update') && this.versionsDataSource.itemsCount > 1;

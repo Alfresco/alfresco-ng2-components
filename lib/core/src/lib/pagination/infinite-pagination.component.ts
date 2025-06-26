@@ -39,7 +39,7 @@ import { PaginationModel } from '../models/pagination.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -50,7 +50,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatProgressBarModule, TranslateModule]
+    imports: [CommonModule, MatButtonModule, MatProgressBarModule, TranslatePipe]
 })
 export class InfinitePaginationComponent implements OnInit, PaginationComponentInterface {
     static DEFAULT_PAGINATION: PaginationModel = new PaginationModel({

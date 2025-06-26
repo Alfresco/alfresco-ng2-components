@@ -21,7 +21,7 @@ import { AdditionalDialogActionButton, DialogData } from './dialog-data.interfac
 import { BehaviorSubject } from 'rxjs';
 import { DialogSize, DialogSizes } from './dialog.model';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -33,7 +33,7 @@ export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component d
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
-    imports: [CommonModule, TranslateModule, MatIconModule, MatDialogModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, MatIconModule, MatDialogModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent {

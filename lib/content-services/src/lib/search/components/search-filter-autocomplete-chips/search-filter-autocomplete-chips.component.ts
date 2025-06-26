@@ -27,14 +27,14 @@ import { CategoryService } from '../../../category/services/category.service';
 import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
     standalone: true,
-    imports: [CommonModule, SearchChipAutocompleteInputComponent, TranslateModule, MatButtonModule],
+    imports: [CommonModule, SearchChipAutocompleteInputComponent, TranslatePipe, MatButtonModule],
     templateUrl: './search-filter-autocomplete-chips.component.html',
     encapsulation: ViewEncapsulation.None
 })

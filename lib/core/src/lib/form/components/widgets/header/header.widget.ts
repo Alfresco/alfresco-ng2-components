@@ -20,7 +20,7 @@ import { ContainerModel } from '../core/container.model';
 import { FieldStylePipe } from './../../../pipes/field-style.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrls: ['./header.widget.scss'],
     standalone: true,
     encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslateModule, NgIf, NgTemplateOutlet]
+    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe, NgIf, NgTemplateOutlet]
 })
 export class HeaderWidgetComponent {
     @Input() element: ContainerModel;

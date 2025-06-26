@@ -21,7 +21,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorMessageModel } from '../core';
 import { WidgetComponent } from '../widget.component';
@@ -54,7 +54,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, MatIconModule, TranslateModule],
+    imports: [NgIf, MatIconModule, TranslatePipe],
     encapsulation: ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {

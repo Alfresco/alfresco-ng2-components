@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, FormService, FormBaseModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,7 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, TranslateModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
+    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
     selector: 'adf-cloud-display-external-property',
     templateUrl: './display-external-property.widget.html',
     styleUrls: ['./display-external-property.widget.scss'],

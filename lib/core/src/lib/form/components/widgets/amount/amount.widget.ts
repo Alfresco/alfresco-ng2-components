@@ -22,7 +22,7 @@ import { Component, OnInit, ViewEncapsulation, InjectionToken, Inject, Optional 
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
@@ -49,7 +49,7 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, TranslateModule, NgIf],
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, TranslatePipe, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {

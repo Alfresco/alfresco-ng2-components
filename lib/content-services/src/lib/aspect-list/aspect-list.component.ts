@@ -25,14 +25,14 @@ import { AspectEntry } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-aspect-list',
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslateModule, MatProgressSpinnerModule],
+    imports: [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslatePipe, MatProgressSpinnerModule],
     templateUrl: './aspect-list.component.html',
     styleUrls: ['./aspect-list.component.scss'],
     encapsulation: ViewEncapsulation.None

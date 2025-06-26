@@ -23,7 +23,7 @@ import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-search-text',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
+    imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
     templateUrl: './search-text.component.html',
     styleUrls: ['./search-text.component.scss'],
     encapsulation: ViewEncapsulation.None,

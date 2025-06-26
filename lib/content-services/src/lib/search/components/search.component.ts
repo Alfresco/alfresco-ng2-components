@@ -35,13 +35,13 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { SearchComponentInterface } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search',
     standalone: true,
-    imports: [CommonModule, TranslateModule],
+    imports: [CommonModule, TranslatePipe],
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
     encapsulation: ViewEncapsulation.None,
