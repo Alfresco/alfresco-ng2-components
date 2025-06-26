@@ -24,13 +24,13 @@ Displays comments from users involved in a specified content and allows an invol
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | nodeId of the document that has comments |
-| readOnly | `boolean` |  | make the [comments component](../../core/components/comments.component.md) readOnly |
+| Name     | Type      | Default value | Description                                                                         |
+| -------- | --------- | ------------- | ----------------------------------------------------------------------------------- |
+| nodeId   | `string`  |               | nodeId of the document that has comments                                            |
+| readOnly | `boolean` |               | make the [comments component](../../core/components/comments.component.md) readOnly |
 
 ### Events
 
-| Name         | Type                                                            | Description                                        |
-|--------------|------------------------------------------------------------------|----------------------------------------------------|
+| Name         | Type                                                                     | Description                                       |
+| ------------ | ------------------------------------------------------------------------ | ------------------------------------------------- |
 | commentAdded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)<CommentModel> | Emitted when a new comment is successfully added. |

@@ -16,27 +16,18 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { NodeCommentsComponent } from './node-comments.component';
-import { CommentsComponent, CommentModel, ADF_COMMENTS_SERVICE } from '@alfresco/adf-core';
+import { ADF_COMMENTS_SERVICE, CommentsComponent, CommentModel } from '@alfresco/adf-core';
 import { NodeCommentsService } from './services/node-comments.service';
-
-@Component({
-    selector: 'app-host-component',
-    template: ` <adf-node-comments [nodeId]="'test-node-id'" (commentAdded)="onCommentAdded($event)"> </adf-node-comments> `
-})
-class HostComponent {
-    onCommentAdded(): void {}
-}
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('NodeCommentsComponent', () => {
-    let fixture: ComponentFixture<HostComponent>;
-    let hostComponent: HostComponent;
+    let fixture: ComponentFixture<NodeCommentsComponent>;
+    let component: NodeCommentsComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [HostComponent],
             imports: [NodeCommentsComponent],
             providers: [
                 {
@@ -46,33 +37,34 @@ describe('NodeCommentsComponent', () => {
             ]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(HostComponent);
-        hostComponent = fixture.componentInstance;
+        fixture = TestBed.createComponent(NodeCommentsComponent);
+        component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
+        component.nodeId = 'test-node-id';
         fixture.detectChanges();
     });
 
-    it('should re-emit commentAdded when inner CommentsComponent emits commentAdded', () => {
-        spyOn(hostComponent, 'onCommentAdded');
-
-        const comment: CommentModel = {
+    it('should emit commentAdded when CommentsComponent emits', () => {
+        const mockComment: CommentModel = {
             id: '123',
-            message: 'Mock comment',
+            message: 'Sample comment',
             created: new Date(),
             createdBy: {
-                id: 'user-1',
-                displayName: 'John Doe',
-                avatarId: 'avatar-001'
+                id: 'user1',
+                displayName: 'User 1',
+                avatarId: 'avatar-123'
             },
             isSelected: false,
-            hasAvatarPicture: false,
-            userDisplayName: 'John Doe',
-            userInitials: 'JD'
+            hasAvatarPicture: true,
+            userDisplayName: 'User 1',
+            userInitials: 'U1'
         };
 
-        const commentsComponent = fixture.debugElement.query(By.directive(CommentsComponent)).componentInstance;
+        spyOn(component.commentAdded, 'emit');
 
-        commentsComponent.commentAdded.emit(comment);
+        const commentsComponent = testingUtils.getByDirective(CommentsComponent).componentInstance;
+        commentsComponent.commentAdded.emit(mockComment);
 
-        expect(hostComponent.onCommentAdded).toHaveBeenCalledWith(comment);
+        expect(component.commentAdded.emit).toHaveBeenCalledWith(mockComment);
     });
 });
