@@ -726,24 +726,37 @@ describe('ViewerComponent', () => {
             const getVisibleDividers = () =>
                 testingUtils.getAllByCSS('.adf-toolbar-divider').filter((sep) => getComputedStyle(sep.nativeElement).display !== 'none');
 
-            const scenarios: [boolean, any, any, boolean, string, number, string][] = [
-                [false, null, null, false, 'Right', 0, 'no elements before fullscreen'],
-                [true, null, null, false, 'Right', 1, 'left sidebar only'],
-                [false, {}, null, false, 'Right', 0, 'open with only'],
-                [false, null, {}, false, 'Right', 0, 'more actions only'],
-                [false, null, null, true, 'Left', 0, 'left close button only'],
-                [true, {}, {}, true, 'Left', 1, 'all elements present'],
-                [false, null, null, false, 'Left', 0, 'no elements at all (left close button not enabled)']
+            const scenarios: [boolean, any, any, boolean, string, any, number, string][] = [
+                [false, null, null, false, 'Right', null, 0, 'no elements before fullscreen'],
+                [false, null, null, false, 'Right', {}, 0, 'toolbar actions only'],
+                [true, null, null, false, 'Right', null, 0, 'left sidebar only'],
+                [false, {}, null, false, 'Right', null, 0, 'open with only'],
+                [false, null, {}, false, 'Right', null, 0, 'more actions only'],
+                [false, null, null, true, 'Left', null, 0, 'left close button only'],
+                [false, null, null, false, 'Left', null, 0, 'no elements at all (left close button not enabled)'],
+                [false, {}, null, false, 'Right', null, 0, 'full screen and menu open with'],
+                [false, null, null, false, 'Right', {}, 0, 'full screen and toolbar actions']
             ];
 
             scenarios.forEach(
-                ([allowLeftSidebar, mnuOpenWith, mnuMoreActions, allowGoBack, closeButtonPosition, expectedSeparatorCount, description]) => {
+                ([
+                    allowLeftSidebar,
+                    mnuOpenWith,
+                    mnuMoreActions,
+                    allowGoBack,
+                    closeButtonPosition,
+                    toolbarActions,
+                    expectedSeparatorCount,
+                    description
+                ]) => {
                     it(`should show ${expectedSeparatorCount} separator(s) when ${description}`, () => {
                         component.allowLeftSidebar = allowLeftSidebar;
                         component.mnuOpenWith = mnuOpenWith;
                         component.mnuMoreActions = mnuMoreActions;
                         component.allowGoBack = allowGoBack;
                         component.closeButtonPosition = closeButtonPosition as any;
+                        component.toolbarActions = toolbarActions;
+
                         fixture.detectChanges();
 
                         expect(getVisibleDividers().length).toBe(expectedSeparatorCount);
