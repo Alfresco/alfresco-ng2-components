@@ -25,6 +25,7 @@ import { DisplayExternalPropertyWidgetComponent } from './display-external-prope
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { UnitTestingUtils } from '../../../../../../../core/src/lib/testing/unit-testing-utils';
 
 describe('DisplayExternalPropertyWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -32,6 +33,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
     let fixture: ComponentFixture<DisplayExternalPropertyWidgetComponent>;
     let element: HTMLElement;
     let formCloudService: FormCloudService;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,8 +44,10 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         fixture = TestBed.createComponent(DisplayExternalPropertyWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+
         loader = TestbedHarnessEnvironment.loader(fixture);
         formCloudService = TestBed.inject(FormCloudService);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     it('should display initial value', async () => {
@@ -126,11 +130,14 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should be able to display label with asterisk', () => {
-            const asterisk = element.querySelector('.adf-asterisk');
+        it('should be able to display label with asterisk', async () => {
+            const formField = await testingUtils.getMatFormField();
+            const formControl = await formField.getControl();
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk?.textContent).toEqual('*');
+            expect(formControl.isRequired).toBeTruthy();
+
+            const inputField = await testingUtils.getByCSS('.adf-input').nativeElement;
+            expect(inputField.hasAttribute('required')).toBeTruthy();
         });
     });
 

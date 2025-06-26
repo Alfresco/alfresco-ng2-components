@@ -6,7 +6,7 @@
 >
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }}
+            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
     </div>
     <div>
@@ -29,7 +29,7 @@
                 <mat-option id="readonlyOption" *ngIf="isReadOnlyType" [value]="field.value">{{field.value}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <div class="adf-error-messages-container">
+        <div class="adf-error-messages-container" *ngIf="!previewState && !field.readOnly">
             <error-widget
                 class="adf-dropdown-required-message"
                 *ngIf="showRequiredMessage"

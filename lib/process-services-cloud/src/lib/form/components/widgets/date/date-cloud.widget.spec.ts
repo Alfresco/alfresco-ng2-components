@@ -21,6 +21,9 @@ import { FormFieldModel, FormModel, FormFieldTypes, DEFAULT_DATE_FORMAT } from '
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
+import { UnitTestingUtils } from '../../../../../../../core/src/lib/testing/unit-testing-utils';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('DateCloudWidgetComponent', () => {
     let widget: DateCloudWidgetComponent;
@@ -28,6 +31,8 @@ describe('DateCloudWidgetComponent', () => {
     let element: HTMLElement;
     let adapter: DateAdapter<Date>;
     let form: FormModel;
+    let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,8 +44,10 @@ describe('DateCloudWidgetComponent', () => {
         fixture = TestBed.createComponent(DateCloudWidgetComponent);
         adapter = fixture.debugElement.injector.get(DateAdapter);
 
+        loader = TestbedHarnessEnvironment.loader(fixture);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     it('should not call onFieldChanged on init', () => {
@@ -445,13 +452,15 @@ describe('DateCloudWidgetComponent', () => {
             });
         });
 
-        it('should be able to display label with asterisk', () => {
+        it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
+            const formField = await testingUtils.getMatFormField();
+            const formControl = await formField.getControl();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            expect(formControl.isRequired).toBeTruthy();
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            const inputField = await testingUtils.getByCSS('.adf-input').nativeElement;
+            expect(inputField.hasAttribute('required')).toBeTruthy();
         });
 
         it('should be invalid after user interaction without typing', () => {
