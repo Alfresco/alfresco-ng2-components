@@ -29,11 +29,9 @@ import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-but
 import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table/file-properties-table-cloud.component';
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
-import { RichTextEditorComponent } from '../rich-text-editor';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
 
 export const FORM_CLOUD_DIRECTIVES = [
-    RichTextEditorComponent,
     FormSpinnerComponent,
     PropertiesViewerWrapperComponent,
     PropertiesViewerWidgetComponent,
