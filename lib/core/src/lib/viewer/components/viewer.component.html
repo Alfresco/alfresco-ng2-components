@@ -78,13 +78,10 @@
                     </mat-menu>
                 </ng-container>
 
-             @if (shouldShowDivider) {
+                @if (shouldShowDivider) {
                     <adf-toolbar-divider />
                 }
                 <ng-content select="adf-viewer-toolbar-custom-actions" />
-
-
-
                 <button id="adf-viewer-fullscreen"
                         *ngIf="allowFullScreen"
                         mat-icon-button
@@ -97,7 +94,6 @@
 
                 <ng-container *ngIf="allowRightSidebar && !hideInfoButton">
                     <adf-toolbar-divider />
-
                     <button mat-icon-button
                             [attr.aria-expanded]="showRightSidebar"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"

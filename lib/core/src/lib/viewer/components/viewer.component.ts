@@ -113,6 +113,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
+    @ContentChild(ViewerToolbarActionsComponent)
+    toolbarActions: ViewerToolbarActionsComponent;
+
     @ContentChild('viewerExtensions', { static: false })
     viewerTemplateExtensions: TemplateRef<any>;
 
@@ -246,7 +249,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     nodeId: string = null;
 
-    /** Original node mime type, should be provided when rendition mime type is different. */
+    /** Original node mime type, should be provided when renditiona mime type is different. */
     @Input()
     nodeMimeType: string = undefined;
 
@@ -564,11 +567,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         if (!this.showToolbarDividers) {
             return false;
         }
-        const hasLeftSidebar = this.allowLeftSidebar;
         const hasOpenWith = !!this.mnuOpenWith;
-        const hasMoreActions = !!this.mnuMoreActions;
-        const hasLeftCloseButton = this.allowGoBack && this.closeButtonPosition === CloseButtonPosition.Left;
+        const hasToolbarActions = !!this.toolbarActions;
 
-        return hasLeftSidebar || hasOpenWith || hasMoreActions || hasLeftCloseButton;
+        return hasOpenWith || hasToolbarActions;
     }
 }
