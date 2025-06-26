@@ -30,8 +30,7 @@ describe('SnackbarContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SnackbarContentComponent],
-            imports: [NoopTranslateModule, CoreTestingModule],
+            imports: [NoopTranslateModule, CoreTestingModule, SnackbarContentComponent],
             providers: [
                 {
                     provide: MatSnackBarRef,
