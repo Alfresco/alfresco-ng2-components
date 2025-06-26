@@ -19,7 +19,7 @@ import { DebugElement, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 export class UnitTestingUtils {
-    constructor(private debugElement?: DebugElement) {}
+    constructor(private readonly debugElement?: DebugElement) {}
 
     getByDirective(directive: Type<any>): DebugElement {
         return this.debugElement.query(By.directive(directive));
