@@ -182,14 +182,14 @@ describe('TextWidgetComponent', () => {
                 expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
             });
 
-            it('should be able to display label with asterisk', async () => {
-                fixture.detectChanges();
-                await fixture.whenStable();
+            it('should be able to display label with asterisk and input field is required', async () => {
+                const formField = await testingUtils.getMatFormField();
+                const formControl = await formField.getControl();
 
-                const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+                expect(formControl.isRequired).toBeTruthy();
 
-                expect(asterisk).toBeTruthy();
-                expect(asterisk.textContent).toEqual('*');
+                const inputField = testingUtils.getByCSS('.adf-input').nativeElement;
+                expect(inputField.hasAttribute('required')).toBeTruthy();
             });
         });
 
@@ -436,6 +436,24 @@ describe('TextWidgetComponent', () => {
                 const adfLeftLabel = testingUtils.getByCSS('.adf-left-label');
                 expect(adfLeftLabel).toBeNull();
             });
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'text-id',
+                name: 'text-name',
+                value: '',
+                type: FormFieldTypes.TEXT,
+                readOnly: false,
+                required: true
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
         });
     });
 });

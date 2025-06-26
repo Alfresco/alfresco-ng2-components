@@ -331,7 +331,7 @@ describe('StartFormComponent', () => {
             expect(dateElement).toBeDefined();
             expect(selectElement).toBeDefined();
 
-            expect(translate.instant(inputLabelElement.textContent.trim())).toBe('ClientName*');
+            expect(translate.instant(inputLabelElement.textContent.trim())).toBe('ClientName');
             expect(translate.instant(dateLabelElement.innerText)).toBe('BillDate (D-M-YYYY)');
             expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');
         });
