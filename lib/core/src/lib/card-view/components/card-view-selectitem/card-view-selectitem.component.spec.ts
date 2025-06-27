@@ -27,6 +27,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { DebugElement } from '@angular/core';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -78,6 +79,8 @@ describe('CardViewSelectItemComponent', () => {
     });
 
     describe('Rendering', () => {
+        const getReadOnlyElement = (): DebugElement => testingUtils.getByDataAutomationClass('read-only-value');
+
         it('should render custom label when editable is set to false', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
@@ -95,12 +98,20 @@ describe('CardViewSelectItemComponent', () => {
 
             component.ngOnChanges({});
             fixture.detectChanges();
-
-            const readOnly = testingUtils.getByDataAutomationClass('read-only-value');
             const selectBox = testingUtils.getByDataAutomationClass('select-box');
 
-            expect(readOnly).not.toBeNull();
+            expect(getReadOnlyElement()).not.toBeNull();
             expect(selectBox).toBeNull();
+        });
+
+        it('should read only value have title', () => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: false
+            });
+
+            fixture.detectChanges();
+            expect(getReadOnlyElement().nativeElement.title).toBe('Two');
         });
 
         it('should be possible edit selectBox item', async () => {
