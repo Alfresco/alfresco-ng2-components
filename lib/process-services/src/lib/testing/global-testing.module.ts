@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import 'zone.js';
-import 'zone.js/testing';
-import { TestBed } from '@angular/core/testing';
-import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { GlobalTestingModule } from './lib/testing/global-testing.module';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NgModule } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-TestBed.initTestEnvironment(GlobalTestingModule, platformBrowserDynamicTesting(), {
-    teardown: { destroyAfterEach: true }
-});
+@NgModule({
+    imports: [BrowserDynamicTestingModule, NoopTranslateModule, NoopAnimationsModule]
+})
+export class GlobalTestingModule {}
