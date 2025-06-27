@@ -18,7 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsComponent } from './comments.component';
-import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
+import { CommentsServiceMock } from './mocks/comments.service.mock';
+import { commentsResponseMock } from '../testing/comments.mock';
 import { of, throwError } from 'rxjs';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';

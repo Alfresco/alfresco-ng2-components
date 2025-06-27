@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { CommentModel, User } from '../../../../../core/src/lib/models';
-import { Observable, of } from 'rxjs';
+import { CommentModel } from '../../../../../core/src/lib/models';
+import { Observable } from 'rxjs';
 import { CommentsService } from '../../../../../core/src/lib/comments/interfaces/comments-service.interface';
+import { commentsResponseMock } from '../../../../../core/src/lib/testing/comments.mock';
 
 export class NodeCommentsServiceMock implements Partial<CommentsService> {
     get(_id: string): Observable<CommentModel[]> {
@@ -28,41 +29,3 @@ export class NodeCommentsServiceMock implements Partial<CommentsService> {
         return commentsResponseMock.addComment();
     }
 }
-
-const commentUser = new User({
-    enabled: true,
-    firstName: 'mock',
-    displayName: 'Mock User',
-    id: 'mock-user-id',
-    email: 'mock@example.com'
-});
-
-export const commentsResponseMock = {
-    getComments: () =>
-        of([
-            new CommentModel({
-                id: 1,
-                message: 'Mock Comment 1',
-                created: new Date(),
-                createdBy: commentUser,
-                isSelected: false
-            }),
-            new CommentModel({
-                id: 2,
-                message: 'Mock Comment 2',
-                created: new Date(),
-                createdBy: commentUser,
-                isSelected: false
-            })
-        ]),
-    addComment: (message = 'Mock comment') =>
-        of(
-            new CommentModel({
-                id: 99,
-                message,
-                created: new Date(),
-                createdBy: commentUser,
-                isSelected: false
-            })
-        )
-};
