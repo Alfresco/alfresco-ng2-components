@@ -111,6 +111,7 @@
     "ajv": "^8.12.0",
     "commander": "12.0.0",
     "dotenv": "16.4.7",
+    "editorjs-html": "4.0.5",
     "ejs": "^3.1.10",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "10.1.2",
