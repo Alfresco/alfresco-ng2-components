@@ -23,7 +23,6 @@ export * from './lib/group/public-api';
 export * from './lib/people/public-api';
 export * from './lib/form/public-api';
 export * from './lib/services/public-api';
-export * from './lib/rich-text-editor/public-api';
 export * from './lib/screen/public-api';
 
 export * from './lib/types';
