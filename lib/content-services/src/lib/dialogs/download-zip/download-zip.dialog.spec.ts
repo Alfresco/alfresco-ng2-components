@@ -21,8 +21,7 @@ import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { DownloadZipService } from './services/download-zip.service';
 import { DownloadEntry, FileDownloadStatus } from '@alfresco/js-api';
 import { EMPTY, Observable, of } from 'rxjs';
-import { NoopTranslateModule, RedirectAuthService } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RedirectAuthService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 
@@ -41,7 +40,7 @@ describe('DownloadZipDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, NoopAnimationsModule],
+            imports: [MatDialogModule],
             providers: [
                 DownloadZipService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

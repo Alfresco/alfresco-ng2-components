@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppConfigService, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoryBody,
     CategoryEntry,
@@ -44,10 +44,6 @@ describe('CategoryService', () => {
     const fakeCategoriesLinkBodies: CategoryLinkBody[] = [{ categoryId: fakeCategoryId }];
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopTranslateModule]
-        });
-
         categoryService = TestBed.inject(CategoryService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
     });

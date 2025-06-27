@@ -16,7 +16,7 @@
  */
 
 import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
-import { NoopTranslateModule, NotificationService } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { DebugElement } from '@angular/core';
@@ -25,7 +25,6 @@ import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EMPTY, of, throwError } from 'rxjs';
 import { TagsCreatorComponent } from './tags-creator.component';
 
@@ -38,7 +37,7 @@ describe('TagsCreatorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, TagsCreatorComponent],
+            imports: [TagsCreatorComponent],
             providers: [
                 {
                     provide: TagService,

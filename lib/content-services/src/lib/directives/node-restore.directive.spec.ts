@@ -19,7 +19,7 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
-import { NoopTranslateModule, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { TrashcanApi } from '@alfresco/js-api';
 
 @Component({
@@ -43,7 +43,7 @@ describe('NodeRestoreDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, TestComponent]
+            imports: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

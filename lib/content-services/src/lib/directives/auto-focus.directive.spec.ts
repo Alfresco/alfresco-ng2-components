@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { By } from '@angular/platform-browser';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
     imports: [AutoFocusDirective],
@@ -32,7 +31,7 @@ describe('AutoFocusDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, AutoFocusDirective, AutoFocusTestComponent]
+            imports: [AutoFocusDirective, AutoFocusTestComponent]
         });
         fixture = TestBed.createComponent(AutoFocusTestComponent);
     });

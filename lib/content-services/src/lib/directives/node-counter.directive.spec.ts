@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodeCounterDirective, NodeCounterComponent } from './node-counter.directive';
 import { By } from '@angular/platform-browser';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
     imports: [NodeCounterDirective],
@@ -34,7 +33,7 @@ describe('NodeCounterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NodeCounterDirective, NodeCounterComponent, TestComponent]
+            imports: [NodeCounterDirective, NodeCounterComponent, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();
