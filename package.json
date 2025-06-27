@@ -108,7 +108,6 @@
     "@typescript-eslint/parser": "6.21.0",
     "@typescript-eslint/typescript-estree": "8.35.1",
     "@typescript-eslint/utils": "^8.8.1",
-    "@valano/change-font-size": "^1.0.1",
     "ajv": "^8.12.0",
     "commander": "12.0.0",
     "dotenv": "16.4.7",
