@@ -19,12 +19,12 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { FileTypePipe, ThumbnailService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-comparison',
     standalone: true,
-    imports: [CommonModule, TranslateModule, FileTypePipe],
+    imports: [CommonModule, TranslatePipe, FileTypePipe],
     templateUrl: './version-comparison.component.html',
     styleUrls: ['./version-comparison.component.scss'],
     encapsulation: ViewEncapsulation.None

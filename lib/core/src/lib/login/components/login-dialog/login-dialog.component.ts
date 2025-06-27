@@ -18,7 +18,7 @@
 import { Component, Inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LoginDialogPanelComponent } from '../login-dialog-panel/login-dialog-panel.component';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 
@@ -27,7 +27,7 @@ import { LoginDialogComponentData } from './login-dialog-component-data.interfac
     standalone: true,
     templateUrl: './login-dialog.component.html',
     styleUrls: ['./login-dialog.component.scss'],
-    imports: [MatDialogModule, LoginDialogPanelComponent, TranslateModule, MatButtonModule],
+    imports: [MatDialogModule, LoginDialogPanelComponent, TranslatePipe, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogComponent {

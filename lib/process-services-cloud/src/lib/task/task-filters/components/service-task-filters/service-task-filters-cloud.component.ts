@@ -23,14 +23,14 @@ import { ServiceTaskFilterCloudService } from '../../services/service-task-filte
 import { IconComponent, TranslationService } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatListModule, IconComponent, MatProgressSpinnerModule],
+    imports: [CommonModule, TranslatePipe, MatListModule, IconComponent, MatProgressSpinnerModule],
     templateUrl: './service-task-filters-cloud.component.html',
     styleUrls: ['./service-task-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

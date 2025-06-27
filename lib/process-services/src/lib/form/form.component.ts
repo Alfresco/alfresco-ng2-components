@@ -57,13 +57,13 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-form',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslateModule, FormRendererComponent, FormatSpacePipe],
+    imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslatePipe, FormRendererComponent, FormatSpacePipe],
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None

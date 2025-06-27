@@ -38,7 +38,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { UnclaimTaskDirective } from '../task-form/unclaim-task.directive';
 import { ClaimTaskDirective } from '../task-form/claim-task.directive';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -46,7 +46,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-task-header',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslateModule, CardViewComponent],
+    imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslatePipe, CardViewComponent],
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss'],
     encapsulation: ViewEncapsulation.None

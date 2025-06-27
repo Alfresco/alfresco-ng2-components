@@ -39,7 +39,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { fromEvent } from 'rxjs';
 import { filter, first, skipWhile } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config';
@@ -79,7 +79,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ToolbarComponent,
         ToolbarTitleComponent,
         MatButtonModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         MatMenuModule,
         ToolbarDividerComponent,

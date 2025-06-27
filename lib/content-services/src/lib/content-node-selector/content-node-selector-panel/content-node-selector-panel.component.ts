@@ -43,7 +43,7 @@ import { debounceTime } from 'rxjs/operators';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives/auto-focus.directive';
 import { NodeCounterDirective } from '../../directives/node-counter.directive';
@@ -66,7 +66,7 @@ export const defaultValidation = () => true;
     imports: [
         CommonModule,
         MatFormFieldModule,
-        TranslateModule,
+        TranslatePipe,
         MatInputModule,
         ReactiveFormsModule,
         AutoFocusDirective,

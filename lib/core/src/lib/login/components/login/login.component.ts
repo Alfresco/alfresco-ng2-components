@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AppConfigService, AppConfigValues } from '../../../app-config';
 import { AuthenticationService, BasicAlfrescoAuthService } from '../../../auth';
 import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
@@ -65,7 +65,7 @@ interface LoginFormValues {
         CommonModule,
         MatCardModule,
         ReactiveFormsModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,

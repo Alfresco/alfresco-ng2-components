@@ -22,12 +22,12 @@ import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-error-content',
     standalone: true,
-    imports: [CommonModule, TranslateModule],
+    imports: [CommonModule, TranslatePipe],
     templateUrl: './error-content.component.html',
     styleUrls: ['./error-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -39,7 +39,7 @@ import {
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
@@ -47,7 +47,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatProgressSpinnerModule,
         DataTableComponent,
         NoContentTemplateDirective,

@@ -21,7 +21,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
 import { ContentTypeService } from './content-type.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-content-type-dialog',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, TranslateModule, MatExpansionModule, MatTableModule, MatButtonModule],
+    imports: [CommonModule, MatDialogModule, TranslatePipe, MatExpansionModule, MatTableModule, MatButtonModule],
     templateUrl: './content-type-dialog.component.html',
     styleUrls: ['./content-type-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

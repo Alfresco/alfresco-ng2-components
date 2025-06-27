@@ -19,14 +19,14 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AppsProcessService } from '../../services/apps-process.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-select-apps-dialog',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatDialogModule, MatSelectModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, MatDialogModule, MatSelectModule, MatButtonModule],
     templateUrl: './select-apps-dialog.component.html',
     styleUrls: ['./select-apps-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

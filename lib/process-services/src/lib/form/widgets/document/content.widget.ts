@@ -20,7 +20,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewE
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-content',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatCardModule, MatIconModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, MatCardModule, MatIconModule, MatButtonModule],
     templateUrl: './content.widget.html',
     styleUrls: ['./content.widget.scss'],
     encapsulation: ViewEncapsulation.None

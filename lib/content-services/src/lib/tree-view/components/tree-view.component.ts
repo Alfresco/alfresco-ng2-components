@@ -25,12 +25,12 @@ import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-tree-view-list',
     standalone: true,
-    imports: [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslateModule],
+    imports: [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslatePipe],
     templateUrl: './tree-view.component.html',
     styleUrls: ['./tree-view.component.scss']
 })

@@ -21,12 +21,12 @@ import { FormDefinitionSelectorCloudService } from '../services/form-definition-
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-cloud-form-definition-selector',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatSelectModule],
+    imports: [CommonModule, TranslatePipe, MatSelectModule],
     templateUrl: './form-definition-selector-cloud.component.html',
     styleUrls: ['./form-definition-selector-cloud.component.scss']
 })

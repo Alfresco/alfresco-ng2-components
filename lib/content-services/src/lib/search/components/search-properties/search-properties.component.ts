@@ -24,7 +24,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchProperties } from './search-properties';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-search-properties',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, TranslateModule, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
+    imports: [CommonModule, ReactiveFormsModule, TranslatePipe, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
     templateUrl: './search-properties.component.html',
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None

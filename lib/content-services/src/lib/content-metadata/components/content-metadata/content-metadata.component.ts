@@ -49,7 +49,7 @@ import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
 import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
 
@@ -69,7 +69,7 @@ enum DefaultPanels {
         MatExpansionModule,
         ContentMetadataHeaderComponent,
         MatButtonModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         MatChipsModule,
         CategoriesManagementComponent,

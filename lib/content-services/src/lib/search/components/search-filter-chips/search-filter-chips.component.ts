@@ -21,7 +21,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { FacetField, SearchCategory, TabbedFacetField } from '../../models';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetChipComponent } from './search-facet-chip/search-facet-chip.component';
 import { SearchWidgetChipComponent } from './search-widget-chip/search-widget-chip.component';
@@ -30,7 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-search-filter-chips',
     standalone: true,
-    imports: [CommonModule, MatChipsModule, TranslateModule, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
+    imports: [CommonModule, MatChipsModule, TranslatePipe, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
     templateUrl: './search-filter-chips.component.html',
     styleUrls: ['./search-filter-chips.component.scss'],
     encapsulation: ViewEncapsulation.None

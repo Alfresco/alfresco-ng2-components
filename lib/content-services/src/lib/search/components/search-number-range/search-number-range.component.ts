@@ -26,13 +26,13 @@ import { first, map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-number-range',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslateModule, MatButtonModule],
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatButtonModule],
     templateUrl: './search-number-range.component.html',
     styleUrls: ['./search-number-range.component.scss'],
     encapsulation: ViewEncapsulation.None,

@@ -20,15 +20,15 @@ import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { ShareDataRow } from '../../data/share-data-row.model';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { AsyncPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-name-column',
     standalone: true,
-    imports: [CommonModule, TranslateModule, NodeNameTooltipPipe],
+    imports: [AsyncPipe, TranslatePipe, NodeNameTooltipPipe],
     template: `
         <span
             role="link"

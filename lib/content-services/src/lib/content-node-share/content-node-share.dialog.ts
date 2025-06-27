@@ -27,7 +27,7 @@ import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
 import { add, endOfDay, format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -44,7 +44,7 @@ interface SharedDialogFormProps {
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         MatDialogModule,
         ReactiveFormsModule,

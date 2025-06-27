@@ -21,14 +21,14 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from '../widget.component';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'analytics-number-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],
     encapsulation: ViewEncapsulation.None

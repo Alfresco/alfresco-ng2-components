@@ -63,7 +63,7 @@ import { VariableMapperService } from '../../../services/variable-mapper.sevice'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
@@ -76,7 +76,7 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     imports: [
         DataTableComponent,
         MatProgressSpinnerModule,
-        TranslateModule,
+        TranslatePipe,
         ColumnsSelectorComponent,
         MainMenuDataTableTemplateDirective,
         EmptyContentComponent,

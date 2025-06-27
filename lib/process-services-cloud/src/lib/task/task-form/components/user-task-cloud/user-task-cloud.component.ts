@@ -25,7 +25,7 @@ import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.compo
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
@@ -48,7 +48,7 @@ type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
         CommonModule,
         MatProgressSpinnerModule,
         UserTaskCloudButtonsComponent,
-        TranslateModule,
+        TranslatePipe,
         MatButtonModule,
         MatCardModule,
         EmptyContentComponent,

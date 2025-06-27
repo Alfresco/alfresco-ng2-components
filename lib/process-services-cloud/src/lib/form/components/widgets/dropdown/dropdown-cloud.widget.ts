@@ -34,7 +34,7 @@ import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angul
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
@@ -65,7 +65,7 @@ export const HIDE_FILTER_LIMIT = 5;
         MatFormFieldModule,
         MatSelectModule,
         ErrorWidgetComponent,
-        TranslateModule,
+        TranslatePipe,
         SelectFilterInputComponent
     ]
 })

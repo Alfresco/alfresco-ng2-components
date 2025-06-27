@@ -20,7 +20,7 @@ import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutle
 import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Track } from '../../models/viewer.model';
 import { ViewUtilService } from '../../services/view-util.service';
 import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
@@ -37,7 +37,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     host: { class: 'adf-viewer-render' },
     encapsulation: ViewEncapsulation.None,
     imports: [
-        TranslateModule,
+        TranslatePipe,
         MatProgressSpinnerModule,
         NgSwitch,
         NgSwitchCase,

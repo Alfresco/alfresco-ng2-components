@@ -1,11 +1,23 @@
-<p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content" aria-hidden="true"><mat-icon *ngIf="data.decorativeIcon" data-automation-id="adf-snackbar-decorative-icon">{{ data.decorativeIcon }}</mat-icon>{{ data.message }}</p>
-<div *ngIf="data.showAction" class="adf-snackbar-message-content-action" aria-hidden="true">
-    <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="adf-snackbar-message-content-action-button"
-            data-automation-id="adf-snackbar-message-content-action-button">
-        {{data.actionLabel}}
-    </button>
-    <button mat-button *ngIf="data.actionIcon" (click)="onIconClicked()" class="adf-snackbar-message-content-action-icon"
-            [attr.aria-label]="data.actionIconAriaLabel | translate">
-        <mat-icon>{{ data.actionIcon }}</mat-icon>
-    </button>
-</div>
+<p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content" aria-hidden="true">
+    @if (data.decorativeIcon) {
+        <mat-icon data-automation-id="adf-snackbar-decorative-icon">{{ data.decorativeIcon }}</mat-icon>
+    }
+    {{ data.message }}
+</p>
+
+@if (data.showAction) {
+    <div class="adf-snackbar-message-content-action" aria-hidden="true">
+        @if (data.actionLabel) {
+            <button mat-button (click)="snackBarRef.dismissWithAction()" class="adf-snackbar-message-content-action-button"
+                    data-automation-id="adf-snackbar-message-content-action-button">
+                {{data.actionLabel}}
+            </button>
+        }
+        @if (data.actionIcon) {
+            <button mat-button (click)="onIconClicked()" class="adf-snackbar-message-content-action-icon"
+                    [attr.aria-label]="data.actionIconAriaLabel | translate">
+                <mat-icon>{{ data.actionIcon }}</mat-icon>
+            </button>
+        }
+    </div>
+}

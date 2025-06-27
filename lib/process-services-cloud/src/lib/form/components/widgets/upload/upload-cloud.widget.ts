@@ -26,7 +26,7 @@ import { ProcessCloudContentService } from '../../../services/process-cloud-cont
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { VersionManagerUploadData } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
@@ -35,7 +35,7 @@ import { MatLineModule } from '@angular/material/core';
 @Component({
     selector: 'upload-cloud-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, MatIconModule, MatButtonModule, MatListModule, MatLineModule],
+    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, MatIconModule, MatButtonModule, MatListModule, MatLineModule],
     templateUrl: './upload-cloud.widget.html',
     styleUrls: ['./upload-cloud.widget.scss'],
     host: {

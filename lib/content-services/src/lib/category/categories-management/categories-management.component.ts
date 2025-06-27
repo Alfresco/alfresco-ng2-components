@@ -35,7 +35,7 @@ import { debounce, first, map, tap } from 'rxjs/operators';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AutoFocusDirective } from '../../directives';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -56,7 +56,7 @@ interface CategoryNameControlErrors {
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         AutoFocusDirective,
         ReactiveFormsModule,
         MatFormFieldModule,

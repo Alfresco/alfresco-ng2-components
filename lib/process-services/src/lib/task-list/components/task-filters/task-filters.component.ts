@@ -24,7 +24,7 @@ import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -33,7 +33,7 @@ import { forkJoin, Observable } from 'rxjs';
 @Component({
     selector: 'adf-task-filters',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconComponent],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

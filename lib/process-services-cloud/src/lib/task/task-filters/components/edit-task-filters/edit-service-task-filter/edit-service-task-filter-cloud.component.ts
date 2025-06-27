@@ -22,7 +22,7 @@ import { ServiceTaskFilterCloudService } from '../../../services/service-task-fi
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from '../base-edit-task-filter-cloud.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
@@ -43,7 +43,7 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatExpansionModule,
         MatButtonModule,
         IconComponent,

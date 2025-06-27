@@ -22,7 +22,7 @@ import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dia
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     standalone: true,
@@ -39,7 +39,7 @@ import { TranslateModule } from '@ngx-translate/core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [TranslateModule, MatFormFieldModule, MatButtonModule],
+    imports: [TranslatePipe, MatFormFieldModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {

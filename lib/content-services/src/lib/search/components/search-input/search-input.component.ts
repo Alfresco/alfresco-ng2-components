@@ -20,13 +20,13 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SearchConfiguration } from '../../models';
 
 @Component({
     selector: 'adf-search-input',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule],
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslatePipe],
     templateUrl: `./search-input.component.html`,
     styleUrls: ['./search-input.component.scss'],
     encapsulation: ViewEncapsulation.None

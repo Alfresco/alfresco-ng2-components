@@ -24,7 +24,7 @@ import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { map, debounceTime, filter, first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SelectFilterInputComponent } from './select-filter-input/select-filter-input.component';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatFormFieldModule,
         MatSelectModule,
         SelectFilterInputComponent,

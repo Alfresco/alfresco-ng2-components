@@ -17,7 +17,7 @@
 
 import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ViewerComponent } from '../../../../viewer';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -41,7 +41,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslateModule, ViewerComponent, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, ViewerComponent, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {

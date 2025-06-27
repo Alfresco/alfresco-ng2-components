@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { PackageInfo } from '../interfaces';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
@@ -27,7 +27,7 @@ import { MatTableModule } from '@angular/material/table';
     styleUrls: ['./package-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule]
+    imports: [CommonModule, TranslatePipe, MatTableModule]
 })
 export class PackageListComponent implements OnInit {
     @Input()

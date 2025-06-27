@@ -38,7 +38,7 @@ import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { TreeContextMenuResult } from '../models/tree-context-menu-result.interface';
 import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,7 +50,7 @@ import { MatIconModule } from '@angular/material/icon';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatTreeModule,
         MatProgressSpinnerModule,
         MatButtonModule,

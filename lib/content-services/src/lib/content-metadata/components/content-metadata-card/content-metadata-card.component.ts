@@ -27,12 +27,12 @@ import { MatCardModule } from '@angular/material/card';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-content-metadata-card',
     standalone: true,
-    imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslateModule],
+    imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslatePipe],
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,

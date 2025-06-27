@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
     selector: 'adf-cloud-process-filter-dialog-cloud',
     standalone: true,
-    imports: [TranslateModule, MatButtonModule, MatCardModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
+    imports: [TranslatePipe, MatButtonModule, MatCardModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
     templateUrl: './process-filter-dialog-cloud.component.html',
     styleUrls: ['./process-filter-dialog-cloud.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

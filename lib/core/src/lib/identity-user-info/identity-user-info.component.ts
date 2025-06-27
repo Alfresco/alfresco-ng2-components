@@ -22,12 +22,12 @@ import { CommonModule } from '@angular/common';
 import { FullNamePipe, InitialUsernamePipe } from '../pipes';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-identity-user-info',
     standalone: true,
-    imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslateModule],
+    imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslatePipe],
     templateUrl: './identity-user-info.component.html',
     styleUrls: ['./identity-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
