@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
-import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('StorageService', () => {
     let storage: StorageService;
@@ -29,7 +29,7 @@ describe('StorageService', () => {
     describe('with local storage and prefix', () => {
         beforeEach(async () => {
             TestBed.configureTestingModule({
-                imports: [NoopTranslateModule, NoopAuthModule]
+                imports: [NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
             storage = TestBed.inject(StorageService);
@@ -122,7 +122,7 @@ describe('StorageService', () => {
             });
 
             TestBed.configureTestingModule({
-                imports: [NoopTranslateModule, NoopAuthModule]
+                imports: [NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
             storage = TestBed.inject(StorageService);

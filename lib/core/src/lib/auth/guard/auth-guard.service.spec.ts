@@ -27,7 +27,6 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { NoopAuthModule } from '../../testing';
 
 describe('AuthGuardService', () => {
@@ -43,7 +42,7 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, RouterTestingModule, NoopAuthModule],
+            imports: [MatDialogModule, RouterTestingModule, NoopAuthModule],
             providers: [
                 AppConfigService,
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of(), init: () => {} } },

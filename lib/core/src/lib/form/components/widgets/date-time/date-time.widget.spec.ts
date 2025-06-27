@@ -26,8 +26,6 @@ import { addMinutes } from 'date-fns';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 
 describe('DateTimeWidgetComponent', () => {
@@ -39,15 +37,7 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopTranslateModule,
-                NoopAnimationsModule,
-                MatDialogModule,
-                MatNativeDatetimeModule,
-                MatDatepickerModule,
-                MatDatetimepickerModule,
-                DateTimeWidgetComponent
-            ]
+            imports: [MatDialogModule, MatNativeDatetimeModule, MatDatepickerModule, MatDatetimepickerModule, DateTimeWidgetComponent]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
         widget = fixture.componentInstance;

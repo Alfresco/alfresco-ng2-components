@@ -22,9 +22,7 @@ import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 @Component({
     template: '<div>Test div</div>',
@@ -88,9 +86,8 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProvidesNotificationServiceComponent, NoopTranslateModule],
-            providers: [provideNoopAnimations()]
-        }).compileComponents();
+            imports: [MatSnackBarModule, ProvidesNotificationServiceComponent]
+        });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();

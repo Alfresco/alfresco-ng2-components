@@ -22,7 +22,6 @@ import { Observable, Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('ColumnsSelectorComponent', () => {
@@ -40,7 +39,7 @@ describe('ColumnsSelectorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, ColumnsSelectorComponent]
+            imports: [ColumnsSelectorComponent]
         });
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);

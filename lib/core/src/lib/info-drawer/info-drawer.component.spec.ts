@@ -22,8 +22,6 @@ import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.compo
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('InfoDrawerComponent', () => {
@@ -33,7 +31,7 @@ describe('InfoDrawerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, InfoDrawerComponent]
+            imports: [InfoDrawerComponent]
         });
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
@@ -105,7 +103,7 @@ describe('Custom InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, CustomInfoDrawerComponent]
+            imports: [CustomInfoDrawerComponent]
         });
 
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
@@ -174,7 +172,7 @@ describe('Header visibility InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, VisibilityInfoDrawerComponent]
+            imports: [VisibilityInfoDrawerComponent]
         });
         fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
         fixture.detectChanges();

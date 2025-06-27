@@ -18,8 +18,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('Confirm Dialog Component', () => {
@@ -40,7 +38,7 @@ describe('Confirm Dialog Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, NoopAnimationsModule, NoopTranslateModule],
+            imports: [MatDialogModule],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }

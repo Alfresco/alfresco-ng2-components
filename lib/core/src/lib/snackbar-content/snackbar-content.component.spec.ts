@@ -20,7 +20,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { SnackbarContentComponent } from './snackbar-content.component';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
-import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('SnackbarContentComponent', () => {
@@ -30,7 +29,7 @@ describe('SnackbarContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, CoreTestingModule, SnackbarContentComponent],
+            imports: [CoreTestingModule, SnackbarContentComponent],
             providers: [
                 {
                     provide: MatSnackBarRef,

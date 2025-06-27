@@ -20,7 +20,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -32,9 +31,6 @@ describe('CardViewBoolItemComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopTranslateModule]
-        });
         fixture = TestBed.createComponent(CardViewBoolItemComponent);
         component = fixture.componentInstance;
         component.property = new CardViewBoolItemModel({

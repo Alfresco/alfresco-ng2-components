@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-import 'zone.js';
-import 'zone.js/testing';
-import { TestBed } from '@angular/core/testing';
-import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import pdfjsLibMock from './src/lib/viewer/components/mock/pdfjs-lib.mock';
-import { GlobalTestingModule } from './src/lib/testing/global-testing.module';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopTranslateModule } from './noop-translate.module';
+import { NgModule } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-TestBed.initTestEnvironment(GlobalTestingModule, platformBrowserDynamicTesting(), {
-    teardown: { destroyAfterEach: true }
-});
-
-(window as any).pdfjsLib = pdfjsLibMock;
+@NgModule({
+    imports: [BrowserDynamicTestingModule, NoopTranslateModule, NoopAnimationsModule]
+})
+export class GlobalTestingModule {}

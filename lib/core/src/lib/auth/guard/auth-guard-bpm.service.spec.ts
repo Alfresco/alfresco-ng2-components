@@ -26,7 +26,6 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { AuthGuardService } from './auth-guard.service';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 describe('AuthGuardService BPM', () => {
     let authGuard: Promise<boolean>;
@@ -41,7 +40,7 @@ describe('AuthGuardService BPM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule],
+            imports: [MatDialogModule],
             providers: [
                 AuthGuardService,
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },

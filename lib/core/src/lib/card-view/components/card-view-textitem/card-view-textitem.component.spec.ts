@@ -30,9 +30,7 @@ import { CardViewItemValidator } from '../../interfaces/card-view-item-validator
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
@@ -113,7 +111,7 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, CardViewTextItemComponent]
+            imports: [CardViewTextItemComponent]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;

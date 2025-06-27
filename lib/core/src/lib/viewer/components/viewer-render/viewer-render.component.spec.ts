@@ -21,11 +21,10 @@ import { SpyLocation } from '@angular/common/testing';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, DeferBlockBehavior, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { NoopTranslateModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
 import { ImgViewerComponent, MediaPlayerComponent, PdfViewerComponent, ViewerExtensionDirective } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-double-viewer',
@@ -69,7 +68,7 @@ describe('ViewerComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatDialogModule, ViewerRenderComponent, DoubleViewerComponent],
+            imports: [MatDialogModule, ViewerRenderComponent, DoubleViewerComponent],
             providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog],
             deferBlockBehavior: DeferBlockBehavior.Playthrough
         });

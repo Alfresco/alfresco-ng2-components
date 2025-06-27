@@ -23,7 +23,6 @@ import { AppConfigService } from '../../../app-config';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 let component: DateCellComponent;
@@ -63,7 +62,7 @@ const checkDisplayedTooltip = (expectedTooltip: string) => {
 
 const configureTestingModule = (providers: any[]) => {
     TestBed.configureTestingModule({
-        imports: [DateCellComponent, NoopTranslateModule],
+        imports: [DateCellComponent],
         providers
     });
     fixture = TestBed.createComponent(DateCellComponent);
