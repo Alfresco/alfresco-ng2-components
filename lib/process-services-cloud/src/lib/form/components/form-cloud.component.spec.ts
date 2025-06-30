@@ -66,8 +66,6 @@ import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
-import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
-import { FormFieldValidator } from '../../../../../core/src/public-api';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
