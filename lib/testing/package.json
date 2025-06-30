@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-testing",
   "description": "Alfresco ADF testing page and utils",
-  "version": "6.9.0",
+  "version": "6.9.1",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "peerDependencies": {
-    "@alfresco/js-api": ">=7.8.0"
+    "@alfresco/js-api": ">=7.8.1"
   },
   "keywords": [
     "testing",
