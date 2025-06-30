@@ -34,8 +34,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { map, startWith } from 'rxjs/operators';
-import { TranslateModule } from '@ngx-translate/core';
-
+import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbFocusDirective } from '../../directives/breadcrumb-focus.directive';
 import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.component';
 
@@ -45,7 +44,7 @@ import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.comp
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatIconModule, TranslateModule, MatButtonModule, BreadcrumbFocusDirective]
+    imports: [CommonModule, MatIconModule, TranslatePipe, MatButtonModule, BreadcrumbFocusDirective]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];

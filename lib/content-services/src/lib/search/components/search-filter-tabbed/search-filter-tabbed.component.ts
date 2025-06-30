@@ -19,12 +19,12 @@ import { ChangeDetectorRef, Component, ContentChildren, ElementRef, OnDestroy, O
 import { SearchFilterTabDirective } from './search-filter-tab.directive';
 import { CommonModule } from '@angular/common';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
     standalone: true,
-    imports: [CommonModule, MatTabsModule, TranslateModule],
+    imports: [CommonModule, MatTabsModule, TranslatePipe],
     templateUrl: './search-filter-tabbed.component.html',
     styleUrls: ['./search-filter-tabbed.component.scss'],
     encapsulation: ViewEncapsulation.None

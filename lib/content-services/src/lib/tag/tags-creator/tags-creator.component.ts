@@ -40,7 +40,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { AutoFocusDirective } from '../../directives';
@@ -70,7 +70,7 @@ const DEFAULT_TAGS_SORTING = {
         MatInputModule,
         ReactiveFormsModule,
         AutoFocusDirective,
-        TranslateModule,
+        TranslatePipe,
         MatChipsModule,
         MatButtonModule,
         MatIconModule,

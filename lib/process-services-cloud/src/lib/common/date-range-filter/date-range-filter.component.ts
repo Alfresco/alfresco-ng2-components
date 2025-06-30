@@ -24,7 +24,7 @@ import { endOfDay, isValid, startOfDay } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -36,7 +36,7 @@ interface DateRangeFormProps {
 @Component({
     selector: 'adf-cloud-date-range-filter',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatDatepickerModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule],
+    imports: [CommonModule, TranslatePipe, MatDatepickerModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule],
     styleUrls: ['./date-range-filter.component.scss'],
     templateUrl: './date-range-filter.component.html',
     providers: [

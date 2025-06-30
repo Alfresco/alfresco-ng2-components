@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
@@ -38,7 +38,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [TranslateModule],
+    imports: [TranslatePipe],
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayTextWidgetComponent extends WidgetComponent {

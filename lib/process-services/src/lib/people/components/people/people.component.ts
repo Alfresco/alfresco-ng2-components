@@ -24,7 +24,7 @@ import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { PeopleListComponent } from '../people-list/people-list.component';
 import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core';
@@ -35,7 +35,7 @@ import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core
     imports: [
         CommonModule,
         MatCardModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         PeopleSearchComponent,
         PeopleListComponent,

@@ -25,7 +25,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PermissionContainerComponent } from '../permission-container/permission-container.component';
 import { PopOverDirective } from '../pop-over.directive';
@@ -41,7 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatProgressSpinnerModule,
         MatIconModule,
         MatSlideToggleModule,
-        TranslateModule,
+        TranslatePipe,
         MatButtonModule,
         PermissionContainerComponent,
         PopOverDirective

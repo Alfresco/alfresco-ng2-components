@@ -17,14 +17,11 @@
 
 import { NgModule } from '@angular/core';
 import { EditJsonDialogComponent } from './edit-json.dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+
+/* @deprecated Use EditJsonDialogComponent directly */
 @NgModule({
-    declarations: [EditJsonDialogComponent],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatDialogModule, MatButtonModule],
+    declarations: [],
+    imports: [EditJsonDialogComponent],
     exports: [EditJsonDialogComponent]
 })
 export class EditJsonDialogModule {}

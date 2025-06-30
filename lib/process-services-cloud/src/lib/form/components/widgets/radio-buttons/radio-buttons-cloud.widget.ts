@@ -20,7 +20,7 @@
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { ErrorMessageModel, ErrorWidgetComponent, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormUtilsService } from '../../../services/form-utils.service';
 import { MatRadioModule } from '@angular/material/radio';
@@ -30,7 +30,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
     selector: 'radio-buttons-cloud-widget',
     standalone: true,
-    imports: [CommonModule, ErrorWidgetComponent, MatRadioModule, TranslateModule, FormsModule],
+    imports: [CommonModule, ErrorWidgetComponent, MatRadioModule, TranslatePipe, FormsModule],
     templateUrl: './radio-buttons-cloud.widget.html',
     styleUrls: ['./radio-buttons-cloud.widget.scss'],
     host: {

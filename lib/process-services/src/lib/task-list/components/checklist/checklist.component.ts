@@ -20,7 +20,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,7 +33,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatChipsModule,
         MatButtonModule,
         MatIconModule,

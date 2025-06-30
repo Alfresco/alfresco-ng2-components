@@ -22,7 +22,7 @@ import { AddPermissionDialogData } from './add-permission-dialog-data.interface'
 import { MemberModel } from '../../models/member.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent } from '@alfresco/adf-core';
 import { MatIconModule } from '@angular/material/icon';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
@@ -37,7 +37,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
         CommonModule,
         MatDialogModule,
         MatButtonModule,
-        TranslateModule,
+        TranslatePipe,
         DataTableComponent,
         DataColumnListComponent,
         DataColumnComponent,

@@ -38,7 +38,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { from, Subject, switchMap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
@@ -65,7 +65,7 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
     imports: [
         MatButtonModule,
         MatIconModule,
-        TranslateModule,
+        TranslatePipe,
         PdfThumbListComponent,
         NgIf,
         NgTemplateOutlet,

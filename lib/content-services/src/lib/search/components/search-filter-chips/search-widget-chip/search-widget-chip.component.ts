@@ -22,7 +22,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,7 @@ import { first } from 'rxjs/operators';
         CommonModule,
         MatChipsModule,
         MatMenuModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         SearchFilterMenuCardComponent,
         SearchWidgetContainerComponent,

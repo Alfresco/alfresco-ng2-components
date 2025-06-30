@@ -19,7 +19,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/cor
 import { BaseViewerWidgetComponent, ErrorWidgetComponent, FormService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 /* eslint-disable @angular-eslint/component-selector */
@@ -27,7 +27,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'adf-properties-viewer-widget',
     standalone: true,
-    imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslateModule],
+    imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslatePipe],
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],
     host: {

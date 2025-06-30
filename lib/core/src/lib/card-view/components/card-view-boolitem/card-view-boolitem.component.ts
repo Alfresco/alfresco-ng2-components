@@ -20,12 +20,12 @@ import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { BaseCardView } from '../base-card-view';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-card-view-boolitem',
     standalone: true,
-    imports: [CommonModule, MatCheckboxModule, TranslateModule],
+    imports: [CommonModule, MatCheckboxModule, TranslatePipe],
     templateUrl: './card-view-boolitem.component.html',
     styles: [
         `

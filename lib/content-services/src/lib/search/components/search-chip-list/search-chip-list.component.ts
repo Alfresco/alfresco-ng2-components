@@ -20,13 +20,13 @@ import { SearchFilterComponent } from '../../components/search-filter/search-fil
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-chip-list',
     standalone: true,
-    imports: [CommonModule, MatChipsModule, TranslateModule, MatIconModule],
+    imports: [CommonModule, MatChipsModule, TranslatePipe, MatIconModule],
     templateUrl: './search-chip-list.component.html',
     styleUrls: ['./search-chip-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

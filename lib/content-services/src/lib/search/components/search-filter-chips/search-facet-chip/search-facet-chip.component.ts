@@ -22,7 +22,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { SearchFacetFieldComponent } from '../../search-facet-field/search-facet-field.component';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,7 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
         CommonModule,
         MatChipsModule,
         MatMenuModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         SearchFilterMenuCardComponent,
         MatButtonModule,

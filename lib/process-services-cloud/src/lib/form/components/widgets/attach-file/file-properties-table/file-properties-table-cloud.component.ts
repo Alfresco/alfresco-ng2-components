@@ -23,7 +23,7 @@ import { Node } from '@alfresco/js-api';
 import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -38,7 +38,7 @@ const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
     imports: [
         CommonModule,
         MatIconModule,
-        TranslateModule,
+        TranslatePipe,
         MatMenuModule,
         UploadDirective,
         MatButtonModule,

@@ -1,37 +1,38 @@
-<div 
-    *ngIf="element?.isTypeFieldGroup"
-    [style]="element | adfFieldStyle"
-    class="adf-container-widget-header"
->
-    <div *ngIf="element?.hideHeader">
-        <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
-    </div>
-    <h4
-        *ngIf="!element?.hideHeader"
-        id="container-header"
-        class="adf-container-widget-header__text"
-        [class.adf-collapsible]="element?.isCollapsible"
-    >
-        <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
-        <span
-            [id]="'container-header-label-' + element?.id"
-            role="button"
-            tabindex="0"
-            (keyup.enter)="onExpanderClicked(element)"
-            (click)="onExpanderClicked(element)"
-        >
-            {{ element.name | translate }}
-        </span>
-    </h4>
+@if (element?.isTypeFieldGroup) {
+    <div [style]="element | adfFieldStyle" class="adf-container-widget-header">
+        @if (element?.hideHeader) {
+            <div>
+                <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
+            </div>
+        } @else {
+            <h4
+                id="container-header"
+                class="adf-container-widget-header__text"
+                [class.adf-collapsible]="element?.isCollapsible"
+            >
+                <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
+                <span
+                    [id]="'container-header-label-' + element?.id"
+                    role="button"
+                    tabindex="0"
+                    (keyup.enter)="onExpanderClicked(element)"
+                    (click)="onExpanderClicked(element)"
+                >
+                    {{ element.name | translate }}
+                </span>
+            </h4>
+        }
 
-    <ng-template #expandButton let-element>
-        <button
-            *ngIf="element?.isCollapsible"
-            mat-icon-button
-            class="mdl-button--icon"
-            (click)="onExpanderClicked(element)"
-        >
-            <mat-icon> {{ element?.isExpanded ? 'expand_more' : 'expand_less' }} </mat-icon>
-        </button>
-    </ng-template>
-</div>
+        <ng-template #expandButton let-element>
+            @if (element?.isCollapsible) {
+                <button
+                    mat-icon-button
+                    class="mdl-button--icon"
+                    (click)="onExpanderClicked(element)"
+                >
+                    <mat-icon> {{ element?.isExpanded ? 'expand_more' : 'expand_less' }} </mat-icon>
+                </button>
+            }
+        </ng-template>
+    </div>
+}

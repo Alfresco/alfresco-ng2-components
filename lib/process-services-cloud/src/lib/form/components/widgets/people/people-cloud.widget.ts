@@ -24,7 +24,7 @@ import { IdentityUserModel } from '../../../../people/models/identity-user.model
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -33,7 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
     selector: 'people-cloud-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudComponent, MatFormFieldModule],
+    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, PeopleCloudComponent, MatFormFieldModule],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

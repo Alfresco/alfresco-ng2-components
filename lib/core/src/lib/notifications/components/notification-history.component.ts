@@ -22,7 +22,7 @@ import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@an
 import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
@@ -39,7 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [
         MatButtonModule,
         MatMenuModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         MatBadgeModule,
         MatListModule,

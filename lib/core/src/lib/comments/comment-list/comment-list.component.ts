@@ -23,12 +23,12 @@ import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatLineModule } from '@angular/material/core';
 import { TimeAgoPipe } from '../../pipes';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-comment-list',
     standalone: true,
-    imports: [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslateModule],
+    imports: [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslatePipe],
     templateUrl: './comment-list.component.html',
     styleUrls: ['./comment-list.component.scss'],
     encapsulation: ViewEncapsulation.None

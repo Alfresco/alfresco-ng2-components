@@ -19,14 +19,14 @@ import { AfterViewInit, Component, EventEmitter, Output, QueryList, ViewChild } 
 import { LanguageItem } from '../common/services/language-item.interface';
 import { CommonModule } from '@angular/common';
 import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageMenuComponent } from './language-menu.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-picker-button',
     standalone: true,
-    imports: [CommonModule, MatMenuModule, TranslateModule, LanguageMenuComponent, MatIconModule],
+    imports: [CommonModule, MatMenuModule, TranslatePipe, LanguageMenuComponent, MatIconModule],
     template: `
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
             <mat-icon>language</mat-icon>

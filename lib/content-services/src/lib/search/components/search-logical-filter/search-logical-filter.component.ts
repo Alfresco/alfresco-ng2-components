@@ -24,7 +24,7 @@ import { map } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -42,7 +42,7 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
 @Component({
     selector: 'adf-search-logical-filter',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, FormsModule],
+    imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule],
     templateUrl: './search-logical-filter.component.html',
     styleUrls: ['./search-logical-filter.component.scss'],
     encapsulation: ViewEncapsulation.None

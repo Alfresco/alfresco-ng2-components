@@ -76,13 +76,13 @@ describe('GroupCloudWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>', leftLabels: true }), {
                 type: FormFieldTypes.GROUP,
                 required: true
             });
         });
 
-        it('should be able to display label with asterisk', async () => {
+        it('should be able to display label with asterisk when leftLabel is tru', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 

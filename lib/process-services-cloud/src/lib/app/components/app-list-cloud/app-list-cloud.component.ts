@@ -22,7 +22,7 @@ import { AppsProcessCloudService } from '../../services/apps-process-cloud.servi
 import { ApplicationInstanceModel } from '../../models/application-instance.model';
 import { catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AppDetailsCloudComponent } from '../app-details-cloud/app-details-cloud.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
@@ -38,7 +38,7 @@ export const DEPLOYED_STATUS: string = 'DEPLOYED';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         AppDetailsCloudComponent,
         MatIconModule,
         MatLineModule,

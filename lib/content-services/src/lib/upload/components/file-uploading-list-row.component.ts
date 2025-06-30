@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { FileSizePipe, IconComponent } from '@alfresco/adf-core';
 import { MatChipsModule } from '@angular/material/chips';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ToggleIconDirective } from '../directives/toggle-icon.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
@@ -36,7 +36,7 @@ import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
         MatListModule,
         IconComponent,
         MatChipsModule,
-        TranslateModule,
+        TranslatePipe,
         ToggleIconDirective,
         FileSizePipe,
         MatButtonModule,

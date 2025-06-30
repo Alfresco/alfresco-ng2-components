@@ -19,7 +19,7 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-cloud-task-filter-dialog',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatInputModule, ReactiveFormsModule, MatDialogModule, MatCardModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, MatInputModule, ReactiveFormsModule, MatDialogModule, MatCardModule, MatButtonModule],
     templateUrl: './task-filter-dialog-cloud.component.html',
     styleUrls: ['./task-filter-dialog-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

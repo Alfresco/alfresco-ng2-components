@@ -20,7 +20,7 @@ import { RoleModel } from '../../models/role.model';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface RoleModelOption {
     label: string;
@@ -30,7 +30,7 @@ export interface RoleModelOption {
 @Component({
     selector: 'adf-user-role-column',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule],
+    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslatePipe],
     template: `
         <mat-form-field class="adf-role-selector-field" *ngIf="!readonly" subscriptSizing="dynamic">
             <mat-select

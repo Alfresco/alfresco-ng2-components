@@ -35,12 +35,12 @@ import { MatListItem, MatListModule } from '@angular/material/list';
 import { EmptySearchResultComponent } from './empty-search-result.component';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-control',
     standalone: true,
-    imports: [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslateModule],
+    imports: [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslatePipe],
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],
     encapsulation: ViewEncapsulation.None,

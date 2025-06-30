@@ -21,7 +21,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { debounceTime } from 'rxjs/operators';
 import { DataColumn } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -34,7 +34,7 @@ import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatButtonModule,
         MatIconModule,
         MatDividerModule,

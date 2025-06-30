@@ -53,7 +53,7 @@ import { finalize } from 'rxjs/operators';
 import { TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const PRESET_KEY = 'adf-task-list.presets';
@@ -65,7 +65,7 @@ export const PRESET_KEY = 'adf-task-list.presets';
         CommonModule,
         MatProgressSpinnerModule,
         EmptyContentComponent,
-        TranslateModule,
+        TranslatePipe,
         DataTableComponent,
         LoadingContentTemplateDirective,
         NoContentTemplateDirective

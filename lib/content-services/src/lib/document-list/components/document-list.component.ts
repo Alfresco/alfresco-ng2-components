@@ -82,7 +82,7 @@ import { FileAutoDownloadComponent } from './file-auto-download/file-auto-downlo
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CommonModule } from '@angular/common';
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -99,7 +99,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
         FilterHeaderComponent,
         NoContentTemplateDirective,
         EmptyListComponent,
-        TranslateModule,
+        TranslatePipe,
         NoPermissionTemplateDirective,
         MatIconModule,
         LoadingContentTemplateDirective,

@@ -24,7 +24,7 @@ import { ProcessService } from '../../services/process.service';
 import { share } from 'rxjs/operators';
 import { ProcessInstanceRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,7 +34,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-process-instance-tasks',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
+    imports: [CommonModule, MatButtonModule, TranslatePipe, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
     templateUrl: './process-instance-tasks.component.html',
     styleUrls: ['./process-instance-tasks.component.css']
 })

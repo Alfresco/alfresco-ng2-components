@@ -32,7 +32,7 @@ import { NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives';
@@ -47,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [
         CommonModule,
         MatDialogModule,
-        TranslateModule,
+        TranslatePipe,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -64,7 +64,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LibraryDialogComponent implements OnInit {
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /**
      * Emitted when the new library is created successfully. The
@@ -72,7 +72,7 @@ export class LibraryDialogComponent implements OnInit {
      * newly-created library.
      */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     createTitle = 'LIBRARY.DIALOG.CREATE_TITLE';
     libraryTitleExists = false;

@@ -10,10 +10,8 @@
         </label>
     </div>
     <div>
-        <mat-form-field>
-            <mat-label *ngIf="!field.leftLabels" class="adf-label" [attr.for]="field.id">
-                {{ field.name | translate }}
-            </mat-label>
+        <mat-form-field class="adf-form-field-input">
+            @if ( (field.name || this.field?.required) && !field.leftLabels) {  <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
             <mat-select
                 class="adf-select"
                 [formControl]="dropdownControl"
@@ -22,7 +20,8 @@
                 [title]="field.tooltip"
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
-                [required]="isRequired()"
+                [disabled]="field.readOnly"
+                [required]="field.required "
             >
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
 
@@ -30,7 +29,7 @@
                 <mat-option id="readonlyOption" *ngIf="isReadOnlyType" [value]="field.value">{{field.value}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <div *ngIf="!previewState && !field.readOnly">
+        <div class="adf-error-messages-container" *ngIf="!previewState && !field.readOnly">
             <error-widget
                 class="adf-dropdown-required-message"
                 *ngIf="showRequiredMessage"

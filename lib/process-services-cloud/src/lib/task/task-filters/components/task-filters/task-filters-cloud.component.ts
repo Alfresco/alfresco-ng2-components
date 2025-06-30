@@ -28,14 +28,14 @@ import { TaskListCloudService } from '../../../task-list/services/task-list-clou
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-task-filters',
     standalone: true,
-    imports: [CommonModule, MatProgressSpinnerModule, TranslateModule, IconComponent, MatListModule],
+    imports: [CommonModule, MatProgressSpinnerModule, TranslatePipe, IconComponent, MatListModule],
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['./task-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

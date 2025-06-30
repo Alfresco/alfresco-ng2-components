@@ -16,7 +16,10 @@
  */
 
 import { Component, Inject, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface EditJsonDialogSettings {
     title?: string;
@@ -25,6 +28,8 @@ export interface EditJsonDialogSettings {
 }
 
 @Component({
+    standalone: true,
+    imports: [MatDialogModule, FormsModule, MatButtonModule, TranslatePipe],
     templateUrl: './edit-json.dialog.html',
     styleUrls: ['./edit-json.dialog.scss'],
     encapsulation: ViewEncapsulation.None,

@@ -14,19 +14,20 @@
         >
     </div>
     <div>
-        <mat-form-field class="adf-date-widget" [class.adf-left-label-input-datepicker]="field.leftLabels" [hideRequiredMarker]="true">
-            <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id"
-                >{{field.name | translate }} ({{field.dateDisplayFormat}})<span
-                    class="adf-asterisk"
-                    [style.visibility]="isRequired() ? 'visible' : 'hidden'"
-                    >*</span
-                ></mat-label>
+        <mat-form-field class="adf-date-widget adf-form-field-input" [class.adf-left-label-input-datepicker]="field.leftLabels">
+            @if ( (field.name || field?.required) && !field.leftLabels) {
+                <mat-label class="adf-label" [attr.for]="field.id">
+                    {{field.name | translate }} ({{field.dateDisplayFormat}})
+                </mat-label>
+            }
             <input
                 matInput
+                class="adf-input"
                 [matDatepicker]="datePicker"
                 [id]="field.id"
                 [formControl]="dateInputControl"
                 [placeholder]="field.placeholder"
+                [required]="field.required && field.isVisible"
                 [min]="minDate"
                 [max]="maxDate"
                 [title]="field.tooltip"

@@ -24,7 +24,7 @@ import { TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [
         CommonModule,
         MatDialogModule,
-        TranslateModule,
+        TranslatePipe,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -54,13 +54,13 @@ export class FolderDialogComponent implements OnInit {
      * Emitted when the edit/create folder give error for example a folder with same name already exist
      */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /**
      * Emitted when the edit/create folder is successfully created/modified
      */
     @Output()
-    success: EventEmitter<Node> = new EventEmitter<Node>();
+    success = new EventEmitter<Node>();
 
     form: UntypedFormGroup;
     folder: Node = null;

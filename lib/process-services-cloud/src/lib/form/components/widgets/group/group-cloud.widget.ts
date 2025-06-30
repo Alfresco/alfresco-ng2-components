@@ -23,7 +23,7 @@ import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
 
 /* eslint-disable @angular-eslint/component-selector */
@@ -31,7 +31,7 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
 @Component({
     selector: 'group-cloud-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, GroupCloudComponent],
+    imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, GroupCloudComponent],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

@@ -37,7 +37,7 @@ import { ReportParametersModel } from '../../diagram/models/report/report-parame
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -111,7 +111,7 @@ export interface ReportFormValues {
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatIconModule,
         ReactiveFormsModule,
         ToolbarComponent,

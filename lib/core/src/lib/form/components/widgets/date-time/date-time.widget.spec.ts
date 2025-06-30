@@ -290,14 +290,6 @@ describe('DateTimeWidgetComponent', () => {
             expect(testingUtils.getByCSS('.adf-invalid')).toBeTruthy();
         });
 
-        it('should be able to display label with asterisk', () => {
-            fixture.detectChanges();
-            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
-
-            expect(asterisk).not.toBeNull();
-            expect(asterisk?.textContent).toEqual('*');
-        });
-
         it('should be valid when field is hidden with empty value', () => {
             widget.field.isVisible = false;
             fixture.detectChanges();
@@ -314,6 +306,16 @@ describe('DateTimeWidgetComponent', () => {
             expect(widget.field.isValid).toBeFalse();
             expect(widget.datetimeInputControl.valid).toBeFalse();
             expect(widget.field.validationSummary.message).toBe('FORM.FIELD.REQUIRED');
+        });
+
+        it('should be able to display label with asterisk and input field is required', async () => {
+            const formField = await testingUtils.getMatFormField();
+            const formControl = await formField.getControl();
+
+            expect(formControl.isRequired).toBeTruthy();
+
+            const inputField = testingUtils.getByCSS('.adf-input').nativeElement;
+            expect(inputField.hasAttribute('required')).toBeTruthy();
         });
     });
 
@@ -503,6 +505,20 @@ describe('DateTimeWidgetComponent', () => {
             await testingUtils.sendKeysToMatInput([TestKey.ENTER]);
 
             expect(testingUtils.getByDataAutomationId('adf-date-time-widget-picker')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk when leftlable is true', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                value: '',
+                type: FormFieldTypes.DATETIME,
+                readOnly: false,
+                required: true
+            });
+            fixture.detectChanges();
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
+            expect(asterisk?.textContent).toEqual('*');
         });
     });
 });

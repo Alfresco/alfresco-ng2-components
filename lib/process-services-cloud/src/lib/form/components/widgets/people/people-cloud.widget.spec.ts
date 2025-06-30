@@ -104,7 +104,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>', leftLabels: true }), {
                 type: FormFieldTypes.PEOPLE,
                 required: true
             });

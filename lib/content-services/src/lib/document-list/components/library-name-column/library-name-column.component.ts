@@ -19,16 +19,15 @@ import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, Inp
 import { NodeEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-
 import { BehaviorSubject } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { AsyncPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-name-column',
     standalone: true,
-    imports: [CommonModule, TranslateModule],
+    imports: [AsyncPipe, TranslatePipe],
     template: `
         <span
             role="link"

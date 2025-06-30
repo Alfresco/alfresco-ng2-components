@@ -62,7 +62,7 @@ import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.
 import { DisplayModeService } from '../services/display-mode.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -76,7 +76,7 @@ export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldVal
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         FormatSpacePipe,
         MatButtonModule,
         MatCardModule,

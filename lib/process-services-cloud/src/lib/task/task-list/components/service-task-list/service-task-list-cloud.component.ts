@@ -35,7 +35,7 @@ import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } 
 import { map } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
@@ -47,7 +47,7 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
         CommonModule,
         ColumnsSelectorComponent,
         MainMenuDataTableTemplateDirective,
-        TranslateModule,
+        TranslatePipe,
         EmptyContentComponent,
         NoContentTemplateDirective,
         MatProgressSpinnerModule,
