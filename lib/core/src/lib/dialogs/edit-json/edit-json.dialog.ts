@@ -33,8 +33,7 @@ export interface EditJsonDialogSettings {
     templateUrl: './edit-json.dialog.html',
     styleUrls: ['./edit-json.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-edit-json-dialog' },
-    standalone: false
+    host: { class: 'adf-edit-json-dialog' }
 })
 export class EditJsonDialogComponent implements OnInit {
     editable: boolean = false;
