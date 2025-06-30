@@ -126,7 +126,6 @@ jobs:
       - name: build libraries
         run: |
           set -u;
-          ./scripts/update-version.sh -gnu || exit 1;
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - uses: actions/setup-node@v4
