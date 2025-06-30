@@ -31,7 +31,7 @@ runs:
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@v4
         env:
           cache-name: node-modules-cache
         with:
@@ -43,7 +43,7 @@ runs:
             node_modules-${{ runner.os }}-build-
             node_modules-${{ runner.os }}-
       - name: pip cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@v4
         if: ${{ inputs.enable-cache == 'true' }}
         with:
           path: ~/.cache/pip
