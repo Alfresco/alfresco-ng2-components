@@ -20,12 +20,14 @@ import { DataRow } from './data-row.model';
 
 // Simple implementation of the DataRow interface.
 export class ObjectDataRow implements DataRow {
-
     constructor(private obj: any, public isSelected: boolean = false, public isSelectable: boolean = true) {
         if (!obj) {
             throw new Error('Object source not found');
         }
+    }
 
+    getSourceObject(): any {
+        return this.obj;
     }
 
     getValue(key: string): any {

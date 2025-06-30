@@ -27,7 +27,7 @@ import { catchError, distinctUntilChanged, map, switchMap } from 'rxjs/operators
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -37,7 +37,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatFormFieldModule,
         MatInputModule,
         MatChipsModule,

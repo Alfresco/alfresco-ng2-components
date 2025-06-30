@@ -37,7 +37,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Chip } from './chip';
 
 /**
@@ -48,7 +48,7 @@ import { Chip } from './chip';
     standalone: true,
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
-    imports: [MatChipsModule, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],
+    imports: [MatChipsModule, TranslatePipe, NgForOf, MatIconModule, NgIf, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {

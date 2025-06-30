@@ -24,13 +24,13 @@ import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-slider',
     standalone: true,
-    imports: [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslateModule],
+    imports: [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslatePipe],
     templateUrl: './search-slider.component.html',
     styleUrls: ['./search-slider.component.scss'],
     encapsulation: ViewEncapsulation.None,

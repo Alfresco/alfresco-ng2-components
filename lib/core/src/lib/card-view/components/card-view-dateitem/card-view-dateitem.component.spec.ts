@@ -28,6 +28,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
 import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -38,7 +39,7 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, CardViewDateItemComponent]
+            imports: [NoopTranslateModule, CardViewDateItemComponent, NoopAnimationsModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
@@ -66,6 +67,7 @@ describe('CardViewDateItemComponent', () => {
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
     const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
+    const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
 
     it('should render the label and value', () => {
         fixture.detectChanges();
@@ -119,7 +121,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = true;
         fixture.detectChanges();
 
-        expect(getPropertyValue().trim()).toBe('FAKE-DEFAULT-KEY');
+        expect(getDateTime().trim()).toBe('FAKE-DEFAULT-KEY');
     });
 
     it('should render value when editable:true', () => {
@@ -128,7 +130,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = true;
         fixture.detectChanges();
 
-        expect(getPropertyValue().trim()).toBe('Jul 10, 2017');
+        expect(getDateTime().trim()).toBe('Jul 10, 2017');
     });
 
     it('should render the picker and toggle in case of editable:true', () => {

@@ -17,14 +17,14 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-task-standalone',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatCardModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, MatCardModule, MatButtonModule],
     templateUrl: './task-standalone.component.html',
     styleUrls: ['./task-standalone.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -46,7 +46,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TaskListRequestSortingModel } from '../../../../models/task-list-sorting.model';
 import { ProcessVariableFilterModel } from '../../../../models/process-variable-filter.model';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
@@ -59,7 +59,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
         CommonModule,
         ColumnsSelectorComponent,
         MainMenuDataTableTemplateDirective,
-        TranslateModule,
+        TranslatePipe,
         EmptyContentComponent,
         NoContentTemplateDirective,
         MatProgressSpinnerModule,

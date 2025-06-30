@@ -39,7 +39,7 @@ import { Environment } from '../../../../common/interface/environment.interface'
 import { endOfDay, isValid, startOfDay } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -84,7 +84,7 @@ interface ProcessFilterFormProps {
     imports: [
         IconComponent,
         MatProgressSpinnerModule,
-        TranslateModule,
+        TranslatePipe,
         MatButtonModule,
         NgForOf,
         NgIf,

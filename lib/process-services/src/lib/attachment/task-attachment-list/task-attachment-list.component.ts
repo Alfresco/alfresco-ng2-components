@@ -41,18 +41,17 @@ import {
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-task-attachment-list',
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
         MatProgressSpinnerModule,
         DataTableComponent,
         EmptyListHeaderDirective,
-        TranslateModule,
+        TranslatePipe,
         DataColumnListComponent,
         DataColumnComponent,
         LoadingContentTemplateDirective,

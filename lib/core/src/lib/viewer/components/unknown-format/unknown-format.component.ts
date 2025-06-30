@@ -17,14 +17,14 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-viewer-unknown-format',
     standalone: true,
     templateUrl: './unknown-format.component.html',
     styleUrls: ['./unknown-format.component.scss'],
-    imports: [MatIconModule, TranslateModule],
+    imports: [MatIconModule, TranslatePipe],
     encapsulation: ViewEncapsulation.None
 })
 export class UnknownFormatComponent {

@@ -32,7 +32,7 @@ import { PeopleProcessService } from '../../../services/people-process.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClaimTaskDirective } from './claim-task.directive';
 import { UnclaimTaskDirective } from './unclaim-task.directive';
@@ -47,7 +47,7 @@ import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
         MatCardModule,
         EmptyContentComponent,
         MatButtonModule,
-        TranslateModule,
+        TranslatePipe,
         MatProgressSpinnerModule,
         ClaimTaskDirective,
         UnclaimTaskDirective,

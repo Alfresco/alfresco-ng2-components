@@ -24,7 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-tag-node-actions-list',
     standalone: true,
-    imports: [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatButtonModule],
+    imports: [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatButtonModule],
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],
     encapsulation: ViewEncapsulation.None,

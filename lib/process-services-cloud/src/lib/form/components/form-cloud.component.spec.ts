@@ -33,7 +33,8 @@ import {
     provideTranslations,
     AuthModule,
     FormFieldEvent,
-    NoopTranslateModule
+    NoopTranslateModule,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -45,7 +46,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
 import {
     cloudFormMock,
@@ -80,7 +81,7 @@ const fakeValidator = {
     supportedTypes: ['test'],
     isSupported: () => true,
     validate: () => true
-} as FormFieldValidator;
+} as any;
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
@@ -1502,16 +1503,54 @@ describe('Multilingual Form', () => {
     let formComponent: FormCloudComponent;
     let fixture: ComponentFixture<FormCloudComponent>;
 
+    class FakeLoader implements TranslateLoader {
+        getTranslation(lang: string) {
+            const translations = {
+                en: {
+                    FILE_UPLOAD_FIELD: {
+                        TITLE: 'File Upload'
+                    },
+                    TEXT_FIELD: {
+                        TITLE: 'Text field'
+                    },
+                    AMOUNT_FIELD: {
+                        TITLE: 'Amount field'
+                    },
+                    DATE_FIELD: {
+                        TITLE: 'Date field'
+                    }
+                },
+                fr: {
+                    FILE_UPLOAD_FIELD: {
+                        TITLE: 'Téléchargement de fichiers'
+                    },
+                    TEXT_FIELD: {
+                        TITLE: 'Champ de texte'
+                    },
+                    AMOUNT_FIELD: {
+                        TITLE: 'Champ Montant'
+                    },
+                    DATE_FIELD: {
+                        TITLE: 'Champ de date'
+                    }
+                }
+            };
+
+            return of(translations[lang]);
+        }
+    }
+
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AuthModule.forRoot({ useHash: true }),
-                NoopAnimationsModule,
-                TranslateModule.forRoot(),
-                CoreModule.forRoot(),
-                ProcessServicesCloudModule.forRoot()
-            ],
-            providers: [provideTranslations('app', 'resources')]
+            imports: [NoopAnimationsModule, NoopAuthModule],
+            providers: [
+                provideTranslateService({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: FakeLoader
+                    }
+                })
+            ]
         });
         translateService = TestBed.inject(TranslateService);
         formCloudService = TestBed.inject(FormCloudService);

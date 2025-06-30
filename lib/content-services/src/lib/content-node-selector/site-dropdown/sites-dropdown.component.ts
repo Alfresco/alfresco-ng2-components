@@ -20,7 +20,7 @@ import { InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,7 +36,7 @@ export enum Relations {
 @Component({
     selector: 'adf-sites-dropdown',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
+    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sites-dropdown' }

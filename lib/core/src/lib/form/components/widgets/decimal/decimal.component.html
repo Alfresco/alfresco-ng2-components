@@ -9,17 +9,14 @@
     </div>
 
     <div>
-        <mat-form-field [hideRequiredMarker]="true" class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : 'auto'">
-            <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
-                {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-            </mat-label>
-
+        <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
+           @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
             <input matInput
                    class="adf-input"
                    type="text"
                    pattern="-?[0-9]*(\.[0-9]*)?"
                    [id]="field.id"
-                   [required]="isRequired()"
+                   [required]="field.required && field.isVisible"
                    [(ngModel)]="field.value"
                    (ngModelChange)="onFieldChanged(field)"
                    [disabled]="field.readOnly"

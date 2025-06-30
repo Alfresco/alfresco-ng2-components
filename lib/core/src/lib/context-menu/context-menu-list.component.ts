@@ -24,7 +24,7 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 import { AfterViewInit, Component, HostListener, Inject, Optional, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 
 @Component({
@@ -37,7 +37,7 @@ import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslateModule],
+    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslatePipe],
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {

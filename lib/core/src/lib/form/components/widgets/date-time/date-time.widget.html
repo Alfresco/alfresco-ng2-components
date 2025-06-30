@@ -10,12 +10,17 @@
     <div>
         <mat-form-field class="adf-date-time-widget adf-form-field-input"
                         [class.adf-left-label-input-datepicker]="field.leftLabels"
-                        [hideRequiredMarker]="true" [floatLabel]="field.placeholder ? 'always' : 'auto'">
-            <mat-label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
-                {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+                        [floatLabel]="field.placeholder ? 'always' : null">
+            @if( (field.name || field?.required) && !field.leftLabels) {
+            <mat-label class="adf-label" [attr.for]="field.id">
+                {{ field.name | translate }} ({{ field.dateDisplayFormat }})
             </mat-label>
+            }
             <input matInput
+                   class="adf-input"
                    [matDatetimepicker]="datetimePicker"
+                   [readonly]="field.readOnly"
+                   [required]="field.required && field.isVisible"
                    [id]="field.id"
                    [formControl]="datetimeInputControl"
                    (keydown.enter)="datetimePicker.open()"

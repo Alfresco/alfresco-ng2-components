@@ -1,16 +1,13 @@
 <form>
-    <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label>
-            <span>{{label}}</span>
-            <span class="adf-asterisk" [style.visibility]="required ? 'visible' : 'hidden'">*</span>
-        </mat-label>
-        <mat-chip-grid #groupChipList data-automation-id="adf-cloud-group-chip-list">
+    <mat-form-field class="adf-cloud-group adf-form-field-input" [class.adf-invalid]="hasError() && isDirty()">
+        @if (label || required) { <mat-label><span>{{label}}</span></mat-label> }
+        <mat-chip-grid [required]="required" #groupChipList data-automation-id="adf-cloud-group-chip-list">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 [removable]="!(group.readonly)"
                 [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
                 (removed)="onRemove(group)"
-                [disabled]="isReadonly() || isValidationLoading()"
+                [disabled]="readOnly || isValidationLoading()"
                 title="{{ (group.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
                 {{group.name}}
                 <mat-icon
@@ -19,7 +16,7 @@
                     cancel
                 </mat-icon>
             </mat-chip-row>
-            <input [disabled]="isReadonly()" matInput
+            <input [disabled]="readOnly || isValidationLoading()" matInput
                    [formControl]="searchGroupsControl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="groupChipList"

@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgChartsModule } from 'ng2-charts';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.component';
@@ -36,7 +36,7 @@ import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.com
         MatButtonModule,
         MatIconModule,
         NgChartsModule,
-        TranslateModule,
+        TranslatePipe,
         MatCheckboxModule,
         FormsModule,
         AnalyticsReportHeatMapComponent

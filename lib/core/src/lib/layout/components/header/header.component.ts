@@ -23,12 +23,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-layout-header',
     standalone: true,
-    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslateModule],
+    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslatePipe],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,

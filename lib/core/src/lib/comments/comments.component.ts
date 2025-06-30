@@ -20,7 +20,7 @@ import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChange
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
@@ -32,7 +32,7 @@ import { CommentListComponent } from './comment-list';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         MatFormFieldModule,
         MatInputModule,
         FormsModule,

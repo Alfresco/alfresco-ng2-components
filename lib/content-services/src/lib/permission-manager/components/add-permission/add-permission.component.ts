@@ -24,12 +24,12 @@ import { AllowableOperationsEnum } from '../../../common/models/allowable-operat
 import { CommonModule } from '@angular/common';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-add-permission',
     standalone: true,
-    imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslateModule],
+    imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslatePipe],
     templateUrl: './add-permission.component.html',
     styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None

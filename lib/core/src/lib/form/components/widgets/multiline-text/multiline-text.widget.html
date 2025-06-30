@@ -1,23 +1,31 @@
-<div class="adf-multiline-text-widget {{ field.className }}"
-     [class.adf-invalid]="!field.isValid && isTouched()"
-     [class.adf-readonly]="field.readOnly">
-    <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true" class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : 'auto'">
-        <mat-label class="adf-label" [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-        </mat-label>
-        <textarea matInput
-                  class="adf-input"
-                  [cdkTextareaAutosize]="true"
-                  type="text"
-                  rows="3"
-                  [id]="field.id"
-                  [required]="isRequired()"
-                  [(ngModel)]="field.value"
-                  (ngModelChange)="onFieldChanged(field)"
-                  [disabled]="field.readOnly || readOnly"
-                  [placeholder]="field.placeholder"
-                  [title]="field.tooltip"
-                  (blur)="markAsTouched()">
+<div
+    class="adf-multiline-text-widget {{ field.className }}"
+    [class.adf-invalid]="!field.isValid && isTouched()"
+    [class.adf-readonly]="field.readOnly"
+>
+    <mat-form-field
+        floatPlaceholder="never"
+        class="adf-form-field-input"
+        [floatLabel]="field.placeholder ? 'always' : null"
+    >
+        @if(field.name || field.required) {
+        <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
+        }
+        <textarea
+            matInput
+            class="adf-input"
+            [cdkTextareaAutosize]="true"
+            type="text"
+            rows="3"
+            [id]="field.id"
+            [required]="field.required"
+            [(ngModel)]="field.value"
+            (ngModelChange)="onFieldChanged(field)"
+            [disabled]="field.readOnly || readOnly"
+            [placeholder]="field.placeholder"
+            [title]="field.tooltip"
+            (blur)="markAsTouched()"
+        >
         </textarea>
     </mat-form-field>
     <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
@@ -32,4 +40,3 @@
         />
     </div>
 </div>
-

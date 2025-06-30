@@ -23,7 +23,8 @@
     [nodeMimeType]="nodeMimeType"
     [urlFile]="urlFileContent"
     [tracks]="tracks"
-    [readOnly]="readOnly"
+    [readOnly]="readOnly || !canEditNode"
+    [showToolbarDividers]="showToolbarDividers"
     [allowedEditActions]="allowedEditActions"
     [viewerExtensions]="viewerExtensions"
     [nodeId]="nodeId"
@@ -53,7 +54,7 @@
         <ng-content select="adf-viewer-sidebar" />
     </adf-viewer-sidebar>
 
-    <adf-viewer-toolbar-custom-actions>
+    <adf-viewer-toolbar-custom-actions *ngIf="allowDownload || allowPrint">
         <button id="adf-alfresco-viewer-download"
                 *ngIf="allowDownload"
                 mat-icon-button

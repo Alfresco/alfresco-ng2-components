@@ -24,14 +24,14 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
 import { DropdownOption } from '../edit-task-filters/base-edit-task-filter-cloud.component';
 import { FormControl, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
 @Component({
     selector: 'adf-cloud-task-assignment-filter',
     standalone: true,
-    imports: [CommonModule, GroupCloudComponent, TranslateModule, MatSelectModule, FormsModule, PeopleCloudComponent],
+    imports: [CommonModule, GroupCloudComponent, TranslatePipe, MatSelectModule, FormsModule, PeopleCloudComponent],
     templateUrl: './task-assignment-filter.component.html',
     styleUrls: ['./task-assignment-filter.component.scss']
 })

@@ -27,7 +27,7 @@ import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 
@@ -38,7 +38,7 @@ import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.co
         CommonModule,
         MatFormFieldModule,
         MatInputModule,
-        TranslateModule,
+        TranslatePipe,
         ReactiveFormsModule,
         MatIconModule,
         MatListModule,

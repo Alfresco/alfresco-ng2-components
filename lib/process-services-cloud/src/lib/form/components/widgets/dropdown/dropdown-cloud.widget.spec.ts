@@ -38,6 +38,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { DebugElement } from '@angular/core';
 import { FormUtilsService } from '../../../services/form-utils.service';
+import { UnitTestingUtils } from '../../../../../../../core/src/public-api';
 
 describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;
@@ -47,6 +48,7 @@ describe('DropdownCloudWidgetComponent', () => {
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
     let loader: HarnessLoader;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -60,6 +62,7 @@ describe('DropdownCloudWidgetComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
         formUtilsService = TestBed.inject(FormUtilsService);
         loader = TestbedHarnessEnvironment.loader(fixture);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => fixture.destroy());
@@ -330,22 +333,15 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>', leftLabels: true }), {
                 type: FormFieldTypes.DROPDOWN,
                 required: true
             });
         });
 
-        it('should be able to display label with asterisk when left-label is present', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: true }), {
-                id: 'dropdown-id',
-                name: 'option list',
-                type: FormFieldTypes.DROPDOWN,
-                options: filterOptionList
-            });
+        it('should be able to display label with asterisk when left-label is present', async () => {
             fixture.detectChanges();
-
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const asterisk = testingUtils.getByCSS('.adf-asterisk').nativeElement;
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');

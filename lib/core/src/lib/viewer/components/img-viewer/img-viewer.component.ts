@@ -32,7 +32,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import Cropper from 'cropperjs';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
@@ -44,7 +44,7 @@ import { ToolbarComponent } from '../../../toolbar';
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },
-    imports: [ToolbarComponent, TranslateModule, MatIconModule, MatButtonModule, NgIf],
+    imports: [ToolbarComponent, TranslatePipe, MatIconModule, MatButtonModule, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {

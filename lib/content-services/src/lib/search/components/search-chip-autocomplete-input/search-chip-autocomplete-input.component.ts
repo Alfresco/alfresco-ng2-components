@@ -38,14 +38,14 @@ import { debounce, startWith, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslateModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
+    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslatePipe, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None

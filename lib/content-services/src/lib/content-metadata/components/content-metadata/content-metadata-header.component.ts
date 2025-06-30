@@ -19,30 +19,30 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, MatIconModule, MatExpansionModule, TranslateModule],
+    imports: [CommonModule, MatIconModule, MatExpansionModule, TranslatePipe],
     selector: 'adf-content-metadata-header',
     encapsulation: ViewEncapsulation.None,
     styles: [
         `
-                    adf-content-metadata-header {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                    }
+            adf-content-metadata-header {
+                display: flex;
+                align-items: center;
+                width: 100%;
+            }
 
-                    .adf-metadata-properties-title {
-                        display: block;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        font-weight: 700;
-                        font-size: 15px;
-                        padding-left: 12px;
-                    }
-                `
+            .adf-metadata-properties-title {
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: 700;
+                font-size: 15px;
+                padding-left: 12px;
+            }
+        `
     ],
     template: `
         <ng-container>

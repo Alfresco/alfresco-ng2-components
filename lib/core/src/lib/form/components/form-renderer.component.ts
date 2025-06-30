@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormService } from '../services/form.service';
 import { FormFieldComponent } from './form-field/form-field.component';
@@ -47,7 +47,7 @@ import { FormSectionComponent } from './form-section/form-section.component';
         MatTabsModule,
         NgForOf,
         NgTemplateOutlet,
-        TranslateModule,
+        TranslatePipe,
         MatButtonModule,
         MatIconModule,
         NgStyle,

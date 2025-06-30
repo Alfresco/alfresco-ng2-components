@@ -48,7 +48,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AttachFormComponent } from '../attach-form/attach-form.component';
 import { PeopleComponent, PeopleSearchComponent } from '../../../people';
 import { TaskHeaderComponent } from '../task-header/task-header.component';
@@ -64,7 +64,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     standalone: true,
     imports: [
         CommonModule,
-        TranslateModule,
+        TranslatePipe,
         TaskFormComponent,
         AttachFormComponent,
         PeopleSearchComponent,

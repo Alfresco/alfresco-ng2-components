@@ -34,7 +34,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addDays, parseISO } from 'date-fns';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -42,7 +42,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'date-widget',
     standalone: true,
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }

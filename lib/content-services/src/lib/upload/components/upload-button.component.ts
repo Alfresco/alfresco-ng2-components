@@ -27,13 +27,13 @@ import { UploadBase } from './base-upload/upload-base';
 import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-operation-subject.interface';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-upload-button',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule],
+    imports: [CommonModule, MatButtonModule, TranslatePipe, MatIconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent) }],

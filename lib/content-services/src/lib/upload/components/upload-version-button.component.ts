@@ -23,13 +23,13 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
 import { FileModel } from '../../common/models/file.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-upload-version-button',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule],
+    imports: [CommonModule, MatButtonModule, TranslatePipe, MatIconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadVersionButtonComponent) }],

@@ -20,7 +20,7 @@ import { ObjectUtils, StringUtils } from '../../common/utils';
 import { LicenseData, StatusData } from '../interfaces';
 import { RepositoryInfo } from './repository-info.interface';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AboutLicenseListComponent } from '../about-license-list/about-license-list.component';
 import { ModuleListComponent } from '../about-module-list/module-list.component';
 import { AboutStatusListComponent } from '../about-status-list/about-status-list.component';
@@ -31,7 +31,7 @@ import { AboutStatusListComponent } from '../about-status-list/about-status-list
     styleUrls: ['./about-repository-info.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [CommonModule, TranslateModule, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
+    imports: [CommonModule, TranslatePipe, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
 })
 export class AboutRepositoryInfoComponent implements OnInit {
     @Input()

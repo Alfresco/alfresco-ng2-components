@@ -17,7 +17,7 @@
             [validate]="validate"
             [roles]="roles"
             [searchGroupsControl]="search"
-            [required]="isRequired()"
+            [required]="field.required"
             (changedGroups)="onChangedGroup($event)"
             [preSelectGroups]="preSelectGroup"
             (blur)="markAsTouched()"

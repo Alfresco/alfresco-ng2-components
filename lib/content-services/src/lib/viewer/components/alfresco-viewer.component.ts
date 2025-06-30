@@ -54,7 +54,7 @@ import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { NodeActionsService } from '../../document-list';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NodeDownloadDirective } from '../../directives';
@@ -63,7 +63,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'adf-alfresco-viewer',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },
@@ -189,6 +189,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Input()
     sidebarLeftTemplate: TemplateRef<any> = null;
 
+    /** Should viewer work in read only mode */
+    @Input()
+    readOnly = false;
+
+    /** Toggles dividers visibility */
+    @Input()
+    showToolbarDividers = true;
+
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter<void>();
@@ -214,7 +222,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     nodeMimeType: string;
     nodeEntry: NodeEntry;
     tracks: Track[] = [];
-    readOnly: boolean = true;
+    canEditNode: boolean = false;
     allowedEditActions: { [key: string]: boolean } = {
         rotate: true,
         crop: true
@@ -316,7 +324,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     }
 
     private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
-        this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
+        this.canEditNode = this.contentService.hasAllowableOperations(nodeData, 'update');
         let mimeType: string;
         let nodeMimeType: string;
         let urlFileContent: string;
@@ -420,7 +428,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     }
 
     onSubmitFile(newImageBlob: Blob) {
-        if (this?.nodeEntry?.entry?.id && !this.readOnly) {
+        if (this?.nodeEntry?.entry?.id && !this.readOnly && this.canEditNode) {
             const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { type: this?.nodeEntry?.entry?.content?.mimeType });
             const newFile = new FileModel(
                 newImageFile,

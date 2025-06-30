@@ -64,7 +64,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
@@ -98,7 +98,7 @@ export enum ShowHeaderMode {
         CommonModule,
         DataTableRowComponent,
         CdkDropList,
-        TranslateModule,
+        TranslatePipe,
         MatCheckboxModule,
         CdkDrag,
         DropZoneDirective,

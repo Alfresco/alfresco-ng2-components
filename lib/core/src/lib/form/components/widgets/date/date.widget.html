@@ -1,5 +1,5 @@
 <div class="{{ field.className }}" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched">
-    <mat-form-field [floatLabel]="'always'" class="adf-date-widget adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : 'auto'">
+    <mat-form-field [floatLabel]="'always'" class="adf-date-widget adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
         <mat-label class="adf-label"
                    [id]="field.id + '-label'"
                    [attr.for]="field.id">
@@ -12,6 +12,8 @@
                [placeholder]="field.placeholder"
                [min]="minDate"
                [max]="maxDate"
+               [required]="field.required && field.isVisible"
+               [readonly]="field.readOnly"
         />
         <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
         <mat-datepicker #datePicker

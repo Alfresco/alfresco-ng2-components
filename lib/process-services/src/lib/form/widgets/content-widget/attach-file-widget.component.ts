@@ -28,7 +28,7 @@ import { UploadWidgetComponent } from '../upload/upload.widget';
 import { ProcessContentService } from '../../services/process-content.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -39,16 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'attach-widget',
     standalone: true,
-    imports: [
-        CommonModule,
-        TranslateModule,
-        MatIconModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatListModule,
-        ErrorWidgetComponent,
-        AlfrescoIconComponent
-    ],
+    imports: [CommonModule, TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
     host: {
