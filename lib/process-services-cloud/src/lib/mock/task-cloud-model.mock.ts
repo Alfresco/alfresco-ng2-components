@@ -39,6 +39,7 @@ export const getTaskCloudModelMock = (cloudModel: Partial<TaskCloudModel> = {}):
     serviceVersion: '',
     status: '',
     taskDefinitionKey: '',
+    standalone: true,
     processVariables: undefined,
     ...cloudModel
 });
