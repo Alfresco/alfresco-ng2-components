@@ -29,7 +29,6 @@ export interface RoleModelOption {
 
 @Component({
     selector: 'adf-user-role-column',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslatePipe],
     template: `
         <mat-form-field class="adf-role-selector-field" *ngIf="!readonly" subscriptSizing="dynamic">

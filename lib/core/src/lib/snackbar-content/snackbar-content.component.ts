@@ -24,7 +24,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-snackbar-content',
-    standalone: true,
     imports: [MatIconModule, TranslatePipe, MatButtonModule],
     templateUrl: './snackbar-content.component.html',
     styleUrls: ['./snackbar-content.component.scss'],

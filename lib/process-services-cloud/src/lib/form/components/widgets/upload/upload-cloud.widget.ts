@@ -34,7 +34,6 @@ import { MatLineModule } from '@angular/material/core';
 
 @Component({
     selector: 'upload-cloud-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, MatIconModule, MatButtonModule, MatListModule, MatLineModule],
     templateUrl: './upload-cloud.widget.html',
     styleUrls: ['./upload-cloud.widget.scss'],

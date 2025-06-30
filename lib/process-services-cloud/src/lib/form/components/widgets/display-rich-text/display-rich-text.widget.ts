@@ -24,7 +24,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'display-rich-text',
-    standalone: true,
     templateUrl: './display-rich-text.widget.html',
     styleUrls: ['./display-rich-text.widget.scss'],
     host: {

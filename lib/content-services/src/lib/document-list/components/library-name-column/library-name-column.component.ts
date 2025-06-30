@@ -26,7 +26,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-name-column',
-    standalone: true,
     imports: [AsyncPipe, TranslatePipe],
     template: `
         <span

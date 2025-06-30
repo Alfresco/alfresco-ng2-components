@@ -31,7 +31,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-number-range',
-    standalone: true,
     imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslatePipe, MatButtonModule],
     templateUrl: './search-number-range.component.html',
     styleUrls: ['./search-number-range.component.scss'],

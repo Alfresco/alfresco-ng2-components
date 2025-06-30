@@ -29,7 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-card-view-key-value-pairs-item',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule],
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],

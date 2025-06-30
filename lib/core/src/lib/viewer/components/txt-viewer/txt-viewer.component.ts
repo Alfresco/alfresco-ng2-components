@@ -21,7 +21,6 @@ import { AppConfigService } from '../../../app-config';
 
 @Component({
     selector: 'adf-txt-viewer',
-    standalone: true,
     templateUrl: './txt-viewer.component.html',
     styleUrls: ['./txt-viewer.component.scss'],
     host: { class: 'adf-txt-viewer' },

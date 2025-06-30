@@ -30,7 +30,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'duration-widget',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
     templateUrl: './duration.widget.html',
     styleUrls: ['./duration.widget.scss'],

@@ -19,7 +19,6 @@ import { ChangeDetectionStrategy, Component, HostListener, ViewEncapsulation } f
 
 @Component({
     selector: 'adf-viewer-sidebar',
-    standalone: true,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-viewer-sidebar' },

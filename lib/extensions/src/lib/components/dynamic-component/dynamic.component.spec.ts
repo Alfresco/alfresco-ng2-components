@@ -26,7 +26,6 @@ import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'test-component',
-    standalone: true,
     template: '<div data-automation-id="found-me">Hey I am the mighty test component!</div>'
 })
 export class TestComponent implements OnChanges {

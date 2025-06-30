@@ -23,7 +23,6 @@ import { MatMenuItem } from '@angular/material/menu';
 // cSpell:words lifecycle
 @Component({
     selector: 'adf-dynamic-component',
-    standalone: true,
     template: `<div #content></div>`
 })
 export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterViewInit {

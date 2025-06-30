@@ -25,7 +25,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-dropdown-breadcrumb',
-    standalone: true,
     imports: [CommonModule, MatIconModule, MatSelectModule, TranslatePipe],
     templateUrl: './dropdown-breadcrumb.component.html',
     styleUrls: ['./dropdown-breadcrumb.component.scss'],

@@ -26,7 +26,6 @@ import { MatTableModule } from '@angular/material/table';
     templateUrl: './package-list.component.html',
     styleUrls: ['./package-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatTableModule]
 })
 export class PackageListComponent implements OnInit {

@@ -26,7 +26,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-cloud-task-filter-dialog',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatInputModule, ReactiveFormsModule, MatDialogModule, MatCardModule, MatButtonModule],
     templateUrl: './task-filter-dialog-cloud.component.html',
     styleUrls: ['./task-filter-dialog-cloud.component.scss'],

@@ -26,7 +26,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-share]',
-    standalone: true,
     exportAs: 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges {
@@ -41,7 +40,6 @@ export class NodeSharedDirective implements OnChanges {
     /** Prefix to add to the generated link. */
     @Input()
     baseShareUrl: string;
-
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {

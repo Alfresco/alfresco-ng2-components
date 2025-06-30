@@ -19,8 +19,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Pipe({
-    name: 'highlight',
-    standalone: true
+    name: 'highlight'
 })
 export class HighlightPipe implements PipeTransform {
     constructor(private highlightTransformService: HighlightTransformService) {}

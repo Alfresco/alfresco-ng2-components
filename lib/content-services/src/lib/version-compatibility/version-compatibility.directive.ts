@@ -20,8 +20,7 @@ import { VersionCompatibilityService } from './version-compatibility.service';
 import { take } from 'rxjs/operators';
 
 @Directive({
-    selector: '[adf-acs-version]',
-    standalone: true
+    selector: '[adf-acs-version]'
 })
 export class VersionCompatibilityDirective {
     /** Minimum version required for component to work correctly . */

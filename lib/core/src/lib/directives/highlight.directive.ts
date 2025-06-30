@@ -21,8 +21,7 @@ import { Directive, ElementRef, Input, Renderer2, AfterViewChecked } from '@angu
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Directive({
-    selector: '[adf-highlight]',
-    standalone: true
+    selector: '[adf-highlight]'
 })
 export class HighlightDirective implements AfterViewChecked {
     /** Class selector for highlightable elements. */

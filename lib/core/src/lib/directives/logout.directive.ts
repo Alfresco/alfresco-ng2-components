@@ -21,8 +21,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Directive({
-    selector: '[adf-logout]',
-    standalone: true
+    selector: '[adf-logout]'
 })
 export class LogoutDirective implements OnInit {
     /** URI to redirect to after logging out. */

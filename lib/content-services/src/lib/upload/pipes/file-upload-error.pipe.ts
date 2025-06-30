@@ -20,8 +20,7 @@ import { TranslationService } from '@alfresco/adf-core';
 
 @Pipe({
     name: 'adfFileUploadError',
-    pure: true,
-    standalone: true
+    pure: true
 })
 export class FileUploadErrorPipe implements PipeTransform {
     constructor(private translation: TranslationService) {}

@@ -27,7 +27,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-people-search',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, PeopleSearchFieldComponent, MatButtonModule],
     templateUrl: './people-search.component.html',
     styleUrls: ['./people-search.component.scss'],

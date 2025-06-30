@@ -25,7 +25,6 @@ import { NodeDownloadDirective } from '../../../directives/node-download.directi
 
 @Component({
     selector: 'adf-file-auto-download',
-    standalone: true,
     imports: [CommonModule, MatDialogModule, TranslatePipe, MatButtonModule, NodeDownloadDirective],
     templateUrl: './file-auto-download.component.html'
 })

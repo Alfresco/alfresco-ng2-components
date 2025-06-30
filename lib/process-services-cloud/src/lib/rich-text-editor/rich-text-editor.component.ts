@@ -23,7 +23,6 @@ import { editorJsConfig } from './editorjs-config';
 
 @Component({
     selector: 'adf-cloud-rich-text-editor',
-    standalone: true,
     templateUrl: './rich-text-editor.component.html',
     styleUrls: ['./rich-text-editor.component.scss'],
     encapsulation: ViewEncapsulation.None

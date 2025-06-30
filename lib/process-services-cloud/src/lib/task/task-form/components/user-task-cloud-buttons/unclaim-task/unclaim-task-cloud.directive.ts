@@ -20,8 +20,7 @@ import { TaskCloudService } from '../../../../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-unclaim-task]',
-    standalone: true
+    selector: '[adf-cloud-unclaim-task]'
 })
 export class UnClaimTaskCloudDirective implements OnInit {
     /** (Required) The id of the task. */

@@ -22,8 +22,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-no-permission-template, no-permission-template',
-    standalone: true
+    selector: 'adf-no-permission-template, no-permission-template'
 })
 export class NoPermissionTemplateDirective implements AfterContentInit {
     @ContentChild(TemplateRef)

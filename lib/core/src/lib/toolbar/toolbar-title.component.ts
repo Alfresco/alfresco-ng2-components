@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'adf-toolbar-title',
-    standalone: true,
     template: '<ng-content />',
     host: { class: 'adf-toolbar-title' }
 })

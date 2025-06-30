@@ -29,7 +29,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-filter-chips',
-    standalone: true,
     imports: [CommonModule, MatChipsModule, TranslatePipe, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
     templateUrl: './search-filter-chips.component.html',
     styleUrls: ['./search-filter-chips.component.scss'],

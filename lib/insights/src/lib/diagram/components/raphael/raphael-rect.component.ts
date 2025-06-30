@@ -23,8 +23,7 @@ import { RaphaelBase } from './raphael-base';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-raphael-rect, raphael-rect',
-    standalone: true
+    selector: 'adf-raphael-rect, raphael-rect'
 })
 export class RaphaelRectDirective extends RaphaelBase implements OnInit {
     @Input()

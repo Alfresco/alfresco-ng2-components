@@ -29,8 +29,7 @@ const SEQUENCE_FLOW_STROKE = 1.5;
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-raphael-flow-arrow, raphael-flow-arrow',
-    standalone: true
+    selector: 'adf-raphael-flow-arrow, raphael-flow-arrow'
 })
 export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     @Input()

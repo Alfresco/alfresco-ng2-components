@@ -19,8 +19,7 @@ import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular
 import { LoginComponent } from '../components/login/login.component';
 
 @Directive({
-    selector: 'adf-login-footer',
-    standalone: true
+    selector: 'adf-login-footer'
 })
 export class LoginFooterDirective implements AfterContentInit {
     @ContentChild(TemplateRef)

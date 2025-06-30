@@ -30,7 +30,6 @@ import { PeopleCloudComponent } from '../../../../people/components/people-cloud
 
 @Component({
     selector: 'adf-cloud-task-assignment-filter',
-    standalone: true,
     imports: [CommonModule, GroupCloudComponent, TranslatePipe, MatSelectModule, FormsModule, PeopleCloudComponent],
     templateUrl: './task-assignment-filter.component.html',
     styleUrls: ['./task-assignment-filter.component.scss']

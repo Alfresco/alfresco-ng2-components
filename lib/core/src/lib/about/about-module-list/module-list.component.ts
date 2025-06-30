@@ -30,7 +30,6 @@ interface ModuleInfo {
     templateUrl: './module-list.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatTableModule]
 })
 export class ModuleListComponent {

@@ -288,7 +288,6 @@ export const fakeFormModelJson = {
     name: 'f',
     description: '',
     version: 0,
-    standAlone: true,
     tabs: [],
     fields: [
         {

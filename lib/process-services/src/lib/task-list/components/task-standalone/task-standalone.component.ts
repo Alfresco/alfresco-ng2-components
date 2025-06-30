@@ -23,7 +23,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-task-standalone',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatCardModule, MatButtonModule],
     templateUrl: './task-standalone.component.html',
     styleUrls: ['./task-standalone.component.scss'],

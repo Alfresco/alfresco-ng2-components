@@ -26,7 +26,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-aspect-list-dialog',
-    standalone: true,
     imports: [CommonModule, MatDialogModule, TranslatePipe, MatButtonModule, AspectListComponent, AutoFocusDirective],
     templateUrl: './aspect-list-dialog.component.html',
     styleUrls: ['./aspect-list-dialog.component.scss'],

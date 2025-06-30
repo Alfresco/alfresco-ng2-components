@@ -19,8 +19,7 @@ import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({
     name: 'fileType',
-    pure: true,
-    standalone: true
+    pure: true
 })
 export class FileTypePipe implements PipeTransform {
     transform(value: string) {

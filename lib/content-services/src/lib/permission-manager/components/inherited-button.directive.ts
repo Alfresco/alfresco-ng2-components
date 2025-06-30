@@ -24,7 +24,6 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
 
 @Directive({
     selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',
-    standalone: true,
     host: {
         role: 'button',
         '(click)': 'onInheritPermissionClicked()'

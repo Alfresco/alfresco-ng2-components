@@ -30,8 +30,7 @@ export const fakeGlobalTask = getTaskCloudModelMock({
     processDefinitionId: null,
     processInstanceId: null,
     status: 'CREATED',
-    lastModified: '1538059139420',
-    standalone: true
+    lastModified: '1538059139420'
 });
 
 export const fakeGlobalTasks = {

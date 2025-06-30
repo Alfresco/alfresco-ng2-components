@@ -36,7 +36,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-properties',
-    standalone: true,
     imports: [CommonModule, ReactiveFormsModule, TranslatePipe, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
     templateUrl: './search-properties.component.html',
     styleUrls: ['./search-properties.component.scss'],

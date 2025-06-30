@@ -20,8 +20,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserLike } from './user-like.interface';
 
 @Pipe({
-    name: 'usernameInitials',
-    standalone: true
+    name: 'usernameInitials'
 })
 export class InitialUsernamePipe implements PipeTransform {
     constructor(private sanitized: DomSanitizer) {}

@@ -26,7 +26,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
     selector: 'analytics-checkbox-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatCheckboxModule],
     templateUrl: './checkbox.widget.html',
     encapsulation: ViewEncapsulation.None

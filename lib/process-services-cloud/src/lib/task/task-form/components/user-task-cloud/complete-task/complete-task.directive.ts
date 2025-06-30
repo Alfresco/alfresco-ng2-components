@@ -20,8 +20,7 @@ import { TaskCloudService } from '../../../../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-complete-task]',
-    standalone: true
+    selector: '[adf-cloud-complete-task]'
 })
 export class CompleteTaskDirective implements OnInit {
     /** (Required) The id of the task. */

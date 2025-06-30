@@ -40,7 +40,6 @@ interface DateRangeProps {
 
 @Component({
     selector: 'adf-date-range-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatGridListModule, MatFormFieldModule, MatInputModule, MatDatepickerModule],
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.scss'],

@@ -19,8 +19,7 @@ import { ResizableDirective } from './resizable.directive';
 import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
-    selector: '[adf-resize-handle]',
-    standalone: true
+    selector: '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
     /**

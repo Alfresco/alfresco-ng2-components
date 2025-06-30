@@ -31,7 +31,6 @@ export interface CategorySelectorDialogOptions {
 
 @Component({
     selector: 'adf-category-selector-dialog',
-    standalone: true,
     imports: [CommonModule, MatDialogModule, TranslatePipe, CategoriesManagementComponent, MatButtonModule],
     templateUrl: './category-selector.dialog.html',
     styleUrls: ['./category-selector.dialog.scss'],

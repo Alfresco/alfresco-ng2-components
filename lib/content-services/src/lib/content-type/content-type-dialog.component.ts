@@ -28,7 +28,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-content-type-dialog',
-    standalone: true,
     imports: [CommonModule, MatDialogModule, TranslatePipe, MatExpansionModule, MatTableModule, MatButtonModule],
     templateUrl: './content-type-dialog.component.html',
     styleUrls: ['./content-type-dialog.component.scss'],

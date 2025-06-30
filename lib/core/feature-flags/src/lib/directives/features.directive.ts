@@ -22,13 +22,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     /* eslint-disable-next-line @angular-eslint/directive-selector */
-    selector: '[adfForFeatures]',
-    standalone: true
+    selector: '[adfForFeatures]'
 })
 export class FeaturesDirective {
     private hasView = false;
     private inputUpdate$ = new BehaviorSubject([] as string[]);
-    
+
     @Input()
     set adfForFeatures(feature: string[] | string) {
         this.inputUpdate$.next(Array.isArray(feature) ? feature : [feature]);

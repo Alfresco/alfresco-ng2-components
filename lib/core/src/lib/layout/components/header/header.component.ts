@@ -27,7 +27,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-layout-header',
-    standalone: true,
     imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslatePipe],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],

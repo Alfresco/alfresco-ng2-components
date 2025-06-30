@@ -49,7 +49,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./infinite-pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatProgressBarModule, TranslatePipe]
 })
 export class InfinitePaginationComponent implements OnInit, PaginationComponentInterface {

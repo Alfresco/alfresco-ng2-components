@@ -836,7 +836,6 @@ export const emptyFormRepresentationJSON = {
     processDefinitionId: 'ed4a6233-0ad8-11ea-8616-e6267bbdb057',
     processInstanceId: 'ec921948-0ad9-11ea-8616-e6267bbdb057',
     processVariables: [],
-    standAlone: true,
     tabs: [],
     taskId: 'ec92194b-0ad9-11ea-8616-e6267bbdb057',
     taskName: null,

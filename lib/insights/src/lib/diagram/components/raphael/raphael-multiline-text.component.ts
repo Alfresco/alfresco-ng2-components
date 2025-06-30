@@ -25,8 +25,7 @@ const TEXT_PADDING = 3;
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-raphael-multiline-text, raphael-multiline-text',
-    standalone: true
+    selector: 'adf-raphael-multiline-text, raphael-multiline-text'
 })
 export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit {
     @Input()

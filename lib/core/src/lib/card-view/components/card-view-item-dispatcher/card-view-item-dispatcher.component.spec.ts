@@ -26,7 +26,6 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 @Component({
     selector: 'whatever-you-want-to-have',
-    standalone: true,
     template: '<div data-automation-id="found-me">Hey I am shiny!</div>'
 })
 export class CardViewShinyCustomElementItemComponent {

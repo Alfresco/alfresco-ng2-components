@@ -18,8 +18,7 @@
 import { ContentChild, Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-    selector: 'adf-sidenav-layout-navigation',
-    standalone: true
+    selector: 'adf-sidenav-layout-navigation'
 })
 export class SidenavLayoutNavigationDirective {
     @ContentChild(TemplateRef)

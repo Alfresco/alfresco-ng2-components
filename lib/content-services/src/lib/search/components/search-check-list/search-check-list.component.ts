@@ -38,7 +38,6 @@ export interface SearchListOption {
 
 @Component({
     selector: 'adf-search-check-list',
-    standalone: true,
     imports: [CommonModule, MatCheckboxModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './search-check-list.component.html',
     styleUrls: ['./search-check-list.component.scss'],

@@ -34,7 +34,6 @@ import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-task-filters',
-    standalone: true,
     imports: [CommonModule, MatProgressSpinnerModule, TranslatePipe, IconComponent, MatListModule],
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['./task-filters-cloud.component.scss'],

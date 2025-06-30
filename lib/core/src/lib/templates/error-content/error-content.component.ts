@@ -26,7 +26,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-error-content',
-    standalone: true,
     imports: [CommonModule, TranslatePipe],
     templateUrl: './error-content.component.html',
     styleUrls: ['./error-content.component.scss'],
