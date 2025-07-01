@@ -44,7 +44,7 @@
     "@cspell/eslint-plugin": "8.16.1",
     "@mat-datetimepicker/core": "14.0.0",
     "@ngx-translate/core": "^16.0.4",
-    "@nx/webpack": "^20.0.0",
+    "@nx/webpack": "^20.6.4",
     "angular-oauth2-oidc": "17.0.2",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "10.0.3",
