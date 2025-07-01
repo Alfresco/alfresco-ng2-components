@@ -1023,6 +1023,32 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('normal-folder');
     });
 
+    it('should reset filterValue to {} when navigating to a new folder by id', () => {
+        documentList.filterValue = { name: 'test' };
+        const folder = new FolderNode();
+        folder.entry.id = 'new-folder-id';
+        documentList.navigateTo(folder.entry);
+        expect(documentList.filterValue).toEqual({});
+    });
+
+    it('should reset filterValue to {} when navigating to a new folder by Node', () => {
+        documentList.filterValue = { name: 'test' };
+        const node = new Node({ id: 'another-folder-id', isFolder: true });
+        documentList.navigateTo(node);
+        expect(documentList.filterValue).toEqual({});
+    });
+
+    it('should call loadFolder and preserve filter context when sorting is changed', () => {
+        documentList.currentFolderId = 'test-folder';
+        documentList.filterValue = { name: 'abc' };
+        spyOn(documentList, 'loadFolder').and.callThrough();
+
+        documentList.onSortingChanged(new CustomEvent('sortingChanged', { detail: ['name', 'desc'] }));
+
+        expect(documentList.loadFolder).toHaveBeenCalled();
+        expect(documentList.filterValue).toEqual({ name: 'abc' });
+    });
+
     it('should require valid node for file preview', () => {
         const file = new FileNode();
         file.entry = null;
