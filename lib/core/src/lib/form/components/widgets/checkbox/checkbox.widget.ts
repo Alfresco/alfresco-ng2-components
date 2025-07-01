@@ -30,6 +30,7 @@ import { WidgetComponent } from '../widget.component';
     selector: 'checkbox-widget',
     standalone: true,
     templateUrl: './checkbox.widget.html',
+    styleUrl: './checkbox.widget.scss',
     styles: [
         `
             .adf-checkbox {
