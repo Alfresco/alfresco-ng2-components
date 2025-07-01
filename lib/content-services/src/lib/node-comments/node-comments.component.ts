@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ADF_COMMENTS_SERVICE, CommentModel, CommentsComponent } from '@alfresco/adf-core';
 import { NodeCommentsService } from './services/node-comments.service';
 
 @Component({
@@ -40,4 +40,8 @@ export class NodeCommentsComponent {
     /** make the comments component readOnly */
     @Input()
     readOnly: boolean;
+
+    /** Emits when a new comment is added */
+    @Output()
+    commentAdded = new EventEmitter<CommentModel>();
 }

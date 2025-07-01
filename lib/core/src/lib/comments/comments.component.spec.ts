@@ -26,6 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { MatError } from '@angular/material/form-field';
+import { CommentModel } from '../models';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -120,6 +121,32 @@ describe('CommentsComponent', () => {
         await fixture.whenStable();
 
         expect(testingUtils.getByCSS('#comment-input')).not.toBeNull();
+    });
+
+    it('should emit commentAdded when a new comment is added successfully', () => {
+        const emitSpy = spyOn(component.commentAdded, 'emit');
+        const mockComment: CommentModel = {
+            id: 'comment-123',
+            message: 'New test comment',
+            created: new Date(),
+            createdBy: {
+                id: 'user-1',
+                displayName: 'John Doe',
+                avatarId: 'avatar-001'
+            },
+            isSelected: false,
+            hasAvatarPicture: false,
+            userDisplayName: 'John Doe',
+            userInitials: 'JD'
+        };
+
+        component.id = '123';
+        component.commentControl.setValue('New test comment');
+        addCommentSpy.and.returnValue(of(mockComment));
+
+        component.addComment();
+
+        expect(emitSpy).toHaveBeenCalledWith(mockComment);
     });
 
     it('should not display comments input when the entity is readonly', async () => {

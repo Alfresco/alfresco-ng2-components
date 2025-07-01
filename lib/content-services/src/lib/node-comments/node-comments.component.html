@@ -1,4 +1,5 @@
 <adf-comments 
     [readOnly]="readOnly"
     [id]="nodeId"
+    (commentAdded)="commentAdded.emit($event)"
 />

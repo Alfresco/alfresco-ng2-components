@@ -15,7 +15,8 @@ Displays comments from users involved in a specified environment and allows an i
 ```html
 <adf-comments
     [id]="YOUR_ID"
-    [readOnly]="YOUR_READ_ONLY_FLAG">
+    [readOnly]="YOUR_READ_ONLY_FLAG"
+    (commentAdded)="onCommentAdded($event)">
 </adf-comments>
 ```
 
@@ -23,13 +24,14 @@ Displays comments from users involved in a specified environment and allows an i
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| id | `string` |  | The numeric ID of the task. |
-| readOnly | `boolean` | false | Are the comments read only? |
+| Name     | Type      | Default value | Description                 |
+| -------- | --------- | ------------- | --------------------------- |
+| id       | `string`  |               | The numeric ID of the task. |
+| readOnly | `boolean` | false         | Are the comments read only? |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while displaying/adding a comment. |
+| Name         | Type                                                                        | Description                                                     |
+| ------------ | --------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| error        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`           | Emitted when an error occurs while displaying/adding a comment. |
+| commentAdded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<CommentModel>`  | Emitted when a new comment is successfully added.               |
