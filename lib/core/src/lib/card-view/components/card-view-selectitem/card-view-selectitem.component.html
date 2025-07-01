@@ -3,7 +3,7 @@
         <div *ngSwitchDefault>
         <div *ngIf="!isEditable"
             [attr.data-automation-id]="'card-select-label-' + property.key"
-            class="adf-property-label"
+            class="adf-property-label adf-property-label-non-editable"
             >{{ property.label | translate }}
         </div>
             <div class="adf-property-field">
@@ -12,6 +12,7 @@
                     class="adf-property-value adf-property-read-only"
                     [attr.data-automation-id]="'select-readonly-value-' + property.key"
                     data-automation-class="read-only-value"
+                    [title]="property.displayValue | async | translate"
                 >
                     {{ property.displayValue | async | translate }}
                 </div>
