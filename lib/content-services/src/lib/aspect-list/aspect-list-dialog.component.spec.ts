@@ -132,7 +132,9 @@ describe('AspectListDialogComponent', () => {
     describe('Without passing node id', () => {
         beforeEach(() => {
             aspectListService = TestBed.inject(AspectListService);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            spyOn(aspectListService, 'getAspects').and.returnValue(
+                of({ standardAspectPaging: { list: { entries: aspectListMock } }, customAspectPaging: { list: { entries: customAspectListMock } } })
+            );
             fixture.detectChanges();
         });
 
@@ -247,9 +249,11 @@ describe('AspectListDialogComponent', () => {
             data.nodeId = 'fake-node-id';
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
+            spyOn(aspectListService, 'getAspects').and.returnValue(
+                of({ standardAspectPaging: { list: { entries: aspectListMock } }, customAspectPaging: { list: { entries: customAspectListMock } } })
+            );
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
-            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
+            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(new Node({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0))
             );

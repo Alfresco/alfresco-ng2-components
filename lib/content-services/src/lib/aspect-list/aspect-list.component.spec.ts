@@ -21,13 +21,14 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService } from './services/aspect-list.service';
 import { EMPTY, of } from 'rxjs';
-import { AspectEntry } from '@alfresco/js-api';
+import { AspectEntry, Pagination } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatTableHarness } from '@angular/material/table/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { CustomAspectPaging } from './interfaces/custom-aspect-paging.interface';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -110,6 +111,11 @@ const customAspectListMock: AspectEntry[] = [
     }
 ];
 
+const allAspectsMock: CustomAspectPaging = {
+    standardAspectPaging: { list: { entries: aspectListMock } },
+    customAspectPaging: { list: { entries: customAspectListMock } }
+};
+
 describe('AspectListComponent', () => {
     let loader: HarnessLoader;
     let component: AspectListComponent;
@@ -122,17 +128,15 @@ describe('AspectListComponent', () => {
             imports: [ContentTestingModule, AspectListComponent],
             providers: [AspectListService]
         });
+
+        fixture = TestBed.createComponent(AspectListComponent);
+        component = fixture.componentInstance;
+        nodeService = TestBed.inject(NodesApiService);
+        aspectListService = TestBed.inject(AspectListService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     describe('Loading', () => {
-        beforeEach(() => {
-            fixture = TestBed.createComponent(AspectListComponent);
-            component = fixture.componentInstance;
-            nodeService = TestBed.inject(NodesApiService);
-            aspectListService = TestBed.inject(AspectListService);
-            loader = TestbedHarnessEnvironment.loader(fixture);
-        });
-
         it('should show the loading spinner when result is loading', async () => {
             spyOn(nodeService, 'getNode').and.returnValue(EMPTY);
             spyOn(aspectListService, 'getAspects').and.returnValue(EMPTY);
@@ -144,16 +148,11 @@ describe('AspectListComponent', () => {
 
     describe('When passing a node id', () => {
         beforeEach(() => {
-            fixture = TestBed.createComponent(AspectListComponent);
-            component = fixture.componentInstance;
-            aspectListService = TestBed.inject(AspectListService);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
-            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
+            spyOn(aspectListService, 'getAspects').and.returnValue(of(allAspectsMock));
+            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
-            nodeService = TestBed.inject(NodesApiService);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'stored:aspect'] } as any));
             component.nodeId = 'fake-node-id';
-            loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
         afterEach(() => {
@@ -251,6 +250,10 @@ describe('AspectListComponent', () => {
                 expect(component.valueChanged.emit).toHaveBeenCalledWith(['frs:AspectOne', 'frs:SecondAspect', ...storedAspect]);
                 expect(component.updateCounter.emit).toHaveBeenCalledWith(2);
             });
+
+            it('should load aspects with 0 skip count as pagination by default', () => {
+                expect(aspectListService.getAspects).toHaveBeenCalledWith({ skipCount: 0 }, { skipCount: 0 });
+            });
         });
 
         describe('with excluded aspects', () => {
@@ -265,11 +268,7 @@ describe('AspectListComponent', () => {
 
     describe('When no node id is passed', () => {
         beforeEach(() => {
-            fixture = TestBed.createComponent(AspectListComponent);
-            component = fixture.componentInstance;
-            aspectListService = TestBed.inject(AspectListService);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
-            loader = TestbedHarnessEnvironment.loader(fixture);
+            spyOn(aspectListService, 'getAspects').and.returnValue(of(allAspectsMock));
         });
 
         afterEach(() => {
@@ -289,5 +288,34 @@ describe('AspectListComponent', () => {
             expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBeFalse();
             expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBeFalse();
         });
+
+        it('should load aspects with 0 skip count as pagination by default', () => {
+            fixture.detectChanges();
+            expect(aspectListService.getAspects).toHaveBeenCalledWith({ skipCount: 0 }, { skipCount: 0 });
+        });
+    });
+
+    it('should load next batch of aspects if not all items were returned by first call', (done) => {
+        fixture.detectChanges();
+        const moreItemsPagination: Pagination = { count: 2, hasMoreItems: true };
+        const allAspectsWithMoreItems: CustomAspectPaging = {
+            standardAspectPaging: { list: { entries: aspectListMock, pagination: moreItemsPagination } },
+            customAspectPaging: { list: { entries: customAspectListMock, pagination: moreItemsPagination } }
+        };
+        const getAspectsSpy = spyOn(aspectListService, 'getAspects').and.returnValues(of(allAspectsWithMoreItems), of(allAspectsMock));
+        spyOn(aspectListService, 'getCustomAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
+        spyOn(aspectListService, 'getStandardAspects').and.returnValue(of({ list: { entries: aspectListMock } }));
+
+        component.aspects$.subscribe(() => {
+            expect(aspectListService.getAspects).toHaveBeenCalledTimes(2);
+            expect(getAspectsSpy.calls.argsFor(0)[0]).toEqual({ skipCount: 0 });
+            expect(getAspectsSpy.calls.argsFor(0)[1]).toEqual({ skipCount: 0 });
+            expect(getAspectsSpy.calls.argsFor(1)[0]).toEqual({ skipCount: 2 });
+            expect(getAspectsSpy.calls.argsFor(1)[1]).toEqual({ skipCount: 2 });
+            done();
+        });
+
+        component.ngOnInit();
+        fixture.detectChanges();
     });
 });
