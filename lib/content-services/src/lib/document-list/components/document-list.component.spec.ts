@@ -1023,29 +1023,45 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('normal-folder');
     });
 
-    it('should reset filterValue to {} when navigating to a new folder by id', () => {
+    it('should reset filterValue and update currentFolderId when navigating with a string folder ID', () => {
         documentList.filterValue = { name: 'test' };
-        const folder = new FolderNode();
-        folder.entry.id = 'new-folder-id';
-        documentList.navigateTo(folder.entry);
+
+        const result = documentList.navigateTo('folder-123');
+
+        expect(result).toBeTrue();
         expect(documentList.filterValue).toEqual({});
+        expect(documentList.currentFolderId).toBe('folder-123');
     });
 
-    it('should reset filterValue to {} when navigating to a new folder by Node', () => {
+    it('should reset filterValue and update currentFolderId when navigating with a Node', () => {
+        const node = new Node({ id: 'node-456', isFolder: true });
+
+        spyOn(documentList, 'canNavigateFolder').and.returnValue(true);
         documentList.filterValue = { name: 'test' };
-        const node = new Node({ id: 'another-folder-id', isFolder: true });
-        documentList.navigateTo(node);
+
+        const result = documentList.navigateTo(node);
+
+        expect(result).toBeTrue();
         expect(documentList.filterValue).toEqual({});
+        expect(documentList.currentFolderId).toBe('node-456');
     });
 
-    it('should call loadFolder and preserve filter context when sorting is changed', () => {
-        documentList.currentFolderId = 'test-folder';
+    it('should update sorting and call data.loadPage when sorting is changed and preserve filterValue', () => {
+        const mockData = jasmine.createSpyObj('DocumentListData', ['loadPage', 'getRows']);
+        mockData.getRows.and.returnValue([]);
+        documentList.data = mockData;
+        documentList.sortingMode = 'server';
         documentList.filterValue = { name: 'abc' };
-        spyOn(documentList, 'loadFolder').and.callThrough();
+        documentList.currentFolderId = 'folder-789';
 
-        documentList.onSortingChanged(new CustomEvent('sortingChanged', { detail: ['name', 'desc'] }));
+        const event = new CustomEvent('sortingChanged', {
+            detail: { sortingKey: 'name', direction: 'asc' }
+        });
 
-        expect(documentList.loadFolder).toHaveBeenCalled();
+        documentList.onSortingChanged(event);
+
+        expect(documentList.sorting).toEqual(['name', 'asc']);
+        expect(mockData.loadPage).toHaveBeenCalled();
         expect(documentList.filterValue).toEqual({ name: 'abc' });
     });
 
