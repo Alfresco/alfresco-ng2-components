@@ -1,15 +1,9 @@
 .adf {
-    &-decimal-widget {
-        width: 100%;
-
+    &-widget {
         &-container {
             display: flex;
             align-items: flex-start;
             flex-direction: column;
-        }
-
-        .adf-label {
-            top: 20px;
         }
     }
 }

@@ -11,6 +11,12 @@
         .adf-label {
             top: 20px;
         }
+
+        &-container {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+        }
     }
 
     &-left-label-input-datepicker {

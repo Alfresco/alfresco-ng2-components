@@ -1,5 +1,6 @@
 <div [ngClass]="field.className"
-     [class.adf-invalid]="!field.isValid && isTouched()">
+     [class.adf-invalid]="!field.isValid && isTouched()" class="adf-checkbox-widget-container"
+>
     <mat-checkbox [id]="field.id"
                   color="primary"
                   class="adf-checkbox"
@@ -8,7 +9,8 @@
                   [(ngModel)]="field.value"
                   (ngModelChange)="onFieldChanged(field)"
                   [title]="field.tooltip"
-                  (click)="markAsTouched()">
+                  (click)="markAsTouched()"
+                  >
         {{ field.name | translate }}
         <span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
     </mat-checkbox>

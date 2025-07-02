@@ -2,8 +2,9 @@
     &-section {
         &-single-column {
             display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
+            flex-wrap: inherit;
+            align-items: baseline;
+            gap: 1%;
         }
 
         &-column-view-item {
@@ -11,8 +12,6 @@
             display: flex;
             flex-grow: 1;
             box-sizing: border-box;
-            padding-left: 1%;
-            padding-right: 1%;
         }
     }
 }

@@ -9,7 +9,6 @@
     }
 
     &-radio-button-container {
-        margin-bottom: 15px;
         display: flex;
         flex-direction: column;
 
@@ -23,7 +22,7 @@
     &-radio-button-container-horizontal {
         margin-bottom: 15px;
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: column wrap;
         align-items: flex-start;
         justify-content: flex-start;
 
