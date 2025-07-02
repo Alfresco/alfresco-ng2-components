@@ -1046,10 +1046,8 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('node-456');
     });
 
-    it('should update sorting and call data.loadPage when sorting is changed and preserve filterValue', () => {
-        const mockData = jasmine.createSpyObj<ShareDataTableAdapter>('ShareDataTableAdapter', ['loadPage', 'getRows']);
-        mockData.getRows.and.returnValue([]);
-        documentList.data = mockData;
+    it('should update sorting and call reload when sorting is changed and preserve filterValue', () => {
+        const reloadSpy = spyOn(documentList, 'reload').and.callThrough();
         documentList.sortingMode = 'server';
         documentList.filterValue = { name: 'abc' };
         documentList.currentFolderId = 'folder-789';
@@ -1061,7 +1059,7 @@ describe('DocumentList', () => {
         documentList.onSortingChanged(event);
 
         expect(documentList.sorting).toEqual(['name', 'asc']);
-        expect(mockData.loadPage).toHaveBeenCalled();
+        expect(reloadSpy).toHaveBeenCalled();
         expect(documentList.filterValue).toEqual({ name: 'abc' });
     });
 

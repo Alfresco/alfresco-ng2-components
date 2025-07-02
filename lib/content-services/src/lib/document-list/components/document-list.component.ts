@@ -828,7 +828,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.sortingSubject.next([this.additionalSorting, event.detail]);
 
         if (this.sortingMode === 'server') {
-            this.loadFolder();
+            this.reload();
         }
     }
 
