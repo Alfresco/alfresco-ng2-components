@@ -7,7 +7,7 @@
             {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
     </div>
-    <div>
+    <div class="adf-date-time-widget-container">
         <mat-form-field class="adf-date-time-widget adf-form-field-input"
                         [class.adf-left-label-input-datepicker]="field.leftLabels"
                         [floatLabel]="field.placeholder ? 'always' : null">

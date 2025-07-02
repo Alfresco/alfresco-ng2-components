@@ -42,6 +42,7 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
     templateUrl: './date.widget.html',
+    styleUrl: './date.widget.scss',
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

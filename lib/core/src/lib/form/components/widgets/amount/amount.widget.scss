@@ -4,10 +4,15 @@
 .adf {
     &-amount-widget {
         width: 100%;
-        margin-top: 15px;
 
         .adf-left-label {
             line-height: 36px;
+        }
+
+        &-container {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
         }
     }
 

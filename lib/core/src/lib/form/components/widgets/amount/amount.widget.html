@@ -9,7 +9,7 @@
             >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
         >
     </div>
-    <div>
+    <div class="adf-amount-widget-container">
         <mat-form-field class="adf-amount-widget__input adf-form-field-input" [floatLabel]="placeholder ? 'always' : null">
             @if ( (field.name || field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">{{field.name | translate }}</mat-label> }
             <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}&nbsp;</span>

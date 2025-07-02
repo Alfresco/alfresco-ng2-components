@@ -3,6 +3,12 @@
 
 .adf {
     &-date-time-widget {
+        &-container {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
         #{ms.$mat-form-field-suffix} {
             top: 26px;
         }

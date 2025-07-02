@@ -1,5 +1,11 @@
 .adf {
     &-checkbox {
-        margin-top: -6%;
+        &-widget {
+            &-container {
+                display: flex;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
     }
 }

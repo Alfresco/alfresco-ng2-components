@@ -7,7 +7,7 @@
             {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
         </label>
     </div>
-    <div>
+    <div class="adf-text-widget-container">
         <mat-form-field class="adf-form-field-input" [floatLabel]="placeholder ? 'always' : null">
             @if ( (field.name || this.field?.required) && !field.leftLabels) { <mat-label class="adf-label" [attr.for]="field.id">
                 {{ field.name | translate }}
