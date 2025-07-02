@@ -719,6 +719,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
             this.currentFolderId = node;
+            this.filterValue = {};
             this.folderChange.emit(new NodeEntryEvent({ id: node } as Node));
             this.reload();
             return true;
@@ -726,6 +727,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
                 this.currentFolderId = this.getNodeFolderDestinationId(node);
+                this.filterValue = {};
                 this.folderChange.emit(new NodeEntryEvent({ id: this.currentFolderId } as Node));
                 this.reload();
                 return true;

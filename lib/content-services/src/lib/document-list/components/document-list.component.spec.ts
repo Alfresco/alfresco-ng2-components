@@ -1023,6 +1023,46 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('normal-folder');
     });
 
+    it('should reset filterValue and update currentFolderId when navigating with a string folder ID', () => {
+        documentList.filterValue = { name: 'test' };
+
+        const result = documentList.navigateTo('folder-123');
+
+        expect(result).toBeTrue();
+        expect(documentList.filterValue).toEqual({});
+        expect(documentList.currentFolderId).toBe('folder-123');
+    });
+
+    it('should reset filterValue and update currentFolderId when navigating with a Node', () => {
+        const node = new Node({ id: 'node-456', isFolder: true });
+
+        spyOn(documentList, 'canNavigateFolder').and.returnValue(true);
+        documentList.filterValue = { name: 'test' };
+
+        const result = documentList.navigateTo(node);
+
+        expect(result).toBeTrue();
+        expect(documentList.filterValue).toEqual({});
+        expect(documentList.currentFolderId).toBe('node-456');
+    });
+
+    it('should update sorting and call reload when sorting is changed and preserve filterValue', () => {
+        const reloadSpy = spyOn(documentList, 'reload').and.callThrough();
+        documentList.sortingMode = 'server';
+        documentList.filterValue = { name: 'abc' };
+        documentList.currentFolderId = 'folder-789';
+
+        const event = new CustomEvent('sortingChanged', {
+            detail: { sortingKey: 'name', direction: 'asc' }
+        });
+
+        documentList.onSortingChanged(event);
+
+        expect(documentList.sorting).toEqual(['name', 'asc']);
+        expect(reloadSpy).toHaveBeenCalled();
+        expect(documentList.filterValue).toEqual({ name: 'abc' });
+    });
+
     it('should require valid node for file preview', () => {
         const file = new FileNode();
         file.entry = null;
