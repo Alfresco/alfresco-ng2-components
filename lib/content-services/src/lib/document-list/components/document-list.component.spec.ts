@@ -1047,7 +1047,10 @@ describe('DocumentList', () => {
     });
 
     it('should update sorting and call data.loadPage when sorting is changed and preserve filterValue', () => {
-        const mockData = jasmine.createSpyObj('DocumentListData', ['loadPage', 'getRows']);
+        const mockData: jasmine.SpyObj<ShareDataTableAdapter> = jasmine.createSpyObj<ShareDataTableAdapter>('ShareDataTableAdapter', [
+            'loadPage',
+            'getRows'
+        ]);
         mockData.getRows.and.returnValue([]);
         documentList.data = mockData;
         documentList.sortingMode = 'server';
