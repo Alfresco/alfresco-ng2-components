@@ -19,9 +19,9 @@ import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, Vie
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { EMPTY, Observable, zip } from 'rxjs';
 import { concatMap, expand, map, reduce, take, tap } from 'rxjs/operators';
-import { AspectListService } from './services/aspect-list.service';
+import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './services/aspect-list.service';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { AspectEntry, ContentPagingQuery } from '@alfresco/js-api';
+import { AspectEntry, ContentPagingQuery, ListAspectsOpts } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
@@ -63,6 +63,7 @@ export class AspectListComponent implements OnInit {
     isPanelOpen: boolean[] = [];
 
     private readonly destroyRef = inject(DestroyRef);
+
     private customAspectsLoaded = 0;
     private standardAspectsLoaded = 0;
     private hasMoreAspects = false;
@@ -74,7 +75,12 @@ export class AspectListComponent implements OnInit {
         if (this.nodeId) {
             const node$ = this.nodeApiService.getNode(this.nodeId);
             const customAspect$ = this.aspectListService
-                .getCustomAspects(this.aspectListService.getVisibleAspects())
+                .getAspects(this.aspectListService.getVisibleAspects(), {
+                    where: CustomAspectsWhere,
+                    include: ['properties'],
+                    skipCount: 0,
+                    maxItems: 100
+                })
                 .pipe(map((customAspects) => customAspects?.list?.entries.flatMap((customAspect) => customAspect.entry.id)));
             aspects$ = zip(node$, customAspect$).pipe(
                 tap(([node, customAspects]) => {
@@ -153,7 +159,19 @@ export class AspectListComponent implements OnInit {
     }
 
     private loadAspects(standardAspectsPagination?: ContentPagingQuery, customAspectsPagination?: ContentPagingQuery): Observable<AspectEntry[]> {
-        return this.aspectListService.getAspects(standardAspectsPagination, customAspectsPagination).pipe(
+        const standardAspectOpts: ListAspectsOpts = {
+            where: StandardAspectsWhere,
+            include: ['properties'],
+            skipCount: standardAspectsPagination?.skipCount || 0,
+            maxItems: 100
+        };
+        const customAspectOpts: ListAspectsOpts = {
+            where: CustomAspectsWhere,
+            include: ['properties'],
+            skipCount: customAspectsPagination?.skipCount || 0,
+            maxItems: 100
+        };
+        return this.aspectListService.getAllAspects(standardAspectOpts, customAspectOpts).pipe(
             take(1),
             tap((aspectsPaging) => {
                 this.customAspectsLoaded += aspectsPaging.customAspectPaging?.list?.pagination?.count || 0;

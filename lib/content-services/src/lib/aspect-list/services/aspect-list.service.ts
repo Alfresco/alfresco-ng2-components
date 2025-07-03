@@ -20,8 +20,11 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { from, Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AspectEntry, AspectPaging, AspectsApi, ContentPagingQuery, ListAspectsOpts } from '@alfresco/js-api';
+import { AspectEntry, AspectPaging, AspectsApi, ListAspectsOpts } from '@alfresco/js-api';
 import { CustomAspectPaging } from '../interfaces/custom-aspect-paging.interface';
+
+export const StandardAspectsWhere = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
+export const CustomAspectsWhere = `(not namespaceUri matches('http://www.alfresco.*'))`;
 
 @Injectable({
     providedIn: 'root'
@@ -35,45 +38,18 @@ export class AspectListService {
 
     constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
 
-    getAspects(standardAspectsPagination?: ContentPagingQuery, customAspectsPagination?: ContentPagingQuery): Observable<CustomAspectPaging> {
+    getAllAspects(standardOpts?: ListAspectsOpts, customOpts?: ListAspectsOpts): Observable<CustomAspectPaging> {
         const visibleAspectList = this.getVisibleAspects();
-        const standardAspects$ = this.getStandardAspects(visibleAspectList, standardAspectsPagination);
-        const customAspects$ = this.getCustomAspects(visibleAspectList, customAspectsPagination);
+        const standardAspects$ = this.getAspects(visibleAspectList, standardOpts);
+        const customAspects$ = this.getAspects(visibleAspectList, customOpts);
         return zip(standardAspects$, customAspects$).pipe(
             map(([standardAspectPaging, customAspectPaging]) => ({ standardAspectPaging, customAspectPaging }))
         );
     }
 
-    getStandardAspects(whiteList: string[], paginationOptions?: ContentPagingQuery): Observable<AspectPaging> {
-        const where = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
-        const opts: ListAspectsOpts = {
-            where,
-            include: ['properties'],
-            skipCount: paginationOptions?.skipCount || 0,
-            maxItems: paginationOptions?.maxItems || 100
-        };
-
+    getAspects(whiteList: string[], opts?: ListAspectsOpts): Observable<AspectPaging> {
         return from(this.aspectsApi.listAspects(opts)).pipe(
-            map((result: AspectPaging) => {
-                if (result?.list?.entries) {
-                    result.list.entries = this.filterAspectByConfig(whiteList, result.list.entries);
-                }
-                return result;
-            }),
-            catchError(() => of({ list: { entries: [] } }))
-        );
-    }
-
-    getCustomAspects(whiteList?: string[], paginationOptions?: ContentPagingQuery): Observable<AspectPaging> {
-        const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
-        const opts: ListAspectsOpts = {
-            where,
-            include: ['properties'],
-            skipCount: paginationOptions?.skipCount || 0,
-            maxItems: paginationOptions?.maxItems || 100
-        };
-        return from(this.aspectsApi.listAspects(opts)).pipe(
-            map((result: AspectPaging) => {
+            map((result) => {
                 if (result?.list?.entries) {
                     result.list.entries = this.filterAspectByConfig(whiteList, result.list.entries);
                 }

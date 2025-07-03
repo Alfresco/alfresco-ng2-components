@@ -22,5 +22,6 @@ export * from './services/node-aspect.service';
 export * from './services/dialog-aspect-list.service';
 
 export * from './aspect-list-dialog-data.interface';
+export * from './interfaces/custom-aspect-paging.interface';
 
 export * from './aspect-list.module';

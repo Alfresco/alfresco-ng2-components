@@ -16,11 +16,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AspectListService } from './aspect-list.service';
-import { AspectPaging, AspectsApi, AspectEntry } from '@alfresco/js-api';
+import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './aspect-list.service';
+import { AspectPaging, AspectsApi, AspectEntry, ListAspectsOpts } from '@alfresco/js-api';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../../services';
 import { provideHttpClient } from '@angular/common/http';
+import { AppConfigService } from '@alfresco/adf-core';
 
 const stdAspect1: AspectEntry = { entry: { id: 'std:standardAspectOne', description: 'Standard Aspect One', title: 'StandardAspectOne' } };
 const stdAspect2: AspectEntry = { entry: { id: 'std:standardAspectTwo', description: 'Standard Aspect Two', title: 'StandardAspectTwo' } };
@@ -30,8 +31,19 @@ const cstAspect1: AspectEntry = { entry: { id: 'cst:customAspectOne', descriptio
 const cstAspect2: AspectEntry = { entry: { id: 'cst:customAspectTwo', description: 'Custom Aspect Two', title: 'CustomAspectTwo' } };
 const cstAspect3: AspectEntry = { entry: { id: 'cst:customAspectThree', description: 'Custom Aspect Three', title: 'CustomAspectThree' } };
 
-const standardAspectsWhere = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
-const customAspectsWhere = `(not namespaceUri matches('http://www.alfresco.*'))`;
+const aspectsOpts: ListAspectsOpts = {
+    where: StandardAspectsWhere,
+    include: ['properties'],
+    skipCount: 0,
+    maxItems: 100
+};
+
+const customAspectsOpts: ListAspectsOpts = {
+    where: CustomAspectsWhere,
+    include: ['properties'],
+    skipCount: 0,
+    maxItems: 100
+};
 
 let standardAspectPagingMock: AspectPaging;
 let customAspectPagingMock: AspectPaging;
@@ -40,6 +52,7 @@ describe('AspectListService', () => {
     let aspectListService: AspectListService;
     let apiService: AlfrescoApiService;
     let aspectsApi: AspectsApi;
+    let appConfigService: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -47,6 +60,7 @@ describe('AspectListService', () => {
         });
 
         aspectListService = TestBed.inject(AspectListService);
+        appConfigService = TestBed.inject(AppConfigService);
         apiService = TestBed.inject(AlfrescoApiService);
         aspectsApi = new AspectsApi(apiService.getInstance());
         spyOnProperty(aspectListService, 'aspectsApi', 'get').and.returnValue(aspectsApi);
@@ -55,143 +69,119 @@ describe('AspectListService', () => {
     });
 
     describe('When API returns error', () => {
-        const visibleAspects = [];
+        const visibleAspects: string[] = [];
 
         beforeEach(() => {
             spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.reject(new Error('API error')));
         });
 
         it('should return empty paging list for standard aspects when api returns error', (done) => {
-            aspectListService.getStandardAspects(visibleAspects).subscribe((response) => {
+            aspectListService.getAspects(visibleAspects, aspectsOpts).subscribe((response) => {
                 expect(response.list.entries).toEqual([]);
                 done();
             });
         });
 
         it('should return empty paging list for custom aspects when api returns error', (done) => {
-            aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
+            aspectListService.getAspects(visibleAspects, aspectsOpts).subscribe((response) => {
                 expect(response.list.entries).toEqual([]);
                 done();
             });
         });
     });
 
-    describe('Standard aspects', () => {
+    describe('When aspects are returned', () => {
         beforeEach(() => {
             spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(standardAspectPagingMock));
         });
 
-        it('should add default pagination for standard aspects list request', (done) => {
-            const visibleAspects = [];
-            aspectListService.getStandardAspects(visibleAspects).subscribe(() => {
-                expect(aspectsApi.listAspects).toHaveBeenCalledWith({
-                    where: standardAspectsWhere,
-                    include: ['properties'],
-                    skipCount: 0,
-                    maxItems: 100
-                });
+        it('should add custom pagination for aspects list request when provided', (done) => {
+            const visibleAspects: string[] = [];
+            const customPagination: ListAspectsOpts = { skipCount: 10, maxItems: 20 };
+            aspectListService.getAspects(visibleAspects, customPagination).subscribe(() => {
+                expect(aspectsApi.listAspects).toHaveBeenCalledWith(customPagination);
                 done();
             });
         });
 
-        it('should add custom pagination for standard aspects list request when provided', (done) => {
-            const visibleAspects = [];
-            aspectListService.getStandardAspects(visibleAspects, { skipCount: 10, maxItems: 20 }).subscribe(() => {
-                expect(aspectsApi.listAspects).toHaveBeenCalledWith({
-                    where: standardAspectsWhere,
-                    include: ['properties'],
-                    skipCount: 10,
-                    maxItems: 20
-                });
-                done();
-            });
-        });
-
-        it('should get one standard aspect', (done) => {
+        it('should get one aspect', (done) => {
             const visibleAspects = ['std:standardAspectOne'];
-            aspectListService.getStandardAspects(visibleAspects).subscribe((response) => {
+            aspectListService.getAspects(visibleAspects, aspectsOpts).subscribe((response) => {
                 expect(response.list.entries).toEqual([stdAspect1]);
                 done();
             });
         });
 
-        it('should get two standard aspects', (done) => {
+        it('should get two aspects', (done) => {
             const visibleAspects = ['std:standardAspectTwo', 'std:standardAspectThree'];
-            aspectListService.getStandardAspects(visibleAspects).subscribe((response) => {
+            aspectListService.getAspects(visibleAspects, aspectsOpts).subscribe((response) => {
                 expect(response.list.entries).toEqual([stdAspect2, stdAspect3]);
+                done();
+            });
+        });
+
+        it('should get all aspects (visible aspects as undefined)', (done) => {
+            const visibleAspects: string[] = undefined;
+            aspectListService.getAspects(visibleAspects, aspectsOpts).subscribe((response) => {
+                expect(response.list.entries).toEqual([stdAspect1, stdAspect2, stdAspect3]);
+                done();
+            });
+        });
+
+        it('should get all aspects (visible aspects as empty array)', (done) => {
+            const visibleAspects: string[] = [];
+            aspectListService.getAspects(visibleAspects, aspectsOpts).subscribe((response) => {
+                expect(response.list.entries).toEqual([stdAspect1, stdAspect2, stdAspect3]);
                 done();
             });
         });
     });
 
-    describe('Custom aspects', () => {
+    describe('getAllAspects', () => {
         beforeEach(() => {
-            spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(customAspectPagingMock));
+            spyOn(aspectsApi, 'listAspects').and.returnValues(Promise.resolve(standardAspectPagingMock), Promise.resolve(customAspectPagingMock));
         });
 
-        it('should add default pagination for custom aspects list request', (done) => {
-            const visibleAspects = [];
-            aspectListService.getCustomAspects(visibleAspects).subscribe(() => {
-                expect(aspectsApi.listAspects).toHaveBeenCalledWith({
-                    where: customAspectsWhere,
-                    include: ['properties'],
-                    skipCount: 0,
-                    maxItems: 100
-                });
+        it('should get all aspects (standard and custom) when visible aspects are empty', (done) => {
+            spyOn(appConfigService, 'get').and.returnValue(undefined);
+            aspectListService.getAllAspects(aspectsOpts, customAspectsOpts).subscribe((aspects) => {
+                expect(aspects.standardAspectPaging.list.entries).toEqual([stdAspect1, stdAspect2, stdAspect3]);
+                expect(aspects.customAspectPaging.list.entries).toEqual([cstAspect1, cstAspect2, cstAspect3]);
+                expect(aspectsApi.listAspects).toHaveBeenCalledTimes(2);
                 done();
             });
         });
 
-        it('should add custom pagination for custom aspects list request when provided', (done) => {
-            const visibleAspects = [];
-            aspectListService.getCustomAspects(visibleAspects, { skipCount: 15, maxItems: 30 }).subscribe(() => {
-                expect(aspectsApi.listAspects).toHaveBeenCalledWith({
-                    where: customAspectsWhere,
-                    include: ['properties'],
-                    skipCount: 15,
-                    maxItems: 30
-                });
+        it('should get all aspects (standard and custom) filtered by visible aspects', (done) => {
+            const visibleAspectConfig = {
+                standard: ['std:standardAspectOne', 'std:standardAspectTwo'],
+                custom: ['cst:customAspectOne']
+            };
+            spyOn(appConfigService, 'get').and.returnValue(visibleAspectConfig);
+            aspectListService.getAllAspects(aspectsOpts, customAspectsOpts).subscribe((aspects) => {
+                expect(aspects.standardAspectPaging.list.entries).toEqual([stdAspect1, stdAspect2]);
+                expect(aspects.customAspectPaging.list.entries).toEqual([cstAspect1]);
+                expect(aspectsApi.listAspects).toHaveBeenCalledTimes(2);
                 done();
             });
         });
+    });
 
-        it('should get one custom aspect', (done) => {
-            const visibleAspects = ['cst:customAspectTwo'];
-            aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
-                expect(response.list.entries).toEqual([cstAspect2]);
-                done();
-            });
+    describe('getVisibleAspects', () => {
+        it('should return empty array when visible aspects are not provided in the config', () => {
+            spyOn(appConfigService, 'get').and.returnValue(undefined);
+            const visibleAspects = aspectListService.getVisibleAspects();
+            expect(visibleAspects).toEqual([]);
         });
 
-        it('should get two custom aspects', (done) => {
-            const visibleAspects = ['cst:customAspectOne', 'cst:customAspectThree'];
-            aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
-                expect(response.list.entries).toEqual([cstAspect1, cstAspect3]);
-                done();
-            });
-        });
-
-        it('should get all custom aspects (visible aspects as undefined)', (done) => {
-            const visibleAspects = undefined;
-            aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
-                expect(response.list.entries).toEqual([cstAspect1, cstAspect2, cstAspect3]);
-                done();
-            });
-        });
-
-        it('should get all custom aspects (visible aspects as empty array)', (done) => {
-            const visibleAspects = [];
-            aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
-                expect(response.list.entries).toEqual([cstAspect1, cstAspect2, cstAspect3]);
-                done();
-            });
-        });
-
-        it('should get all custom aspects (visible aspects not supplied)', (done) => {
-            aspectListService.getCustomAspects().subscribe((response) => {
-                expect(response.list.entries).toEqual([cstAspect1, cstAspect2, cstAspect3]);
-                done();
-            });
+        it('should return visible aspects from config when provided', () => {
+            const visibleAspectConfig = {
+                standard: ['std:standardAspectOne', 'std:standardAspectTwo'],
+                custom: ['cst:customAspectOne']
+            };
+            spyOn(appConfigService, 'get').and.returnValue(visibleAspectConfig);
+            const visibleAspects = aspectListService.getVisibleAspects();
+            expect(visibleAspects).toEqual(['std:standardAspectOne', 'std:standardAspectTwo', 'cst:customAspectOne']);
         });
     });
 });

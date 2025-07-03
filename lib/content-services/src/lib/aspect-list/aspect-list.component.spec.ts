@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListComponent } from './aspect-list.component';
-import { AspectListService } from './services/aspect-list.service';
+import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './services/aspect-list.service';
 import { EMPTY, of } from 'rxjs';
 import { AspectEntry, Pagination } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -148,8 +148,8 @@ describe('AspectListComponent', () => {
 
     describe('When passing a node id', () => {
         beforeEach(() => {
-            spyOn(aspectListService, 'getAspects').and.returnValue(of(allAspectsMock));
-            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
+            spyOn(aspectListService, 'getAllAspects').and.returnValue(of(allAspectsMock));
+            spyOn(aspectListService, 'getAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'stored:aspect'] } as any));
             component.nodeId = 'fake-node-id';
@@ -252,7 +252,10 @@ describe('AspectListComponent', () => {
             });
 
             it('should load aspects with 0 skip count as pagination by default', () => {
-                expect(aspectListService.getAspects).toHaveBeenCalledWith({ skipCount: 0 }, { skipCount: 0 });
+                expect(aspectListService.getAllAspects).toHaveBeenCalledWith(
+                    { where: StandardAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 },
+                    { where: CustomAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 }
+                );
             });
         });
 
@@ -268,7 +271,7 @@ describe('AspectListComponent', () => {
 
     describe('When no node id is passed', () => {
         beforeEach(() => {
-            spyOn(aspectListService, 'getAspects').and.returnValue(of(allAspectsMock));
+            spyOn(aspectListService, 'getAllAspects').and.returnValue(of(allAspectsMock));
         });
 
         afterEach(() => {
@@ -291,7 +294,10 @@ describe('AspectListComponent', () => {
 
         it('should load aspects with 0 skip count as pagination by default', () => {
             fixture.detectChanges();
-            expect(aspectListService.getAspects).toHaveBeenCalledWith({ skipCount: 0 }, { skipCount: 0 });
+            expect(aspectListService.getAllAspects).toHaveBeenCalledWith(
+                { where: StandardAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 },
+                { where: CustomAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 }
+            );
         });
     });
 
@@ -302,16 +308,17 @@ describe('AspectListComponent', () => {
             standardAspectPaging: { list: { entries: aspectListMock, pagination: moreItemsPagination } },
             customAspectPaging: { list: { entries: customAspectListMock, pagination: moreItemsPagination } }
         };
-        const getAspectsSpy = spyOn(aspectListService, 'getAspects').and.returnValues(of(allAspectsWithMoreItems), of(allAspectsMock));
-        spyOn(aspectListService, 'getCustomAspects').and.returnValue(of({ list: { entries: customAspectListMock } }));
-        spyOn(aspectListService, 'getStandardAspects').and.returnValue(of({ list: { entries: aspectListMock } }));
+        const getAspectsSpy = spyOn(aspectListService, 'getAllAspects').and.returnValues(of(allAspectsWithMoreItems), of(allAspectsMock));
+        spyOn(aspectListService, 'getAspects').and.returnValues(
+            of({ list: { entries: aspectListMock } }),
+            of({ list: { entries: customAspectListMock } })
+        );
 
         component.aspects$.subscribe(() => {
-            expect(aspectListService.getAspects).toHaveBeenCalledTimes(2);
-            expect(getAspectsSpy.calls.argsFor(0)[0]).toEqual({ skipCount: 0 });
-            expect(getAspectsSpy.calls.argsFor(0)[1]).toEqual({ skipCount: 0 });
-            expect(getAspectsSpy.calls.argsFor(1)[0]).toEqual({ skipCount: 2 });
-            expect(getAspectsSpy.calls.argsFor(1)[1]).toEqual({ skipCount: 2 });
+            expect(getAspectsSpy.calls.argsFor(0)[0]).toEqual({ where: StandardAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 });
+            expect(getAspectsSpy.calls.argsFor(0)[1]).toEqual({ where: CustomAspectsWhere, include: ['properties'], skipCount: 0, maxItems: 100 });
+            expect(getAspectsSpy.calls.argsFor(1)[0]).toEqual({ where: StandardAspectsWhere, include: ['properties'], skipCount: 2, maxItems: 100 });
+            expect(getAspectsSpy.calls.argsFor(1)[1]).toEqual({ where: CustomAspectsWhere, include: ['properties'], skipCount: 2, maxItems: 100 });
             done();
         });
 
