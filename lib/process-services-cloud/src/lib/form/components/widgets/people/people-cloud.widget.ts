@@ -32,7 +32,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     selector: 'people-cloud-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, ErrorWidgetComponent, PeopleCloudComponent, MatFormFieldModule],
     templateUrl: './people-cloud.widget.html',
     host: {

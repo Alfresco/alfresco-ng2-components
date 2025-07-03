@@ -30,7 +30,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-manager',
-    standalone: true,
     imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslatePipe, VersionListComponent],
     templateUrl: './version-manager.component.html',
     styleUrls: ['./version-manager.component.scss'],

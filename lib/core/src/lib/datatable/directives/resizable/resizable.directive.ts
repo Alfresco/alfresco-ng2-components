@@ -23,7 +23,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-resizable]',
-    standalone: true,
     exportAs: 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {

@@ -20,7 +20,6 @@ import { DataRow } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-name-location-cell',
-    standalone: true,
     template: `
         <div class="adf-name-location-cell-name adf-datatable-cell-value" [title]="name">{{ name }}</div>
         <div class="adf-name-location-cell-location adf-datatable-cell-value" [title]="path">{{ path }}</div>

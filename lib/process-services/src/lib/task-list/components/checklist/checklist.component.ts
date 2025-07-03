@@ -30,7 +30,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-checklist',
-    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,

@@ -27,7 +27,6 @@ import { MatButtonModule } from '@angular/material/button';
     selector: 'adf-header-widget',
     templateUrl: './header.widget.html',
     styleUrls: ['./header.widget.scss'],
-    standalone: true,
     encapsulation: ViewEncapsulation.None,
     imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet]
 })

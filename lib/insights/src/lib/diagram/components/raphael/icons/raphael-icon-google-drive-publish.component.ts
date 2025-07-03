@@ -23,8 +23,7 @@ import { RaphaelBase } from '../raphael-base';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-raphael-icon-google-drive-publish, raphael-icon-google-drive-publish',
-    standalone: true
+    selector: 'adf-raphael-icon-google-drive-publish, raphael-icon-google-drive-publish'
 })
 export class RaphaelIconGoogleDrivePublishDirective extends RaphaelBase implements OnInit {
     @Input()

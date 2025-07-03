@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-task-comments',
-    standalone: true,
     imports: [CommonModule, CommentsComponent],
     templateUrl: './task-comments.component.html',
     encapsulation: ViewEncapsulation.None,

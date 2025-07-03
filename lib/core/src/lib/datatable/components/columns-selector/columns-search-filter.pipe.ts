@@ -20,8 +20,7 @@ import { DataColumn } from '../../data/data-column.model';
 import { TranslationService } from '../../../translation';
 
 @Pipe({
-    name: 'columnsSearchFilter',
-    standalone: true
+    name: 'columnsSearchFilter'
 })
 export class ColumnsSearchFilterPipe implements PipeTransform {
     private translationService = inject(TranslationService);

@@ -21,7 +21,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Directive({
     selector: '[adf-clipboard]',
-    standalone: true,
     exportAs: 'adfClipboard'
 })
 export class ClipboardDirective {
@@ -75,7 +74,6 @@ export class ClipboardDirective {
 
 @Component({
     selector: 'adf-copy-content-tooltip',
-    standalone: true,
     imports: [TranslatePipe],
     template: `<span class="adf-copy-tooltip">{{ placeholder | translate }} </span>`,
     encapsulation: ViewEncapsulation.None

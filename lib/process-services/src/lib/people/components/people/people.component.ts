@@ -31,7 +31,6 @@ import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core
 
 @Component({
     selector: 'adf-people',
-    standalone: true,
     imports: [
         CommonModule,
         MatCardModule,

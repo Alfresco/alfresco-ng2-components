@@ -22,7 +22,6 @@ import { DataColumnComponent } from './data-column.component';
 
 @Component({
     selector: 'data-columns',
-    standalone: true,
     template: ''
 })
 export class DataColumnListComponent {

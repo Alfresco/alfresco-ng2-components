@@ -24,8 +24,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Pipe({
     name: 'adfDecimalNumber',
-    pure: false,
-    standalone: true
+    pure: false
 })
 export class DecimalNumberPipe implements PipeTransform {
     static DEFAULT_LOCALE = 'en-US';

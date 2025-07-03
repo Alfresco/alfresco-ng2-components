@@ -35,7 +35,6 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
 
 @Component({
     selector: 'date-time-widget',
-    standalone: true,
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },

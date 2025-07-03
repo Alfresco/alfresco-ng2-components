@@ -27,7 +27,8 @@ import { FileDownloadStatus } from '@alfresco/js-api';
     templateUrl: './download-zip.dialog.html',
     styleUrls: ['./download-zip.dialog.scss'],
     host: { class: 'adf-download-zip-dialog' },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DownloadZipDialogComponent implements OnInit {
     // flag for async threads

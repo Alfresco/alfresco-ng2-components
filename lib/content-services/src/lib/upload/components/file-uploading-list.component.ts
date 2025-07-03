@@ -24,7 +24,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-file-uploading-list',
-    standalone: true,
     imports: [CommonModule],
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.scss']

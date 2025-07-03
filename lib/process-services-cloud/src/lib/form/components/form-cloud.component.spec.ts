@@ -94,7 +94,8 @@ describe('FormCloudComponent', () => {
 
     @Component({
         selector: 'adf-cloud-custom-widget',
-        template: '<div></div>'
+        template: '<div></div>',
+        standalone: false
     })
     // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {

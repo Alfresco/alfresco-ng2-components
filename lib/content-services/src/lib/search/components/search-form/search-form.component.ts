@@ -26,7 +26,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-form',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, TranslatePipe, MatMenuModule, MatIconModule],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.scss'],

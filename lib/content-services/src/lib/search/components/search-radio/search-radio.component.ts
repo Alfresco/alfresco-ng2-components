@@ -37,7 +37,6 @@ export interface SearchRadioOption {
 
 @Component({
     selector: 'adf-search-radio',
-    standalone: true,
     imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],

@@ -17,59 +17,56 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 @Component({
-    template: '',
+    template: '<div>Test div</div>',
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
     constructor(public notificationService: NotificationService) {}
 
     sendMessageWithoutConfig() {
-        return this.notificationService.openSnackMessage('Test notification', 1000);
+        return this.notificationService.openSnackMessage('Test notification');
     }
 
     sendMessage() {
-        return this.notificationService.openSnackMessage('Test notification', 1000);
+        return this.notificationService.openSnackMessage('Test notification');
     }
 
     sendMessageWithArgs() {
-        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, { arg: 'arg' });
+        return this.notificationService.openSnackMessage('Test notification {{ arg }}', undefined, { arg: 'arg' });
     }
 
     sendCustomMessage() {
         const matSnackBarConfig = new MatSnackBarConfig();
-        matSnackBarConfig.duration = 1000;
 
         return this.notificationService.openSnackMessage('Test notification', matSnackBarConfig);
     }
 
     sendMessageActionWithoutConfig() {
-        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
+        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn');
     }
 
     sendMessageAction() {
-        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
+        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn');
     }
 
     sendCustomMessageAction() {
         const matSnackBarConfig = new MatSnackBarConfig();
-        matSnackBarConfig.duration = 1000;
 
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', matSnackBarConfig);
     }
 
     sendMessageWithDecorativeIcon() {
         const notificationConfig = new MatSnackBarConfig();
-        notificationConfig.duration = 1000;
         notificationConfig.data = { decorativeIcon: 'info' };
 
         return this.notificationService.openSnackMessage('with decorative icon', notificationConfig);
@@ -77,7 +74,6 @@ class ProvidesNotificationServiceComponent {
 
     sendMessageWithDecorativeIconAndAction() {
         const notificationConfig = new MatSnackBarConfig();
-        notificationConfig.duration = 1000;
         notificationConfig.data = { decorativeIcon: 'folder' };
 
         return this.notificationService.openSnackMessageAction('with decorative icon', 'TestWarn', notificationConfig);
@@ -92,9 +88,9 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatSnackBarModule],
-            declarations: [ProvidesNotificationServiceComponent]
-        });
+            imports: [ProvidesNotificationServiceComponent, NoopTranslateModule],
+            providers: [provideNoopAnimations()]
+        }).compileComponents();
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();
@@ -131,6 +127,7 @@ describe('NotificationService', () => {
     it('should open a message notification bar', async () => {
         fixture.componentInstance.sendMessage();
         fixture.detectChanges();
+
         const isLoaded = await testingUtils.checkIfMatSnackbarExists();
         expect(isLoaded).toBe(true);
     });

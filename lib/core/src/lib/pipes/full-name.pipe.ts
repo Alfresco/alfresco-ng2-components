@@ -19,8 +19,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { UserLike } from './user-like.interface';
 
 @Pipe({
-    name: 'fullName',
-    standalone: true
+    name: 'fullName'
 })
 export class FullNamePipe implements PipeTransform {
     transform(user: UserLike, emailDisplayed?: boolean): string {

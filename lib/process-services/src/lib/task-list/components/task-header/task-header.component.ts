@@ -45,7 +45,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-header',
-    standalone: true,
     imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslatePipe, CardViewComponent],
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss'],

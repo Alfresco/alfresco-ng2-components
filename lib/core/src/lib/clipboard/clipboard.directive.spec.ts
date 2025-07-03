@@ -31,7 +31,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
         <button mat-button clipboard-notification="copy success" [adf-clipboard] [target]="ref">copy</button>
 
         <input #ref />
-    `
+    `,
+    standalone: false
 })
 class TestTargetClipboardComponent {}
 
@@ -73,7 +74,8 @@ describe('ClipboardDirective', () => {
 describe('CopyClipboardDirective', () => {
     @Component({
         selector: 'adf-copy-conent-test-component',
-        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`
+        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`,
+        standalone: false
     })
     class TestCopyClipboardComponent {
         mockText = 'text to copy';

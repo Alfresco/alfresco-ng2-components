@@ -21,8 +21,7 @@ import { ContainerModel } from '../components/widgets/core/container.model';
 import { predefinedTheme } from '../components/widgets/core/predefined-theme';
 
 @Pipe({
-    name: 'adfFieldStyle',
-    standalone: true
+    name: 'adfFieldStyle'
 })
 export class FieldStylePipe implements PipeTransform {
     transform(field: FormFieldModel | ContainerModel): string {

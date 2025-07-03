@@ -35,7 +35,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
-    standalone: true,
     imports: [CommonModule, MatDialogModule, LoginDialogPanelComponent, MatButtonModule, TranslatePipe, ContentNodeSelectorPanelComponent],
     templateUrl: './attach-file-widget-dialog.component.html',
     styleUrls: ['./attach-file-widget-dialog.component.scss'],

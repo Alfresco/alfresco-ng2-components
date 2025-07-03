@@ -23,7 +23,6 @@ import { CurrencyConfig, DateConfig, DecimalConfig } from '../data/data-column.m
 
 @Component({
     selector: 'data-column',
-    standalone: true,
     template: ''
 })
 export class DataColumnComponent implements OnInit {

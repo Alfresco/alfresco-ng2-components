@@ -26,7 +26,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-role-column',
-    standalone: true,
     imports: [AsyncPipe, TranslatePipe],
     template: `
         <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">

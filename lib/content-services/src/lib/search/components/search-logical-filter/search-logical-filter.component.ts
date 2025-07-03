@@ -41,7 +41,6 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
 
 @Component({
     selector: 'adf-search-logical-filter',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule],
     templateUrl: './search-logical-filter.component.html',
     styleUrls: ['./search-logical-filter.component.scss'],

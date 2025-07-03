@@ -23,7 +23,6 @@ import { RaphaelIconMuleDirective } from '../raphael/icons/raphael-icon-mule.com
 
 @Component({
     selector: 'diagram-icon-mule-task',
-    standalone: true,
     imports: [RaphaelIconMuleDirective],
     templateUrl: './diagram-icon-mule-task.component.html'
 })

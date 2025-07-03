@@ -22,12 +22,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatMenuItem } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'test-component',
-    standalone: true,
     template: '<div data-automation-id="found-me">Hey I am the mighty test component!</div>'
 })
 export class TestComponent implements OnChanges {
@@ -52,7 +50,6 @@ describe('DynamicExtensionComponent', () => {
             imports: [HttpClientModule, DynamicExtensionComponent, TestComponent],
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
-
         TestBed.compileComponents();
     });
 
@@ -94,9 +91,10 @@ describe('DynamicExtensionComponent', () => {
         });
 
         it('should assign menuItem from dynamically generated component in ngAfterViewInit', () => {
-            getInnerElement().componentInstance.menuItem = new MatMenuItem(null, null, null, null, null);
+            const testData = 'matMenuTestData';
+            getInnerElement().componentInstance.menuItem = testData;
             component.ngAfterViewInit();
-            expect(component.menuItem).toBeInstanceOf(MatMenuItem);
+            expect(component.menuItem).toEqual(testData);
         });
     });
 

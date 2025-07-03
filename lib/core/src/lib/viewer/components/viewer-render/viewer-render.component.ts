@@ -31,7 +31,6 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
 
 @Component({
     selector: 'adf-viewer-render',
-    standalone: true,
     templateUrl: './viewer-render.component.html',
     styleUrls: ['./viewer-render.component.scss'],
     host: { class: 'adf-viewer-render' },

@@ -29,7 +29,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-double-viewer',
-    standalone: true,
     imports: [ViewerExtensionDirective, ViewerRenderComponent],
     template: `
         <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1 />

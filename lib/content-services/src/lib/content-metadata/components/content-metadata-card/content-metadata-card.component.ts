@@ -31,7 +31,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-content-metadata-card',
-    standalone: true,
     imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslatePipe],
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],

@@ -25,7 +25,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'analytics-dropdown-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],

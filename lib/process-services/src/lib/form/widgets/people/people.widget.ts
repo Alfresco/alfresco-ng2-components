@@ -34,7 +34,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'people-widget',
-    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,

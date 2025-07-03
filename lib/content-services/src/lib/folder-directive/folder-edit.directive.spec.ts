@@ -26,7 +26,8 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentService } from '../common/services/content.service';
 
 @Component({
-    template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
+    template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>',
+    standalone: false
 })
 class TestComponent {
     folder = {};

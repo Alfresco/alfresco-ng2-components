@@ -26,7 +26,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-filter-header',
-    standalone: true,
     imports: [CommonModule, HeaderFilterTemplateDirective, SearchFilterContainerComponent],
     templateUrl: './filter-header.component.html'
 })

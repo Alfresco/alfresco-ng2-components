@@ -31,7 +31,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-cloud-task-form',
-    standalone: true,
     imports: [CommonModule, UserTaskCloudButtonsComponent, FormCustomOutcomesComponent, FormCloudComponent],
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss'],

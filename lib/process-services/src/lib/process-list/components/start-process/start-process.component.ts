@@ -62,7 +62,6 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 
 @Component({
     selector: 'adf-start-process',
-    standalone: true,
     imports: [
         CommonModule,
         MatProgressSpinnerModule,

@@ -25,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-sorting-picker',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, MatButtonModule, MatIconModule],
     templateUrl: './sorting-picker.component.html',
     encapsulation: ViewEncapsulation.None,

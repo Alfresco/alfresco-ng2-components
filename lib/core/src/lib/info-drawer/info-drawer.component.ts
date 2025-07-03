@@ -40,7 +40,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-info-drawer-tab',
-    standalone: true,
     template: '<ng-template><ng-content /></ng-template>',
     encapsulation: ViewEncapsulation.None
 })
@@ -59,7 +58,6 @@ export class InfoDrawerTabComponent {
 
 @Component({
     selector: 'adf-info-drawer',
-    standalone: true,
     imports: [
         CommonModule,
         InfoDrawerLayoutComponent,

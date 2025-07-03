@@ -27,7 +27,6 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 @Component({
     selector: 'adf-dialog-test',
-    standalone: true,
     template: ''
 })
 export class DialogSelectAppTestComponent {

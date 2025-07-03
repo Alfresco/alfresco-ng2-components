@@ -38,7 +38,6 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
-    standalone: true,
     host: {
         role: 'combobox',
         '[attr.autocomplete]': 'autocomplete',

@@ -29,7 +29,6 @@ import { CommentListComponent } from './comment-list';
 
 @Component({
     selector: 'adf-comments',
-    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,

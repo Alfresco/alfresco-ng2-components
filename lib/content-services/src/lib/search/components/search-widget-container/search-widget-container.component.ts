@@ -22,7 +22,6 @@ import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../.
 
 @Component({
     selector: 'adf-search-widget-container',
-    standalone: true,
     template: '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {

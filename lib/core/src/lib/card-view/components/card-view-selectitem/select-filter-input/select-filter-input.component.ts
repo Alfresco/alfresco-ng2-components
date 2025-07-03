@@ -28,7 +28,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-select-filter-input',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe],
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],

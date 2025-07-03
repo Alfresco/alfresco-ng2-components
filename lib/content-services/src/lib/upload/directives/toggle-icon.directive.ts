@@ -19,7 +19,6 @@ import { Directive, HostListener } from '@angular/core';
 
 @Directive({
     selector: '[adf-toggle-icon]',
-    standalone: true,
     exportAs: 'toggleIcon'
 })
 export class ToggleIconDirective {

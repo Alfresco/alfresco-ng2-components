@@ -27,7 +27,6 @@ export interface NavbarItem {
 
 @Component({
     selector: 'adf-navbar-item',
-    standalone: true,
     templateUrl: 'navbar-item.component.html',
     styleUrls: ['./navbar-item.component.scss'],
     encapsulation: ViewEncapsulation.None,

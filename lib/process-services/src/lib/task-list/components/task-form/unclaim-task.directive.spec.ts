@@ -24,7 +24,6 @@ import { UnclaimTaskDirective } from '@alfresco/adf-process-services';
 
 describe('UnclaimTaskDirective', () => {
     @Component({
-        standalone: true,
         imports: [UnclaimTaskDirective],
         selector: 'adf-unclaim-test-component',
         template: '<button adf-unclaim-task [taskId]="taskId" (success)="onUnclaim($event)">Unclaim</button>'
@@ -76,18 +75,16 @@ describe('UnclaimTaskDirective', () => {
 
 describe('Claim Task Directive validation errors', () => {
     @Component({
-        standalone: true,
         imports: [UnclaimTaskDirective],
         selector: 'adf-unclaim-no-fields-validation-component',
-        template: '<button adf-unclaim-task></button>'
+        template: '<button adf-unclaim-task>Task</button>'
     })
     class ClaimTestMissingInputDirectiveComponent {}
 
     @Component({
-        standalone: true,
         imports: [UnclaimTaskDirective],
         selector: 'adf-claim-no-taskid-validation-component',
-        template: '<button adf-unclaim-task [taskId]=""></button>'
+        template: '<button adf-unclaim-task [taskId]="">Task</button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {}
 

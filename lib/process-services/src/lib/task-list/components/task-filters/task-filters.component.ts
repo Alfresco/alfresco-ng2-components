@@ -32,7 +32,6 @@ import { forkJoin, Observable } from 'rxjs';
 
 @Component({
     selector: 'adf-task-filters',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatButtonModule, IconComponent],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],

@@ -24,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-custom-container',
-    standalone: true,
     imports: [CommonModule, ButtonsMenuComponent, MatMenuModule, MatIconModule],
     template: `
         <adf-buttons-action-menu>
@@ -42,7 +41,8 @@ export class CustomContainerComponent {
 
 @Component({
     selector: 'adf-custom-empty-container',
-    template: `<adf-buttons-action-menu />`
+    template: `<adf-buttons-action-menu />`,
+    standalone: false
 })
 export class CustomEmptyContainerComponent {}
 

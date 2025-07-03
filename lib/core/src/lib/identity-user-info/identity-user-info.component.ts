@@ -26,7 +26,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-identity-user-info',
-    standalone: true,
     imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslatePipe],
     templateUrl: './identity-user-info.component.html',
     styleUrls: ['./identity-user-info.component.scss'],

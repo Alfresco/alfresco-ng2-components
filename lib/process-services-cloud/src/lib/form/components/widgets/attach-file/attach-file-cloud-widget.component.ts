@@ -53,7 +53,6 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
-    standalone: true,
     imports: [CommonModule, ErrorWidgetComponent, TranslatePipe, MatIconModule, FilePropertiesTableCloudComponent, MatButtonModule],
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],

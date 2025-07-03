@@ -31,7 +31,6 @@ import { FormComponent } from '../../../form';
 
 @Component({
     selector: 'adf-attach-form',
-    standalone: true,
     imports: [CommonModule, MatCardModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
     templateUrl: './attach-form.component.html',
     styleUrls: ['./attach-form.component.scss']

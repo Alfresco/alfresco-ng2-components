@@ -39,7 +39,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-control',
-    standalone: true,
     imports: [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslatePipe],
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],

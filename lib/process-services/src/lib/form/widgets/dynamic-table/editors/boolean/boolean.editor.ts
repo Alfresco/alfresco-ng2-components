@@ -26,7 +26,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-boolean-editor',
-    standalone: true,
     imports: [CommonModule, MatCheckboxModule],
     templateUrl: './boolean.editor.html',
     styleUrls: ['./boolean.editor.scss']

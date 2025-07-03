@@ -19,8 +19,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from './app-config.service';
 
 @Pipe({
-    name: 'adfAppConfig',
-    standalone: true
+    name: 'adfAppConfig'
 })
 export class AppConfigPipe implements PipeTransform {
     constructor(private config: AppConfigService) {}

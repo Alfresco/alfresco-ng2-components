@@ -35,7 +35,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-pop-over]',
-    standalone: true,
     exportAs: 'adfPopOver'
 })
 export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {

@@ -23,7 +23,6 @@ import { DownloadPromptActions } from '../../models/download-prompt.actions';
 
 @Component({
     selector: 'adf-download-prompt-dialog',
-    standalone: true,
     imports: [MatDialogModule, TranslatePipe, MatButtonModule],
     templateUrl: './download-prompt-dialog.component.html'
 })

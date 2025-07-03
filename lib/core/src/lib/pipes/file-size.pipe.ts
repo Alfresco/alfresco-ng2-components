@@ -20,8 +20,7 @@ import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
     name: 'adfFileSize',
-    pure: false,
-    standalone: true
+    pure: false
 })
 export class FileSizePipe implements PipeTransform {
     constructor(private translation: TranslationService) {}

@@ -20,17 +20,34 @@ import { SelectFilterInputComponent } from './select-filter-input.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
+import { Subject } from 'rxjs';
 
 describe('SelectFilterInputComponent', () => {
     let fixture: ComponentFixture<SelectFilterInputComponent>;
     let component: SelectFilterInputComponent;
     let matSelect: MatSelect;
+    let mockMatSelect: jasmine.SpyObj<MatSelect>;
+    let openedChangeSubject: Subject<boolean>;
+    let valueChangesSubject: Subject<any>;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, MatSelectModule],
-            providers: [MatSelect]
+        openedChangeSubject = new Subject<boolean>();
+        valueChangesSubject = new Subject<any>();
+        mockMatSelect = jasmine.createSpyObj('MatSelect', ['_onChange'], {
+            openedChange: openedChangeSubject,
+            multiple: false,
+            options: { map: () => [] },
+            compareWith: (a: any, b: any) => a === b,
+            ngControl: {
+                value: null,
+                valueChanges: valueChangesSubject
+            }
         });
+
+        TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, NoopTranslateModule, MatSelectModule, SelectFilterInputComponent],
+            providers: [{ provide: MatSelect, useValue: mockMatSelect }]
+        }).compileComponents();
 
         fixture = TestBed.createComponent(SelectFilterInputComponent);
         component = fixture.componentInstance;

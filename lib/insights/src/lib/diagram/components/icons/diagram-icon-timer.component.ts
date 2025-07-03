@@ -25,7 +25,6 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-icon-timer',
-    standalone: true,
     imports: [RaphaelCircleDirective, RaphaelIconTimerDirective, DiagramTooltipComponent],
     templateUrl: './diagram-icon-timer.component.html'
 })

@@ -20,8 +20,7 @@ import { ViewerRenderComponent } from '../components/viewer-render/viewer-render
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
-    selector: 'adf-viewer-extension',
-    standalone: true
+    selector: 'adf-viewer-extension'
 })
 export class ViewerExtensionDirective implements AfterContentInit {
     @ContentChild(TemplateRef)

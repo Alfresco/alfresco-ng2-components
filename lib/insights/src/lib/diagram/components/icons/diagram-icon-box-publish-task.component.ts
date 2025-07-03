@@ -23,7 +23,6 @@ import { RaphaelIconBoxPublishDirective } from '../raphael/icons/raphael-icon-bo
 
 @Component({
     selector: 'diagram-icon-box-publish-task',
-    standalone: true,
     imports: [RaphaelIconBoxPublishDirective],
     templateUrl: './diagram-icon-box-publish-task.component.html'
 })

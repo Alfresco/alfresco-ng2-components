@@ -128,7 +128,6 @@ const fakeProcessCloudList = {
 };
 
 @Component({
-    standalone: true,
     imports: [DataColumnComponent, DataColumnListComponent, ProcessListCloudComponent],
     template: ` <adf-cloud-process-list #processListCloud>
         <data-columns>
@@ -1129,7 +1128,6 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     @Component({
-        standalone: true,
         imports: [CustomEmptyContentTemplateDirective, ProcessListCloudComponent],
         template: `
             <adf-cloud-process-list #processListCloud>

@@ -37,8 +37,7 @@ export const taskDetailsWithParentTaskIdMock: TaskDetailsCloudModel = {
     formKey: null,
     lastModified: new Date(1545048055900),
     lastModifiedTo: null,
-    lastModifiedFrom: null,
-    standalone: true
+    lastModifiedFrom: null
 };
 
 export const assignedTaskDetailsCloudMock: TaskDetailsCloudModel = {
@@ -61,8 +60,7 @@ export const assignedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     formKey: null,
     lastModified: new Date(1545048055900),
     lastModifiedTo: null,
-    lastModifiedFrom: null,
-    standalone: true
+    lastModifiedFrom: null
 };
 
 export const createdTaskDetailsCloudMock: TaskDetailsCloudModel = {
@@ -85,8 +83,7 @@ export const createdTaskDetailsCloudMock: TaskDetailsCloudModel = {
     formKey: null,
     lastModified: new Date(1545048055900),
     lastModifiedTo: null,
-    lastModifiedFrom: null,
-    standalone: true
+    lastModifiedFrom: null
 };
 
 export const emptyOwnerTaskDetailsCloudMock: TaskDetailsCloudModel = {
@@ -109,8 +106,7 @@ export const emptyOwnerTaskDetailsCloudMock: TaskDetailsCloudModel = {
     formKey: null,
     lastModified: new Date(1545048055900),
     lastModifiedTo: null,
-    lastModifiedFrom: null,
-    standalone: true
+    lastModifiedFrom: null
 };
 
 export const createdStateTaskDetailsCloudMock: TaskDetailsCloudModel = {
@@ -182,8 +178,7 @@ export const suspendedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     formKey: null,
     lastModified: new Date(1545048055900),
     lastModifiedTo: null,
-    lastModifiedFrom: null,
-    standalone: true
+    lastModifiedFrom: null
 };
 
 export const noCandidateUsersTaskDetailsCloudMock: TaskDetailsCloudModel = {
@@ -249,7 +244,6 @@ export const taskWithFormDetailsMock: TaskDetailsCloudModel = {
     id: 'bd6b1741-6046-11e9-80f0-0a586460040d',
     name: 'Task1',
     owner: 'fakeAdmin',
-    standalone: true,
     status: 'ASSIGNED'
 };
 

@@ -22,7 +22,6 @@ import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-sidebar-action-menu',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, MatMenuModule],
     templateUrl: './sidebar-action-menu.component.html',
     styleUrls: ['./sidebar-action-menu.component.scss'],
@@ -52,19 +51,16 @@ export class SidebarActionMenuComponent {
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: '[adf-sidebar-menu-options], [sidebar-menu-options]',
-    standalone: true
+    selector: '[adf-sidebar-menu-options], [sidebar-menu-options]'
 })
 export class SidebarMenuDirective {}
 
 @Directive({
-    selector: '[adf-sidebar-menu-title-icon], [sidebar-menu-title-icon]',
-    standalone: true
+    selector: '[adf-sidebar-menu-title-icon], [sidebar-menu-title-icon]'
 })
 export class SidebarMenuTitleIconDirective {}
 
 @Directive({
-    selector: '[adf-sidebar-menu-expand-icon], [sidebar-menu-expand-icon]',
-    standalone: true
+    selector: '[adf-sidebar-menu-expand-icon], [sidebar-menu-expand-icon]'
 })
 export class SidebarMenuExpandIconDirective {}

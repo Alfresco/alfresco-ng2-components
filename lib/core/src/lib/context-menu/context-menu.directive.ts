@@ -21,8 +21,7 @@ import { Directive, HostListener, Input } from '@angular/core';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 
 @Directive({
-    selector: '[adf-context-menu]',
-    standalone: true
+    selector: '[adf-context-menu]'
 })
 export class ContextMenuDirective {
     /** Items for the menu. */

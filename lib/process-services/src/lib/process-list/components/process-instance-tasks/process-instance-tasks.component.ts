@@ -33,7 +33,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-process-instance-tasks',
-    standalone: true,
     imports: [CommonModule, MatButtonModule, TranslatePipe, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
     templateUrl: './process-instance-tasks.component.html',
     styleUrls: ['./process-instance-tasks.component.css']

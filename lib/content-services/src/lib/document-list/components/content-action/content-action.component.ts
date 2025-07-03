@@ -28,7 +28,6 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'content-action',
-    standalone: true,
     template: '',
     providers: [DocumentActionsService, FolderActionsService]
 })

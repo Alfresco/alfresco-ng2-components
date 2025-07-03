@@ -29,7 +29,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
-    standalone: true,
     imports: [CommonModule, ErrorWidgetComponent, MatRadioModule, TranslatePipe, FormsModule],
     templateUrl: './radio-buttons-cloud.widget.html',
     styleUrls: ['./radio-buttons-cloud.widget.scss'],

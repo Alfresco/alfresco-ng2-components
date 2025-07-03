@@ -38,7 +38,6 @@ import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-custom-column-template-component',
-    standalone: true,
     template: ` <ng-template #tmplRef /> `
 })
 class CustomColumnTemplateComponent {
@@ -47,7 +46,6 @@ class CustomColumnTemplateComponent {
 
 @Component({
     selector: 'adf-custom-column-header-component',
-    standalone: true,
     template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
 })
 class CustomColumnHeaderComponent {

@@ -19,7 +19,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     template: '<div data-automation-id="auth-confirmation"></div>',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class AuthenticationConfirmationComponent {
     constructor() {}

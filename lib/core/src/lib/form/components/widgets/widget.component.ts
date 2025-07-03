@@ -27,7 +27,6 @@ import { FormFieldModel } from './core';
  */
 @Component({
     selector: 'base-widget',
-    standalone: true,
     template: '',
     host: {
         '(click)': 'event($event)',

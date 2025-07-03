@@ -25,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-chip-list',
-    standalone: true,
     imports: [CommonModule, MatChipsModule, TranslatePipe, MatIconModule],
     templateUrl: './search-chip-list.component.html',
     styleUrls: ['./search-chip-list.component.scss'],

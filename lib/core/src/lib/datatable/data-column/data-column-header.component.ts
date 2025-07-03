@@ -22,7 +22,6 @@ import { DataColumnComponent } from './data-column.component';
 
 @Component({
     selector: 'adf-data-column-header',
-    standalone: true,
     template: ''
 })
 export class DateColumnHeaderComponent implements AfterContentInit {

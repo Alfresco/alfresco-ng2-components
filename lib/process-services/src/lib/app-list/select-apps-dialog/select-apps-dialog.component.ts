@@ -25,7 +25,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-select-apps-dialog',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatDialogModule, MatSelectModule, MatButtonModule],
     templateUrl: './select-apps-dialog.component.html',
     styleUrls: ['./select-apps-dialog.component.scss'],

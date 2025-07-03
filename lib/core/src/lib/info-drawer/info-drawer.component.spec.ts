@@ -81,7 +81,6 @@ describe('InfoDrawerComponent', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [InfoDrawerTabComponent, InfoDrawerComponent],
     template: `
         <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
@@ -159,7 +158,6 @@ describe('Custom InfoDrawer', () => {
 });
 
 @Component({
-    standalone: true,
     imports: [InfoDrawerComponent],
     template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title" /> `
 })

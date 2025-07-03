@@ -24,7 +24,6 @@ import { ClaimTaskDirective } from '@alfresco/adf-process-services';
 
 describe('ClaimTaskDirective', () => {
     @Component({
-        standalone: true,
         imports: [ClaimTaskDirective],
         selector: 'adf-claim-test-component',
         template: '<button adf-claim-task [taskId]="taskId" (success)="onClaim($event)">Claim</button>'
@@ -73,21 +72,19 @@ describe('ClaimTaskDirective', () => {
         expect(unclaimSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
     });
 });
-
+// eslint-disable @angular-eslint/template/elements-content
 describe('Claim Task Directive validation errors', () => {
     @Component({
-        standalone: true,
         imports: [ClaimTaskDirective],
         selector: 'adf-claim-no-fields-validation-component',
-        template: '<button adf-claim-task></button>'
+        template: '<button adf-claim-task>Task</button>'
     })
     class ClaimTestMissingInputDirectiveComponent {}
 
     @Component({
-        standalone: true,
         imports: [ClaimTaskDirective],
         selector: 'adf-claim-no-taskid-validation-component',
-        template: '<button adf-claim-task [taskId]=""></button>'
+        template: '<button adf-claim-task [taskId]="">Task</button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {}
 

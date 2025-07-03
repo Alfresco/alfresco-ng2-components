@@ -27,7 +27,6 @@ import { MatTableModule } from '@angular/material/table';
     styleUrls: ['./about-license-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatTableModule]
 })
 export class AboutLicenseListComponent {

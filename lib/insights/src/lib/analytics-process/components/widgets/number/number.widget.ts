@@ -27,7 +27,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'analytics-number-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],

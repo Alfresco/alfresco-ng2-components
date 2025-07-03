@@ -19,7 +19,6 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 @Component({
     selector: 'adf-viewer-toolbar-actions',
-    standalone: true,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-viewer-toolbar-actions' },

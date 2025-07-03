@@ -24,7 +24,6 @@ import { DiagramIconRestCallTaskComponent } from '../icons/diagram-icon-rest-cal
 
 @Component({
     selector: 'diagram-rest-call-task',
-    standalone: true,
     imports: [DiagramTaskComponent, DiagramIconRestCallTaskComponent],
     templateUrl: './diagram-rest-call-task.component.html'
 })

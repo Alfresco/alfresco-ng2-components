@@ -23,7 +23,6 @@ import { RaphaelIconGoogleDrivePublishDirective } from '../raphael/icons/raphael
 
 @Component({
     selector: 'diagram-icon-google-drive-publish-task',
-    standalone: true,
     imports: [RaphaelIconGoogleDrivePublishDirective],
     templateUrl: './diagram-icon-google-drive-publish-task.component.html'
 })

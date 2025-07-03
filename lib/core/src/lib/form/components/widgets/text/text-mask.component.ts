@@ -31,7 +31,6 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
  */
 @Directive({
     selector: '[adf-text-mask], [textMask]',
-    standalone: true,
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {

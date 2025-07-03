@@ -24,7 +24,6 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
 
 @Directive({
     selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',
-    standalone: true,
     host: {
         role: 'button',
         '(click)': 'onInheritPermissionClicked()'
@@ -48,7 +47,7 @@ export class InheritPermissionDirective {
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
             if (this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
-                const nodeBody = { permissions: { isInheritanceEnabled: !node?.permissions?.isInheritanceEnabled ?? false } };
+                const nodeBody = { permissions: { isInheritanceEnabled: !node?.['permissions']?.['isInheritanceEnabled'] || false } };
                 this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe(
                     (nodeUpdated: Node) => {
                         this.updated.emit(nodeUpdated);

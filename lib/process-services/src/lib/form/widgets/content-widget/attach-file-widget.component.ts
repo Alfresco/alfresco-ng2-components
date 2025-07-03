@@ -38,7 +38,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'attach-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],

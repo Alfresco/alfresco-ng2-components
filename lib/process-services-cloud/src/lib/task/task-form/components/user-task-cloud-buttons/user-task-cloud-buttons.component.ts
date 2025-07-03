@@ -24,7 +24,6 @@ import { ClaimTaskCloudDirective } from './claim-task/claim-task-cloud.directive
 
 @Component({
     selector: 'adf-cloud-user-task-cloud-buttons',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, UnClaimTaskCloudDirective, ClaimTaskCloudDirective, MatButtonModule],
     styles: ['button { margin-right: 8px; }'],
     templateUrl: './user-task-cloud-buttons.component.html'

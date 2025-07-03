@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER } from '@angular/core';
+import { inject, provideAppInitializer } from '@angular/core';
 import {
     FlagsOverrideToken,
     FeaturesServiceToken,
     QaFeaturesHelperConfig,
     WritableFeaturesServiceConfig,
     WritableFeaturesServiceConfigToken,
-    WritableFeaturesServiceToken
+    WritableFeaturesServiceToken,
+    IFeaturesService
 } from '../interfaces/features.interface';
 import { StorageFeaturesService } from '../services/storage-features.service';
 import { DebugFeaturesService } from '../services/debug-features.service';
@@ -41,19 +42,18 @@ export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig &
         { provide: WritableFeaturesServiceConfigToken, useValue: config },
         { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
         { provide: QaFeaturesHelper, useClass: QaFeaturesHelper },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (featuresService: StorageFeaturesService) => () => featuresService.init(),
-            deps: [WritableFeaturesServiceToken],
-            multi: true
-        },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (qaFeaturesHelper: QaFeaturesHelper, document: Document & { [key: string]: QaFeaturesHelper }) => () => {
+        provideAppInitializer(() => {
+            const initializerFn = (
+                (featuresService: IFeaturesService) => () =>
+                    featuresService.init()
+            )(inject(WritableFeaturesServiceToken));
+            return initializerFn();
+        }),
+        provideAppInitializer(() => {
+            const initializerFn = ((qaFeaturesHelper: QaFeaturesHelper, document: Document) => () => {
                 document[config.helperExposeKeyOnDocument ?? 'featureOverrides'] = qaFeaturesHelper;
-            },
-            deps: [QaFeaturesHelper, DOCUMENT],
-            multi: true
-        }
+            })(inject(QaFeaturesHelper), inject(DOCUMENT));
+            return initializerFn();
+        })
     ];
 }

@@ -23,7 +23,6 @@ import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
     selector: 'diagram-lanes',
-    standalone: true,
     imports: [DiagramLaneComponent, NgIf, NgForOf],
     templateUrl: './diagram-lanes.component.html'
 })

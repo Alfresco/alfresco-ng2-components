@@ -18,8 +18,7 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
-    selector: '[adf-search-filter-tab]',
-    standalone: true
+    selector: '[adf-search-filter-tab]'
 })
 export class SearchFilterTabDirective {
     @Input('adf-search-filter-tab')

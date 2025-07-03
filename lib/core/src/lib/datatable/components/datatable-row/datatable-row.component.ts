@@ -21,7 +21,6 @@ import { DataRow } from '../../data/data-row.model';
 
 @Component({
     selector: 'adf-datatable-row',
-    standalone: true,
     template: `<ng-content />`,
     encapsulation: ViewEncapsulation.None,
     host: {

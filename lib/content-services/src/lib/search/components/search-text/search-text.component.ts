@@ -32,7 +32,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-text',
-    standalone: true,
     imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
     templateUrl: './search-text.component.html',
     styleUrls: ['./search-text.component.scss'],

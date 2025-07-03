@@ -19,7 +19,6 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
 
 @Component({
     selector: 'adf-toolbar-divider',
-    standalone: true,
     template: '<div></div>',
     host: { class: 'adf-toolbar-divider' },
     styles: [

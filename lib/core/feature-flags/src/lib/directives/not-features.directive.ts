@@ -22,8 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     /* eslint-disable-next-line @angular-eslint/directive-selector */
-    selector: '[adfNotForFeatures]',
-    standalone: true
+    selector: '[adfNotForFeatures]'
 })
 export class NotFeaturesDirective {
     private hasView = false;

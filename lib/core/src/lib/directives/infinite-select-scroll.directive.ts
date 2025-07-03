@@ -22,8 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 const SELECT_ITEM_HEIGHT_EM = 3;
 
 @Directive({
-    selector: '[adf-infinite-select-scroll]',
-    standalone: true
+    selector: '[adf-infinite-select-scroll]'
 })
 export class InfiniteSelectScrollDirective implements AfterViewInit {
     static readonly MAX_ITEMS = 50;

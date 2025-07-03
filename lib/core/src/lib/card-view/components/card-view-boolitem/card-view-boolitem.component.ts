@@ -24,7 +24,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    standalone: true,
     imports: [CommonModule, MatCheckboxModule, TranslatePipe],
     templateUrl: './card-view-boolitem.component.html',
     styles: [

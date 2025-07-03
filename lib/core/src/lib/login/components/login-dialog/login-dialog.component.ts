@@ -24,7 +24,6 @@ import { LoginDialogComponentData } from './login-dialog-component-data.interfac
 
 @Component({
     selector: 'adf-login-dialog',
-    standalone: true,
     templateUrl: './login-dialog.component.html',
     styleUrls: ['./login-dialog.component.scss'],
     imports: [MatDialogModule, LoginDialogPanelComponent, TranslatePipe, MatButtonModule],

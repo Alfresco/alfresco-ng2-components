@@ -23,7 +23,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-card-view-mapitem',
-    standalone: true,
     imports: [CommonModule, TranslatePipe],
     templateUrl: './card-view-mapitem.component.html',
     styleUrls: ['./card-view-mapitem.component.scss']

@@ -18,8 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'multiValue',
-    standalone: true
+    name: 'multiValue'
 })
 export class MultiValuePipe implements PipeTransform {
     static DEFAULT_SEPARATOR = ', ';

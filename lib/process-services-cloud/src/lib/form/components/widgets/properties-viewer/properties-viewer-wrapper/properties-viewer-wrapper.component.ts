@@ -25,7 +25,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-properties-viewer-wrapper',
-    standalone: true,
     imports: [CommonModule, MatProgressSpinnerModule, ContentMetadataComponent],
     templateUrl: './properties-viewer-wrapper.component.html',
     encapsulation: ViewEncapsulation.None

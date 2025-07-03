@@ -34,7 +34,8 @@ const IMAGE_URL = 'alfresco-logo.svg';
         [width]="'400'"
         [htmlContent]="'this is the <b>html</b> raw code'"
         class="test-component"
-    ></span>`
+    ></span>`,
+    standalone: false
 })
 class TestComponent {
     @ViewChild(TooltipCardDirective, { static: true })

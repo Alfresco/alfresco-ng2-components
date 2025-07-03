@@ -23,8 +23,7 @@ import { DocumentListComponent } from './../document-list.component';
 
 @Component({
     selector: 'content-actions',
-    template: '',
-    standalone: true
+    template: ''
 })
 export class ContentActionListComponent {
     constructor(private documentList: DocumentListComponent) {}

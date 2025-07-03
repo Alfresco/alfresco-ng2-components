@@ -34,7 +34,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-preview-extension',
-    standalone: true,
     template: `<div #content></div>`
 })
 export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {

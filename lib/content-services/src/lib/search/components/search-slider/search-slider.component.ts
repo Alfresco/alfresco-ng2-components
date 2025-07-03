@@ -29,7 +29,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-slider',
-    standalone: true,
     imports: [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslatePipe],
     templateUrl: './search-slider.component.html',
     styleUrls: ['./search-slider.component.scss'],

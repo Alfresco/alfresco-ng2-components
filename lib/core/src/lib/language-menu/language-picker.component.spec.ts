@@ -42,8 +42,8 @@ describe('LanguagePickerComponent', () => {
         testingUtils.getByDirective(MatMenuTrigger).nativeElement.click();
         fixture.detectChanges();
         const languageMenuComponent = testingUtils.getByDirective(LanguageMenuComponent).componentInstance;
-        const menuItem1 = new MatMenuItem(null, null, null, null, null);
-        const menuItem2 = new MatMenuItem(null, null, null, null, null);
+        const menuItem1 = {} as MatMenuItem;
+        const menuItem2 = {} as MatMenuItem;
 
         languageMenuComponent.menuItems = new QueryList<MatMenuItem>();
         languageMenuComponent.menuItems.reset([menuItem1, menuItem2]);

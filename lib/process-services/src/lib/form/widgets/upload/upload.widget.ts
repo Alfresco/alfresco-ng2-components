@@ -30,7 +30,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'upload-widget',
-    standalone: true,
     imports: [CommonModule, TranslatePipe, MatListModule, MatButtonModule, MatIconModule, ErrorWidgetComponent],
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.scss'],

@@ -25,7 +25,6 @@ import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'hyperlink-widget',
-    standalone: true,
     templateUrl: './hyperlink.widget.html',
     styleUrls: ['./hyperlink.widget.scss'],
     host: {
