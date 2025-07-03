@@ -10,10 +10,6 @@
         display: flex;
         line-height: 20px;
 
-        &.adf-property-value-editable {
-            color: var(--adf-metadata-property-panel-title-color);
-        }
-
         &.adf-property-readonly-value {
             color: var(--adf-metadata-property-panel-label-color);
         }
@@ -33,7 +29,6 @@
 
             #{ms.$mat-input-element} {
                 text-overflow: ellipsis;
-                color: var(--adf-metadata-property-panel-title-color);
                 padding: 6px 0;
                 line-height: 20px;
             }
@@ -84,7 +79,6 @@
         color: var(--adf-metadata-property-panel-title-color);
 
         &.adf-property-value-editable {
-            color: var(--adf-metadata-property-panel-title-color);
             background-color: var(--adf-metadata-buttons-background-color);
             box-sizing: border-box;
             border-radius: 6px;

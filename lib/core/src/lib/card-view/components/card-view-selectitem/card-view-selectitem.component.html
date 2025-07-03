@@ -17,7 +17,7 @@
                     {{ property.displayValue | async | translate }}
                 </div>
                 <div *ngIf="isEditable">
-                    <mat-form-field class="adf-property-value">
+                    <mat-form-field class="adf-property-value adf-form-field-input">
                         <mat-label
                             [attr.data-automation-id]="'card-select-label-' + property.key"
                             class="adf-property-label adf-property-value-editable"
@@ -46,7 +46,7 @@
         </div>
         <div *ngSwitchCase="'autocompleteBased'">
             <mat-form-field
-                class="adf-property-field adf-card-selectitem-autocomplete"
+                class="adf-property-field adf-card-selectitem-autocomplete adf-form-field-input"
                 [ngClass]="{ 'adf-property-read-only': !isEditable }"
                 [floatLabel]="property.default ? 'always' : null"
             >
