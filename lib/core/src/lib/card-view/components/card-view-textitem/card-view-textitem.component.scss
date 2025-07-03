@@ -75,10 +75,6 @@
         color: var(--adf-metadata-property-panel-title-color);
     }
 
-    .adf-property-value-editable:not(:disabled) {
-        color: var(--adf-metadata-property-panel-title-color);
-    }
-
     .adf-property-value-has-icon-suffix {
         padding-right: 34px;
         overflow: hidden;

@@ -1,7 +1,7 @@
 <div [ngSwitch]="templateType">
     <div *ngSwitchDefault>
         <mat-form-field
-            class="adf-property-field adf-card-textitem-field"
+            class="adf-property-field adf-card-textitem-field adf-form-field-input"
             [ngClass]="{
                 'adf-property-read-only': !isEditable
             }"
@@ -35,6 +35,7 @@
                 [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                 [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 (keydown)="undoText($event)"
+                [disabled]="!isEditable"
             />
             <textarea
                 matInput
@@ -110,7 +111,7 @@
         (keyup.enter)="clicked()"
         (click)="clicked()"
     >
-        <mat-form-field class="adf-property-field adf-card-textitem-field" [floatLabel]="property.default ? 'always' : null">
+        <mat-form-field class="adf-property-field adf-card-textitem-field adf-form-field-input" [floatLabel]="property.default ? 'always' : null">
             <mat-label
                 *ngIf="showProperty || isEditable"
                 [attr.data-automation-id]="'card-textitem-label-' + property.key"
