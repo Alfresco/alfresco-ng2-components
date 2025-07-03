@@ -303,12 +303,6 @@ describe('CategoriesManagementComponent', () => {
             expect(component.categoryNameControl.hasValidator(Validators.required)).toBeFalse();
         });
 
-        it('should display validation error when searching for empty category', fakeAsync(() => {
-            typeCategory('   ');
-
-            expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.EMPTY_CATEGORY');
-        }));
-
         it('should clear categories and hide category control when classifiable aspect is removed', () => {
             const controlVisibilityChangeSpy = spyOn(component.categoryNameControlVisibleChange, 'emit').and.callThrough();
             classifiableChangedSubject.next();
@@ -522,6 +516,14 @@ describe('CategoriesManagementComponent', () => {
                 typeCategory('   ');
 
                 expect(getCreateCategoryLabel().hidden).toBeTrue();
+            }));
+
+            it('should display validation error when prohibited symbol entered', fakeAsync(() => {
+                typeCategory('category:name');
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.SPECIAL_CHARACTERS');
             }));
         });
     });

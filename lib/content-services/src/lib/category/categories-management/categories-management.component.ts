@@ -49,6 +49,7 @@ interface CategoryNameControlErrors {
     duplicatedCategory?: boolean;
     emptyCategory?: boolean;
     required?: boolean;
+    specialCharacters?: boolean;
 }
 
 @Component({
@@ -73,14 +74,15 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         ['duplicatedExistingCategory', 'ALREADY_EXISTS'],
         ['duplicatedCategory', 'DUPLICATED_CATEGORY'],
         ['emptyCategory', 'EMPTY_CATEGORY'],
-        ['required', 'REQUIRED']
+        ['required', 'REQUIRED'],
+        ['specialCharacters', 'SPECIAL_CHARACTERS']
     ]);
 
     private existingCategoryLoaded$ = new Subject<void>();
     private cancelExistingCategoriesLoading$ = new Subject<void>();
     private _categoryNameControl = new FormControl<string>(
         '',
-        [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyCategory, Validators.required],
+        [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyCategory, this.validateSpecialCharacters, Validators.required],
         this.validateIfNotAlreadyCreated.bind(this)
     );
     private _existingCategories: Category[];
@@ -356,6 +358,11 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     private validateEmptyCategory(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
         return categoryNameControl.value.length && !categoryNameControl.value.trim() ? { emptyCategory: true } : null;
+    }
+
+    private validateSpecialCharacters(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
+        const specialSymbolsRegex = /[:"\\|<>/?*]/;
+        return categoryNameControl.value.length && specialSymbolsRegex.test(categoryNameControl.value) ? { specialCharacters: true } : null;
     }
 
     private setCategoryNameControlErrorMessageKey() {

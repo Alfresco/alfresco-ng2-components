@@ -183,7 +183,8 @@
       "ALREADY_EXISTS": "Category already exists",
       "DUPLICATED_CATEGORY": "Category is already added",
       "CREATE_CATEGORIES": "Error while creating categories",
-      "EXISTING_CATEGORIES": "Some categories already exist"
+      "EXISTING_CATEGORIES": "Some categories already exist",
+      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters"
     },
     "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
