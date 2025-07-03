@@ -162,27 +162,27 @@ export class AspectListComponent implements OnInit {
         const standardAspectOpts: ListAspectsOpts = {
             where: StandardAspectsWhere,
             include: ['properties'],
-            skipCount: standardAspectsPagination?.skipCount || 0,
+            skipCount: standardAspectsPagination?.skipCount ?? 0,
             maxItems: 100
         };
         const customAspectOpts: ListAspectsOpts = {
             where: CustomAspectsWhere,
             include: ['properties'],
-            skipCount: customAspectsPagination?.skipCount || 0,
+            skipCount: customAspectsPagination?.skipCount ?? 0,
             maxItems: 100
         };
         return this.aspectListService.getAllAspects(standardAspectOpts, customAspectOpts).pipe(
             take(1),
             tap((aspectsPaging) => {
-                this.customAspectsLoaded += aspectsPaging.customAspectPaging?.list?.pagination?.count || 0;
-                this.standardAspectsLoaded += aspectsPaging.standardAspectPaging?.list?.pagination?.count || 0;
+                this.customAspectsLoaded += aspectsPaging.customAspectPaging?.list?.pagination?.count ?? 0;
+                this.standardAspectsLoaded += aspectsPaging.standardAspectPaging?.list?.pagination?.count ?? 0;
                 this.hasMoreAspects =
                     aspectsPaging.customAspectPaging?.list?.pagination?.hasMoreItems ||
                     aspectsPaging.standardAspectPaging?.list?.pagination?.hasMoreItems;
             }),
             map((aspectsPaging) => [
-                ...(aspectsPaging.standardAspectPaging?.list?.entries || []),
-                ...(aspectsPaging.customAspectPaging?.list?.entries || [])
+                ...(aspectsPaging.standardAspectPaging?.list?.entries ?? []),
+                ...(aspectsPaging.customAspectPaging?.list?.entries ?? [])
             ])
         );
     }
