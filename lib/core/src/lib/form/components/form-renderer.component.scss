@@ -26,10 +26,14 @@
 
     #{ms.$mat-tab-body} {
         margin-bottom: 8em;
+    
+        @include flex.layout-bp(lt-md) {
+            margin-bottom: 0em;
+        }
     }
 
     #{ms.$mat-tab-header} {
-        z-index: 10;
+        z-index: 2;
         margin: 0;
         background-color: white;
         position: absolute;
@@ -94,11 +98,7 @@
             flex-direction: column;
         }
 
-        .adf-grid-list-single-column-xl {
-            display: none;
-        }
-
-        .adf-grid-list-single-column-s {
+        .adf-grid-list-single-column {
             display: block;
             /* stylelint-disable-next-line declaration-no-important */
             width: 90% !important;
