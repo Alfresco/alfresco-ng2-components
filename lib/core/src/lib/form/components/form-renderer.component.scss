@@ -26,6 +26,10 @@
 
     #{ms.$mat-tab-body} {
         margin-bottom: 8em;
+    
+        @include flex.layout-bp(lt-md) {
+            margin-bottom: 0em;
+        }
     }
 
     #{ms.$mat-tab-header} {
