@@ -20,7 +20,11 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { from, Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
+import { AspectEntry, AspectPaging, AspectsApi, ListAspectsOpts } from '@alfresco/js-api';
+import { CustomAspectPaging } from '../interfaces/custom-aspect-paging.interface';
+
+export const StandardAspectsWhere = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
+export const CustomAspectsWhere = `(not namespaceUri matches('http://www.alfresco.*'))`;
 
 @Injectable({
     providedIn: 'root'
@@ -34,37 +38,24 @@ export class AspectListService {
 
     constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
 
-    getAspects(): Observable<AspectEntry[]> {
+    getAllAspects(standardOpts?: ListAspectsOpts, customOpts?: ListAspectsOpts): Observable<CustomAspectPaging> {
         const visibleAspectList = this.getVisibleAspects();
-        const standardAspects$ = this.getStandardAspects(visibleAspectList);
-        const customAspects$ = this.getCustomAspects(visibleAspectList);
+        const standardAspects$ = this.getAspects(visibleAspectList, standardOpts);
+        const customAspects$ = this.getAspects(visibleAspectList, customOpts);
         return zip(standardAspects$, customAspects$).pipe(
-            map(([standardAspectList, customAspectList]) => [...standardAspectList, ...customAspectList])
+            map(([standardAspectPaging, customAspectPaging]) => ({ standardAspectPaging, customAspectPaging }))
         );
     }
 
-    getStandardAspects(whiteList: string[]): Observable<AspectEntry[]> {
-        const where = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
-        const opts: any = {
-            where,
-            include: ['properties']
-        };
-
+    getAspects(whiteList: string[], opts?: ListAspectsOpts): Observable<AspectPaging> {
         return from(this.aspectsApi.listAspects(opts)).pipe(
-            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
-            catchError(() => of([]))
-        );
-    }
-
-    getCustomAspects(whiteList?: string[]): Observable<AspectEntry[]> {
-        const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
-        const opts: any = {
-            where,
-            include: ['properties']
-        };
-        return from(this.aspectsApi.listAspects(opts)).pipe(
-            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
-            catchError(() => of([]))
+            map((result) => {
+                if (result?.list?.entries) {
+                    result.list.entries = this.filterAspectByConfig(whiteList, result.list.entries);
+                }
+                return result;
+            }),
+            catchError(() => of({ list: { entries: [] } }))
         );
     }
 
