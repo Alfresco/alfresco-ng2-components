@@ -1,4 +1,4 @@
-/* stylelint-disable selector-class-pattern */
+xxxx/* stylelint-disable selector-class-pattern */
 @use '../../styles/flex' as flex;
 @use '../../styles/mat-selectors' as ms;
 
@@ -33,7 +33,7 @@
     }
 
     #{ms.$mat-tab-header} {
-        z-index: 10;
+        z-index: 2;
         margin: 0;
         background-color: white;
         position: absolute;
