@@ -94,11 +94,7 @@
             flex-direction: column;
         }
 
-        .adf-grid-list-single-column-xl {
-            display: none;
-        }
-
-        .adf-grid-list-single-column-s {
+        .adf-grid-list-single-column {
             display: block;
             /* stylelint-disable-next-line declaration-no-important */
             width: 90% !important;
