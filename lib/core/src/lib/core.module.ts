@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
-import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
@@ -37,7 +37,6 @@ import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-hi
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
-import { TranslationService } from './translation/translation.service';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
@@ -60,7 +59,6 @@ import { DecimalRenderMiddlewareService, FORM_FIELD_MODEL_RENDER_MIDDLEWARE } fr
 
 @NgModule({
     imports: [
-        TranslateModule,
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
@@ -133,9 +131,12 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                TranslateStore,
-                TranslateService,
-                { provide: TranslateLoader, useClass: TranslateLoaderService },
+                provideTranslateService({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: TranslateLoaderService
+                    }
+                }),
                 MomentDateAdapter,
                 StoragePrefixFactory,
                 provideAppInitializer(() => {
@@ -172,9 +173,5 @@ export class CoreModule {
         return {
             ngModule: CoreModule
         };
-    }
-
-    constructor(translation: TranslationService) {
-        translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }
