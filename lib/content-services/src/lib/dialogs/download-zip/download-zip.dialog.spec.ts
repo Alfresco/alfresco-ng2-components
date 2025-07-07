@@ -40,9 +40,8 @@ describe('DownloadZipDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule],
+            imports: [MatDialogModule, DownloadZipDialogComponent],
             providers: [
-                DownloadZipService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: dataMock },

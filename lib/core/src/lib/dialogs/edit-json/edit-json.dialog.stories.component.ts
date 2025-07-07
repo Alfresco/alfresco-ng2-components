@@ -18,11 +18,13 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from './edit-json.dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-edit-json-dialog-storybook',
     template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`,
-    standalone: false
+    standalone: true,
+    imports: [MatButtonModule]
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
