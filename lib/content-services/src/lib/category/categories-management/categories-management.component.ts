@@ -372,7 +372,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     private validateEndsWithDot(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
-        return categoryNameControl.value.length && categoryNameControl.value.trim().endsWith('.') ? { specialCharacters: true } : null;
+        return categoryNameControl.value.trim().endsWith('.') ? { specialCharacters: true } : null;
     }
 
     private setCategoryNameControlErrorMessageKey() {
