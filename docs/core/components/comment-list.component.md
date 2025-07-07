@@ -62,25 +62,33 @@ The component displays user avatars based on the presence of `pictureId` or `ava
 Example user objects:
 
 ```ts
-[
-  {
-    id: 'user1',
-    firstName: 'Alice',
-    lastName: 'Smith',
-    pictureId: 1234
-  },
-  {
-    id: 'user2',
-    firstName: 'Bob',
-    lastName: 'Jones',
-    avatarId: 'avatar-xyz'
-  },
-  {
-    id: 'user3',
-    firstName: 'Charlie',
-    lastName: 'Brown'
+import { CommentModel } from '@alfresco/adf-core';
+
+export class SomeComponent implements OnInit {
+  comments: CommentModel[] = [
+    {
+      id: 'user1',
+      firstName: 'Alice',
+      lastName: 'Smith',
+      pictureId: 1234
+    },
+    {
+      id: 'user2',
+      firstName: 'Bob',
+      lastName: 'Jones',
+      avatarId: 'avatar-xyz'
+    },
+    {
+      id: 'user3',
+      firstName: 'Charlie',
+      lastName: 'Brown'
+    }
+  ];
+
+  onClickCommentRow(comment: CommentModel) {
+    console.log('Clicked row: ', comment);
   }
-]
+}
 ```
 
 In the component template use the [comment list component](comment-list.component.md):
