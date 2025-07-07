@@ -3,12 +3,16 @@
                   (click)="selectComment(comment)"
                   class="adf-comment-list-item">
         <div class="adf-comment-img-container">
-            <div *ngIf="!getUserImage(comment.createdBy)" class="adf-comment-user-icon">
-                {{ comment.userInitials }}
-            </div>
-            <img *ngIf="getUserImage(comment.createdBy)" class="adf-people-img"
-                [alt]="'COMMENTS.PROFILE_ALT' | translate:{ name: comment.userDisplayName }"
-                [src]="getUserImage(comment.createdBy)" />
+            <ng-container *ngIf="getUserImage(comment.createdBy) as userImage; else noAvatar">
+                <img class="adf-people-img"
+                    [alt]="'COMMENTS.PROFILE_ALT' | translate:{ name: comment.userDisplayName }"
+                    [src]="userImage" />
+            </ng-container>
+            <ng-template #noAvatar>
+                <div class="adf-people-img adf-people-img-default">
+                    {{ comment.userInitials }}
+                </div>
+            </ng-template>
         </div>
         <div class="adf-comment-contents">
             <div matLine class="adf-comment-user-name">{{ comment.userDisplayName }}</div>

@@ -29,6 +29,15 @@ describe('CommentListComponent', () => {
     let fixture: ComponentFixture<CommentListComponent>;
     let testingUtils: UnitTestingUtils;
 
+    /**
+     * Helper to retrieve the avatar image element from the DOM.
+     *
+     * @returns The avatar image element.
+     */
+    function getAvatarImg() {
+        return testingUtils.getByCSS('.adf-people-img');
+    }
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
@@ -180,7 +189,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const img = testingUtils.getByCSS('.adf-people-img');
+        const img = getAvatarImg();
         expect(img).not.toBeNull();
         expect(img.nativeElement.src).toContain('1001');
     });
@@ -201,7 +210,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const img = testingUtils.getByCSS('.adf-people-img');
+        const img = getAvatarImg();
         expect(img).not.toBeNull();
         expect(img.nativeElement.src).toContain('avatar-xyz');
     });
@@ -221,7 +230,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const img = testingUtils.getByCSS('.adf-people-img');
+        const img = getAvatarImg();
         expect(img).not.toBeNull();
         expect(img.nativeElement.src).toContain('2002');
     });
