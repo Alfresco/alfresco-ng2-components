@@ -23,14 +23,14 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'adf-search-filter-tabbed-test',
+    imports: [SearchFilterTabbedComponent, SearchFilterTabDirective],
     template: `
         <adf-search-filter-tabbed>
             <div *adf-search-filter-tab="'Tab 1'">Tab 1 content</div>
             <div *adf-search-filter-tab="'Tab 2'">Tab 2 content</div>
             <div *adf-search-filter-tab="'Tab 3'">Tab 3 content</div>
         </adf-search-filter-tabbed>
-    `,
-    imports: [SearchFilterTabbedComponent, SearchFilterTabDirective]
+    `
 })
 class SearchFilterTabbedTestComponent {}
 

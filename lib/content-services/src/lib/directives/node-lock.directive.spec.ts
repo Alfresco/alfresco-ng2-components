@@ -19,19 +19,14 @@ import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement } from '@angular/core';
 import { NodeLockDirective } from './node-lock.directive';
-import { Node } from '@alfresco/js-api';
+import type { Node } from '@alfresco/js-api';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
-const fakeNode = {
-    id: 'fake',
-    isFile: true,
-    isLocked: false
-} as Node;
-
 @Component({
     template: '<div [adf-node-lock]="node"></div>',
-    standalone: false
+    standalone: true,
+    imports: [NodeLockDirective]
 })
 class TestComponent {
     node = null;
@@ -45,8 +40,7 @@ describe('NodeLock Directive', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -56,6 +50,13 @@ describe('NodeLock Directive', () => {
 
     it('should call openLockNodeDialog method on click', () => {
         spyOn(contentNodeDialogService, 'openLockNodeDialog');
+
+        const fakeNode = {
+            id: 'fake',
+            isFile: true,
+            isLocked: false
+        } as Node;
+
         component.node = fakeNode;
 
         fixture.detectChanges();
