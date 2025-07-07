@@ -50,6 +50,7 @@ interface CategoryNameControlErrors {
     emptyCategory?: boolean;
     required?: boolean;
     specialCharacters?: boolean;
+    endsWithDot?: boolean;
 }
 
 @Component({
@@ -75,7 +76,8 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         ['duplicatedCategory', 'DUPLICATED_CATEGORY'],
         ['emptyCategory', 'EMPTY_CATEGORY'],
         ['required', 'REQUIRED'],
-        ['specialCharacters', 'SPECIAL_CHARACTERS']
+        ['specialCharacters', 'SPECIAL_CHARACTERS'],
+        ['endsWithDot', 'ENDS_WITH_DOT']
     ]);
 
     private existingCategoryLoaded$ = new Subject<void>();
@@ -372,7 +374,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     private validateEndsWithDot(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
-        return categoryNameControl.value.trim().endsWith('.') ? { specialCharacters: true } : null;
+        return categoryNameControl.value.trim().endsWith('.') ? { endsWithDot: true } : null;
     }
 
     private setCategoryNameControlErrorMessageKey() {

@@ -531,7 +531,7 @@ describe('CategoriesManagementComponent', () => {
                 component.categoryNameControl.markAsTouched();
                 fixture.detectChanges();
 
-                expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.SPECIAL_CHARACTERS');
+                expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.ENDS_WITH_DOT');
             }));
 
             it('should not display validation error when dot used in positions other than the end', fakeAsync(() => {
