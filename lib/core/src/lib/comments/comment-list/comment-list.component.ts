@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatLineModule } from '@angular/material/core';
 import { TimeAgoPipe } from '../../pipes';
 import { TranslatePipe } from '@ngx-translate/core';
+import { User } from '../../models/general-user.model';
 
 @Component({
     selector: 'adf-comment-list',
@@ -47,7 +48,14 @@ export class CommentListComponent {
         this.clickRow.emit(comment);
     }
 
-    getUserImage(userId: string): string {
-        return this.commentsService.getUserImage(userId);
+    getUserImage(user: User): string | null {
+        if (!user) {
+            return null;
+        }
+
+        const avatarNodeId = user.pictureId?.toString() || user.avatarId;
+
+        if (avatarNodeId) return this.commentsService.getUserImage(avatarNodeId);
+        return null;
     }
 }

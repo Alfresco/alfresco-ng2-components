@@ -163,4 +163,74 @@ describe('CommentListComponent', () => {
         const elements = testingUtils.getAllByCSS('.adf-comment-user-icon');
         expect(elements.length).toBe(1);
     });
+
+    it('should display user images or initials depending on pictureId and avatarId presence', async () => {
+        const comments = [
+            // User with only pictureId
+            new CommentModel({
+                id: 1,
+                message: 'With pictureId only',
+                created: new Date(),
+                createdBy: {
+                    id: 'picUser',
+                    firstName: 'Pic',
+                    lastName: 'User',
+                    pictureId: 1001
+                }
+            }),
+            // User with only avatarId
+            new CommentModel({
+                id: 2,
+                message: 'With avatarId only',
+                created: new Date(),
+                createdBy: {
+                    id: 'avatarUser',
+                    firstName: 'Avatar',
+                    lastName: 'User',
+                    avatarId: 'avatar-xyz'
+                }
+            }),
+            // User with both
+            new CommentModel({
+                id: 3,
+                message: 'With both pictureId and avatarId',
+                created: new Date(),
+                createdBy: {
+                    id: 'bothUser',
+                    firstName: 'Both',
+                    lastName: 'User',
+                    pictureId: 2002,
+                    avatarId: 'avatar-abc'
+                }
+            }),
+            // User with neither
+            new CommentModel({
+                id: 4,
+                message: 'With no avatar or picture',
+                created: new Date(),
+                createdBy: {
+                    id: 'noUser',
+                    firstName: 'No',
+                    lastName: 'Avatar'
+                }
+            })
+        ];
+
+        commentList.comments = comments;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const images = testingUtils.getAllByCSS('.adf-people-img');
+        const initials = testingUtils.getAllByCSS('.adf-comment-user-icon');
+
+        expect(images.length).toBe(3);
+        expect(initials.length).toBe(1);
+
+        expect(images[0].nativeElement.src).toContain('1001'); // pictureId
+        expect(images[1].nativeElement.src).toContain('avatar-xyz'); // avatarId
+        expect(images[2].nativeElement.src).toContain('2002'); // pictureId preferred
+
+        expect(initials[0].nativeElement.innerText).toBe('NA'); // No Avatar
+    });
 });

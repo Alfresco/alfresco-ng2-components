@@ -48,6 +48,49 @@ export class SomeComponent implements OnInit {
   onClickCommentRow(comment: CommentModel) {
     console.log('Clicked row: ', comment);
   }
+}
+```
+
+## Avatar Display Logic
+
+The component displays user avatars based on the presence of `pictureId` or `avatarId` properties on the user model:
+
+- If the user has a `pictureId`, the component fetches and displays the avatar image using that ID.
+- If no `pictureId` but an `avatarId` is present, it fetches and displays the avatar image using the `avatarId`.
+- If neither `pictureId` nor `avatarId` is available, the component displays the user's initials as a fallback.
+
+Example user objects:
+
+```ts
+import { CommentModel } from '@alfresco/adf-core';
+
+export class SomeComponent implements OnInit {
+  comments: CommentModel[] = [
+    {
+      id: 'user1',
+      firstName: 'Alice',
+      lastName: 'Smith',
+      pictureId: 1234
+    }
+
+    {
+      id: 'user2',
+      firstName: 'Bob',
+      lastName: 'Jones',
+      avatarId: 'avatar-xyz'
+    }
+
+    {
+      id: 'user3',
+      firstName: 'Charlie',
+      lastName: 'Brown'
+    }
+  ];
+
+  onClickCommentRow(comment: CommentModel) {
+    console.log('Clicked row: ', comment);
+  }
+}
 ```
 
 In the component template use the [comment list component](comment-list.component.md):
