@@ -6,7 +6,7 @@
             placeholder="{{'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}"
             adf-auto-focus
             />
-        <mat-error *ngIf="categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
+        <mat-error *ngIf="categoryNameControl.invalid && categoryNameControl.touched">{{ categoryNameErrorMessageKey | translate }}</mat-error>
     </div>
     <div class="adf-categories-list" *ngIf="categories?.length > 0" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
         <span
