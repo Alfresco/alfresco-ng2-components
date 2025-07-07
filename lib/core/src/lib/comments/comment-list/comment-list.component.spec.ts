@@ -23,20 +23,16 @@ import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { DebugElement } from '@angular/core';
 
 describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
     let testingUtils: UnitTestingUtils;
 
-    /**
-     * Helper to retrieve the avatar image element from the DOM.
-     *
-     * @returns The avatar image element.
-     */
-    function getAvatarImg() {
-        return testingUtils.getByCSS('.adf-people-img');
-    }
+    const AVATAR_IMG_SELECTOR = '.adf-people-img';
+
+    const getAvatarImg = (): DebugElement => testingUtils.getByCSS(AVATAR_IMG_SELECTOR);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -159,7 +155,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = testingUtils.getAllByCSS('.adf-people-img');
+        const elements = testingUtils.getAllByCSS(AVATAR_IMG_SELECTOR);
         expect(elements.length).toBe(1);
     });
 
