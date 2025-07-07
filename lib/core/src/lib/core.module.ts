@@ -56,6 +56,7 @@ import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
+import { DecimalRenderMiddlewareService, FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './form';
 
 @NgModule({
     imports: [
@@ -153,6 +154,11 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
+                },
+                {
+                    provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
+                    useClass: DecimalRenderMiddlewareService,
+                    multi: true
                 }
             ]
         };
