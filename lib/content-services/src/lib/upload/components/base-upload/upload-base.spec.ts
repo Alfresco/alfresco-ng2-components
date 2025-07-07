@@ -28,7 +28,7 @@ import { FileUploadErrorEvent } from '../../../common/events/file.event';
 @Component({
     selector: 'adf-upload-button-test',
     template: 'test component',
-    standalone: false
+    standalone: true
 })
 export class UploadTestComponent extends UploadBase {}
 
@@ -41,8 +41,7 @@ describe('UploadBase', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [UploadTestComponent]
+            imports: [ContentTestingModule, UploadTestComponent]
         });
         fixture = TestBed.createComponent(UploadTestComponent);
         uploadService = TestBed.inject(UploadService);
@@ -51,10 +50,7 @@ describe('UploadBase', () => {
         fixture.detectChanges();
     });
 
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
+    afterEach(() => fixture.destroy());
 
     describe('beginUpload', () => {
         it('should raise event', () => {

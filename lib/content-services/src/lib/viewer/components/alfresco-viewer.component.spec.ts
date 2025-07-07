@@ -93,7 +93,7 @@ class ViewerWithCustomSidebarComponent {}
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``,
-    standalone: false
+    standalone: true
 })
 class DummyDialogComponent {}
 

@@ -15,15 +15,37 @@
  * limitations under the License.
  */
 
-import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodesApiService } from '../../common/services/nodes-api.service';
+import { Component } from '@angular/core';
+import { InheritPermissionDirective } from './inherited-button.directive';
+import { NgIf } from '@angular/common';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: true }, allowableOperations: ['updatePermissions'] };
 const fakeNodeNoInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: false }, allowableOperations: ['updatePermissions'] };
 const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions: { isInheritanceEnabled: true } };
+
+@Component({
+    template: `
+        <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId" (updated)="onUpdate($event)">PERMISSION</button>
+        <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
+    `,
+    standalone: true,
+    imports: [InheritPermissionDirective, NgIf]
+})
+class SimpleInheritedPermissionTestComponent {
+    message: string = '';
+    nodeId: string = 'fake-node-id';
+    updatedNode: boolean = false;
+
+    constructor() {}
+
+    onUpdate(node: any) {
+        this.updatedNode = node.permissions?.isInheritanceEnabled ?? false;
+    }
+}
 
 describe('InheritPermissionDirective', () => {
     let fixture: ComponentFixture<SimpleInheritedPermissionTestComponent>;
@@ -33,8 +55,7 @@ describe('InheritPermissionDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [SimpleInheritedPermissionTestComponent]
+            imports: [ContentTestingModule, SimpleInheritedPermissionTestComponent]
         });
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;

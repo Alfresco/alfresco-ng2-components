@@ -20,10 +20,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
+import { ResetSearchDirective } from './reset-search.directive';
 
 @Component({
     template: `<button adf-reset-search>Reset</button>`,
-    standalone: false
+    standalone: true,
+    imports: [ResetSearchDirective]
 })
 class TestComponent {}
 
@@ -34,8 +36,7 @@ describe('Directive: ResetSearchDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);

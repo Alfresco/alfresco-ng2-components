@@ -35,7 +35,7 @@ import { Version, VersionPaging } from '@alfresco/js-api';
 
 @Component({
     template: '',
-    standalone: false
+    standalone: true
 })
 class TestDialogComponent {
     @Output()
@@ -56,13 +56,10 @@ describe('NewVersionUploaderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestDialogComponent],
+            imports: [ContentTestingModule, TestDialogComponent],
             teardown: { destroyAfterEach: false }
         });
-    });
 
-    beforeEach(() => {
         service = TestBed.inject(NewVersionUploaderService);
         dialog = TestBed.inject(MatDialog);
         fixture = TestBed.createComponent(TestDialogComponent);
@@ -71,10 +68,6 @@ describe('NewVersionUploaderService', () => {
         dialogRefSpyObj.componentInstance = fixture.componentInstance;
         dialogRefSpyObj.afterClosed = fixture.componentInstance.afterClosed;
         spyOnDialogOpen = spyOn(dialog, 'open').and.returnValue(dialogRefSpyObj);
-    });
-
-    it('should be created', () => {
-        expect(service).toBeTruthy();
     });
 
     describe('openUploadNewVersionDialog', () => {
