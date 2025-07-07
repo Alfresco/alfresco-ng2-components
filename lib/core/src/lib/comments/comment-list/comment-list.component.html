@@ -7,7 +7,7 @@
                 {{ comment.userInitials }}
             </div>
             <img *ngIf="getUserImage(comment.createdBy)" class="adf-people-img"
-                [alt]="'COMMENTS.PROFILE_IMAGE' | translate"
+                [alt]="'COMMENTS.PROFILE_ALT' | translate:{ name: comment.userDisplayName }"
                 [src]="getUserImage(comment.createdBy)" />
         </div>
         <div class="adf-comment-contents">
