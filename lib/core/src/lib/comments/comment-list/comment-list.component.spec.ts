@@ -164,73 +164,85 @@ describe('CommentListComponent', () => {
         expect(elements.length).toBe(1);
     });
 
-    it('should display user images or initials depending on pictureId and avatarId presence', async () => {
-        const comments = [
-            // User with only pictureId
-            new CommentModel({
-                id: 1,
-                message: 'With pictureId only',
-                created: new Date(),
-                createdBy: {
-                    id: 'picUser',
-                    firstName: 'Pic',
-                    lastName: 'User',
-                    pictureId: 1001
-                }
-            }),
-            // User with only avatarId
-            new CommentModel({
-                id: 2,
-                message: 'With avatarId only',
-                created: new Date(),
-                createdBy: {
-                    id: 'avatarUser',
-                    firstName: 'Avatar',
-                    lastName: 'User',
-                    avatarId: 'avatar-xyz'
-                }
-            }),
-            // User with both
-            new CommentModel({
-                id: 3,
-                message: 'With both pictureId and avatarId',
-                created: new Date(),
-                createdBy: {
-                    id: 'bothUser',
-                    firstName: 'Both',
-                    lastName: 'User',
-                    pictureId: 2002,
-                    avatarId: 'avatar-abc'
-                }
-            }),
-            // User with neither
-            new CommentModel({
-                id: 4,
-                message: 'With no avatar or picture',
-                created: new Date(),
-                createdBy: {
-                    id: 'noUser',
-                    firstName: 'No',
-                    lastName: 'Avatar'
-                }
-            })
-        ];
+    it('should display image using pictureId if available', async () => {
+        const comment = new CommentModel({
+            id: 1,
+            message: 'With pictureId only',
+            created: new Date(),
+            createdBy: {
+                firstName: 'Pic',
+                lastName: 'User',
+                pictureId: 1001
+            }
+        });
 
-        commentList.comments = comments;
-
+        commentList.comments = [comment];
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const images = testingUtils.getAllByCSS('.adf-people-img');
-        const initials = testingUtils.getAllByCSS('.adf-comment-user-icon');
+        const img = testingUtils.getByCSS('.adf-people-img');
+        expect(img).not.toBeNull();
+        expect(img.nativeElement.src).toContain('1001');
+    });
 
-        expect(images.length).toBe(3);
-        expect(initials.length).toBe(1);
+    it('should display image using avatarId if pictureId is not available', async () => {
+        const comment = new CommentModel({
+            id: 2,
+            message: 'With avatarId only',
+            created: new Date(),
+            createdBy: {
+                firstName: 'Avatar',
+                lastName: 'User',
+                avatarId: 'avatar-xyz'
+            }
+        });
 
-        expect(images[0].nativeElement.src).toContain('1001'); // pictureId
-        expect(images[1].nativeElement.src).toContain('avatar-xyz'); // avatarId
-        expect(images[2].nativeElement.src).toContain('2002'); // pictureId preferred
+        commentList.comments = [comment];
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(initials[0].nativeElement.innerText).toBe('NA'); // No Avatar
+        const img = testingUtils.getByCSS('.adf-people-img');
+        expect(img).not.toBeNull();
+        expect(img.nativeElement.src).toContain('avatar-xyz');
+    });
+
+    it('should prefer pictureId over avatarId if both are available', async () => {
+        const comment = new CommentModel({
+            id: 3,
+            message: 'With both',
+            created: new Date(),
+            createdBy: {
+                pictureId: 2002,
+                avatarId: 'avatar-abc'
+            }
+        });
+
+        commentList.comments = [comment];
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const img = testingUtils.getByCSS('.adf-people-img');
+        expect(img).not.toBeNull();
+        expect(img.nativeElement.src).toContain('2002');
+    });
+
+    it('should display user initials if neither pictureId nor avatarId is present', async () => {
+        const comment = new CommentModel({
+            id: 4,
+            message: 'No avatar',
+            created: new Date(),
+            createdBy: {
+                firstName: 'No',
+                lastName: 'Avatar'
+            }
+        });
+
+        commentList.comments = [comment];
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const icon = testingUtils.getByCSS('.adf-comment-user-icon');
+        expect(icon).not.toBeNull();
+        expect(icon.nativeElement.innerText).toBe('NA');
     });
 });
