@@ -86,19 +86,3 @@
         display: contents;
     }
 }
-
-.adf-viewer-inline {
-    .adf-viewer-render {
-        &-main-loader {
-            position: unset;
-        }
-
-        &-layout-content > div {
-            height: 100%;
-        }
-
-        &__loading-screen {
-            height: 100%;
-        }
-    }
-}
