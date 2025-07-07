@@ -30,9 +30,9 @@ describe('CommentListComponent', () => {
     let fixture: ComponentFixture<CommentListComponent>;
     let testingUtils: UnitTestingUtils;
 
-    const AVATAR_IMG_SELECTOR = '.adf-people-img';
+    const avatarImgSelector = '.adf-people-img';
 
-    const getAvatarImg = (): DebugElement => testingUtils.getByCSS(AVATAR_IMG_SELECTOR);
+    const getAvatarImg = (): DebugElement => testingUtils.getByCSS(avatarImgSelector);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -155,7 +155,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = testingUtils.getAllByCSS(AVATAR_IMG_SELECTOR);
+        const elements = testingUtils.getAllByCSS(avatarImgSelector);
         expect(elements.length).toBe(1);
     });
 
