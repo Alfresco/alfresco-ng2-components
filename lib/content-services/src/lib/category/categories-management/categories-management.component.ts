@@ -82,7 +82,13 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private cancelExistingCategoriesLoading$ = new Subject<void>();
     private _categoryNameControl = new FormControl<string>(
         '',
-        [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyCategory, this.validateSpecialCharacters, Validators.required],
+        [
+            this.validateIfNotAlreadyAdded.bind(this),
+            this.validateEmptyCategory,
+            this.validateSpecialCharacters,
+            this.validateEndsWithDot,
+            Validators.required
+        ],
         this.validateIfNotAlreadyCreated.bind(this)
     );
     private _existingCategories: Category[];
@@ -363,6 +369,11 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private validateSpecialCharacters(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
         const specialSymbolsRegex = /[:"\\|<>/?*]/;
         return categoryNameControl.value.length && specialSymbolsRegex.test(categoryNameControl.value) ? { specialCharacters: true } : null;
+    }
+
+    private validateEndsWithDot(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
+        const endsWithDotRegex = /\.$/;
+        return categoryNameControl.value.length && endsWithDotRegex.test(categoryNameControl.value.trim()) ? { specialCharacters: true } : null;
     }
 
     private setCategoryNameControlErrorMessageKey() {

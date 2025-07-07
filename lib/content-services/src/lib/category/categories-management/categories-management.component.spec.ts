@@ -525,6 +525,22 @@ describe('CategoriesManagementComponent', () => {
 
                 expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.SPECIAL_CHARACTERS');
             }));
+
+            it('should display validation error when dot placed in the end', fakeAsync(() => {
+                typeCategory('category.');
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.SPECIAL_CHARACTERS');
+            }));
+
+            it('should not display validation error when dot used in positions other than the end', fakeAsync(() => {
+                typeCategory('.category.name');
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(component.categoryNameControl.valid).toBeTrue();
+            }));
         });
     });
 });
