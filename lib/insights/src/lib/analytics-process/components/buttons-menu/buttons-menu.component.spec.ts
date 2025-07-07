@@ -17,14 +17,13 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { ButtonsMenuComponent } from '@alfresco/adf-insights';
-import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { ButtonsMenuComponent } from './buttons-menu.component';
 
 @Component({
     selector: 'adf-custom-container',
-    imports: [CommonModule, ButtonsMenuComponent, MatMenuModule, MatIconModule],
+    imports: [ButtonsMenuComponent, MatMenuModule, MatIconModule],
     template: `
         <adf-buttons-action-menu>
             <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span>Button</span></button>
@@ -41,8 +40,8 @@ export class CustomContainerComponent {
 
 @Component({
     selector: 'adf-custom-empty-container',
-    template: `<adf-buttons-action-menu />`,
-    standalone: false
+    template: ` <adf-buttons-action-menu />`,
+    imports: [ButtonsMenuComponent]
 })
 export class CustomEmptyContainerComponent {}
 
@@ -54,7 +53,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ButtonsMenuComponent, CustomContainerComponent]
+                imports: [CustomContainerComponent]
             });
             fixture = TestBed.createComponent(CustomContainerComponent);
             element = fixture.debugElement.nativeElement;
@@ -95,8 +94,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ButtonsMenuComponent],
-                declarations: [CustomEmptyContainerComponent]
+                imports: [CustomEmptyContainerComponent]
             });
             fixture = TestBed.createComponent(CustomEmptyContainerComponent);
             element = fixture.nativeElement;
