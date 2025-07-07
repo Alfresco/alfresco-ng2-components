@@ -18,13 +18,12 @@
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-
 import { VersionCompatibilityService } from './version-compatibility.service';
 import { VersionInfo } from '@alfresco/js-api';
 import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { VersionCompatibilityDirective } from '@alfresco/adf-content-services';
+import { VersionCompatibilityDirective } from './version-compatibility.directive';
 
 @Component({
     template: `
@@ -35,7 +34,8 @@ import { VersionCompatibilityDirective } from '@alfresco/adf-content-services';
         <div *adf-acs-version="'6.1'" class="visible-content-2">My visible content 2</div>
         <div *adf-acs-version="'6'" class="visible-content-3">My visible content 3</div>
     `,
-    standalone: false
+    imports: [VersionCompatibilityDirective],
+    standalone: true
 })
 class TestComponent {}
 
@@ -52,8 +52,7 @@ describe('VersionCompatibilityDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [VersionCompatibilityDirective, HttpClientTestingModule],
-            declarations: [TestComponent],
+            imports: [VersionCompatibilityDirective, HttpClientTestingModule, TestComponent],
             providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
         fixture = TestBed.createComponent(TestComponent);

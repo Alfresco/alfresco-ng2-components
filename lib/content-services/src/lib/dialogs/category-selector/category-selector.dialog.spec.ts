@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 
 describe('CategorySelectorDialogComponent', () => {
     let fixture: ComponentFixture<CategorySelectorDialogComponent>;
@@ -48,7 +48,7 @@ describe('CategorySelectorDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, CategorySelectorDialogComponent],
+            imports: [MatDialogModule, CategorySelectorDialogComponent],
             providers: [
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: MatDialogRef, useValue: dialogRef },

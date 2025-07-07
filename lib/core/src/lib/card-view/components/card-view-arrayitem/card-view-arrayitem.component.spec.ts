@@ -22,7 +22,6 @@ import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-vie
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('CardViewArrayItemComponent', () => {
@@ -49,7 +48,7 @@ describe('CardViewArrayItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, CardViewArrayItemComponent]
+            imports: [CardViewArrayItemComponent]
         });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);

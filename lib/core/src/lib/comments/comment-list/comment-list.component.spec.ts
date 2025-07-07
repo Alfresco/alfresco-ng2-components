@@ -21,7 +21,6 @@ import { CommentListComponent } from './comment-list.component';
 import { commentUserNoPictureDefined, commentUserPictureDefined, mockCommentOne, testUser } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 describe('CommentListComponent', () => {
@@ -31,7 +30,6 @@ describe('CommentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,

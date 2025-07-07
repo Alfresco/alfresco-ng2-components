@@ -19,7 +19,6 @@ import { NotificationService } from '../notifications/services/notification.serv
 import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -28,7 +27,7 @@ describe('ClipboardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule]
+            imports: [MatSnackBarModule]
         });
         clipboardService = TestBed.inject(ClipboardService);
         notificationService = TestBed.inject(NotificationService);

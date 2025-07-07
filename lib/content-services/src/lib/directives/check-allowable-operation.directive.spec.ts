@@ -26,8 +26,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
     selector: 'adf-text-subject',
-    template: '',
-    standalone: false
+    template: ''
 })
 class TestComponent implements NodeAllowableOperationSubject {
     disabled: boolean = false;

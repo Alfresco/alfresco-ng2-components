@@ -20,7 +20,6 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { AuthModule } from '../oidc/auth.module';
 
 describe('Auth Guard SSO role service', () => {
@@ -30,7 +29,7 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, AuthModule.forRoot({ useHash: true })]
+            imports: [MatDialogModule, AuthModule.forRoot({ useHash: true })]
         });
         localStorage.clear();
         jwtHelperService = TestBed.inject(JwtHelperService);

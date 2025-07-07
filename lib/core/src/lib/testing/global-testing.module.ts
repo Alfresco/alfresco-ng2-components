@@ -15,23 +15,12 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopTranslateModule } from './noop-translate.module';
+import { NgModule } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-@Component({
-    template: `
-        <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId" (updated)="onUpdate($event)">PERMISSION</button>
-        <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
-    `,
-    standalone: false
+@NgModule({
+    imports: [BrowserDynamicTestingModule, NoopTranslateModule, NoopAnimationsModule]
 })
-export class SimpleInheritedPermissionTestComponent {
-    message: string = '';
-    nodeId: string = 'fake-node-id';
-    updatedNode: boolean = false;
-
-    constructor() {}
-
-    onUpdate(node: any) {
-        this.updatedNode = node.permissions?.isInheritanceEnabled ?? false;
-    }
-}
+export class GlobalTestingModule {}

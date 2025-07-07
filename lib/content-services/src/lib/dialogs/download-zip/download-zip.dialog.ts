@@ -16,19 +16,23 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { DownloadZipService } from './services/download-zip.service';
 import { ContentService } from '../../common/services/content.service';
 import { FileDownloadStatus } from '@alfresco/js-api';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-download-zip-dialog',
+    standalone: true,
+    imports: [TranslatePipe, MatProgressBarModule, MatDialogModule, MatButtonModule],
     templateUrl: './download-zip.dialog.html',
     styleUrls: ['./download-zip.dialog.scss'],
     host: { class: 'adf-download-zip-dialog' },
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+    encapsulation: ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {
     // flag for async threads

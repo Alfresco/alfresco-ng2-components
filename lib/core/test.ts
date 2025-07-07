@@ -17,12 +17,12 @@
 
 import 'zone.js';
 import 'zone.js/testing';
-import { getTestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { TestBed } from '@angular/core/testing';
+import { platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import pdfjsLibMock from './src/lib/viewer/components/mock/pdfjs-lib.mock';
+import { GlobalTestingModule } from './src/lib/testing/global-testing.module';
 
-// First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
+TestBed.initTestEnvironment(GlobalTestingModule, platformBrowserDynamicTesting(), {
     teardown: { destroyAfterEach: true }
 });
 

@@ -28,7 +28,6 @@ import {
     roleMappingMock
 } from '../mock/identity-group.mock';
 import { AdfHttpClient } from '../../../../api/src';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -37,7 +36,6 @@ describe('IdentityGroupService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
             providers: [AdfHttpClient]
         });
         service = TestBed.inject(IdentityGroupService);

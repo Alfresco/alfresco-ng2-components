@@ -20,8 +20,7 @@ import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { HeaderWidgetComponent } from './header.widget';
-import { NoopTranslateModule, UnitTestingUtils } from '../../../../testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UnitTestingUtils } from '../../../../testing';
 
 describe('HeaderWidgetComponent', () => {
     let component: HeaderWidgetComponent;
@@ -30,7 +29,7 @@ describe('HeaderWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HeaderWidgetComponent, NoopTranslateModule, NoopAnimationsModule]
+            imports: [HeaderWidgetComponent]
         });
     });
 

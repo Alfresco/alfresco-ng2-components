@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AppConfigServiceMock } from '../../common';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 const aboutGithubDetails = {
     url: 'https://github.com/componany/repository/commits/',
@@ -37,7 +36,6 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
             providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
         });
         fixture = TestBed.createComponent(AboutServerSettingsComponent);

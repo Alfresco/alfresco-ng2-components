@@ -24,6 +24,7 @@ import { SearchControlComponent } from './search-control.component';
 import { SearchService } from '../services/search.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { EmptySearchResultComponent } from './empty-search-result.component';
 
 @Component({
     template: `
@@ -33,7 +34,8 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
             </adf-empty-search-result>
         </adf-search-control>
     `,
-    standalone: false
+    standalone: true,
+    imports: [SearchControlComponent, SearchTextInputComponent, EmptySearchResultComponent]
 })
 export class SimpleSearchTestCustomEmptyComponent {
     customMessage = '';
@@ -60,8 +62,7 @@ describe('SearchControlComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [SimpleSearchTestCustomEmptyComponent]
+            imports: [ContentTestingModule, SimpleSearchTestCustomEmptyComponent]
         });
         fixture = TestBed.createComponent(SearchControlComponent);
         debugElement = fixture.debugElement;

@@ -28,7 +28,6 @@ import {
     ViewerComponent,
     VIEWER_DIRECTIVES,
     ViewerSidebarComponent,
-    NoopTranslateModule,
     ViewerToolbarComponent,
     ViewerOpenWithComponent,
     ViewerMoreActionsComponent,
@@ -94,7 +93,7 @@ class ViewerWithCustomSidebarComponent {}
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``,
-    standalone: false
+    standalone: true
 })
 class DummyDialogComponent {}
 
@@ -180,7 +179,6 @@ describe('AlfrescoViewerComponent', () => {
                 ContentTestingModule,
                 NoopAuthModule,
                 MatDialogModule,
-                NoopTranslateModule,
                 ...VIEWER_DIRECTIVES,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,

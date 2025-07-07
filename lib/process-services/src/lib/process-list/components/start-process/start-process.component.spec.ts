@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, getTestBed } from '@angular/core/testing';
-import { AppConfigService, AppConfigServiceMock, FormRenderingService, LocalizedDatePipe, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock, FormRenderingService, LocalizedDatePipe } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';
@@ -34,7 +34,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RestVariable } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
@@ -57,7 +56,7 @@ describe('StartProcessComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, StartProcessInstanceComponent],
+            imports: [StartProcessInstanceComponent],
             providers: [
                 LocalizedDatePipe,
                 { provide: FormRenderingService, useClass: ProcessFormRenderingService },

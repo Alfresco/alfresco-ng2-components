@@ -23,9 +23,7 @@ import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-c
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
-import { CommonModule } from '@angular/common';
 import { of } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 @Component({
@@ -54,14 +52,14 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 export class SidenavLayoutTesterComponent {}
 
 describe('SidenavLayoutComponent', () => {
-    let fixture: ComponentFixture<any>;
+    let fixture: ComponentFixture<SidenavLayoutComponent>;
     let mediaQueryList: any;
     let component: SidenavLayoutComponent;
     let mediaMatcher: MediaMatcher;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, NoopAnimationsModule, SidenavLayoutComponent],
+            imports: [SidenavLayoutComponent],
             providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
         });
         mediaQueryList = {
@@ -82,10 +80,7 @@ describe('SidenavLayoutComponent', () => {
         component.sidenavMax = 320;
     });
 
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
+    afterEach(() => fixture.destroy());
 
     describe('toggleMenu', () => {
         beforeEach(() => {
@@ -160,7 +155,7 @@ describe('Template transclusion', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, NoopAnimationsModule, SidenavLayoutTesterComponent],
+            imports: [SidenavLayoutTesterComponent],
             providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
         });
 

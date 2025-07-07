@@ -17,14 +17,11 @@
 
 import { NgModule } from '@angular/core';
 import { ConfirmDialogComponent } from './confirm.dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+
+/** @deprecated use `ConfirmDialogComponent` directly instead of importing this module */
 @NgModule({
-    declarations: [ConfirmDialogComponent],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatDialogModule, MatButtonModule],
+    declarations: [],
+    imports: [ConfirmDialogComponent],
     exports: [ConfirmDialogComponent]
 })
 export class ConfirmDialogModule {}

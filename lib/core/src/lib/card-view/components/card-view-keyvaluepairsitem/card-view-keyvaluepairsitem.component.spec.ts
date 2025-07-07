@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -35,7 +34,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, CardViewKeyValuePairsItemComponent]
+            imports: [CardViewKeyValuePairsItemComponent]
         });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);

@@ -16,7 +16,7 @@
  */
 
 import { ContentPagingQuery } from '@alfresco/js-api';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { Component, OnInit } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -82,7 +82,8 @@ class TestDataSource extends InfiniteScrollDatasource<TestData> {
             {{ item.testDescription }}
         </div>
     </cdk-virtual-scroll-viewport>`,
-    standalone: false
+    imports: [CdkFixedSizeVirtualScroll, CdkVirtualScrollViewport, CdkVirtualForOf],
+    standalone: true
 })
 class TestComponent implements OnInit {
     testDatasource = new TestDataSource();
@@ -100,8 +101,7 @@ describe('InfiniteScrollDatasource', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, ScrollingModule],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, ScrollingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

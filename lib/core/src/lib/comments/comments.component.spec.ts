@@ -22,8 +22,6 @@ import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.serv
 import { of, throwError } from 'rxjs';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { MatError } from '@angular/material/form-field';
 import { CommentModel } from '../models';
@@ -38,7 +36,7 @@ describe('CommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, CommentsComponent],
+            imports: [CommentsComponent],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,

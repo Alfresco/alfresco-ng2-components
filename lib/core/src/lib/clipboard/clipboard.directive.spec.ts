@@ -20,19 +20,19 @@ import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testin
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-test-component',
     template: `
-        <button mat-button clipboard-notification="copy success" [adf-clipboard] [target]="ref">copy</button>
+        <button mat-button clipboard-notification="copy success" [adf-clipboard]="" [target]="ref">copy</button>
 
         <input #ref />
     `,
-    standalone: false
+    imports: [MatButtonModule, ClipboardDirective]
 })
 class TestTargetClipboardComponent {}
 
@@ -44,8 +44,7 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
-            declarations: [TestTargetClipboardComponent]
+            imports: [MatSnackBarModule, TestTargetClipboardComponent]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
@@ -73,9 +72,9 @@ describe('ClipboardDirective', () => {
 
 describe('CopyClipboardDirective', () => {
     @Component({
-        selector: 'adf-copy-conent-test-component',
+        selector: 'adf-copy-content-test-component',
         template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`,
-        standalone: false
+        imports: [ClipboardDirective]
     })
     class TestCopyClipboardComponent {
         mockText = 'text to copy';
@@ -90,8 +89,7 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
-            declarations: [TestCopyClipboardComponent]
+            imports: [MatSnackBarModule, TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

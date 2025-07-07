@@ -27,9 +27,7 @@ import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/ca
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('CardViewComponent', () => {
@@ -40,7 +38,7 @@ describe('CardViewComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatSnackBarModule, MatDialogModule, CardViewComponent]
+            imports: [MatSnackBarModule, MatDialogModule, CardViewComponent]
         });
 
         fixture = TestBed.createComponent(CardViewComponent);

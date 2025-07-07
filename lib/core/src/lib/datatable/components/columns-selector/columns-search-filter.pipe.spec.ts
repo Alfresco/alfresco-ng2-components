@@ -17,7 +17,6 @@
 
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 import { DataColumn } from '../../data/data-column.model';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 import { TestBed } from '@angular/core/testing';
 
 describe('ColumnsSeearchFilterPipe', () => {
@@ -25,7 +24,7 @@ describe('ColumnsSeearchFilterPipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, ColumnsSearchFilterPipe],
+            imports: [ColumnsSearchFilterPipe],
             providers: [ColumnsSearchFilterPipe]
         });
 

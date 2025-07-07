@@ -18,8 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectFilterInputComponent } from './select-filter-input.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
 import { Subject } from 'rxjs';
 
 describe('SelectFilterInputComponent', () => {
@@ -45,7 +43,7 @@ describe('SelectFilterInputComponent', () => {
         });
 
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, MatSelectModule, SelectFilterInputComponent],
+            imports: [MatSelectModule, SelectFilterInputComponent],
             providers: [{ provide: MatSelect, useValue: mockMatSelect }]
         }).compileComponents();
 

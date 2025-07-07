@@ -17,13 +17,11 @@
 
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 
 describe('MultilineTextWidgetComponentComponent', () => {
@@ -34,7 +32,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MultilineTextWidgetComponentComponent]
+            imports: [MultilineTextWidgetComponentComponent]
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;

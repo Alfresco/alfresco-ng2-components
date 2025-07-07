@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileAutoDownloadComponent } from './file-auto-download.component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 import { NodeDownloadDirective } from '../../../directives/node-download.directive';
 
@@ -35,7 +34,7 @@ describe('FileAutoDownloadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, MatButtonModule, NodeDownloadDirective, FileAutoDownloadComponent],
+            imports: [MatDialogModule, MatButtonModule, NodeDownloadDirective, FileAutoDownloadComponent],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialog },
                 { provide: MAT_DIALOG_DATA, useValue: null }

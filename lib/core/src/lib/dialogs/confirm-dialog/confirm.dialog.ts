@@ -16,8 +16,11 @@
  */
 
 import { Component, Inject, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface ConfirmDialogComponentProps {
     title?: string;
@@ -34,7 +37,8 @@ export interface ConfirmDialogComponentProps {
     styleUrls: ['./confirm.dialog.scss'],
     host: { class: 'adf-confirm-dialog' },
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: true,
+    imports: [TranslatePipe, MatDialogModule, NgIf, MatButtonModule]
 })
 export class ConfirmDialogComponent {
     title: string;

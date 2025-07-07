@@ -25,8 +25,7 @@ import {
     FormFieldModel,
     FormModel,
     AppConfigServiceMock,
-    AppConfigService,
-    NoopTranslateModule
+    AppConfigService
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { TaskFormService } from '../../services/task-form.service';
@@ -44,7 +43,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [NoopTranslateModule, RadioButtonsWidgetComponent],
+            imports: [RadioButtonsWidgetComponent],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }

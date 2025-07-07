@@ -33,8 +33,7 @@ export default {
     title: 'Core/Dialog/Download ZIP Dialog',
     decorators: [
         moduleMetadata({
-            declarations: [DownloadZipDialogStorybookComponent],
-            imports: [MatButtonModule, MatDialogModule, HttpClientTestingModule],
+            imports: [MatButtonModule, MatDialogModule, HttpClientTestingModule, DownloadZipDialogStorybookComponent],
             providers: [
                 {
                     provide: AlfrescoApiService,

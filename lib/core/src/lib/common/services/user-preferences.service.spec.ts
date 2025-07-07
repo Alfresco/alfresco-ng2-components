@@ -21,7 +21,6 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('UserPreferencesService', () => {
     const supportedPaginationSize = [5, 10, 15, 20];
@@ -32,7 +31,6 @@ describe('UserPreferencesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
             providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
         });
         appConfig = TestBed.inject(AppConfigService);

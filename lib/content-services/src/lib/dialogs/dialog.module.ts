@@ -19,18 +19,19 @@ import { NgModule } from '@angular/core';
 import { FolderDialogComponent } from './folder/folder.dialog';
 import { NodeLockDialogComponent } from './node-lock/node-lock.dialog';
 import { LibraryDialogComponent } from './library/library.dialog';
-import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.module';
 import { CategorySelectorDialogComponent } from './category-selector/category-selector.dialog';
+import { DownloadZipDialogComponent } from './download-zip/download-zip.dialog';
 
+/** @deprecated use standalone component imports instead */
 export const CONTENT_DIALOG_DIRECTIVES = [
-    DownloadZipDialogModule,
+    DownloadZipDialogComponent,
     FolderDialogComponent,
     NodeLockDialogComponent,
     LibraryDialogComponent,
     CategorySelectorDialogComponent
 ];
 
-/** @deprecated use `..CONTENT_DIALOG_DIRECTIVES` or standalone component imports instead */
+/** @deprecated use standalone component imports instead */
 @NgModule({
     imports: [...CONTENT_DIALOG_DIRECTIVES],
     exports: [...CONTENT_DIALOG_DIRECTIVES]

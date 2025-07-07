@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('CardViewMapItemComponent', () => {
@@ -30,7 +29,7 @@ describe('CardViewMapItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, CardViewMapItemComponent]
+            imports: [CardViewMapItemComponent]
         });
         fixture = TestBed.createComponent(CardViewMapItemComponent);
         service = TestBed.inject(CardViewUpdateService);

@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarComponent } from './toolbar.component';
-import { NoopTranslateModule } from '../testing/noop-translate.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('ToolbarComponent', () => {
@@ -26,7 +25,7 @@ describe('ToolbarComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, ToolbarComponent]
+            imports: [ToolbarComponent]
         });
 
         fixture = TestBed.createComponent(ToolbarComponent);

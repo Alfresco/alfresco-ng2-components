@@ -28,7 +28,6 @@ import {
     DataColumnComponent,
     DataColumnListComponent,
     FullNamePipe,
-    NoopTranslateModule,
     CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
@@ -41,7 +40,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
 
@@ -108,7 +106,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, TaskListComponent],
+            imports: [TaskListComponent],
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

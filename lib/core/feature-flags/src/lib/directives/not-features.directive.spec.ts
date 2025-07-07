@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockFeatureFlags } from '../mocks/features-service-mock.factory';
@@ -28,7 +27,7 @@ import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
     `,
-    standalone: false
+    imports: [NotFeaturesDirective]
 })
 class TestWithEnabledFlagComponent {
     features = ['feature1', 'feature3'];
@@ -40,7 +39,7 @@ class TestWithEnabledFlagComponent {
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
     `,
-    standalone: false
+    imports: [NotFeaturesDirective]
 })
 class TestWithDisabledFlagComponent {
     features = 'feature2';
@@ -53,7 +52,7 @@ describe('NotFeaturesDirective', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, NotFeaturesDirective],
+            imports: [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent],
             providers: [
                 provideMockFeatureFlags({
                     feature1: true,
@@ -61,8 +60,7 @@ describe('NotFeaturesDirective', () => {
                     feature3: true
                 }),
                 NotFeaturesDirective
-            ],
-            declarations: [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent]
+            ]
         });
         enabledFixture = TestBed.createComponent(TestWithEnabledFlagComponent);
         enabledFixture.detectChanges();

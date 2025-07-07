@@ -20,18 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Component } from '@angular/core';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-filter-tabbed-test',
+    imports: [SearchFilterTabbedComponent, SearchFilterTabDirective],
     template: `
         <adf-search-filter-tabbed>
             <div *adf-search-filter-tab="'Tab 1'">Tab 1 content</div>
             <div *adf-search-filter-tab="'Tab 2'">Tab 2 content</div>
             <div *adf-search-filter-tab="'Tab 3'">Tab 3 content</div>
         </adf-search-filter-tabbed>
-    `,
-    imports: [SearchFilterTabbedComponent, SearchFilterTabDirective]
+    `
 })
 class SearchFilterTabbedTestComponent {}
 
@@ -40,7 +39,7 @@ describe('SearchFilterTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [SearchFilterTabbedTestComponent, NoopTranslateModule, ContentTestingModule]
+            imports: [SearchFilterTabbedTestComponent, ContentTestingModule]
         });
         searchFilterTabbedTestFixture = TestBed.createComponent(SearchFilterTabbedTestComponent);
     });

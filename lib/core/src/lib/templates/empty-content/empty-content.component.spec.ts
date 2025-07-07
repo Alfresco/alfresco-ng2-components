@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { EmptyContentComponent } from './empty-content.component';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
@@ -43,7 +42,7 @@ describe('EmptyContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, TestComponent]
+            imports: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

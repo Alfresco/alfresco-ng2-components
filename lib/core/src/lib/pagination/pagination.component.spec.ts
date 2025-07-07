@@ -20,8 +20,6 @@ import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../testing/noop-translate.module';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -42,7 +40,7 @@ describe('PaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, PaginationComponent]
+            imports: [PaginationComponent]
         });
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;

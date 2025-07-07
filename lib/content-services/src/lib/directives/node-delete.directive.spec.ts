@@ -19,7 +19,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
-import { NoopTranslateModule, RedirectAuthService } from '@alfresco/adf-core';
+import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 
@@ -80,7 +80,7 @@ describe('NodeDeleteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent],
+            imports: [TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent],
             providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
         fixture = TestBed.createComponent(TestComponent);

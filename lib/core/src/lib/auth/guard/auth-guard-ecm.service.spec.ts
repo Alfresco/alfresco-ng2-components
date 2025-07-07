@@ -26,8 +26,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
-import { NoopTranslateModule } from '../../testing/noop-translate.module';
-
 
 describe('AuthGuardService ECM', () => {
     let authGuard: Promise<boolean>;
@@ -41,7 +39,7 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, RouterTestingModule, MatDialogModule],
+            imports: [RouterTestingModule, MatDialogModule],
             providers: [
                 BasicAlfrescoAuthService,
                 AppConfigService,

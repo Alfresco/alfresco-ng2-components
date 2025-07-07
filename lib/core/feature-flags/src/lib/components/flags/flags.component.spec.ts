@@ -16,21 +16,19 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FlagsComponent } from './flags.component';
 import { FeaturesDirective } from '../../directives/features.directive';
 import { WritableFeaturesServiceToken } from '../../interfaces/features.interface';
 import { provideMockFeatureFlags } from '../../mocks/features-service-mock.factory';
 import { StorageFeaturesService } from '../../services/storage-features.service';
-import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('FlagsComponent', () => {
     let component: FlagsComponent;
     let fixture: ComponentFixture<FlagsComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [FlagsComponent, NoopTranslateModule, FeaturesDirective, NoopAnimationsModule],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [FlagsComponent, FeaturesDirective],
             providers: [
                 { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
                 provideMockFeatureFlags({
@@ -39,7 +37,7 @@ describe('FlagsComponent', () => {
                     feature3: true
                 })
             ]
-        }).compileComponents();
+        });
 
         const storageFeaturesService = TestBed.inject(WritableFeaturesServiceToken);
         storageFeaturesService.init();
