@@ -16,10 +16,10 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
@@ -30,7 +30,8 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
             {{ option.text }}
         </mat-option>
     </mat-select>`,
-    standalone: false
+    standalone: true,
+    imports: [MatSelectModule, InfiniteSelectScrollDirective, CommonModule]
 })
 class TestComponent {
     options = new Array(50).fill({ text: 'dummy' });
@@ -55,8 +56,7 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective],
-            declarations: [TestComponent]
+            imports: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

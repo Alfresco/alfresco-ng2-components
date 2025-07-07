@@ -16,9 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ProgressComponent } from './progress.component';
@@ -30,10 +27,10 @@ describe('ProgressComponent', () => {
     let loader: HarnessLoader;
     let testingUtils: UnitTestingUtils;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [MatProgressBarModule, MatProgressSpinnerModule, NoopAnimationsModule, ProgressComponent]
-        }).compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ProgressComponent]
+        });
 
         fixture = TestBed.createComponent(ProgressComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);

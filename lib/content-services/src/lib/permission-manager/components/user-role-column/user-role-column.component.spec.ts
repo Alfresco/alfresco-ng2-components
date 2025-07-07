@@ -18,18 +18,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserRoleColumnComponent } from './user-role-column.component';
 import { RoleModel } from '../../models/role.model';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '@alfresco/adf-content-services';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('UserRoleColumnComponent', () => {
     let component: UserRoleColumnComponent;
     let fixture: ComponentFixture<UserRoleColumnComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NoopAnimationsModule, UserRoleColumnComponent]
-        }).compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule, UserRoleColumnComponent]
+        });
 
         fixture = TestBed.createComponent(UserRoleColumnComponent);
         component = fixture.componentInstance;

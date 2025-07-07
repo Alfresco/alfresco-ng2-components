@@ -18,11 +18,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TooltipCardDirective } from './tooltip-card.directive';
-import { CommonModule } from '@angular/common';
 import { Overlay, OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { TooltipCardComponent } from './tooltip-card.component';
 
 const IMAGE_URL = 'alfresco-logo.svg';
 
@@ -35,7 +32,8 @@ const IMAGE_URL = 'alfresco-logo.svg';
         [htmlContent]="'this is the <b>html</b> raw code'"
         class="test-component"
     ></span>`,
-    standalone: false
+    standalone: true,
+    imports: [TooltipCardDirective]
 })
 class TestComponent {
     @ViewChild(TooltipCardDirective, { static: true })
@@ -53,21 +51,16 @@ describe('TooltipCardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, OverlayModule, NoopAnimationsModule, TooltipCardDirective, TooltipCardComponent],
-            declarations: [TestComponent]
-        }).compileComponents();
-    });
+            imports: [OverlayModule, TestComponent]
+        });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         overlayService = TestBed.inject(Overlay);
         overlayContainer = TestBed.inject(OverlayContainer);
         overlay = overlayContainer.getContainerElement();
     });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
-    });
+    afterEach(() => fixture.destroy());
 
     it('should display tooltip-card on mouse enter', () => {
         fixture.detectChanges();

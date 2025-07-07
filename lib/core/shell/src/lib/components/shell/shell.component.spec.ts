@@ -15,18 +15,12 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { AppConfigService, LAYOUT_DIRECTIVES } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { ShellLayoutComponent } from './shell.component';
 import { Router, NavigationStart, RouterModule } from '@angular/router';
 import { of, Subject } from 'rxjs';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { CommonModule } from '@angular/common';
 import { ShellAppService, SHELL_APP_SERVICE } from '../../services/shell-app.service';
-import { HttpClientModule } from '@angular/common/http';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
 
 class MockRouter {
     private url = 'some-url';
@@ -58,16 +52,7 @@ describe('AppLayoutComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                NoopAnimationsModule,
-                HttpClientModule,
-                ...LAYOUT_DIRECTIVES,
-                ExtensionsModule,
-                RouterModule.forChild([]),
-                TranslateModule.forRoot(),
-                ShellLayoutComponent
-            ],
+            imports: [RouterModule.forChild([]), ShellLayoutComponent],
             providers: [
                 {
                     provide: Router,
@@ -77,8 +62,7 @@ describe('AppLayoutComponent', () => {
                     provide: SHELL_APP_SERVICE,
                     useValue: shellService
                 }
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+            ]
         });
 
         fixture = TestBed.createComponent(ShellLayoutComponent);
