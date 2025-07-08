@@ -17,8 +17,7 @@
 
 import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '@alfresco/adf-core';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { NoopAuthModule } from '@alfresco/adf-core';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -28,7 +27,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
+import { IdentityUserService } from '../services/identity-user.service';
 
 describe('PeopleCloudComponent', () => {
     let loader: HarnessLoader;
@@ -81,7 +80,7 @@ describe('PeopleCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudComponent]
+            imports: [NoopAuthModule, PeopleCloudComponent]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;

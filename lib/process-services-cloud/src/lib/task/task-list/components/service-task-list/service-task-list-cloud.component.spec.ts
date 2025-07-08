@@ -18,17 +18,25 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataRowEvent,
+    ObjectDataRow,
+    NoopTranslateModule,
+    NoopAuthModule,
+    DataColumnComponent,
+    DataColumnListComponent
+} from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
 import { fakeServiceTask, fakeCustomSchema } from '../../mock/fake-task-response.mock';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../../services/service-task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { ProcessServicesCloudModule } from '../../../../process-services-cloud.module';
 
 @Component({
     template: ` <adf-cloud-service-task-list #taskListCloud>
@@ -37,12 +45,14 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
             <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden" />
         </data-columns>
     </adf-cloud-service-task-list>`,
-    standalone: false
+    standalone: true,
+    imports: [ServiceTaskListCloudComponent, DataColumnComponent, DataColumnListComponent]
 })
 class CustomTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent)
     taskList: ServiceTaskListCloudComponent;
 }
+
 @Component({
     template: `
         <adf-cloud-service-task-list>
@@ -54,6 +64,7 @@ class CustomTaskListComponent {
     standalone: false
 })
 class EmptyTemplateComponent {}
+
 @Component({
     template: ` <adf-cloud-service-task-list>
         <data-columns>
@@ -61,7 +72,8 @@ class EmptyTemplateComponent {}
             <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" />
         </data-columns>
     </adf-cloud-service-task-list>`,
-    standalone: false
+    standalone: true,
+    imports: [ServiceTaskListCloudComponent, DataColumnComponent, DataColumnListComponent]
 })
 class CustomCopyContentTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent, { static: true })
@@ -77,7 +89,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [ProcessServicesCloudModule.forRoot(), NoopTranslateModule, NoopAuthModule, ServiceTaskListCloudComponent],
             declarations: [EmptyTemplateComponent]
         });
         appConfig = TestBed.inject(AppConfigService);
@@ -354,8 +366,13 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [
+                ProcessServicesCloudModule.forRoot(),
+                NoopTranslateModule,
+                NoopAuthModule,
+                CustomTaskListComponent,
+                CustomCopyContentTaskListComponent
+            ]
         });
 
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
@@ -412,7 +429,7 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServicesCloudModule.forRoot(), NoopTranslateModule, NoopAuthModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);

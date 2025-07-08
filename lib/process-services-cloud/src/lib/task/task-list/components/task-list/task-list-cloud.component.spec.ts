@@ -27,13 +27,14 @@ import {
     ColumnsSelectorComponent,
     DataColumnListComponent,
     DataColumnComponent,
-    CustomEmptyContentTemplateDirective
+    CustomEmptyContentTemplateDirective,
+    NoopTranslateModule,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../../mock/fake-task-response.mock';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
@@ -43,6 +44,7 @@ import { PreferenceCloudServiceInterface } from '../../../../services/preference
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { ProcessServicesCloudModule } from '../../../../process-services-cloud.module';
 
 @Component({
     imports: [TaskListCloudComponent, DataColumnListComponent, DataColumnComponent],
@@ -111,7 +113,7 @@ describe('TaskListCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskListCloudComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, TaskListCloudComponent],
             providers: [
                 {
                     provide: TASK_LIST_CLOUD_TOKEN,
@@ -676,7 +678,13 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [
+                ProcessServicesCloudModule.forRoot(),
+                NoopTranslateModule,
+                NoopAuthModule,
+                CustomTaskListComponent,
+                CustomCopyContentTaskListComponent
+            ]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
@@ -730,7 +738,7 @@ describe('TaskListCloudComponent: Creating an empty custom template - EmptyTempl
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule]
+            imports: [NoopTranslateModule, NoopAuthModule, TaskListCloudModule]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         const emptyList = { list: { entries: [] } };
@@ -764,7 +772,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServicesCloudModule.forRoot(), NoopTranslateModule, NoopAuthModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);

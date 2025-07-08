@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { UnclaimTaskDirective } from './unclaim-task.directive';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('UnclaimTaskDirective', () => {
     @Component({
@@ -43,7 +44,7 @@ describe('UnclaimTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TestComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, TestComponent]
         });
         taskListService = TestBed.inject(TaskListService);
         fixture = TestBed.createComponent(TestComponent);
@@ -87,24 +88,19 @@ describe('Claim Task Directive validation errors', () => {
     })
     class ClaimTestMissingTaskIdDirectiveComponent {}
 
-    let fixture: ComponentFixture<ClaimTestMissingInputDirectiveComponent>;
-
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
         });
-        fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
     });
 
     it('should throw error when missing input', () => {
-        fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
-
+        const fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError();
     });
 
     it('should throw error when taskId is not set', () => {
-        fixture = TestBed.createComponent(ClaimTestMissingTaskIdDirectiveComponent);
-
+        const fixture = TestBed.createComponent(ClaimTestMissingTaskIdDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError('Attribute taskId is required');
     });
 });

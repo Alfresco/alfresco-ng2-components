@@ -18,9 +18,9 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { catchError, firstValueFrom, of } from 'rxjs';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
@@ -37,7 +37,7 @@ describe('ProcessListCloudService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopTranslateModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ProcessListCloudService);

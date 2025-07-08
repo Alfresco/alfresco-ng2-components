@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of, throwError } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -46,7 +45,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, RadioButtonsCloudWidgetComponent]
+            imports: [RadioButtonsCloudWidgetComponent]
         });
         formCloudService = TestBed.inject(FormCloudService);
         formUtilsService = TestBed.inject(FormUtilsService);

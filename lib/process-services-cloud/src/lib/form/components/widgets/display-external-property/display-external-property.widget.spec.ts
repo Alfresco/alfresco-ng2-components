@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import { FormService, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { DisplayExternalPropertyWidgetComponent } from './display-external-property.widget';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { By } from '@angular/platform-browser';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { UnitTestingUtils } from '../../../../../../../core/src/lib/testing/unit-testing-utils';
 
 describe('DisplayExternalPropertyWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -37,9 +34,8 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
-            providers: [FormService]
-        }).compileComponents();
+            imports: [DisplayExternalPropertyWidgetComponent]
+        });
 
         fixture = TestBed.createComponent(DisplayExternalPropertyWidgetComponent);
         widget = fixture.componentInstance;
