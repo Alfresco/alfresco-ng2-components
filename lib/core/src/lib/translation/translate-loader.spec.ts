@@ -18,11 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '../core.module';
-import { AuthModule } from '../auth/oidc/auth.module';
-
-declare let jasmine: any;
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 describe('TranslateLoader', () => {
     let translationService: TranslationService;
@@ -30,17 +27,20 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), TranslateModule.forRoot(), CoreModule.forRoot()],
-            providers: [TranslationService]
+            providers: [
+                provideTranslateService({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: TranslateLoaderService,
+                        deps: [HttpClient]
+                    },
+                    defaultLanguage: 'en'
+                }),
+                TranslationService
+            ]
         });
         translationService = TestBed.inject(TranslationService);
         customLoader = translationService.translate.currentLoader as TranslateLoaderService;
-
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('should be able to provide any TranslateLoader', () => {
