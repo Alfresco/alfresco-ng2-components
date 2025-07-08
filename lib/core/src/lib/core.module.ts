@@ -41,13 +41,20 @@ import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import {
+    // HttpClientModule,
+    // HttpClientXsrfModule,
+    HTTP_INTERCEPTORS,
+    HttpClient,
+    provideHttpClient,
+    withXsrfConfiguration,
+    withInterceptorsFromDi
+} from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
-import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
@@ -86,11 +93,6 @@ import { DecimalRenderMiddlewareService, FORM_FIELD_MODEL_RENDER_MIDDLEWARE } fr
         BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
-        HttpClientModule,
-        HttpClientXsrfModule.withOptions({
-            cookieName: 'CSRF-TOKEN',
-            headerName: 'X-CSRF-TOKEN'
-        }),
         MaterialModule
     ],
     providers: [...CORE_PIPES],
@@ -139,7 +141,6 @@ export class CoreModule {
                     },
                     defaultLanguage: 'en'
                 }),
-                MomentDateAdapter,
                 StoragePrefixFactory,
                 provideAppInitializer(() => {
                     const initializerFn = loadAppConfig(
@@ -150,6 +151,7 @@ export class CoreModule {
                     );
                     return initializerFn();
                 }),
+                provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
                 { provide: Authentication, useClass: AuthenticationService },
                 {
