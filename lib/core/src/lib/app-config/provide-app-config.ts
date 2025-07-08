@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { inject, provideAppInitializer } from '@angular/core';
+import { inject, provideAppInitializer, Provider, EnvironmentProviders } from '@angular/core';
 import { StoragePrefixFactory } from './app-config-storage-prefix.factory';
 import { loadAppConfig } from './app-config.loader';
 import { AppConfigService } from './app-config.service';
@@ -27,7 +27,7 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
  *
  * @returns An array of providers to initialize the application configuration.
  */
-export function provideAppConfig() {
+export function provideAppConfig(): (Provider | EnvironmentProviders)[] {
     return [
         StoragePrefixFactory,
         provideAppInitializer(() => {
