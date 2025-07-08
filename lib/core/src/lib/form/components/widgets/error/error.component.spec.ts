@@ -17,7 +17,7 @@
 
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
+import { UnitTestingUtils } from '../../../../testing';
 import { ErrorMessageModel } from '../core';
 import { ErrorWidgetComponent } from './error.component';
 
@@ -28,7 +28,7 @@ describe('ErrorWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [ErrorWidgetComponent]
         });
         fixture = TestBed.createComponent(ErrorWidgetComponent);
         widget = fixture.componentInstance;
