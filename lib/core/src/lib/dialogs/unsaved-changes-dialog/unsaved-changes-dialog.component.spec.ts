@@ -30,7 +30,6 @@ describe('UnsavedChangesDialog', () => {
 
     const setupBeforeEach = (unsavedChangesDialogData?: UnsavedChangesDialogData) => {
         TestBed.configureTestingModule({
-            imports: [],
             providers: [
                 {
                     provide: MAT_DIALOG_DATA,

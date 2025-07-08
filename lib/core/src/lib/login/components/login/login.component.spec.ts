@@ -29,7 +29,9 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { LoginSuccessEvent } from '../../models/login-success.event';
 import { LoginErrorEvent } from '../../models/login-error.event';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { NoopAuthModule, NoopTranslationService, TranslationService } from '@alfresco/adf-core';
+import { NoopAuthModule } from '../../../testing/noop-auth.module';
+import { TranslationService } from '../../../translation/translation.service';
+import { NoopTranslationService } from '../../../testing/noop-translate.module';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
