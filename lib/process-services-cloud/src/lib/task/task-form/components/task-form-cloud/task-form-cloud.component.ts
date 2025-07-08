@@ -27,7 +27,6 @@ import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model'
 import { CommonModule } from '@angular/common';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 import { FormCustomOutcomesComponent } from '../../../../form/components/form-cloud-custom-outcomes.component';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -88,14 +87,6 @@ export class TaskFormCloudComponent {
     @Input()
     taskDetails: TaskDetailsCloudModel;
 
-    /** Toggle rendering of the `Open next task` checkbox. */
-    @Input()
-    showNextTaskCheckbox = false;
-
-    /** Whether the `Open next task` checkbox is checked by default or not. */
-    @Input()
-    isNextTaskCheckboxChecked = false;
-
     /** Emitted when the form is saved. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -142,10 +133,6 @@ export class TaskFormCloudComponent {
     /** Emitted when a display mode configuration is turned off. */
     @Output()
     displayModeOff = new EventEmitter<FormCloudDisplayModeConfiguration>();
-
-    /** Emitted when the `Open next task` checkbox was toggled. */
-    @Output()
-    nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
     @ViewChild('adfCloudForm', { static: false })
     adfCloudForm: FormCloudComponent;
@@ -237,9 +224,5 @@ export class TaskFormCloudComponent {
 
     onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOff.emit(displayModeConfiguration);
-    }
-
-    onNextTaskCheckboxCheckedChanged(event: MatCheckboxChange) {
-        this.nextTaskCheckboxCheckedChanged.emit(event);
     }
 }
