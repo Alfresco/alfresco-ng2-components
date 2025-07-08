@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import {
@@ -33,7 +33,7 @@ import {
     preselectedMultipleNodes
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
-import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
+import { WidgetVisibilityService, FormModel, FormOutcomeModel, FormRenderingService } from '@alfresco/adf-core';
 import { TranslateService } from '@ngx-translate/core';
 import { ProcessService } from '../../process-list/services/process.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -41,7 +41,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { ProcessModule } from '../../process.module';
+import { ProcessFormRenderingService } from '../process-form-rendering.service';
 
 describe('StartFormComponent', () => {
     let component: StartFormComponent;
@@ -57,8 +57,8 @@ describe('StartFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessModule.forRoot()],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [StartFormComponent],
+            providers: [FormRenderingService, { provide: FormRenderingService, useClass: ProcessFormRenderingService }]
         });
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
