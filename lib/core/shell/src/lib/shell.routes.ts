@@ -55,10 +55,7 @@ export function provideShellRoutes(routes: Routes | AppShellRoutesConfig): Envir
     const rootRoute = shellParentRoute || shellLayoutRoute;
 
     if (routes.shellParentRoute) {
-        if (rootRoute.children === undefined) {
-            rootRoute.children = [];
-        }
-
+        rootRoute.children = rootRoute.children || [];
         rootRoute.children.push(shellLayoutRoute);
     }
 
