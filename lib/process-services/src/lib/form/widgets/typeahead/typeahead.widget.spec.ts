@@ -17,9 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-
 import { By } from '@angular/platform-browser';
-import { FormService, FormFieldOption, FormFieldTypes, FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
+import { FormService, FormFieldOption, FormFieldTypes, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { TranslateService } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
@@ -34,7 +33,7 @@ describe('TypeaheadWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, TypeaheadWidgetComponent]
+            imports: [TypeaheadWidgetComponent]
         });
         translationService = TestBed.inject(TranslateService);
         taskFormService = TestBed.inject(TaskFormService);

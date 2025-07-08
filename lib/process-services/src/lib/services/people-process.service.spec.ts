@@ -17,7 +17,6 @@
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { PeopleProcessService } from './people-process.service';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
@@ -46,7 +45,6 @@ describe('PeopleProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(PeopleProcessService);

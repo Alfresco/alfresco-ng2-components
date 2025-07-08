@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FormFieldTypes, FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
+import { FormFieldTypes, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { PeopleWidgetComponent } from './people.widget';
 import { TranslateService } from '@ngx-translate/core';
@@ -40,7 +40,7 @@ describe('PeopleWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [PeopleWidgetComponent]
         });
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         peopleProcessService = TestBed.inject(PeopleProcessService);
