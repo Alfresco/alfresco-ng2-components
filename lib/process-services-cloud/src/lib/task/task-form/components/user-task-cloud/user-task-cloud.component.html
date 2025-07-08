@@ -12,8 +12,6 @@
                     [showTitle]="showTitle"
                     [taskId]="taskId"
                     [taskDetails]="taskDetails"
-                    [showNextTaskCheckbox]="showNextTaskCheckbox && canCompleteTask() && nextTaskCheckboxForFormsActivated"
-                    [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
                     (cancelClick)="onCancelForm()"
                     (executeOutcome)="onExecuteOutcome($event)"
                     (error)="onError($event)"
@@ -22,7 +20,6 @@
                     (taskCompleted)="onCompleteTaskForm()"
                     (taskClaimed)="onClaimTask()"
                     (taskUnclaimed)="onTaskUnclaimed()"
-                    (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
                 />
             </ng-container>
 
@@ -70,14 +67,6 @@
                         />
                     </mat-card-content>
                     <mat-card-actions class="adf-task-form-actions" align="end">
-                        <mat-checkbox
-                            id="adf-form-open-next-task"
-                            *ngIf="showNextTaskCheckbox && canCompleteTask() && nextTaskCheckboxForFormsActivated"
-                            [checked]="isNextTaskCheckboxChecked"
-                            (change)="onNextTaskCheckboxCheckedChanged($event)"
-                            >{{ 'ADF_CLOUD_TASK_FORM.OPEN_NEXT_TASK.LABEL' | translate }}
-                        </mat-checkbox>
-                        <span class="adf-card-actions-spacer"></span>
                         <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                         <button
                             *ngIf="canCompleteTask()"

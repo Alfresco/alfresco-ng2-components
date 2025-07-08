@@ -86,7 +86,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     showCompleteButton = true;
 
-    /** Toggle rendering of the `Open next task` checkbox. */
+    /** Toggle rendering of the `Open next task` checkbox (for screens only). */
     @Input()
     showNextTaskCheckbox = false;
 
@@ -158,12 +158,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     taskDetails: TaskDetailsCloudModel;
     taskType: TaskTypesType;
     taskTypeEnum = TaskTypes;
-
-    /**
-     * The `Open next task` feature is currently disabled for forms only.
-     * See https://hyland.atlassian.net/browse/AAE-34514 for further details.
-     */
-    readonly nextTaskCheckboxForFormsActivated = false;
 
     private taskCloudService: TaskCloudService = inject(TaskCloudService);
     private readonly destroyRef = inject(DestroyRef);

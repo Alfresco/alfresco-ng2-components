@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
@@ -37,7 +37,8 @@ import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
 import { By } from '@angular/platform-browser';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -54,6 +55,34 @@ const taskDetails: TaskDetailsCloudModel = {
     permissions: [TASK_VIEW_PERMISSION]
 };
 
+@Component({
+    selector: 'adf-cloud-task-screen',
+    standalone: true,
+    template: ''
+})
+class TaskScreenCloudMockComponent {
+    @Input() taskId: string;
+    @Input() appName: string = '';
+    @Input() canClaimTask: boolean;
+    @Input() canUnclaimTask: boolean;
+    @Input() showCancelButton: boolean;
+    @Input() screenId: string = '';
+    @Input() processInstanceId: string = '';
+    @Input() taskName: string = '';
+    @Input() readOnly = false;
+    @Input() rootProcessInstanceId: string = '';
+    @Input() isNextTaskCheckboxChecked = false;
+    @Input() showNextTaskCheckbox = false;
+
+    @Output() taskSaved = new EventEmitter();
+    @Output() taskCompleted = new EventEmitter<any>();
+    @Output() error = new EventEmitter<any>();
+    @Output() cancelTask = new EventEmitter<any>();
+    @Output() claimTask = new EventEmitter<any>();
+    @Output() unclaimTask = new EventEmitter<any>();
+    @Output() nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
+}
+
 describe('UserTaskCloudComponent', () => {
     let component: UserTaskCloudComponent;
     let fixture: ComponentFixture<UserTaskCloudComponent>;
@@ -67,7 +96,11 @@ describe('UserTaskCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule, UserTaskCloudComponent, TaskFormCloudComponent]
+        }).overrideComponent(UserTaskCloudComponent, {
+            remove: { imports: [TaskScreenCloudComponent] },
+            add: { imports: [TaskScreenCloudMockComponent] }
         });
+
         fixture = TestBed.createComponent(UserTaskCloudComponent);
         component = fixture.componentInstance;
         errorEmitSpy = spyOn(component.error, 'emit');
@@ -480,12 +513,8 @@ describe('UserTaskCloudComponent', () => {
     });
 
     it('should allow controlling [open next task] checkbox visibility', () => {
-        if (!component.nextTaskCheckboxForFormsActivated) {
-            expect(true).toBeTrue();
-            return;
-        }
-
-        taskDetails.formKey = 'form';
+        taskDetails.formKey = 'my-screen';
+        component.taskDetails = { ...taskDetails };
         component.getTaskType();
         component.taskId = 'taskId';
         component.appName = 'app';
@@ -493,8 +522,11 @@ describe('UserTaskCloudComponent', () => {
         const spy = spyOn(taskCloudService, 'canCompleteTask');
 
         const isCheckboxShown = () => {
-            const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-            return !!checkbox;
+            const screenElement = fixture.debugElement.query(By.css('adf-cloud-task-screen'));
+            expect(screenElement).toBeTruthy();
+            const screenComponent: TaskScreenCloudMockComponent = screenElement.componentInstance;
+            expect(screenComponent).toBeTruthy();
+            return screenComponent.showNextTaskCheckbox;
         };
 
         const prepareTestCase = (testCase: {
@@ -558,63 +590,5 @@ describe('UserTaskCloudComponent', () => {
 
         prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: true });
         expect(isCheckboxShown()).toBeTrue();
-    });
-
-    it('should allow controlling [open next task] checkbox value', async () => {
-        if (!component.nextTaskCheckboxForFormsActivated) {
-            expect(true).toBeTrue();
-            return;
-        }
-
-        taskDetails.formKey = 'form';
-        component.getTaskType();
-
-        component.taskId = 'taskId';
-        component.appName = 'app';
-        component.showNextTaskCheckbox = true;
-        component.showCompleteButton = true;
-        component.readOnly = false;
-        spyOn(taskCloudService, 'canCompleteTask').and.returnValue(true);
-
-        const isCheckboxChecked = async () => {
-            const checkbox = await loader.getHarness(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
-            return checkbox.isChecked();
-        };
-
-        fixture.detectChanges();
-        expect(await isCheckboxChecked()).toBeFalse();
-
-        component.isNextTaskCheckboxChecked = true;
-        fixture.detectChanges();
-        expect(await isCheckboxChecked()).toBeTrue();
-
-        component.isNextTaskCheckboxChecked = false;
-        fixture.detectChanges();
-        expect(await isCheckboxChecked()).toBeFalse();
-    });
-
-    it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
-        if (!component.nextTaskCheckboxForFormsActivated) {
-            expect(true).toBeTrue();
-            return;
-        }
-
-        taskDetails.formKey = 'form';
-        component.getTaskType();
-
-        component.taskId = 'taskId';
-        component.appName = 'app';
-        component.showNextTaskCheckbox = true;
-        component.showCompleteButton = true;
-        component.readOnly = false;
-        spyOn(taskCloudService, 'canCompleteTask').and.returnValue(true);
-
-        fixture.detectChanges();
-        const checkbox = await loader.getHarnessOrNull(MatCheckboxHarness);
-
-        spyOn(component.nextTaskCheckboxCheckedChanged, 'emit');
-        await checkbox.check();
-
-        expect(component.nextTaskCheckboxCheckedChanged.emit).toHaveBeenCalled();
     });
 });

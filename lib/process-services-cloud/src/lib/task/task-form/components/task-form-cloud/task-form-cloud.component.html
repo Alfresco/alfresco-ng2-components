@@ -12,8 +12,6 @@
         [showCompleteButton]="canCompleteTask()"
         [showSaveButton]="canCompleteTask()"
         [displayModeConfigurations]="displayModeConfigurations"
-        [showNextTaskCheckbox]="showNextTaskCheckbox"
-        [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
         (formSaved)="onFormSaved($event)"
         (formCompleted)="onFormCompleted($event)"
         (formError)="onError($event)"
@@ -22,7 +20,6 @@
         (executeOutcome)="onFormExecuteOutcome($event)"
         (displayModeOn)="onDisplayModeOn($event)"
         (displayModeOff)="onDisplayModeOff($event)"
-        (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
     >
         <adf-cloud-form-custom-outcomes>
             <adf-cloud-user-task-cloud-buttons

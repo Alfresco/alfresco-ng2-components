@@ -61,7 +61,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 
 const MAX_NAME_LENGTH: number = 255;
@@ -138,14 +137,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
-    /** Toggle rendering of the `Open next task` checkbox. */
-    @Input()
-    showNextTaskCheckbox = false;
-
-    /** Whether the `Open next task` checkbox is checked by default or not. */
-    @Input()
-    isNextTaskCheckboxChecked = false;
-
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();
@@ -165,10 +156,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     /** Emitted when process definition selection changes. */
     @Output()
     processDefinitionSelection: EventEmitter<ProcessDefinitionCloud> = new EventEmitter<ProcessDefinitionCloud>();
-
-    /** Emitted when the `Open next task` checkbox was toggled. */
-    @Output()
-    nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent?: ProcessDefinitionCloud;
@@ -588,9 +575,5 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
         }
         return processName;
-    }
-
-    onNextTaskCheckboxCheckedChanged(event: MatCheckboxChange) {
-        this.nextTaskCheckboxCheckedChanged.emit(event);
     }
 }
