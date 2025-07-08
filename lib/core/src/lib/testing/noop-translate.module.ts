@@ -17,7 +17,7 @@
 
 import { EventEmitter, Injectable, NgModule } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
@@ -47,8 +47,15 @@ export class NoopTranslationService implements TranslationService {
 }
 
 @NgModule({
-    imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-    providers: [{ provide: TranslationService, useClass: NoopTranslationService }],
-    exports: [TranslateModule]
+    imports: [HttpClientTestingModule],
+    providers: [
+        { provide: TranslationService, useClass: NoopTranslationService },
+        provideTranslateService({
+            loader: {
+                provide: TranslateLoader,
+                useClass: NoopTranslationService
+            }
+        })
+    ]
 })
 export class NoopTranslateModule {}

@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigValues, CoreTestingModule, UnsavedChangesDialogComponent, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigValues, UnsavedChangesDialogComponent, UserPreferencesService } from '@alfresco/adf-core';
 import { DebugElement } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
@@ -30,7 +30,7 @@ describe('UnsavedChangesDialog', () => {
 
     const setupBeforeEach = (unsavedChangesDialogData?: UnsavedChangesDialogData) => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [],
             providers: [
                 {
                     provide: MAT_DIALOG_DATA,
