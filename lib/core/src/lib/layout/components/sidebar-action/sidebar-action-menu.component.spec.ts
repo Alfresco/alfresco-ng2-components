@@ -18,7 +18,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -31,7 +30,7 @@ describe('SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, SidebarActionMenuComponent]
+            imports: [SidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         component = fixture.componentInstance;
@@ -86,7 +85,7 @@ describe('Custom SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, SidebarActionMenuComponent, CustomSidebarActionMenuComponent]
+            imports: [SidebarActionMenuComponent, CustomSidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();

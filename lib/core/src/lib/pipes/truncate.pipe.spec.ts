@@ -17,16 +17,12 @@
 
 import { TruncatePipe } from './truncate.pipe';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('TruncatePipe', () => {
     let pipe: TruncatePipe;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         const injector = TestBed.inject(Injector);
         runInInjectionContext(injector, () => {
             pipe = new TruncatePipe();

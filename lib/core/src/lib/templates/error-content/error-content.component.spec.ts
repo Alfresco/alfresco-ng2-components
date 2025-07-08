@@ -16,7 +16,6 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../translation/translation.service';
 import { ActivatedRoute } from '@angular/router';
@@ -31,7 +30,7 @@ describe('ErrorContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [ErrorContentComponent],
             providers: [{ provide: ActivatedRoute, useValue: { params: of() } }]
         });
         fixture = TestBed.createComponent(ErrorContentComponent);

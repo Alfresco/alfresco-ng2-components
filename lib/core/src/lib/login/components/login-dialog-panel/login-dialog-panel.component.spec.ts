@@ -21,7 +21,7 @@ import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authenticatio
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;
@@ -33,7 +33,7 @@ describe('LoginDialogPanelComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [NoopAuthModule, LoginDialogPanelComponent],
             providers: [{ provide: OidcAuthenticationService, useValue: {} }]
         });
         fixture = TestBed.createComponent(LoginDialogPanelComponent);

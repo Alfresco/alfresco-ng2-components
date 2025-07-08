@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { formModelTabs } from '../../mock';
 import { FORM_SERVICE_FIELD_VALIDATORS_TOKEN, FormService } from './form.service';
-import { CoreTestingModule } from '../../testing';
 import { FORM_FIELD_VALIDATORS, FormFieldValidator } from '../public-api';
 
 const fakeValidator = {
@@ -32,7 +31,7 @@ describe('Form service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [],
             providers: [{ provide: FORM_SERVICE_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }]
         });
         service = TestBed.inject(FormService);

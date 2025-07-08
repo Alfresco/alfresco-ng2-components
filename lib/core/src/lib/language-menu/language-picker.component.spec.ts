@@ -20,17 +20,17 @@ import { LanguagePickerComponent } from './language-picker.component';
 import { MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { LanguageMenuComponent } from './language-menu.component';
 import { QueryList } from '@angular/core';
-import { CoreTestingModule, UnitTestingUtils } from '@alfresco/adf-core';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('LanguagePickerComponent', () => {
     let component: LanguagePickerComponent;
     let fixture: ComponentFixture<LanguagePickerComponent>;
     let testingUtils: UnitTestingUtils;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, LanguagePickerComponent]
-        }).compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [LanguagePickerComponent]
+        });
 
         fixture = TestBed.createComponent(LanguagePickerComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

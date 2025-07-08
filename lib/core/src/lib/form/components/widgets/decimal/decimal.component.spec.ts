@@ -19,7 +19,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material/input';
-import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
+import { UnitTestingUtils } from '../../../../testing';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { DecimalWidgetComponent } from './decimal.component';
@@ -30,11 +30,11 @@ describe('DecimalComponent', () => {
     let fixture: ComponentFixture<DecimalWidgetComponent>;
     let testingUtils: UnitTestingUtils;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, DecimalWidgetComponent],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [MatInputModule, DecimalWidgetComponent],
             providers: [FormService]
-        }).compileComponents();
+        });
 
         fixture = TestBed.createComponent(DecimalWidgetComponent);
         widget = fixture.componentInstance;

@@ -28,7 +28,6 @@ import {
     complexVisibilityJsonNotVisible,
     headerVisibilityCond
 } from '../../mock/form/widget-visibility-cloud.service.mock';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -39,9 +38,6 @@ describe('WidgetVisibilityCloudService', () => {
     const stubFormWithFields = new FormModel(fakeFormJson);
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         service = TestBed.inject(WidgetVisibilityService);
         jasmine.Ajax.install();
     });

@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils } from '../../../testing';
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { CheckboxWidgetComponent, FormFieldModel, FormFieldTypes, FormModel, TextWidgetComponent } from '../widgets';
 import { FormFieldComponent } from './form-field.component';
@@ -31,7 +31,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [FormFieldComponent]
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;

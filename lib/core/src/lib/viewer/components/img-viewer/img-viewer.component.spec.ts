@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils } from '../../../testing';
 import { ImgViewerComponent } from './img-viewer.component';
 
 describe('Test Img viewer component ', () => {
@@ -32,12 +32,6 @@ describe('Test Img viewer component ', () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
         return new Blob([data], { type: 'image/png' });
     };
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
-    });
 
     describe('Zoom customization', () => {
         beforeEach(() => {
