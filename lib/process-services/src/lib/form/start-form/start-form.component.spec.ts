@@ -35,13 +35,13 @@ import {
 import { StartFormComponent } from './start-form.component';
 import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { TranslateService } from '@ngx-translate/core';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { ProcessService } from '../../process-list/services/process.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { ProcessModule } from '../../process.module';
 
 describe('StartFormComponent', () => {
     let component: StartFormComponent;
@@ -57,7 +57,7 @@ describe('StartFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
+            imports: [ProcessModule.forRoot()],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(StartFormComponent);

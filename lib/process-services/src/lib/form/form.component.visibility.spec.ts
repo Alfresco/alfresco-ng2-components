@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { of } from 'rxjs';
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import {
     formDefinitionDropdownField,
     formDefinitionTwoTextFields,
@@ -30,13 +28,13 @@ import {
     formReadonlyTwoTextFields
 } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
-import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { ProcessModule } from '../process.module';
 
 describe('FormComponent UI and visibility', () => {
     let component: FormComponent;
@@ -47,8 +45,7 @@ describe('FormComponent UI and visibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessModule.forRoot(), FormComponent]
         });
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;

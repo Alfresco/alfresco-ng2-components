@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { PeopleSearchFieldComponent } from './people-search-field.component';
 import { By } from '@angular/platform-browser';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 describe('PeopleSearchFieldComponent', () => {
     let component: PeopleSearchFieldComponent;
@@ -28,9 +27,6 @@ describe('PeopleSearchFieldComponent', () => {
     let element: HTMLElement;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
-        });
         fixture = TestBed.createComponent(PeopleSearchFieldComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;

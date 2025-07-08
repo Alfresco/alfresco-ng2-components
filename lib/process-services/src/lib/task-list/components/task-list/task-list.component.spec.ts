@@ -32,7 +32,6 @@ import {
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../testing/mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
@@ -669,7 +668,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomTaskListComponent, CustomTaskListComponent]
+            imports: [CustomTaskListComponent, CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
         fixture.detectChanges();
@@ -709,7 +708,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, EmptyTemplateComponent]
+            imports: [EmptyTemplateComponent]
         });
         translateService = TestBed.inject(TranslateService);
         taskListService = TestBed.inject(TaskListService);
@@ -797,7 +796,7 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskListContextMenuComponent]
+            imports: [TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;

@@ -36,7 +36,6 @@ import {
 } from '@alfresco/adf-core';
 import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessColumnSchema } from '../../../testing/mock';
 import { ProcessService } from '../../services/process.service';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
@@ -59,9 +58,6 @@ describe('ProcessInstanceListComponent', () => {
     };
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
-        });
         fixture = TestBed.createComponent(ProcessInstanceListComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -489,7 +485,7 @@ describe('CustomProcessListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomProcessListComponent]
+            imports: [CustomProcessListComponent]
         });
         fixture = TestBed.createComponent(CustomProcessListComponent);
         fixture.detectChanges();
@@ -524,7 +520,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, EmptyTemplateComponent]
+            imports: [EmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         processService = TestBed.inject(ProcessService);
@@ -620,7 +616,7 @@ describe('ProcessListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ProcessListContextMenuComponent]
+            imports: [ProcessListContextMenuComponent]
         });
         fixture = TestBed.createComponent(ProcessListContextMenuComponent);
         customComponent = fixture.componentInstance;

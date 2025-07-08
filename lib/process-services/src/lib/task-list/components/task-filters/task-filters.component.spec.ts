@@ -23,10 +23,8 @@ import { of, throwError } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
-import { NavigationStart, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { NavigationStart, provideRouter, Router } from '@angular/router';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 const fakeTaskFilters = [
@@ -60,7 +58,8 @@ describe('TaskFiltersComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, RouterTestingModule, TaskFiltersComponent]
+            imports: [TaskFiltersComponent],
+            providers: [provideRouter([])]
         });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';

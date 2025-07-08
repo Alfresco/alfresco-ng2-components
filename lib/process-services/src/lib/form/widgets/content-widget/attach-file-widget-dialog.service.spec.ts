@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AlfrescoEndpointRepresentation } from '@alfresco/js-api';
 
 describe('AttachFileWidgetDialogService', () => {
@@ -29,9 +28,6 @@ describe('AttachFileWidgetDialogService', () => {
     let mockRepository: AlfrescoEndpointRepresentation;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
-        });
         service = TestBed.inject(AttachFileWidgetDialogService);
         materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({

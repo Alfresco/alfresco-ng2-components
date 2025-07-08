@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
 import { exampleProcess } from '../../../testing/mock';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 describe('ProcessInstanceHeaderComponent', () => {
     let component: ProcessInstanceHeaderComponent;
@@ -27,9 +26,6 @@ describe('ProcessInstanceHeaderComponent', () => {
     let appConfigService: AppConfigService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
-        });
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
 

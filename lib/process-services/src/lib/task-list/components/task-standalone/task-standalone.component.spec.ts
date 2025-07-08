@@ -17,7 +17,6 @@
 
 import { TaskStandaloneComponent } from './task-standalone.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 describe('TaskStandaloneComponent', () => {
     let component: TaskStandaloneComponent;
@@ -26,7 +25,7 @@ describe('TaskStandaloneComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskStandaloneComponent]
+            imports: [TaskStandaloneComponent]
         });
         fixture = TestBed.createComponent(TaskStandaloneComponent);
         component = fixture.componentInstance;
