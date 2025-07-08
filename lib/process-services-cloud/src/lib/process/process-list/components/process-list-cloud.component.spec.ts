@@ -29,7 +29,9 @@ import {
     getDataColumnMock,
     ObjectDataColumn,
     ObjectDataRow,
-    User
+    User,
+    NoopAuthModule,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
@@ -43,8 +45,7 @@ import { PreferenceCloudServiceInterface } from '../../../services/preference-cl
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { NoopAuthModule, NoopTranslateModule } from '../../../../../../core';
-import { ProcessServicesCloudModule } from '../../../process-services-cloud.module';
+import { provideCloudPreferences } from '../../../providers';
 
 const fakeCustomSchema = [
     new ObjectDataColumn<ProcessListDataColumnCustomData>({
@@ -218,7 +219,8 @@ describe('ProcessListCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServicesCloudModule.forRoot(), NoopTranslateModule, NoopAuthModule, ProcessListCloudComponent]
+            imports: [NoopAuthModule, ProcessListCloudComponent],
+            providers: [provideCloudPreferences()]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -1105,7 +1107,8 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServicesCloudModule.forRoot(), NoopTranslateModule, CustomTaskListComponent]
+            imports: [CustomTaskListComponent],
+            providers: [provideCloudPreferences()]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
         fixtureCustom.detectChanges();

@@ -16,24 +16,18 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { FormRenderingService, provideTranslations } from '@alfresco/adf-core';
+import { provideTranslations } from '@alfresco/adf-core';
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
 import { TASK_FORM_CLOUD_DIRECTIVES } from './task/task-form/task-form.module';
-import {
-    LocalPreferenceCloudService,
-    PreferenceCloudServiceInterface,
-    PROCESS_FILTERS_SERVICE_TOKEN,
-    TASK_FILTERS_SERVICE_TOKEN,
-    PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-    TASK_LIST_PREFERENCES_SERVICE_TOKEN
-} from './services/public-api';
-import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
+import { PreferenceCloudServiceInterface, TASK_LIST_CLOUD_TOKEN } from './services/public-api';
 import { RichTextEditorComponent } from './rich-text-editor';
 import { GroupCloudComponent } from './group/components/group-cloud.component';
 import { PeopleCloudComponent } from './people/components/people-cloud.component';
+import { provideCloudFormRenderer, provideCloudPreferences } from './providers';
+import { TaskListCloudService } from './task/task-list/services/task-list-cloud.service';
 
 export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [
     ...APP_LIST_CLOUD_DIRECTIVES,
@@ -43,9 +37,20 @@ export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [
     RichTextEditorComponent
 ] as const;
 
+/**
+ * @deprecated this module is deprecated and will be removed in the future versions
+ *
+ * Instead, import the standalone components directly, or use the following provider API to replicate the behaviour:
+ *
+ * providers: [
+ *      provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
+ *      provideCloudPreferences()
+ *      provideCloudFormRenderer(),
+ *      { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }
+ * ]
+ */
 @NgModule({
     imports: [ProcessCloudModule, TaskCloudModule, GroupCloudComponent, ...PROCESS_SERVICES_CLOUD_DIRECTIVES],
-    providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')],
     exports: [ProcessCloudModule, TaskCloudModule, GroupCloudComponent, ...PROCESS_SERVICES_CLOUD_DIRECTIVES]
 })
 export class ProcessServicesCloudModule {
@@ -57,12 +62,12 @@ export class ProcessServicesCloudModule {
             ngModule: ProcessServicesCloudModule,
             providers: [
                 provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
-                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                FormRenderingService,
-                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+                provideCloudPreferences({
+                    filterPreferenceServiceInstance,
+                    listPreferenceServiceInstance
+                }),
+                provideCloudFormRenderer(),
+                { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }
             ]
         };
     }

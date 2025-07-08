@@ -39,3 +39,4 @@ export * from './lib/models/process-instance-variable.model';
 export * from './lib/models/variable-definition';
 export * from './lib/models/date-format-cloud.model';
 export * from './lib/models/process-variable-filter.model';
+export * from './lib/providers';
