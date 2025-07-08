@@ -41,7 +41,7 @@ import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { loadAppConfig } from './app-config/app-config.loader';
@@ -134,8 +134,10 @@ export class CoreModule {
                 provideTranslateService({
                     loader: {
                         provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
+                        useClass: TranslateLoaderService,
+                        deps: [HttpClient]
+                    },
+                    defaultLanguage: 'en'
                 }),
                 MomentDateAdapter,
                 StoragePrefixFactory,
