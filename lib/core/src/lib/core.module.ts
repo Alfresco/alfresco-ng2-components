@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
@@ -39,7 +39,6 @@ import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import {
     // HttpClientModule,
@@ -52,10 +51,7 @@ import {
 } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { loadAppConfig } from './app-config/app-config.loader';
-import { AppConfigService } from './app-config/app-config.service';
-import { StorageService } from './common/services/storage.service';
-import { AppConfigPipe, StoragePrefixFactory } from './app-config';
+import { AppConfigPipe } from './app-config';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
@@ -63,6 +59,7 @@ import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
 import { DecimalRenderMiddlewareService, FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './form';
+import { provideAppConfig } from './app-config/provide-app-config';
 
 @NgModule({
     imports: [
@@ -141,16 +138,7 @@ export class CoreModule {
                     },
                     defaultLanguage: 'en'
                 }),
-                StoragePrefixFactory,
-                provideAppInitializer(() => {
-                    const initializerFn = loadAppConfig(
-                        inject(AppConfigService),
-                        inject(StorageService),
-                        inject(AdfHttpClient),
-                        inject(StoragePrefixFactory)
-                    );
-                    return initializerFn();
-                }),
+                provideAppConfig(),
                 provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
                 { provide: Authentication, useClass: AuthenticationService },
