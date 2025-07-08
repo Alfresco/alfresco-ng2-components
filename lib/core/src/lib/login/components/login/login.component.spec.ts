@@ -26,9 +26,10 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { LoginSuccessEvent } from '../../models/login-success.event';
 import { LoginErrorEvent } from '../../models/login-error.event';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { NoopAuthModule, NoopTranslationService, TranslationService } from '@alfresco/adf-core';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -58,8 +59,10 @@ describe('LoginComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [NoopAuthModule, LoginComponent],
             providers: [
+                provideHttpClientTesting(),
+                { provide: TranslationService, useClass: NoopTranslationService },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {

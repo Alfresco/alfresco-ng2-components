@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
@@ -113,7 +113,6 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...LANGUAGE_MENU_DIRECTIVES,
         ...INFO_DRAWER_DIRECTIVES,
         ...DATATABLE_DIRECTIVES,
-        TranslateModule,
         ...TEMPLATE_DIRECTIVES,
         SortingPickerComponent,
         IconComponent,
