@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Route } from '@angular/router';
+import { provideRouter, Route, Routes } from '@angular/router';
 import { ShellLayoutComponent } from './components/shell/shell.component';
 import { SHELL_AUTH_TOKEN } from './services/shell-app.service';
+import { EnvironmentProviders } from '@angular/core';
 
 export const SHELL_LAYOUT_ROUTE: Route = {
     path: '',
@@ -25,3 +26,41 @@ export const SHELL_LAYOUT_ROUTE: Route = {
     canActivate: [SHELL_AUTH_TOKEN],
     children: []
 };
+
+export interface AppShellRoutesConfig {
+    shellParentRoute?: Route;
+    shellChildren: Routes;
+}
+
+/**
+ * Provides shell routes for the application.
+ *
+ * @param routes The routes configuration for the shell.
+ * @returns An array of providers for the shell routes.
+ */
+export function provideShellRoutes(routes: Routes | AppShellRoutesConfig): EnvironmentProviders[] {
+    const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
+
+    if (Array.isArray(routes)) {
+        shellLayoutRoute.children.push(...routes);
+        return [provideRouter([shellLayoutRoute])];
+    }
+
+    const shellChildrenRoutes = routes.shellChildren || [];
+    if (shellChildrenRoutes.length > 0) {
+        shellLayoutRoute.children.push(...shellChildrenRoutes);
+    }
+
+    const shellParentRoute = routes.shellParentRoute;
+    const rootRoute = shellParentRoute || shellLayoutRoute;
+
+    if (routes.shellParentRoute) {
+        if (rootRoute.children === undefined) {
+            rootRoute.children = [];
+        }
+
+        rootRoute.children.push(shellLayoutRoute);
+    }
+
+    return [provideRouter([rootRoute])];
+}

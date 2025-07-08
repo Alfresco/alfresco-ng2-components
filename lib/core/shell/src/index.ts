@@ -18,3 +18,4 @@
 export * from './lib/shell.module';
 export * from './lib/services/shell-app.service';
 export * from './lib/components/shell/shell.component';
+export * from './lib/shell.routes';
