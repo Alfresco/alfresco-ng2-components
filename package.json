@@ -86,7 +86,7 @@
     "@editorjs/marker": "1.4.0",
     "@editorjs/paragraph": "^2.11.7",
     "@editorjs/underline": "1.2.1",
-    "@nx/angular": "20.8.0",
+    "@nx/angular": "21.2.2",
     "@nx/eslint-plugin": "20.8.0",
     "@nx/js": "20.8.0",
     "@nx/node": "20.8.0",
