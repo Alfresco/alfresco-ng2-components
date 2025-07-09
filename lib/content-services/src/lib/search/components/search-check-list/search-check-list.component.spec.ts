@@ -25,11 +25,14 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { ReplaySubject } from 'rxjs';
+import { UnitTestingUtils } from '../../../../../../core';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 describe('SearchCheckListComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchCheckListComponent>;
     let component: SearchCheckListComponent;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +41,7 @@ describe('SearchCheckListComponent', () => {
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component.context = {
             queryFragments: {},
@@ -136,6 +140,18 @@ describe('SearchCheckListComponent', () => {
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.filterRawParams[component.id]).toBeUndefined();
+    });
+
+    it('should have set labelPosition to after for checkboxes', () => {
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: true },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: true }
+        ]);
+
+        fixture.detectChanges();
+        const checkboxes = unitTestingUtils.getAllByDirective(MatCheckbox);
+        expect(checkboxes.length).toBe(2);
+        expect(checkboxes.every((checkbox) => checkbox.componentInstance.labelPosition === 'after')).toBeTrue();
     });
 
     describe('Pagination', () => {
