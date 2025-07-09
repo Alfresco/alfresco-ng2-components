@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('ProcessFilterDialogCloudComponent', () => {
     let component: ProcessFilterDialogCloudComponent;
@@ -35,7 +35,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessFilterDialogCloudComponent],
+            imports: [NoopTranslateModule, ProcessFilterDialogCloudComponent],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: mockDialogData }

@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { taskDetailsMock } from '../../../testing/mock/task/task-details.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -50,7 +49,7 @@ describe('StartTaskComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, StartTaskComponent]
+            imports: [StartTaskComponent]
         });
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
@@ -66,7 +65,6 @@ describe('StartTaskComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     it('should fetch fake form on init', () => {

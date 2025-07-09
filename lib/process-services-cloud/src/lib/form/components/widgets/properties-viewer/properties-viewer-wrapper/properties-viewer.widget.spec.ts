@@ -17,10 +17,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper.component';
-import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { fakeNodeWithProperties } from '../../../../mocks/attach-file-cloud-widget.mock';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let component: PropertiesViewerWrapperComponent;
@@ -29,7 +29,7 @@ describe('PropertiesViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, PropertiesViewerWrapperComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, PropertiesViewerWrapperComponent],
             providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWrapperComponent);

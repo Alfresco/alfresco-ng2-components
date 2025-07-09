@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel, NoopAuthModule, CoreModule } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -34,7 +33,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, PeopleCloudWidgetComponent]
+            imports: [CoreModule.forRoot(), NoopAuthModule, PeopleCloudWidgetComponent]
         });
         identityUserService = TestBed.inject(IdentityUserService);
         fixture = TestBed.createComponent(PeopleCloudWidgetComponent);

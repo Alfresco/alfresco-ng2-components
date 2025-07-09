@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TaskFilterService } from './task-filter.service';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 describe('TaskListService', () => {
@@ -31,7 +30,6 @@ describe('TaskListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(TaskFilterService);

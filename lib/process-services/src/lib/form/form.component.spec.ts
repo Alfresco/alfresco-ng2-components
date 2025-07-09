@@ -29,18 +29,18 @@ import {
     FormService,
     WidgetVisibilityService,
     ContainerModel,
-    fakeForm
+    fakeForm,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { NodeMetadata, NodesApiService } from '@alfresco/adf-content-services';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
-import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TaskFormService } from './services/task-form.service';
 import { TaskService } from './services/task.service';
 import { EditorService } from './services/editor.service';
 import { ModelService } from './services/model.service';
-import { FormCustomOutcomesComponent } from '@alfresco/adf-process-services';
 import { MatButtonModule } from '@angular/material/button';
+import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
 
 describe('FormComponent', () => {
     let fixture: ComponentFixture<FormComponent>;
@@ -84,7 +84,7 @@ describe('FormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomUploadModule]
+            imports: [NoopAuthModule, CustomUploadModule]
         });
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
@@ -1012,7 +1012,7 @@ describe('FormWithCustomOutComesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, FormWithCustomOutComesComponent]
+            imports: [FormWithCustomOutComesComponent]
         });
         fixture = TestBed.createComponent(FormWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;

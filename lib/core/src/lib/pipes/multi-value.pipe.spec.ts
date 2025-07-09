@@ -17,14 +17,13 @@
 
 import { MultiValuePipe } from './multi-value.pipe';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('MultiValuePipe', () => {
     let pipe: MultiValuePipe;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MultiValuePipe],
+            imports: [MultiValuePipe],
             providers: [MultiValuePipe]
         });
         pipe = TestBed.inject(MultiValuePipe);

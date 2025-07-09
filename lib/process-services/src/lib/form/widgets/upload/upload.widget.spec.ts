@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { FormService, FormFieldTypes, FormModel, FormFieldModel, CoreTestingModule } from '@alfresco/adf-core';
+import { FormService, FormFieldTypes, FormModel, FormFieldModel } from '@alfresco/adf-core';
 import { UploadWidgetComponent } from './upload.widget';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -74,7 +74,7 @@ describe('UploadWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, UploadWidgetComponent]
+            imports: [UploadWidgetComponent]
         });
     });
 

@@ -18,25 +18,12 @@
 import { NgModule } from '@angular/core';
 import { TaskListCloudComponent } from './components/task-list/task-list-cloud.component';
 import { ServiceTaskListCloudComponent } from './components/service-task-list/service-task-list-cloud.component';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../services/cloud-token.service';
-import { TaskListCloudService } from './services/task-list-cloud.service';
-import { LocalPreferenceCloudService } from '../../services/local-preference-cloud.service';
 
 export const TASK_LIST_CLOUD_DIRECTIVES = [TaskListCloudComponent, ServiceTaskListCloudComponent] as const;
 
 /** @deprecated use standalone components or TASK_LIST_CLOUD_DIRECTIVES instead */
 @NgModule({
     imports: [...TASK_LIST_CLOUD_DIRECTIVES],
-    exports: [...TASK_LIST_CLOUD_DIRECTIVES],
-    providers: [
-        {
-            provide: TASK_LIST_CLOUD_TOKEN,
-            useClass: TaskListCloudService
-        },
-        {
-            provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
-            useClass: LocalPreferenceCloudService
-        }
-    ]
+    exports: [...TASK_LIST_CLOUD_DIRECTIVES]
 })
 export class TaskListCloudModule {}

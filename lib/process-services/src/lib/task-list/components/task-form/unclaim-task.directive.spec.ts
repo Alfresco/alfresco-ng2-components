@@ -19,8 +19,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { UnclaimTaskDirective } from '@alfresco/adf-process-services';
+import { UnclaimTaskDirective } from './unclaim-task.directive';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('UnclaimTaskDirective', () => {
     @Component({
@@ -44,7 +44,7 @@ describe('UnclaimTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TestComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, TestComponent]
         });
         taskListService = TestBed.inject(TaskListService);
         fixture = TestBed.createComponent(TestComponent);
@@ -88,24 +88,19 @@ describe('Claim Task Directive validation errors', () => {
     })
     class ClaimTestMissingTaskIdDirectiveComponent {}
 
-    let fixture: ComponentFixture<any>;
-
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
         });
-        fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
     });
 
     it('should throw error when missing input', () => {
-        fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
-
+        const fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError();
     });
 
     it('should throw error when taskId is not set', () => {
-        fixture = TestBed.createComponent(ClaimTestMissingTaskIdDirectiveComponent);
-
+        const fixture = TestBed.createComponent(ClaimTestMissingTaskIdDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError('Attribute taskId is required');
     });
 });

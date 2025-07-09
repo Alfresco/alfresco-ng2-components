@@ -15,19 +15,12 @@
  * limitations under the License.
  */
 
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProcessModule } from '../process.module';
-import { CoreModule, FormRenderingService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
-import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [CoreModule.forRoot(), ProcessModule.forRoot(), NoopAuthModule, NoopAnimationsModule, NoopTranslateModule],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ],
-    exports: [CoreModule, ProcessModule]
+    imports: [BrowserDynamicTestingModule, NoopTranslateModule, NoopAnimationsModule]
 })
-export class ProcessTestingModule {}
+export class GlobalTestingModule {}

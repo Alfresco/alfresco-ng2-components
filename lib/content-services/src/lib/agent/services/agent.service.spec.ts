@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { AgentService } from './agent.service';
 import { Agent, AgentPaging } from '@alfresco/js-api';
 
@@ -53,10 +52,6 @@ describe('AgentService', () => {
     let agentService: AgentService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
-
         agentService = TestBed.inject(AgentService);
     });
 

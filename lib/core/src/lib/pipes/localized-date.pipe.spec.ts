@@ -20,7 +20,6 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { of } from 'rxjs';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr);
@@ -30,9 +29,6 @@ describe('LocalizedDatePipe', () => {
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new LocalizedDatePipe(userPreferences, TestBed.inject(AppConfigService));

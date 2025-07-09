@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
@@ -32,7 +32,7 @@ describe('DateEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [DateEditorComponent]
         });
         fixture = TestBed.createComponent(DateEditorComponent);
         component = fixture.componentInstance;

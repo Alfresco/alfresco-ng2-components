@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils } from '../../../testing';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
@@ -72,7 +72,7 @@ describe('PdfThumbListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [PdfThumbListComponent]
         });
         fixture = TestBed.createComponent(PdfThumbListComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

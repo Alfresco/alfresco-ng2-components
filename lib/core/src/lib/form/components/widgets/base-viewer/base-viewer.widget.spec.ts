@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../../testing';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel, FormModel } from '../core';
 import { BaseViewerWidgetComponent } from './base-viewer.widget';
@@ -44,7 +43,7 @@ describe('BaseViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, BaseViewerWidgetComponent],
+            imports: [BaseViewerWidgetComponent],
             providers: [{ provide: FormService, useValue: formServiceStub }]
         });
 

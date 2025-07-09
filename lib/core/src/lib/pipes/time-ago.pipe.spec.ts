@@ -19,7 +19,6 @@ import { TimeAgoPipe } from './time-ago.pipe';
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { of } from 'rxjs';
 import { Injector, runInInjectionContext } from '@angular/core';
 
@@ -28,9 +27,6 @@ describe('TimeAgoPipe', () => {
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         userPreferences = TestBed.inject(UserPreferencesService);
         const injector = TestBed.inject(Injector);
         spyOn(userPreferences, 'select').and.returnValue(of(''));

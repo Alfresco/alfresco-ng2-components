@@ -22,9 +22,8 @@ import { of, throwError } from 'rxjs';
 import { fakeApplicationInstance } from '../../mock/app-model.mock';
 import { AppListCloudComponent, LAYOUT_GRID, LAYOUT_LIST } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../../services/apps-process-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { MatIconModule } from '@angular/material/icon';
-import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { CustomEmptyContentTemplateDirective, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('AppListCloudComponent', () => {
     let component: AppListCloudComponent;
@@ -56,7 +55,7 @@ describe('AppListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, AppListCloudComponent, CustomEmptyAppListCloudTemplateComponent]
+            imports: [NoopTranslateModule, AppListCloudComponent, CustomEmptyAppListCloudTemplateComponent]
         });
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;

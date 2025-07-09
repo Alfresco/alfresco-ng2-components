@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { FormListComponent } from './form-list.component';
 import { ModelService } from '../services/model.service';
 
@@ -29,7 +28,7 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, FormListComponent]
+            imports: [FormListComponent]
         });
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;

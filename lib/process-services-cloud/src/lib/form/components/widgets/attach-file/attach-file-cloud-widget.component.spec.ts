@@ -29,7 +29,9 @@ import {
     FormService,
     LocalizedDatePipe,
     NotificationService,
-    UploadWidgetContentLinkModel
+    UploadWidgetContentLinkModel,
+    NoopTranslateModule,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import {
     allSourceParams,
@@ -59,9 +61,14 @@ import {
     onlyLocalParams,
     processVariables
 } from '../../../mocks/attach-file-cloud-widget.mock';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { Injector, runInInjectionContext } from '@angular/core';
-import { ContentNodeSelectorPanelService, NewVersionUploaderDataAction, NewVersionUploaderService } from '@alfresco/adf-content-services';
+import {
+    ContentNodeSelectorPanelService,
+    NewVersionUploaderDataAction,
+    NewVersionUploaderService,
+    AlfrescoApiService,
+    AlfrescoApiServiceMock
+} from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 
@@ -143,7 +150,8 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, AttachFileCloudWidgetComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, AttachFileCloudWidgetComponent],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         notificationService = TestBed.inject(NotificationService);
         downloadService = TestBed.inject(DownloadService);

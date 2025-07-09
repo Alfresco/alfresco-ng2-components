@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { of } from 'rxjs';
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import {
     formDefinitionDropdownField,
     formDefinitionTwoTextFields,
     formDefinitionRequiredField,
     formDefVisibilityFieldDependsOnNextOne,
     formDefVisibilitiFieldDependsOnPreviousOne,
-    formReadonlyTwoTextFields
+    formReadonlyTwoTextFields,
+    FormRenderingService
 } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
-import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
-import { TaskRepresentation } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 describe('FormComponent UI and visibility', () => {
     let component: FormComponent;
@@ -44,17 +42,21 @@ describe('FormComponent UI and visibility', () => {
     let taskFormService: TaskFormService;
     let fixture: ComponentFixture<FormComponent>;
     let loader: HarnessLoader;
+    let getTaskFormSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [FormComponent],
+            providers: [FormRenderingService, { provide: FormRenderingService, useClass: ProcessFormRenderingService }]
         });
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
-        taskService = TestBed.inject(TaskService);
         taskFormService = TestBed.inject(TaskFormService);
+
+        taskService = TestBed.inject(TaskService);
+        spyOn(taskService, 'getTask').and.returnValue(of({} as any));
+        getTaskFormSpy = spyOn(taskFormService, 'getTaskForm');
     });
 
     afterEach(() => {
@@ -63,8 +65,7 @@ describe('FormComponent UI and visibility', () => {
 
     describe('Validation icon', () => {
         it('should display valid icon for valid form', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-            spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
+            getTaskFormSpy.and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ taskId: change });
@@ -75,8 +76,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should display invalid icon for valid form', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-            spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionRequiredField));
+            getTaskFormSpy.and.returnValue(of(formDefinitionRequiredField));
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ taskId: change });
@@ -87,8 +87,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should NOT display validation icon when [showValidationIcon] is false', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-            spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
+            getTaskFormSpy.and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ taskId: change });
@@ -101,8 +100,7 @@ describe('FormComponent UI and visibility', () => {
 
     describe('form definition', () => {
         it('should display two text fields form definition', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-            spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
+            getTaskFormSpy.and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ taskId: change });
@@ -118,8 +116,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should display dropdown field', async () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-            spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionDropdownField));
+            getTaskFormSpy.and.returnValue(of(formDefinitionDropdownField));
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ taskId: change });
@@ -144,8 +141,7 @@ describe('FormComponent UI and visibility', () => {
 
         describe('Visibility conditions', () => {
             it('should hide the field based on the next one', () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-                spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
+                getTaskFormSpy.and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
 
                 const change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ taskId: change });
@@ -161,8 +157,7 @@ describe('FormComponent UI and visibility', () => {
             });
 
             it('should hide the field based on the previous one', () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-                spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilitiFieldDependsOnPreviousOne));
+                getTaskFormSpy.and.returnValue(of(formDefVisibilitiFieldDependsOnPreviousOne));
 
                 const change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ taskId: change });
@@ -178,8 +173,7 @@ describe('FormComponent UI and visibility', () => {
             });
 
             it('should show the hidden field when the visibility condition change to true', () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-                spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
+                getTaskFormSpy.and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
 
                 const change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ taskId: change });
@@ -203,8 +197,7 @@ describe('FormComponent UI and visibility', () => {
 
         describe('Readonly Form', () => {
             it('should display two text fields readonly', async () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
-                spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formReadonlyTwoTextFields));
+                getTaskFormSpy.and.returnValue(of(formReadonlyTwoTextFields));
 
                 const change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ taskId: change });

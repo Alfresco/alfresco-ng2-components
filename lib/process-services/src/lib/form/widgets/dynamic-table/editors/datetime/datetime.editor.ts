@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ADF_DATETIME_FORMATS,
-    ADF_DATE_FORMATS,
-    AdfDateFnsAdapter,
-    AdfDateTimeFnsAdapter /*MOMENT_DATE_FORMATS, MomentDateAdapter*/,
-    DateFnsUtils
-} from '@alfresco/adf-core';
+import { ADF_DATETIME_FORMATS, ADF_DATE_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';

@@ -41,7 +41,6 @@ import {
     taskDetailsWithOutFormMock,
     taskFormMock
 } from '../../../testing/mock/task/task-details.mock';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { TaskService } from '../../../form/services/task.service';
@@ -62,7 +61,6 @@ describe('TaskFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(TaskFormComponent);

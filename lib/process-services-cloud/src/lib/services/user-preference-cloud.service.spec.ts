@@ -18,8 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { UserPreferenceCloudService } from './user-preference-cloud.service';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
-import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('PreferenceService', () => {
     let service: UserPreferenceCloudService;
@@ -34,7 +34,7 @@ describe('PreferenceService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopTranslateModule]
         });
         service = TestBed.inject(UserPreferenceCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
