@@ -1,11 +1,15 @@
 .adf-version-list {
     &-viewport {
-        height: 100%;
-        overflow-x: hidden;
         display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 200px; // Ensure it's not invisible
+        max-height: 60vh; // Prevent overflow in dialogs/small screens
+        height: 100%; // Take full height if parent provides it
+        overflow: hidden auto; // Scroll vertically if needed // No horizontal scroll
 
         :first-child {
-            max-width: 100%;
+            max-width: 100%; // Prevents content from stretching too far
         }
     }
 
@@ -29,6 +33,10 @@
     }
 
     &.adf-version-list-element {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
         .adf-version-list-item {
             border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
             width: 100%;
