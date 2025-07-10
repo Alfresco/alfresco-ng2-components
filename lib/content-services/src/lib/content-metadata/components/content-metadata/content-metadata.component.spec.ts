@@ -154,6 +154,8 @@ describe('ContentMetadataComponent', () => {
 
     const queryDom = (properties = 'properties') => fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
 
+    const emptyPanelMessage = () => fixture.debugElement.query(By.css('.adf-metadata-no-item-added'));
+
     /**
      * Get metadata categories
      *
@@ -1484,6 +1486,37 @@ describe('ContentMetadataComponent', () => {
             const noEditableTagsContainer = fixture.debugElement.query(By.css('div.adf-metadata-properties-tags'));
             expect(noEditableTagsContainer).toBeNull();
         });
+
+        it('should show existing tags when editing another panel and viewing tags panel', async () => {
+            component.displayTags = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+            fixture.detectChanges();
+
+            toggleEditModeForGeneralInfo();
+            expandTagsPanel();
+            const tagElements = await findTagElements();
+            expect(tagElements).toHaveSize(2);
+            expect(component.showEmptyTagMessage).toBeFalse();
+        });
+
+        it('should show empty tag message when editing another panel and viewing tags panel', () => {
+            component.displayTags = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+
+            toggleEditModeForGeneralInfo();
+            expandTagsPanel();
+            fixture.detectChanges();
+
+            expect(emptyPanelMessage()).toBeTruthy();
+            expect(component.showEmptyTagMessage).toBeTrue();
+        });
     });
 
     describe('Tags creator', () => {
@@ -1677,6 +1710,36 @@ describe('ContentMetadataComponent', () => {
             toggleEditModeForCategories();
             expect(getCategories().length).toBe(0);
         });
+
+        it('should show existing categories when editing another panel and viewing categories panel', async () => {
+            component.displayCategories = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+            fixture.detectChanges();
+
+            toggleEditModeForGeneralInfo();
+            expandCategoriesPanel();
+            const categories = getCategories();
+            expect(categories).toHaveSize(2);
+            expect(component.showEmptyCategoryMessage).toBeFalse();
+        });
+
+        it('should show empty categories message when editing another panel and viewing categories panel', () => {
+            component.displayCategories = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+
+            toggleEditModeForGeneralInfo();
+            expandCategoriesPanel();
+            fixture.detectChanges();
+
+            expect(emptyPanelMessage()).toBeTruthy();
+            expect(component.showEmptyCategoryMessage).toBeTrue();
+        });
     });
 
     describe('Categories management', () => {
@@ -1771,4 +1834,90 @@ describe('ContentMetadataComponent', () => {
             expect(customComponent).toBeDefined();
         });
     });
+    //
+    // fdescribe('Empty message conditions', () => {
+    //     beforeEach(() => {
+    //         component.displayTags = true;
+    //         component.displayCategories = true;
+    //         component.readOnly = false;
+    //         spyOn(tagService, 'getTagsByNodeId').and.returnValue(of({ list: { entries: [] } } as TagPaging));
+    //         spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of({ list: { entries: [] } } as CategoryPaging));
+    //         component.ngOnInit();
+    //         fixture.detectChanges();
+    //     });
+    //
+    //     it('should show empty tag message when tags array is empty and tags panel is not being edited', () => {
+    //         // Expand tags panel
+    //         component.expandPanel('Tags');
+    //         fixture.detectChanges();
+    //
+    //         // Verify the empty message is shown
+    //         const emptyTagMessage = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-empty-tags"]'));
+    //         expect(emptyTagMessage).toBeTruthy();
+    //         expect(component.showEmptyTagMessage).toBeTrue();
+    //     });
+    //
+    //     it('should NOT show empty tag message when tags panel is being edited', () => {
+    //         // Expand tags panel and enable edit mode
+    //         component.expandPanel('Tags');
+    //         fixture.detectChanges();
+    //         toggleEditModeForTags();
+    //
+    //         // Verify the empty message is not shown
+    //         const emptyTagMessage = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-empty-tags"]'));
+    //         expect(emptyTagMessage).toBeNull();
+    //         expect(component.showEmptyTagMessage).toBeFalse();
+    //     });
+    //
+    //     it('should show empty tag message when editing another panel and viewing tags panel', () => {
+    //         // Start editing general info panel
+    //         toggleEditModeForGeneralInfo();
+    //
+    //         // Switch to tags panel
+    //         component.expandPanel('Tags');
+    //         fixture.detectChanges();
+    //
+    //         // Verify the empty message is shown
+    //         const emptyTagMessage = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-empty-tags"]'));
+    //         expect(emptyTagMessage).toBeTruthy();
+    //         expect(component.showEmptyTagMessage).toBeTrue();
+    //     });
+    //
+    //     it('should show empty category message when categories array is empty and categories panel is not being edited', () => {
+    //         // Expand categories panel
+    //         component.expandPanel('Categories');
+    //         fixture.detectChanges();
+    //
+    //         // Verify the empty message is shown
+    //         const emptyCategoryMessage = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-empty-categories"]'));
+    //         expect(emptyCategoryMessage).toBeTruthy();
+    //         expect(component.showEmptyCategoryMessage).toBeTrue();
+    //     });
+    //
+    //     it('should NOT show empty category message when categories panel is being edited', () => {
+    //         // Expand categories panel and enable edit mode
+    //         component.expandPanel('Categories');
+    //         fixture.detectChanges();
+    //         toggleEditModeForCategories();
+    //
+    //         // Verify the empty message is not shown
+    //         const emptyCategoryMessage = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-empty-categories"]'));
+    //         expect(emptyCategoryMessage).toBeNull();
+    //         expect(component.showEmptyCategoryMessage).toBeFalse();
+    //     });
+    //
+    //     it('should show empty category message when editing another panel and viewing categories panel', () => {
+    //         // Start editing general info panel
+    //         toggleEditModeForGeneralInfo();
+    //
+    //         // Switch to categories panel
+    //         component.expandPanel('Categories');
+    //         fixture.detectChanges();
+    //
+    //         // Verify the empty message is shown
+    //         const emptyCategoryMessage = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-empty-categories"]'));
+    //         expect(emptyCategoryMessage).toBeTruthy();
+    //         expect(component.showEmptyCategoryMessage).toBeTrue();
+    //     });
+    // });
 });
