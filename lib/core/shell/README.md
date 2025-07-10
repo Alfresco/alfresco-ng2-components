@@ -9,9 +9,19 @@ This module provides the main layout for the application, allowing you to define
 Passed routes are going to be attached to shell main route.
 
 ```typescript
-import { provideShellRoutes } from '@alfresco/adf-core/shell';
+import { provideShell } from '@alfresco/adf-core/shell';
 
-provideShellRoutes([/*Your Routes*/])
+provideShell(
+    {
+        routes: [],
+        appService: AppService,
+        authGuard: AuthGuard,
+        navBar: {
+            minWidth: 0,
+            maxWidth: 100
+        }
+    }
+)
 ```
 
 If you would like to provide custom app guard, you can provide your own using `SHELL_AUTH_TOKEN`.
