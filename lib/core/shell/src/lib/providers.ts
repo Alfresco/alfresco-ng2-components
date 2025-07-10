@@ -56,7 +56,7 @@ export function provideShell(opts?: ProvideShellOpts): (Provider | EnvironmentPr
     if (opts?.navBar) {
         result.push({
             provide: SHELL_NAVBAR_MIN_WIDTH,
-            useValue: opts.navBar.minWidth || 70
+            useValue: opts.navBar.minWidth ?? 70
         });
         result.push({
             provide: SHELL_NAVBAR_MAX_WIDTH,
