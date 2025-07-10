@@ -17,3 +17,4 @@
 
 export * from './translation.service';
 export * from './translate-loader.service';
+export * from './provide-i18n';
