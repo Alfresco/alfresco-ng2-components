@@ -19,7 +19,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, provideRouter } from '@angular/router';
 import { AppShellRoutesConfig, SHELL_LAYOUT_ROUTE } from './shell.routes';
 
-/** @deprecated use `provideShellRoutes` instead */
+/** @deprecated use `provideShell` instead */
 @NgModule()
 export class ShellModule {
     static withRoutes(routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
