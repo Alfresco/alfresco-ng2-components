@@ -18,7 +18,14 @@
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { AppConfigService, CardViewBaseItemModel, CardViewComponent, NotificationService, UpdateNotification } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    NotificationService,
+    UpdateNotification,
+    UnitTestingUtils
+} from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
@@ -36,7 +43,7 @@ import { CategoryService } from '../../../category/services/category.service';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -48,6 +55,7 @@ describe('ContentMetadataComponent', () => {
     let folderNode: Node;
     let tagService: TagService;
     let categoryService: CategoryService;
+    let testingUtils: UnitTestingUtils;
     let getClassSpy: jasmine.Spy;
     let notificationService: NotificationService;
     let getGroupedPropertiesSpy: jasmine.Spy;
@@ -154,7 +162,7 @@ describe('ContentMetadataComponent', () => {
 
     const queryDom = (properties = 'properties') => fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
 
-    const emptyPanelMessage = () => fixture.debugElement.query(By.css('.adf-metadata-no-item-added'));
+    const getEmptyPanelMessage = (): DebugElement => testingUtils.getByCSS('.adf-metadata-no-item-added');
 
     /**
      * Get metadata categories
@@ -198,6 +206,7 @@ describe('ContentMetadataComponent', () => {
         });
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         contentMetadataService = TestBed.inject(ContentMetadataService);
         updateService = TestBed.inject(CardViewContentUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
@@ -1496,7 +1505,6 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({
                 node: new SimpleChange(undefined, node, false)
             });
-            fixture.detectChanges();
 
             toggleEditModeForGeneralInfo();
             expandTagsPanel();
@@ -1514,7 +1522,7 @@ describe('ContentMetadataComponent', () => {
             expandTagsPanel();
             fixture.detectChanges();
 
-            expect(emptyPanelMessage()).toBeTruthy();
+            expect(getEmptyPanelMessage()).toBeTruthy();
             expect(component.showEmptyTagMessage).toBeTrue();
         });
     });
@@ -1719,7 +1727,6 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({
                 node: new SimpleChange(undefined, node, false)
             });
-            fixture.detectChanges();
 
             toggleEditModeForGeneralInfo();
             expandCategoriesPanel();
@@ -1737,7 +1744,7 @@ describe('ContentMetadataComponent', () => {
             expandCategoriesPanel();
             fixture.detectChanges();
 
-            expect(emptyPanelMessage()).toBeTruthy();
+            expect(getEmptyPanelMessage()).toBeTruthy();
             expect(component.showEmptyCategoryMessage).toBeTrue();
         });
     });

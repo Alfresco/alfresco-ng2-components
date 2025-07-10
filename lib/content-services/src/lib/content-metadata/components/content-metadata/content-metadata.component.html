@@ -241,7 +241,7 @@
                         </div>
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <div *ngIf="!showGroup(group) && group.editable && !editing" class="adf-metadata-no-item-added">
+                <div *ngIf="!showGroup(group) && group.editable && editedPanelTitle !== group.title" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate : { groupTitle: group.title | translate } }}
                 </div>
                 <adf-card-view
