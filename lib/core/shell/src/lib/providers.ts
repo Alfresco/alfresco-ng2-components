@@ -60,7 +60,7 @@ export function provideShell(opts?: ProvideShellOpts): (Provider | EnvironmentPr
         });
         result.push({
             provide: SHELL_NAVBAR_MAX_WIDTH,
-            useValue: opts.navBar.maxWidth || 320
+            useValue: opts.navBar.maxWidth ?? 320
         });
     }
 
