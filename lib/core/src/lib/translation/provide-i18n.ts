@@ -48,7 +48,7 @@ export function provideI18N(config?: ProvideI18NConfig): (Provider | Environment
         provideTranslateService({
             loader: {
                 provide: TranslateLoader,
-                useClass: TranslateLoaderService,
+                useExisting: TranslateLoaderService,
                 deps: [HttpClient]
             },
             defaultLanguage: config?.defaultLanguage || 'en'
