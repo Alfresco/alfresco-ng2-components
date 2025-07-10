@@ -37,7 +37,7 @@ export interface ProvideI18NConfig {
 /**
  * Provides the i18n service.
  * This function is used to provide the i18n service in the application.
- * It is recommended to use this function the top-level `AppModule` to ensure that the i18n service is available throughout the application.
+ * It is recommended to use this function in the top-level `AppModule` to ensure that the i18n service is available throughout the application.
  *
  * @param config - Configuration for the i18n service.
  * @param config.assets - An array of assets to be used for i18n, where each asset is a tuple containing an identifier and a path.
