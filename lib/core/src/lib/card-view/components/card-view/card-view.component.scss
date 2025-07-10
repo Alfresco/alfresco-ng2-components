@@ -13,10 +13,6 @@
         &.adf-property-value-editable {
             color: var(--adf-metadata-property-panel-title-color);
         }
-
-        &.adf-property-readonly-value {
-            color: var(--adf-metadata-property-panel-label-color);
-        }
     }
 
     .adf-property-container {
@@ -36,6 +32,14 @@
                 color: var(--adf-metadata-property-panel-title-color);
                 padding: 6px 0;
                 line-height: 20px;
+
+                &.adf-property-value-editable {
+                    padding: 6px 0 6px 12px;
+
+                    &:disabled {
+                        color: var(--adf-metadata-property-panel-label-color);
+                    }
+                }
             }
 
             .adf-card-view__key-value-pairs__row {
