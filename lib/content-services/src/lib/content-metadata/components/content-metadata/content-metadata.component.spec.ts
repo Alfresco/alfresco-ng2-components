@@ -18,7 +18,14 @@
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { AppConfigService, CardViewBaseItemModel, CardViewComponent, NotificationService, UpdateNotification } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    NotificationService,
+    UpdateNotification,
+    UnitTestingUtils
+} from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
@@ -36,7 +43,7 @@ import { CategoryService } from '../../../category/services/category.service';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -48,6 +55,7 @@ describe('ContentMetadataComponent', () => {
     let folderNode: Node;
     let tagService: TagService;
     let categoryService: CategoryService;
+    let testingUtils: UnitTestingUtils;
     let getClassSpy: jasmine.Spy;
     let notificationService: NotificationService;
     let getGroupedPropertiesSpy: jasmine.Spy;
@@ -154,6 +162,8 @@ describe('ContentMetadataComponent', () => {
 
     const queryDom = (properties = 'properties') => fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
 
+    const getEmptyPanelMessage = (): DebugElement => testingUtils.getByCSS('.adf-metadata-no-item-added');
+
     /**
      * Get metadata categories
      *
@@ -196,6 +206,7 @@ describe('ContentMetadataComponent', () => {
         });
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         contentMetadataService = TestBed.inject(ContentMetadataService);
         updateService = TestBed.inject(CardViewContentUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
@@ -1484,6 +1495,36 @@ describe('ContentMetadataComponent', () => {
             const noEditableTagsContainer = fixture.debugElement.query(By.css('div.adf-metadata-properties-tags'));
             expect(noEditableTagsContainer).toBeNull();
         });
+
+        it('should show existing tags when editing another panel and viewing tags panel', async () => {
+            component.displayTags = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+
+            toggleEditModeForGeneralInfo();
+            expandTagsPanel();
+            const tagElements = await findTagElements();
+            expect(tagElements).toHaveSize(2);
+            expect(component.showEmptyTagMessage).toBeFalse();
+        });
+
+        it('should show empty tag message when editing another panel and viewing tags panel', () => {
+            component.displayTags = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+
+            toggleEditModeForGeneralInfo();
+            expandTagsPanel();
+            fixture.detectChanges();
+
+            expect(getEmptyPanelMessage()).toBeTruthy();
+            expect(component.showEmptyTagMessage).toBeTrue();
+        });
     });
 
     describe('Tags creator', () => {
@@ -1676,6 +1717,35 @@ describe('ContentMetadataComponent', () => {
 
             toggleEditModeForCategories();
             expect(getCategories().length).toBe(0);
+        });
+
+        it('should show existing categories when editing another panel and viewing categories panel', async () => {
+            component.displayCategories = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+
+            toggleEditModeForGeneralInfo();
+            expandCategoriesPanel();
+            const categories = getCategories();
+            expect(categories).toHaveSize(2);
+            expect(component.showEmptyCategoryMessage).toBeFalse();
+        });
+
+        it('should show empty categories message when editing another panel and viewing categories panel', () => {
+            component.displayCategories = true;
+            component.readOnly = false;
+            fixture.detectChanges();
+
+            toggleEditModeForGeneralInfo();
+            expandCategoriesPanel();
+            fixture.detectChanges();
+
+            expect(getEmptyPanelMessage()).toBeTruthy();
+            expect(component.showEmptyCategoryMessage).toBeTrue();
         });
     });
 
