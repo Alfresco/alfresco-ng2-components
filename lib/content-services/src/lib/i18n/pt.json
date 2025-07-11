@@ -184,8 +184,8 @@
       "DUPLICATED_CATEGORY": "Categoria já adicionada",
       "CREATE_CATEGORIES": "Erro ao criar categorias",
       "EXISTING_CATEGORIES": "Algumas categorias já existem",
-      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
-      "ENDS_WITH_DOT": "Category name cannot end with a dot"
+      "SPECIAL_CHARACTERS": "O nome da categoria não pode conter caracteres proibidos",
+      "ENDS_WITH_DOT": "O nome da categoria não pode terminar com um ponto"
     },
     "CATEGORIES_SEARCH_PLACEHOLDER": "Categorias de Pesquisa"
   },
