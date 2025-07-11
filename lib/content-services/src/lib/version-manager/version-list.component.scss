@@ -1,8 +1,9 @@
 .adf-version-list {
     &-viewport {
-        height: 100%;
-        overflow-x: hidden;
         display: flex;
+        min-height: 200px;
+        max-height: 60vh;
+        height: 100%;
 
         :first-child {
             max-width: 100%;
