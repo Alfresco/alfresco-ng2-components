@@ -24,9 +24,8 @@ import { By } from '@angular/platform-browser';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { mockProcessFilters } from '../../mock/process-filters-cloud.mock';
-import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 
 const ProcessFilterCloudServiceMock = {
@@ -44,7 +43,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, ProcessFiltersCloudComponent, ApolloTestingModule],
+            imports: [ProcessFiltersCloudComponent, ApolloTestingModule],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },

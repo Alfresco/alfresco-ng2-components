@@ -18,7 +18,6 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
-import { CoreTestingModule } from '../../../testing';
 
 describe('PdfThumbComponent', () => {
     let fixture: ComponentFixture<PdfThumbComponent>;
@@ -42,7 +41,7 @@ describe('PdfThumbComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [PdfThumbComponent],
             providers: [
                 {
                     provide: DomSanitizer,

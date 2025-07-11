@@ -98,7 +98,7 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="currentPanel.panelTitle === DefaultPanels.TAGS && !editing"
+            <div *ngIf="currentPanel.panelTitle === DefaultPanels.TAGS && editedPanelTitle !== DefaultPanels.TAGS"
                  class="adf-metadata-properties-tags">
                 <adf-dynamic-chip-list [chips]="tagsToDisplay" [showDelete]="false" />
             </div>
@@ -161,7 +161,7 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="currentPanel.panelTitle === DefaultPanels.CATEGORIES && !editing">
+            <div *ngIf="currentPanel.panelTitle === DefaultPanels.CATEGORIES && editedPanelTitle !== DefaultPanels.CATEGORIES">
                 <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
             </div>
             <div *ngIf="showEmptyCategoryMessage" class="adf-metadata-no-item-added">
@@ -241,7 +241,7 @@
                         </div>
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <div *ngIf="!showGroup(group) && group.editable && !editing" class="adf-metadata-no-item-added">
+                <div *ngIf="!showGroup(group) && group.editable && editedPanelTitle !== group.title" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate : { groupTitle: group.title | translate } }}
                 </div>
                 <adf-card-view

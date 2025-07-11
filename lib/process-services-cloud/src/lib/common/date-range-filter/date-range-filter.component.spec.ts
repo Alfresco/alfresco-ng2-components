@@ -17,7 +17,6 @@
 
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
@@ -28,6 +27,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatDateRangeInputHarness } from '@angular/material/datepicker/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
@@ -37,7 +37,7 @@ describe('DateRangeFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, DateRangeFilterComponent]
+            imports: [NoopTranslateModule, DateRangeFilterComponent]
         });
         fixture = TestBed.createComponent(DateRangeFilterComponent);
         component = fixture.componentInstance;

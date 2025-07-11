@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
@@ -51,7 +50,7 @@ describe('IdentityUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatMenuModule, IdentityUserInfoComponent]
+            imports: [MatMenuModule, IdentityUserInfoComponent]
         });
         fixture = TestBed.createComponent(IdentityUserInfoComponent);
         component = fixture.componentInstance;

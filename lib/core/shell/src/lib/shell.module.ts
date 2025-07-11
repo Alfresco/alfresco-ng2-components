@@ -16,19 +16,11 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { Routes, provideRoutes, Route } from '@angular/router';
-import { SHELL_LAYOUT_ROUTE } from './shell.routes';
-import { ShellLayoutComponent } from './components/shell/shell.component';
+import { Routes, provideRouter } from '@angular/router';
+import { AppShellRoutesConfig, SHELL_LAYOUT_ROUTE } from './shell.routes';
 
-export interface AppShellRoutesConfig {
-    shellParentRoute?: Route;
-    shellChildren: Routes;
-}
-
-@NgModule({
-    imports: [ShellLayoutComponent],
-    exports: [ShellLayoutComponent]
-})
+/** @deprecated use `provideShellRoutes` instead */
+@NgModule()
 export class ShellModule {
     static withRoutes(routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
         if (Array.isArray(routes)) {
@@ -54,7 +46,7 @@ function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
 
     return {
         ngModule: ShellModule,
-        providers: provideRoutes([shellLayoutRoute])
+        providers: [provideRouter([shellLayoutRoute])]
     };
 }
 
@@ -84,6 +76,6 @@ function getModuleForRouteConfig(config: AppShellRoutesConfig): ModuleWithProvid
 
     return {
         ngModule: ShellModule,
-        providers: provideRoutes([rootRoute])
+        providers: [provideRouter([rootRoute])]
     };
 }

@@ -20,7 +20,7 @@ import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, fakeAsync, flush, discardPeriodicTasks } from '@angular/core/testing';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { AppConfigService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import {
     assignedTaskDetailsCloudMock,
@@ -33,8 +33,6 @@ import {
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -61,7 +59,7 @@ describe('TaskHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TaskHeaderCloudComponent, HttpClientTestingModule, NoopTranslateModule, NoopAuthModule, NoopAnimationsModule]
+            imports: [TaskHeaderCloudComponent, NoopAuthModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {

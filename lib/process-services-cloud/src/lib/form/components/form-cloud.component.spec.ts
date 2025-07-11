@@ -45,7 +45,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
 import {
@@ -64,7 +63,6 @@ import { FORM_CLOUD_FIELD_VALIDATORS_TOKEN, FormCloudComponent } from './form-cl
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 const mockOauth2Auth: any = {
@@ -114,7 +112,7 @@ describe('FormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormCloudComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
             providers: [
                 {
                     provide: VersionCompatibilityService,
@@ -1541,7 +1539,7 @@ describe('Multilingual Form', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopAuthModule],
+            imports: [NoopAuthModule],
             providers: [
                 provideTranslateService({
                     loader: {
@@ -1616,7 +1614,7 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule, CoreModule.forRoot(), FormCloudComponent],
+            imports: [AuthModule.forRoot({ useHash: true }), CoreModule.forRoot(), FormCloudComponent],
             providers: [
                 provideTranslations('app', 'resources'),
                 {

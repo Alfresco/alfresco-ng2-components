@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { FormModel } from '@alfresco/adf-core';
+import { FormModel, NoopTranslateModule } from '@alfresco/adf-core';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudComponent } from './form-cloud.component';
 import { FormCustomOutcomesComponent } from './form-cloud-custom-outcomes.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -49,7 +48,7 @@ describe('FormCloudWithCustomOutComesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormCloudWithCustomOutComesComponent]
+            imports: [NoopTranslateModule, FormCloudWithCustomOutComesComponent]
         });
         fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;

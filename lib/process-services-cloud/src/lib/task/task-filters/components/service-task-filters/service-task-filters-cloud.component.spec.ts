@@ -21,10 +21,10 @@ import { of, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { By } from '@angular/platform-browser';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { fakeGlobalServiceFilters } from '../../mock/task-filters-cloud.mock';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { ServiceTaskFiltersCloudComponent } from './service-task-filters-cloud.component';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('ServiceTaskFiltersCloudComponent', () => {
     let serviceTaskFilterCloudService: ServiceTaskFilterCloudService;
@@ -35,7 +35,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ServiceTaskFiltersCloudComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, ServiceTaskFiltersCloudComponent],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);

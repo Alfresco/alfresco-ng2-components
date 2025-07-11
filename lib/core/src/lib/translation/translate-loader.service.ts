@@ -29,7 +29,12 @@ import { map, catchError, retry } from 'rxjs/operators';
 export class TranslateLoaderService implements TranslateLoader {
     private prefix: string = 'i18n';
     private suffix: string = '.json';
-    private providers: ComponentTranslationModel[] = [];
+    private providers: ComponentTranslationModel[] = [
+        new ComponentTranslationModel({
+            name: 'adf-core',
+            path: 'assets/adf-core'
+        })
+    ];
     private queue: string[][] = [];
     private defaultLang: string = 'en';
 

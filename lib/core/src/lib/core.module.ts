@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
-import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
@@ -37,29 +37,24 @@ import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-hi
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
-import { TranslationService } from './translation/translation.service';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withXsrfConfiguration, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { loadAppConfig } from './app-config/app-config.loader';
-import { AppConfigService } from './app-config/app-config.service';
-import { StorageService } from './common/services/storage.service';
-import { MomentDateAdapter } from './common/utils/moment-date-adapter';
-import { AppConfigPipe, StoragePrefixFactory } from './app-config';
+import { AppConfigPipe } from './app-config';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
+import { DecimalRenderMiddlewareService, FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './form';
+import { provideAppConfig } from './app-config/provide-app-config';
 
 @NgModule({
     imports: [
-        TranslateModule,
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
@@ -87,11 +82,6 @@ import { MaterialModule } from './material.module';
         BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
-        HttpClientModule,
-        HttpClientXsrfModule.withOptions({
-            cookieName: 'CSRF-TOKEN',
-            headerName: 'X-CSRF-TOKEN'
-        }),
         MaterialModule
     ],
     providers: [...CORE_PIPES],
@@ -115,7 +105,6 @@ import { MaterialModule } from './material.module';
         ...LANGUAGE_MENU_DIRECTIVES,
         ...INFO_DRAWER_DIRECTIVES,
         ...DATATABLE_DIRECTIVES,
-        TranslateModule,
         ...TEMPLATE_DIRECTIVES,
         SortingPickerComponent,
         IconComponent,
@@ -132,20 +121,16 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                TranslateStore,
-                TranslateService,
-                { provide: TranslateLoader, useClass: TranslateLoaderService },
-                MomentDateAdapter,
-                StoragePrefixFactory,
-                provideAppInitializer(() => {
-                    const initializerFn = loadAppConfig(
-                        inject(AppConfigService),
-                        inject(StorageService),
-                        inject(AdfHttpClient),
-                        inject(StoragePrefixFactory)
-                    );
-                    return initializerFn();
+                provideTranslateService({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: TranslateLoaderService,
+                        deps: [HttpClient]
+                    },
+                    defaultLanguage: 'en'
                 }),
+                provideAppConfig(),
+                provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
                 { provide: Authentication, useClass: AuthenticationService },
                 {
@@ -153,6 +138,11 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
+                },
+                {
+                    provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
+                    useClass: DecimalRenderMiddlewareService,
+                    multi: true
                 }
             ]
         };
@@ -166,9 +156,5 @@ export class CoreModule {
         return {
             ngModule: CoreModule
         };
-    }
-
-    constructor(translation: TranslationService) {
-        translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }

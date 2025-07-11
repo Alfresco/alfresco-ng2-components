@@ -27,8 +27,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { GroupCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
+import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
 
 describe('TaskAssignmentFilterComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;
@@ -57,7 +57,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, GroupCloudComponent, TaskAssignmentFilterCloudComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, GroupCloudComponent, TaskAssignmentFilterCloudComponent]
         });
     });
 

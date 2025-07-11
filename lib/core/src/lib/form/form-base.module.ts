@@ -20,10 +20,9 @@ import { StartFormCustomButtonDirective } from './components/form-custom-button.
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { FormRendererComponent } from './components/form-renderer.component';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
-import { DecimalRenderMiddlewareService } from './components/middlewares/decimal-middleware.service';
-import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './components/middlewares/middleware';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components/widgets';
 
+/** @deprecated This module is deprecated and will be removed in a future release. Use standalone components instead. */
 @NgModule({
     imports: [
         FormFieldComponent,
@@ -34,7 +33,6 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE
     ],
-    declarations: [],
     exports: [
         FormFieldComponent,
         FormRendererComponent,
@@ -42,13 +40,6 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components
         ...WIDGET_DIRECTIVES,
         InplaceFormInputComponent,
         WidgetComponent
-    ],
-    providers: [
-        {
-            provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
-            useClass: DecimalRenderMiddlewareService,
-            multi: true
-        }
     ]
 })
 export class FormBaseModule {}

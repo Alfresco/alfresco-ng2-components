@@ -379,9 +379,6 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Unzulässiger Pfad für Zielordner",
       "DESTINATION_FOLDER_PATH_ERROR": "Der Zielpfad ist falsch oder nicht vorhanden. Rollback auf -meinen- Speicherort."
-    },
-    "OPEN_NEXT_TASK": {
-      "LABEL": "Nächste Aufgabe öffnen"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

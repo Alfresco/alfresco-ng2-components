@@ -16,9 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormModel } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
@@ -46,7 +45,7 @@ describe('PropertiesViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, PropertiesViewerWidgetComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, PropertiesViewerWidgetComponent],
             providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWidgetComponent);

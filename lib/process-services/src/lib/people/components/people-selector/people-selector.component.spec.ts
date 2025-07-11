@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleSelectorComponent } from './people-selector.component';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { PeopleProcessService } from '../../../services/people-process.service';
 
 describe('PeopleSelectorComponent', () => {
@@ -27,9 +26,6 @@ describe('PeopleSelectorComponent', () => {
     let fixture: ComponentFixture<PeopleSelectorComponent>;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
-        });
         fixture = TestBed.createComponent(PeopleSelectorComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

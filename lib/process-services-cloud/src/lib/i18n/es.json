@@ -379,9 +379,6 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Ruta de carpeta de destino no válida",
       "DESTINATION_FOLDER_PATH_ERROR": "La ruta de destino es incorrecta o no existe, vuelva a -mi- ubicación"
-    },
-    "OPEN_NEXT_TASK": {
-      "LABEL": "Abrir la siguiente tarea"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

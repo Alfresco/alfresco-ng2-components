@@ -15,16 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    TASK_ASSIGNED_STATE,
-    TASK_CLAIM_PERMISSION,
-    TASK_CREATED_STATE,
-    TASK_RELEASE_PERMISSION,
-    TASK_VIEW_PERMISSION,
-    TaskCloudService,
-    TaskDetailsCloudModel,
-    TaskFormCloudComponent
-} from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, EventEmitter, Input, Output, SimpleChange } from '@angular/core';
@@ -32,13 +22,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
 import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
 import { By } from '@angular/platform-browser';
 import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import {
+    TASK_ASSIGNED_STATE,
+    TASK_CLAIM_PERMISSION,
+    TASK_CREATED_STATE,
+    TASK_RELEASE_PERMISSION,
+    TASK_VIEW_PERMISSION,
+    TaskDetailsCloudModel
+} from '../../../models/task-details-cloud.model';
+import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.component';
+import { TaskCloudService } from '../../../services/task-cloud.service';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -95,7 +95,7 @@ describe('UserTaskCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, UserTaskCloudComponent, TaskFormCloudComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, UserTaskCloudComponent, TaskFormCloudComponent]
         }).overrideComponent(UserTaskCloudComponent, {
             remove: { imports: [TaskScreenCloudComponent] },
             add: { imports: [TaskScreenCloudMockComponent] }

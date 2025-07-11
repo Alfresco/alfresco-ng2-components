@@ -341,11 +341,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     }
 
     get showEmptyTagMessage(): boolean {
-        return this.tags?.length === 0 && this.currentPanel.panelTitle === 'Tags' && !this.editing;
+        return this.tags?.length === 0 && !this.isPanelEditing('Tags');
     }
 
     get showEmptyCategoryMessage(): boolean {
-        return this.categories?.length === 0 && this.currentPanel.panelTitle === 'Categories' && !this.editing;
+        return this.categories?.length === 0 && !this.isPanelEditing('Categories');
     }
 
     toggleGroupEditing(panelTitle: string, event?: MouseEvent) {

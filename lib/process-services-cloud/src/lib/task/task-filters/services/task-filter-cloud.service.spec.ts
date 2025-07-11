@@ -30,13 +30,11 @@ import {
 } from '../mock/task-filters-cloud.mock';
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-import { StorageService } from '@alfresco/adf-core';
-import { TaskStatusFilter } from '../public-api';
 import { ApolloTestingModule } from 'apollo-angular/testing';
+import { StorageService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { TaskStatusFilter } from '../models/filter-cloud.model';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -56,7 +54,7 @@ describe('TaskFilterCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloTestingModule],
+            imports: [NoopTranslateModule, NoopAuthModule, ApolloTestingModule],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
@@ -265,7 +263,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloTestingModule],
+            imports: [NoopTranslateModule, NoopAuthModule, ApolloTestingModule],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);

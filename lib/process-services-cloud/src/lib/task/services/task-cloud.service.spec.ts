@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import {
@@ -24,7 +24,6 @@ import {
     createdTaskDetailsCloudMock,
     emptyOwnerTaskDetailsCloudMock
 } from '../task-header/mocks/task-details-cloud.mock';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
@@ -82,7 +81,7 @@ describe('Task Cloud Service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopTranslateModule, NoopAuthModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);

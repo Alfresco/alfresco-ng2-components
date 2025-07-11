@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnitTestingUtils } from '../../testing';
+import { UnitTestingUtils } from '../../testing';
 import { FormRulesManager } from '../models/form-rules.model';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { FormService } from '../services/form.service';
@@ -90,7 +90,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [FormRendererComponent]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;

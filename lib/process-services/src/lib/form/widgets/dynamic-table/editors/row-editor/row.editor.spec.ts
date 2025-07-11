@@ -15,21 +15,17 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormModel, FormService, CoreTestingModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService } from '@alfresco/adf-core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
 import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-summary.model';
-import { TestBed } from '@angular/core/testing';
 
 describe('RowEditorComponent', () => {
     let component: RowEditorComponent;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
         component.table = new DynamicTableModel(field, new FormService());

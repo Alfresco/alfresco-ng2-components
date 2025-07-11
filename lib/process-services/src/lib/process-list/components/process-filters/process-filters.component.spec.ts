@@ -22,9 +22,9 @@ import { ProcessFilterService } from '../../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { NavigationStart, Router } from '@angular/router';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
     {
@@ -58,7 +58,8 @@ describe('ProcessFiltersComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
 
         processFilterService = TestBed.inject(ProcessFilterService);

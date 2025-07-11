@@ -9,7 +9,7 @@
         color: var(--adf-metadata-property-panel-text-color);
         display: flex;
         line-height: 20px;
-
+     
         &.adf-property-readonly-value {
             color: var(--adf-metadata-property-panel-label-color);
         }
@@ -30,6 +30,14 @@
             #{ms.$mat-input-element} {
                 text-overflow: ellipsis;
                 line-height: 20px;
+
+                &.adf-property-value-editable {
+                    padding: 6px 0 6px 12px;
+
+                    &:disabled {
+                        color: var(--adf-metadata-property-panel-label-color);
+                    }
+                }
             }
 
             .adf-card-view__key-value-pairs__row {

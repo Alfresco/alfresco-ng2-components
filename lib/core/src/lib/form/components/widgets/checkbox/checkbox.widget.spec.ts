@@ -19,9 +19,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TranslateLoader } from '@ngx-translate/core';
-import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
-import { TranslateLoaderService } from '../../../../translation';
+import { UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { CheckboxWidgetComponent } from './checkbox.widget';
 
@@ -33,8 +31,7 @@ describe('CheckboxWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatCheckboxModule],
-            providers: [{ provide: TranslateLoader, useClass: TranslateLoaderService }]
+            imports: [MatCheckboxModule]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
         widget = fixture.componentInstance;

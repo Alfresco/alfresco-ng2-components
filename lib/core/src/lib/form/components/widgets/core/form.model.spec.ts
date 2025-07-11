@@ -25,16 +25,11 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
-import { CoreTestingModule } from '../../../../testing';
-import { TestBed } from '@angular/core/testing';
 
 describe('FormModel', () => {
     let formService: FormService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         formService = new FormService();
     });
 

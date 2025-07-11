@@ -19,9 +19,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContentNodeSelectorPanelComponent, DocumentListService, SitesService, NodesApiService } from '@alfresco/adf-content-services';
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService, NoopAuthModule } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, Subject, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -50,7 +49,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachFileWidgetDialogComponent],
+            imports: [NoopAuthModule, AttachFileWidgetDialogComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 { provide: MatDialogRef, useValue: { close: () => of() } }

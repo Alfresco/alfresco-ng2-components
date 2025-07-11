@@ -183,7 +183,9 @@
       "ALREADY_EXISTS": "La categoria esiste già",
       "DUPLICATED_CATEGORY": "La categoria è già stata aggiunta",
       "CREATE_CATEGORIES": "Errore durante la creazione delle categorie",
-      "EXISTING_CATEGORIES": "Alcune categorie esistono già"
+      "EXISTING_CATEGORIES": "Alcune categorie esistono già",
+      "SPECIAL_CHARACTERS": "Category name cannot contain prohibited characters",
+      "ENDS_WITH_DOT": "Category name cannot end with a dot"
     },
     "CATEGORIES_SEARCH_PLACEHOLDER": "Cerca categorie"
   },

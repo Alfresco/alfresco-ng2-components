@@ -19,9 +19,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { DEFAULT_OPTION, DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { FormFieldModel, FormModel, FormService, FormFieldEvent, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService, FormFieldEvent, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import {
     fakeOptionList,
     filterOptionList,
@@ -38,7 +37,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { DebugElement } from '@angular/core';
 import { FormUtilsService } from '../../../services/form-utils.service';
-import { UnitTestingUtils } from '../../../../../../../core/src/public-api';
 
 describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;
@@ -52,7 +50,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [DropdownCloudWidgetComponent]
         });
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
         widget = fixture.componentInstance;
