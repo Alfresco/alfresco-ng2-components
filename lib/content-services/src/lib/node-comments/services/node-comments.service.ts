@@ -28,6 +28,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 })
 export class NodeCommentsService implements CommentsService {
     private _commentsApi: CommentsApi;
+    private avatarCache = new Map<string, string>();
+
     get commentsApi(): CommentsApi {
         this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
         return this._commentsApi;
@@ -73,15 +75,25 @@ export class NodeCommentsService implements CommentsService {
     }
 
     private newCommentModel(comment: Comment): CommentModel {
+        const user = new User(comment.createdBy);
+        const userId = user.id?.toString();
+
+        const imageId = user.pictureId?.toString() || user.avatarId;
+
+        if (userId && imageId && !this.avatarCache.has(userId)) {
+            const avatarUrl = this.contentService.getContentUrl(imageId);
+            this.avatarCache.set(userId, avatarUrl);
+        }
+
         return new CommentModel({
             id: comment.id,
             message: comment.content,
             created: comment.createdAt,
-            createdBy: new User(comment.createdBy)
+            createdBy: user
         });
     }
 
-    getUserImage(avatarId: string): string {
-        return this.contentService.getContentUrl(avatarId);
+    getUserImage(userId: string): string {
+        return this.avatarCache.get(userId) || '';
     }
 }

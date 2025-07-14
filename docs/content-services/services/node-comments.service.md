@@ -20,7 +20,7 @@ Adds and retrieves comments for nodes in Content Services.
     Gets all comments that have been added to a task.
     -   _id:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
--   **getUserImage**(avatarId: `string`): `string`<br/>
-    Gets the URL for the user's profile image.
-    -   _avatarId:_ `string`  - ID of the user
+-   **getUserImage**(userId: `string`): `string`<br/>
+    Gets the cached URL for the user's profile image, if available.
+    -   _userId:_ `string`  - ID of the user
     -   **Returns** `string` - URL for the user's profile image
