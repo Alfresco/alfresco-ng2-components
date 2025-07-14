@@ -201,7 +201,7 @@ export class FormModel implements ProcessFormModel {
         this.validateForm();
     }
 
-    // Activiti supports 3 types of root fields: container|group|dynamic-table
+    // Activiti supports 4 types of root fields: container|group|dynamic-table|section
     private parseRootFields(json: any): (ContainerModel | FormFieldModel)[] {
         let fields = [];
 
@@ -354,10 +354,10 @@ export class FormModel implements ProcessFormModel {
 
     private processFields(fields: (ContainerModel | FormFieldModel)[], formFieldModel: FormFieldModel[]): void {
         fields.forEach((field) => {
-            if (this.isSectionField(field)) {
-                this.handleSectionField(field, formFieldModel);
-            } else if (this.isContainerField(field)) {
+            if (this.isContainerField(field)) {
                 this.handleContainerField(field, formFieldModel);
+            } else if (this.isSectionField(field)) {
+                this.handleSectionField(field, formFieldModel);
             } else if (this.isFormField(field)) {
                 this.handleSingleField(field, formFieldModel);
             }
