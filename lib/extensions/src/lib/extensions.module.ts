@@ -21,7 +21,6 @@ import { DynamicColumnComponent } from './components/dynamic-column/dynamic-colu
 import { PreviewExtensionComponent } from './components/viewer/preview-extension.component';
 import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
-import { setupExtensions } from './services/startup-extension-factory';
 
 export const EXTENSION_DIRECTIVES = [DynamicExtensionComponent, DynamicTabComponent, DynamicColumnComponent, PreviewExtensionComponent] as const;
 
@@ -36,8 +35,8 @@ export class ExtensionsModule {
             ngModule: ExtensionsModule,
             providers: [
                 provideAppInitializer(() => {
-                    const initializerFn = setupExtensions(inject(AppExtensionService));
-                    return initializerFn();
+                    const appExtensionService = inject(AppExtensionService);
+                    return appExtensionService.load();
                 })
             ]
         };
