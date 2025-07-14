@@ -25,7 +25,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { ReplaySubject } from 'rxjs';
-import { UnitTestingUtils } from '../../../../../../core';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 describe('SearchCheckListComponent', () => {
