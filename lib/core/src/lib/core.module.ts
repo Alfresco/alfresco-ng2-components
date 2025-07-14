@@ -40,7 +40,7 @@ import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AuthenticationInterceptor, Authentication } from './auth';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { AppConfigPipe } from './app-config';
