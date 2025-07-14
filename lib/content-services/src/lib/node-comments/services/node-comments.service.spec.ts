@@ -81,5 +81,43 @@ describe('NodeCommentsService', () => {
                 responseText: JSON.stringify(fakeContentComments)
             });
         });
+
+        it('should cache the avatar URL when new comment is processed', () => {
+            const mockComment = {
+                id: '999',
+                content: 'test-message',
+                createdAt: '2024-07-14T12:00:00Z',
+                createdBy: {
+                    id: 'test-user',
+                    firstName: 'Test',
+                    lastName: 'User',
+                    email: 'test@user.com',
+                    avatarId: 'avatar123'
+                }
+            };
+
+            const contentService = (service as any).contentService;
+            spyOn(contentService, 'getContentUrl').and.returnValue('fake-url');
+
+            const result = (service as any).newCommentModel(mockComment);
+
+            expect(contentService.getContentUrl).toHaveBeenCalledWith('avatar123');
+            expect((service as any).avatarCache.get('test-user')).toBe('fake-url');
+            expect(result.createdBy.id).toBe('test-user');
+        });
+
+        it('should return avatar URL from cache via getUserImage()', () => {
+            (service as any).avatarCache.set('cached-user', 'cached-url');
+
+            const result = service.getUserImage('cached-user');
+
+            expect(result).toBe('cached-url');
+        });
+
+        it('should return empty string if avatar not in cache', () => {
+            const result = service.getUserImage('non-existent-user');
+
+            expect(result).toBe('');
+        });
     });
 });
