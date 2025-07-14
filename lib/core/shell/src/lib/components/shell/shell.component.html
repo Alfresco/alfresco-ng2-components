@@ -9,13 +9,14 @@
 >
   <adf-sidenav-layout-header>
     <ng-template let-isMenuMinimized="isMenuMinimized">
-      <div
-        role="heading"
-        aria-level="1"
-        *ngIf="!hideSidenav"
-      >
-        <adf-dynamic-component id="app.layout.header" [data]="{ layout }" />
-      </div>
+        @if (!hideSidenav) {
+          <div
+            role="heading"
+            aria-level="1"
+          >
+            <adf-dynamic-component id="app.layout.header" [data]="{ layout }" />
+          </div>
+        }
     </ng-template>
   </adf-sidenav-layout-header>
 

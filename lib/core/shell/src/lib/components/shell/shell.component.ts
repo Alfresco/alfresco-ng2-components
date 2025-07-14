@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-import { AppConfigService, SidenavLayoutComponent, SidenavLayoutModule } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    SidenavLayoutComponent,
+    SidenavLayoutContentDirective,
+    SidenavLayoutHeaderDirective,
+    SidenavLayoutNavigationDirective
+} from '@alfresco/adf-core';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { Component, DestroyRef, inject, Inject, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -24,12 +30,18 @@ import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Directionality } from '@angular/cdk/bidi';
 import { SHELL_APP_SERVICE, SHELL_NAVBAR_MAX_WIDTH, SHELL_NAVBAR_MIN_WIDTH, ShellAppService } from '../../services/shell-app.service';
-import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-shell',
-    imports: [CommonModule, SidenavLayoutModule, RouterModule, DynamicExtensionComponent],
+    imports: [
+        RouterModule,
+        SidenavLayoutHeaderDirective,
+        SidenavLayoutNavigationDirective,
+        SidenavLayoutContentDirective,
+        DynamicExtensionComponent,
+        SidenavLayoutComponent
+    ],
     templateUrl: './shell.component.html',
     styleUrls: ['./shell.component.scss'],
     encapsulation: ViewEncapsulation.None,
