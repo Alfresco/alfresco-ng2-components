@@ -708,5 +708,46 @@ describe('FormModel', () => {
             expect(fields[1].type).toBe(FormFieldTypes.DATE);
             expect(fields[2].type).toBe(FormFieldTypes.NUMBER);
         });
+
+        it('should handle sections at root level correctly', () => {
+            const mockFormWithRootSection = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'root-section',
+                        name: 'Root Section',
+                        type: 'section',
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'text-in-root-section',
+                                    name: 'Text in Root Section',
+                                    type: 'text',
+                                    required: false,
+                                    readOnly: false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+
+            const formWithRootSection = new FormModel(mockFormWithRootSection);
+
+            // Check that the root section is parsed correctly as FormFieldModel, not wrapped in ContainerModel
+            expect(formWithRootSection.fields.length).toBe(1);
+            expect(formWithRootSection.fields[0]).toBeInstanceOf(FormFieldModel);
+            expect(formWithRootSection.fields[0].type).toBe('section');
+            expect(formWithRootSection.fields[0].id).toBe('root-section');
+
+            // Check that getFormFields returns all fields including the section and its children
+            const allFields = formWithRootSection.getFormFields();
+            expect(allFields.length).toBe(2); // section + text field inside
+            expect(allFields[0].type).toBe('section');
+            expect(allFields[1].type).toBe('text');
+            expect(allFields[1].id).toBe('text-in-root-section');
+        });
     });
 });
