@@ -28,7 +28,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 })
 export class NodeCommentsService implements CommentsService {
     private _commentsApi: CommentsApi;
-    private avatarCache = new Map<string, string>();
+    private readonly avatarCache = new Map<string, string>();
 
     get commentsApi(): CommentsApi {
         this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
