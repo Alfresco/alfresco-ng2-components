@@ -21,7 +21,8 @@ export const LANDING_PAGE_TOKEN = new InjectionToken<Type<any>>('LANDING_PAGE_TO
 
 /**
  *
- * @param componentClass
+ * @param componentClass The component class to be registered as the landing page.
+ * @returns A provider that registers the landing page component class.
  */
 export function provideLandingPage(componentClass: Type<any>): Provider {
     return {
