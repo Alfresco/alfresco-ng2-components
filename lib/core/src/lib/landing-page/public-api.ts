@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export * from './blank-page.component';
-export * from './blank-page.module';
+export * from './provider';
