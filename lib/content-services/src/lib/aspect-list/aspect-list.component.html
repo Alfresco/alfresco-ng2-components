@@ -8,8 +8,7 @@
                           (click)="onCheckBoxClick($event)"
                           [aria-label]="getTitle(aspect)"
                           (change)="onChange($event, aspect?.entry?.id)"/>
-            <mat-expansion-panel
-                                 [id]="'aspect-list-'+getId(aspect)"
+            <mat-expansion-panel [id]="'aspect-list-'+getId(aspect)"
                                  class="adf-accordion-aspect-list-expansion-panel"
                                  (opened)="isPanelOpen[colIndex] = true"
                                  (afterCollapse)="isPanelOpen[colIndex] = false"
