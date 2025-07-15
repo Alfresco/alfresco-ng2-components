@@ -24,6 +24,7 @@ export * from './lib/toolbar/index';
 export * from './lib/header/index';
 export * from './lib/pagination/index';
 export * from './lib/login/index';
+export * from './lib/landing-page/index';
 export * from './lib/language-menu/index';
 export * from './lib/info-drawer/index';
 export * from './lib/identity-user-info/index';
