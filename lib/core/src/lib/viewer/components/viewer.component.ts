@@ -253,6 +253,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     customError: string = undefined;
 
+    /** File title to be displayed in the viewer. */
+    @Input()
+    title: string = undefined;
+
     /** Toggles dividers visibility */
     @Input()
     showToolbarDividers = true;
@@ -474,7 +478,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     getDisplayFileName(): string {
-        const fullName = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
+        const title = this.title;
+        const fileName = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
+
+        const fullName = title ? `${title} (${fileName})` : fileName;
         const maxLength = 50;
 
         if (fullName.length <= maxLength) {

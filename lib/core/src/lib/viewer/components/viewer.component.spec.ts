@@ -171,6 +171,28 @@ describe('ViewerComponent', () => {
                 expect(component.getDisplayFileName()).toBe('');
                 expect(getFileName()).toBe('');
             });
+
+            it('should include title if it is available and put fileName into brackets', () => {
+                const fileShortName = 'shortname.txt';
+                const title = 'Alfresco title';
+                component.fileName = fileShortName;
+                component.title = title;
+                fixture.detectChanges();
+
+                expect(component.getDisplayFileName()).toBe(`${title} (${fileShortName})`);
+                expect(getFileName()).toBe(fileShortName);
+            });
+
+            it('should not include title if it is empty and do not put fileName into brackets', () => {
+                const fileShortName = 'shortname.txt';
+                const title = '';
+                component.fileName = fileShortName;
+                component.title = title;
+                fixture.detectChanges();
+
+                expect(component.getDisplayFileName()).toBe(fileShortName);
+                expect(getFileName()).toBe(fileShortName);
+            });
         });
 
         describe('fileName setter integration', () => {
