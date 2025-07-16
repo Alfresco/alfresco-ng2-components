@@ -75,6 +75,10 @@ export class UnitTestingUtils {
         return this.debugElement.query(By.directive(directive));
     }
 
+    getAllByDirective(directive: Type<any>): DebugElement[] {
+        return this.debugElement.queryAll(By.directive(directive));
+    }
+
     /** Perform actions */
 
     clickByCSS(selector: string): void {
