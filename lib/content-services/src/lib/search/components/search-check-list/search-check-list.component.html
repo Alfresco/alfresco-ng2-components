@@ -2,7 +2,6 @@
     <mat-checkbox
         *ngFor="let option of options"
         [checked]="option.checked"
-        labelPosition="before"
         (keydown.enter)="option.checked = !option.checked"
         [attr.data-automation-id]="'checkbox-' + (option.name)"
         [attr.aria-label]="option.name | translate"
