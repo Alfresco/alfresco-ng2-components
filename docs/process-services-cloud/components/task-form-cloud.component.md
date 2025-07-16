@@ -36,11 +36,9 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 | Name                      | Type                                  | Default value | Description                                                         |
 | ------------------------- | ------------------------------------- | ------------- | ------------------------------------------------------------------- |
 | appName                   | `string`                              | ""            | App id to fetch corresponding form and values.                      |
-| isNextTaskCheckboxChecked | `boolean`                             | false         | Whether the `Open next task` checkbox is checked by default or not. |
 | readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                                  |
 | showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.                            |
 | showCompleteButton        | `boolean`                             | true          | Toggle rendering of the `Complete` button.                          |
-| showNextTaskCheckbox      | `boolean`                             | false         | Toggle rendering of the `Open next task` checkbox.                  |
 | showRefreshButton         | `boolean`                             | false         | Toggle rendering of the `Refresh` button.                           |
 | showTitle                 | `boolean`                             | true          | Toggle rendering of the form title.                                 |
 | showValidationIcon        | `boolean`                             | true          | Toggle rendering of the `Validation` icon.                          |
@@ -57,7 +55,6 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 | formCompleted                  | `EventEmitter<FormModel>`                         | Emitted when the form is submitted with the `Complete` outcome.                                        |
 | formContentClicked             | `EventEmitter<ContentLinkModel>`                  | Emitted when form content is clicked.                                                                  |
 | formSaved                      | `EventEmitter<FormModel>`                         | Emitted when the form is saved.                                                                        |
-| nextTaskCheckboxCheckedChanged | `EventEmitter<MatCheckboxChange>`                 | Emitted when the `Open next task` checkbox was toggled.                                                |
 | onTaskLoaded                   | `EventEmitter<TaskDetailsCloudModel>`             | Emitted when a task is loaded.                                                                         |
 | taskClaimed                    | `EventEmitter<string>`                            | Emitted when the task is claimed.                                                                      |
 | taskCompleted                  | `EventEmitter<string>`                            | Emitted when the task is completed.                                                                    |
