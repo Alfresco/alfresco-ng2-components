@@ -144,14 +144,14 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('Display Values Tests', () => {
+    describe('Display values Tests', () => {
         describe('getDisplayTruncatedValue method', () => {
             it('should return full filename when total length is 80 characters or less', () => {
                 const fileShortName = 'shortname.txt';
                 component.fileName = fileShortName;
                 fixture.detectChanges();
 
-                expect(component.getDisplayFileName()).toBe(fileShortName);
+                expect(component.getDisplayTruncatedValue(fileShortName)).toBe(fileShortName);
                 expect(getFileName()).toBe(fileShortName);
             });
 
@@ -162,7 +162,7 @@ describe('ViewerComponent', () => {
                 component.fileName = longName;
                 fixture.detectChanges();
 
-                const result = component.getDisplayFileName();
+                const result = component.getDisplayTruncatedValue(longName);
 
                 expect(result).toContain('.....');
                 expect(result.length).toBe(50);
@@ -172,7 +172,7 @@ describe('ViewerComponent', () => {
                 component.fileName = '';
                 fixture.detectChanges();
 
-                expect(component.getDisplayFileName()).toBe('');
+                expect(component.getDisplayTruncatedValue('')).toBe('');
                 expect(getFileName()).toBe('');
             });
         });

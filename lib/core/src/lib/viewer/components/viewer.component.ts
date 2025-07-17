@@ -308,6 +308,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private _fileExtension: string;
 
     public displayName: string;
+    public displayTitle: string;
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
     public mimeTypeIconUrl: string;
@@ -320,7 +321,14 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this._fileName = fileName;
         this._fileExtension = this.viewUtilsService.getFileExtension(this.fileName);
         this._fileNameWithoutExtension = this.fileName?.replace(new RegExp(`${this.fileExtension}$`), '') || '';
-        this.displayName = this.getDisplayFileName();
+        const value = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
+        this.displayName = this.getDisplayTruncatedValue(value);
+    }
+
+    /** Override Content title. */
+    @Input()
+    set title(title: string) {
+        this.displayTitle = this.getDisplayTruncatedValue(title);
     }
 
     get fileName(): string {
@@ -474,12 +482,11 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.clearDownloadPromptTimeouts();
     }
 
-    getDisplayFileName(): string {
-        const fullName = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
+    getDisplayTruncatedValue(value: string): string {
         const maxLength = 50;
 
-        if (fullName.length <= maxLength) {
-            return fullName;
+        if (value.length <= maxLength) {
+            return value;
         }
 
         const amountOfTruncateDots = 5;
@@ -487,8 +494,8 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         const endLength = 8;
         const startLength = availableSpace - endLength;
 
-        const start = fullName.substring(0, startLength);
-        const end = fullName.substring(fullName.length - endLength);
+        const start = value.substring(0, startLength);
+        const end = value.substring(value.length - endLength);
         return start + '.....' + end;
     }
 
