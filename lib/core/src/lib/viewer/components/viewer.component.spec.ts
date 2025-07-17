@@ -144,8 +144,8 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('File Name Display Tests', () => {
-        describe('displayFileName method', () => {
+    describe('Display Values Tests', () => {
+        describe('getDisplayTruncatedValue method', () => {
             it('should return full filename when total length is 80 characters or less', () => {
                 const fileShortName = 'shortname.txt';
                 component.fileName = fileShortName;
