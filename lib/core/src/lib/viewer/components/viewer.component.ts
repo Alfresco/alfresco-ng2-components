@@ -327,7 +327,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /** Override Content title. */
     @Input()
     set title(title: string) {
-        this.displayTitle = this.getDisplayTruncatedValue(title);
+        this.displayTitle = title ? this.getDisplayTruncatedValue(title) : '';
     }
 
     get fileName(): string {

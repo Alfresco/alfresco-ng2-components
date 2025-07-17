@@ -151,7 +151,7 @@ describe('ViewerComponent', () => {
                 expect(getFileName()).toBe(fileShortName);
             });
 
-            it('should truncate filename when total length exceeds 80 characters', () => {
+            it('should truncate filename when total length exceeds 50 characters', () => {
                 const longName =
                     'verylongfilenamethatexceedsmaximumlengthallowedverylongfilenamethatexceedsmaximumlengthallowed.verylongextensionnamethatistoolongverylongextensionnamethatistoolong';
 
