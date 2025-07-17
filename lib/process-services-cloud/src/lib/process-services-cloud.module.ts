@@ -23,7 +23,6 @@ import { ProcessCloudModule } from './process/process-cloud.module';
 import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
 import { TASK_FORM_CLOUD_DIRECTIVES } from './task/task-form/task-form.module';
 import { PreferenceCloudServiceInterface, TASK_LIST_CLOUD_TOKEN } from './services/public-api';
-import { RichTextEditorComponent } from './rich-text-editor';
 import { GroupCloudComponent } from './group/components/group-cloud.component';
 import { PeopleCloudComponent } from './people/components/people-cloud.component';
 import { provideCloudFormRenderer, provideCloudPreferences } from './providers';
@@ -33,8 +32,7 @@ export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [
     ...APP_LIST_CLOUD_DIRECTIVES,
     ...FORM_CLOUD_DIRECTIVES,
     ...TASK_FORM_CLOUD_DIRECTIVES,
-    PeopleCloudComponent,
-    RichTextEditorComponent
+    PeopleCloudComponent
 ] as const;
 
 /**
