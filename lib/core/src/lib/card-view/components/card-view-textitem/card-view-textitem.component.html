@@ -25,7 +25,8 @@
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-property-readonly-value': isReadonlyProperty,
-                    'adf-property-value-has-error': isEditable && hasErrors
+                    'adf-property-value-has-error': isEditable && hasErrors,
+                    'adf-property-value-not-editable': !editable
                 }"
                 title="{{ property.label | translate }}"
                 [placeholder]="property.default"

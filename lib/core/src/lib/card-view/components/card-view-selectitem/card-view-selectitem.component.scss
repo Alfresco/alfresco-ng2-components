@@ -14,7 +14,7 @@
         z-index: 1;
     }
 
-    .adf-property-value-editable.adf-property-value-editable {
+    .adf-property-value-editable {
         padding-left: 0;
 
         #{ms.$mat-text-field-no-label} #{ms.$mat-form-field-infix} {
@@ -55,7 +55,6 @@
         cursor: default;
         padding: 6px 0;
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
-        color: var(--adf-metadata-property-panel-title-color);
     }
 
     #{ms.$mat-line-ripple} {
@@ -71,5 +70,10 @@
             cursor: default;
             font-size: 10px;
         }
+    }
+
+    #{ms.$mat-form-field-infix} {
+        padding-left: 3%;
+        padding-right: 3%;
     }
 }
