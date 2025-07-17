@@ -46,11 +46,20 @@
                          [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
                          [src]="mimeTypeIconUrl"
                          data-automation-id="adf-file-thumbnail">
-                    <div class="adf-viewer__display-name"
-                         id="adf-viewer-display-name"
-                         [title]="fileName">
-                        <span>{{ displayName }}</span>
-                    </div>
+                    @if (displayTitle) {
+                        <div class="adf-viewer__title-display-name-container"
+                             id="adf-viewer-title-display-name"
+                             [title]="displayTitle">
+                            <p class="adf-viewer__title-value">{{ displayTitle }}</p>
+                            <p class="adf-viewer__display-name-value">{{ displayName }}</p>
+                        </div>
+                    } @else {
+                        <div class="adf-viewer__display-name"
+                             id="adf-viewer-display-name"
+                             [title]="fileName">
+                            <span>{{ displayName }}</span>
+                        </div>
+                    }
                     <button *ngIf="allowNavigate && canNavigateNext"
                             data-automation-id="adf-toolbar-next-file"
                             mat-icon-button
