@@ -18,7 +18,6 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { getTestScheduler } from 'jasmine-marbles';
-import { CoreTestingModule } from '../../testing';
 import { FormModel } from '../components/widgets';
 import { FormEvent, FormRulesEvent } from '../events';
 import { FormService } from '../services/form.service';
@@ -42,7 +41,6 @@ describe('Form Rules', () => {
     describe('Injection token provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule],
                 providers: [
                     {
                         provide: FORM_RULES_MANAGER,
@@ -106,9 +104,6 @@ describe('Form Rules', () => {
         let getRulesSpy: jasmine.Spy;
 
         beforeEach(() => {
-            TestBed.configureTestingModule({
-                imports: [CoreTestingModule]
-            });
             injector = TestBed.inject(Injector);
             rulesManager = formRulesManagerFactory<any>(injector);
             getRulesSpy = spyOn<any>(rulesManager, 'getRules');

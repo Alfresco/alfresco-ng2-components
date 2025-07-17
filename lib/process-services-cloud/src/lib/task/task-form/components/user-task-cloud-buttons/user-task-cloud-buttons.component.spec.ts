@@ -22,9 +22,9 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { ProcessServiceCloudTestingModule } from 'lib/process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
-import { TaskCloudService } from '@alfresco/adf-process-services-cloud';
 import { of } from 'rxjs';
+import { NoopAuthModule } from '@alfresco/adf-core';
+import { TaskCloudService } from '../../../services/task-cloud.service';
 
 describe('UserTaskCloudButtonsComponent', () => {
     let component: UserTaskCloudButtonsComponent;
@@ -35,7 +35,7 @@ describe('UserTaskCloudButtonsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, UserTaskCloudButtonsComponent]
+            imports: [NoopAuthModule, UserTaskCloudButtonsComponent]
         });
         fixture = TestBed.createComponent(UserTaskCloudButtonsComponent);
         debugElement = fixture.debugElement;

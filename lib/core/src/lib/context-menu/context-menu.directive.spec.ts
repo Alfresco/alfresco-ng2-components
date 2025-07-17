@@ -17,8 +17,6 @@
 
 import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { CONTEXT_MENU_DIRECTIVES } from './context-menu.module';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
@@ -118,8 +116,7 @@ testCases.forEach((testCase) => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, CONTEXT_MENU_DIRECTIVES],
-                declarations: [TestComponent]
+                imports: [TestComponent]
             });
             fixture = TestBed.createComponent(TestComponent);
             fixture.componentInstance.isEnabled = false;

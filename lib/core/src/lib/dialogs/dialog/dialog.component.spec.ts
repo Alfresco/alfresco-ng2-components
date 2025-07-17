@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DIALOG_COMPONENT_DATA, DialogComponent } from './dialog.component';
 import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
-import { CoreTestingModule, UnitTestingUtils } from '../../testing';
+import { UnitTestingUtils } from '../../testing';
 import { Component, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -55,8 +55,7 @@ describe('DialogComponent', () => {
 
     const setupBeforeEach = (dialogOptions: DialogData = data) => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [DummyComponent],
+            imports: [DummyComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: dialogOptions },
                 { provide: MatDialogRef, useValue: dialogRef }

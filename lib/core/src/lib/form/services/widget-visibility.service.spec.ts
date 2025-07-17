@@ -30,7 +30,6 @@ import {
     fakeFormChainedVisibilityJson,
     fakeFormCheckBoxVisibilityJson
 } from '../../mock/form/widget-visibility.service.mock';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('WidgetVisibilityService', () => {
     let service: WidgetVisibilityService;
@@ -48,9 +47,6 @@ describe('WidgetVisibilityService', () => {
     };
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         service = TestBed.inject(WidgetVisibilityService);
     });
 

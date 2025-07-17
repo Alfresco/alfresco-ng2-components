@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { LightUserRepresentation } from '@alfresco/js-api';
 
 const fakeUser: LightUserRepresentation = {
@@ -35,7 +34,7 @@ describe('PeopleListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, PeopleListComponent]
+            imports: [PeopleListComponent]
         });
         fixture = TestBed.createComponent(PeopleListComponent);
         peopleListComponent = fixture.componentInstance;

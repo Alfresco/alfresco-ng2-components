@@ -27,17 +27,16 @@ import {
     DownloadService,
     AppConfigService,
     AppConfigValues,
-    UnitTestingUtils
+    UnitTestingUtils,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { ProcessContentService } from '../../services/process-content.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuHarness } from '@angular/material/menu/testing';
@@ -164,8 +163,9 @@ describe('AttachFileWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachFileWidgetComponent, RouterTestingModule],
+            imports: [NoopAuthModule, AttachFileWidgetComponent],
             providers: [
+                provideRouter([]),
                 {
                     provide: ActivatedRoute,
                     useValue: {

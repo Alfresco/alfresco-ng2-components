@@ -20,7 +20,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
+import { UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
 import { DecimalNumberPipe } from '../../../../pipes';
@@ -36,7 +36,7 @@ describe('NumberWidgetComponent', () => {
         mockDecimalNumberPipe = jasmine.createSpyObj('DecimalNumberPipe', ['transform']);
 
         await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, MatIconModule]
+            imports: [MatInputModule, MatIconModule]
         })
             .overrideComponent(NumberWidgetComponent, {
                 set: {

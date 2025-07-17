@@ -54,12 +54,11 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { PeopleCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { ADF_DATE_FORMATS, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ADF_DATE_FORMATS, NoopAuthModule } from '@alfresco/adf-core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { PeopleCloudComponent } from '../../../../../people/components/people-cloud.component';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -77,15 +76,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAuthModule,
-                NoopAnimationsModule,
-                NoopTranslateModule,
-                PeopleCloudComponent,
-                MatIconTestingModule,
-                EditTaskFilterCloudComponent,
-                ApolloTestingModule
-            ],
+            imports: [NoopAuthModule, PeopleCloudComponent, MatIconTestingModule, EditTaskFilterCloudComponent, ApolloTestingModule],
             providers: [
                 MatDialog,
                 { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },

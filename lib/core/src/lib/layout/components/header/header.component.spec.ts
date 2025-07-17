@@ -17,11 +17,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderLayoutComponent } from './header.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { Component } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { provideRouter } from '@angular/router';
 
 describe('HeaderLayoutComponent', () => {
     let loader: HarnessLoader;
@@ -32,7 +32,8 @@ describe('HeaderLayoutComponent', () => {
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, HeaderLayoutComponent]
+                imports: [HeaderLayoutComponent],
+                providers: [provideRouter([])]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
             loader = TestbedHarnessEnvironment.loader(fixture);
@@ -249,7 +250,8 @@ describe('HeaderLayoutComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, HeaderLayoutTesterComponent]
+                imports: [HeaderLayoutTesterComponent],
+                providers: [provideRouter([])]
             });
         });
 

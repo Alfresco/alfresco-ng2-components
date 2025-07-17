@@ -18,9 +18,9 @@
 import { NgModule } from '@angular/core';
 import { AppConfigPipe } from './app-config.pipe';
 
+/** @deprecated This module is deprecated, consider importing AppConfigPipe directly */
 @NgModule({
     imports: [AppConfigPipe],
     exports: [AppConfigPipe]
 })
-/** @deprecated This module is deprecated, consider importing AppConfigPipe directly */
 export class AppConfigModule {}

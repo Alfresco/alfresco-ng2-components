@@ -17,13 +17,11 @@
 
 import { Component, DebugElement, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
 import { AppConfigService } from '../../app-config';
 import { EventMock } from '../../mock';
-import { CoreTestingModule, UnitTestingUtils } from '../../testing';
+import { UnitTestingUtils } from '../../testing';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 import { CloseButtonPosition } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
@@ -57,9 +55,6 @@ describe('ViewerComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreTestingModule,
-                MatButtonModule,
-                MatIconModule,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,

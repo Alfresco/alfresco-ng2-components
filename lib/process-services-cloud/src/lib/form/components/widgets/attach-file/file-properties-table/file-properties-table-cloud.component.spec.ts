@@ -17,9 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('FilePropertiesTableCloudComponent', () => {
     let widget: FilePropertiesTableCloudComponent;
@@ -27,7 +27,7 @@ describe('FilePropertiesTableCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FilePropertiesTableCloudComponent]
+            imports: [NoopTranslateModule, FilePropertiesTableCloudComponent]
         });
     });
 

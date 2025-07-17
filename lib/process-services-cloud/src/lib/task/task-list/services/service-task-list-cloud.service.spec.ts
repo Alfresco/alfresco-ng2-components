@@ -18,9 +18,9 @@
 import { TestBed } from '@angular/core/testing';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('Activiti ServiceTaskList Cloud Service', () => {
     let service: ServiceTaskListCloudService;
@@ -33,7 +33,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopTranslateModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ServiceTaskListCloudService);

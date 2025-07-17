@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -32,7 +31,7 @@ describe('SearchTextInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [SearchTextInputComponent]
         });
         fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;

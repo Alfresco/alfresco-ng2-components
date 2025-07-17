@@ -29,7 +29,6 @@ import {
 } from '../../../testing/mock';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { SimpleChanges } from '@angular/core';
@@ -58,7 +57,7 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskHeaderComponent]
+            imports: [TaskHeaderComponent]
         });
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;

@@ -22,7 +22,6 @@ import { AppsProcessService } from '../services/apps-process.service';
 import { of, throwError } from 'rxjs';
 import { defaultApp, deployedApps, nonDeployedApps } from '../testing/mock/apps-list.mock';
 import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from './apps-list.component';
-import { ProcessTestingModule } from '../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
@@ -52,7 +51,7 @@ describe('AppsListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomEmptyAppListTemplateComponent]
+            imports: [CustomEmptyAppListTemplateComponent]
         });
         fixture = TestBed.createComponent(AppsListComponent);
         component = fixture.componentInstance;

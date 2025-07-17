@@ -18,7 +18,6 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChecklistComponent } from './checklist.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TaskListService } from '../../services/tasklist.service';
 import { of } from 'rxjs';
 import { TaskRepresentation } from '@alfresco/js-api';
@@ -32,7 +31,7 @@ describe('ChecklistComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ChecklistComponent]
         });
         service = TestBed.inject(TaskListService);
         spyOn(service, 'getTaskChecklist').and.returnValue(

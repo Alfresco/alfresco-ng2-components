@@ -19,8 +19,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { ClaimTaskDirective } from '@alfresco/adf-process-services';
+import { ClaimTaskDirective } from './claim-task.directive';
 
 describe('ClaimTaskDirective', () => {
     @Component({
@@ -45,7 +44,7 @@ describe('ClaimTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TestComponent]
+            imports: [TestComponent]
         });
         taskListService = TestBed.inject(TaskListService);
         fixture = TestBed.createComponent(TestComponent);
@@ -95,7 +94,7 @@ describe('Claim Task Directive validation errors', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
+            imports: [ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
         });
         fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
     });

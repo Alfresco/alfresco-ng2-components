@@ -20,7 +20,6 @@ import { PaginationModel } from '../models/pagination.model';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
@@ -58,8 +57,7 @@ describe('InfinitePaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestPaginatedComponent]
+            imports: [TestPaginatedComponent]
         });
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;

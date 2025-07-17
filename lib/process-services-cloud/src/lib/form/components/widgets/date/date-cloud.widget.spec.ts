@@ -17,11 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
-import { FormFieldModel, FormModel, FormFieldTypes, DEFAULT_DATE_FORMAT } from '@alfresco/adf-core';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { FormFieldModel, FormModel, FormFieldTypes, DEFAULT_DATE_FORMAT, UnitTestingUtils } from '@alfresco/adf-core';
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
-import { UnitTestingUtils } from '../../../../../../../core/src/lib/testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
@@ -36,7 +34,7 @@ describe('DateCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [DateCloudWidgetComponent]
         });
 
         form = new FormModel();

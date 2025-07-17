@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { mockEmittedProcessAttachments, mockProcessAttachments } from '../../testing/mock/process/process-attachments.mock';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -37,7 +36,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ProcessAttachmentListComponent]
+            imports: [ProcessAttachmentListComponent]
         });
         fixture = TestBed.createComponent(ProcessAttachmentListComponent);
         component = fixture.componentInstance;
@@ -257,7 +256,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomEmptyTemplateComponent]
+            imports: [CustomEmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
         fixture.detectChanges();

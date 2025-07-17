@@ -17,10 +17,10 @@
 
 import { AttachFormComponent } from './attach-form.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TaskListService } from '../../services/tasklist.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
@@ -30,7 +30,8 @@ describe('AttachFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachFormComponent]
+            imports: [AttachFormComponent],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;

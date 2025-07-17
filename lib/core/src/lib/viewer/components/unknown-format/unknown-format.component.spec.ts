@@ -17,7 +17,6 @@
 
 import { UnknownFormatComponent } from './unknown-format.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('Unknown Format Component', () => {
     let fixture: ComponentFixture<UnknownFormatComponent>;
@@ -26,7 +25,7 @@ describe('Unknown Format Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [UnknownFormatComponent]
         });
         fixture = TestBed.createComponent(UnknownFormatComponent);
         fixture.detectChanges();

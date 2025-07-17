@@ -37,7 +37,6 @@ import {
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
@@ -85,7 +84,7 @@ describe('StartProcessCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, StartProcessCloudComponent]
+            imports: [StartProcessCloudComponent]
         });
         processService = TestBed.inject(StartProcessCloudService);
         formCloudService = TestBed.inject(FormCloudService);

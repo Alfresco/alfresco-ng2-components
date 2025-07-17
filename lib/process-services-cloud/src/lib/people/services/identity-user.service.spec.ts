@@ -17,10 +17,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { IdentityUserService } from './identity-user.service';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { mockFoodUsers } from '../mock/people-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 
 const mockHttpErrorResponse = new HttpErrorResponse({
     error: 'Mock Error',
@@ -35,7 +35,7 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopTranslateModule, NoopAuthModule]
         });
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

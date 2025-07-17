@@ -18,9 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, FormCloudService } from './form-cloud.service';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { FORM_FIELD_VALIDATORS, FormFieldValidator } from '@alfresco/adf-core';
+import { FORM_FIELD_VALIDATORS, FormFieldValidator, NoopAuthModule } from '@alfresco/adf-core';
 
 const mockTaskResponseBody = {
     entry: { id: 'id', name: 'name', formKey: 'form-key' }
@@ -44,7 +43,7 @@ describe('Form Cloud service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [NoopAuthModule],
             providers: [{ provide: FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, useValue: [fakeValidator] }]
         });
         service = TestBed.inject(FormCloudService);

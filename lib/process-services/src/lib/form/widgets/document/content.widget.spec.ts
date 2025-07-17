@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentLinkModel, CoreTestingModule, DownloadService } from '@alfresco/adf-core';
+import { ContentLinkModel, DownloadService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -60,7 +60,7 @@ describe('ContentWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContentWidgetComponent],
+            imports: [ContentWidgetComponent],
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         downloadService = TestBed.inject(DownloadService);

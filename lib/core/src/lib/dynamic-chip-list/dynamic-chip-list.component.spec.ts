@@ -19,7 +19,6 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Chip } from './chip';
 import { DynamicChipListComponent } from './dynamic-chip-list.component';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('DynamicChipListComponent', () => {
@@ -65,9 +64,6 @@ describe('DynamicChipListComponent', () => {
     }
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
         const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(DynamicChipListComponent);
         component = fixture.componentInstance;

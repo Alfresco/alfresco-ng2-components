@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel, NoopAuthModule, CoreModule } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCloudWidgetComponent } from './group-cloud.widget';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
@@ -31,7 +30,7 @@ describe('GroupCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, GroupCloudWidgetComponent]
+            imports: [CoreModule.forRoot(), NoopAuthModule, GroupCloudWidgetComponent]
         });
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
