@@ -159,30 +159,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    /**
-     * @deprecated
-     * @returns the logged username
-     */
-    getEcmUsername(): string {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.getUsername();
-        } else {
-            return this.basicAlfrescoAuthService.getEcmUsername();
-        }
-    }
-
-    /**
-     * @deprecated
-     * @returns the logged username
-     */
-    getBpmUsername(): string {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.getUsername();
-        } else {
-            return this.basicAlfrescoAuthService.getBpmUsername();
-        }
-    }
-
     getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getAuthHeaders(requestUrl, headers);

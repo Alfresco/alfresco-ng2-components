@@ -20,7 +20,6 @@ import ee from 'event-emitter';
 import { Observable } from 'rxjs';
 
 export interface AuthenticationServiceInterface {
-
     onError: any;
     onLogin: any;
     onLogout: any;
@@ -48,9 +47,7 @@ export interface AuthenticationServiceInterface {
 
     isALLProvider(): boolean;
 
-    getEcmUsername(): string;
-
-    getBpmUsername(): string;
+    getUsername(): string;
 
     getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
 

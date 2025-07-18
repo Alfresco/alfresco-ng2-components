@@ -53,9 +53,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     abstract reset(): void;
 
-    abstract getEcmUsername(): string;
-
-    abstract getBpmUsername(): string;
+    abstract getUsername(): string;
 
     /**
      * Adds the auth token to an HTTP header using the 'bearer' scheme.

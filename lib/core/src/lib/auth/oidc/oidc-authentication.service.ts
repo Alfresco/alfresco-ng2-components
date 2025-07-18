@@ -129,22 +129,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
-    /**
-     * @deprecated
-     * @returns the logged username
-     */
-    getEcmUsername(): string {
-        return this.getUsername();
-    }
-
-    /**
-     * @deprecated
-     * @returns the logged username
-     */
-    getBpmUsername(): string {
-        return this.getUsername();
-    }
-
     ssoLogin(redirectUrl?: string) {
         this.auth.login(redirectUrl);
     }
