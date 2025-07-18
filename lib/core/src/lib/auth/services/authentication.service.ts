@@ -169,22 +169,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    /**
-     * @deprecated use `getUsername` instead
-     * @returns the logged username
-     */
-    getEcmUsername(): string {
-        return this.getUsername();
-    }
-
-    /**
-     * @deprecated use `getUsername` instead
-     * @returns the logged username
-     */
-    getBpmUsername(): string {
-        return this.getUsername();
-    }
-
     getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getAuthHeaders(requestUrl, headers);
