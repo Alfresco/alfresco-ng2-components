@@ -66,8 +66,8 @@ Major version updates have been applied to the following core libraries:
 ```json
 {
     "devDependencies": {
-        "mini-css-extract-plugin"
-        "css-loader"
+        "mini-css-extract-plugin": "X.X.X",
+        "css-loader": "X.X.X"
     }
 }
 ```
@@ -99,8 +99,8 @@ To replace this module, import the standalone components directly or use the fol
 
 ```typescript
 providers: [
-    provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
-    provideCloudPreferences()
+    provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
+    provideCloudPreferences(),
     provideCloudFormRenderer(),
     { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }
 ]
