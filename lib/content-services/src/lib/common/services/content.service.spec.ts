@@ -156,7 +156,7 @@ describe('ContentService', () => {
         });
 
         it('should take current logged user id if userId undefined ', () => {
-            spyOn(authService, 'getEcmUsername').and.returnValue('user1');
+            spyOn(authService, 'getUsername').and.returnValue('user1');
             const permissionNode = new Node({
                 permissions: {
                     inherited: [
