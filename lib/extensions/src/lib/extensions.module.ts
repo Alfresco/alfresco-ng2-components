@@ -15,36 +15,26 @@
  * limitations under the License.
  */
 
-import { DynamicExtensionComponent } from './components/dynamic-component/dynamic.component';
-import { DynamicTabComponent } from './components/dynamic-tab/dynamic-tab.component';
-import { DynamicColumnComponent } from './components/dynamic-column/dynamic-column.component';
-import { PreviewExtensionComponent } from './components/viewer/preview-extension.component';
 import { NgModule, ModuleWithProviders, inject, provideAppInitializer } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
-import { setupExtensions } from './services/startup-extension-factory';
 
-export const EXTENSION_DIRECTIVES = [DynamicExtensionComponent, DynamicTabComponent, DynamicColumnComponent, PreviewExtensionComponent] as const;
-
-/** @deprecated import EXTENSION_DIRECTIVES or standalone components instead */
-@NgModule({
-    imports: [...EXTENSION_DIRECTIVES],
-    exports: [...EXTENSION_DIRECTIVES]
-})
+/** @deprecated use provideAppExtensions() api instead */
+@NgModule()
 export class ExtensionsModule {
     static forRoot(): ModuleWithProviders<ExtensionsModule> {
         return {
             ngModule: ExtensionsModule,
             providers: [
                 provideAppInitializer(() => {
-                    const initializerFn = setupExtensions(inject(AppExtensionService));
-                    return initializerFn();
+                    const appExtensionService = inject(AppExtensionService);
+                    return appExtensionService.load();
                 })
             ]
         };
     }
 
     /**
-     * @deprecated use `ExtensionsModule` instead, `EXTENSION_DIRECTIVES` or direct standalone components
+     * @deprecated use provideAppExtensions() api instead
      * @returns Module with providers
      */
     static forChild(): ModuleWithProviders<ExtensionsModule> {
