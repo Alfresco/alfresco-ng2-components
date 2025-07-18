@@ -23,6 +23,7 @@ import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
 import { ProcessContentService } from '../../services/process-content.service';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -61,7 +62,11 @@ describe('ContentWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentWidgetComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
+            ]
         });
         downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);

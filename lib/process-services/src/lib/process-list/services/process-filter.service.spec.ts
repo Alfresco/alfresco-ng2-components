@@ -20,6 +20,7 @@ import { ProcessFilterService } from './process-filter.service';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { of } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -49,7 +50,12 @@ describe('Process filter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            imports: [],
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
+            ]
         });
         service = TestBed.inject(ProcessFilterService);
     });
