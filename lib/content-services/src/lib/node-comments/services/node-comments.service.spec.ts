@@ -23,11 +23,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
+import { ContentService } from '../../common/services/content.service';
 
 declare let jasmine: any;
 
 describe('NodeCommentsService', () => {
     let service: NodeCommentsService;
+    let contentService: ContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,6 +40,7 @@ describe('NodeCommentsService', () => {
             ]
         });
         service = TestBed.inject(NodeCommentsService);
+        contentService = TestBed.inject(ContentService);
 
         jasmine.Ajax.install();
     });
@@ -80,6 +83,45 @@ describe('NodeCommentsService', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeContentComments)
             });
+        });
+
+        it('should cache the avatar URL when new comment is processed', (done) => {
+            spyOn(contentService, 'getContentUrl').and.returnValue('fake-url');
+
+            service.add('999', fakeContentComment.entry.content).subscribe((result: CommentModel) => {
+                expect(contentService.getContentUrl).toHaveBeenCalledWith('123-123-123');
+                expect(service.getUserImage('fake-email@dom.com')).toBe('fake-url');
+                expect(result.createdBy.id).toBe('fake-email@dom.com');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeContentComment)
+            });
+        });
+
+        it('should return avatar URL from cache via getUserImage()', (done) => {
+            spyOn(contentService, 'getContentUrl').and.returnValue('cached-url');
+
+            service.add('999', fakeContentComment.entry.content).subscribe(() => {
+                const result = service.getUserImage('fake-email@dom.com');
+                expect(result).toBe('cached-url');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeContentComment)
+            });
+        });
+
+        it('should return empty string if avatar not in cache', () => {
+            const result = service.getUserImage('non-existent-user');
+
+            expect(result).toBe('');
         });
     });
 });
