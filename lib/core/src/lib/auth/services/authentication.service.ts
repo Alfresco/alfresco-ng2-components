@@ -116,17 +116,25 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
+    /**
+     * @deprecated use `isLoggedIn` instead
+     * @returns true if the ECM provider is logged in
+     */
     isEcmLoggedIn(): boolean {
         if (this.isOauth()) {
-            return this.oidcAuthenticationService.isEcmLoggedIn();
+            return this.oidcAuthenticationService.isLoggedIn();
         } else {
             return this.basicAlfrescoAuthService.isEcmLoggedIn();
         }
     }
 
+    /**
+     * @deprecated use `isLoggedIn` instead
+     * @returns true if the BPM provider is logged in
+     */
     isBpmLoggedIn(): boolean {
         if (this.isOauth()) {
-            return this.oidcAuthenticationService.isBpmLoggedIn();
+            return this.oidcAuthenticationService.isLoggedIn();
         } else {
             return this.basicAlfrescoAuthService.isBpmLoggedIn();
         }
@@ -149,6 +157,8 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     /**
+     * Gets the username of the authenticated user.
+     *
      * @returns the username of the authenticated user
      */
     getUsername(): string {
@@ -160,27 +170,19 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getEcmUsername(): string {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.getUsername();
-        } else {
-            return this.basicAlfrescoAuthService.getEcmUsername();
-        }
+        return this.getUsername();
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getBpmUsername(): string {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.getUsername();
-        } else {
-            return this.basicAlfrescoAuthService.getBpmUsername();
-        }
+        return this.getUsername();
     }
 
     getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {

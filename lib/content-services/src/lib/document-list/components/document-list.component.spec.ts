@@ -646,7 +646,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        spyOn(authenticationService, 'getEcmUsername').and.returnValue('lockOwner');
+        spyOn(authenticationService, 'getUsername').and.returnValue('lockOwner');
 
         documentList.actions = [documentMenu];
 
@@ -677,7 +677,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        spyOn(authenticationService, 'getEcmUsername').and.returnValue('jerryTheKillerCow');
+        spyOn(authenticationService, 'getUsername').and.returnValue('jerryTheKillerCow');
 
         documentList.actions = [documentMenu];
 
