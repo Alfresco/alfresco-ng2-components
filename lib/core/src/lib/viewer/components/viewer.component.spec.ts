@@ -50,6 +50,7 @@ describe('ViewerComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
+    const getTitle = (): string => testingUtils.getByCSS('.adf-viewer__title-value')?.nativeElement?.textContent;
     const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
 
     beforeEach(() => {
@@ -194,6 +195,37 @@ describe('ViewerComponent', () => {
 
                 expect(getFileName()).toEqual('testFileName.jpg');
             });
+        });
+    });
+
+    describe('displayTitle', () => {
+        it('should return full title when total length is 50 characters or less', () => {
+            const titleShortName = 'Custom mock title';
+            component.title = titleShortName;
+            fixture.detectChanges();
+
+            expect(component.getDisplayTruncatedValue(titleShortName)).toBe(titleShortName);
+            expect(getTitle()).toBe(titleShortName);
+        });
+
+        it('should truncate title when total length exceeds 50 characters', () => {
+            const longTitle =
+                'verylongTitlethatexceedsmaximumlengthallowedverylongTitlethatexceedsmaximumlengthallowedverylongTitlethatexceedsmaximumlengthallowed';
+
+            component.title = longTitle;
+            fixture.detectChanges();
+
+            const result = component.getDisplayTruncatedValue(longTitle);
+
+            expect(result).toContain('.....');
+            expect(result.length).toBe(50);
+        });
+
+        it('should handle empty title', () => {
+            component.title = undefined;
+            fixture.detectChanges();
+
+            expect(getTitle()).toBeFalsy();
         });
     });
 

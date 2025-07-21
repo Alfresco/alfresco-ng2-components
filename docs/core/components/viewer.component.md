@@ -60,37 +60,38 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
-| allowGoBack | `boolean` | true | Allows `back` navigation. |
-| closeButtonPosition | `CloseButtonPosition` | `left` | Set close button position right/left. |
-| hideInfoButton | `boolean` | false | Toggles Info button. |
-| allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
-| allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
-| allowRightSidebar | `boolean` | false | Allow the right sidebar. |
-| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
-| canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
-| canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
-| fileName | `string` |  | Override Content filename. |
-| mimeType | `string` |  | Overload mimeType |
-| overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
-| readOnly | `boolean` | true | Enable when where is possible the editing functionalities |
-| allowedEditActions | `{ [key: string]: boolean }` | `{ rotate: true, crop: true }` | Controls which editing actions are enabled when not in read-only mode. Allows granular control over actions like rotation and cropping. |
-| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
-| showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
-| showToolbar | `boolean` | true | Hide or show the toolbar |
-| showViewer | `boolean` | true | Hide or show the viewer |
-| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
-| sidebarLeftTemplateContext |  | null | Context object available for binding by the local sidebarLeftTemplate with let declarations. |
-| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
-| sidebarRightTemplateContext |  | null | Context object available for binding by the local sidebarRightTemplate with let declarations. |
-| tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
-| urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| viewerExtensions | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. |
-| nodeId | `string` | null | Identifier of a node opened by a viewer. |
-| nodeMimeType | `string` | undefined | Original node mime type, should be provided when renditiona mime type is different. |
-| customError | `string` | undefined | Custom error message to be displayed in the viewer. |
+| Name                        | Type | Default value | Description                                                                                                                             |
+|-----------------------------| ---- | ------------- |-----------------------------------------------------------------------------------------------------------------------------------------|
+| allowFullScreen             | `boolean` | true | Toggles the 'Full Screen' feature.                                                                                                      |
+| allowGoBack                 | `boolean` | true | Allows `back` navigation.                                                                                                               |
+| closeButtonPosition         | `CloseButtonPosition` | `left` | Set close button position right/left.                                                                                                   |
+| hideInfoButton              | `boolean` | false | Toggles Info button.                                                                                                                    |
+| allowLeftSidebar            | `boolean` | false | Allow the left the sidebar.                                                                                                             |
+| allowNavigate               | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection.                          |
+| allowRightSidebar           | `boolean` | false | Allow the right sidebar.                                                                                                                |
+| blobFile                    | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File                                                              |
+| canNavigateBefore           | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.                                                           |
+| canNavigateNext             | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled.                                                                  |
+| fileName                    | `string` |  | Override Content filename.                                                                                                              |
+| title                       | `string` |  | Override Content title.                                                                                                                 |
+| mimeType                    | `string` |  | Overload mimeType                                                                                                                       |
+| overlayMode                 | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div.                            |
+| readOnly                    | `boolean` | true | Enable when where is possible the editing functionalities                                                                               |
+| allowedEditActions          | `{ [key: string]: boolean }` | `{ rotate: true, crop: true }` | Controls which editing actions are enabled when not in read-only mode. Allows granular control over actions like rotation and cropping. |
+| showLeftSidebar             | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`.                                                       |
+| showRightSidebar            | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                                     |
+| showToolbar                 | `boolean` | true | Hide or show the toolbar                                                                                                                |
+| showViewer                  | `boolean` | true | Hide or show the viewer                                                                                                                 |
+| sidebarLeftTemplate         | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data.                                                  |
+| sidebarLeftTemplateContext  |  | null | Context object available for binding by the local sidebarLeftTemplate with let declarations.                                            |
+| sidebarRightTemplate        | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data.                                                 |
+| sidebarRightTemplateContext |  | null | Context object available for binding by the local sidebarRightTemplate with let declarations.                                           |
+| tracks                      | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player                                                                                                    |
+| urlFile                     | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from.           |
+| viewerExtensions            | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension.         |
+| nodeId                      | `string` | null | Identifier of a node opened by a viewer.                                                                                                |
+| nodeMimeType                | `string` | undefined | Original node mime type, should be provided when renditiona mime type is different.                                                     |
+| customError                 | `string` | undefined | Custom error message to be displayed in the viewer.                                                                                     |
 
 ### Events
 
