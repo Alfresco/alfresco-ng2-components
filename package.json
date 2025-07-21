@@ -123,7 +123,7 @@
     "eslint-plugin-prettier": "^5.5.3",
     "eslint-plugin-rxjs": "^5.0.3",
     "eslint-plugin-storybook": "^9.0.7",
-    "eslint-plugin-unicorn": "^49.0.0",
+    "eslint-plugin-unicorn": "^59.0.1",
     "graphql": "^16.9.0",
     "husky": "^9.1.7",
     "jasmine-ajax": "4.0.0",
