@@ -27,22 +27,20 @@ import {
     ColumnsSelectorComponent,
     DataColumnListComponent,
     DataColumnComponent,
-    CustomEmptyContentTemplateDirective
+    CustomEmptyContentTemplateDirective,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../../mock/fake-task-response.mock';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
-import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
-import { TaskListCloudModule } from '../../task-list-cloud.module';
-import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { provideCloudPreferences } from '../../../../providers';
 
 @Component({
     standalone: true,
@@ -106,15 +104,17 @@ describe('TaskListCloudComponent', () => {
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
     let appConfig: AppConfigService;
-    let taskListCloudService: TaskListCloudServiceInterface;
-    const preferencesService: PreferenceCloudServiceInterface = jasmine.createSpyObj('preferencesService', {
+    let getTaskByRequestSpy: jasmine.Spy;
+    let fetchTaskListSpy: jasmine.Spy;
+
+    const preferencesService = jasmine.createSpyObj('preferencesService', {
         getPreferences: of({}),
         updatePreference: of({})
     });
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskListCloudComponent],
+            imports: [NoopAuthModule, TaskListCloudComponent],
             providers: [
                 {
                     provide: TASK_LIST_CLOUD_TOKEN,
@@ -129,7 +129,11 @@ describe('TaskListCloudComponent', () => {
         appConfig = TestBed.inject(AppConfigService);
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
-        taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
+
+        const taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
+        getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest');
+        fetchTaskListSpy = spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
+
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-task-list': {
                 presets: {
@@ -166,7 +170,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should load spinner and show the content', async () => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+            getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
             component.ngOnChanges({ appName });
@@ -182,7 +186,7 @@ describe('TaskListCloudComponent', () => {
 
         it('should hide columns on applying new columns visibility through columns selector', () => {
             component.showMainDatatableActions = true;
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+            getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
             component.ngAfterContentInit();
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -213,7 +217,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should return the results if an application name is given', (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+            getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -237,7 +241,6 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should call endpoint when a column visibility gets changed', () => {
-            spyOn(taskListCloudService, 'getTaskByRequest');
             component.ngAfterContentInit();
             spyOn(component, 'createDatatableSchema');
             component.appName = 'fake-app-name';
@@ -248,8 +251,9 @@ describe('TaskListCloudComponent', () => {
 
             fixture.detectChanges();
 
-            expect(taskListCloudService.getTaskByRequest).toHaveBeenCalledTimes(1);
+            expect(getTaskByRequestSpy).toHaveBeenCalledTimes(1);
         });
+
         describe('component changes', () => {
             beforeEach(() => {
                 component.rows = fakeGlobalTasks.list.entries;
@@ -257,7 +261,7 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should reload the task list when input parameters changed', () => {
-                const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
                 component.appName = 'mock-app-name';
                 component.priority = 1;
                 component.status = 'mock-status';
@@ -282,7 +286,7 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should reload task list when sorting on a column changes', () => {
-                const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
                 component.onSortingChanged(
                     new CustomEvent('sorting-changed', {
                         detail: {
@@ -313,7 +317,6 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should load spinner and show the content', async () => {
-            spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
             fixture.detectChanges();
@@ -330,7 +333,6 @@ describe('TaskListCloudComponent', () => {
 
         it('should hide columns on applying new columns visibility through columns selector', () => {
             component.showMainDatatableActions = true;
-            spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
             component.ngAfterContentInit();
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -361,8 +363,6 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should return the results if an application name is given', (done) => {
-            spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
-
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.rows).toBeDefined();
@@ -385,7 +385,6 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should call endpoint when a column visibility gets changed', () => {
-            const fetchTaskListSpy = spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
             component.ngAfterContentInit();
             spyOn(component, 'createDatatableSchema');
             component.appName = 'fake-app-name';
@@ -406,7 +405,6 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should reload the task list when input parameters changed', () => {
-                const fetchTaskListSpy = spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
                 component.appName = 'mock-app-name';
                 component.priorities = ['1', '2'];
                 component.statuses = ['mock-status-1', 'mock-status-2'];
@@ -425,7 +423,6 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should reload task list when sorting on a column changes', () => {
-                const fetchTaskListSpy = spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
                 fixture.detectChanges();
                 component.onSortingChanged(
                     new CustomEvent('sorting-changed', {
@@ -469,7 +466,7 @@ describe('TaskListCloudComponent', () => {
 
         it('should display empty content when process list is empty', async () => {
             const emptyList = { list: { entries: [] } };
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
+            getTaskByRequestSpy.and.returnValue(of(emptyList));
             fixture.detectChanges();
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -598,14 +595,13 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should NOT reload the task list when no parameters changed', () => {
-                spyOn(taskListCloudService, 'getTaskByRequest');
                 component.rows = null;
                 fixture.detectChanges();
                 expect(component.isListEmpty()).toBeTruthy();
             });
 
             it('should set formattedSorting if sorting input changes', () => {
-                spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
                 spyOn(component, 'formatSorting').and.callThrough();
 
                 component.appName = 'mock-app-name';
@@ -625,7 +621,7 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should reset pagination when resetPaginationValues is called', (done) => {
-                spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
 
                 const size = component.size;
                 const skipCount = component.skipCount;
@@ -648,7 +644,7 @@ describe('TaskListCloudComponent', () => {
             });
 
             it('should set pagination and reload when updatePagination is called', (done) => {
-                spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                getTaskByRequestSpy.and.returnValue(of(fakeGlobalTasks));
                 spyOn(component, 'reload').and.stub();
 
                 const pagination = {
@@ -675,13 +671,13 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
     let componentCustom: CustomTaskListComponent;
     let customCopyComponent: CustomCopyContentTaskListComponent;
     let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
-    let taskListCloudService: TaskListCloudServiceInterface;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [NoopAuthModule, CustomTaskListComponent, CustomCopyContentTaskListComponent],
+            providers: [provideCloudPreferences(), { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }]
         });
-        taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
+        const taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
@@ -729,13 +725,13 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
 
 describe('TaskListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
-    let taskListCloudService: TaskListCloudServiceInterface;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule]
+            imports: [NoopAuthModule, EmptyTemplateComponent],
+            providers: [provideCloudPreferences(), { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }]
         });
-        taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
+        const taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
         spyOn(taskListCloudService, 'fetchTaskList').and.returnValue(of(fakeGlobalTasks));
@@ -761,16 +757,16 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
     let getTaskByRequestSpy: jasmine.Spy;
     let fetchTaskListSpy: jasmine.Spy;
     let appConfig: AppConfigService;
-    let taskListCloudService: TaskListCloudServiceInterface;
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopAuthModule, TaskListCloudComponent],
+            providers: [provideCloudPreferences(), { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }]
         });
         appConfig = TestBed.inject(AppConfigService);
-        taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
+        const taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-task-list': {
                 presets: {

@@ -23,7 +23,6 @@ import { AppsProcessService } from '../../services/apps-process.service';
 import { deployedApps } from '../../testing/mock/apps-list.mock';
 import { of } from 'rxjs';
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 @Component({
     selector: 'adf-dialog-test',
@@ -58,7 +57,7 @@ describe('Select app dialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, DialogSelectAppTestComponent],
+            imports: [DialogSelectAppTestComponent],
             providers: [
                 {
                     provide: OverlayContainer,

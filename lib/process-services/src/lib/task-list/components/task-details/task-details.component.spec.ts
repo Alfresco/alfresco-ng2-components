@@ -23,7 +23,6 @@ import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User, ADF_
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../../testing/mock';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TaskService } from '../../../form/services/task.service';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { PeopleProcessService } from '../../../services/people-process.service';
@@ -31,6 +30,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { LightUserRepresentation, TaskRepresentation } from '@alfresco/js-api';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 const fakeUser: LightUserRepresentation = {
     id: 0,
@@ -60,7 +60,8 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskDetailsComponent]
+            imports: [TaskDetailsComponent],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
         spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ email: 'fake-email' } as any));

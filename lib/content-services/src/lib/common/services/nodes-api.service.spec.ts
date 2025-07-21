@@ -16,8 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CoreTestingModule, RedirectAuthService } from '@alfresco/adf-core';
+import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, firstValueFrom, of } from 'rxjs';
 import { JobIdBodyEntry, SizeDetails, SizeDetailsEntry } from '@alfresco/js-api';
 import { NodesApiService } from './nodes-api.service';
@@ -46,7 +45,6 @@ describe('NodesApiService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, CoreTestingModule],
             providers: [
                 NodesApiService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

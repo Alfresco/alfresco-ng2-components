@@ -45,7 +45,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
 import {
@@ -64,9 +63,7 @@ import { FORM_CLOUD_FIELD_VALIDATORS_TOKEN, FormCloudComponent } from './form-cl
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -114,7 +111,7 @@ describe('FormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormCloudComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, FormCloudComponent],
             providers: [
                 {
                     provide: VersionCompatibilityService,
@@ -1215,95 +1212,6 @@ describe('FormCloudComponent', () => {
         expect(form.fieldValidators.length).toBe(10);
     });
 
-    it('should allow controlling [open next task] checkbox visibility', async () => {
-        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
-        formComponent.form = formModel;
-
-        const isCheckboxShown = () => {
-            const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-            return !!checkbox;
-        };
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(isCheckboxShown()).toBeFalse();
-
-        formComponent.showNextTaskCheckbox = true;
-        formComponent.showCompleteButton = true;
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(isCheckboxShown()).toBeTrue();
-
-        formComponent.showNextTaskCheckbox = false;
-        formComponent.showCompleteButton = false;
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(isCheckboxShown()).toBeFalse();
-    });
-
-    it('should allow controlling [open next task] checkbox value', async () => {
-        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
-        formComponent.form = formModel;
-        formComponent.showNextTaskCheckbox = true;
-        formComponent.showCompleteButton = true;
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const isCheckboxChecked = async () => {
-            if (formComponent.showNextTaskCheckbox && formComponent.showCompleteButton) {
-                const checkbox = await documentRootLoader.getHarness(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
-                return checkbox.isChecked();
-            }
-            return null;
-        };
-        expect(await isCheckboxChecked()).toBeFalse();
-
-        formComponent.isNextTaskCheckboxChecked = true;
-        formComponent.showCompleteButton = true;
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        expect(await isCheckboxChecked()).toBeTrue();
-
-        formComponent.isNextTaskCheckboxChecked = false;
-        formComponent.showCompleteButton = false;
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        // Skip the checkbox visibility test if it's not supposed to be visible
-        if (formComponent.showNextTaskCheckbox && formComponent.showCompleteButton) {
-            expect(await isCheckboxChecked()).toBeFalse();
-        } else {
-            // Alternative test when checkbox shouldn't be visible
-            const checkboxElement = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-            expect(checkboxElement).toBeNull();
-        }
-    });
-
-    it('should call onNextTaskCheckboxCheckedChanged when the checkbox is checked', async () => {
-        // Add fields to make sure the components are shown which contain the checkbox
-        const formModel = new FormModel({ fields: [{ id: 'field2' }] });
-        formComponent.form = formModel;
-
-        // Set both required properties to make the checkbox visible
-        formComponent.showNextTaskCheckbox = true;
-        formComponent.showCompleteButton = true;
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        // Use a specific selector to target the correct checkbox
-        const checkbox = await documentRootLoader.getHarnessOrNull(MatCheckboxHarness.with({ selector: '#adf-form-open-next-task' }));
-
-        // Ensure checkbox was found
-        expect(checkbox).not.toBeNull();
-
-        spyOn(formComponent.nextTaskCheckboxCheckedChanged, 'emit');
-        await checkbox.check();
-
-        expect(formComponent.nextTaskCheckboxCheckedChanged.emit).toHaveBeenCalled();
-    });
-
     describe('form validations', () => {
         it('should be able to set visibility conditions for Attach File widget', async () => {
             spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));
@@ -1630,7 +1538,7 @@ describe('Multilingual Form', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopAuthModule],
+            imports: [NoopAuthModule],
             providers: [
                 provideTranslateService({
                     loader: {
@@ -1705,7 +1613,7 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule, CoreModule.forRoot(), FormCloudComponent],
+            imports: [AuthModule.forRoot({ useHash: true }), CoreModule.forRoot(), FormCloudComponent],
             providers: [
                 provideTranslations('app', 'resources'),
                 {
@@ -1802,14 +1710,5 @@ describe('retrieve metadata on submit', () => {
         formService.formFieldValueChanged.next({} as FormFieldEvent);
 
         expect(formComponent.disableSaveButton).toBeFalse();
-    });
-
-    it('should not show next task checkbox when complete button is not shown', () => {
-        formComponent.showNextTaskCheckbox = false;
-        formComponent.showCompleteButton = false;
-        fixture.detectChanges();
-
-        const checkbox = fixture.debugElement.query(By.css('#adf-form-open-next-task'));
-        expect(checkbox).toBeNull();
     });
 });

@@ -18,9 +18,9 @@
 import { TestBed } from '@angular/core/testing';
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { catchError, firstValueFrom, of } from 'rxjs';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('TaskListCloudService', () => {
     let service: TaskListCloudService;
@@ -33,7 +33,7 @@ describe('TaskListCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopTranslateModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(TaskListCloudService);

@@ -16,10 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { processInstanceDetailsCloudMock } from '../../mock/process-instance-details-cloud.mock';
@@ -32,7 +31,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessHeaderCloudComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, ProcessHeaderCloudComponent]
         });
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;

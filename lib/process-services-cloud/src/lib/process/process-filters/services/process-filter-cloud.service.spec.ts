@@ -20,7 +20,6 @@ import { firstValueFrom, of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import {
     fakeEmptyProcessCloudFilterEntries,
     fakeProcessCloudFilterEntries,
@@ -33,6 +32,7 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { ApolloTestingModule } from 'apollo-angular/testing';
+import { NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -52,7 +52,7 @@ describe('ProcessFilterCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ApolloTestingModule],
+            imports: [NoopTranslateModule, NoopAuthModule, ApolloTestingModule],
             providers: [{ provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(ProcessFilterCloudService);

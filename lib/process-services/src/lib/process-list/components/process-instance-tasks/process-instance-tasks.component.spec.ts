@@ -22,7 +22,6 @@ import { of } from 'rxjs';
 import { taskDetailsMock } from '../../../testing/mock';
 import { ProcessService } from '../../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatListItemHarness } from '@angular/material/list/testing';
@@ -37,9 +36,6 @@ describe('ProcessInstanceTasksComponent', () => {
     const exampleProcessInstance: ProcessInstanceRepresentation = { id: '123' };
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
-        });
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         processService = TestBed.inject(ProcessService);
         component = fixture.componentInstance;

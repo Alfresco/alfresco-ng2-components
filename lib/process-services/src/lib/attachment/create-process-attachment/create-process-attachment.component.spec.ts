@@ -18,7 +18,6 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 declare let jasmine: any;
@@ -48,7 +47,7 @@ describe('CreateProcessAttachmentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CreateProcessAttachmentComponent],
+            imports: [CreateProcessAttachmentComponent],
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);

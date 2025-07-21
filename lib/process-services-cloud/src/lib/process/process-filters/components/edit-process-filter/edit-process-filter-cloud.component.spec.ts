@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { ADF_DATE_FORMATS, NoopAuthModule, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, NoopAuthModule, UserPreferencesService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { SimpleChange } from '@angular/core';
@@ -28,7 +28,6 @@ import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { endOfDay, format, isValid, startOfDay, subYears } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { of } from 'rxjs';
@@ -51,7 +50,7 @@ import {
     PROCESS_FILTER_ACTION_SAVE_DEFAULT
 } from './edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
-import { IdentityUserService } from '@alfresco/adf-process-services-cloud';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 describe('EditProcessFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -90,14 +89,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAuthModule,
-                MatIconTestingModule,
-                MatDialogModule,
-                NoopTranslateModule,
-                NoopAnimationsModule,
-                EditProcessFilterCloudComponent
-            ],
+            imports: [NoopAuthModule, MatIconTestingModule, MatDialogModule, EditProcessFilterCloudComponent],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: MAT_DATE_LOCALE, useValue: enUS },

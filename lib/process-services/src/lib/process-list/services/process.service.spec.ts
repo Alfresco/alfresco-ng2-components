@@ -18,8 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { exampleProcess } from '../../testing/mock';
 import { ProcessService } from './process.service';
-import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation, RestVariable, TaskRepresentation } from '@alfresco/js-api';
 
 const fakeTasksList = {
@@ -55,7 +54,7 @@ describe('ProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ProcessTestingModule]
+            imports: []
         });
         service = TestBed.inject(ProcessService);
     });

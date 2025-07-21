@@ -29,22 +29,23 @@ import {
     getDataColumnMock,
     ObjectDataColumn,
     ObjectDataRow,
-    User
+    User,
+    NoopAuthModule,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { of, throwError } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN, ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { provideCloudPreferences } from '../../../providers';
 
 const fakeCustomSchema = [
     new ObjectDataColumn<ProcessListDataColumnCustomData>({
@@ -219,7 +220,8 @@ describe('ProcessListCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessListCloudComponent]
+            imports: [NoopAuthModule, ProcessListCloudComponent],
+            providers: [provideCloudPreferences()]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -1106,7 +1108,8 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent]
+            imports: [CustomTaskListComponent],
+            providers: [provideCloudPreferences()]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
         fixtureCustom.detectChanges();
@@ -1152,13 +1155,7 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessServiceCloudTestingModule,
-                MatProgressSpinnerModule,
-                CustomEmptyContentTemplateDirective,
-                ProcessListCloudComponent,
-                EmptyTemplateComponent
-            ],
+            imports: [NoopTranslateModule, CustomEmptyContentTemplateDirective, ProcessListCloudComponent, EmptyTemplateComponent],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);

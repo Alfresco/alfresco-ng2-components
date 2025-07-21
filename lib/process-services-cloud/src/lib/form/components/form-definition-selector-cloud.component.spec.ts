@@ -16,13 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
 import { of } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('FormDefinitionCloudComponent', () => {
     let fixture: ComponentFixture<FormDefinitionSelectorCloudComponent>;
@@ -32,7 +32,7 @@ describe('FormDefinitionCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormDefinitionSelectorCloudComponent]
+            imports: [NoopTranslateModule, FormDefinitionSelectorCloudComponent]
         });
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
         service = TestBed.inject(FormDefinitionSelectorCloudService);

@@ -24,7 +24,6 @@ import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent, ShowHeaderMode } from './datatable.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../data-column/data-column.component';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
@@ -35,6 +34,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { provideRouter } from '@angular/router';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -148,7 +148,8 @@ describe('DataTable', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CustomColumnHeaderComponent]
+            imports: [CustomColumnHeaderComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
@@ -1293,7 +1294,7 @@ describe('DataTable', () => {
         expect(dataTable.data.getColumns()).toEqual(expectedNewDataColumns);
     });
 
-    it('should render the custom column header', () => {
+    it('should render the custom column header', async () => {
         const customHeader = TestBed.createComponent(CustomColumnHeaderComponent).componentInstance.templateRef;
         dataTable.data = new ObjectDataTableAdapter(
             [
@@ -1303,6 +1304,7 @@ describe('DataTable', () => {
             [new ObjectDataColumn({ key: 'id', title: 'ID' }), new ObjectDataColumn({ key: 'name', title: 'Name', header: customHeader })]
         );
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(testingUtils.getInnerTextByDataAutomationId('auto_id_id')).toContain('ID');
         expect(testingUtils.getInnerTextByDataAutomationId('auto_id_name')).toContain('CUSTOM HEADER');
@@ -1520,7 +1522,7 @@ describe('Accessibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CustomColumnTemplateComponent],
+            imports: [CustomColumnTemplateComponent],
             providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1754,7 +1756,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CustomColumnTemplateComponent],
+            imports: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -1848,7 +1850,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CustomColumnTemplateComponent],
+            imports: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -1956,7 +1958,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CustomColumnTemplateComponent],
+            imports: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);

@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
-import { CoreTestingModule, UnitTestingUtils } from '../../../../testing';
+import { UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { DateWidgetComponent } from './date.widget';
 import { DEFAULT_DATE_FORMAT } from '../../../../common';
@@ -32,7 +32,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [DateWidgetComponent]
         });
 
         form = new FormModel();

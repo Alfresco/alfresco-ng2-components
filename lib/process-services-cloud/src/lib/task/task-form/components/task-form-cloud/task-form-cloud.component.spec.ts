@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
-import { FormCustomOutcomesComponent } from '@alfresco/adf-process-services-cloud';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
 import { DisplayModeService } from '../../../../form/services/display-mode.service';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import {
     TASK_ASSIGNED_STATE,
@@ -34,6 +32,7 @@ import {
 } from '../../../models/task-details-cloud.model';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
+import { FormCustomOutcomesComponent } from '../../../../form/components/form-cloud-custom-outcomes.component';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -61,7 +60,8 @@ describe('TaskFormCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                ProcessServiceCloudTestingModule,
+                NoopTranslateModule,
+                NoopAuthModule,
                 FormCloudComponent,
                 FormCustomOutcomesComponent,
                 UserTaskCloudButtonsComponent,

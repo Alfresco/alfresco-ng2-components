@@ -21,6 +21,7 @@ import { CoreModule } from '../core.module';
 import { NoopTranslateModule } from './noop-translate.module';
 import { NoopAuthModule } from './noop-auth.module';
 
+/** @deprecated this module is deprecated and will be removed in the future */
 @NgModule({
     imports: [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule]
 })

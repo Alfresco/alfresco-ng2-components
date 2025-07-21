@@ -28,7 +28,6 @@ import { ProcessDefinitionService } from '../../../../services/process-definitio
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ProcessTestingModule } from '../../../../../testing/process.testing.module';
 
 describe('DropdownEditorComponent', () => {
     let fixture: ComponentFixture<DropdownEditorComponent>;
@@ -44,7 +43,7 @@ describe('DropdownEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, DropdownEditorComponent]
+            imports: [DropdownEditorComponent]
         });
         formService = TestBed.inject(FormService);
         taskFormService = TestBed.inject(TaskFormService);

@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils } from '../../../testing';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
@@ -29,7 +29,7 @@ describe('Text View component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, TxtViewerComponent]
+            imports: [TxtViewerComponent]
         });
         fixture = TestBed.createComponent(TxtViewerComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

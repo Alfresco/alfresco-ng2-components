@@ -17,7 +17,6 @@
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { filter } from 'rxjs/operators';
-import { CoreTestingModule } from '../../../testing';
 import { FormRulesEvent } from '../../events';
 import { FormFieldModel, FormModel } from './core';
 import { WidgetComponent } from './widget.component';
@@ -29,7 +28,7 @@ describe('WidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [WidgetComponent]
         });
         fixture = TestBed.createComponent(WidgetComponent);
 

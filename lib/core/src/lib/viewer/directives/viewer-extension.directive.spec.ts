@@ -21,7 +21,6 @@ import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ViewerRenderComponent } from '../components/viewer-render/viewer-render.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
-import { CoreTestingModule } from '../../testing';
 
 describe('ExtensionViewerDirective', () => {
     let extensionViewerDirective: ViewerExtensionDirective;
@@ -35,7 +34,7 @@ describe('ExtensionViewerDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [ViewerRenderComponent],
             providers: [
                 { provide: Location, useClass: SpyLocation },
                 ViewerExtensionDirective,

@@ -16,7 +16,7 @@
  */
 
 import { of, timer } from 'rxjs';
-import { FormFieldModel, FormModel, GroupModel, CoreTestingModule, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, GroupModel, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleProcessService } from '../../../services/people-process.service';
@@ -41,7 +41,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [FunctionalGroupWidgetComponent]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
         getWorkflowGroupsSpy = spyOn(peopleProcessService, 'getWorkflowGroups').and.returnValue(of([]));

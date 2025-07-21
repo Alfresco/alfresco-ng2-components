@@ -21,8 +21,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { taskCompleteCloudMock } from '../../../../task-header/mocks/fake-complete-task.mock';
 import { TaskCloudService } from '../../../../services/task-cloud.service';
-import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { By } from '@angular/platform-browser';
+import { NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 
 describe('CompleteTaskDirective', () => {
     @Component({
@@ -58,7 +58,7 @@ describe('CompleteTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TestComponent]
+            imports: [NoopTranslateModule, NoopAuthModule, TestComponent]
         });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
@@ -176,37 +176,36 @@ describe('Complete Task Directive validation errors', () => {
         }
     }
 
-    let fixture: ComponentFixture<any>;
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                ProcessServiceCloudTestingModule,
+                NoopTranslateModule,
+                NoopAuthModule,
                 TestMissingTaskIdDirectiveComponent,
                 TestInvalidAppNameUndefinedDirectiveComponent,
                 TestInvalidAppNameNullDirectiveComponent,
                 TestMissingInputDirectiveComponent
             ]
         });
-        fixture = TestBed.createComponent(TestMissingInputDirectiveComponent);
     });
 
     it('should throw error when missing input', () => {
+        const fixture = TestBed.createComponent(TestMissingInputDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError();
     });
 
     it('should throw error when taskId is not set', () => {
-        fixture = TestBed.createComponent(TestMissingTaskIdDirectiveComponent);
+        const fixture = TestBed.createComponent(TestMissingTaskIdDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError('Attribute taskId is required');
     });
 
     it('should throw error when appName is undefined', () => {
-        fixture = TestBed.createComponent(TestInvalidAppNameUndefinedDirectiveComponent);
+        const fixture = TestBed.createComponent(TestInvalidAppNameUndefinedDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 
     it('should throw error when appName is null', () => {
-        fixture = TestBed.createComponent(TestInvalidAppNameUndefinedDirectiveComponent);
+        const fixture = TestBed.createComponent(TestInvalidAppNameUndefinedDirectiveComponent);
         expect(() => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 });

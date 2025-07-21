@@ -1,17 +1,21 @@
 # @alfresco/adf-core/shell
 
-Secondary entry point of `@alfresco/adf-core`. It can be used by importing from `@alfresco/adf-core/shell`.
+Namespace: `@alfresco/adf-core/shell`.
+
+This module provides the main layout for the application, allowing you to define routes and guards for your application shell.
 
 # Shell
 
-[ShellModule](./src/lib/shell.module.ts) is designated as a main layout for the application.
+Passed routes are going to be attached to shell main route.
 
-I order to attach routes to appShell, `withRoutes(routes: Routes | AppShellRoutesConfig)` method should be used.
+```typescript
+import { provideShellRoutes } from '@alfresco/adf-core/shell';
 
-Passed routes are going to be attached to [shell main route](./src/lib/shell.routes.ts)
+provideShellRoutes([/*Your Routes*/])
+```
 
-If you would like to provide custom app guard, you can provide your own using [SHELL_AUTH_TOKEN](./src/lib/shell.routes.ts)
+If you would like to provide custom app guard, you can provide your own using `SHELL_AUTH_TOKEN`.
 
 ## Shell Service
 
-In order to use `shell`, you need to provide [SHELL_APP_SERVICE](./src/lib/services/shell-app.service.ts) which provides necessary options for shell component to work.
+In order to use `shell`, you need to provide `SHELL_APP_SERVICE` which provides necessary options for shell component to work.

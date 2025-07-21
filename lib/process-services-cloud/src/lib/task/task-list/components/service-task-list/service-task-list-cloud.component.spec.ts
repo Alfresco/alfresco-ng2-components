@@ -18,17 +18,25 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataRowEvent,
+    ObjectDataRow,
+    NoopAuthModule,
+    DataColumnComponent,
+    DataColumnListComponent,
+    CustomEmptyContentTemplateDirective
+} from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
 import { fakeServiceTask, fakeCustomSchema } from '../../mock/fake-task-response.mock';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudSortingModel } from '../../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../../services/service-task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { provideCloudPreferences } from '../../../../providers';
 
 @Component({
     template: ` <adf-cloud-service-task-list #taskListCloud>
@@ -36,12 +44,15 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
             <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="2" />
             <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden" />
         </data-columns>
-    </adf-cloud-service-task-list>`
+    </adf-cloud-service-task-list>`,
+    standalone: true,
+    imports: [ServiceTaskListCloudComponent, DataColumnComponent, DataColumnListComponent]
 })
 class CustomTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent)
     taskList: ServiceTaskListCloudComponent;
 }
+
 @Component({
     template: `
         <adf-cloud-service-task-list>
@@ -49,16 +60,21 @@ class CustomTaskListComponent {
                 <p id="custom-id"></p>
             </adf-custom-empty-content-template>
         </adf-cloud-service-task-list>
-    `
+    `,
+    standalone: true,
+    imports: [CustomEmptyContentTemplateDirective, ServiceTaskListCloudComponent]
 })
 class EmptyTemplateComponent {}
+
 @Component({
     template: ` <adf-cloud-service-task-list>
         <data-columns>
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID" />
             <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" />
         </data-columns>
-    </adf-cloud-service-task-list>`
+    </adf-cloud-service-task-list>`,
+    standalone: true,
+    imports: [ServiceTaskListCloudComponent, DataColumnComponent, DataColumnListComponent]
 })
 class CustomCopyContentTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent, { static: true })
@@ -69,18 +85,18 @@ describe('ServiceTaskListCloudComponent', () => {
     let loader: HarnessLoader;
     let component: ServiceTaskListCloudComponent;
     let fixture: ComponentFixture<ServiceTaskListCloudComponent>;
-    let appConfig: AppConfigService;
-    let serviceTaskListCloudService: ServiceTaskListCloudService;
+    let getServiceTaskByRequestSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [EmptyTemplateComponent]
+            imports: [NoopAuthModule, ServiceTaskListCloudComponent, EmptyTemplateComponent],
+            providers: [provideCloudPreferences()]
         });
-        appConfig = TestBed.inject(AppConfigService);
-        serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
-        fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
-        component = fixture.componentInstance;
+
+        const serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
+        getServiceTaskByRequestSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest');
+
+        const appConfig = TestBed.inject(AppConfigService);
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-service-task-list': {
                 presets: {
@@ -102,6 +118,9 @@ describe('ServiceTaskListCloudComponent', () => {
             }
         });
 
+        fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
+        component = fixture.componentInstance;
+
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
@@ -118,7 +137,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should display empty content when process list is empty', async () => {
         const emptyList = { list: { entries: [] } };
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
+        getServiceTaskByRequestSpy.and.returnValue(of(emptyList));
         fixture.detectChanges();
 
         expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
@@ -128,7 +147,7 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should load spinner and show the content', async () => {
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+        getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
@@ -164,7 +183,7 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should reload tasks when reload() is called', (done) => {
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+        getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -214,7 +233,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should call endpoint when a column visibility gets changed', () => {
         const emptyList = { list: { entries: [] } };
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
+        getServiceTaskByRequestSpy.and.returnValue(of(emptyList));
         component.ngAfterContentInit();
         spyOn(component, 'createDatatableSchema');
         component.appName = 'fake-app-name';
@@ -225,7 +244,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
         fixture.detectChanges();
 
-        expect(serviceTaskListCloudService.getServiceTaskByRequest).toHaveBeenCalledTimes(1);
+        expect(getServiceTaskByRequestSpy).toHaveBeenCalledTimes(1);
     });
 
     describe('component changes', () => {
@@ -235,14 +254,13 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('should NOT reload the task list when no parameters changed', () => {
-            spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest');
             component.rows = null;
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
         });
 
         it('should reload the task list when input parameters changed', () => {
-            const getServiceTaskByRequestSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+            getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
             component.appName = 'mock-app-name';
             component.queryParams.status = 'mock-status';
             const queryParams = new SimpleChange(undefined, { status: 'mock-status' }, true);
@@ -255,7 +273,7 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('should set formattedSorting if sorting input changes', () => {
-            spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+            getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
             spyOn(component, 'formatSorting').and.callThrough();
 
             component.appName = 'mock-app-name';
@@ -275,7 +293,7 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('should reload task list when sorting on a column changes', () => {
-            const getServiceTaskByRequestSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+            getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
             component.onSortingChanged(
                 new CustomEvent('sorting-changed', {
                     detail: {
@@ -298,7 +316,7 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('should reset pagination when resetPaginationValues is called', (done) => {
-            spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+            getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
 
             const size = component.size;
             const skipCount = component.skipCount;
@@ -321,7 +339,7 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {
-            spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+            getServiceTaskByRequestSpy.and.returnValue(of(fakeServiceTask));
             spyOn(component, 'reload').and.stub();
 
             const pagination = {
@@ -347,15 +365,14 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
     let componentCustom: CustomTaskListComponent;
     let customCopyComponent: CustomCopyContentTaskListComponent;
     let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
-    let serviceTaskListCloudService: ServiceTaskListCloudService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [NoopAuthModule, CustomTaskListComponent, CustomCopyContentTaskListComponent],
+            providers: [provideCloudPreferences()]
         });
 
-        serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
+        const serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
 
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
@@ -403,16 +420,19 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
 describe('ServiceTaskListCloudComponent: Copy cell content directive from app.config specifications', () => {
     let taskSpy: jasmine.Spy;
     let appConfig: AppConfigService;
-    let serviceTaskListCloudService: ServiceTaskListCloudService;
     let fixture: ComponentFixture<ServiceTaskListCloudComponent>;
     let component: ServiceTaskListCloudComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [NoopAuthModule, ServiceTaskListCloudComponent],
+            providers: [provideCloudPreferences()]
         });
+
+        const serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
+        taskSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+
         appConfig = TestBed.inject(AppConfigService);
-        serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-service-task-list': {
                 presets: {
@@ -436,7 +456,6 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
         });
         fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
         component = fixture.componentInstance;
-        taskSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
     });
     afterEach(() => {
         fixture.destroy();

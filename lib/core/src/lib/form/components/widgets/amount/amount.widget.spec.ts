@@ -18,13 +18,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from '../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
-import { FormBaseModule } from '../../../form-base.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '../../../../testing/noop-translate.module';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 
 describe('AmountWidgetComponent', () => {
@@ -35,7 +32,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, FormBaseModule]
+            imports: [AmountWidgetComponent]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -133,7 +130,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, FormBaseModule]
+            imports: [AmountWidgetComponent]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -338,7 +335,7 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, FormBaseModule],
+            imports: [AmountWidgetComponent],
             providers: [
                 {
                     provide: ADF_AMOUNT_SETTINGS,

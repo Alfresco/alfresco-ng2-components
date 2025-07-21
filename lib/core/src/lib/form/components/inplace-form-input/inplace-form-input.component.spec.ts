@@ -17,8 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UntypedFormControl } from '@angular/forms';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
 import { InplaceFormInputComponent } from './inplace-form-input.component';
+import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 describe('InplaceFormInputComponent', () => {
     let component: InplaceFormInputComponent;
@@ -26,13 +26,10 @@ describe('InplaceFormInputComponent', () => {
     let formControl: UntypedFormControl;
     let testingUtils: UnitTestingUtils;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, InplaceFormInputComponent]
-        }).compileComponents();
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [InplaceFormInputComponent]
+        });
         formControl = new UntypedFormControl('');
         fixture = TestBed.createComponent(InplaceFormInputComponent);
 

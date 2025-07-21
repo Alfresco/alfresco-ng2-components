@@ -24,10 +24,10 @@ import { exampleProcess, exampleProcessNoName, mockRunningProcess, processEnded 
 import { mockProcessInstanceComments } from '../../../testing/mock/process/process-comments.mock';
 import { ProcessService } from '../../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
-import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 describe('ProcessInstanceDetailsComponent', () => {
     let service: ProcessService;
@@ -38,7 +38,8 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ProcessInstanceDetailsComponent],
+            imports: [ProcessInstanceDetailsComponent],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);

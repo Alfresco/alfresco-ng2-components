@@ -89,12 +89,9 @@
                     [showRefreshButton]="false"
                     [showValidationIcon]="false"
                     [showTitle]="false"
-                    [showNextTaskCheckbox]="showNextTaskCheckbox"
-                    [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
                     (formContentClicked)="onFormContentClicked($event)"
                     (formLoaded)="onFormLoaded($event)"
                     (executeOutcome)="onCustomOutcomeClicked($event.outcome.name)"
-                    (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
                 >
                         <adf-cloud-form-custom-outcomes>
                             <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />

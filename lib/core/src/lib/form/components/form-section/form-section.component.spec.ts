@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils } from '../../../testing';
 import { FormFieldModel, FormModel } from '../widgets';
 import { FormSectionComponent } from './form-section.component';
 import { mockSectionWithFields } from '../mock/form-renderer.component.mock';
@@ -28,7 +28,7 @@ describe('FormSectionComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [FormSectionComponent]
         });
         fixture = TestBed.createComponent(FormSectionComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);

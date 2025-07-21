@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppConfigService, NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -31,7 +31,6 @@ import { MatActionListItemHarness } from '@angular/material/list/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 
 describe('TaskFiltersCloudComponent', () => {
@@ -48,7 +47,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, NoopAnimationsModule, NoopTranslateModule, TaskFiltersCloudComponent, ApolloTestingModule],
+            imports: [NoopAuthModule, TaskFiltersCloudComponent, ApolloTestingModule],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);

@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormFieldTypes, FormModel, FormService, CoreTestingModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, FormService } from '@alfresco/adf-core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
@@ -72,7 +72,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [DynamicTableWidgetComponent]
         });
         const field = new FormFieldModel(new FormModel());
         formService = TestBed.inject(FormService);
