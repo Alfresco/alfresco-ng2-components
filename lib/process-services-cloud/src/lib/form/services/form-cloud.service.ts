@@ -210,7 +210,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      *
      * @param json JSON data to create the form
      * @param data Values for the form's fields
-     * @param readOnly Toggles whether or not the form should be read-only
+     * @param readOnly Toggles whether the form should be read-only
      * @returns Form created from the JSON specification
      */
     parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {

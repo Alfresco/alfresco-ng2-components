@@ -73,6 +73,31 @@ export class TaskFormCloudComponent {
     @Input()
     showCompleteButton = true;
 
+    /** Toggle rendering of the `Save` button. */
+    @Input()
+    showSaveButton = true;
+
+    /**
+     * Custom text for the `Cancel` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customCancelButtonText: string = '';
+
+    /**
+     * Custom text for the `Complete` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customCompleteButtonText: string = '';
+
+    /**
+     * Custom text for the `Save` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customSaveButtonText: string = '';
+
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;
@@ -86,6 +111,10 @@ export class TaskFormCloudComponent {
     /** Task details. */
     @Input()
     taskDetails: TaskDetailsCloudModel;
+
+    /** Emitted when the form is loaded or reloaded. */
+    @Output()
+    formLoaded = new EventEmitter<FormModel>();
 
     /** Emitted when the form is saved. */
     @Output()
@@ -224,5 +253,9 @@ export class TaskFormCloudComponent {
 
     onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOff.emit(displayModeConfiguration);
+    }
+
+    onFormLoaded(form: FormModel) {
+        this.formLoaded.emit(form);
     }
 }

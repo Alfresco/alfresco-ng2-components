@@ -21,9 +21,9 @@ import { FormWidgetModel } from './form-widget.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
-    static SAVE_ACTION: string = 'SAVE'; // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'COMPLETE'; // Activiti 'Complete' action name
-    static START_PROCESS_ACTION: string = 'START PROCESS'; // Activiti 'Start Process' action name
+    static readonly SAVE_ACTION: string = 'SAVE'; // Activiti 'Save' action name
+    static readonly COMPLETE_ACTION: string = 'COMPLETE'; // Activiti 'Complete' action name
+    static readonly START_PROCESS_ACTION: string = 'START PROCESS'; // Activiti 'Start Process' action name
 
     isSystem: boolean = false;
     isSelected: boolean = false;

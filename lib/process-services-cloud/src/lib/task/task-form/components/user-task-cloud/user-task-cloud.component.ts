@@ -87,6 +87,31 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     showCompleteButton = true;
 
+    /** Toggle rendering of the `Save` button. */
+    @Input()
+    showSaveButton = true;
+
+    /**
+     * Custom text for the `Cancel` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customCancelButtonText: string = '';
+
+    /**
+     * Custom text for the `Complete` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customCompleteButtonText: string = '';
+
+    /**
+     * Custom text for the `Save` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customSaveButtonText: string = '';
+
     /** Toggle rendering of the `Open next task` checkbox (for screens only). */
     @Input()
     showNextTaskCheckbox = false;
@@ -129,6 +154,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     /** Emitted when form content is clicked. */
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
+
+    /** Emitted when the form is loaded or reloaded. */
+    @Output()
+    formLoaded = new EventEmitter<FormModel>();
 
     /** Emitted when the form is saved. */
     @Output()
@@ -247,6 +276,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     onError(data: any): void {
         this.error.emit(data);
+    }
+
+    onFormLoaded(form: FormModel) {
+        this.formLoaded.emit(form);
     }
 
     onExecuteOutcome(outcome: FormOutcomeEvent): void {
