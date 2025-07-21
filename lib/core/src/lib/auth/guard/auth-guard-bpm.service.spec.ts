@@ -95,7 +95,7 @@ describe('AuthGuardService BPM', () => {
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {
-        spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuardBpm(route, state)) as Promise<boolean>;
         expect(await authGuard).toBeTruthy();

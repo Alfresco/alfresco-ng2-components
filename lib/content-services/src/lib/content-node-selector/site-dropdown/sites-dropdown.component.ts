@@ -182,7 +182,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
-        const loggedUserName = this.authService.getEcmUsername();
+        const loggedUserName = this.authService.getUsername();
         sites.list.entries = sites.list.entries.filter((site) => this.isCurrentUserMember(site, loggedUserName));
         return sites;
     }

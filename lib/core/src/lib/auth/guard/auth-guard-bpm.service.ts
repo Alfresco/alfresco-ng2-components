@@ -28,7 +28,7 @@ export const AuthGuardBpm: CanActivateFn = async (_: ActivatedRouteSnapshot, sta
         return authGuardBaseService.redirectSSOSuccessURL();
     }
 
-    if (authenticationService.isBpmLoggedIn() || authGuardBaseService.withCredentials) {
+    if (authenticationService.isLoggedIn() || authGuardBaseService.withCredentials) {
         return true;
     }
 
