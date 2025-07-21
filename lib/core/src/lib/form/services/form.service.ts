@@ -81,7 +81,7 @@ export class FormService implements FormValidationService {
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
-                        id: '$save',
+                        id: FormModel.SAVE_OUTCOME,
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true
                     })

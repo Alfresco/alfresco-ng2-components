@@ -39,6 +39,8 @@ import {
 } from '../../../models/task-details-cloud.model';
 import { TaskFormCloudComponent } from '../task-form-cloud/task-form-cloud.component';
 import { TaskCloudService } from '../../../services/task-cloud.service';
+import { FormModel } from '../../../../../../../core';
+import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -590,5 +592,169 @@ describe('UserTaskCloudComponent', () => {
 
         prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: true });
         expect(isCheckboxShown()).toBeTrue();
+    });
+
+    describe('Input Properties - Button Controls', () => {
+        beforeEach(() => {
+            taskDetails.formKey = 'my-form';
+            component.taskDetails = { ...taskDetails };
+            component.getTaskType();
+            component.taskId = 'taskId';
+            component.appName = 'app';
+        });
+
+        describe('showSaveButton', () => {
+            it('should pass showSaveButton to task form when task type is Form', () => {
+                fixture.componentRef.setInput('showSaveButton', false);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.showSaveButton).toBe(false);
+            });
+
+            it('should pass showSaveButton as true by default to task form', () => {
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.showSaveButton).toBe(true);
+            });
+
+            it('should only show save button when canCompleteTask returns true', () => {
+                spyOn(component, 'canCompleteTask').and.returnValue(false);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.showSaveButton).toBe(false);
+            });
+        });
+
+        describe('showCompleteButton', () => {
+            it('should pass showCompleteButton to task form when task type is Form', () => {
+                fixture.componentRef.setInput('showCompleteButton', false);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.showCompleteButton).toBe(false);
+            });
+
+            it('should only show complete button when canCompleteTask returns true', () => {
+                spyOn(component, 'canCompleteTask').and.returnValue(false);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.showCompleteButton).toBe(false);
+            });
+
+            it('should display custom complete button text in no form template', async () => {
+                component.taskDetails.formKey = '';
+                component.getTaskType();
+
+                const customText = 'Custom Complete Text';
+                fixture.componentRef.setInput('customCompleteButtonText', customText);
+                fixture.detectChanges();
+
+                const completeButton = await loader.getHarnessOrNull(MatButtonHarness.with({ selector: '#adf-form-complete' }));
+                expect(completeButton).not.toBeNull();
+
+                const buttonText = await completeButton.getText();
+                expect(buttonText).toBe(customText);
+            });
+
+            it('should display default complete button text when customCompleteButtonText is not provided', async () => {
+                component.taskDetails.formKey = '';
+                component.getTaskType();
+                const spy = spyOn(taskCloudService, 'canCompleteTask');
+                spy.and.returnValue(true);
+                fixture.detectChanges();
+
+                const completeButton = await loader.getHarnessOrNull(MatButtonHarness.with({ selector: '#adf-form-complete' }));
+                expect(completeButton).not.toBeNull();
+
+                const buttonText = await completeButton.getText();
+                expect(buttonText).toBe('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE');
+            });
+        });
+
+        describe('Custom button text', () => {
+            it('should pass customCancelButtonText to task form when task type is Form', () => {
+                const customText = 'Custom Cancel Text';
+                fixture.componentRef.setInput('customCancelButtonText', customText);
+                component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.customCancelButtonText).toBe(customText);
+            });
+
+            it('should pass customCancelButtonText to adf-cloud-user-task-cloud-buttons', () => {
+                component.taskDetails.formKey = '';
+                component.getTaskType();
+
+                const customText = 'Custom Cancel Text';
+                fixture.componentRef.setInput('customCancelButtonText', customText);
+                fixture.detectChanges();
+
+                const buttonsElement = fixture.debugElement.query(By.css('adf-cloud-user-task-cloud-buttons'));
+                const buttonsComponent = buttonsElement?.componentInstance as UserTaskCloudButtonsComponent;
+
+                expect(buttonsComponent.customCancelButtonText).toBe(customText);
+            });
+
+            it('should pass customSaveButtonText to task form when task type is Form', () => {
+                const customText = 'Custom Save Text';
+                fixture.componentRef.setInput('customSaveButtonText', customText);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.customSaveButtonText).toBe(customText);
+            });
+
+            it('should pass customCompleteButtonText to task form when task type is Form', () => {
+                const customText = 'Custom Complete Text';
+                fixture.componentRef.setInput('customCompleteButtonText', customText);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.customCompleteButtonText).toBe(customText);
+            });
+        });
+    });
+
+    it('should emit formLoaded when task form emits formLoaded event', () => {
+        const mockForm = new FormModel();
+
+        taskDetails.formKey = 'my-form';
+        component.taskDetails = { ...taskDetails };
+        component.getTaskType();
+        component.taskId = 'taskId';
+        component.appName = 'app';
+
+        spyOn(component.formLoaded, 'emit');
+
+        component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+        fixture.detectChanges();
+
+        const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+        const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+        taskFormComponent.formLoaded.emit(mockForm);
+
+        expect(component.formLoaded.emit).toHaveBeenCalledWith(mockForm);
     });
 });

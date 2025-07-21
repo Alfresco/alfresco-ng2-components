@@ -91,7 +91,7 @@
                                 class="adf-cloud-form-custom-outcome-button"
                                 (click)="onOutcomeClicked(outcome)"
                             >
-                                {{ outcome.name | translate | uppercase }}
+                                {{ getCustomOutcomeButtonText(outcome) || (outcome.name | translate | uppercase) }}
                             </button>
                         </ng-container>
                     </mat-card-actions>

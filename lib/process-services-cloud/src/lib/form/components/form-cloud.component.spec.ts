@@ -1492,6 +1492,54 @@ describe('FormCloudComponent', () => {
             });
         });
     });
+
+    describe('Custom outcome button text for default outcomes', () => {
+        beforeEach(() => {
+            formComponent.form = formComponent.parseForm(emptyFormRepresentationJSON);
+        });
+
+        it('should display custom save button text when set', () => {
+            const customText = 'Custom Save Text';
+            formComponent.customSaveButtonText = customText;
+
+            fixture.detectChanges();
+
+            const buttonSelector = '#adf-form-save';
+            const outcomeButton = fixture.debugElement.query(By.css(buttonSelector));
+            expect(outcomeButton).toBeTruthy();
+            expect(outcomeButton.nativeElement.textContent.trim()).toBe(customText);
+        });
+
+        it('should display default save button text when not set', () => {
+            fixture.detectChanges();
+
+            const buttonSelector = '#adf-form-save';
+            const outcomeButton = fixture.debugElement.query(By.css(buttonSelector));
+            expect(outcomeButton).toBeTruthy();
+            expect(outcomeButton.nativeElement.textContent.trim()).toBe('SAVE');
+        });
+
+        it('should display custom complete button text when set', () => {
+            const customText = 'Custom Complete Text';
+            formComponent.customCompleteButtonText = customText;
+
+            fixture.detectChanges();
+
+            const buttonSelector = '#adf-form-complete';
+            const outcomeButton = fixture.debugElement.query(By.css(buttonSelector));
+            expect(outcomeButton).toBeTruthy();
+            expect(outcomeButton.nativeElement.textContent.trim()).toBe(customText);
+        });
+
+        it('should display default complete button text when not set', () => {
+            fixture.detectChanges();
+
+            const buttonSelector = '#adf-form-complete';
+            const outcomeButton = fixture.debugElement.query(By.css(buttonSelector));
+            expect(outcomeButton).toBeTruthy();
+            expect(outcomeButton.nativeElement.textContent.trim()).toBe('COMPLETE');
+        });
+    });
 });
 
 describe('Multilingual Form', () => {
