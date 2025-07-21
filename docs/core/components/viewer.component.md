@@ -13,41 +13,33 @@ Displays content from blob file or url file.
 
 ## Contents
 
--   [Basic usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Keyboard shortcuts](#keyboard-shortcuts)
--   [Details](#details)
-    -   [Custom file parameters](#custom-file-parameters)
-    -   [Supported file formats](#supported-file-formats)
-    -   [Configuring PDF.js library](#configuring-pdfjs-library)
-    -   [Extending the Viewer](#extending-the-viewer)
-    -   [Custom layout](#custom-layout)
--   [Handling non responsive file preview](#handling-non-responsive-file-preview)
--   [See also](#see-also)
+- [Basic usage](#basic-usage)
+    - [Transclusions](#transclusions)
+- [Class members](#class-members)
+    - [Properties](#properties)
+    - [Events](#events)
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- [Details](#details)
+    - [Custom file parameters](#custom-file-parameters)
+    - [Supported file formats](#supported-file-formats)
+    - [Configuring PDF.js library](#configuring-pdfjs-library)
+    - [Extending the Viewer](#extending-the-viewer)
+    - [Custom layout](#custom-layout)
+- [Handling non responsive file preview](#handling-non-responsive-file-preview)
+- [See also](#see-also)
 
 ## Basic usage
 
 Using with blob file:
 
 ```html
-<adf-viewer 
-    [showViewer]="true" 
-    [overlayMode]="true" 
-    [blobFile]="blobFile"
-    [fileName]="'filename.pdf'">
-</adf-viewer>
+<adf-viewer [showViewer]="true" [overlayMode]="true" [blobFile]="blobFile" [fileName]="'filename.pdf'"> </adf-viewer>
 ```
 
 Using with file url:
 
 ```html
-<adf-viewer 
-    [overlayMode]="true" 
-    [urlFile]="'https://fileUrl.com/filename.pdf'">
-</adf-viewer>
+<adf-viewer [overlayMode]="true" [urlFile]="'https://fileUrl.com/filename.pdf'"> </adf-viewer>
 ```
 
 ### [Transclusions](../../user-guide/transclusion.md)
@@ -60,57 +52,57 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ### Properties
 
-| Name                        | Type | Default value | Description                                                                                                                             |
-|-----------------------------| ---- | ------------- |-----------------------------------------------------------------------------------------------------------------------------------------|
-| allowFullScreen             | `boolean` | true | Toggles the 'Full Screen' feature.                                                                                                      |
-| allowGoBack                 | `boolean` | true | Allows `back` navigation.                                                                                                               |
-| closeButtonPosition         | `CloseButtonPosition` | `left` | Set close button position right/left.                                                                                                   |
-| hideInfoButton              | `boolean` | false | Toggles Info button.                                                                                                                    |
-| allowLeftSidebar            | `boolean` | false | Allow the left the sidebar.                                                                                                             |
-| allowNavigate               | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection.                          |
-| allowRightSidebar           | `boolean` | false | Allow the right sidebar.                                                                                                                |
-| blobFile                    | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File                                                              |
-| canNavigateBefore           | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.                                                           |
-| canNavigateNext             | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled.                                                                  |
-| fileName                    | `string` |  | Override Content filename.                                                                                                              |
-| title                       | `string` |  | Override Content title.                                                                                                                 |
-| mimeType                    | `string` |  | Overload mimeType                                                                                                                       |
-| overlayMode                 | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div.                            |
-| readOnly                    | `boolean` | true | Enable when where is possible the editing functionalities                                                                               |
-| allowedEditActions          | `{ [key: string]: boolean }` | `{ rotate: true, crop: true }` | Controls which editing actions are enabled when not in read-only mode. Allows granular control over actions like rotation and cropping. |
-| showLeftSidebar             | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`.                                                       |
-| showRightSidebar            | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                                     |
-| showToolbar                 | `boolean` | true | Hide or show the toolbar                                                                                                                |
-| showViewer                  | `boolean` | true | Hide or show the viewer                                                                                                                 |
-| sidebarLeftTemplate         | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data.                                                  |
-| sidebarLeftTemplateContext  |  | null | Context object available for binding by the local sidebarLeftTemplate with let declarations.                                            |
-| sidebarRightTemplate        | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data.                                                 |
-| sidebarRightTemplateContext |  | null | Context object available for binding by the local sidebarRightTemplate with let declarations.                                           |
-| tracks                      | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player                                                                                                    |
-| urlFile                     | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from.           |
-| viewerExtensions            | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension.         |
-| nodeId                      | `string` | null | Identifier of a node opened by a viewer.                                                                                                |
-| nodeMimeType                | `string` | undefined | Original node mime type, should be provided when renditiona mime type is different.                                                     |
-| customError                 | `string` | undefined | Custom error message to be displayed in the viewer.                                                                                     |
+| Name                        | Type                                                                   | Default value                  | Description                                                                                                                             |
+| --------------------------- | ---------------------------------------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| allowFullScreen             | `boolean`                                                              | true                           | Toggles the 'Full Screen' feature.                                                                                                      |
+| allowGoBack                 | `boolean`                                                              | true                           | Allows `back` navigation.                                                                                                               |
+| closeButtonPosition         | `CloseButtonPosition`                                                  | `left`                         | Set close button position right/left.                                                                                                   |
+| hideInfoButton              | `boolean`                                                              | false                          | Toggles Info button.                                                                                                                    |
+| allowLeftSidebar            | `boolean`                                                              | false                          | Allow the left the sidebar.                                                                                                             |
+| allowNavigate               | `boolean`                                                              | false                          | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection.                          |
+| allowRightSidebar           | `boolean`                                                              | false                          | Allow the right sidebar.                                                                                                                |
+| blobFile                    | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)        |                                | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File                                                              |
+| canNavigateBefore           | `boolean`                                                              | true                           | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.                                                           |
+| canNavigateNext             | `boolean`                                                              | true                           | Toggles the next (">") button. Requires `allowNavigate` to be enabled.                                                                  |
+| fileName                    | `string`                                                               |                                | Override Content filename.                                                                                                              |
+| title                       | `string`                                                               |                                | Override Content title.                                                                                                                 |
+| mimeType                    | `string`                                                               |                                | Overload mimeType                                                                                                                       |
+| overlayMode                 | `boolean`                                                              | false                          | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div.                            |
+| readOnly                    | `boolean`                                                              | true                           | Enable when where is possible the editing functionalities                                                                               |
+| allowedEditActions          | `{ [key: string]: boolean }`                                           | `{ rotate: true, crop: true }` | Controls which editing actions are enabled when not in read-only mode. Allows granular control over actions like rotation and cropping. |
+| showLeftSidebar             | `boolean`                                                              | false                          | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`.                                                       |
+| showRightSidebar            | `boolean`                                                              | false                          | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                                     |
+| showToolbar                 | `boolean`                                                              | true                           | Hide or show the toolbar                                                                                                                |
+| showViewer                  | `boolean`                                                              | true                           | Hide or show the viewer                                                                                                                 |
+| sidebarLeftTemplate         | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>`        | null                           | The template for the left sidebar. The template context contains the loaded node data.                                                  |
+| sidebarLeftTemplateContext  |                                                                        | null                           | Context object available for binding by the local sidebarLeftTemplate with let declarations.                                            |
+| sidebarRightTemplate        | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>`        | null                           | The template for the right sidebar. The template context contains the loaded node data.                                                 |
+| sidebarRightTemplateContext |                                                                        | null                           | Context object available for binding by the local sidebarRightTemplate with let declarations.                                           |
+| tracks                      | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[]                            | media subtitles for the media player                                                                                                    |
+| urlFile                     | `string`                                                               | ""                             | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from.           |
+| viewerExtensions            | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>`        | null                           | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension.         |
+| nodeId                      | `string`                                                               | null                           | Identifier of a node opened by a viewer.                                                                                                |
+| nodeMimeType                | `string`                                                               | undefined                      | Original node mime type, should be provided when renditiona mime type is different.                                                     |
+| customError                 | `string`                                                               | undefined                      | Custom error message to be displayed in the viewer.                                                                                     |
 
 ### Events
 
-| Name             | Type                                                                                                                            | Description                                                                |
-|------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| navigateBefore   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>`                                       | Emitted when user clicks 'Navigate Before' ("&lt;") button.                |
-| navigateNext     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>`                                       | Emitted when user clicks 'Navigate Next' (">") button.                     |
-| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                                                           | Emitted when the viewer close                                              |
-| submitFile       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when the img is submitted in the img viewer.                       |
+| Name             | Type                                                                                                                            | Description                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| navigateBefore   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>`                                       | Emitted when user clicks 'Navigate Before' ("&lt;") button.          |
+| navigateNext     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>`                                       | Emitted when user clicks 'Navigate Next' (">") button.               |
+| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                                                           | Emitted when the viewer close                                        |
+| submitFile       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when the img is submitted in the img viewer.                 |
 | downloadFile     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`void`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when download button is clicked on the Download File Prompt. |
 
 ## Keyboard shortcuts
 
-| Name | Description |
-| ---- | ----------- |
-| Esc | Close the viewer (overlay mode only). |
-| Left | Invoke 'Navigate before' action. |
-| Right | Invoke 'Navigate next' action. |
-| Ctrl+F | Activate full-screen mode. |
+| Name   | Description                           |
+| ------ | ------------------------------------- |
+| Esc    | Close the viewer (overlay mode only). |
+| Left   | Invoke 'Navigate before' action.      |
+| Right  | Invoke 'Navigate next' action.        |
+| Ctrl+F | Activate full-screen mode.            |
 
 ## Details
 
@@ -119,57 +111,52 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 You can provide custom file parameters, for example a value for the `mimeType` or `fileName` when using URL values that have no file names or extensions:
 
 ```html
-<adf-viewer
-    [fileName]="fileName"
-    [allowGoBack]="false"
-    [mimeType]="mimeType"
-    [urlFile]="fileUrl">
-</adf-viewer>
+<adf-viewer [fileName]="fileName" [allowGoBack]="false" [mimeType]="mimeType" [urlFile]="fileUrl"> </adf-viewer>
 ```
 
 ### Supported file formats
 
 The [Viewer component](viewer.component.md) consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
 
--   PDF View
-    -   application/pdf
-    -   \*.pdf
--   Image View
-    -   image/png
-    -   image/jpeg
-    -   image/gif
-    -   image/bmp
-    -   image/svg+xml
-    -   \*.png
-    -   \*.jpg
-    -   \*.jpeg
-    -   \*.gif
-    -   \*.bpm
-    -   \*.svg
--   Text View
-    -   text/plain
-    -   text/csv
-    -   text/xml
-    -   text/html
-    -   application/x-javascript
-    -   \*.txt
-    -   \*.xml
-    -   \*.js
-    -   \*.html
-    -   \*.json
-    -   \*.ts
--   Media View
-    -   video/mp4
-    -   video/webm
-    -   video/ogg
-    -   audio/mpeg
-    -   audio/ogg
-    -   audio/wav
-    -   \*.wav
-    -   \*.mp4
-    -   \*.mp3
-    -   \*.webm
-    -   \*.ogg
+- PDF View
+    - application/pdf
+    - \*.pdf
+- Image View
+    - image/png
+    - image/jpeg
+    - image/gif
+    - image/bmp
+    - image/svg+xml
+    - \*.png
+    - \*.jpg
+    - \*.jpeg
+    - \*.gif
+    - \*.bpm
+    - \*.svg
+- Text View
+    - text/plain
+    - text/csv
+    - text/xml
+    - text/html
+    - application/x-javascript
+    - \*.txt
+    - \*.xml
+    - \*.js
+    - \*.html
+    - \*.json
+    - \*.ts
+- Media View
+    - video/mp4
+    - video/webm
+    - video/ogg
+    - audio/mpeg
+    - audio/ogg
+    - audio/wav
+    - \*.wav
+    - \*.mp4
+    - \*.mp3
+    - \*.webm
+    - \*.ogg
 
 ### Configuring PDF.js library
 
@@ -182,8 +169,8 @@ npm install pdfjs-dist
 ```
 
 - Update `vendors.ts` by appending the following code. This will enable the [viewer component](viewer.component.md)
-    and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
-    library to render PDF files in the background:
+  and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
+  library to render PDF files in the background:
 
 ```ts
 // PDF.js
@@ -196,12 +183,11 @@ require('pdfjs-dist/web/pdf_viewer.mjs');
 
 ```js
 new CopyWebpackPlugin([
-    ...
-    {
+    ...{
         from: 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
         to: 'pdf.worker.min.mjs'
     }
-])
+]);
 ```
 
 The [Viewer component](viewer.component.md) should now be able to display PDF files.
@@ -210,7 +196,7 @@ The [Viewer component](viewer.component.md) should now be able to display PDF fi
 
 #### Internal extension mechanism
 
-The Viewer supports dynamically-loaded viewer preview extensions, to know more about it [Preview Extension component](../../extensions/components/preview-extension.component.md). This 
+The Viewer supports dynamically-loaded viewer preview extensions, to know more about it [Preview Extension component](../../extensions/components/preview-extension.component.md). This
 
 #### Code extension mechanism]
 
@@ -223,42 +209,33 @@ to handle 3D data files. `contentLoaded` should be an `EventEmitter` that will e
     <ng-template #viewerExtensions>
         <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
             <ng-template let-urlFileContent="urlFileContent" let-extension="extension" let-markAsLoaded="markAsLoaded">
-                <threed-viewer 
-                    [urlFile]="urlFileContent" 
-                    [extension]="extension"
-                    (contentLoaded)="markAsLoaded()">
-                </threed-viewer>
+                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" (contentLoaded)="markAsLoaded()"> </threed-viewer>
             </ng-template>
         </adf-viewer-extension>
     </ng-template>
-</adf-viewer> 
+</adf-viewer>
 ```
 
 Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
 
 You need to keep all instances of `adf-viewer-extension` inside `viewerExtensions` template, also you can define multiple `adf-viewer-extension` templates if required:
+
 ```html
 <adf-viewer [urlFile]="urlFile">
     <ng-template #viewerExtensions>
         <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
             <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded">
-                <my-custom-xls-component
-                    urlFileContent="urlFileContent"
-                    (contentLoaded)="markAsLoaded()">
-                </my-custom-xls-component>
+                <my-custom-xls-component urlFileContent="urlFileContent" (contentLoaded)="markAsLoaded()"> </my-custom-xls-component>
             </ng-template>
         </adf-viewer-extension>
 
         <adf-viewer-extension [supportedExtensions]="['txt']" #extension>
-            <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded" >
-                <my-custom-txt-component
-                    urlFileContent="urlFileContent"
-                    (contentLoaded)="markAsLoaded()">
-                </my-custom-txt-component>
+            <ng-template let-urlFileContent="urlFileContent" let-markAsLoaded="markAsLoaded">
+                <my-custom-txt-component urlFileContent="urlFileContent" (contentLoaded)="markAsLoaded()"> </my-custom-txt-component>
             </ng-template>
         </adf-viewer-extension>
     </ng-template>
-</adf-viewer> 
+</adf-viewer>
 ```
 
 ### Custom layout
@@ -329,7 +306,6 @@ You can enable a custom "Open With" menu by providing at least one action inside
 
 ```html
 <adf-viewer [urlFile]="urlFile">
-
     <adf-viewer-open-with>
         <button mat-menu-item>
             <mat-icon>dialpad</mat-icon>
@@ -344,7 +320,6 @@ You can enable a custom "Open With" menu by providing at least one action inside
             <span>Option 3</span>
         </button>
     </adf-viewer-open-with>
-
 </adf-viewer>
 ```
 
@@ -404,7 +379,7 @@ By default the viewer's zoom scaling is set to 100%.
 
 ## Handling non responsive file preview
 
-It is possible that trying to load a large file, especially over a slow network, can cause the [viewer component](../../core/components/viewer.component.md) to get stuck in the loading state. To handle such cases, 
+It is possible that trying to load a large file, especially over a slow network, can cause the [viewer component](../../core/components/viewer.component.md) to get stuck in the loading state. To handle such cases,
 the viewer can be configured to display a prompt to ask the user to either download the file locally and then close the viewer, or wait for the viewer to load the file.
 In case the user decides to wait, the viewer can further be configured to display subsequent reminder prompts asking the same options.
 
@@ -421,15 +396,15 @@ In order to configure this feature, add the following code in `app.config.json`.
 }
 ```
 
-Here `enableDownloadPrompt: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the 
-`downloadPromptDelay` property. 
+Here `enableDownloadPrompt: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the
+`downloadPromptDelay` property.
 
-The second boolean flag `enableDownloadPromptReminder: true` can be used to configure whether the reminder prompts should be displayed or not. 
+The second boolean flag `enableDownloadPromptReminder: true` can be used to configure whether the reminder prompts should be displayed or not.
 `downloadPromptReminderDelay` property can be used to configure the time to wait between reminder prompts.
 
 > All times in this configuration must be provided in seconds
 
 ## See also
 
--   [Document List component](../../content-services/components/document-list.component.md)
--   [Preview Extension component](../../extensions/components/preview-extension.component.md)
+- [Document List component](../../content-services/components/document-list.component.md)
+- [Preview Extension component](../../extensions/components/preview-extension.component.md)
