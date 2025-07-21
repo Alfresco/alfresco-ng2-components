@@ -51,6 +51,7 @@ describe('ViewerComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
+    const getTitle = (): string => testingUtils.getByCSS('.adf-viewer__title-value')?.nativeElement?.textContent;
     const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
 
     beforeEach(() => {
