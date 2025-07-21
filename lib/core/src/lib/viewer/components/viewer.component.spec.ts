@@ -198,6 +198,37 @@ describe('ViewerComponent', () => {
         });
     });
 
+    describe('displayTitle', () => {
+        it('should return full title when total length is 50 characters or less', () => {
+            const titleShortName = 'Custom mock title';
+            component.title = titleShortName;
+            fixture.detectChanges();
+
+            expect(component.getDisplayTruncatedValue(titleShortName)).toBe(titleShortName);
+            expect(getTitle()).toBe(titleShortName);
+        });
+
+        it('should truncate title when total length exceeds 50 characters', () => {
+            const longTitle =
+                'verylongTitlethatexceedsmaximumlengthallowedverylongTitlethatexceedsmaximumlengthallowedverylongTitlethatexceedsmaximumlengthallowed';
+
+            component.title = longTitle;
+            fixture.detectChanges();
+
+            const result = component.getDisplayTruncatedValue(longTitle);
+
+            expect(result).toContain('.....');
+            expect(result.length).toBe(50);
+        });
+
+        it('should handle empty title', () => {
+            component.title = undefined;
+            fixture.detectChanges();
+
+            expect(getTitle()).toBeFalsy();
+        });
+    });
+
     describe('Viewer Example Component Rendering', () => {
         it('should use custom toolbar', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
