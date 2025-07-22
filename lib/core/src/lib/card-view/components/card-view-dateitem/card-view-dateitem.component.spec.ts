@@ -64,14 +64,14 @@ describe('CardViewDateItemComponent', () => {
     afterEach(() => fixture.destroy());
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
-    const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
+    const getPropertyInputValue = (): HTMLInputElement => testingUtils.getInputByCSS('.adf-property-value');
     const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
 
     it('should render the label and value', () => {
         fixture.detectChanges();
 
         expect(getPropertyLabel()).toBe('Date label');
-        expect(getPropertyValue().trim()).toBe('Jul 10, 2017');
+        expect(getPropertyInputValue().value.trim()).toBe('Jul 10, 2017');
     });
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
@@ -87,6 +87,7 @@ describe('CardViewDateItemComponent', () => {
         component.displayEmpty = false;
         fixture.detectChanges();
 
+        const getPropertyValue = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
         expect(getPropertyValue().trim()).toBe('');
     });
 
@@ -103,7 +104,7 @@ describe('CardViewDateItemComponent', () => {
         component.displayEmpty = true;
         fixture.detectChanges();
 
-        expect(getPropertyValue().trim()).toBe('FAKE-DEFAULT-KEY');
+        expect(getPropertyInputValue().value.trim()).toBe('FAKE-DEFAULT-KEY');
     });
 
     it('should render the default as value if the value is empty and editable:true', () => {
@@ -213,7 +214,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        testingUtils.doubleClickByDataAutomationId(`card-dateitem-${component.property.key}`);
+        testingUtils.doubleClickByDataAutomationId(`card-${component.property.type}-value-${component.property.key}`);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
