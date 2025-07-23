@@ -173,6 +173,9 @@
   "engines": {
     "node": ">=18.0.0"
   },
+    "overrides": {
+    "stylus": "github:stylus/stylus#0.64.0"
+  },
   "module": "./index.js",
   "typings": "./index.d.ts"
 }
