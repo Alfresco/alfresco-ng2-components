@@ -314,6 +314,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
+    /** Override Content title. */
+    @Input()
+    set title(title: string) {
+        this.displayTitle = title ? this.getDisplayTruncatedValue(title) : '';
+    }
+
     /** Override Content filename. */
     @Input()
     set fileName(fileName: string) {
@@ -322,12 +328,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this._fileNameWithoutExtension = this.fileName?.replace(new RegExp(`${this.fileExtension}$`), '') || '';
         const value = (this.fileNameWithoutExtension || '') + (this.fileExtension || '');
         this.displayName = this.getDisplayTruncatedValue(value);
-    }
-
-    /** Override Content title. */
-    @Input()
-    set title(title: string) {
-        this.displayTitle = title ? this.getDisplayTruncatedValue(title) : '';
     }
 
     get fileName(): string {
