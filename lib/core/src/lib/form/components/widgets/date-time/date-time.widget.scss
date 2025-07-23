@@ -4,9 +4,8 @@
 .adf {
     &-date-time-widget {
         &-container {
-            display: flex;
+            display: grid;
             align-items: flex-start;
-            flex-direction: column;
         }
 
         #{ms.$mat-form-field-suffix} {
