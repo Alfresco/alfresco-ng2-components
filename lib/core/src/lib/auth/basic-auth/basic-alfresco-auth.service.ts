@@ -317,14 +317,27 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
     }
 
+    /**
+     * @deprecated use `getUsername()` instead
+     * @returns the username of the authenticated user
+     */
     getBpmUsername(): string {
         return this.processAuth.getUsername();
     }
 
+    /**
+     * @deprecated use `getUsername()` instead
+     * @returns the username of the authenticated user
+     */
     getEcmUsername(): string {
         return this.contentAuth.getUsername();
     }
 
+    /**
+     * Gets the username of the authenticated user.
+     *
+     * @returns the username of the authenticated user
+     */
     getUsername(): string {
         if (this.isBPMProvider()) {
             return this.processAuth.getUsername();

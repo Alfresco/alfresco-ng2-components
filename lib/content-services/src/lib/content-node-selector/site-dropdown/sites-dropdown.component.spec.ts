@@ -274,7 +274,7 @@ describe('DropdownSitesComponent', () => {
                 });
 
                 it('should show only sites which logged user is member of when member relation is set', async () => {
-                    spyOn(authService, 'getEcmUsername').and.returnValue('test');
+                    spyOn(authService, 'getUsername').and.returnValue('test');
                     fixture.detectChanges();
                     await fixture.whenStable();
 
@@ -295,7 +295,7 @@ describe('DropdownSitesComponent', () => {
                 });
 
                 it('should show all the sites if no relation is set', async () => {
-                    spyOn(authService, 'getEcmUsername').and.returnValue('test');
+                    spyOn(authService, 'getUsername').and.returnValue('test');
                     fixture.detectChanges();
                     await fixture.whenStable();
 
