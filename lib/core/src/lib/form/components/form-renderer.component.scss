@@ -72,16 +72,16 @@
                 width: 100%;
                 box-sizing: border-box;
             }
+
+            .adf-radio-buttons-widget {
+                padding-left: 12px;
+            }
         }
 
         &-single-column {
             display: flex;
             flex-direction: column;
             flex: 1 1 auto;
-        }
-
-        .adf-radio-buttons-widget {
-            padding-left: 12px;
         }
 
         &-item {
