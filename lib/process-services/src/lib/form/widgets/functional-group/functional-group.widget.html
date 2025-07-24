@@ -8,7 +8,7 @@
     <label class="adf-label" [attr.for]="field.id"
         >{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label
     >
-    <mat-form-field appearance="outline" class="adf-group-widget-field">
+    <mat-form-field [floatLabel]="field.placeholder ? 'always': null" class="adf-group-widget-field">
         <mat-chip-grid #chipGrid>
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
