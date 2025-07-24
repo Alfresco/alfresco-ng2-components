@@ -1,11 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.ComponentInfo = exports.MethodSigInfo = exports.ParamInfo = exports.PropInfo = void 0;
-var skipMethodNames = [
-    'ngOnChanges',
-    'ngOnDestroy',
-    'ngOnInit'
-];
+var skipMethodNames = ['ngOnChanges', 'ngOnDestroy', 'ngOnInit'];
 var PropInfo = /** @class */ (function () {
     function PropInfo(sourceData) {
         var _this = this;
@@ -19,7 +31,9 @@ var PropInfo = /** @class */ (function () {
         this.type = sourceData.syntax['return'].type || '';
         this.type = this.type.toString().replace(/\|/, '\\|').replace('unknown', '');
         if (sourceData.tags) {
-            var depTag = sourceData.tags.find(function (tag) { return tag.name === 'deprecated'; });
+            var depTag = sourceData.tags.find(function (tag) {
+                return tag.name === 'deprecated';
+            });
             if (depTag) {
                 this.isDeprecated = true;
                 this.docText = '(**Deprecated:** ' + depTag.text.replace(/[\n\r]+/g, ' ').trim() + ') ' + this.docText;
@@ -33,24 +47,24 @@ var PropInfo = /** @class */ (function () {
                     _this.isInput = true;
                     if (dec.arguments) {
                         var bindingName = dec.arguments['bindingPropertyName'];
-                        if (bindingName && (bindingName !== '')) {
+                        if (bindingName && bindingName !== '') {
                             _this.name = bindingName.replace(/['"]/g, '');
                         }
                     }
                     if (!_this.docText && !_this.isDeprecated) {
-                        _this.errorMessages.push("Error: Input \"".concat(sourceData.name, "\" has no doc text."));
+                        _this.errorMessages.push('Error: Input "'.concat(sourceData.name, '" has no doc text.'));
                     }
                 }
                 if (dec.name === 'Output') {
                     _this.isOutput = true;
                     if (!_this.docText && !_this.isDeprecated) {
-                        _this.errorMessages.push("Error: Output \"".concat(sourceData.name, "\" has no doc text."));
+                        _this.errorMessages.push('Error: Output "'.concat(sourceData.name, '" has no doc text.'));
                     }
                 }
             });
         }
     }
-    Object.defineProperty(PropInfo.prototype, "errors", {
+    Object.defineProperty(PropInfo.prototype, 'errors', {
         get: function () {
             return this.errorMessages;
         },
@@ -58,7 +72,7 @@ var PropInfo = /** @class */ (function () {
         configurable: true
     });
     return PropInfo;
-}());
+})();
 exports.PropInfo = PropInfo;
 var ParamInfo = /** @class */ (function () {
     function ParamInfo(sourceData) {
@@ -68,7 +82,9 @@ var ParamInfo = /** @class */ (function () {
         this.docText = sourceData.description.replace(/[\n\r]+/g, ' ').trim();
         this.isOptional = false;
         if (sourceData.flags) {
-            var flag = sourceData.flags.find(function (sourceFlag) { return sourceFlag.name === 'isOptional'; });
+            var flag = sourceData.flags.find(function (sourceFlag) {
+                return sourceFlag.name === 'isOptional';
+            });
             if (flag) {
                 this.isOptional = true;
             }
@@ -77,13 +93,13 @@ var ParamInfo = /** @class */ (function () {
         if (this.isOptional) {
             this.combined += '?';
         }
-        this.combined += ": `".concat(this.type, "`");
+        this.combined += ': `'.concat(this.type, '`');
         if (this.defaultValue !== '') {
-            this.combined += " = `".concat(this.defaultValue, "`");
+            this.combined += ' = `'.concat(this.defaultValue, '`');
         }
     }
     return ParamInfo;
-}());
+})();
 exports.ParamInfo = ParamInfo;
 var MethodSigInfo = /** @class */ (function () {
     function MethodSigInfo(sourceData) {
@@ -93,21 +109,23 @@ var MethodSigInfo = /** @class */ (function () {
         this.docText = sourceData.summary || '';
         this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
         if (!this.docText && this.name.indexOf('service') > 0) {
-            this.errorMessages.push("Warning: method \"".concat(sourceData.name, "\" has no doc text."));
+            this.errorMessages.push('Warning: method "'.concat(sourceData.name, '" has no doc text.'));
         }
         this.returnType = sourceData.syntax['return'].type || '';
         this.returnType = this.returnType.toString().replace(/\s/g, '');
-        this.returnsSomething = this.returnType && (this.returnType !== 'void');
+        this.returnsSomething = this.returnType && this.returnType !== 'void';
         this.returnDocText = sourceData.syntax['return'].summary || '';
         if (this.returnDocText.toLowerCase() === 'nothing') {
             this.returnsSomething = false;
         }
         if (this.returnsSomething && !this.returnDocText && this.name.indexOf('service') > 0) {
-            this.errorMessages.push("Warning: Return value of method \"".concat(sourceData.name, "\" has no doc text."));
+            this.errorMessages.push('Warning: Return value of method "'.concat(sourceData.name, '" has no doc text.'));
         }
         this.isDeprecated = false;
         if (sourceData.tags) {
-            var depTag = sourceData.tags.find(function (tag) { return tag.name === 'deprecated'; });
+            var depTag = sourceData.tags.find(function (tag) {
+                return tag.name === 'deprecated';
+            });
             if (depTag) {
                 this.isDeprecated = true;
                 this.docText = '(**Deprecated:** ' + depTag.text.replace(/[\n\r]+/g, ' ').trim() + ') ' + this.docText;
@@ -118,7 +136,9 @@ var MethodSigInfo = /** @class */ (function () {
         if (sourceData.syntax.parameters) {
             sourceData.syntax.parameters.forEach(function (rawParam) {
                 if (rawParam.name && !rawParam.description && !rawParam.name.startWith('on')) {
-                    _this.errorMessages.push("Warning: parameter \"".concat(rawParam.name, "\" of method \"").concat(sourceData.name, "\" has no doc text."));
+                    _this.errorMessages.push(
+                        'Warning: parameter "'.concat(rawParam.name, '" of method "').concat(sourceData.name, '" has no doc text.')
+                    );
                 }
                 var param = new ParamInfo(rawParam);
                 _this.params.push(param);
@@ -127,7 +147,7 @@ var MethodSigInfo = /** @class */ (function () {
         }
         this.signature = '(' + paramStrings.join(', ') + ')';
     }
-    Object.defineProperty(MethodSigInfo.prototype, "errors", {
+    Object.defineProperty(MethodSigInfo.prototype, 'errors', {
         get: function () {
             return this.errorMessages;
         },
@@ -135,7 +155,7 @@ var MethodSigInfo = /** @class */ (function () {
         configurable: true
     });
     return MethodSigInfo;
-}());
+})();
 exports.MethodSigInfo = MethodSigInfo;
 var ComponentInfo = /** @class */ (function () {
     function ComponentInfo(sourceData) {
@@ -166,10 +186,17 @@ var ComponentInfo = /** @class */ (function () {
                     }
                     break;
                 case 'method':
-                    if (item.flags && (item.flags.length > 0) &&
-                        !item.flags.find(function (flag) { return flag.name === 'isPrivate'; }) &&
-                        !item.flags.find(function (flag) { return flag.name === 'isProtected'; }) &&
-                        !skipMethodNames.includes(item.name)) {
+                    if (
+                        item.flags &&
+                        item.flags.length > 0 &&
+                        !item.flags.find(function (flag) {
+                            return flag.name === 'isPrivate';
+                        }) &&
+                        !item.flags.find(function (flag) {
+                            return flag.name === 'isProtected';
+                        }) &&
+                        !skipMethodNames.includes(item.name)
+                    ) {
                         _this.methods.push(new MethodSigInfo(item));
                         _this.hasMethods = true;
                     }
@@ -179,7 +206,7 @@ var ComponentInfo = /** @class */ (function () {
             }
         });
     }
-    Object.defineProperty(ComponentInfo.prototype, "errors", {
+    Object.defineProperty(ComponentInfo.prototype, 'errors', {
         get: function () {
             var combinedErrors = [];
             this.methods.forEach(function (method) {
@@ -198,5 +225,5 @@ var ComponentInfo = /** @class */ (function () {
         configurable: true
     });
     return ComponentInfo;
-}());
+})();
 exports.ComponentInfo = ComponentInfo;
