@@ -74,6 +74,11 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         }
     }
 
+    @HostListener('blur')
+    onBlur() {
+        this._onTouched();
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['inputMask']?.currentValue['mask']) {
             this.inputMask = changes['inputMask'].currentValue;
