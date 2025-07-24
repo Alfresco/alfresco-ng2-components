@@ -4,7 +4,6 @@
      id="people-widget-content">
     <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span></label>
     <mat-form-field
-        appearance="outline"
         class="adf-people-widget-field">
         <mat-chip-grid #chipGrid [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECTED_PEOPLE' | translate">
             <mat-chip-row
