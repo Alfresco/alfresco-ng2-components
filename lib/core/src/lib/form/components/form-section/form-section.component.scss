@@ -1,9 +1,29 @@
+@use '../../../../../src/lib/styles/flex' as flex;
+
 .adf-grid-list {
     &-section {
         &-single-column {
             display: flex;
             flex-wrap: inherit;
+            flex-direction: column;
             gap: 1%;
+
+            @include flex.layout-bp(lt-md) {
+                flex: 1 1 100% !important;
+            }
+
+            .adf-section-widget {
+                @include flex.layout-bp(lt-md) {
+                    width: 100% !important;
+                }
+            }
+
+            > div {
+                @include flex.layout-bp(lt-md) {
+                    width: 100% !important;
+                }
+            }
+
         }
 
         &-column-view-item {
