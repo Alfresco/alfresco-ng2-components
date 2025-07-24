@@ -40,7 +40,7 @@ Based on property taskDetails: TaskDetailsCloudModel shows a form or a screen.
 | readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                                  |
 | showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.                            |
 | showCompleteButton        | `boolean`                             | true          | Toggle rendering of the `Complete` button.                          |
-| showNextTaskCheckbox      | `boolean`                             | false         | Toggle rendering of the `Open next task` checkbox.                  |
+| showSaveButton            | `boolean`                             | true          | Toggle rendering of the `Save` button.                      |
 | showTitle                 | `boolean`                             | true          | Toggle rendering of the form title.                                 |
 | showValidationIcon        | `boolean`                             | true          | Toggle rendering of the `Validation` icon.                          |
 | taskId                    | `string`                              |               | Task id to fetch corresponding form and values.                     |

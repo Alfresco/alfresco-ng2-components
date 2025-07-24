@@ -74,7 +74,6 @@ class TaskScreenCloudMockComponent {
     @Input() readOnly = false;
     @Input() rootProcessInstanceId: string = '';
     @Input() isNextTaskCheckboxChecked = false;
-    @Input() showNextTaskCheckbox = false;
 
     @Output() taskSaved = new EventEmitter();
     @Output() taskCompleted = new EventEmitter<any>();
@@ -531,13 +530,7 @@ describe('UserTaskCloudComponent', () => {
             return screenComponent.showNextTaskCheckbox;
         };
 
-        const prepareTestCase = (testCase: {
-            showNextTaskCheckbox: boolean;
-            showCompleteButton: boolean;
-            readOnly: boolean;
-            canCompleteTask: boolean;
-        }): void => {
-            component.showNextTaskCheckbox = testCase.showNextTaskCheckbox;
+        const prepareTestCase = (testCase: { showCompleteButton: boolean; readOnly: boolean; canCompleteTask: boolean }): void => {
             component.showCompleteButton = testCase.showCompleteButton;
             component.readOnly = testCase.readOnly;
             spy.calls.reset();
@@ -545,52 +538,29 @@ describe('UserTaskCloudComponent', () => {
             fixture.detectChanges();
         };
 
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: false, canCompleteTask: false });
+        // The checkbox should always be shown when canCompleteTask() returns true, regardless of other settings
+        prepareTestCase({ showCompleteButton: false, readOnly: false, canCompleteTask: false });
         expect(isCheckboxShown()).toBeFalse();
 
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: false, canCompleteTask: true });
+        prepareTestCase({ showCompleteButton: false, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeTrue();
+
+        prepareTestCase({ showCompleteButton: false, readOnly: true, canCompleteTask: false });
         expect(isCheckboxShown()).toBeFalse();
 
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: true, canCompleteTask: false });
+        prepareTestCase({ showCompleteButton: false, readOnly: true, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeTrue();
+
+        prepareTestCase({ showCompleteButton: true, readOnly: false, canCompleteTask: false });
         expect(isCheckboxShown()).toBeFalse();
 
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: false, readOnly: true, canCompleteTask: true });
+        prepareTestCase({ showCompleteButton: true, readOnly: false, canCompleteTask: true });
+        expect(isCheckboxShown()).toBeTrue();
+
+        prepareTestCase({ showCompleteButton: true, readOnly: true, canCompleteTask: false });
         expect(isCheckboxShown()).toBeFalse();
 
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: false, canCompleteTask: false });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: false, canCompleteTask: true });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: true, canCompleteTask: false });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: false, showCompleteButton: true, readOnly: true, canCompleteTask: true });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: false, canCompleteTask: false });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: false, canCompleteTask: true });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: true, canCompleteTask: false });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: false, readOnly: true, canCompleteTask: true });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: true, canCompleteTask: false });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: true, canCompleteTask: true });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: false });
-        expect(isCheckboxShown()).toBeFalse();
-
-        prepareTestCase({ showNextTaskCheckbox: true, showCompleteButton: true, readOnly: false, canCompleteTask: true });
+        prepareTestCase({ showCompleteButton: true, readOnly: true, canCompleteTask: true });
         expect(isCheckboxShown()).toBeTrue();
     });
 

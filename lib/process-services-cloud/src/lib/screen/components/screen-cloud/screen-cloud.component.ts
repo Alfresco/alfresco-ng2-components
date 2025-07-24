@@ -72,10 +72,6 @@ export class TaskScreenCloudComponent implements OnInit {
     @Input()
     isNextTaskCheckboxChecked = false;
 
-    /** Toggle rendering of the `Open next task` checkbox. */
-    @Input()
-    showNextTaskCheckbox = false;
-
     /** Emitted when the task is saved. */
     @Output()
     taskSaved = new EventEmitter();
@@ -152,8 +148,8 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'rootProcessInstanceId')) {
             this.componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
         }
-        if (this.showNextTaskCheckbox && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
-            this.componentRef.setInput('showNextTaskCheckbox', this.showNextTaskCheckbox);
+        if (Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
+            this.componentRef.setInput('showNextTaskCheckbox', true);
         }
         if (this.isNextTaskCheckboxChecked && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'isNextTaskCheckboxChecked')) {
             this.componentRef.setInput('isNextTaskCheckboxChecked', this.isNextTaskCheckboxChecked);
