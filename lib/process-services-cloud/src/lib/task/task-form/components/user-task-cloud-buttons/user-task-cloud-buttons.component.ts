@@ -50,6 +50,13 @@ export class UserTaskCloudButtonsComponent {
     @Input()
     showCancelButton = true;
 
+    /**
+     * Custom text for the `Cancel` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customCancelButtonText: string = '';
+
     /** Emitted when any error occurs. */
     @Output() error = new EventEmitter<any>();
 

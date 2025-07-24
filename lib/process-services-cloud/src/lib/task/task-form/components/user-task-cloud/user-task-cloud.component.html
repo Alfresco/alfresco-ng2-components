@@ -1,4 +1,4 @@
- <div class="adf-user-task-cloud-container">
+<div class="adf-user-task-cloud-container">
     <div *ngIf="!loading; else loadingTemplate">
         <ng-container [ngSwitch]="taskType">
             <ng-container *ngSwitchCase="taskTypeEnum.Form">
@@ -12,9 +12,16 @@
                     [showTitle]="showTitle"
                     [taskId]="taskId"
                     [taskDetails]="taskDetails"
+                    [showCancelButton]="showCancelButton"
+                    [showSaveButton]="showSaveButton && canCompleteTask()"
+                    [showCompleteButton]="showCompleteButton && canCompleteTask()"
+                    [customCancelButtonText]="customCancelButtonText"
+                    [customSaveButtonText]="customSaveButtonText"
+                    [customCompleteButtonText]="customCompleteButtonText"
                     (cancelClick)="onCancelForm()"
                     (executeOutcome)="onExecuteOutcome($event)"
                     (error)="onError($event)"
+                    (formLoaded)="onFormLoaded($event)"
                     (formSaved)="onFormSaved()"
                     (formContentClicked)="onFormContentClicked($event)"
                     (taskCompleted)="onCompleteTaskForm()"
@@ -37,7 +44,6 @@
                     [taskId]="taskId"
                     [showNextTaskCheckbox]="showNextTaskCheckbox && canCompleteTask()"
                     [isNextTaskCheckboxChecked]="isNextTaskCheckboxChecked"
-
                     (cancelTask)="onCancelClick()"
                     (claimTask)="onClaimTask()"
                     (error)="onError($event)"
@@ -79,7 +85,7 @@
                             color="primary"
                             id="adf-form-complete"
                         >
-                            {{ 'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate }}
+                            {{ customCompleteButtonText || ('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate) }}
                         </button>
                     </mat-card-actions>
                 </mat-card>
@@ -98,6 +104,7 @@
         [canClaimTask]="canClaimTask()"
         [canUnclaimTask]="canUnclaimTask()"
         [showCancelButton]="showCancelButton"
+        [customCancelButtonText]="customCancelButtonText"
         [taskId]="taskId"
         (cancelClick)="onCancelClick()"
         (claimTask)="onClaimTask()"

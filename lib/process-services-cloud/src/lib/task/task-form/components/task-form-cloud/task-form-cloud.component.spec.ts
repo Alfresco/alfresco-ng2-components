@@ -33,6 +33,7 @@ import {
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { FormCustomOutcomesComponent } from '../../../../form/components/form-cloud-custom-outcomes.component';
+import { By } from '@angular/platform-browser';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -191,6 +192,90 @@ describe('TaskFormCloudComponent', () => {
             const canUnclaimTask = component.canUnclaimTask();
             expect(canUnclaimTask).toBe(false);
         });
+
+        it('should pass showCompleteButton to adf-cloud-form when task can be completed', () => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.showCompleteButton = true;
+            spyOn(component, 'canCompleteTask').and.returnValue(true);
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.showCompleteButton).toBe(true);
+        });
+
+        it('should not pass showCompleteButton to adf-cloud-form when task cannot be completed', () => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.showCompleteButton = true;
+            spyOn(component, 'canCompleteTask').and.returnValue(false);
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.showCompleteButton).toBe(false);
+        });
+
+        it('should pass showSaveButton to adf-cloud-form when task can be completed', () => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.showSaveButton = true;
+            spyOn(component, 'canCompleteTask').and.returnValue(true);
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.showSaveButton).toBe(true);
+        });
+
+        it('should not pass showSaveButton to adf-cloud-form when task cannot be completed', () => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.showSaveButton = true;
+            spyOn(component, 'canCompleteTask').and.returnValue(false);
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.showSaveButton).toBe(false);
+        });
+
+        it('should pass customSaveButtonText to adf-cloud-form', () => {
+            const customText = 'Custom Save';
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.customSaveButtonText = customText;
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.customSaveButtonText).toBe(customText);
+        });
+
+        it('should pass customCompleteButtonText to adf-cloud-form', () => {
+            const customText = 'Custom Complete';
+            component.appName = 'app1';
+            component.taskId = 'task1';
+            component.customCompleteButtonText = customText;
+            fixture.detectChanges();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.customCompleteButtonText).toBe(customText);
+        });
     });
 
     describe('Events', () => {
@@ -253,6 +338,25 @@ describe('TaskFormCloudComponent', () => {
             await fixture.whenStable();
 
             expect(component.displayModeOff.emit).toHaveBeenCalledWith(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+        });
+
+        it('should emit formLoaded when form is loaded', () => {
+            const mockForm = new FormModel();
+            spyOn(component.formLoaded, 'emit').and.stub();
+            component.onFormLoaded(mockForm);
+
+            expect(component.formLoaded.emit).toHaveBeenCalledOnceWith(mockForm);
+        });
+
+        it('should handle formLoaded event from adf-cloud-form and re-emit it', () => {
+            const mockForm = new FormModel();
+            spyOn(component.formLoaded, 'emit').and.stub();
+
+            // Trigger the formLoaded event from the child adf-cloud-form component
+            const cloudFormElement = fixture.debugElement.query((sel) => sel.name === 'adf-cloud-form');
+            cloudFormElement.triggerEventHandler('formLoaded', mockForm);
+
+            expect(component.formLoaded.emit).toHaveBeenCalledOnceWith(mockForm);
         });
     });
 

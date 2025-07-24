@@ -62,10 +62,10 @@ export interface FormRepresentationModel {
     theme?: ThemeModel;
 }
 export class FormModel implements ProcessFormModel {
-    static UNSET_TASK_NAME: string = 'Nameless task';
-    static SAVE_OUTCOME: string = '$save';
-    static COMPLETE_OUTCOME: string = '$complete';
-    static START_PROCESS_OUTCOME: string = '$startProcess';
+    static readonly UNSET_TASK_NAME: string = 'Nameless task';
+    static readonly SAVE_OUTCOME: string = '$save';
+    static readonly COMPLETE_OUTCOME: string = '$complete';
+    static readonly START_PROCESS_OUTCOME: string = '$startProcess';
 
     readonly id: string | number;
     readonly name: string;
@@ -410,27 +410,28 @@ export class FormModel implements ProcessFormModel {
     }
 
     protected parseOutcomes() {
-        if (this.json.fields) {
-            const saveOutcome = new FormOutcomeModel(this, {
-                id: FormModel.SAVE_OUTCOME,
-                name: 'SAVE',
-                isSystem: true
-            });
-            const completeOutcome = new FormOutcomeModel(this, {
-                id: FormModel.COMPLETE_OUTCOME,
-                name: 'COMPLETE',
-                isSystem: true
-            });
-            const startProcessOutcome = new FormOutcomeModel(this, {
-                id: FormModel.START_PROCESS_OUTCOME,
-                name: 'START PROCESS',
-                isSystem: true
-            });
+        if (!this.json.fields) return;
 
-            const customOutcomes = (this.json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
+        const saveOutcome = new FormOutcomeModel(this, {
+            id: FormModel.SAVE_OUTCOME,
+            name: FormOutcomeModel.SAVE_ACTION,
+            isSystem: true
+        });
 
-            this.outcomes = [saveOutcome].concat(customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]);
-        }
+        const completeOutcome = new FormOutcomeModel(this, {
+            id: FormModel.COMPLETE_OUTCOME,
+            name: FormOutcomeModel.COMPLETE_ACTION,
+            isSystem: true
+        });
+
+        const startProcessOutcome = new FormOutcomeModel(this, {
+            id: FormModel.START_PROCESS_OUTCOME,
+            name: FormOutcomeModel.START_PROCESS_ACTION,
+            isSystem: true
+        });
+
+        const customOutcomes = (this.json.outcomes ?? ([] as FormModel[])).map((formModel: FormModel) => new FormOutcomeModel(this, formModel));
+        this.outcomes = [saveOutcome].concat(customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]);
     }
 
     addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {

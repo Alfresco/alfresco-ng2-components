@@ -122,6 +122,20 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     showCompleteButton = false;
 
+    /**
+     * Custom text for the `Save` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customSaveButtonText: string = '';
+
+    /**
+     * Custom text for the `Complete` button.
+     * If not provided, the default text will be used.
+     */
+    @Input()
+    customCompleteButtonText: string = '';
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -299,6 +313,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         );
     }
 
+    getCustomOutcomeButtonText(outcome: FormOutcomeModel): string {
+        if (outcome?.id === FormModel.SAVE_OUTCOME || outcome?.name === FormOutcomeModel.SAVE_ACTION) {
+            return this.customSaveButtonText;
+        } else if (outcome?.id === FormModel.COMPLETE_OUTCOME || outcome?.name === FormOutcomeModel.COMPLETE_ACTION) {
+            return this.customCompleteButtonText;
+        }
+        return '';
+    }
+
     isAProcessTask(taskRepresentation: TaskDetailsCloudModel): boolean {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
@@ -431,7 +454,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
      * @returns list of form outcomes
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
-        return [new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
+        return [new FormOutcomeModel(form, { id: FormModel.SAVE_OUTCOME, name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
     }
 
     checkVisibility(field: FormFieldModel) {
