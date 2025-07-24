@@ -72,6 +72,10 @@ export class TaskScreenCloudComponent implements OnInit {
     @Input()
     isNextTaskCheckboxChecked = false;
 
+    /** Toggle rendering of the `Open next task` checkbox (controlled internally by parent component). */
+    @Input()
+    showNextTaskCheckbox = false;
+
     /** Emitted when the task is saved. */
     @Output()
     taskSaved = new EventEmitter();
