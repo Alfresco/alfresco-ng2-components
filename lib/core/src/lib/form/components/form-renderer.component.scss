@@ -15,9 +15,9 @@
 
 .adf-form-renderer {
     // override Material styles, otherwise fields collapse on some screen widths
+    // related issue: https://hyland.atlassian.net/browse/AAE-36582
     .mat-mdc-form-field-infix {
-        /* stylelint-disable-next-line declaration-no-important */
-        width: auto !important;
+        width: auto;
     }
 }
 
