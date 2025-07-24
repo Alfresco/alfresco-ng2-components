@@ -17,16 +17,8 @@
     }
 
     &-amount-widget__input {
-        margin-top: -15px;
-
         #{ms.$mat-focused} {
             transition: none;
-        }
-
-        #{ms.$mat-form-field-prefix} {
-            padding-top: 16px;
-            padding-bottom: 16px;
-            align-self: flex-end;
         }
 
         .adf-input {

@@ -27,12 +27,28 @@ import { isOutcomeButtonVisible } from './helpers/buttons-visibility';
 export abstract class FormBaseComponent {
     protected _form: FormModel;
 
-    static SAVE_OUTCOME_ID: string = '$save';
-    static COMPLETE_OUTCOME_ID: string = '$complete';
-    static START_PROCESS_OUTCOME_ID: string = '$startProcess';
-    static CUSTOM_OUTCOME_ID: string = '$custom';
-    static COMPLETE_BUTTON_COLOR: ThemePalette = 'primary';
-    static COMPLETE_OUTCOME_NAME: string = 'COMPLETE';
+    /**
+     * @deprecated Use {@link FormModel.SAVE_OUTCOME} instead.
+     */
+    static readonly SAVE_OUTCOME_ID: string = FormModel.SAVE_OUTCOME;
+
+    /**
+     * @deprecated Use {@link FormModel.COMPLETE_OUTCOME} instead.
+     */
+    static readonly COMPLETE_OUTCOME_ID: string = FormModel.COMPLETE_OUTCOME;
+
+    /**
+     * @deprecated Use {@link FormModel.START_PROCESS_OUTCOME} instead.
+     */
+    static readonly START_PROCESS_OUTCOME_ID: string = FormModel.START_PROCESS_OUTCOME;
+
+    static readonly CUSTOM_OUTCOME_ID: string = '$custom';
+    static readonly COMPLETE_BUTTON_COLOR: ThemePalette = 'primary';
+
+    /**
+     * @deprecated Use {@link FormOutcomeModel.COMPLETE_ACTION} instead.
+     */
+    static readonly COMPLETE_OUTCOME_NAME: string = FormOutcomeModel.COMPLETE_ACTION;
 
     /** Path of the folder where the metadata will be stored. */
     @Input()
@@ -50,7 +66,7 @@ export abstract class FormBaseComponent {
     @Input()
     showCompleteButton: boolean = true;
 
-    /** If true then the `Complete` outcome button is shown but it will be disabled. */
+    /** If true then the `Complete` outcome button is shown, but it will be disabled. */
     @Input()
     disableCompleteButton: boolean = false;
 
@@ -138,7 +154,7 @@ export abstract class FormBaseComponent {
     }
 
     getColorForOutcome(outcomeName: string): ThemePalette {
-        return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
+        return outcomeName === FormOutcomeModel.COMPLETE_ACTION ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
     }
 
     isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
@@ -182,20 +198,20 @@ export abstract class FormBaseComponent {
             }
 
             if (outcome.isSystem) {
-                if (outcome.id === FormBaseComponent.SAVE_OUTCOME_ID) {
+                if (outcome.id === FormModel.SAVE_OUTCOME) {
                     this.disableSaveButton = true;
                     this.saveTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormBaseComponent.COMPLETE_OUTCOME_ID) {
+                if (outcome.id === FormModel.COMPLETE_OUTCOME) {
                     this.disableSaveButton = true;
                     this.disableCompleteButton = true;
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormBaseComponent.START_PROCESS_OUTCOME_ID) {
+                if (outcome.id === FormModel.START_PROCESS_OUTCOME) {
                     this.completeTaskForm();
                     return true;
                 }

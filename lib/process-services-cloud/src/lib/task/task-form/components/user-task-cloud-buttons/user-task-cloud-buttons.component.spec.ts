@@ -71,6 +71,29 @@ describe('UserTaskCloudButtonsComponent', () => {
         expect(cancelClickSpy).toHaveBeenCalled();
     });
 
+    it('should display custom text when customCancelButtonText is provided', async () => {
+        const customText = 'Custom Cancel Text';
+        fixture.componentRef.setInput('showCancelButton', true);
+        fixture.componentRef.setInput('customCancelButtonText', customText);
+        fixture.detectChanges();
+
+        const cancelButton: MatButtonHarness = await loader.getHarnessOrNull(MatButtonHarness.with({ selector: '#adf-cloud-cancel-task' }));
+        const buttonText = await cancelButton.getText();
+
+        expect(buttonText.trim()).toBe(customText);
+    });
+
+    it('should display default text when customCancelButtonText is not provided', async () => {
+        fixture.componentRef.setInput('showCancelButton', true);
+        fixture.componentRef.setInput('customCancelButtonText', '');
+        fixture.detectChanges();
+
+        const cancelButton: MatButtonHarness = await loader.getHarnessOrNull(MatButtonHarness.with({ selector: '#adf-cloud-cancel-task' }));
+        const buttonText = await cancelButton.getText();
+
+        expect(buttonText.trim()).toBe('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL');
+    });
+
     it('should show claim button', async () => {
         let claimButton: MatButtonHarness = await loader.getHarnessOrNull(MatButtonHarness.with({ selector: '.adf-user-task-cloud-claim-btn' }));
 
