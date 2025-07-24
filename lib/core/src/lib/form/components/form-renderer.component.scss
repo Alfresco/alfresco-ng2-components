@@ -13,6 +13,14 @@
     height: 100%;
 }
 
+.adf-form-renderer {
+    // override Material styles, otherwise fields collapse on some screen widths
+    .mat-mdc-form-field-infix {
+        /* stylelint-disable-next-line declaration-no-important */
+        width: auto !important;
+    }
+}
+
 .alfresco-tabs-widget {
     width: 100%;
 
