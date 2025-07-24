@@ -323,7 +323,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
      * @returns list of form outcomes
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
-        return [new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
+        return [new FormOutcomeModel(form, { id: FormModel.SAVE_OUTCOME, name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
     }
 
     checkVisibility(field: FormFieldModel) {

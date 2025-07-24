@@ -1,10 +1,5 @@
-<button
-    *ngIf="showCancelButton"
-    mat-button
-    id="adf-cloud-cancel-task"
-    (click)="onCancelClick()"
->
-    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+<button *ngIf="showCancelButton" mat-button id="adf-cloud-cancel-task" (click)="onCancelClick()">
+    {{ customCancelButtonText || ('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate) }}
 </button>
 <button
     *ngIf="canClaimTask"
@@ -16,7 +11,7 @@
     (success)="onClaimTask()"
     (error)="onError($event)"
 >
-    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
+    {{ 'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate }}
 </button>
 <button
     *ngIf="canUnclaimTask"
@@ -28,5 +23,5 @@
     (success)="onUnclaimTask()"
     (error)="onError($event)"
 >
-    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
+    {{ 'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate }}
 </button>
