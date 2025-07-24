@@ -998,6 +998,21 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.dropdownControl.value).toEqual({ id: 'testValue', name: '' });
         });
 
+        it('should set dropdownControl value when form field value gets changed', () => {
+            widget.field = {
+                value: { id: 'Id_1', name: 'Label 1' },
+                options: [],
+                isVisible: true,
+                markAsValid: () => {}
+            } as FormFieldModel;
+            spyOn(widget.dropdownControl, 'setValue').and.callThrough();
+
+            widget.updateReactiveFormControl();
+
+            expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'Id_1', name: 'Label 1' }, { emitEvent: false });
+            expect(widget.dropdownControl.value).toEqual({ id: 'Id_1', name: 'Label 1' });
+        });
+
         it('should set dropdownControl value without emitting events if is an object', () => {
             widget.field = {
                 value: { id: 'testValueObj', name: 'testValueObjName' },
