@@ -112,10 +112,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     customSaveButtonText: string = '';
 
-    /** Toggle rendering of the `Open next task` checkbox (for screens only). */
-    @Input()
-    showNextTaskCheckbox = false;
-
     /** Whether the `Open next task` checkbox is checked by default or not. */
     @Input()
     isNextTaskCheckboxChecked = false;
