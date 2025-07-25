@@ -73,11 +73,16 @@
 
             display: flex;
             margin-right: -1%;
+            gap: 8px;
             width: 100%;
 
             &-item {
                 width: 100%;
                 box-sizing: border-box;
+            }
+
+            .adf-radio-buttons-widget-cloud {
+                padding-left: 12px;
             }
         }
 
@@ -85,8 +90,6 @@
             display: flex;
             flex-direction: column;
             flex: 1 1 auto;
-            padding-left: 5px;
-            padding-right: 5px;
         }
 
         &-item {

@@ -138,6 +138,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     updateReactiveFormControl(): void {
+        this.setFormControlValue();
         this.updateFormControlState();
         this.handleErrors();
     }
