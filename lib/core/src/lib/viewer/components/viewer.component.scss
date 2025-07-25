@@ -53,12 +53,24 @@
         }
     }
 
+    &__title-display-name-container,
     &__display-name {
         font-size: var(--theme-subheading-2-font-size);
         line-height: 1.5;
         vertical-align: middle;
         color: var(--adf-theme-foreground-text-color);
         white-space: nowrap;
+    }
+
+    &__display-name-value,
+    &__title-value {
+        margin-top: 0;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    &__display-name-value {
+        font-size: var(--theme-body-1-font-size);
     }
 
     &-container {
