@@ -34,7 +34,6 @@
             #{ms.$mat-input-element} {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
-                padding: 6px 0;
                 line-height: 20px;
             }
 
@@ -114,7 +113,6 @@
             background-color: var(--adf-metadata-buttons-background-color);
             box-sizing: border-box;
             border-radius: 6px;
-            padding: 6px 0;
             margin: 0;
             width: 100%;
         }
