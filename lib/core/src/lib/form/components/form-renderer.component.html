@@ -21,6 +21,10 @@
 
 <ng-template #render let-fieldToRender="fieldToRender">
     <div *ngFor="let currentRootElement of fieldToRender">
+        <div *ngIf="currentRootElement.type === 'section'" [id]="'field-' + currentRootElement?.id + '-container'" class="adf-container-widget">
+            <adf-form-section [field]="currentRootElement" />
+        </div>
+
         <div *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'"
              [id]="'field-' + currentRootElement?.id + '-container'"
              class="adf-container-widget"

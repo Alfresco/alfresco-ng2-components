@@ -708,5 +708,103 @@ describe('FormModel', () => {
             expect(fields[1].type).toBe(FormFieldTypes.DATE);
             expect(fields[2].type).toBe(FormFieldTypes.NUMBER);
         });
+
+        it('should handle sections at root level correctly', () => {
+            const mockFormWithRootSection = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'root-section',
+                        name: 'Root Section',
+                        type: 'section',
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'text-in-root-section',
+                                    name: 'Text in Root Section',
+                                    type: 'text',
+                                    required: false,
+                                    readOnly: false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+
+            const formWithRootSection = new FormModel(mockFormWithRootSection);
+
+            // Check that the root section is parsed correctly - wrapped in ContainerModel as expected
+            expect(formWithRootSection.fields.length).toBe(1);
+            expect(formWithRootSection.fields[0]).toBeInstanceOf(ContainerModel);
+            expect(formWithRootSection.fields[0].field.type).toBe('section');
+            expect(formWithRootSection.fields[0].field.id).toBe('root-section');
+
+            // Check that getFormFields returns all fields including the section and its children
+            const allFields = formWithRootSection.getFormFields();
+            expect(allFields.length).toBe(2); // section + text field inside
+            expect(allFields[0].type).toBe('section');
+            expect(allFields[1].type).toBe('text');
+            expect(allFields[1].id).toBe('text-in-root-section');
+        });
+
+        it('should process container fields before section fields in getFormFields', () => {
+            const mockFormWithContainerAndSection = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'container-field',
+                        name: 'Container Field',
+                        type: 'container',
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'text-in-container',
+                                    name: 'Text in Container',
+                                    type: 'text',
+                                    required: false,
+                                    readOnly: false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: 'section-field',
+                        name: 'Section Field',
+                        type: 'section',
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'text-in-section',
+                                    name: 'Text in Section',
+                                    type: 'text',
+                                    required: false,
+                                    readOnly: false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+
+            const formWithMixed = new FormModel(mockFormWithContainerAndSection);
+            const allFields = formWithMixed.getFormFields();
+
+            // Check that the following order is correct: container, text-in-container, section, text-in-section
+            expect(allFields.length).toBe(4);
+            expect(allFields[0].type).toBe('container');
+            expect(allFields[0].id).toBe('container-field');
+            expect(allFields[1].type).toBe('text');
+            expect(allFields[1].id).toBe('text-in-container');
+            expect(allFields[2].type).toBe('section');
+            expect(allFields[2].id).toBe('section-field');
+            expect(allFields[3].type).toBe('text');
+            expect(allFields[3].id).toBe('text-in-section');
+        });
     });
 });
