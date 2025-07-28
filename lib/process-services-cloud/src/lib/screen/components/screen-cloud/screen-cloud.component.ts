@@ -153,8 +153,8 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.rootProcessInstanceId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'rootProcessInstanceId')) {
             this.componentRef.setInput('rootProcessInstanceId', this.rootProcessInstanceId);
         }
-        if (Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
-            this.componentRef.setInput('showNextTaskCheckbox', true);
+        if (this.showNextTaskCheckbox && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'showNextTaskCheckbox')) {
+            this.componentRef.setInput('showNextTaskCheckbox', this.showNextTaskCheckbox);
         }
         if (this.isNextTaskCheckboxChecked && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'isNextTaskCheckboxChecked')) {
             this.componentRef.setInput('isNextTaskCheckboxChecked', this.isNextTaskCheckboxChecked);
