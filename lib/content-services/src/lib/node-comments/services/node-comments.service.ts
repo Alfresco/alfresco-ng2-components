@@ -68,7 +68,12 @@ export class NodeCommentsService implements CommentsService {
         return from(this.commentsApi.createComment(id, { content: message })).pipe(map((response) => this.newCommentModel(response.entry)));
     }
 
-    getAvatarCache() {
+    /**
+     * Gets the avatar cache containing userId–avatarUrl mappings.
+     *
+     * @returns A map of userId to avatar URL
+     */
+    getAvatarCache(): Map<string, string> {
         return this.avatarCache;
     }
 

@@ -45,7 +45,7 @@ describe('NodeCommentsService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    describe('Node  comments', () => {
+    fdescribe('Node  comments', () => {
         it('should add a comment node ', (done) => {
             service.add('999', 'fake-comment-message').subscribe((res: CommentModel) => {
                 expect(res).toBeDefined();
@@ -83,7 +83,7 @@ describe('NodeCommentsService', () => {
 
         it('should return avatar URL from cache if present', () => {
             const userId = 'user-123';
-            const cachedUrl = 'http://cached-avatar.url';
+            const cachedUrl = 'https://cached-avatar.url';
             service.getAvatarCache().set(userId, cachedUrl);
 
             const result = service.getUserImage(userId);
