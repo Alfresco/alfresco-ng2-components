@@ -45,7 +45,7 @@ describe('NodeCommentsService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    fdescribe('Node  comments', () => {
+    describe('Node  comments', () => {
         it('should add a comment node ', (done) => {
             service.add('999', 'fake-comment-message').subscribe((res: CommentModel) => {
                 expect(res).toBeDefined();
