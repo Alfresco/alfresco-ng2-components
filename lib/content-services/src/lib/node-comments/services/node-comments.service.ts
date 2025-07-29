@@ -68,6 +68,10 @@ export class NodeCommentsService implements CommentsService {
         return from(this.commentsApi.createComment(id, { content: message })).pipe(map((response) => this.newCommentModel(response.entry)));
     }
 
+    getAvatarCache() {
+        return this.avatarCache;
+    }
+
     private addToComments(comments: CommentModel[], comment: CommentEntry): void {
         const newComment: Comment = comment.entry;
 
@@ -76,12 +80,10 @@ export class NodeCommentsService implements CommentsService {
 
     private newCommentModel(comment: Comment): CommentModel {
         const user = new User(comment.createdBy);
-        const userId = user.id?.toString();
+        const userId = String(user.id);
 
-        const imageId = user.pictureId?.toString() || user.avatarId;
-
-        if (userId && imageId && !this.avatarCache.has(userId)) {
-            const avatarUrl = this.contentService.getContentUrl(imageId);
+        if (userId && user.avatarId && !this.avatarCache.has(userId)) {
+            const avatarUrl = this.contentService.getContentUrl(user.avatarId);
             this.avatarCache.set(userId, avatarUrl);
         }
 
