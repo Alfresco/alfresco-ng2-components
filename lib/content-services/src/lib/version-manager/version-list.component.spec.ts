@@ -208,12 +208,16 @@ describe('VersionListComponent', () => {
             expect(component.versionsApi.revertVersion).not.toHaveBeenCalled();
         });
 
-        it('should load the versions for a given id', () => {
+        it('should load the versions for a given id', async () => {
             fixture.detectChanges();
             const spyOnRevertVersion = spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
+            const spyOnOnVersionRestored = spyOn(component, 'onVersionRestored').and.stub();
             component.restore(versionId);
 
+            await fixture.whenStable();
+
             expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: '' });
+            expect(spyOnOnVersionRestored).toHaveBeenCalled();
         });
 
         it('should get node info after restoring the node', fakeAsync(() => {

@@ -17,16 +17,17 @@
 
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AppConfigService, AppConfigServiceMock, AuthModule, JWT_STORAGE_SERVICE, NoopTranslateModule, StorageService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock, AuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule, HttpClientTestingModule],
+    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule],
     providers: [
-        { provide: JWT_STORAGE_SERVICE, useClass: StorageService },
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock }
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        // TODO: remove this as soon as unit test not using jasmine.Ajax
+        { provide: AdfHttpClient, useValue: null }
     ],
     exports: [NoopAnimationsModule]
 })

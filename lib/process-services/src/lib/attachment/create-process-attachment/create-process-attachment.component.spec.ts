@@ -19,6 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -48,7 +49,11 @@ describe('CreateProcessAttachmentComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CreateProcessAttachmentComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
+            ]
         });
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;

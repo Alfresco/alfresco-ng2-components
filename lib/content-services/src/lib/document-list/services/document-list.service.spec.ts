@@ -18,6 +18,7 @@
 import { DocumentListService } from './document-list.service';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -68,7 +69,11 @@ describe('DocumentListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule],
+            providers: [
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
+            ]
         });
         service = TestBed.inject(DocumentListService);
         jasmine.Ajax.install();

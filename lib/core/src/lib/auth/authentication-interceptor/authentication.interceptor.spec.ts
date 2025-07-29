@@ -18,9 +18,9 @@
 import { HttpHandler, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-
-import { AuthenticationInterceptor, SHOULD_ADD_AUTH_TOKEN } from './authentication.interceptor';
-import { Authentication } from '@alfresco/adf-core';
+import { Authentication } from '../authentication';
+import { AuthenticationInterceptor } from './authentication.interceptor';
+import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/api';
 
 class MockAuthentication extends Authentication {
     addTokenToHeader(_: string, httpHeaders: HttpHeaders): Observable<HttpHeaders> {

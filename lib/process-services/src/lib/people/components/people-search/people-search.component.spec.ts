@@ -19,6 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { PeopleSearchComponent } from './people-search.component';
 import { LightUserRepresentation } from '@alfresco/js-api';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 const fakeUser: LightUserRepresentation = {
     id: 1,
@@ -43,7 +44,11 @@ describe('PeopleSearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [PeopleSearchComponent]
+            imports: [PeopleSearchComponent],
+            providers: [
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
+            ]
         });
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;

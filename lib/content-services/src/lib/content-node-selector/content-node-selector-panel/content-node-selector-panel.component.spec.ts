@@ -131,10 +131,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(lastValue).toBe('fake-site');
             });
 
-            it('should trigger siteChange event when a site is selected in sites-dropdown', async () => {
+            it('should trigger siteChange event when a site is selected in sites-dropdown', () => {
                 const fakeSiteEntry = new SiteEntry({ entry: new Site({ title: 'fake-new-site', guid: 'fake-new-site' }) });
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 let lastValue: string;
                 component.siteChange.subscribe((siteTitle: string) => (lastValue = siteTitle));
@@ -698,7 +697,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 contentNodeSelectorPanelService.customModels = undefined;
             });
 
-            it('should search panel be collapsed by default and expand when clicking the filter button', async () => {
+            it('should search panel be collapsed by default and expand when clicking the filter button', () => {
                 contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 
@@ -708,7 +707,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 toggleFiltersPanelButton.nativeElement.click();
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(component.searchPanelExpanded).toEqual(true);
             });
@@ -758,10 +756,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.getSelectedCount()).toBe(0);
             });
 
-            it('should not render component input if `showNodeCounter` is false', async () => {
+            it('should not render component input if `showNodeCounter` is false', () => {
                 component.showNodeCounter = false;
                 fixture.detectChanges();
-                await fixture.whenStable();
                 expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
             });
         });

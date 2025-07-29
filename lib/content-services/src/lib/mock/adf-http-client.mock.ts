@@ -15,24 +15,17 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 
-/** @deprecated use `AlfrescoApiService` instead */
 @Injectable()
-export class AlfrescoApiNoAuthService extends AlfrescoApiService {
-    constructor() {
-        super();
+export class AdfHttpClientMock {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    post(..._args): Promise<unknown> {
+        return Promise.resolve({ success: true, mockData: 'default response' });
     }
 
-    override createInstance(config: AlfrescoApiConfig) {
-        return new AlfrescoApi(
-            {
-                ...config,
-                oauthInit: false
-            },
-            this.adfHttpClient
-        );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    get(..._args): Promise<unknown> {
+        return Promise.resolve({ success: true, mockData: 'default get response' });
     }
 }

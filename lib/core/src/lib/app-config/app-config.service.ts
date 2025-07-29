@@ -77,17 +77,14 @@ export class AppConfigService {
     };
 
     status: Status = Status.INIT;
-    protected onLoadSubject: ReplaySubject<any>;
-    onLoad: Observable<any>;
+    protected readonly onLoadSubject = new ReplaySubject<any>();
+    onLoad = this.onLoadSubject.asObservable();
 
     get isLoaded() {
         return this.status === Status.LOADED;
     }
 
     constructor() {
-        this.onLoadSubject = new ReplaySubject();
-        this.onLoad = this.onLoadSubject.asObservable();
-
         this.extensionService.setup$.subscribe((config) => {
             this.onExtensionsLoaded(config);
         });

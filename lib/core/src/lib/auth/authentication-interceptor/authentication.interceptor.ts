@@ -16,7 +16,6 @@
  */
 
 import {
-    HttpContextToken,
     HttpHandler,
     HttpHeaderResponse,
     HttpHeaders,
@@ -30,9 +29,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { Authentication } from '@alfresco/adf-core';
-
-export const SHOULD_ADD_AUTH_TOKEN = new HttpContextToken<boolean>(() => false);
+import { Authentication } from '../authentication';
+import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/api';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
@@ -45,7 +43,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         if (req.context.get(SHOULD_ADD_AUTH_TOKEN)) {
             return this.authService.addTokenToHeader(req.url, req.headers).pipe(
                 mergeMap((headersWithBearer) => {
-                    const headerWithContentType = this.appendJsonContentType(headersWithBearer, req.body);
+                    const headerWithContentType = this.appendJsonContentType(headersWithBearer);
                     const kcReq = req.clone({ headers: headerWithContentType });
                     return next.handle(kcReq).pipe(catchError((error) => observableThrowError(error)));
                 })
@@ -55,7 +53,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(catchError((error) => observableThrowError(error)));
     }
 
-    private appendJsonContentType(headers: HttpHeaders, reqBody: any): HttpHeaders {
+    private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
         // prevent adding any content type, to properly handle formData with boundary browser generated value,
         // as adding any Content-Type its going to break the upload functionality
 
@@ -63,7 +61,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
             return headers.delete('Content-Type');
         }
 
-        if (!headers.get('Content-Type') && !(reqBody instanceof FormData)) {
+        if (!headers.get('Content-Type')) {
             return headers.set('Content-Type', 'application/json;charset=UTF-8');
         }
 

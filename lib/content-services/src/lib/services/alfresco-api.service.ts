@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { ReplaySubject } from 'rxjs';
 import { AlfrescoApiFactory } from './alfresco-api.interface';
 import { AppConfigService, AppConfigValues, OauthConfigModel, OpenidConfiguration, StorageService } from '@alfresco/adf-core';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
 
@@ -27,7 +28,12 @@ export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-    alfrescoApiInitialized = new ReplaySubject<boolean>(1);
+    protected appConfig = inject(AppConfigService);
+    protected storageService = inject(StorageService);
+    protected alfrescoApiFactory = inject<AlfrescoApiFactory>(ALFRESCO_API_FACTORY, { optional: true });
+    protected adfHttpClient = inject(AdfHttpClient, { optional: true });
+
+    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApi;
 
@@ -36,19 +42,11 @@ export class AlfrescoApiService {
 
     idpConfig: OpenidConfiguration;
 
-    private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
+    private readonly excludedErrorUrl = ['/api/enterprise/system/properties'];
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
     }
-
-    constructor(
-        protected appConfig: AppConfigService,
-        protected storageService: StorageService,
-        @Optional()
-        @Inject(ALFRESCO_API_FACTORY)
-        private alfrescoApiFactory?: AlfrescoApiFactory
-    ) {}
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
@@ -122,15 +120,26 @@ export class AlfrescoApiService {
         if (this.alfrescoApiFactory) {
             return this.alfrescoApiFactory.createAlfrescoApi(config);
         }
-        return new AlfrescoApi(config);
+
+        return new AlfrescoApi(
+            {
+                ...config,
+                oauthInit: false
+            },
+            this.adfHttpClient
+        );
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
         return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
     }
 
+    private formatExcludedPath(path: string): string {
+        return path.replace(this.lastConfig.hostBpm + '/' + this.lastConfig.contextRootBpm, '');
+    }
+
     isExcludedErrorListener(currentFullPath: string): boolean {
-        const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm + '/' + this.lastConfig.contextRootBpm, '');
+        const formattedPath = this.formatExcludedPath(currentFullPath);
         return this.excludedErrorUrl.includes(formattedPath);
     }
 }

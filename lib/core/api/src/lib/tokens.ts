@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
-export * from './authentication';
-export * from './authentication-interceptor/authentication.interceptor';
+import { HttpContextToken } from '@angular/common/http';
+
+export const SHOULD_ADD_AUTH_TOKEN = new HttpContextToken<boolean>(() => false);
