@@ -456,8 +456,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.isProcessStarting = false;
             },
             error: (err) => {
-                this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
-                this.unifyErrorResponse(err);
+                this.errorMessageId = err?.response?.body?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START_PROCESS';
+                this.unifyErrorResponse(err?.response?.body);
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
@@ -485,9 +485,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private unifyErrorResponse(err: any) {
         if (!err?.response?.body?.entry && err?.response?.body?.message) {
-            err.response.body = {
-                entry: JSON.parse(err.response.body.message)
-            };
+            try {
+                const parsedMessage = JSON.parse(err.response.body.message);
+                err.response.body.entry = parsedMessage;
+            } catch (jsonError) {
+                // If message is not valid JSON, use it as a string
+                err.response.body.entry = {
+                    message: err.response.body.message
+                };
+            }
         }
     }
 
