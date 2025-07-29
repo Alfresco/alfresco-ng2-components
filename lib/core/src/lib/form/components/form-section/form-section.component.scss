@@ -7,11 +7,11 @@
             display: flex;
             flex-wrap: inherit;
             align-items: baseline;
-            flex-direction: column;
             gap: 1%;
 
             @include flex.layout-bp(lt-md) {
                 flex: 1 1 100% !important;
+                flex-direction: column;
             }
 
             .adf-section-widget {
