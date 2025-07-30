@@ -307,7 +307,7 @@ export class ProcessService {
 
         try {
             return datePipe.transform(value, dateFormat);
-        } catch (err) {
+        } catch {
             return '';
         }
     }

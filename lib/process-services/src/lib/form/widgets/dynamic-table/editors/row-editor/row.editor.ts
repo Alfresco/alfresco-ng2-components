@@ -59,10 +59,10 @@ export class RowEditorComponent {
     column: DynamicTableColumn;
 
     @Output()
-    save: EventEmitter<any> = new EventEmitter<any>();
+    save = new EventEmitter<any>();
 
     @Output()
-    cancel: EventEmitter<any> = new EventEmitter<any>();
+    cancel = new EventEmitter<any>();
 
     validationSummary: DynamicRowValidationSummary;
 
