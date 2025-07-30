@@ -292,7 +292,19 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
-      "SORT_BY": "Sort by"
+      "SORT_BY": "Sort by",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
     },
     "FEATURE-FLAGS": {
       "OVERRIDES": "Feature flag overrides",

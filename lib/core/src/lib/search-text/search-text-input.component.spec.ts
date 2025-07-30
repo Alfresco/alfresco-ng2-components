@@ -21,6 +21,8 @@ import { DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
+import { NoopTranslateModule } from '../testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SearchTextInputComponent', () => {
     let fixture: ComponentFixture<SearchTextInputComponent>;
@@ -31,7 +33,7 @@ describe('SearchTextInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [SearchTextInputComponent]
+            imports: [NoopAnimationsModule, SearchTextInputComponent, NoopTranslateModule]
         });
         fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;
@@ -354,6 +356,39 @@ describe('SearchTextInputComponent', () => {
                 expect(component.subscriptAnimationState.value).toEqual('active');
                 expect(component.searchTerm).toEqual('fake-search-term');
             });
+        });
+    });
+
+    describe('Translations', () => {
+        beforeEach(fakeAsync(() => {
+            component.expandable = true;
+            component.showClearButton = true;
+            fixture.detectChanges();
+            component.subscriptAnimationState.value = 'active';
+            fixture.detectChanges();
+            tick(200);
+        }));
+
+        it('should contain correct translation key for search button tooltip', () => {
+            const searchButton = testingUtils.getByCSS('#adf-search-button');
+            expect(searchButton.nativeElement.getAttribute('title')).toBe('CORE.SEARCH.BUTTON.TOOLTIP');
+        });
+
+        it('should contain correct translation key for search button aria-label', () => {
+            const searchButton = testingUtils.getByCSS('#adf-search-button');
+            // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
+            const searchIcon = searchButton.nativeElement.querySelector('mat-icon');
+            expect(searchIcon.getAttribute('aria-label')).toBe('CORE.SEARCH.BUTTON.ARIA-LABEL');
+        });
+
+        it('should contain correct translation key for search input aria-label', () => {
+            const searchInput = testingUtils.getByCSS('#adf-control-input');
+            expect(searchInput.nativeElement.getAttribute('aria-label')).toBe('CORE.SEARCH.INPUT.ARIA-LABEL');
+        });
+
+        it('should contain correct translation key for clear button title', () => {
+            const clearButton = testingUtils.getByDataAutomationId('adf-clear-search-button');
+            expect(clearButton.nativeElement.getAttribute('title')).toBe('CORE.SEARCH.FILTER.BUTTONS.CLOSE');
         });
     });
 });
