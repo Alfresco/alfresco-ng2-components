@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, getDataColumnMock } from '@alfresco/adf-core';
+import { DataColumn, DataRow } from '@alfresco/adf-core';
+import { getDataColumnMock } from '../../../../../testing/data-column.mock';
 import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../../../models/data-column-custom-data';
 import { TasksListDatatableAdapter } from './task-list-datatable-adapter';
 import { TaskInstanceCloudListViewModel } from '../../../models/task-cloud-view.model';

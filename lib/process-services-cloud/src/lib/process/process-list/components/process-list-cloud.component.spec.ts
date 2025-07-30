@@ -26,7 +26,6 @@ import {
     DataColumnComponent,
     DataColumnListComponent,
     DataRowEvent,
-    getDataColumnMock,
     ObjectDataColumn,
     ObjectDataRow,
     User,
@@ -46,6 +45,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { provideCloudPreferences } from '../../../providers';
+import { getDataColumnMock } from '../../../testing/data-column.mock';
 
 const fakeCustomSchema = [
     new ObjectDataColumn<ProcessListDataColumnCustomData>({

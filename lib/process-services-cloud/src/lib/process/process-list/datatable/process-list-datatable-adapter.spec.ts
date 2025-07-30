@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, getDataColumnMock } from '@alfresco/adf-core';
+import { DataColumn, DataRow } from '@alfresco/adf-core';
 import { getProcessInstanceVariableMock } from '../../../mock/process-instance-variable.mock';
 import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
 import { ProcessListDatatableAdapter } from './process-list-datatable-adapter';
+import { getDataColumnMock } from '../../../testing/data-column.mock';
 
 describe('ProcessListDatatableAdapter', () => {
     it('should get proepr type for column', () => {
