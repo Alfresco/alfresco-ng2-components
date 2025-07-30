@@ -211,7 +211,7 @@ describe('RedirectAuthService', () => {
         try {
             await service.loginCallback();
             fail('Expected to throw an error');
-        } catch (error) {
+        } catch {
             expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         }
     });
@@ -281,7 +281,7 @@ describe('RedirectAuthService', () => {
         try {
             await service.loginCallback();
             expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
-        } catch (error) {
+        } catch {
             fail('Expected not to throw an error');
         }
     });

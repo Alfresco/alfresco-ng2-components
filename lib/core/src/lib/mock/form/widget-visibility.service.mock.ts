@@ -19,12 +19,6 @@ import { FormModel, FormValues } from '../../form/components/widgets/core';
 
 export const formTest = new FormModel({});
 
-export const fakeTaskProcessVariableModels = [
-    { id: 'TEST_VAR_1', type: 'string', value: 'test_value_1' },
-    { id: 'TEST_VAR_2', type: 'string', value: 'test_value_2' },
-    { id: 'TEST_VAR_3', type: 'string', value: 'test_value_3' }
-];
-
 export const formValues: FormValues = {
     test_1: 'value_1',
     test_2: 'value_2',

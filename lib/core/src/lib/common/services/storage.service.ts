@@ -135,7 +135,7 @@ export class StorageService {
             storage.setItem(key, key);
             storage.removeItem(key, key);
             return true;
-        } catch (e) {
+        } catch {
             return false;
         }
     }

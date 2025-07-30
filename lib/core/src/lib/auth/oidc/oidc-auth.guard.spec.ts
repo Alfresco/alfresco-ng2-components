@@ -60,10 +60,9 @@ describe('OidcAuthGuard', () => {
         try {
             await TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
             expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/', { replaceUrl: true });
-        } catch (error) {
+        } catch {
             fail('Expected no error to be thrown');
         }
-
     });
 
     it('should throw an error if loginCallback fails and logout event is emitted', async () => {
@@ -89,7 +88,7 @@ describe('OidcAuthGuard', () => {
             fakeLogoutSubject.next();
             await runInInjectionContext;
             expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/test-route', { replaceUrl: true });
-        } catch (error) {
+        } catch {
             fail('Expected no error to be thrown');
         }
     });

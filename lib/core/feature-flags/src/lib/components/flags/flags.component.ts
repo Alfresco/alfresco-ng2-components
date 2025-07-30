@@ -123,11 +123,11 @@ export class FlagsComponent {
         this.featuresService.enable(value);
     }
 
-    protected onInputChange(text: string) {
+    onInputChange(text: string) {
         this.inputValue$.next(text);
     }
 
-    protected onClearInput() {
+    onClearInput() {
         this.inputValue = '';
         this.inputValue$.next('');
     }

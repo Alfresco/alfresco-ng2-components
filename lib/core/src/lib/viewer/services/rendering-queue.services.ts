@@ -37,10 +37,10 @@ export class RenderingQueueServices {
     pdfThumbnailViewer: any = null;
     onIdle: any = null;
 
-    highestPriorityPage: any = null;
+    highestPriorityPage: string | null = null;
     idleTimeout: any = null;
     printing: any = false;
-    isThumbnailViewEnabled: any = false;
+    isThumbnailViewEnabled = false;
 
     /**
      * Set the instance of the PDF Viewer

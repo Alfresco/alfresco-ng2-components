@@ -245,7 +245,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     nodeId: string = null;
 
-    /** Original node mime type, should be provided when renditiona mime type is different. */
+    /** Original node mime type, should be provided when renditions mime type is different. */
     @Input()
     nodeMimeType: string = undefined;
 

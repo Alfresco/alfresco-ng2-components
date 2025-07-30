@@ -152,6 +152,7 @@ module.exports = {
                 'rxjs/no-subject-value': 'error',
                 'rxjs/no-unsafe-takeuntil': 'error',
                 'unicorn/filename-case': 'error',
+                'unicorn/prefer-optional-catch-binding': 'error',
                 '@typescript-eslint/no-unused-expressions': [
                     'error',
                     {

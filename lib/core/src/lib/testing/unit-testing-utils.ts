@@ -24,7 +24,7 @@ import { MatChipGridHarness, MatChipHarness, MatChipListboxHarness } from '@angu
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatErrorHarness, MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { ComponentFixture } from '@angular/core/testing';
@@ -34,7 +34,10 @@ import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
 
 export class UnitTestingUtils {
-    constructor(private debugElement?: DebugElement, private loader?: HarnessLoader) {
+    constructor(
+        private debugElement?: DebugElement,
+        private loader?: HarnessLoader
+    ) {
         this.debugElement = debugElement;
         this.loader = loader;
     }
@@ -73,10 +76,6 @@ export class UnitTestingUtils {
 
     getByDirective(directive: Type<any>): DebugElement {
         return this.debugElement.query(By.directive(directive));
-    }
-
-    getAllByDirective(directive: Type<any>): DebugElement[] {
-        return this.debugElement.queryAll(By.directive(directive));
     }
 
     /** Perform actions */
@@ -243,10 +242,6 @@ export class UnitTestingUtils {
         return this.loader.getHarness(MatIconHarness.with({ ancestor: selector }));
     }
 
-    async getMatIconWithAncestorByCSSAndName(selector: string, name: string): Promise<MatIconHarness> {
-        return this.loader.getHarness(MatIconHarness.with({ ancestor: selector, name }));
-    }
-
     async checkIfMatIconExistsWithAncestorByDataAutomationId(dataAutomationId: string): Promise<boolean> {
         return this.loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="${dataAutomationId}"]` }));
     }
@@ -339,10 +334,6 @@ export class UnitTestingUtils {
         return this.loader.getHarness(MatInputHarness);
     }
 
-    async getMatInputByCSS(selector: string): Promise<MatInputHarness> {
-        return this.loader.getHarness(MatInputHarness.with({ selector }));
-    }
-
     async getMatInputByDataAutomationId(dataAutomationId: string): Promise<MatInputHarness> {
         return this.loader.getHarness(MatInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
     }
@@ -360,14 +351,6 @@ export class UnitTestingUtils {
         return this.loader.hasHarness(MatInputHarness);
     }
 
-    async checkIfMatInputExistsWithCSS(selector: string): Promise<boolean> {
-        return this.loader.hasHarness(MatInputHarness.with({ selector }));
-    }
-
-    async checkIfMatInputExistsWithDataAutomationId(dataAutomationId: string): Promise<boolean> {
-        return this.loader.hasHarness(MatInputHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
-    }
-
     async checkIfMatInputExistsWithPlaceholder(placeholder: string): Promise<boolean> {
         return this.loader.hasHarness(MatInputHarness.with({ placeholder }));
     }
@@ -380,11 +363,6 @@ export class UnitTestingUtils {
 
     async fillMatInput(value: string): Promise<void> {
         const input = await this.getMatInput();
-        await input.setValue(value);
-    }
-
-    async fillMatInputByCSS(selector: string, value: string): Promise<void> {
-        const input = await this.getMatInputByCSS(selector);
         await input.setValue(value);
     }
 
@@ -409,11 +387,6 @@ export class UnitTestingUtils {
         return input.getValue();
     }
 
-    async getMatInputValueByDataAutomationId(dataAutomationId: string): Promise<string> {
-        const input = await this.getMatInputByDataAutomationId(dataAutomationId);
-        return input.getValue();
-    }
-
     async sendKeysToMatInput(keys: (string | TestKey)[]): Promise<void> {
         const input = await this.getMatInput();
         const host = await input.host();
@@ -428,16 +401,6 @@ export class UnitTestingUtils {
         fixture.detectChanges();
 
         return autocomplete.getOptions();
-    }
-
-    /** MatError related methods */
-
-    async getMatErrorByCSS(selector: string): Promise<MatErrorHarness> {
-        return this.loader.getHarness(MatErrorHarness.with({ selector }));
-    }
-
-    async getMatErrorByDataAutomationId(dataAutomationId: string): Promise<MatErrorHarness> {
-        return this.loader.getHarness(MatErrorHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
     }
 
     /** MatTabGroup related methods */

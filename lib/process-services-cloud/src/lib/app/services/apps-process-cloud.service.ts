@@ -28,7 +28,10 @@ import { RequestOptions } from '@alfresco/js-api';
 export class AppsProcessCloudService {
     deployedApps: ApplicationInstanceModel[];
 
-    constructor(private adfHttpClient: AdfHttpClient, private appConfigService: AppConfigService) {
+    constructor(
+        private adfHttpClient: AdfHttpClient,
+        private appConfigService: AppConfigService
+    ) {
         this.loadApps();
     }
 
@@ -48,7 +51,7 @@ export class AppsProcessCloudService {
     }
 
     loadApps() {
-        const apps = this.appConfigService.get<any>('alfresco-deployed-apps', []);
+        const apps = this.appConfigService.get<{ theme: string; icon: string }[]>('alfresco-deployed-apps', []);
         apps.map((app) => {
             app.theme = app.theme ? app.theme : 'theme-1';
             app.icon = app.icon ? app.icon : 'favorite';

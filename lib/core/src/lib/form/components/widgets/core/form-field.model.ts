@@ -488,7 +488,7 @@ export class FormFieldModel extends FormWidgetModel {
                 let dateValue;
                 try {
                     dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
-                } catch (e) {
+                } catch {
                     dateValue = new Date('error');
                 }
 
