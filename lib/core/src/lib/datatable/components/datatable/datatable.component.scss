@@ -671,7 +671,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-body {
         display: block;
         flex: 1;
-        overflow-y: scroll;
+        overflow: hidden scroll;
         margin-top: -1px;
     }
 }
