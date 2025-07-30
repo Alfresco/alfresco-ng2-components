@@ -39,13 +39,14 @@ export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [
  * @deprecated this module is deprecated and will be removed in the future versions
  *
  * Instead, import the standalone components directly, or use the following provider API to replicate the behaviour:
- *
+ * ```
  * providers: [
  *      provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
  *      provideCloudPreferences()
  *      provideCloudFormRenderer(),
  *      { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }
  * ]
+ * ```
  */
 @NgModule({
     imports: [ProcessCloudModule, TaskCloudModule, GroupCloudComponent, ...PROCESS_SERVICES_CLOUD_DIRECTIVES],

@@ -28,6 +28,17 @@ import { FORM_DIRECTIVES } from './form';
 import { TASK_COMMENTS_DIRECTIVES } from './task-comments';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
+/**
+ * @deprecated use provider api instead, for example:
+ * ```
+ * providers: [
+ *     provideTranslations('adf-process-services', 'assets/adf-process-services'),
+ *     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
+ *     FormRenderingService,
+ *     { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+ * ]
+ * ```
+ */
 @NgModule({
     imports: [
         ...PROCESS_COMMENTS_DIRECTIVES,
