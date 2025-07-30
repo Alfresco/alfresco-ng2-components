@@ -1,31 +1,33 @@
-<div *ngIf="isLoading" class="adf-viewer-render-main-loader">
-    <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
-        <div class="adf-viewer-render-content-container">
-            <div class="adf-viewer-render__loading-screen">
-                <h2 id="loading-spinner-label">{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
-                <div>
-                    <mat-spinner aria-labelledby="loading-spinner-label"
-                                 class="adf-viewer-render__loading-screen__spinner" />
+@if (isLoading) {
+    <div class="adf-viewer-render-main-loader">
+        <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
+            <div class="adf-viewer-render-content-container">
+                <div class="adf-viewer-render__loading-screen">
+                    <h2 id="loading-spinner-label">{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
+                    <div>
+                        <mat-spinner aria-labelledby="loading-spinner-label" class="adf-viewer-render__loading-screen__spinner" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 @if (urlFile || blobFile) {
     <div [style.visibility]="isLoading ? 'hidden' : 'visible'" class="adf-viewer-render-main">
         <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
             <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
                 <ng-container *ngSwitchCase="'external'">
-                    <adf-preview-extension
-                        *ngIf="!!externalViewer"
-                        [id]="externalViewer.component"
-                        [url]="urlFile"
-                        [extension]="externalViewer.fileExtension"
-                        [nodeId]="nodeId"
-                        [attr.data-automation-id]="externalViewer.component"
-                        (contentLoaded)="markAsLoaded()"
-                    />
+                    @if (!!externalViewer) {
+                        <adf-preview-extension
+                            [id]="externalViewer.component"
+                            [url]="urlFile"
+                            [extension]="externalViewer.fileExtension"
+                            [nodeId]="nodeId"
+                            [attr.data-automation-id]="externalViewer.component"
+                            (contentLoaded)="markAsLoaded()"
+                        />
+                    }
                 </ng-container>
 
                 <ng-container *ngSwitchCase="'pdf'">
@@ -75,24 +77,27 @@
 
                 <ng-container *ngSwitchCase="'custom'">
                     <ng-container *ngFor="let ext of viewerExtensions">
-                        <adf-preview-extension
-                            *ngIf="checkExtensions(ext.fileExtension)"
-                            [id]="ext.component"
-                            [url]="urlFile"
-                            [extension]="extension"
-                            [nodeId]="nodeId"
-                            [attr.data-automation-id]="ext.component"
-                            (contentLoaded)="markAsLoaded()"
-                        />
+                        @if (checkExtensions(ext.fileExtension)) {
+                            <adf-preview-extension
+                                [id]="ext.component"
+                                [url]="urlFile"
+                                [extension]="extension"
+                                [nodeId]="nodeId"
+                                [attr.data-automation-id]="ext.component"
+                                (contentLoaded)="markAsLoaded()"
+                            />
+                        }
                     </ng-container>
 
                     <ng-container *ngFor="let extensionTemplate of extensionTemplates">
-                        <span *ngIf="extensionTemplate.isVisible" class="adf-viewer-render-custom-content">
-                            <ng-template
-                                [ngTemplateOutlet]="extensionTemplate.template"
-                                [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }"
-                            />
-                        </span>
+                        @if (extensionTemplate.isVisible) {
+                            <span class="adf-viewer-render-custom-content">
+                                <ng-template
+                                    [ngTemplateOutlet]="extensionTemplate.template"
+                                    [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }"
+                                />
+                            </span>
+                        }
                     </ng-container>
                 </ng-container>
 
@@ -103,8 +108,9 @@
         </div>
     </div>
 }
-<ng-container *ngIf="viewerTemplateExtensions">
+
+@if (viewerTemplateExtensions) {
     <ng-template [ngTemplateOutlet]="viewerTemplateExtensions"
                  [ngTemplateOutletContext]="{ urlFile: urlFile, extension: extension, markAsLoaded: markAsLoaded.bind(this) }"
                  [ngTemplateOutletInjector]="injector" />
-</ng-container>
+}
