@@ -11,6 +11,7 @@
 
             @include flex.layout-bp(lt-md) {
                 flex: 1 1 100% !important;
+                flex-direction: column;
             }
 
             .adf-section-widget {
