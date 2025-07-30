@@ -16,7 +16,7 @@
  */
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
-import { NgForOf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
+import { NgForOf, NgTemplateOutlet } from '@angular/common';
 import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -38,8 +38,6 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     imports: [
         TranslatePipe,
         MatProgressSpinnerModule,
-        NgSwitch,
-        NgSwitchCase,
         PdfViewerComponent,
         ImgViewerComponent,
         MediaPlayerComponent,
@@ -48,7 +46,6 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
         UnknownFormatComponent,
         ExtensionsModule,
         NgForOf,
-        NgSwitchDefault,
         PreviewExtensionComponent
     ],
     providers: [ViewUtilService]
