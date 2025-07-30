@@ -88,31 +88,38 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @HostListener('document:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
         switch (event.key) {
-            case 'ArrowLeft':
+            case 'ArrowLeft': {
                 event.preventDefault();
                 this.cropper.move(-3, 0);
                 break;
-            case 'ArrowUp':
+            }
+            case 'ArrowUp': {
                 event.preventDefault();
                 this.cropper.move(0, -3);
                 break;
-            case 'ArrowRight':
+            }
+            case 'ArrowRight': {
                 event.preventDefault();
                 this.cropper.move(3, 0);
                 break;
-            case 'ArrowDown':
+            }
+            case 'ArrowDown': {
                 event.preventDefault();
                 this.cropper.move(0, 3);
                 break;
-            case 'i':
+            }
+            case 'i': {
                 this.zoomIn();
                 break;
-            case 'o':
+            }
+            case 'o': {
                 this.zoomOut();
                 break;
-            case 'r':
+            }
+            case 'r': {
                 this.rotateImage();
                 break;
+            }
             default:
         }
     }
@@ -132,7 +139,10 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
+    constructor(
+        private appConfigService: AppConfigService,
+        private urlService: UrlService
+    ) {
         this.initializeScaling();
     }
 
@@ -222,7 +232,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.cropper.clear();
         this.cropper.reset();
         this.cropper.setDragMode('move');
-        this.scale = 1.0;
+        this.scale = 1;
         this.updateCanvasContainer();
     }
 

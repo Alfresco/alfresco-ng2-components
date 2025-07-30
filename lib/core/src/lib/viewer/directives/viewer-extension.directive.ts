@@ -60,7 +60,7 @@ export class ViewerExtensionDirective implements AfterContentInit {
     isVisible(fileExtension: string): boolean {
         let supportedExtension: string;
 
-        if (this.supportedExtensions && this.supportedExtensions instanceof Array) {
+        if (Array.isArray(this.supportedExtensions)) {
             supportedExtension = this.supportedExtensions.find((extension) => extension.toLowerCase() === fileExtension);
         }
 

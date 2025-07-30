@@ -54,7 +54,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     providerRegistered(name: string): boolean {
-        return !!this.providers.find((x) => x.name === name);
+        return !!this.providers.some((x) => x.name === name);
     }
 
     fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
@@ -85,13 +85,13 @@ export class TranslateLoaderService implements TranslateLoader {
         if (!this.queue[lang]) {
             this.queue[lang] = [];
         }
-        this.providers.forEach((component) => {
+        for (const component of this.providers) {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
                 observableBatch.push(this.fetchLanguageFile(lang, component));
             }
-        });
+        }
 
         return observableBatch;
     }
@@ -103,7 +103,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     isComponentInQueue(lang: string, name: string) {
-        return !!(this.queue[lang] || []).find((x) => x === name);
+        return !!(this.queue[lang] || []).some((x) => x === name);
     }
 
     getFullTranslationJSON(lang: string): any {
@@ -144,8 +144,8 @@ export class TranslateLoaderService implements TranslateLoader {
 
         return new Observable((observer) => {
             if (batch.length > 0) {
-                forkJoin(batch).subscribe(
-                    () => {
+                forkJoin(batch).subscribe({
+                    next: () => {
                         const fullTranslation = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
@@ -156,10 +156,10 @@ export class TranslateLoaderService implements TranslateLoader {
                             observer.complete();
                         }
                     },
-                    () => {
+                    error: () => {
                         observer.error('Failed to load some resources');
                     }
-                );
+                });
             } else {
                 const fullTranslation = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {

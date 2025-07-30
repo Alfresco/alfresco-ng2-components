@@ -27,7 +27,7 @@ import { NoopAuthModule, UnitTestingUtils } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
-import pdfjsLibMock from '../mock/pdfjs-lib.mock';
+import pdfjsLibraryMock from '../mock/pdfjs-lib.mock';
 
 declare const pdfjsLib: any;
 
@@ -326,7 +326,7 @@ describe('Test PdfViewer component', () => {
                     () =>
                         ({
                             afterClosed: () => of('')
-                        } as any)
+                        }) as any
                 );
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
@@ -438,7 +438,7 @@ describe('Test PdfViewer - User interaction', () => {
                 },
                 RenderingQueueServices,
                 { provide: PDFJS_VIEWER_MODULE, useValue: pdfViewerSpy },
-                { provide: PDFJS_MODULE, useValue: pdfjsLibMock }
+                { provide: PDFJS_MODULE, useValue: pdfjsLibraryMock }
             ]
         });
 

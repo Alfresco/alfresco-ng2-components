@@ -28,6 +28,7 @@ module.exports = {
                 'plugin:@angular-eslint/recommended',
                 'plugin:@angular-eslint/template/process-inline-templates',
                 'plugin:jsdoc/recommended-typescript-error'
+                // 'plugin:unicorn/recommended'
             ],
             plugins: [
                 'eslint-plugin-unicorn',

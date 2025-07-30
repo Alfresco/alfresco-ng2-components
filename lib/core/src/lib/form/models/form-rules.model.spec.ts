@@ -24,11 +24,11 @@ import { FormService } from '../services/form.service';
 import { ByPassFormRuleManager, FORM_RULES_MANAGER, FormRulesManager, formRulesManagerFactory } from './form-rules.model';
 
 class CustomRuleManager extends FormRulesManager<any> {
-    protected getRules() {
+    getRules(): any {
         return null;
     }
 
-    protected handleRuleEvent(): void {
+    handleRuleEvent(): void {
         return;
     }
 }
@@ -106,7 +106,7 @@ describe('Form Rules', () => {
         beforeEach(() => {
             injector = TestBed.inject(Injector);
             rulesManager = formRulesManagerFactory(injector);
-            getRulesSpy = spyOn(rulesManager, 'getRules');
+            getRulesSpy = spyOn(rulesManager as any, 'getRules');
         });
 
         it('factory function should return bypass service', () => {

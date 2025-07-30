@@ -53,7 +53,7 @@ export class ViewUtilService {
      * @returns list of extensions
      */
     get externalExtensions(): string[] {
-        return this.viewerExtensions.map((ext) => ext.fileExtension);
+        return this.viewerExtensions.map((extension) => extension.fileExtension);
     }
 
     constructor(private extensionService: AppExtensionService) {}
@@ -85,7 +85,7 @@ export class ViewUtilService {
             const match = fileName.match(/\.([^./?#]+)($|\?|#)/);
             return match ? match[1] : null;
         }
-        return null;
+        return undefined;
     }
 
     getViewerType(extension: string, mimeType: string, extensionsSupportedByTemplates?: string[]): string {
@@ -104,7 +104,7 @@ export class ViewUtilService {
 
             const editorTypes = Object.keys(this.mimeTypes);
             for (const type of editorTypes) {
-                if (this.mimeTypes[type].indexOf(mimeType) >= 0) {
+                if (this.mimeTypes[type].includes(mimeType)) {
                     return type;
                 }
             }
@@ -125,19 +125,19 @@ export class ViewUtilService {
             return 'custom';
         }
 
-        if (this.extensions.image.indexOf(extension) >= 0) {
+        if (this.extensions.image.includes(extension)) {
             return 'image';
         }
 
-        if (this.extensions.media.indexOf(extension) >= 0) {
+        if (this.extensions.media.includes(extension)) {
             return 'media';
         }
 
-        if (this.extensions.text.indexOf(extension) >= 0) {
+        if (this.extensions.text.includes(extension)) {
             return 'text';
         }
 
-        if (this.extensions.pdf.indexOf(extension) >= 0) {
+        if (this.extensions.pdf.includes(extension)) {
             return 'pdf';
         }
 
@@ -145,7 +145,7 @@ export class ViewUtilService {
     }
 
     private isExternalViewer(): boolean {
-        return !!this.viewerExtensions.find((ext) => ext.fileExtension === '*');
+        return !!this.viewerExtensions.some((extension) => extension.fileExtension === '*');
     }
 
     isCustomViewerExtension(extension: string, extensionsSupportedByTemplates?: string[]): boolean {
@@ -156,7 +156,7 @@ export class ViewUtilService {
 
         if (extension && extensions.length > 0) {
             extension = extension.toLowerCase();
-            return extensions.flat().indexOf(extension) >= 0;
+            return extensions.flat().includes(extension);
         }
 
         return false;
