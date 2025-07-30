@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppExtensionService, ExtensionsModule, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
 import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,7 +49,8 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
         UnknownFormatComponent,
         ExtensionsModule,
         NgForOf,
-        NgSwitchDefault
+        NgSwitchDefault,
+        PreviewExtensionComponent
     ],
     providers: [ViewUtilService]
 })
