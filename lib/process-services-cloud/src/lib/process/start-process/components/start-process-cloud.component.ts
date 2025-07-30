@@ -487,10 +487,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private unifyErrorResponse(err: any) {
         if (!err?.response?.body?.entry && err?.response?.body?.message) {
             try {
-                const parsedMessage = JSON.parse(err.response.body.message);
-                err.response.body.entry = parsedMessage;
+                err.response.body.entry = JSON.parse(err.response.body.message);
             } catch (jsonError) {
-                // If message is not valid JSON, use it as a string
+                console.warn('Failed to parse error message as JSON:', jsonError);
                 err.response.body.entry = {
                     message: err.response.body.message
                 };
