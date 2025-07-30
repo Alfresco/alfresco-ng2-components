@@ -5,6 +5,7 @@
         &-single-column {
             display: flex;
             flex-wrap: inherit;
+            align-items: center;
             gap: 1%;
 
             @include flex.layout-bp(lt-md) {
