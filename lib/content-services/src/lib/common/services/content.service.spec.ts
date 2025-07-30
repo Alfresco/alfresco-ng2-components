@@ -20,7 +20,6 @@ import { ContentService } from './content.service';
 import { AppConfigService, AuthenticationService, RedirectAuthService, StorageService } from '@alfresco/adf-core';
 import { Node, PermissionsInfo } from '@alfresco/js-api';
 import { EMPTY, of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ContentService', () => {
     let contentService: ContentService;
@@ -29,7 +28,6 @@ describe('ContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [ContentService, AuthenticationService, { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
         authService = TestBed.inject(AuthenticationService);
