@@ -29,8 +29,8 @@ export class AppsProcessCloudService {
     deployedApps: ApplicationInstanceModel[];
 
     constructor(
-        private adfHttpClient: AdfHttpClient,
-        private appConfigService: AppConfigService
+        private readonly adfHttpClient: AdfHttpClient,
+        private readonly appConfigService: AppConfigService
     ) {
         this.loadApps();
     }
@@ -52,10 +52,11 @@ export class AppsProcessCloudService {
 
     loadApps() {
         const apps = this.appConfigService.get<{ theme: string; icon: string }[]>('alfresco-deployed-apps', []);
-        apps.map((app) => {
-            app.theme = app.theme ? app.theme : 'theme-1';
-            app.icon = app.icon ? app.icon : 'favorite';
-        });
+        for (const app of apps) {
+            app.theme = app.theme ?? 'theme-1';
+            app.icon = app.icon ?? 'favorite';
+        }
+
         this.deployedApps = apps;
     }
 

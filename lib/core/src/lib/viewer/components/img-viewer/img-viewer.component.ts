@@ -140,8 +140,8 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     constructor(
-        private appConfigService: AppConfigService,
-        private urlService: UrlService
+        private readonly appConfigService: AppConfigService,
+        private readonly urlService: UrlService
     ) {
         this.initializeScaling();
     }

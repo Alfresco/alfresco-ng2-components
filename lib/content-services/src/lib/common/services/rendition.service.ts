@@ -74,9 +74,9 @@ export class RenditionService {
     }
 
     constructor(
-        private apiService: AlfrescoApiService,
-        private translateService: TranslationService,
-        private viewUtilsService: ViewUtilService
+        private readonly apiService: AlfrescoApiService,
+        private readonly translateService: TranslationService,
+        private readonly viewUtilsService: ViewUtilService
     ) {}
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
