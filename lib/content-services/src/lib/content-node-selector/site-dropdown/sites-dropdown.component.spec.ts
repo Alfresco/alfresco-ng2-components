@@ -54,7 +54,7 @@ const customSiteList = {
 
 describe('DropdownSitesComponent', () => {
     let loader: HarnessLoader;
-    let component: any;
+    let component: DropdownSitesComponent;
     let fixture: ComponentFixture<DropdownSitesComponent>;
     let element: HTMLElement;
     let siteService: SitesService;
@@ -167,7 +167,7 @@ describe('DropdownSitesComponent', () => {
             });
 
             it('should load custom sites when the "siteList" input property is given a value', async () => {
-                component.siteList = customSiteList;
+                component.siteList = customSiteList as any;
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -246,7 +246,7 @@ describe('DropdownSitesComponent', () => {
 
                 fixture.whenStable().then(() => {
                     expect(component.selected).toBeUndefined();
-                    expect(component.loading).toBeFalsy();
+                    expect(component.isLoading).toBeFalsy();
                     done();
                 });
             });
@@ -290,7 +290,7 @@ describe('DropdownSitesComponent', () => {
 
             describe('No relations', () => {
                 beforeEach(() => {
-                    component.relations = [];
+                    component.relations = '';
                     authService = TestBed.inject(AuthenticationService);
                 });
 

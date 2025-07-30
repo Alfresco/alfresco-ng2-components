@@ -89,6 +89,10 @@ export class DropdownSitesComponent implements OnInit {
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
 
+    get isLoading(): boolean {
+        return this.loading;
+    }
+
     constructor(
         private authService: AuthenticationService,
         private sitesService: SitesService,

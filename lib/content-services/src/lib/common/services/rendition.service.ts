@@ -73,7 +73,11 @@ export class RenditionService {
         return this._versionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private translateService: TranslationService, private viewUtilsService: ViewUtilService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private translateService: TranslationService,
+        private viewUtilsService: ViewUtilService
+    ) {}
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
         return renditionExists && type !== RenditionService.ContentGroup.IMAGE
@@ -167,7 +171,7 @@ export class RenditionService {
             }
             try {
                 return versionId ? await this.waitNodeRendition(nodeId, renditionId, versionId) : await this.waitNodeRendition(nodeId, renditionId);
-            } catch (e) {
+            } catch {
                 return null;
             }
         } catch {

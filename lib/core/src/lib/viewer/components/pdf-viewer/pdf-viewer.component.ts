@@ -278,7 +278,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
-        const viewer = this.getViewer();
+        const viewer: any = this.getViewer();
         const container = this.getDocumentContainer();
 
         if (viewer && container) {

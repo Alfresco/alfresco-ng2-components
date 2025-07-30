@@ -95,7 +95,7 @@ describe('FolderActionsService', () => {
     it('should delete the folder node if there is the delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
-                new Observable<any>((observer) => {
+                new Observable((observer) => {
                     observer.next(undefined);
                     observer.complete();
                 })
@@ -156,7 +156,7 @@ describe('FolderActionsService', () => {
     it('should delete the folder node if there is the delete and others permission ', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
-                new Observable<any>((observer) => {
+                new Observable((observer) => {
                     observer.next(undefined);
                     observer.complete();
                 })
@@ -174,7 +174,7 @@ describe('FolderActionsService', () => {
     it('should support deletion only folder node', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
-                new Observable<any>((observer) => {
+                new Observable((observer) => {
                     observer.next(undefined);
                     observer.complete();
                 })
@@ -195,7 +195,7 @@ describe('FolderActionsService', () => {
     it('should require node id to delete', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
-                new Observable<any>((observer) => {
+                new Observable((observer) => {
                     observer.next(undefined);
                     observer.complete();
                 })
@@ -211,7 +211,7 @@ describe('FolderActionsService', () => {
     it('should reload target upon node deletion', async () => {
         spyOn(documentListService, 'deleteNode').and.callFake(
             () =>
-                new Observable<any>((observer) => {
+                new Observable((observer) => {
                     observer.next(undefined);
                     observer.complete();
                 })
