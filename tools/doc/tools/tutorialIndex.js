@@ -1,28 +1,43 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.processDocs = void 0;
-var fs = require("fs");
-var path = require("path");
-var replaceSection = require("mdast-util-heading-range");
-var remark = require("remark");
-var frontMatter = require("remark-frontmatter");
-var yaml = require("js-yaml");
-var ejs = require("ejs");
-var unist = require("../unistHelpers");
+'use strict';
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.processDocs = processDocs;
+var fs = require('fs');
+var path = require('path');
+var replaceSection = require('mdast-util-heading-range');
+var remark = require('remark');
+var frontMatter = require('remark-frontmatter');
+var yaml = require('js-yaml');
+var ejs = require('ejs');
+var unist = require('../unistHelpers');
 var tutFolder = path.resolve('docs', 'tutorials');
 var templateFolder = path.resolve('tools', 'doc', 'templates');
 var userGuideFolder = path.resolve('docs', 'user-guide');
 function processDocs() {
     aggPhase();
 }
-exports.processDocs = processDocs;
 function aggPhase() {
     var indexDocData = getIndexDocData();
     var templateName = path.resolve(templateFolder, 'tutIndex.ejs');
     var templateSource = fs.readFileSync(templateName, 'utf8');
     var template = ejs.compile(templateSource);
     var mdText = template(indexDocData);
-    mdText = mdText.replace(/^ +\|/mg, '|');
+    mdText = mdText.replace(/^ +\|/gm, '|');
     var newSection = remark().use(frontMatter, ['yaml']).data('settings', { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
     var tutIndexFile = path.resolve(tutFolder, 'README.md');
     var tutIndexText = fs.readFileSync(tutIndexFile, 'utf8');
@@ -32,7 +47,10 @@ function aggPhase() {
         newSection.push(after);
         return newSection;
     });
-    fs.writeFileSync(tutIndexFile, remark().use(frontMatter, { type: 'yaml', fence: '---' }).data('settings', { paddedTable: false, gfm: false }).stringify(tutIndexMD));
+    fs.writeFileSync(
+        tutIndexFile,
+        remark().use(frontMatter, { type: 'yaml', fence: '---' }).data('settings', { paddedTable: false, gfm: false }).stringify(tutIndexMD)
+    );
 }
 function getIndexDocData() {
     var indexFile = path.resolve(userGuideFolder, 'summary.json');
@@ -54,22 +72,19 @@ function getIndexDocData() {
         var metadata = getDocMetadata(tutMD);
         if (metadata['Level']) {
             tutData['level'] = metadata['Level'];
-        }
-        else {
+        } else {
             tutData['level'] = '';
         }
         var briefDesc = getFirstParagraph(tutMD);
-        var briefDescText = remark()
+        tutData['briefDesc'] = remark()
             .use(frontMatter, { type: 'yaml', fence: '---' })
             .data('settings', { paddedTable: false, gfm: false })
             .stringify(briefDesc);
-        tutData['briefDesc'] = briefDescText;
         var title = getFirstHeading(tutMD);
-        var titleText = remark()
+        tutData['title'] = remark()
             .use(frontMatter, { type: 'yaml', fence: '---' })
             .data('settings', { paddedTable: false, gfm: false })
             .stringify(title.children[0]);
-        tutData['title'] = titleText;
         result.tuts.push(tutData);
     });
     return result;
@@ -77,28 +92,25 @@ function getIndexDocData() {
 function getDocMetadata(tree) {
     if (tree.children[0].type === 'yaml') {
         return yaml.load(tree.children[0].value);
-    }
-    else {
+    } else {
         return {};
     }
 }
 function getFirstParagraph(tree) {
     var s = 0;
-    for (; (s < tree.children.length) && !unist.isParagraph(tree.children[s]); s++) { }
+    for (; s < tree.children.length && !unist.isParagraph(tree.children[s]); s++) {}
     if (s < tree.children.length) {
         return tree.children[s];
-    }
-    else {
+    } else {
         return null;
     }
 }
 function getFirstHeading(tree) {
     var s = 0;
-    for (; (s < tree.children.length) && !unist.isHeading(tree.children[s]); s++) { }
+    for (; s < tree.children.length && !unist.isHeading(tree.children[s]); s++) {}
     if (s < tree.children.length) {
         return tree.children[s];
-    }
-    else {
+    } else {
         return null;
     }
 }

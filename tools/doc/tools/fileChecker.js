@@ -1,11 +1,27 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.processDocs = void 0;
-var path = require("path");
-var fs = require("fs");
-var unist_util_select_1 = require("unist-util-select");
-var lev = require("fast-levenshtein");
-var ngHelpers = require("../ngHelpers");
+'use strict';
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.processDocs = processDocs;
+var path = require('path');
+var fs = require('fs');
+var unist_util_select_1 = require('unist-util-select');
+var lev = require('fast-levenshtein');
+var ngHelpers = require('../ngHelpers');
 var imageFolderPath = path.resolve('docs', 'docassets', 'images');
 // Using this value for the edit distance between Markdown image URLs
 // and filenames is enough to trap errors like missing out the 'images'
@@ -27,8 +43,7 @@ function processDocs(mdCache, aggData) {
             if (!filterFilepath(filters, pathname)) {
                 classlessDocs.push(pathname);
             }
-        }
-        else {
+        } else {
             var linkElems = (0, unist_util_select_1.selectAll)('link', tree);
             linkElems.forEach(function (linkElem) {
                 var normUrl = normaliseLinkPath(pathname, linkElem.url);
@@ -46,11 +61,11 @@ function processDocs(mdCache, aggData) {
     });
     classlessDocs.forEach(function (docPath) {
         var relDocPath = docPath.substring(docPath.indexOf('docs'));
-        console.group("Warning: no source class found for \"".concat(relDocPath, "\""));
+        console.group('Warning: no source class found for "'.concat(relDocPath, '"'));
         if (linkRefs[docPath]) {
             linkRefs[docPath].forEach(function (linkRef) {
                 var relLinkPath = linkRef.substring(linkRef.indexOf('docs'));
-                console.log("Linked from: \"".concat(relLinkPath, "\""));
+                console.log('Linked from: "'.concat(relLinkPath, '"'));
             });
         }
         console.groupEnd();
@@ -60,7 +75,7 @@ function processDocs(mdCache, aggData) {
     imagePaths.forEach(function (imagePath) {
         if (!imageRefs[imagePath]) {
             var relImagePath = imagePath.substring(imagePath.indexOf('docs'));
-            console.log("Warning: no links to image file \"".concat(relImagePath, "\""));
+            console.log('Warning: no links to image file "'.concat(relImagePath, '"'));
         }
     });
     console.log();
@@ -68,27 +83,30 @@ function processDocs(mdCache, aggData) {
     brokenImUrls.forEach(function (url) {
         var relUrl = url.substring(url.indexOf('docs'));
         var relDocPath = brokenImageRefs[url].substring(brokenImageRefs[url].indexOf('docs'));
-        console.group("Broken image link \"".concat(relUrl, "\" found in \"").concat(relDocPath));
+        console.group('Broken image link "'.concat(relUrl, '" found in "').concat(relDocPath));
         imagePaths.forEach(function (imPath) {
             if (lev.get(imPath, url) <= maxImagePathLevDistance) {
                 var relImPath = imPath.substring(imPath.indexOf('docs'));
-                console.log("Should it be \"".concat(relImPath, "\"?"));
+                console.log('Should it be "'.concat(relImPath, '"?'));
             }
         });
         console.groupEnd();
     });
 }
-exports.processDocs = processDocs;
 function normaliseLinkPath(homeFilePath, linkUrl) {
     var homeFolder = path.dirname(homeFilePath);
     return path.resolve(homeFolder, linkUrl);
 }
 function getImagePaths(imageFolder) {
     var files = fs.readdirSync(imageFolder);
-    return files.map(function (f) { return path.resolve(imageFolder, f); });
+    return files.map(function (f) {
+        return path.resolve(imageFolder, f);
+    });
 }
 function makeFilepathFilters(patterns) {
-    return patterns.map(function (r) { return new RegExp(r); });
+    return patterns.map(function (r) {
+        return new RegExp(r);
+    });
 }
 function filterFilepath(filters, filepath) {
     for (var i = 0; i < filters.length; i++) {
@@ -101,8 +119,7 @@ function filterFilepath(filters, filepath) {
 function multiSetAdd(container, key, value) {
     if (container[key]) {
         container[key].push(value);
-    }
-    else {
+    } else {
         container[key] = [value];
     }
 }
