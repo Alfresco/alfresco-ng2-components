@@ -44,7 +44,7 @@ export class FormSectionComponent implements OnInit {
         const fieldColspan = columnFields[firstColumnFieldIndex]?.colspan ?? defaultColspan;
 
         if (typeof numberOfColumns !== 'number' || !numberOfColumns || numberOfColumns <= 0) {
-            return Math.min(100, 100 * fieldColspan) + '';
+            numberOfColumns = 1;
         }
 
         return Math.min(100, (100 / numberOfColumns) * fieldColspan) + '';
