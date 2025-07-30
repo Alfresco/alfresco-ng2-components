@@ -15,20 +15,9 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldValidator } from '@alfresco/adf-core';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-
-export class MockFormFieldValidator implements FormFieldValidator {
-    isSupported(_field: FormFieldModel): boolean {
-        return true;
-    }
-
-    validate(_field: FormFieldModel): boolean {
-        return true;
-    }
-}
 
 export const fakeProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
