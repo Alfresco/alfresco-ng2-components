@@ -149,7 +149,6 @@
     "moment": "^2.29.4",
     "ng-packagr": "19.2.2",
     "nock": "13.5.5",
-    "npm-run-all": "^4.1.5",
     "nx": "20.8.0",
     "postcss": "8.5.4",
     "postcss-sass": "^0.5.0",
@@ -163,7 +162,6 @@
     "stylelint": "16.20.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.1.1",
     "typescript": "5.8.2",
     "webpack": "5.98.0",
     "webpack-cli": "^5.1.4"
@@ -172,7 +170,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-    "overrides": {
+  "overrides": {
     "stylus": "github:stylus/stylus#0.64.0"
   },
   "module": "./index.js",
