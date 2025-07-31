@@ -151,7 +151,6 @@
     "nock": "13.5.5",
     "nx": "20.8.0",
     "prettier": "3.6.2",
-    "resize-observer-polyfill": "^1.5.1",
     "rimraf": "6.0.1",
     "sass-loader": "16.0.5",
     "shelljs": "^0.8.5",
