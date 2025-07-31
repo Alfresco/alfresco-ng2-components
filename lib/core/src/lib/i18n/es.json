@@ -292,7 +292,19 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Cambiar entre orden ascendente y descendente de resultados",
-      "SORT_BY": "Clasificar por"
+      "SORT_BY": "Clasificar por",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
     },
     "FEATURE-FLAGS": {
       "OVERRIDES": "Anulación de indicador de características",
