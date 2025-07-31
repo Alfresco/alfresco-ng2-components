@@ -458,7 +458,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             },
             error: (err) => {
                 this.errorMessageId = err?.response?.body?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START_PROCESS';
-                this.unifyErrorResponse(err?.response?.body);
+                this.unifyErrorResponse(err);
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
