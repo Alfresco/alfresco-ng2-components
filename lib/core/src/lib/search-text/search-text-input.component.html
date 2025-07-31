@@ -7,16 +7,16 @@
                 id="adf-search-button"
                 class="adf-search-button"
                 [ngClass]="{'adf-search-button-inactive': subscriptAnimationState.value === 'inactive'}"
-                [title]="'SEARCH.BUTTON.TOOLTIP' | translate"
+                [title]="'CORE.SEARCH.BUTTON.TOOLTIP' | translate"
                 (click)="toggleSearchBar()"
                 (keyup.enter)="toggleSearchBar()">
-            <mat-icon [attr.aria-label]="'SEARCH.BUTTON.ARIA-LABEL' | translate">search</mat-icon>
+            <mat-icon [attr.aria-label]="'CORE.SEARCH.BUTTON.ARIA-LABEL' | translate">search</mat-icon>
         </button>
         <mat-form-field class="adf-input-form-field-divider" [hintLabel]="hintLabel">
             <mat-label *ngIf='label'>{{label}}</mat-label>
             <input matInput
                    #searchInput
-                   [attr.aria-label]="'SEARCH.INPUT.ARIA-LABEL' | translate"
+                   [attr.aria-label]="'CORE.SEARCH.INPUT.ARIA-LABEL' | translate"
                    [attr.type]="inputType"
                    [autocomplete]="getAutoComplete()"
                    id="adf-control-input"
@@ -34,7 +34,7 @@
                     matSuffix
                     data-automation-id="adf-clear-search-button"
                     class="adf-clear-search-button"
-                    [title]="'SEARCH.FILTER.BUTTONS.CLOSE' | translate"
+                    [title]="'CORE.SEARCH.FILTER.BUTTONS.CLOSE' | translate"
                     (click)="resetSearch()"
                     (keyup.enter)="resetSearch()">
                     <mat-icon>close</mat-icon>
