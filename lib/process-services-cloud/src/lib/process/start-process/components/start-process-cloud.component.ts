@@ -34,9 +34,9 @@ import {
     ContentLinkModel,
     FormModel,
     InplaceFormInputComponent,
-    isOutcomeButtonVisible,
     LocalizedDatePipe,
-    TranslationService
+    TranslationService,
+    isOutcomeButtonVisible
 } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -45,7 +45,7 @@ import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, combineLatest } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
@@ -70,6 +70,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 
 @Component({
     selector: 'adf-cloud-start-process',
+    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,
@@ -457,7 +458,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             },
             error: (err) => {
                 this.errorMessageId = err?.response?.body?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START_PROCESS';
-                this.unifyErrorResponse(err?.response?.body);
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
@@ -480,19 +480,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     this.startProcessWithoutConfirmation();
                 }
             });
-        }
-    }
-
-    private unifyErrorResponse(err: any) {
-        if (!err?.response?.body?.entry && err?.response?.body?.message) {
-            try {
-                err.response.body.entry = JSON.parse(err.response.body.message);
-            } catch (jsonError) {
-                console.warn('Failed to parse error message as JSON:', jsonError);
-                err.response.body.entry = {
-                    message: err.response.body.message
-                };
-            }
         }
     }
 
