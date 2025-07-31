@@ -458,7 +458,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             },
             error: (err) => {
                 this.errorMessageId = err?.response?.body?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START_PROCESS';
-                this.unifyErrorResponse(err);
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
@@ -481,19 +480,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     this.startProcessWithoutConfirmation();
                 }
             });
-        }
-    }
-
-    private unifyErrorResponse(err: any) {
-        if (!err?.response?.body?.entry && err?.response?.body?.message) {
-            try {
-                err.response.body.entry = JSON.parse(err.response.body.message);
-            } catch (jsonError) {
-                console.warn('Failed to parse error message as JSON:', jsonError);
-                err.response.body.entry = {
-                    message: err.response.body.message
-                };
-            }
         }
     }
 
