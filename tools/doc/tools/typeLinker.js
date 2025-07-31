@@ -1,22 +1,50 @@
-"use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.processDocs = void 0;
-var path = require("path");
-var unist = require("../unistHelpers");
-var ngHelpers = require("../ngHelpers");
+'use strict';
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var __spreadArray =
+    (this && this.__spreadArray) ||
+    function (to, from, pack) {
+        if (pack || arguments.length === 2)
+            for (var i = 0, l = from.length, ar; i < l; i++) {
+                if (ar || !(i in from)) {
+                    if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+                    ar[i] = from[i];
+                }
+            }
+        return to.concat(ar || Array.prototype.slice.call(from));
+    };
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.processDocs = processDocs;
+var path = require('path');
+var unist = require('../unistHelpers');
+var ngHelpers = require('../ngHelpers');
 var includedNodeTypes = [
-    'root', 'paragraph', 'inlineCode', 'list', 'listItem',
-    'table', 'tableRow', 'tableCell', 'emphasis', 'strong',
-    'link', 'text'
+    'root',
+    'paragraph',
+    'inlineCode',
+    'list',
+    'listItem',
+    'table',
+    'tableRow',
+    'tableCell',
+    'emphasis',
+    'strong',
+    'link',
+    'text'
 ];
 var externalNameLinks;
 var linkOverrides;
@@ -28,7 +56,6 @@ function processDocs(mdCache, aggData) {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData);
     });
 }
-exports.processDocs = processDocs;
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
     ignoreLinkWords = aggData.config.ignoreLinkWords;
@@ -59,8 +86,7 @@ function updateFile(tree, pathname, aggData) {
             return;
         }
         if (node.type === 'link') {
-            if (node.children[0] && ((node.children[0].type === 'inlineCode') ||
-                (node.children[0].type === 'text'))) {
+            if (node.children[0] && (node.children[0].type === 'inlineCode' || node.children[0].type === 'text')) {
                 if (!ignoreLinkWords.includes(node.children[0].value)) {
                     var link = resolveTypeLink(aggData, pathname, node.children[0].value);
                     if (link) {
@@ -68,15 +94,13 @@ function updateFile(tree, pathname, aggData) {
                     }
                 }
             }
-        }
-        else if ((node.children) && (node.type !== 'heading')) {
+        } else if (node.children && node.type !== 'heading') {
             node.children.forEach(function (child, index) {
                 var _a;
-                if ((child.type === 'text') || (child.type === 'inlineCode')) {
+                if (child.type === 'text' || child.type === 'inlineCode') {
                     var newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
                     (_a = node.children).splice.apply(_a, __spreadArray([index, 1], newNodes, false));
-                }
-                else {
+                } else {
                     traverseMDTree(child);
                 }
             });
@@ -85,8 +109,12 @@ function updateFile(tree, pathname, aggData) {
 }
 var SplitNameNode = /** @class */ (function () {
     function SplitNameNode(key, value) {
-        if (key === void 0) { key = ''; }
-        if (value === void 0) { value = ''; }
+        if (key === void 0) {
+            key = '';
+        }
+        if (value === void 0) {
+            value = '';
+        }
         this.key = key;
         this.value = value;
         this.children = {};
@@ -95,21 +123,21 @@ var SplitNameNode = /** @class */ (function () {
         this.children[child.key] = child;
     };
     return SplitNameNode;
-}());
+})();
 var SplitNameMatchElement = /** @class */ (function () {
     function SplitNameMatchElement(node, textPos) {
         this.node = node;
         this.textPos = textPos;
     }
     return SplitNameMatchElement;
-}());
+})();
 var SplitNameMatchResult = /** @class */ (function () {
     function SplitNameMatchResult(value, startPos) {
         this.value = value;
         this.startPos = startPos;
     }
     return SplitNameMatchResult;
-}());
+})();
 var SplitNameMatcher = /** @class */ (function () {
     function SplitNameMatcher(root) {
         this.root = root;
@@ -125,29 +153,25 @@ var SplitNameMatcher = /** @class */ (function () {
                 if (child) {
                     if (child.value) {
                         /* Using unshift to add the match to the array means that
-                        * the longest matches will appear first in the array.
-                        * User can then just use the first array element if only
-                        * the longest match is needed.
-                        */
+                         * the longest matches will appear first in the array.
+                         * User can then just use the first array element if only
+                         * the longest match is needed.
+                         */
                         result.unshift(new SplitNameMatchResult(child.value, this.matches[i].textPos));
                         this.matches.splice(i, 1);
-                    }
-                    else {
+                    } else {
                         this.matches[i] = new SplitNameMatchElement(child, this.matches[i].textPos);
                     }
-                }
-                else {
+                } else {
                     this.matches.splice(i, 1);
                 }
-            }
-            else {
+            } else {
                 this.matches.splice(i, 1);
             }
         }
         if (result === []) {
             return null;
-        }
-        else {
+        } else {
             return result;
         }
     };
@@ -155,7 +179,7 @@ var SplitNameMatcher = /** @class */ (function () {
         this.matches = [];
     };
     return SplitNameMatcher;
-}());
+})();
 var SplitNameLookup = /** @class */ (function () {
     function SplitNameLookup() {
         this.root = new SplitNameNode();
@@ -166,7 +190,7 @@ var SplitNameLookup = /** @class */ (function () {
         var currNode = this.root;
         segments.forEach(function (segment, index) {
             var value = '';
-            if (index === (segments.length - 1)) {
+            if (index === segments.length - 1) {
                 value = name;
             }
             var childNode = currNode.children[segment];
@@ -178,7 +202,7 @@ var SplitNameLookup = /** @class */ (function () {
         });
     };
     return SplitNameLookup;
-}());
+})();
 var WordScanner = /** @class */ (function () {
     function WordScanner(text) {
         this.text = text;
@@ -214,9 +238,11 @@ var WordScanner = /** @class */ (function () {
         this.index = this.text.length;
     };
     return WordScanner;
-}());
+})();
 function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
-    if (wrapInlineCode === void 0) { wrapInlineCode = false; }
+    if (wrapInlineCode === void 0) {
+        wrapInlineCode = false;
+    }
     var result = [];
     var currTextStart = 0;
     var matcher = new SplitNameMatcher(aggData.nameLookup.root);
@@ -234,8 +260,7 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
                     link = resolveTypeLink(aggData, docFilePath, match[0].value);
                     matchStart = match[0].startPos;
                 }
-            }
-            else {
+            } else {
                 matchStart = scanner.index;
             }
             if (link) {
@@ -243,8 +268,7 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
                 var linkTitle = void 0;
                 if (wrapInlineCode) {
                     linkTitle = unist.makeInlineCode(linkText);
-                }
-                else {
+                } else {
                     linkTitle = unist.makeText(linkText);
                 }
                 var linkNode = unist.makeLink(linkTitle, link);
@@ -252,8 +276,7 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
                 if (prevText) {
                     if (wrapInlineCode) {
                         result.push(unist.makeInlineCode(prevText));
-                    }
-                    else {
+                    } else {
                         result.push(unist.makeText(prevText));
                     }
                 }
@@ -267,8 +290,7 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
     if (remainingText) {
         if (wrapInlineCode) {
             result.push(unist.makeInlineCode(remainingText));
-        }
-        else {
+        } else {
             result.push(unist.makeText(remainingText));
         }
     }
@@ -282,11 +304,9 @@ function resolveTypeLink(aggData, docFilePath, text) {
     var classInfo = aggData.classInfo[possTypeName];
     if (linkOverrides[possTypeName.toLowerCase()]) {
         return '';
-    }
-    else if (externalNameLinks[possTypeName]) {
+    } else if (externalNameLinks[possTypeName]) {
         return externalNameLinks[possTypeName];
-    }
-    else if (classInfo) {
+    } else if (classInfo) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
         var url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
@@ -294,8 +314,7 @@ function resolveTypeLink(aggData, docFilePath, text) {
             url = fixRelDocUrl(docFilePath, possDocFile);
         }
         return url;
-    }
-    else {
+    } else {
         return '';
     }
 }
@@ -303,7 +322,7 @@ function fixRelSrcUrl(docPath, srcPath) {
     var relDocPath = docPath.substring(docPath.indexOf('docs'));
     var docPathSegments = relDocPath.split(/[\\\/]/);
     var dotPathPart = '';
-    for (var i = 0; i < (docPathSegments.length - 1); i++) {
+    for (var i = 0; i < docPathSegments.length - 1; i++) {
         dotPathPart += '../';
     }
     return dotPathPart + srcPath;
@@ -312,7 +331,7 @@ function fixRelDocUrl(docPathFrom, docPathTo) {
     var relDocPathFrom = docPathFrom.substring(docPathFrom.indexOf('docs'));
     var docPathSegments = relDocPathFrom.split(/[\\\/]/);
     var dotPathPart = '';
-    for (var i = 0; i < (docPathSegments.length - 2); i++) {
+    for (var i = 0; i < docPathSegments.length - 2; i++) {
         dotPathPart += '../';
     }
     return dotPathPart + docPathTo;
@@ -321,13 +340,14 @@ function cleanTypeName(text) {
     var matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);
     if (matches) {
         return matches[1];
-    }
-    else {
+    } else {
         return text.replace(/\[\]$/, '');
     }
 }
 function convertNodeToTypeLink(node, text, url, title) {
-    if (title === void 0) { title = null; }
+    if (title === void 0) {
+        title = null;
+    }
     var linkDisplayText = unist.makeInlineCode(text);
     node.type = 'link';
     node.title = title;

@@ -20,5 +20,4 @@ export * from './debug-app-config.service';
 export * from './app-config.pipe';
 export * from './app-config-storage-prefix.factory';
 
-export * from './app-config.module';
 export * from './provide-app-config';

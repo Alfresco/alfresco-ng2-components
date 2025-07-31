@@ -1,19 +1,33 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.processDocs = void 0;
-var fs = require("fs");
-var path = require("path");
-var ejs = require("ejs");
-var remark = require("remark");
-var frontMatter = require("remark-frontmatter");
-var replaceZone = require("mdast-zone");
-var graphql_1 = require("graphql");
-var MQ = require("../mqDefs");
-var libNamesList = [
-    'content-services', 'core', 'extensions',
-    'insights', 'process-services', 'process-services-cloud'
-];
-var query = "\n    query libIndex($libName: String) {\n        documents(idFilter: $libName) {\n            title: metadata(key: \"Title\")\n            status: metadata(key: \"Status\")\n            id\n            classType: folder(depth: 2)\n            heading {\n                link {\n                    url\n                }\n            }\n            paragraph {\n                plaintext\n            }\n        }\n    }\n";
+'use strict';
+/*!
+ * @license
+ * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.processDocs = processDocs;
+var fs = require('fs');
+var path = require('path');
+var ejs = require('ejs');
+var remark = require('remark');
+var frontMatter = require('remark-frontmatter');
+var replaceZone = require('mdast-zone');
+var graphql_1 = require('graphql');
+var MQ = require('../mqDefs');
+var libNamesList = ['content-services', 'core', 'extensions', 'insights', 'process-services', 'process-services-cloud'];
+var query =
+    '\n    query libIndex($libName: String) {\n        documents(idFilter: $libName) {\n            title: metadata(key: "Title")\n            status: metadata(key: "Status")\n            id\n            classType: folder(depth: 2)\n            heading {\n                link {\n                    url\n                }\n            }\n            paragraph {\n                plaintext\n            }\n        }\n    }\n';
 function processDocs(mdCache, aggData) {
     var docset = new MQ.Docset(mdCache);
     var templateFilePath = path.resolve(__dirname, '..', 'templates', 'gqIndex.ejs');
@@ -21,17 +35,13 @@ function processDocs(mdCache, aggData) {
     var template = ejs.compile(templateSource);
     var indexFilePath = path.resolve(aggData['rootFolder'], 'docs', 'README.md');
     var indexFileText = fs.readFileSync(indexFilePath, 'utf8');
-    var indexMD = remark()
-        .use(frontMatter, ['yaml'])
-        .parse(indexFileText);
+    var indexMD = remark().use(frontMatter, ['yaml']).parse(indexFileText);
     var schema = (0, graphql_1.buildSchema)(MQ.schema);
     libNamesList.forEach(function (libName) {
-        (0, graphql_1.graphql)(schema, query, docset, null, { 'libName': libName })
-            .then(function (response) {
+        (0, graphql_1.graphql)(schema, query, docset, null, { libName: libName }).then(function (response) {
             if (!response['data']) {
                 console.log(JSON.stringify(response));
-            }
-            else {
+            } else {
                 // console.log(template(response['data']));
                 var newSection_1 = remark().parse(template(response['data'])).children;
                 replaceZone(indexMD, libName, function (start, _oldZone, end) {
@@ -48,4 +58,3 @@ function processDocs(mdCache, aggData) {
         });
     });
 }
-exports.processDocs = processDocs;
