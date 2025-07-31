@@ -13,29 +13,30 @@
     <div>
         <mat-form-field class="adf-form-field-input" [floatLabel]="field.placeholder ? 'always' : null">
             @if( (field.name || field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id">
-                {{ field.name | translate }}
-            </mat-label>
-                 }
-            <input matInput
-                   class="adf-input"
-                   type="text"
-                   data-automation-id="adf-display-external-property-widget"
-                   [id]="field.id"
-                   [formControl]="propertyControl"
-                   [required]="field.required"
-            >
+            <mat-label class="adf-label" [attr.for]="field.id"> {{ field.name | translate }} </mat-label>
+            }
+            <input
+                matInput
+                class="adf-input"
+                type="text"
+                data-automation-id="adf-display-external-property-widget"
+                [id]="field.id"
+                [formControl]="propertyControl"
+                [required]="field.required"
+            />
 
             <ng-container *ngIf="previewState">
-                <span class="adf-display-external-property-widget-preview"
-                       data-automation-id="adf-display-external-property-widget-preview"
-                >
+                <span class="adf-display-external-property-widget-preview" data-automation-id="adf-display-external-property-widget-preview">
                     {{ field.params.externalPropertyLabel }}
                 </span>
             </ng-container>
         </mat-form-field>
 
-        <ng-container *ngIf="!previewState">
+        <div
+            class="adf-error-messages-container"
+            [ngClass]="!previewState ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
+        >
             <error-widget *ngIf="propertyLoadFailed" [required]="'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate" />
-        </ng-container>
+        </div>
+    </div>
 </div>

@@ -11,7 +11,8 @@
     </div>
     <div>
         <mat-form-field class="adf-form-field-input">
-            @if ( (field.name || this.field?.required) && !field.leftLabels) {  <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
+            @if ( (field.name || this.field?.required) && !field.leftLabels) {
+            <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
             <mat-select
                 class="adf-select"
                 [formControl]="dropdownControl"
@@ -29,12 +30,11 @@
                 <mat-option id="readonlyOption" *ngIf="isReadOnlyType" [value]="field.value">{{field.value}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <div class="adf-error-messages-container" *ngIf="!previewState && !field.readOnly">
-            <error-widget
-                class="adf-dropdown-required-message"
-                *ngIf="showRequiredMessage"
-                required="{{ 'FORM.FIELD.REQUIRED' | translate }}"
-            />
+        <div
+            class="adf-error-messages-container"
+            [ngClass]="!previewState && !field.readOnly ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
+        >
+            <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
             <error-widget
                 class="adf-dropdown-failed-message"
                 *ngIf="isRestApiFailed"
