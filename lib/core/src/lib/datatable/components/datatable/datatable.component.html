@@ -1,7 +1,7 @@
 <div
     role="grid"
     *ngIf="data"
-    class="adf-full-width adf-datatable-list"
+    class="adf-datatable-list"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()"

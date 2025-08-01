@@ -5,7 +5,7 @@ export default {
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     coverageDirectory: '../../../coverage/libs/js-api',
-    moduleMNameMapper: {
+    moduleNameMapper: {
         '^pdfjs-dist$': 'pdfjs-dist/legacy/build/pdf'
     },
     transform: {

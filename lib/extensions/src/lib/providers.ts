@@ -15,6 +15,18 @@
  * limitations under the License.
  */
 
-import { AppExtensionService } from './app-extension.service';
+import { EnvironmentProviders, inject, provideAppInitializer, Provider } from '@angular/core';
+import { AppExtensionService } from './services/app-extension.service';
 
-export const setupExtensions = (appExtensionService: AppExtensionService) => () => appExtensionService.load();
+/**
+ * Provides all necessary entries for the app extensibility
+ * @returns list of providers
+ */
+export function provideAppExtensions(): (Provider | EnvironmentProviders)[] {
+    return [
+        provideAppInitializer(() => {
+            const appExtensionService = inject(AppExtensionService);
+            return appExtensionService.load();
+        })
+    ];
+}

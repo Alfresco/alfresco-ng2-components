@@ -292,7 +292,19 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Afficher les résultats dans l'ordre croissant ou décroissant",
-      "SORT_BY": "Trier par"
+      "SORT_BY": "Trier par",
+      "BUTTON": {
+        "TOOLTIP": "Search",
+        "ARIA-LABEL": "Search button"
+      },
+      "INPUT": {
+        "ARIA-LABEL": "Search input"
+      },
+      "FILTER": {
+        "BUTTONS": {
+          "CLOSE": "Close"
+        }
+      }
     },
     "FEATURE-FLAGS": {
       "OVERRIDES": "Remplacements d’indicateur de fonctionnalité",

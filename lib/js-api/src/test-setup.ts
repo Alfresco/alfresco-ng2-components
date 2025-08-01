@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-import 'jest-preset-angular/setup-jest';
-import 'resize-observer-polyfill/dist/ResizeObserver.global';
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+setupZoneTestEnv();
