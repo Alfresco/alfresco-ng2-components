@@ -215,11 +215,12 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.ngOnInit();
                 fixture.detectChanges();
 
-                const errorMessageElement = getErrorMessageElement();
                 expect(getRestWidgetDataSpy).toHaveBeenCalled();
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toEqual(0);
-                expect(errorMessageElement).toBe(null);
+
+                const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
+                expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
             });
         });
 
@@ -1151,8 +1152,8 @@ describe('DropdownCloudWidgetComponent', () => {
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement).toBeNull();
+            const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
+            expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
         });
 
         it('should NOT display errors if field is readonly', () => {
@@ -1166,8 +1167,8 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.readOnly = true;
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement).toBeNull();
+            const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
+            expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
         });
 
         it('should update options when form variable changes', async () => {
