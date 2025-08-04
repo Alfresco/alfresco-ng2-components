@@ -73,7 +73,10 @@
                                 }
                                 @if (processInstanceName.hasError('maxlength')) {
                                     <span id="adf-start-process-maxlength-error">
-                                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters: maxNameLength } }}
+                                        {{
+                                            'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH'
+                                                | translate: { characters: maxNameLength }
+                                        }}
                                     </span>
                                 }
                                 @if (processInstanceName.hasError('pattern')) {
