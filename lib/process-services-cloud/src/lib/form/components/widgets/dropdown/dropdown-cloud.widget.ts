@@ -29,7 +29,7 @@ import {
     SelectFilterInputComponent,
     WidgetComponent
 } from '@alfresco/adf-core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -60,6 +60,7 @@ export const HIDE_FILTER_LIMIT = 5;
     imports: [
         NgIf,
         NgFor,
+        NgClass,
         AsyncPipe,
         ReactiveFormsModule,
         MatFormFieldModule,
