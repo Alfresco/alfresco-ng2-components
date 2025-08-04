@@ -145,7 +145,7 @@ export class ViewUtilService {
     }
 
     private isExternalViewer(): boolean {
-        return !!this.viewerExtensions.some((extension) => extension.fileExtension === '*');
+        return this.viewerExtensions.some((extension) => extension.fileExtension === '*');
     }
 
     isCustomViewerExtension(extension: string, extensionsSupportedByTemplates?: string[]): boolean {

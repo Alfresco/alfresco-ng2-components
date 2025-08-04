@@ -28,6 +28,10 @@ module.exports = {
                 'plugin:@angular-eslint/recommended',
                 'plugin:@angular-eslint/template/process-inline-templates',
                 'plugin:jsdoc/recommended-typescript-error'
+                // Uncomment this once all linting issues are fixed
+                // Note to developers:
+                //  you can uncomment the full ruleset locally when fixing issues, and then comment
+                //  that will allow splitting the work into smaller chunks
                 // 'plugin:unicorn/recommended'
             ],
             plugins: [
