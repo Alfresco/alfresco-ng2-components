@@ -54,7 +54,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     providerRegistered(name: string): boolean {
-        return !!this.providers.some((x) => x.name === name);
+        return this.providers.some((x) => x.name === name);
     }
 
     fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
@@ -75,7 +75,7 @@ export class TranslateLoaderService implements TranslateLoader {
                         return this.fetchLanguageFile(lang, component, url);
                     }
                 }
-                return throwError(`Failed to load ${translationUrl}`);
+                return throwError(() => new Error(`Failed to load ${translationUrl}`));
             })
         );
     }
@@ -102,8 +102,8 @@ export class TranslateLoaderService implements TranslateLoader {
         }
     }
 
-    isComponentInQueue(lang: string, name: string) {
-        return !!(this.queue[lang] || []).some((x) => x === name);
+    isComponentInQueue(lang: string, name: string): boolean {
+        return (this.queue[lang] || []).some((x) => x === name);
     }
 
     getFullTranslationJSON(lang: string): any {
