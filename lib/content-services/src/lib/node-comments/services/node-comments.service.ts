@@ -38,7 +38,7 @@ export class NodeCommentsService implements CommentsService {
         return this._peopleApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private readonly apiService: AlfrescoApiService) {}
 
     /**
      * Gets all comments that have been added to a task.
@@ -87,7 +87,6 @@ export class NodeCommentsService implements CommentsService {
     }
 
     getUserImage(userId: string): string {
-        const avatarUrl = this.peopleApi.getAvatarImageUrl(userId);
-        return avatarUrl;
+        return this.peopleApi.getAvatarImageUrl(userId);
     }
 }
