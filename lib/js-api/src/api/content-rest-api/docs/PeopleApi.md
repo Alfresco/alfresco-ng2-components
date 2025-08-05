@@ -2,17 +2,18 @@
 
 All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfresco/versions/1*
 
-| Method                                        | HTTP request                                       | Description            |
-|-----------------------------------------------|----------------------------------------------------|------------------------|
-| [createPerson](#createPerson)                 | **POST** /people                                   | Create person          |
-| [deleteAvatarImage](#deleteAvatarImage)       | **DELETE** /people/{personId}/avatar               | Delete avatar image    |
-| [getAvatarImage](#getAvatarImage)             | **GET** /people/{personId}/avatar                  | Get avatar image       |
-| [getPerson](#getPerson)                       | **GET** /people/{personId}                         | Get a person           |
-| [listPeople](#listPeople)                     | **GET** /people                                    | List people            |
-| [requestPasswordReset](#requestPasswordReset) | **POST** /people/{personId}/request-password-reset | Request password reset |
-| [resetPassword](#resetPassword)               | **POST** /people/{personId}/reset-password         | Reset password         |
-| [updateAvatarImage](#updateAvatarImage)       | **PUT** /people/{personId}/avatar                  | Update avatar image    |
-| [updatePerson](#updatePerson)                 | **PUT** /people/{personId}                         | Update person          |
+| Method                                        | HTTP request                                       | Description             |
+|-----------------------------------------------|----------------------------------------------------|-------------------------|
+| [createPerson](#createPerson)                 | **POST** /people                                   | Create person           |
+| [deleteAvatarImage](#deleteAvatarImage)       | **DELETE** /people/{personId}/avatar               | Delete avatar image     |
+| [getAvatarImage](#getAvatarImage)             | **GET** /people/{personId}/avatar                  | Get avatar image        |
+| [getPerson](#getPerson)                       | **GET** /people/{personId}                         | Get a person            |
+| [listPeople](#listPeople)                     | **GET** /people                                    | List people             |
+| [requestPasswordReset](#requestPasswordReset) | **POST** /people/{personId}/request-password-reset | Request password reset  |
+| [resetPassword](#resetPassword)               | **POST** /people/{personId}/reset-password         | Reset password          |
+| [updateAvatarImage](#updateAvatarImage)       | **PUT** /people/{personId}/avatar                  | Update avatar image     |
+| [getAvatarImageUrl](#getAvatarImageUrl)       | **(local)**                                        | Returns avatar image url|
+| [updatePerson](#updatePerson)                 | **PUT** /people/{personId}                         | Update person           |
 
 ## createPerson
 
@@ -321,6 +322,35 @@ const contentBodyUpdate = {};
 peopleApi.updateAvatarImage(`<personId>`, contentBodyUpdate).then(() => {
   console.log('API called successfully.');
 });
+```
+
+## getAvatarImageUrl
+
+Returns the direct URL to the avatar image of the specified person.
+
+> this is a local utility method that builds a direct URL to the avatar image, including the current authentication ticket to allow secure access.
+> it does not make a network request — it only returns the constructed URL.
+
+You can use the -me- string in place of <personId> to specify the currently authenticated user.
+
+This method is useful for displaying profile images using direct <img> tags or background image URLs.
+
+**Parameters**
+
+| Name         | Type   | Description                 |
+| ------------ | ------ | --------------------------- |
+| **personId** | string | The identifier of a person. |
+
+**Example**
+
+```javascript
+import { AlfrescoApi, PeopleApi } from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const peopleApi = new PeopleApi(alfrescoApi);
+
+const avatarUrl = peopleApi.getAvatarImageUrl('<personId>');
+console.log('Avatar URL:', avatarUrl);
 ```
 
 ## updatePerson

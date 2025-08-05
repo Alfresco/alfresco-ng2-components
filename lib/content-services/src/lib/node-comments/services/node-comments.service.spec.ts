@@ -81,18 +81,16 @@ describe('NodeCommentsService', () => {
             });
         });
 
-        it('should return avatar URL from cache if present', () => {
-            const userId = 'user-123';
-            const cachedUrl = 'https://cached-avatar.url';
-            service.getAvatarCache().set(userId, cachedUrl);
+        it('should return avatar image URL for given userId', () => {
+            const userId = 'fake-user-id';
+            const expectedUrl = 'https://fake-avatar-url.com/avatar.png';
+
+            spyOn(service.peopleApi, 'getAvatarImageUrl').and.returnValue(expectedUrl);
 
             const result = service.getUserImage(userId);
-            expect(result).toBe(cachedUrl);
-        });
 
-        it('should return empty string if avatar not in cache', () => {
-            const result = service.getUserImage('non-existent-user');
-            expect(result).toBe('');
+            expect(service.peopleApi.getAvatarImageUrl).toHaveBeenCalledWith(userId);
+            expect(result).toBe(expectedUrl);
         });
     });
 });

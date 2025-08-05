@@ -16,11 +16,10 @@
  */
 
 import { CommentModel, CommentsService, User } from '@alfresco/adf-core';
-import { CommentEntry, CommentsApi, Comment } from '@alfresco/js-api';
+import { CommentEntry, CommentsApi, Comment, PeopleApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ContentService } from '../../common/services/content.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
@@ -28,14 +27,18 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 })
 export class NodeCommentsService implements CommentsService {
     private _commentsApi: CommentsApi;
-    private readonly avatarCache = new Map<string, string>();
-
     get commentsApi(): CommentsApi {
         this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private contentService: ContentService) {}
+    private _peopleApi: PeopleApi;
+    get peopleApi(): PeopleApi {
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
+        return this._peopleApi;
+    }
+
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets all comments that have been added to a task.
@@ -68,15 +71,6 @@ export class NodeCommentsService implements CommentsService {
         return from(this.commentsApi.createComment(id, { content: message })).pipe(map((response) => this.newCommentModel(response.entry)));
     }
 
-    /**
-     * Gets the avatar cache containing userId–avatarUrl mappings.
-     *
-     * @returns A map of userId to avatar URL
-     */
-    getAvatarCache(): Map<string, string> {
-        return this.avatarCache;
-    }
-
     private addToComments(comments: CommentModel[], comment: CommentEntry): void {
         const newComment: Comment = comment.entry;
 
@@ -84,23 +78,16 @@ export class NodeCommentsService implements CommentsService {
     }
 
     private newCommentModel(comment: Comment): CommentModel {
-        const user = new User(comment.createdBy);
-        const userId = String(user.id);
-
-        if (userId && user.avatarId && !this.avatarCache.has(userId)) {
-            const avatarUrl = this.contentService.getContentUrl(user.avatarId);
-            this.avatarCache.set(userId, avatarUrl);
-        }
-
         return new CommentModel({
             id: comment.id,
             message: comment.content,
             created: comment.createdAt,
-            createdBy: user
+            createdBy: new User(comment.createdBy)
         });
     }
 
     getUserImage(userId: string): string {
-        return this.avatarCache.get(userId) || '';
+        const avatarUrl = this.peopleApi.getAvatarImageUrl(userId);
+        return avatarUrl;
     }
 }
