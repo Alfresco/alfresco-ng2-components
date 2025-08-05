@@ -877,7 +877,13 @@ describe('StartProcessCloudComponent', () => {
 
         it('should throw error event when process cannot be started', async () => {
             const errorSpy = spyOn(component.error, 'emit');
-            const error = { message: 'My error' };
+            const error = {
+                response: {
+                    body: {
+                        message: 'My error'
+                    }
+                }
+            };
             startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.startProcess();
             await fixture.whenStable();
@@ -888,14 +894,21 @@ describe('StartProcessCloudComponent', () => {
             getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
-            startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
+            const error = {
+                response: {
+                    body: {
+                        message: 'Process start failed'
+                    }
+                }
+            };
+            startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.startProcess();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             const errorEl = fixture.nativeElement.querySelector('#error-message');
-            expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START');
+            expect(errorEl.innerText.trim()).toBe('Process start failed');
         });
 
         it('should emit start event when start select a process and add a name', (done) => {
