@@ -16,11 +16,10 @@
  */
 
 import { CommentModel, CommentsService, User } from '@alfresco/adf-core';
-import { CommentEntry, CommentsApi, Comment } from '@alfresco/js-api';
+import { CommentEntry, CommentsApi, Comment, PeopleApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ContentService } from '../../common/services/content.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
@@ -33,7 +32,13 @@ export class NodeCommentsService implements CommentsService {
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private contentService: ContentService) {}
+    private _peopleApi: PeopleApi;
+    get peopleApi(): PeopleApi {
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
+        return this._peopleApi;
+    }
+
+    constructor(private readonly apiService: AlfrescoApiService) {}
 
     /**
      * Gets all comments that have been added to a task.
@@ -81,7 +86,13 @@ export class NodeCommentsService implements CommentsService {
         });
     }
 
-    getUserImage(avatarId: string): string {
-        return this.contentService.getContentUrl(avatarId);
+    /**
+     * Gets the avatar image URL for a given user ID.
+     *
+     * @param userId ID of the user
+     * @returns The URL of the user's avatar image
+     */
+    getUserImage(userId: string): string {
+        return this.peopleApi.getAvatarImageUrl(userId);
     }
 }

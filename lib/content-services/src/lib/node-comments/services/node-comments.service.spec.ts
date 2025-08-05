@@ -38,7 +38,6 @@ describe('NodeCommentsService', () => {
             ]
         });
         service = TestBed.inject(NodeCommentsService);
-
         jasmine.Ajax.install();
     });
 
@@ -80,6 +79,18 @@ describe('NodeCommentsService', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeContentComments)
             });
+        });
+
+        it('should return avatar image URL for given userId', () => {
+            const userId = 'fake-user-id';
+            const expectedUrl = 'https://fake-avatar-url.com/avatar.png';
+
+            spyOn(service.peopleApi, 'getAvatarImageUrl').and.returnValue(expectedUrl);
+
+            const result = service.getUserImage(userId);
+
+            expect(service.peopleApi.getAvatarImageUrl).toHaveBeenCalledWith(userId);
+            expect(result).toBe(expectedUrl);
         });
     });
 });
