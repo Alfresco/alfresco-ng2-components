@@ -86,6 +86,12 @@ export class NodeCommentsService implements CommentsService {
         });
     }
 
+    /**
+     * Gets the avatar image URL for a given user ID.
+     *
+     * @param userId ID of the user
+     * @returns The URL of the user's avatar image
+     */
     getUserImage(userId: string): string {
         return this.peopleApi.getAvatarImageUrl(userId);
     }

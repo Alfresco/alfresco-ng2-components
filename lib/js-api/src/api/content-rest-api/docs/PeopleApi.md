@@ -12,7 +12,7 @@ All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfres
 | [requestPasswordReset](#requestPasswordReset) | **POST** /people/{personId}/request-password-reset | Request password reset  |
 | [resetPassword](#resetPassword)               | **POST** /people/{personId}/reset-password         | Reset password          |
 | [updateAvatarImage](#updateAvatarImage)       | **PUT** /people/{personId}/avatar                  | Update avatar image     |
-| [getAvatarImageUrl](#getAvatarImageUrl)       | **(local)**                                        | Returns avatar image url|
+| [getAvatarImageUrl](#getAvatarImageUrl)       | **GET** /people/{personId}/avatar?placeholder=true | Returns avatar image url|
 | [updatePerson](#updatePerson)                 | **PUT** /people/{personId}                         | Update person           |
 
 ## createPerson
