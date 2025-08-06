@@ -15,33 +15,23 @@
  * limitations under the License.
  */
 
-import { inject, ModuleWithProviders, NgModule, InjectionToken, provideAppInitializer } from '@angular/core';
-import { AUTH_CONFIG, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
+import { inject, ModuleWithProviders, NgModule, InjectionToken, provideAppInitializer, EnvironmentProviders, Provider } from '@angular/core';
+import { AUTH_CONFIG, OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
-import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
-import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { StorageService } from '../../common/services/storage.service';
+import { provideRouter } from '@angular/router';
+import { AUTH_ROUTES } from './auth.routes';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
     factory: () => inject(StorageService)
 });
-
-/**
- * Create a Login Factory function
- *
- * @param redirectService auth redirect service
- * @returns a factory function
- */
-export function loginFactory(redirectService: RedirectAuthService): () => Promise<boolean> {
-    return () => redirectService.init();
-}
 
 /**
  *  @returns current instance of OAuthStorage
@@ -50,11 +40,20 @@ export function oauthStorageFactory(): OAuthStorage {
     return inject(JWT_STORAGE_SERVICE);
 }
 
-@NgModule({
-    imports: [AuthRoutingModule, OAuthModule.forRoot(), AuthenticationConfirmationComponent],
-    providers: [
+/**
+ * Provides core authentication api
+ *
+ * @param config Optional configuration parameters
+ * @returns Angular providers
+ */
+export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): (Provider | EnvironmentProviders)[] {
+    config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
+    return [
+        provideHttpClient(),
+        provideOAuthClient(),
+        provideRouter(AUTH_ROUTES),
         { provide: OAuthStorage, useFactory: oauthStorageFactory },
-        { provide: AuthenticationService },
+        AuthenticationService,
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,
@@ -63,8 +62,36 @@ export function oauthStorageFactory(): OAuthStorage {
         RedirectAuthService,
         { provide: AuthService, useExisting: RedirectAuthService },
         provideAppInitializer(() => {
-            const initializerFn = loginFactory(inject(RedirectAuthService));
-            return initializerFn();
+            const redirectService = inject(RedirectAuthService);
+            return redirectService.init();
+        }),
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        },
+        { provide: AUTH_MODULE_CONFIG, useValue: config }
+    ];
+}
+
+/** @deprecated use `provideCoreAuth()` provider api instead */
+@NgModule({
+    providers: [
+        provideHttpClient(),
+        provideOAuthClient(),
+        provideRouter(AUTH_ROUTES),
+        { provide: OAuthStorage, useFactory: oauthStorageFactory },
+        AuthenticationService,
+        {
+            provide: AUTH_CONFIG,
+            useFactory: authConfigFactory,
+            deps: [AuthConfigService]
+        },
+        RedirectAuthService,
+        { provide: AuthService, useExisting: RedirectAuthService },
+        provideAppInitializer(() => {
+            const redirectService = inject(RedirectAuthService);
+            return redirectService.init();
         }),
         {
             provide: HTTP_INTERCEPTORS,

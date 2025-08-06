@@ -15,14 +15,10 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { provideRouter, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 import { OidcAuthGuard } from './oidc-auth.guard';
 
-const routes: Routes = [{ path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent, canActivate: [OidcAuthGuard] }];
-
-@NgModule({
-    providers: [provideRouter(routes)]
-})
-export class AuthRoutingModule {}
+export const AUTH_ROUTES: Routes = [
+    { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent, canActivate: [OidcAuthGuard] }
+];
