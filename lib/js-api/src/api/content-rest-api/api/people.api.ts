@@ -283,6 +283,21 @@ export class PeopleApi extends BaseApi {
     }
 
     /**
+     * Get avatar image URL
+     *
+     * Builds and returns the direct URL to fetch the avatar image for the person `personId`.
+     * This includes the current authentication ticket in the URL to allow secure access.
+     *
+     * You can use the `-me-` string in place of <personId> to specify the currently authenticated user.
+     * @param personId The identifier of a person.
+     * @returns A string URL to the user's avatar image.
+     */
+    getAvatarImageUrl(personId: string): string {
+        const ticket = this.alfrescoApi.contentClient.getAlfTicket(undefined);
+        return `${this.apiClient.basePath}/people/${personId}/avatar?placeholder=true${ticket}`;
+    }
+
+    /**
      * Update person
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.

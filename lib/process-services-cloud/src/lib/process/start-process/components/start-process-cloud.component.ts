@@ -70,6 +70,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 
 @Component({
     selector: 'adf-cloud-start-process',
+    standalone: true,
     imports: [
         CommonModule,
         TranslatePipe,
@@ -456,8 +457,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.isProcessStarting = false;
             },
             error: (err) => {
-                this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
-                this.unifyErrorResponse(err);
+                this.errorMessageId = err?.response?.body?.message || 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START_PROCESS';
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
@@ -480,14 +480,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     this.startProcessWithoutConfirmation();
                 }
             });
-        }
-    }
-
-    private unifyErrorResponse(err: any) {
-        if (!err?.response?.body?.entry && err?.response?.body?.message) {
-            err.response.body = {
-                entry: JSON.parse(err.response.body.message)
-            };
         }
     }
 
