@@ -154,7 +154,7 @@ export class ExtensionService {
      * Adds one or more new rule evaluators to the existing set.
      * @param values The new evaluators to add
      */
-    setEvaluators(values: { [key: string]: RuleEvaluator }) {
+    setEvaluators(values: Record<string, RuleEvaluator>) {
         this.ruleService.setEvaluators(values);
     }
 
@@ -172,7 +172,7 @@ export class ExtensionService {
      * Adds one or more new components to the existing set.
      * @param values The new components to add
      */
-    setComponents(values: { [key: string]: Type<any> }) {
+    setComponents(values: Record<string, Type<any>>) {
         this.componentRegister.setComponents(values);
     }
 

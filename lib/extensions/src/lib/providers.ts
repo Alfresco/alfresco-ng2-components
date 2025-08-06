@@ -63,7 +63,7 @@ export function provideAppExtensions(): (Provider | EnvironmentProviders)[] {
 export function provideExtensions(params: {
     authGuards?: Record<string, unknown>;
     evaluators?: Record<string, RuleEvaluator>;
-    components: Record<string, Type<any>>;
+    components?: Record<string, Type<any>>;
 }) {
     return [
         provideAppInitializer(() => {

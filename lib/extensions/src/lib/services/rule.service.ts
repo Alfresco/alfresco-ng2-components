@@ -38,7 +38,7 @@ export class RuleService {
      * Adds one or more new rule evaluators to the existing set.
      * @param values The new evaluators to add
      */
-    setEvaluators(values: { [key: string]: RuleEvaluator }) {
+    setEvaluators(values: Record<string, RuleEvaluator>) {
         if (values) {
             this.evaluators = Object.assign({}, this.evaluators, values);
         }

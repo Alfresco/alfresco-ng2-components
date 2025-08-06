@@ -25,9 +25,9 @@ export interface ExtensionComponent {
 
 @Injectable({ providedIn: 'root' })
 export class ComponentRegisterService {
-    components: { [key: string]: Type<any> } = {};
+    components: Record<string, Type<any>> = {};
 
-    setComponents(values: { [key: string]: Type<any> }) {
+    setComponents(values: Record<string, Type<any>>) {
         if (values) {
             this.components = Object.assign({}, this.components, values);
         }
