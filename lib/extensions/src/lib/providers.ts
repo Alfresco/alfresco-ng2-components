@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { EnvironmentProviders, inject, provideAppInitializer, Provider } from '@angular/core';
+import { EnvironmentProviders, inject, provideAppInitializer, Provider, Type } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
+import { ExtensionService } from './services/extension.service';
+import { RuleEvaluator } from './config/rule.extensions';
 
 /**
  * Provides all necessary entries for the app extensibility
@@ -27,6 +29,59 @@ export function provideAppExtensions(): (Provider | EnvironmentProviders)[] {
         provideAppInitializer(() => {
             const appExtensionService = inject(AppExtensionService);
             return appExtensionService.load();
+        })
+    ];
+}
+
+/**
+ * Provides a way to register extension entities in a single API
+ *
+ * Example:
+ * ```typescript
+ * providers: [
+ *  provideExtensions({
+ *      authGuards: {
+ *          auth1: guard1,
+ *          auth2: guard2
+ *      },
+ *      evaluators: {
+ *          eval1: evaluator1,
+ *          eval2: evaluator2
+ *      },
+ *      components: {
+ *          component: component1
+ *      }
+ *  });
+ * ]
+ * ```
+ * @param params Parameters for the api
+ * @param params.authGuards Auth guards to register
+ * @param params.evaluators Rule evaluators to register
+ * @param params.components Components to register
+ * @returns list of Angular providers
+ */
+export function provideExtensions(params: {
+    authGuards?: Record<string, unknown>;
+    evaluators?: Record<string, RuleEvaluator>;
+    components: Record<string, Type<any>>;
+}) {
+    return [
+        provideAppInitializer(() => {
+            const service = inject(ExtensionService);
+
+            if (params) {
+                if (params.authGuards) {
+                    service.setAuthGuards(params.authGuards);
+                }
+                if (params.evaluators) {
+                    service.setEvaluators(params.evaluators);
+                }
+                if (params.components) {
+                    service.setComponents(params.components);
+                }
+            }
+
+            return Promise.resolve();
         })
     ];
 }
