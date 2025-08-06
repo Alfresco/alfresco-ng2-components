@@ -101,6 +101,7 @@ export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): 
     ]
 })
 export class AuthModule {
+    /* @deprecated use `provideCoreAuth()` provider api instead */
     static forRoot(config: AuthModuleConfig = { useHash: false }): ModuleWithProviders<AuthModule> {
         config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
         return {

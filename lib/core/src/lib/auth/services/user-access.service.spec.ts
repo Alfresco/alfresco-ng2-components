@@ -20,7 +20,7 @@ import { UserAccessService } from './user-access.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { AppConfigService } from '../../app-config';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AuthModule, JWT_STORAGE_SERVICE } from '../oidc/auth.module';
+import { JWT_STORAGE_SERVICE, provideCoreAuth } from '../oidc/auth.module';
 import { StorageService } from '../../common/services/storage.service';
 
 describe('UserAccessService', () => {
@@ -30,8 +30,8 @@ describe('UserAccessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, AuthModule.forRoot({ useHash: true })],
-            providers: [{ provide: JWT_STORAGE_SERVICE, useClass: StorageService }, UserAccessService]
+            imports: [HttpClientTestingModule],
+            providers: [provideCoreAuth({ useHash: true }), { provide: JWT_STORAGE_SERVICE, useClass: StorageService }]
         });
         userAccessService = TestBed.inject(UserAccessService);
         jwtHelperService = TestBed.inject(JwtHelperService);
