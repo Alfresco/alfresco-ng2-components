@@ -60,10 +60,12 @@ export class YourService extends ScreenRenderingService {
 | appName                   | `string`                              | ""            | App id to fetch corresponding form and values.    |
 | canClaimTask              | `boolean`                             |               | Boolean informing if a task can be claimed.       |
 | canUnclaimTask            | `boolean`                             |               | Boolean informing if a task can be unclaimed.     |
+| isNextTaskCheckboxChecked | `boolean`                             | false         | Whether the `Open next task` checkbox is checked by default or not. |
 | processInstanceId         | `string`                              |               | Process Instance Id to fetch corresponding data.  |
 | rootProcessInstanceId     | `string`                              |               | Root Process Instance Id to fetch corresponding data.  |
 | readOnly                  | `boolean`                             | false         | Toggle readonly state of the task.                |
 | showCancelButton          | `boolean`                             | true          | Toggle rendering of the `Cancel` button.          |
+| showNextTaskCheckbox      | `boolean`                             | false         | Toggle rendering of the `Open next task` checkbox (controlled internally by parent component). |
 | screenId                  | `string`                              |               | Screen id to create dynamic component             |
 | taskId                    | `string`                              |               | Task id to fetch corresponding form and values.   |
 | taskName                  | `string`                              |               | Name of the task.                                 |
