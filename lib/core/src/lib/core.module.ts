@@ -39,10 +39,7 @@ import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
-import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withXsrfConfiguration, withInterceptorsFromDi } from '@angular/common/http';
-import { AuthenticationService } from './auth/services/authentication.service';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 import { AppConfigPipe } from './app-config';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
@@ -50,9 +47,19 @@ import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
-import { DecimalRenderMiddlewareService, FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './form';
 import { provideAppConfig } from './app-config/provide-app-config';
 
+/**
+ * @deprecated this module is deprecated and will be removed
+ * Use the following combination instead:
+ * ```typescript
+ * providers: [
+ *  provideI18N(...),
+ *  provideAppConfig(),
+ *  provideCoreAuth(...)
+ * ]
+ * ```
+ */
 @NgModule({
     imports: [
         ...ABOUT_DIRECTIVES,
@@ -129,21 +136,7 @@ export class CoreModule {
                     },
                     defaultLanguage: 'en'
                 }),
-                provideAppConfig(),
-                provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
-                { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-                { provide: Authentication, useClass: AuthenticationService },
-                {
-                    provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-                    useValue: {
-                        duration: 10000
-                    }
-                },
-                {
-                    provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
-                    useClass: DecimalRenderMiddlewareService,
-                    multi: true
-                }
+                provideAppConfig()
             ]
         };
     }

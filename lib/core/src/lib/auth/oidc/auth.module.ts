@@ -22,11 +22,12 @@ import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { StorageService } from '../../common/services/storage.service';
 import { provideRouter } from '@angular/router';
 import { AUTH_ROUTES } from './auth.routes';
+import { Authentication, AuthenticationInterceptor } from '@alfresco/adf-core/auth';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
@@ -49,7 +50,7 @@ export function oauthStorageFactory(): OAuthStorage {
 export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): (Provider | EnvironmentProviders)[] {
     config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
     return [
-        provideHttpClient(),
+        provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
         provideOAuthClient(),
         provideRouter(AUTH_ROUTES),
         { provide: OAuthStorage, useFactory: oauthStorageFactory },
@@ -65,40 +66,16 @@ export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): 
             const redirectService = inject(RedirectAuthService);
             return redirectService.init();
         }),
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true
-        },
-        { provide: AUTH_MODULE_CONFIG, useValue: config }
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+        { provide: AUTH_MODULE_CONFIG, useValue: config },
+        { provide: Authentication, useClass: AuthenticationService }
     ];
 }
 
 /** @deprecated use `provideCoreAuth()` provider api instead */
 @NgModule({
-    providers: [
-        provideHttpClient(),
-        provideOAuthClient(),
-        provideRouter(AUTH_ROUTES),
-        { provide: OAuthStorage, useFactory: oauthStorageFactory },
-        AuthenticationService,
-        {
-            provide: AUTH_CONFIG,
-            useFactory: authConfigFactory,
-            deps: [AuthConfigService]
-        },
-        RedirectAuthService,
-        { provide: AuthService, useExisting: RedirectAuthService },
-        provideAppInitializer(() => {
-            const redirectService = inject(RedirectAuthService);
-            return redirectService.init();
-        }),
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true
-        }
-    ]
+    providers: [...provideCoreAuth()]
 })
 export class AuthModule {
     /* @deprecated use `provideCoreAuth()` provider api instead */
