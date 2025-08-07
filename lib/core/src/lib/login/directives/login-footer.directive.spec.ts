@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginComponent, LoginFooterDirective, NoopAuthModule } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from '../../auth/oidc/oidc-authentication.service';
+import { LoginComponent } from '../components/login/login.component';
+import { LoginFooterDirective } from './login-footer.directive';
+import { provideCoreAuthTesting } from '../../testing';
 
 describe('LoginFooterDirective', () => {
     let fixture: ComponentFixture<LoginComponent>;
@@ -26,8 +28,9 @@ describe('LoginFooterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, LoginComponent],
+            imports: [LoginComponent],
             providers: [
+                provideCoreAuthTesting(),
                 {
                     provide: OidcAuthenticationService,
                     useValue: {}

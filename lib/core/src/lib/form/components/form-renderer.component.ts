@@ -29,6 +29,7 @@ import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } fr
 import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
 import { FormSectionComponent } from './form-section/form-section.component';
+import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware.service';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -39,6 +40,11 @@ import { FormSectionComponent } from './form-section/form-section.component';
             provide: FormRulesManager,
             useFactory: formRulesManagerFactory,
             deps: [Injector]
+        },
+        {
+            provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
+            useClass: DecimalRenderMiddlewareService,
+            multi: true
         }
     ],
     imports: [

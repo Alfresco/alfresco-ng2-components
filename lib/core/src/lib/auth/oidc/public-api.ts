@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './auth-routing.module';
 export * from './auth.module';
 export * from './auth.service';
 export * from './oidc-auth.guard';

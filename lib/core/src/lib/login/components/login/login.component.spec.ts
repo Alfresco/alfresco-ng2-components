@@ -25,13 +25,11 @@ import { AuthenticationService } from '../../../auth/services/authentication.ser
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
-import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { LoginSuccessEvent } from '../../models/login-success.event';
 import { LoginErrorEvent } from '../../models/login-error.event';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { NoopAuthModule } from '../../../testing/noop-auth.module';
+import { provideCoreAuthTesting, NoopTranslationService, UnitTestingUtils } from '../../../testing';
 import { TranslationService } from '../../../translation/translation.service';
-import { NoopTranslationService } from '../../../testing/noop-translate.module';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -61,8 +59,9 @@ describe('LoginComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, LoginComponent],
+            imports: [LoginComponent],
             providers: [
+                provideCoreAuthTesting(),
                 provideHttpClientTesting(),
                 { provide: TranslationService, useClass: NoopTranslationService },
                 {

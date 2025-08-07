@@ -23,7 +23,7 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { AppConfigService } from '../../../app-config';
 import { EventMock } from '../../../mock';
-import { NoopAuthModule, UnitTestingUtils } from '../../../testing';
+import { UnitTestingUtils, provideCoreAuthTesting } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
@@ -106,8 +106,9 @@ describe('Test PdfViewer component', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, PdfViewerComponent],
+            imports: [PdfViewerComponent],
             providers: [
+                provideCoreAuthTesting(),
                 {
                     provide: MatDialog,
                     useValue: {
@@ -326,7 +327,7 @@ describe('Test PdfViewer component', () => {
                     () =>
                         ({
                             afterClosed: () => of('')
-                        } as any)
+                        }) as any
                 );
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
@@ -355,8 +356,9 @@ describe('Test PdfViewer - Zoom customization', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, PdfViewerComponent],
+            imports: [PdfViewerComponent],
             providers: [
+                provideCoreAuthTesting(),
                 {
                     provide: MatDialog,
                     useValue: {
@@ -428,8 +430,9 @@ describe('Test PdfViewer - User interaction', () => {
         });
 
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, PdfViewerComponent],
+            imports: [PdfViewerComponent],
             providers: [
+                provideCoreAuthTesting(),
                 {
                     provide: MatDialog,
                     useValue: {

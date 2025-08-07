@@ -22,7 +22,7 @@ import { of, throwError } from 'rxjs';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogoutDirective } from './logout.directive';
-import { NoopAuthModule } from '../testing/noop-auth.module';
+import { provideCoreAuthTesting } from '../testing/noop-auth.module';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 describe('LogoutDirective', () => {
@@ -45,7 +45,8 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule, TestComponent]
+                imports: [TestComponent],
+                providers: [provideCoreAuthTesting()]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -118,7 +119,8 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule, TestComponent]
+                imports: [TestComponent],
+                providers: [provideCoreAuthTesting()]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -156,7 +158,8 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule, TestComponent]
+                imports: [TestComponent],
+                providers: [provideCoreAuthTesting()]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);

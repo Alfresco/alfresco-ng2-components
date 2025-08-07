@@ -26,8 +26,7 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NoopAuthModule } from '../../testing';
+import { provideCoreAuthTesting } from '../../testing/';
 
 describe('AuthGuardService', () => {
     let state: RouterStateSnapshot;
@@ -42,9 +41,9 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, RouterTestingModule, NoopAuthModule],
+            imports: [MatDialogModule],
             providers: [
-                AppConfigService,
+                provideCoreAuthTesting(),
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of(), init: () => {} } },
                 {
                     provide: OidcAuthenticationService,
