@@ -144,7 +144,7 @@ describe('TaskHeaderCloudComponent', () => {
             const valueEl = fixture.debugElement.query(
                 By.css('[data-automation-id="header-dueDate"] .adf-property-value .adf-datepicker-span-button')
             );
-            expect(valueEl.nativeElement.innerText.trim()).toBe('Monday, December 17, 2018 at 12:00:55 PM GMT+00:00');
+            expect(valueEl.nativeElement.value.trim()).toBe('Monday, December 17, 2018 at 12:00:55 PM GMT+00:00');
         });
 
         it('should display process instance id', async () => {
@@ -506,7 +506,7 @@ describe('TaskHeaderCloudComponent', () => {
             const createdDateElement = fixture.debugElement.query(By.css('[data-automation-id="header-created"] .adf-property-value'));
 
             expect(component.dateFormat).toEqual('full');
-            expect(createdDateElement.nativeElement.innerText.trim()).toBe('Monday, December 17, 2018 at 12:00:00 AM GMT+00:00');
+            expect(createdDateElement.nativeElement.value.trim()).toBe('Monday, December 17, 2018 at 12:00:00 AM GMT+00:00');
         });
     });
 
