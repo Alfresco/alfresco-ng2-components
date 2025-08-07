@@ -29,7 +29,7 @@ export interface ProvideI18NConfig {
     defaultLanguage?: string;
     /**
      * An array of assets to be used for i18n, where each asset is a tuple containing an identifier and a path.
-     * Example: [['en', '/assets/i18n/en.json'], ['fr', '/assets/i18n/fr.json']]
+     * Example: [['adf-core', 'assets/adf-core'], ['my-translations', 'assets/my-translations']]
      */
     assets?: [string, string][];
 }
