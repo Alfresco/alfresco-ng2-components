@@ -20,8 +20,8 @@ import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { AuthModule } from '../oidc/auth.module';
-import { HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { provideCoreAuth } from '../oidc/auth.module';
+import { HttpHeaders } from '@angular/common/http';
 import { CookieServiceMock } from '../../mock';
 import { AppConfigServiceMock } from '../../common';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
@@ -44,8 +44,8 @@ describe('AuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true })],
             providers: [
+                provideCoreAuth({ useHash: true }),
                 {
                     provide: CookieService,
                     useClass: CookieServiceMock
@@ -53,8 +53,7 @@ describe('AuthenticationService', () => {
                 {
                     provide: AppConfigService,
                     useClass: AppConfigServiceMock
-                },
-                provideHttpClient()
+                }
             ]
         });
 

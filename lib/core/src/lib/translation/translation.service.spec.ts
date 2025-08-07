@@ -18,9 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslationService } from './translation.service';
-import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { of } from 'rxjs';
+import { provideAppConfigTesting } from '../testing';
 
 describe('TranslationService', () => {
     let translationService: TranslationService;
@@ -60,7 +59,7 @@ describe('TranslationService', () => {
                     }
                 })
             ],
-            providers: [TranslationService, { provide: AppConfigService, useClass: AppConfigServiceMock }]
+            providers: [TranslationService, provideAppConfigTesting()]
         });
 
         translationService = TestBed.inject(TranslationService);

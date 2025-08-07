@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { AppConfigServiceMock } from '../../common';
+import { provideAppConfigTesting } from '@alfresco/adf-core';
 
 const aboutGithubDetails = {
     url: 'https://github.com/componany/repository/commits/',
@@ -36,7 +36,7 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
+            providers: [provideAppConfigTesting()]
         });
         fixture = TestBed.createComponent(AboutServerSettingsComponent);
         component = fixture.componentInstance;
