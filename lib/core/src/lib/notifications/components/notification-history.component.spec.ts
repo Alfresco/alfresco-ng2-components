@@ -22,7 +22,7 @@ import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
-import { NoopAuthModule } from '../../testing/noop-auth.module';
+import { provideCoreAuthTesting } from '../../testing/noop-auth.module';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('Notification History Component', () => {
@@ -41,7 +41,8 @@ describe('Notification History Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAuthModule, NotificationHistoryComponent, MatIconTestingModule]
+            imports: [NotificationHistoryComponent, MatIconTestingModule],
+            providers: [provideCoreAuthTesting()]
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;

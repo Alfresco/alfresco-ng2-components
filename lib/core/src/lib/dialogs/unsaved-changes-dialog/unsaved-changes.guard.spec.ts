@@ -20,7 +20,9 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { Observable, Subject } from 'rxjs';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
 import { UnsavedChangesGuard } from './unsaved-changes.guard';
-import { AuthenticationService, AuthGuardService, NoopAuthModule } from '@alfresco/adf-core';
+import { AuthenticationService } from '../../auth/services/authentication.service';
+import { AuthGuardService } from '../../auth/guard/auth-guard.service';
+import { provideCoreAuthTesting } from '../../testing';
 
 describe('UnsavedChangesGuard', () => {
     let guard: UnsavedChangesGuard;
@@ -39,8 +41,9 @@ describe('UnsavedChangesGuard', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, NoopAuthModule],
+            imports: [MatDialogModule],
             providers: [
+                provideCoreAuthTesting(),
                 {
                     provide: AuthenticationService,
                     useValue: {
