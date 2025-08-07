@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable, NgModule } from '@angular/core';
+import { EnvironmentProviders, Injectable, NgModule, Provider } from '@angular/core';
 import { JWT_STORAGE_SERVICE, provideCoreAuth } from '../auth/oidc/auth.module';
 import { RedirectAuthService } from '../auth/oidc/redirect-auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppConfigService, provideAppConfig } from '../app-config';
 import { AppConfigServiceMock, CookieService, StorageService } from '../common';
 import { CookieServiceMock } from '../mock';
@@ -35,15 +33,31 @@ export class NoopRedirectAuthService extends RedirectAuthService {
     }
 }
 
-@NgModule({
-    imports: [HttpClientTestingModule, RouterTestingModule],
-    providers: [
+/**
+ * Provides testing api for Core Auth layer
+ *
+ * Example:
+ * ```typescript
+ * TestBed.configureTestingModule({
+ *     providers: [provideCoreAuthTesting()]
+ * });
+ * ```
+ *
+ * @returns list of Angular providers
+ */
+export function provideCoreAuthTesting(): (Provider | EnvironmentProviders)[] {
+    return [
         provideCoreAuth({ useHash: true }),
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: CookieService, useClass: CookieServiceMock },
         { provide: RedirectAuthService, useClass: NoopRedirectAuthService },
         provideAppConfig(),
         { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
-    ]
+    ];
+}
+
+/* @deprecated use `provideCoreAuthTesting()` instead */
+@NgModule({
+    providers: [...provideCoreAuthTesting()]
 })
 export class NoopAuthModule {}
