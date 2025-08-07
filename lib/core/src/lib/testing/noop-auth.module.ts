@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { Injectable, NgModule, inject, provideAppInitializer } from '@angular/core';
-import { AuthModule, JWT_STORAGE_SERVICE } from '../auth/oidc/auth.module';
+import { Injectable, NgModule } from '@angular/core';
+import { JWT_STORAGE_SERVICE, provideCoreAuth } from '../auth/oidc/auth.module';
 import { RedirectAuthService } from '../auth/oidc/redirect-auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppConfigService, StoragePrefixFactory } from '../app-config';
+import { AppConfigService, provideAppConfig } from '../app-config';
 import { AppConfigServiceMock, CookieService, StorageService } from '../common';
 import { CookieServiceMock } from '../mock';
 import { EMPTY, of } from 'rxjs';
-import { loadAppConfig } from '../app-config/app-config.loader';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({ providedIn: 'root' })
 export class NoopRedirectAuthService extends RedirectAuthService {
@@ -38,20 +36,13 @@ export class NoopRedirectAuthService extends RedirectAuthService {
 }
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), HttpClientTestingModule, RouterTestingModule],
+    imports: [HttpClientTestingModule, RouterTestingModule],
     providers: [
+        provideCoreAuth({ useHash: true }),
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: CookieService, useClass: CookieServiceMock },
         { provide: RedirectAuthService, useClass: NoopRedirectAuthService },
-        provideAppInitializer(() => {
-            const initializerFn = loadAppConfig(
-                inject(AppConfigService),
-                inject(StorageService),
-                inject(AdfHttpClient),
-                inject(StoragePrefixFactory)
-            );
-            return initializerFn();
-        }),
+        provideAppConfig(),
         { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
     ]
 })
