@@ -61,8 +61,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     border: 1px solid var(--adf-theme-foreground-text-color-007);
     box-sizing: border-box;
     overflow-x: auto;
-    min-width: 100%;
-    width: fit-content;
 
     @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
         .adf-datatable-center-size-column-ie {
