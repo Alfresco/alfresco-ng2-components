@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -38,8 +38,8 @@
     "@angular/router": ">=16.0.0",
     "@mat-datetimepicker/core": ">=12.0.1",
     "@ngx-translate/core": ">=16.0.0",
-    "@alfresco/js-api": ">=9.0.0",
-    "@alfresco/adf-extensions": ">=8.0.0",
+    "@alfresco/js-api": ">=9.0.1",
+    "@alfresco/adf-extensions": ">=8.0.1",
     "minimatch": ">=10.0.0",
     "pdfjs-dist": ">=3.3.122",
     "ts-morph": ">=20.0.0"

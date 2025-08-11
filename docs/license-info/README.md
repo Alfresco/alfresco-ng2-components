@@ -56,3 +56,4 @@ The pages linked below contain the licenses for all third party dependencies of 
 - [ADF 7.0.0-alpha.7](license-info-7.0.0-alpha.7.md)
 - [ADF 7.0.0](license-info-7.0.0.md)
 - [ADF 8.0.0](license-info-8.0.0.md)
+- [ADF 8.0.1](license-info-8.0.1.md)

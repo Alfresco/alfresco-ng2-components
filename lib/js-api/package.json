@@ -1,6 +1,6 @@
 {
   "name": "@alfresco/js-api",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "license": "Apache-2.0",
   "description": "JavaScript client library for the Alfresco REST API",
   "author": "Hyland Software, Inc. and its affiliates",
