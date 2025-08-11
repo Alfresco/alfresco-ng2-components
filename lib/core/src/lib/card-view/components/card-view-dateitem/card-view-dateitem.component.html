@@ -19,6 +19,7 @@
     </mat-label>
     <input
         matInput
+        [attr.data-automation-id]="'card-dateitem-' + property.key"
         [value]="property.displayValue"
         title="{{ property.label | translate }}"
         [attr.id]="'card-view-dateitem-' + property.key"
@@ -38,18 +39,6 @@
     class="adf-property-value"
     [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty }"
     >
-    <span
-        *ngIf="!isEditable && !property.multivalued"
-        [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
-        <span
-            *ngIf="showProperty"
-            [attr.data-automation-id]="'card-dateitem-' + property.key"
-            (dblclick)="copyToClipboard(property.displayValue)"
-            [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-            >{{ property.displayValue }}</span
-        >
-    </span>
-
 
     <mat-form-field *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable adf-property-field hxp-input" [floatLabel]="property.default ? 'always' : null">
         <mat-label
