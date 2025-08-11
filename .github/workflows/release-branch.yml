@@ -9,6 +9,11 @@ on:
         required: false
         type: boolean
         default: true
+      npm-tag:
+        description: 'NPM tag to use for publishing'
+        required: false
+        type: string
+        default: 'branch'
 
 env:
   BASE_REF: ${{ github.base_ref }}
@@ -46,7 +51,7 @@ jobs:
       - name: set TAG_NPM BRANCH
         shell: bash
         run: |
-          TAG_NPM="branch"
+          TAG_NPM=${{ inputs.npm-tag }}
           echo "Set TAG with name: ${TAG_NPM}"
           echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
       - name: Checkout repository
@@ -86,6 +91,7 @@ jobs:
           dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Set libraries versions
+        if: ${{ inputs.npm-tag == 'branch' }}
         run: |
           set -u;
           ./scripts/update-version.sh -gnu || exit 1;
