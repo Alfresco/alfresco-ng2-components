@@ -23,6 +23,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EventEmitter } from 'eventemitter3';
+
 type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 @Injectable({
     providedIn: 'root'
