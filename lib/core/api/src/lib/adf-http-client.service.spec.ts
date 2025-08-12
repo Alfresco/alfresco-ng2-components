@@ -21,6 +21,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { AdfHttpClient } from './adf-http-client.service';
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
+import EventEmitter from 'eventemitter3';
 
 const securityOptions: SecurityOptions = {
     authentications: {},
@@ -30,16 +31,9 @@ const securityOptions: SecurityOptions = {
     withCredentials: false
 };
 
-const emitter = {
-    emit: () => {},
-    off: () => {},
-    on: () => {},
-    once: () => {}
-};
-
 const emitters: Emitters = {
-    eventEmitter: emitter,
-    apiClientEmitter: emitter
+    eventEmitter: new EventEmitter(),
+    apiClientEmitter: new EventEmitter()
 };
 
 const mockResponse = {
@@ -124,10 +118,11 @@ describe('AdfHttpClient', () => {
                 httpMethod: 'POST'
             };
 
-            const spy = spyOn(emitter, 'emit').and.callThrough();
+            // const spy = spyOn(emitter, 'emit').and.callThrough();
+            const eventSpy = spyOn(emitters.eventEmitter, 'emit').and.callThrough();
 
             angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(() => {
-                expect(spy).toHaveBeenCalledWith('unauthorized');
+                expect(eventSpy).toHaveBeenCalledWith('unauthorized');
                 done();
             });
 
