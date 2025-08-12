@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/f
 import { debounceTime, filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,7 +47,7 @@ const templateTypes = {
     imports: [
         CommonModule,
         MatFormFieldModule,
-        TranslatePipe,
+        TranslateModule,
         MatInputModule,
         ReactiveFormsModule,
         MatChipsModule,
@@ -84,7 +84,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
+    constructor(
+        private clipboardService: ClipboardService,
+        private translateService: TranslationService,
+        private cd: ChangeDetectorRef
+    ) {
         super();
     }
 
@@ -141,6 +145,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     private resetErrorMessages() {
         this.errors = [];
+        this.textInput.setErrors(null);
+        this.textInput.markAsUntouched();
     }
 
     update(): void {
@@ -151,6 +157,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value);
             } else {
                 this.errors = this.property.getValidationErrors(this.editedValue);
+                this.textInput.setErrors({ customError: true });
+                this.textInput.markAsTouched();
                 this.cardViewUpdateService.update({ ...this.property, isValidValue: false } as CardViewTextItemModel, this.editedValue);
             }
         }
