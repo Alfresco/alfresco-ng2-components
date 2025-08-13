@@ -151,7 +151,7 @@ export class AdfHttpClient implements JsApiHttpClient {
         return this.request<T>(url, { ...options, httpMethod: 'DELETE' }, sc, emitters);
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: EventEmitter) {
+    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any) {
         const eventPromise = Object.assign(promise, {
             on<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) {
                 eventEmitter.on(event, fn, context);
