@@ -25,6 +25,8 @@ import { Storage } from './storage';
 
 declare const Buffer: any;
 
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
 export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
     on: <K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) => AlfrescoApiClientPromise<T>;
     off: <K extends string | symbol>(event: K, fn?: (...args: any[]) => void, context?: any) => AlfrescoApiClientPromise<T>;
@@ -387,7 +389,7 @@ export class AlfrescoApiClient implements LegacyHttpClient {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
-    addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: EventEmitter): AlfrescoApiClientPromise<T> {
+    addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: EventEmitterInstance): AlfrescoApiClientPromise<T> {
         return Object.assign(promise, {
             on<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any): AlfrescoApiClientPromise<T> {
                 eventEmitter.on(event, fn, context);

@@ -23,11 +23,13 @@ import { CookieService } from '../../common/services/cookie.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import { EventEmitter } from 'eventemitter3';
 
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
 export abstract class BaseAuthenticationService implements AuthenticationServiceInterface {
-    on: EventEmitter['on'];
-    off: EventEmitter['off'];
-    once: EventEmitter['once'];
-    emit: EventEmitter['emit'];
+    on: EventEmitterInstance['on'];
+    off: EventEmitterInstance['off'];
+    once: EventEmitterInstance['once'];
+    emit: EventEmitterInstance['emit'];
 
     protected redirectUrl: RedirectionModel = null;
 
