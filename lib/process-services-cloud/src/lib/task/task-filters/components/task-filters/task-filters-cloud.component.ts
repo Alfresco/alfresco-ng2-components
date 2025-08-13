@@ -151,7 +151,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
         return this.searchApiMethod === 'POST'
-            ? this.taskListCloudService.getTaskListCounter(new TaskFilterCloudAdapter(filter))
+            ? this.taskListCloudService.getTaskListCount(new TaskFilterCloudAdapter(filter))
             : this.taskFilterCloudService.getTaskFilterCounter(filter);
     }
 

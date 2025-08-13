@@ -42,7 +42,7 @@ describe('TaskFiltersCloudComponent', () => {
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
     let getTaskFilterCounterSpy: jasmine.Spy;
     let getTaskListFiltersSpy: jasmine.Spy;
-    let getTaskListCounterSpy: jasmine.Spy;
+    let getTaskListCountSpy: jasmine.Spy;
 
     const configureTestingModule = (searchApiMethod: 'GET' | 'POST') => {
         TestBed.configureTestingModule({
@@ -52,7 +52,7 @@ describe('TaskFiltersCloudComponent', () => {
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         taskListService = TestBed.inject(TaskListCloudService);
         getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
-        getTaskListCounterSpy = spyOn(taskListService, 'getTaskListCounter').and.returnValue(of(11));
+        getTaskListCountSpy = spyOn(taskListService, 'getTaskListCount').and.returnValue(of(11));
         spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
         getTaskListFiltersSpy = spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeGlobalFilter));
 
@@ -355,7 +355,7 @@ describe('TaskFiltersCloudComponent', () => {
             );
             await filterButton.click();
 
-            expect(getTaskListCounterSpy).toHaveBeenCalledWith(new TaskFilterCloudAdapter(fakeGlobalFilter[0]));
+            expect(getTaskListCountSpy).toHaveBeenCalledWith(new TaskFilterCloudAdapter(fakeGlobalFilter[0]));
         });
     });
 

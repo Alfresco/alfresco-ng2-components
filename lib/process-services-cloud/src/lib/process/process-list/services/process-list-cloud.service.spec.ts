@@ -267,4 +267,40 @@ describe('ProcessListCloudService', () => {
             expect(requestBodyParams.variableKeys[1]).toBe('test-two');
         });
     });
+
+    describe('getProcessListCount', () => {
+        it('should concat the app name to the request url', async () => {
+            const taskRequest = {
+                appName: 'fakeName'
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.getProcessListCount(taskRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res).toContain('fakeName/query/v1/process-instances/count');
+        });
+
+        it('should return 0 if response is falsy for getProcessListCount', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(() => Promise.resolve(null));
+
+            const res = await firstValueFrom(service.getProcessListCount(taskRequest));
+
+            expect(res).toBe(0);
+        });
+
+        it('should throw error if appName is not configured in getProcessListCount', async () => {
+            const taskRequest = { appName: null } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.getProcessListCount(taskRequest).pipe(catchError((error) => of(error.message))));
+
+            expect(res).toBe('Appname not configured');
+        });
+    });
 });
