@@ -36,9 +36,11 @@ import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import { EventEmitter } from 'eventemitter3';
 
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
 export interface Emitters {
-    readonly eventEmitter: EventEmitter;
-    readonly apiClientEmitter: EventEmitter;
+    readonly eventEmitter: EventEmitterInstance;
+    readonly apiClientEmitter: EventEmitterInstance;
 }
 
 @Injectable({
@@ -151,7 +153,7 @@ export class AdfHttpClient implements JsApiHttpClient {
         return this.request<T>(url, { ...options, httpMethod: 'DELETE' }, sc, emitters);
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: EventEmitter) {
+    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any) {
         const eventPromise = Object.assign(promise, {
             on<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) {
                 eventEmitter.on(event, fn, context);
@@ -174,7 +176,7 @@ export class AdfHttpClient implements JsApiHttpClient {
     }
 
     private getEventEmitters(): Emitters {
-        const apiClientEmitter = new EventEmitter();
+        const apiClientEmitter: EventEmitterInstance = new EventEmitter();
 
         // Bind this instance's methods to the apiClientEmitter for backward compatibility
         apiClientEmitter.on = this.on.bind(this);

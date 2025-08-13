@@ -28,6 +28,8 @@ import { AlfrescoApiType } from './to-deprecate/alfresco-api-type';
 import { HttpClient } from './api-clients/http-client.interface';
 import { AlfrescoApiClient, AlfrescoApiClientPromise } from './alfrescoApiClient';
 
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
 export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
     __type = 'legacy-client';
     contentClient: ContentClient;
@@ -388,7 +390,7 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
         const contentPromise = this.contentAuth.login(username, password);
         const processPromise = this.processAuth.login(username, password);
 
-        const eventEmitter = new EventEmitter();
+        const eventEmitter: EventEmitterInstance = new EventEmitter();
         const promise = new Promise<[string, string]>((resolve, reject) => {
             Promise.all([contentPromise, processPromise]).then(
                 (data) => {
@@ -445,7 +447,7 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
         const contentPromise = this.contentAuth.logout();
         const processPromise = this.processAuth.logout();
 
-        const eventEmitter = new EventEmitter();
+        const eventEmitter: EventEmitterInstance = new EventEmitter();
         const promise = new Promise<void>((resolve, reject) => {
             Promise.all([contentPromise, processPromise]).then(
                 () => {

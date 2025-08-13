@@ -23,7 +23,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EventEmitter } from 'eventemitter3';
-
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 @Injectable({
     providedIn: 'root'
 })
@@ -49,19 +49,19 @@ export class AuthenticationService implements AuthenticationServiceInterface {
         }
     }
 
-    get on(): EventEmitter['on'] {
+    get on(): EventEmitterInstance['on'] {
         return this.isOauth() ? this.oidcAuthenticationService.on : this.basicAlfrescoAuthService.on;
     }
 
-    get off(): EventEmitter['off'] {
+    get off(): EventEmitterInstance['off'] {
         return this.isOauth() ? this.oidcAuthenticationService.off : this.basicAlfrescoAuthService.off;
     }
 
-    get once(): EventEmitter['once'] {
+    get once(): EventEmitterInstance['once'] {
         return this.isOauth() ? this.oidcAuthenticationService.once : this.basicAlfrescoAuthService.once;
     }
 
-    get emit(): EventEmitter['emit'] {
+    get emit(): EventEmitterInstance['emit'] {
         return this.isOauth() ? this.oidcAuthenticationService.emit : this.basicAlfrescoAuthService.emit;
     }
 

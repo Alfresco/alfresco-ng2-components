@@ -19,15 +19,17 @@ import { HttpHeaders } from '@angular/common/http';
 import { EventEmitter } from 'eventemitter3';
 import { Observable } from 'rxjs';
 
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
 export interface AuthenticationServiceInterface {
     onError: any;
     onLogin: any;
     onLogout: any;
 
-    on: EventEmitter['on'];
-    off: EventEmitter['off'];
-    once: EventEmitter['once'];
-    emit: EventEmitter['emit'];
+    on: EventEmitterInstance['on'];
+    off: EventEmitterInstance['off'];
+    once: EventEmitterInstance['once'];
+    emit: EventEmitterInstance['emit'];
 
     getToken(): string;
     isLoggedIn(): boolean;
