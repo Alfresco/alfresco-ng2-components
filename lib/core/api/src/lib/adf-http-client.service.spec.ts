@@ -118,7 +118,6 @@ describe('AdfHttpClient', () => {
                 httpMethod: 'POST'
             };
 
-            // const spy = spyOn(emitter, 'emit').and.callThrough();
             const eventSpy = spyOn(emitters.eventEmitter, 'emit').and.callThrough();
 
             angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(() => {
