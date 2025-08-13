@@ -294,15 +294,15 @@
       "TOGGLE_ASC_DESC_ORDER": "Alternar resultados entre ordem crescente e decrescente",
       "SORT_BY": "Ordenar por:",
       "BUTTON": {
-        "TOOLTIP": "Search",
-        "ARIA-LABEL": "Search button"
+        "TOOLTIP": "Pesquisar",
+        "ARIA-LABEL": "Botão Pesquisar"
       },
       "INPUT": {
-        "ARIA-LABEL": "Search input"
+        "ARIA-LABEL": "Entrada de pesquisa"
       },
       "FILTER": {
         "BUTTONS": {
-          "CLOSE": "Close"
+          "CLOSE": "Fechar"
         }
       }
     },
