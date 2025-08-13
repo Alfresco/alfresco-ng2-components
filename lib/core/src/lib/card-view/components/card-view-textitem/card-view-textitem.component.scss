@@ -5,6 +5,10 @@
         font-size: var(--theme-caption-font-size);
         padding-top: 6px;
 
+        &::before {
+            display: none;
+        }
+
         ul {
             margin: 0;
             padding: 0;

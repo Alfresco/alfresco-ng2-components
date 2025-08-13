@@ -84,7 +84,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
+    constructor(
+        private clipboardService: ClipboardService,
+        private translateService: TranslationService,
+        private cd: ChangeDetectorRef
+    ) {
         super();
     }
 
@@ -141,6 +145,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     private resetErrorMessages() {
         this.errors = [];
+        this.textInput.setErrors(null);
+        this.textInput.markAsUntouched();
     }
 
     update(): void {
@@ -151,6 +157,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 this.cardViewUpdateService.update({ ...this.property, isValidValue: true } as CardViewTextItemModel, this.property.value);
             } else {
                 this.errors = this.property.getValidationErrors(this.editedValue);
+                this.textInput.setErrors({ customError: true });
+                this.textInput.markAsTouched();
                 this.cardViewUpdateService.update({ ...this.property, isValidValue: false } as CardViewTextItemModel, this.editedValue);
             }
         }

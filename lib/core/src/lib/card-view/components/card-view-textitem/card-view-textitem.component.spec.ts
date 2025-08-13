@@ -49,6 +49,7 @@ describe('CardViewTextItemComponent', () => {
 
     const updateTextField = async (key: string, value: string) => {
         await testingUtils.fillMatInputByDataAutomationId(`card-textitem-value-${key}`, value);
+        component.update();
         fixture.detectChanges();
     };
 
@@ -69,6 +70,7 @@ describe('CardViewTextItemComponent', () => {
     const verifyNoErrors = (key: string) => {
         const errorElement = getErrorElements(key);
         expect(errorElement.length).toBe(0);
+        expect(component.textInput.errors).toBeNull();
     };
 
     const checkCtrlZActions = (ctrlKeyValue: boolean, codeValue: string, metaKeyValue: boolean, mockTestValue: string, flag: boolean) => {
@@ -613,6 +615,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(component.errors).toBe(expectedErrorMessages);
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should set the errorMessages properly if the editedValue is valid', async () => {
@@ -621,7 +624,7 @@ describe('CardViewTextItemComponent', () => {
             await updateTextField(component.property.key, 'updated-value');
             await fixture.whenStable();
 
-            expect(component.errors).toEqual([]);
+            verifyNoErrors('textKey');
         });
 
         it('should render the error', () => {
@@ -759,6 +762,7 @@ describe('CardViewTextItemComponent', () => {
 
             const errorMessage = getTextFieldError(component.property.key);
             expect(errorMessage).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should NOT show validation error for empty string', async () => {
@@ -785,6 +789,7 @@ describe('CardViewTextItemComponent', () => {
 
             const errorMessage = getTextFieldError(component.property.key);
             expect(errorMessage).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should show validation error for float number', async () => {
@@ -795,6 +800,7 @@ describe('CardViewTextItemComponent', () => {
             const error = getTextFieldError(component.property.key);
             expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
             expect(component.property.value).toBe(10);
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should show validation error for exceed the number limit (2147483648)', async () => {
@@ -805,6 +811,7 @@ describe('CardViewTextItemComponent', () => {
             const error = getTextFieldError(component.property.key);
             expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
             expect(component.property.value).toBe(10);
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should not show validation error for below the number limit (2147483647)', async () => {
@@ -862,6 +869,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             expect(getTextFieldError(component.property.key)).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should show validation error for empty string (float)', async () => {
@@ -870,6 +878,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             expect(getTextFieldError(component.property.key)).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+            expect(component.textInput.errors?.['customError']).toEqual(true);
         });
 
         it('should update input the value on input updated', async () => {
