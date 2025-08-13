@@ -25,14 +25,13 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { ReplaySubject } from 'rxjs';
-import { UnitTestingUtils } from '@alfresco/adf-core';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { By } from '@angular/platform-browser';
 
 describe('SearchCheckListComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchCheckListComponent>;
     let component: SearchCheckListComponent;
-    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,7 +40,6 @@ describe('SearchCheckListComponent', () => {
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
-        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         component.context = {
             queryFragments: {},
@@ -149,7 +147,7 @@ describe('SearchCheckListComponent', () => {
         ]);
 
         fixture.detectChanges();
-        const checkboxes = unitTestingUtils.getAllByDirective(MatCheckbox);
+        const checkboxes = fixture.debugElement.queryAll(By.directive(MatCheckbox));
         expect(checkboxes.length).toBe(2);
         expect(checkboxes.every((checkbox) => checkbox.componentInstance.labelPosition === 'after')).toBeTrue();
     });

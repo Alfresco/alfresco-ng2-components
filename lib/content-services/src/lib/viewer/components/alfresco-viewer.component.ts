@@ -300,7 +300,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         try {
             const sharedLinkEntry = await this.sharedLinksApi.getSharedLink(this.sharedLinkId);
             await this.setUpSharedLinkFile(sharedLinkEntry);
-        } catch (error) {
+        } catch {
             this.invalidSharedLink.next(undefined);
             this.mimeType = 'invalid-link';
             this.urlFileContent = 'invalid-file';
@@ -317,7 +317,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                 await this.setUpNodeFile(this.nodeEntry.entry);
                 this.cdr.detectChanges();
             }
-        } catch (error) {
+        } catch {
             this.urlFileContent = 'invalid-node';
         }
     }
@@ -392,14 +392,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                 const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
                 return { url: urlFileContent, mimeType: 'application/pdf' };
             }
-        } catch (error) {
+        } catch {
             try {
                 const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
                     return { url: urlFileContent, mimeType: 'image/png' };
                 }
-            } catch (renditionError) {
+            } catch {
                 return null;
             }
         }

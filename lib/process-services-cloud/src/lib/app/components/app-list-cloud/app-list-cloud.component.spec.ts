@@ -213,7 +213,7 @@ describe('AppListCloudComponent', () => {
             customFixture.detectChanges();
             await customFixture.whenStable();
 
-            const title: any = customFixture.nativeElement.querySelector('#custom-id');
+            const title = customFixture.nativeElement.querySelector('#custom-id');
             expect(title.innerText).toBe('No Apps Found');
         });
     });

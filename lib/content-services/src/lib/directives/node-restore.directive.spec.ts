@@ -38,7 +38,7 @@ describe('NodeRestoreDirective', () => {
     let component: TestComponent;
     let trashcanApi: TrashcanApi;
     let directiveInstance: NodeRestoreDirective;
-    let restoreNodeSpy: any;
+    let restoreNodeSpy: jasmine.Spy;
     let translationService: TranslationService;
 
     beforeEach(() => {
@@ -131,7 +131,7 @@ describe('NodeRestoreDirective', () => {
         it('should notify on multiple fails', (done) => {
             const error = { message: '{ "error": {} }' };
 
-            directiveInstance.restore.subscribe((event: any) => {
+            directiveInstance.restore.subscribe((event) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PARTIAL_PLURAL');
                 done();
             });
@@ -193,7 +193,7 @@ describe('NodeRestoreDirective', () => {
 
             restoreNodeSpy.and.returnValue(Promise.reject(error));
 
-            directiveInstance.restore.subscribe((event: any) => {
+            directiveInstance.restore.subscribe((event) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.LOCATION_MISSING');
                 done();
             });
@@ -205,7 +205,7 @@ describe('NodeRestoreDirective', () => {
         });
 
         it('should notify success when restore multiple nodes', (done) => {
-            directiveInstance.restore.subscribe((event: any) => {
+            directiveInstance.restore.subscribe((event) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PLURAL');
 
                 done();

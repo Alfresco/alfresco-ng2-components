@@ -161,7 +161,7 @@ export class FolderDialogComponent implements OnInit {
             if (statusCode === 409) {
                 errorMessage = 'CORE.MESSAGES.ERRORS.EXISTENT_FOLDER';
             }
-        } catch (err) {
+        } catch {
             /* Do nothing, keep the original message */
         }
 

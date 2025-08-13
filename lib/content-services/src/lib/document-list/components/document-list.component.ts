@@ -430,7 +430,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     dataTable: DataTableComponent;
 
     actions: ContentActionModel[] = [];
-    contextActionHandler: Subject<any> = new Subject();
+    contextActionHandler = new Subject();
     data: ShareDataTableAdapter;
     noPermission: boolean = false;
     selection = new Array<NodeEntry>();
@@ -1051,7 +1051,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
                 if (JSON.parse(err.message).error.statusCode === 403) {
                     this.noPermission = true;
                 }
-            } catch (error) {
+            } catch {
                 /* empty */
             }
         }

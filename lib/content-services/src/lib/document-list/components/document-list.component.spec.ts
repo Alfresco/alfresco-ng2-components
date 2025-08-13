@@ -52,7 +52,6 @@ import {
 } from '../../mock';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
-import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { ImageResolver } from '../data/image-resolver.model';
 import { RowFilter } from '../data/row-filter.model';
 import { ShareDataRow } from '../data/share-data-row.model';
@@ -64,10 +63,15 @@ import { FileAutoDownloadComponent } from './file-auto-download/file-auto-downlo
 import { DocumentListComponent } from './document-list.component';
 import { CustomResourcesService, DocumentListService } from '../public-api';
 import { CommonModule } from '@angular/common';
+import { MatIconRegistry } from '@angular/material/icon';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
 };
+
+export const matIconRegistryMock = {
+    addSvgIconInNamespace: () => {}
+} as any as MatIconRegistry;
 
 describe('DocumentList', () => {
     let loader: HarnessLoader;

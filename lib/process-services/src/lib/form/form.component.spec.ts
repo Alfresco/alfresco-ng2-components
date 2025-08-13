@@ -29,9 +29,9 @@ import {
     FormService,
     WidgetVisibilityService,
     ContainerModel,
-    fakeForm,
     NoopAuthModule
 } from '@alfresco/adf-core';
+import { fakeForm } from './form.component.mock';
 import { NodeMetadata, NodesApiService } from '@alfresco/adf-content-services';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';

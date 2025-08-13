@@ -16,11 +16,11 @@
  */
 
 import { getProcessInstanceVariableMock } from '../mock/process-instance-variable.mock';
-
 import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { VariableMapperService } from './variable-mapper.sevice';
-import { DataColumn, getDataColumnMock } from '@alfresco/adf-core';
+import { DataColumn } from '@alfresco/adf-core';
+import { getDataColumnMock } from '../testing/data-column.mock';
 
 describe('VariableMapperService', () => {
     let service: VariableMapperService;

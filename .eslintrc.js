@@ -28,6 +28,11 @@ module.exports = {
                 'plugin:@angular-eslint/recommended',
                 'plugin:@angular-eslint/template/process-inline-templates',
                 'plugin:jsdoc/recommended-typescript-error'
+                // Uncomment this once all linting issues are fixed
+                // Note to developers:
+                //  you can uncomment the full ruleset locally when fixing issues, and then comment
+                //  that will allow splitting the work into smaller chunks
+                // 'plugin:unicorn/recommended'
             ],
             plugins: [
                 'eslint-plugin-unicorn',
@@ -152,6 +157,7 @@ module.exports = {
                 'rxjs/no-subject-value': 'error',
                 'rxjs/no-unsafe-takeuntil': 'error',
                 'unicorn/filename-case': 'error',
+                'unicorn/prefer-optional-catch-binding': 'error',
                 '@typescript-eslint/no-unused-expressions': [
                     'error',
                     {

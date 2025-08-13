@@ -19,15 +19,10 @@ import { SimpleChange } from '@angular/core';
 import { of } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    formDefinitionDropdownField,
-    formDefinitionTwoTextFields,
-    formDefinitionRequiredField,
-    formDefVisibilityFieldDependsOnNextOne,
-    formDefVisibilitiFieldDependsOnPreviousOne,
-    formReadonlyTwoTextFields,
-    FormRenderingService
-} from '@alfresco/adf-core';
+import { formDefinitionDropdownField, formDefinitionTwoTextFields, formDefinitionRequiredField } from './form-definition.mock';
+import { formDefVisibilityFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from './form-definition-visibility.mock';
+import { formReadonlyTwoTextFields } from './form-definition-readonly.mock';
+import { FormRenderingService } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';

@@ -759,7 +759,7 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.error.subscribe((error: any) => {
+            component.error.subscribe((error) => {
                 expect(error).toEqual(mockError);
                 done();
             });

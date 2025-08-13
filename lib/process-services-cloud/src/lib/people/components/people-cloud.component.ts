@@ -376,7 +376,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
                 if (!this.equalsUsers(user, validationResult)) {
                     this.invalidUsers.push(user);
                 }
-            } catch (error) {
+            } catch {
                 this.invalidUsers.push(user);
             }
         }

@@ -32,6 +32,12 @@ import { TextEditorComponent } from '../text/text.editor';
 import { ErrorWidgetComponent } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 
+export interface RowEditorReturnType {
+    table: DynamicTableModel;
+    row: DynamicTableRow;
+    column: DynamicTableColumn;
+}
+
 @Component({
     selector: 'row-editor',
     imports: [
@@ -59,10 +65,10 @@ export class RowEditorComponent {
     column: DynamicTableColumn;
 
     @Output()
-    save: EventEmitter<any> = new EventEmitter<any>();
+    save = new EventEmitter<RowEditorReturnType>();
 
     @Output()
-    cancel: EventEmitter<any> = new EventEmitter<any>();
+    cancel = new EventEmitter<RowEditorReturnType>();
 
     validationSummary: DynamicRowValidationSummary;
 

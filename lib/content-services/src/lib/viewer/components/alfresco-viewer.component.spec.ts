@@ -790,7 +790,7 @@ describe('AlfrescoViewerComponent', () => {
                 });
 
                 it('should Click on close button hide the viewer', (done) => {
-                    const closeButton: any = element.querySelector('.adf-viewer-close-button');
+                    const closeButton = element.querySelector<HTMLButtonElement>('.adf-viewer-close-button');
                     closeButton.click();
                     fixture.detectChanges();
 

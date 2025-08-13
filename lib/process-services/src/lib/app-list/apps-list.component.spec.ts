@@ -269,7 +269,7 @@ describe('AppsListComponent', () => {
             customFixture.detectChanges();
             await customFixture.whenStable();
 
-            const title: any = customFixture.debugElement.queryAll(By.css('#custom-id'));
+            const title = customFixture.debugElement.queryAll(By.css('#custom-id'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('No Apps');
         });

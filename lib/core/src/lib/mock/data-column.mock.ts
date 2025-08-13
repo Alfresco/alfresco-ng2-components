@@ -15,30 +15,7 @@
  * limitations under the License.
  */
 
-import { DataColumn } from '../datatable/data/data-column.model';
 import { mockPathInfos } from '../datatable/components/mocks/datatable.mock';
-
-export const getDataColumnMock = <T = unknown>(column: Partial<DataColumn<T>> = {}): DataColumn<T> => ({
-    id: 'columnId',
-    key: 'key',
-    type: 'text',
-    format: 'format',
-    sortable: false,
-    title: 'title',
-    srTitle: 'srTitle',
-    cssClass: 'cssClass',
-    template: undefined,
-    copyContent: false,
-    editable: false,
-    focus: false,
-    sortingKey: 'sortingKey',
-    header: undefined,
-    draggable: false,
-    resizable: true,
-    isHidden: false,
-    customData: undefined,
-    ...column
-});
 
 export const textColumnRows = [{ firstname: 'John' }, { firstname: 'Henry' }, { firstname: 'David' }, { firstname: 'Thomas' }];
 

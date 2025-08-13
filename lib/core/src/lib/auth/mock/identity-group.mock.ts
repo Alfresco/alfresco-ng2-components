@@ -76,20 +76,6 @@ export const clientRoles: IdentityRoleModel[] = [
 
 export const mockJoinGroupRequest: IdentityJoinGroupRequestModel = { userId: 'mock-hser-id', groupId: 'mock-group-id', realm: 'mock-realm-name' };
 
-export const mockGroup1 = {
-    id: 'mock-group-id-1',
-    name: 'Mock Group 1',
-    path: '/mock',
-    subGroups: []
-} as IdentityGroupModel;
-
-export const mockGroup2 = {
-    id: 'mock-group-id-2',
-    name: 'Mock Group 2',
-    path: '',
-    subGroups: []
-} as IdentityGroupModel;
-
 export const mockGroups = [
     { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] } as IdentityGroupModel,
     { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] } as IdentityGroupModel

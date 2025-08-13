@@ -15,8 +15,26 @@
  * limitations under the License.
  */
 
-import { MatIconRegistry } from '@angular/material/icon';
+import { DataColumn } from '@alfresco/adf-core';
 
-export const matIconRegistryMock = {
-    addSvgIconInNamespace: () => {}
-} as any as MatIconRegistry;
+export const getDataColumnMock = <T = unknown>(column: Partial<DataColumn<T>> = {}): DataColumn<T> => ({
+    id: 'columnId',
+    key: 'key',
+    type: 'text',
+    format: 'format',
+    sortable: false,
+    title: 'title',
+    srTitle: 'srTitle',
+    cssClass: 'cssClass',
+    template: undefined,
+    copyContent: false,
+    editable: false,
+    focus: false,
+    sortingKey: 'sortingKey',
+    header: undefined,
+    draggable: false,
+    resizable: true,
+    isHidden: false,
+    customData: undefined,
+    ...column
+});

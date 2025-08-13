@@ -313,7 +313,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
 
         try {
             document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
-        } catch (err) {
+        } catch {
             /* continue regardless of error */
         }
     }

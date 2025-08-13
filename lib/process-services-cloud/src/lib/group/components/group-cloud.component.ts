@@ -268,7 +268,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
                 if (this.isPreselectedGroupInvalid(group, validationResult)) {
                     this.invalidGroups.push(group);
                 }
-            } catch (error) {
+            } catch {
                 this.invalidGroups.push(group);
             }
         }

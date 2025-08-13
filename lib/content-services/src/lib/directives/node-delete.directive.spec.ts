@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { RedirectAuthService } from '@alfresco/adf-core';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, Subscription } from 'rxjs';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 
 @Component({
@@ -73,10 +73,10 @@ describe('NodeDeleteDirective', () => {
     let elementWithPermanentDelete: DebugElement;
     let component: TestComponent;
     let componentWithPermanentDelete: TestDeletePermanentComponent;
-    let deleteNodeSpy: any;
-    let disposableDelete: any;
-    let deleteNodePermanentSpy: any;
-    let purgeDeletedNodePermanentSpy: any;
+    let deleteNodeSpy: jasmine.Spy;
+    let disposableDelete: Subscription;
+    let deleteNodePermanentSpy: jasmine.Spy;
+    let purgeDeletedNodePermanentSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({

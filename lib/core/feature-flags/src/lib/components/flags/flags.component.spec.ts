@@ -58,7 +58,7 @@ describe('FlagsComponent', () => {
     });
 
     it('should update inputValue$ when onInputChange is called', (done) => {
-        (component as any).onInputChange('test');
+        component.onInputChange('test');
         component.inputValue$.subscribe((value) => {
             expect(value).toBe('test');
             done();
@@ -67,12 +67,12 @@ describe('FlagsComponent', () => {
 
     it('should clear inputValue when onClearInput is called', () => {
         component.inputValue = 'test';
-        (component as any).onClearInput();
+        component.onClearInput();
         expect(component.inputValue).toBe('');
     });
 
     it('should filter flags when when onClearInput is called', (done) => {
-        (component as any).onInputChange('feature1');
+        component.onInputChange('feature1');
         component.flags$.subscribe((flags) => {
             expect(flags).toEqual([{ fictive: false, flag: 'feature1', value: true }]);
             done();

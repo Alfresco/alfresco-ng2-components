@@ -2188,37 +2188,6 @@ export const mockSectionWithFields = {
     colspan: 1
 };
 
-export const mockFormWithSimpleSection = {
-    id: 'form-363114eb-35f6-40d0-9908-8bbbe776c3e6',
-    name: 'simplest section',
-    key: 'simplest-section-uzvc7',
-    description: '',
-    version: 0,
-    formDefinition: {
-        tabs: [],
-        fields: [
-            {
-                id: 'Group0wuwv7',
-                name: 'Group',
-                type: 'group',
-                tab: null,
-                params: {
-                    hideHeader: false,
-                    allowCollapse: false,
-                    collapseByDefault: false
-                },
-                numberOfColumns: 1,
-                fields: {
-                    1: [mockSectionWithFields]
-                }
-            }
-        ],
-        outcomes: [],
-        metadata: {},
-        variables: []
-    }
-};
-
 export const mockSectionVisibilityForm = {
     id: 'form-65e9f07c-44d9-4469-8f5d-74aba3bd7326',
     name: 'section visibility',

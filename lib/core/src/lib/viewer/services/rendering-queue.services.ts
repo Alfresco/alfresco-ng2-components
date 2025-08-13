@@ -31,16 +31,16 @@ export class RenderingQueueServices {
         FINISHED: 3
     };
 
-    CLEANUP_TIMEOUT: number = 30000;
+    CLEANUP_TIMEOUT: number = 30_000;
 
     pdfViewer: any = null;
     pdfThumbnailViewer: any = null;
     onIdle: any = null;
 
-    highestPriorityPage: any = null;
+    highestPriorityPage: string | null = null;
     idleTimeout: any = null;
     printing: any = false;
-    isThumbnailViewEnabled: any = false;
+    isThumbnailViewEnabled = false;
 
     /**
      * Set the instance of the PDF Viewer
@@ -81,10 +81,8 @@ export class RenderingQueueServices {
             return;
         }
         // No pages needed rendering so check thumbnails.
-        if (this.pdfThumbnailViewer && this.isThumbnailViewEnabled) {
-            if (this.pdfThumbnailViewer.forceRendering()) {
-                return;
-            }
+        if (this.pdfThumbnailViewer && this.isThumbnailViewEnabled && this.pdfThumbnailViewer.forceRendering()) {
+            return;
         }
 
         if (this.printing) {
@@ -106,11 +104,11 @@ export class RenderingQueueServices {
         // 2 if last scrolled up page before the visible pages
         const visibleViews = visible.views;
 
-        const numVisible = visibleViews.length;
-        if (numVisible === 0) {
+        const numberVisible = visibleViews.length;
+        if (numberVisible === 0) {
             return false;
         }
-        for (let i = 0; i < numVisible; ++i) {
+        for (let i = 0; i < numberVisible; ++i) {
             const view = visibleViews[i].view;
             if (!this.isViewFinished(view)) {
                 return view;
@@ -180,8 +178,9 @@ export class RenderingQueueServices {
                 view.draw().then(continueRendering, continueRendering);
                 break;
             }
-            default:
+            default: {
                 break;
+            }
         }
         return true;
     }

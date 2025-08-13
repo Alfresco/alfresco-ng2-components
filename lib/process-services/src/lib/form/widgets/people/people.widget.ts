@@ -74,7 +74,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     groupId: number;
 
     searchTerm = new UntypedFormControl();
-    searchTerms$: Observable<any> = this.searchTerm.valueChanges;
+    searchTerms$ = this.searchTerm.valueChanges;
 
     users$: Observable<LightUserRepresentation[]> = this.searchTerms$.pipe(
         distinctUntilChanged(),
@@ -92,7 +92,10 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         })
     );
 
-    constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
+    constructor(
+        public formService: FormService,
+        public peopleProcessService: PeopleProcessService
+    ) {
         super(formService);
     }
 

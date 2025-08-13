@@ -24,11 +24,11 @@ import { FormService } from '../services/form.service';
 import { ByPassFormRuleManager, FORM_RULES_MANAGER, FormRulesManager, formRulesManagerFactory } from './form-rules.model';
 
 class CustomRuleManager extends FormRulesManager<any> {
-    protected getRules() {
+    getRules(): any {
         return null;
     }
 
-    protected handleRuleEvent(): void {
+    handleRuleEvent(): void {
         return;
     }
 }
@@ -67,8 +67,8 @@ describe('Form Rules', () => {
 
         it('should send the form loaded event when initialized', () => {
             const rulesManager = new CustomRuleManager(formService);
-            const getRulesSpy = spyOn<any>(rulesManager, 'getRules').and.returnValue({});
-            const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
+            const getRulesSpy = spyOn(rulesManager, 'getRules').and.returnValue({});
+            const handleRuleEventSpy = spyOn(rulesManager, 'handleRuleEvent');
             const formModel = new FormModel({ id: 'mock' }, {}, false);
             const formEvent = new FormEvent(formModel);
             const event = new FormRulesEvent('formLoaded', formEvent);
@@ -82,8 +82,8 @@ describe('Form Rules', () => {
 
         it('should not receive the form event when event has no form', () => {
             const rulesManager = new CustomRuleManager(formService);
-            spyOn<any>(rulesManager, 'getRules').and.returnValue({});
-            const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
+            spyOn(rulesManager, 'getRules').and.returnValue({});
+            const handleRuleEventSpy = spyOn(rulesManager, 'handleRuleEvent');
             const formModel = new FormModel({ id: 'mock' }, {}, false);
             const formEvent = new FormEvent(new FormModel(null));
             const event = new FormRulesEvent('formLoaded', formEvent);
@@ -105,8 +105,8 @@ describe('Form Rules', () => {
 
         beforeEach(() => {
             injector = TestBed.inject(Injector);
-            rulesManager = formRulesManagerFactory<any>(injector);
-            getRulesSpy = spyOn<any>(rulesManager, 'getRules');
+            rulesManager = formRulesManagerFactory(injector);
+            getRulesSpy = spyOn(rulesManager as any, 'getRules');
         });
 
         it('factory function should return bypass service', () => {

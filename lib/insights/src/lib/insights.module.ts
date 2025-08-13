@@ -20,7 +20,15 @@ import { provideTranslations } from '@alfresco/adf-core';
 import { ANALYTICS_PROCESS_DIRECTIVES } from './analytics-process/public-api';
 import { DIAGRAM_DIRECTIVES } from './diagram/public-api';
 
-/** @deprecated This module is deprecated and will be removed in a future release. */
+/**
+ * @deprecated This module is deprecated and will be removed in a future release.
+ * Example:
+ * ```
+ * providers: [
+ *  provideTranslations('adf-insights', 'assets/adf-insights')
+ * ]
+ * ```
+ */
 @NgModule({
     imports: [...ANALYTICS_PROCESS_DIRECTIVES, ...DIAGRAM_DIRECTIVES],
     exports: [...ANALYTICS_PROCESS_DIRECTIVES, ...DIAGRAM_DIRECTIVES]

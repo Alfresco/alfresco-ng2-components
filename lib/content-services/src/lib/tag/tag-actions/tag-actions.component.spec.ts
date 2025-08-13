@@ -43,7 +43,7 @@ describe('TagActionsComponent', () => {
         }
     };
 
-    let component: any;
+    let component: TagActionsComponent;
     let fixture: ComponentFixture<TagActionsComponent>;
     let element: HTMLElement;
     let tagService: TagService;
@@ -90,7 +90,7 @@ describe('TagActionsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton: any = element.querySelector('#tag_delete_test1');
+            const deleteButton = element.querySelector<HTMLButtonElement>('#tag_delete_test1');
             deleteButton.click();
             expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');
         });
@@ -102,7 +102,7 @@ describe('TagActionsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const addButton: any = element.querySelector('#add-tag');
+            const addButton = element.querySelector<HTMLButtonElement>('#add-tag');
             expect(addButton.disabled).toEqual(true);
         });
 
@@ -110,7 +110,7 @@ describe('TagActionsComponent', () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'test1';
 
-            await component.error.subscribe((res) => {
+            component.error.subscribe((res) => {
                 expect(res).toEqual('TAG.MESSAGES.EXIST');
             });
 
@@ -118,7 +118,7 @@ describe('TagActionsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const addButton: any = element.querySelector('#add-tag');
+            const addButton = element.querySelector<HTMLButtonElement>('#add-tag');
             addButton.click();
         });
 
@@ -130,7 +130,7 @@ describe('TagActionsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const addButton: any = element.querySelector('#add-tag');
+            const addButton = element.querySelector<HTMLButtonElement>('#add-tag');
             expect(addButton.disabled).toEqual(false);
         });
     });

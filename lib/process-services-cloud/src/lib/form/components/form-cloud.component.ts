@@ -363,8 +363,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 }),
                 takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe(
-                (form) => {
+            .subscribe({
+                next: (form) => {
                     this.formCloudRepresentationJSON = form;
                     this.formCloudRepresentationJSON.processVariables = this.data || [];
                     const parsedForm = this.parseForm(form);
@@ -374,10 +374,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.form.nodeId = '-my-';
                     this.onFormLoaded(this.form);
                 },
-                (error) => {
+                error: (error) => {
                     this.handleError(error);
                 }
-            );
+            });
     }
 
     saveTaskForm() {
@@ -385,12 +385,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.formCloudService
                 .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values)
                 .pipe(takeUntilDestroyed(this.destroyRef))
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         this.onTaskSaved(this.form);
                     },
-                    (error) => this.onTaskSavedError(error)
-                );
+                    error: (error) => this.onTaskSavedError(error)
+                });
             this.displayModeService.onSaveTask(this.id, this.displayMode, this.displayModeConfigurations);
         }
     }
@@ -420,12 +420,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
                 .pipe(takeUntilDestroyed(this.destroyRef))
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         this.onTaskCompleted(this.form);
                     },
-                    (error) => this.onTaskCompletedError(error)
-                );
+                    error: (error) => this.onTaskCompletedError(error)
+                });
         }
     }
 
@@ -531,7 +531,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {
-        if (injectedFieldValidators && injectedFieldValidators?.length) {
+        if (Array.isArray(injectedFieldValidators) && injectedFieldValidators.length) {
             this.fieldValidators = [...this.fieldValidators, ...injectedFieldValidators];
         }
     }

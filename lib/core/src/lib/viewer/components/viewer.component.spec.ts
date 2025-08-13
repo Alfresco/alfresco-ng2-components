@@ -545,9 +545,9 @@ describe('ViewerComponent', () => {
                         keyCode: 27
                     } as KeyboardEventInit);
 
-                    const dialogRef = dialog.open(DummyDialogComponent);
+                    const dialogReference = dialog.open(DummyDialogComponent);
 
-                    dialogRef.afterClosed().subscribe(() => {
+                    dialogReference.afterClosed().subscribe(() => {
                         EventMock.keyDown(27);
                         fixture.detectChanges();
                         expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
