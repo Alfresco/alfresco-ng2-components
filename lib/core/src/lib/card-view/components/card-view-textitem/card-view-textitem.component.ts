@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/f
 import { debounceTime, filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,7 +47,7 @@ const templateTypes = {
     imports: [
         CommonModule,
         MatFormFieldModule,
-        TranslateModule,
+        TranslatePipe,
         MatInputModule,
         ReactiveFormsModule,
         MatChipsModule,
