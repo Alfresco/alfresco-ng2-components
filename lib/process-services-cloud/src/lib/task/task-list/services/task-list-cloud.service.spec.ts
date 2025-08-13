@@ -158,4 +158,39 @@ describe('TaskListCloudService', () => {
             expect(res).toBe('Appname not configured');
         });
     });
+    describe('getTaskListCount', () => {
+        it('should concat the app name to the request url', async () => {
+            const taskRequest = {
+                appName: 'fakeName'
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.getTaskListCount(taskRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res).toContain('fakeName/query/v1/tasks/count');
+        });
+
+        it('should return 0 if response is falsy for getTaskListCount', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(() => Promise.resolve(null));
+
+            const res = await firstValueFrom(service.getTaskListCount(taskRequest));
+
+            expect(res).toBe(0);
+        });
+
+        it('should throw error if appName is not configured in getTaskListCount', async () => {
+            const taskRequest = { appName: null } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.getTaskListCount(taskRequest).pipe(catchError((error) => of(error.message))));
+
+            expect(res).toBe('Appname not configured');
+        });
+    });
 });
