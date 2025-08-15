@@ -660,7 +660,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     universalBtoa(stringToConvert: string) {
         try {
             return btoa(stringToConvert);
-        } catch (err) {
+        } catch {
             return Buffer.from(stringToConvert).toString('base64');
         }
     }
@@ -763,7 +763,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
                 const ticketEntry = await authContentApi.getTicket();
                 this.config.ticketEcm = ticketEntry.entry.id;
                 this.emit('ticket_exchanged');
-            } catch (e) {
+            } catch {
                 // continue regardless of error
             }
         });
