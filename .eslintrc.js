@@ -200,7 +200,8 @@ module.exports = {
             files: ['*.spec.ts'],
             plugins: ['@alfresco/eslint-angular'],
             rules: {
-                '@alfresco/eslint-angular/no-angular-material-selectors': 'error'
+                '@alfresco/eslint-angular/no-angular-material-selectors': 'error',
+                '@angular-eslint/component-class-suffix': 'off'
             }
         },
         {

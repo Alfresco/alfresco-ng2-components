@@ -16,10 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ScreenRenderingService } from '../../../services/public-api';
+import { ScreenRenderingService } from '../../services/screen-rendering.service';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
 
 @Component({
@@ -31,8 +30,7 @@ import { TaskScreenCloudComponent } from './screen-cloud.component';
             <div class="adf-cloud-test-container-rootProcessInstanceId">{{ rootProcessInstanceId }}</div>
             <button class="adf-cloud-test-container-complete-btn" (click)="onComplete()">complete</button>
         </div>
-    `,
-    imports: [CommonModule]
+    `
 })
 class TestComponent {
     @Input() taskId = '';
@@ -59,7 +57,7 @@ class TestComponent {
             (taskCompleted)="onTaskCompleted()"
         />
     `,
-    imports: [CommonModule, TaskScreenCloudComponent]
+    imports: [TaskScreenCloudComponent]
 })
 class TestWrapperComponent {
     @Input() screenId = '';

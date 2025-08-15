@@ -17,9 +17,9 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { ScreenRenderingService } from '../../../services/public-api';
+import { ScreenRenderingService } from '../../services/screen-rendering.service';
 import { MatCardModule } from '@angular/material/card';
-import { UserTaskCustomUi } from '../../models/screen-cloud.model';
+import { UserTaskCustomUi } from './screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
