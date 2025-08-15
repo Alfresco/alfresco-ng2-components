@@ -176,12 +176,12 @@ export class SuperagentHttpClient implements HttpClient {
 
         if (contentType && contentType !== 'multipart/form-data') {
             request.type(contentType);
-        } else if (!(request as any).header['Content-Type'] && contentType !== 'multipart/form-data') {
+        } else if (!request.header['Content-Type'] && contentType !== 'multipart/form-data') {
             request.type('application/json');
         }
 
         if (contentType === 'application/x-www-form-urlencoded') {
-            request.send(SuperagentHttpClient.normalizeParams(formParams)).on('progress', (event: any) => {
+            request.send(SuperagentHttpClient.normalizeParams(formParams)).on('progress', (event) => {
                 this.progress(event, eventEmitter);
             });
         } else if (contentType === 'multipart/form-data') {
@@ -231,7 +231,7 @@ export class SuperagentHttpClient implements HttpClient {
 
         try {
             document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
-        } catch (err) {
+        } catch {
             /* continue regardless of error */
         }
     }
