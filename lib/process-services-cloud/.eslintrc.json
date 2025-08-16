@@ -85,6 +85,13 @@
       }
     },
     {
+      "files": ["*.spec.ts"],
+      "plugins": ["@alfresco/eslint-angular"],
+      "rules": {
+        "@angular-eslint/component-class-suffix": "off"
+      }
+    },
+    {
       "files": ["*.html"],
       "extends": ["plugin:@nx/angular-template"],
       "parserOptions": {

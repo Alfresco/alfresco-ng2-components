@@ -21,7 +21,6 @@ export * from './form-fields.interfaces';
 export * from './local-preference-cloud.service';
 export * from './notification-cloud.service';
 export * from './preference-cloud.interface';
-export * from './screen-rendering.service';
 export * from './task-list-cloud.service.interface';
 export * from './user-preference-cloud.service';
 export * from './variable-mapper.sevice';

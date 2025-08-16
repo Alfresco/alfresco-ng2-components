@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export * from './models/screen-cloud.model';
+export * from './components/screen-cloud/screen-cloud.model';
+export * from './services/screen-rendering.service';
+export * from './services/provide-screen';
