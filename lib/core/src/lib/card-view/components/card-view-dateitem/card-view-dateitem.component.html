@@ -19,7 +19,7 @@
             >{{ property.displayValue }}</span
         >
     </span>
-    <mat-form-field *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable hxp-input">
+    <mat-form-field *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable hxp-input" [floatLabel]="property.default ? 'always' : null">
         <mat-label
             class="adf-property-label"
             [attr.data-automation-id]="'card-dateitem-label-' + property.key"

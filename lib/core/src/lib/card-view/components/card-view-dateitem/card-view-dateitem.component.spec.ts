@@ -356,4 +356,63 @@ describe('CardViewDateItemComponent', () => {
         expect(await chips[1].getText()).toBe('Jul 11, 2017, 0:01');
         expect(await chips[2].getText()).toBe('Jul 12, 2017, 0:01');
     });
+
+    describe('FloatLabel behavior', () => {
+        it('should set floatLabel to "always" when property has default value and is editable', async () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                default: 'Default Value',
+                format: '',
+                editable: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const matFormField = await testingUtils.getMatFormField();
+            const host = await matFormField.host();
+            const floatLabel = await host.getAttribute('ng-reflect-float-label');
+
+            expect(floatLabel).toBe('always');
+        });
+
+        it('should set floatLabel to null when property has no default value and is editable', async () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                default: '',
+                format: '',
+                editable: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const matFormField = await testingUtils.getMatFormField();
+            const host = await matFormField.host();
+            const floatLabel = await host.getAttribute('ng-reflect-float-label');
+
+            expect(floatLabel).toBe(null);
+        });
+
+        it('should set floatLabel to null when property has null default value and is editable', async () => {
+            component.property = new CardViewDateItemModel({
+                label: 'Date label',
+                value: new Date('07/10/2017'),
+                key: 'dateKey',
+                default: null,
+                format: '',
+                editable: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+
+            const matFormField = await testingUtils.getMatFormField();
+            const host = await matFormField.host();
+            const floatLabel = await host.getAttribute('ng-reflect-float-label');
+
+            expect(floatLabel).toBe(null);
+        });
+    });
 });
