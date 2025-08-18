@@ -207,9 +207,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual(
-                'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER'
-            );
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').value.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
         });
     });
 

@@ -53,7 +53,7 @@ describe('CardViewComponent', () => {
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
     const getPropertyValue = (): string => testingUtils.getByCSS('.adf-property-value').nativeElement.value;
-    const getPropertyValueText = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
+    const getPropertyValueText = (): string => testingUtils.getInputByCSS('.adf-property-value').value;
     const getPropertyValueByDataAutomationId = (dataAutomationId: string): string =>
         testingUtils.getByDataAutomationId(dataAutomationId).nativeElement.value;
 

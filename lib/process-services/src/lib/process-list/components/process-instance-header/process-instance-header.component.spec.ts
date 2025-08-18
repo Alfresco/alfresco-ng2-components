@@ -64,7 +64,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
-        expect(valueEl.innerText).toBe('Nov 3, 2016');
+        expect(valueEl.value).toBe('Nov 3, 2016');
     });
 
     it('should display placeholder if no due date', () => {
@@ -72,7 +72,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
-        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT');
+        expect(valueEl.value).toBe('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT');
     });
 
     it('should display process category', async () => {
@@ -98,7 +98,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges();
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
-        expect(valueEl.innerText).toBe('Nov 3, 2016');
+        expect(valueEl.value).toBe('Nov 3, 2016');
     });
 
     it('should display started by', async () => {

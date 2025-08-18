@@ -25,7 +25,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -85,7 +85,8 @@ describe('CardViewSelectItemComponent', () => {
                 editable: false
             });
             fixture.detectChanges();
-            expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Select box label');
+
+            expect(testingUtils.getInnerTextByDataAutomationId('card-select-label-key')).toBe('Select box label');
         });
 
         it('should render readOnly value is editable property is FALSE', () => {
@@ -109,7 +110,9 @@ describe('CardViewSelectItemComponent', () => {
             });
 
             fixture.detectChanges();
-            expect(getReadOnlyElement().nativeElement.title).toBe('Two');
+
+            const inputEl = getReadOnlyElement().nativeElement as HTMLInputElement;
+            expect(inputEl.value).toBe('Two');
         });
 
         it('should be possible edit selectBox item', async () => {
@@ -284,7 +287,9 @@ describe('CardViewSelectItemComponent', () => {
             const autocompleteValueSpy = spyOn(cardViewUpdateService.autocompleteInputValue$, 'next');
             component.editedValue = '';
             component.editable = true;
-            component.ngOnChanges({ property: { firstChange: true } } as any);
+            component.ngOnChanges({
+                property: new SimpleChange(undefined, component.property, true)
+            });
             fixture.detectChanges();
 
             component.autocompleteControl.setValue('new value');
