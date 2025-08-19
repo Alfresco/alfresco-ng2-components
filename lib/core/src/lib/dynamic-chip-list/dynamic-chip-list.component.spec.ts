@@ -344,6 +344,7 @@ describe('DynamicChipListComponent', () => {
 
             const containerWidth = component.containerView.nativeElement.clientWidth;
             const chipsWidth = component.matChips.toArray().reduce(
+                // eslint-disable-next-line no-underscore-dangle
                 (w, chip) => w + chip._elementRef.nativeElement.getBoundingClientRect().width,
                 0
             );
@@ -363,6 +364,7 @@ describe('DynamicChipListComponent', () => {
 
             const containerWidth = component.containerView.nativeElement.clientWidth;
             const chipsWidth = component.matChips.toArray().reduce(
+                // eslint-disable-next-line no-underscore-dangle
                 (w, chip) => w + chip._elementRef.nativeElement.getBoundingClientRect().width,
                 0
             );
