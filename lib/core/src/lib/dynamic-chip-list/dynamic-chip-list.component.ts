@@ -179,7 +179,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
                 chips.reduce((width, val, index) => {
                     width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
                     const availableSpace =
-                        (index && index === chips.length - 1) || !this.paginationData ? containerWidth - viewMoreBtnWidth : containerWidth;
+                        (index === chips.length - 1 && width <= containerWidth) ? containerWidth : containerWidth - viewMoreBtnWidth;
                     if (availableSpace >= width - chipMargin) {
                         chipsToDisplay = (this.paginationData ? chipsToDisplay : index) + 1;
                         lastIndex++;

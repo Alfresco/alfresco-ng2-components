@@ -334,5 +334,43 @@ describe('DynamicChipListComponent', () => {
             expect(component.chipsToDisplay).toEqual([]);
             expect(findViewMoreButton().hidden).toBeTrue();
         }));
+
+        it('should display all chips if they all fit in one row', () => {
+            component.chips = [
+                { id: '1', name: 'Chip 1' },
+                { id: '2', name: 'Chip 2' }
+            ];
+            fixture.detectChanges();
+
+            const containerWidth = component.containerView.nativeElement.clientWidth;
+            const chipsWidth = component.matChips.toArray().reduce(
+                (w, chip) => w + chip._elementRef.nativeElement.getBoundingClientRect().width,
+                0
+            );
+
+            expect(chipsWidth).toBeLessThanOrEqual(containerWidth);
+            expect(component.chipsToDisplay.length).toBe(component.chips.length);
+            expect(component.undisplayedChipsCount).toBe(0);
+        });
+
+        it('should truncate chips and reserve space for view more button if not all fit', () => {
+            component.chips = [
+                { id: '1', name: 'A very very very very very very long chip' },
+                { id: '2', name: 'Another very very very very very long chip' },
+                { id: '3', name: 'Chip 3' }
+            ];
+            fixture.detectChanges();
+
+            const containerWidth = component.containerView.nativeElement.clientWidth;
+            const chipsWidth = component.matChips.toArray().reduce(
+                (w, chip) => w + chip._elementRef.nativeElement.getBoundingClientRect().width,
+                0
+            );
+
+            expect(chipsWidth).toBeGreaterThan(containerWidth);
+            expect(component.chipsToDisplay.length).toBeLessThan(component.chips.length);
+            expect(component.undisplayedChipsCount).toBeGreaterThan(0);
+        });
+
     });
 });
