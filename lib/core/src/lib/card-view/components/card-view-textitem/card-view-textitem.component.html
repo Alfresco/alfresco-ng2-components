@@ -2,6 +2,7 @@
     <div *ngSwitchDefault>
         <mat-form-field
             subscriptSizing="dynamic"
+            [floatLabel]="'always'"
             class="adf-property-field adf-card-textitem-field"
             [ngClass]="{
                 'adf-property-read-only': !isEditable
