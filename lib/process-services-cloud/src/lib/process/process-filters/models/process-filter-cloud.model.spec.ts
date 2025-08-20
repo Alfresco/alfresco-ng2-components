@@ -64,4 +64,14 @@ describe('ProcessFilterCloudModel', () => {
         expect(model.startFrom).toEqual(startOfDay(date).toISOString());
         expect(model.startTo).toEqual(endOfDay(date).toISOString());
     });
+
+    it('should assign value to the excludeByProcessCategoryName if provided', () => {
+        const model = new ProcessFilterCloudModel({ excludeByProcessCategoryName: 'test' });
+        expect(model.excludeByProcessCategoryName).toBe('test');
+    });
+
+    it('should assign null to the excludeByProcessCategoryName if value not provided', () => {
+        const model = new ProcessFilterCloudModel({});
+        expect(model.excludeByProcessCategoryName).toBeNull();
+    });
 });
