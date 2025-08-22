@@ -20,7 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class SecurityMarkApiMock extends BaseMock {
     get200GetSecurityMark(securityGroupId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks')
             .reply(200, {
                 list: {
@@ -45,7 +45,7 @@ export class SecurityMarkApiMock extends BaseMock {
     }
 
     createSecurityMark200Response(securityGroupId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks')
             .reply(200, {
                 entry: {
@@ -56,7 +56,7 @@ export class SecurityMarkApiMock extends BaseMock {
             });
     }
     createSecurityMarks200Response(securityGroupId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks')
             .reply(200, {
                 list: {
@@ -87,7 +87,7 @@ export class SecurityMarkApiMock extends BaseMock {
             });
     }
     get200GetSingleSecurityMark(securityGroupId: string, securityMarkId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks/' + securityMarkId)
             .reply(200, {
                 entry: {
@@ -98,7 +98,7 @@ export class SecurityMarkApiMock extends BaseMock {
             });
     }
     put200UpdateSecurityMarkResponse(securityGroupId: string, securityMarkId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .put('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks/' + securityMarkId)
             .reply(200, {
                 entry: {
@@ -109,12 +109,14 @@ export class SecurityMarkApiMock extends BaseMock {
             });
     }
     getDeleteSecurityMarkSuccessfulResponse(securityGroupId: string, securityMarkId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.addCorsSupport();
+        nock(this.host)
+            .defaultReplyHeaders(this.getBaseHeaders())
             .delete('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks/' + securityMarkId)
             .reply(200);
     }
     get401Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/gs/versions/1/security-groups/')
             .reply(401, {
                 error: {

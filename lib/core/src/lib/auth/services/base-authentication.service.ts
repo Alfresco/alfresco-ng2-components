@@ -21,13 +21,15 @@ import { Observable, Observer, ReplaySubject, throwError } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
-import ee from 'event-emitter';
+import { EventEmitter } from 'eventemitter3';
 
-export abstract class BaseAuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    emit: (type: string, ...args: any[]) => void;
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
+export abstract class BaseAuthenticationService implements AuthenticationServiceInterface {
+    on: EventEmitterInstance['on'];
+    off: EventEmitterInstance['off'];
+    once: EventEmitterInstance['once'];
+    emit: EventEmitterInstance['emit'];
 
     protected redirectUrl: RedirectionModel = null;
 
@@ -35,9 +37,10 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
 
-    protected constructor(protected appConfig: AppConfigService, protected cookie: CookieService) {
-        ee(this);
-    }
+    protected constructor(
+        protected appConfig: AppConfigService,
+        protected cookie: CookieService
+    ) {}
 
     abstract getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
     abstract getToken(): string;
