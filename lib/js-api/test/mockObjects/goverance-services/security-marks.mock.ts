@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class SecurityMarkApiMock extends BaseMock {
@@ -108,7 +109,9 @@ export class SecurityMarkApiMock extends BaseMock {
             });
     }
     getDeleteSecurityMarkSuccessfulResponse(securityGroupId: string, securityMarkId: string): void {
-        this.createNockWithCors()
+        this.addCorsSupport();
+        nock(this.host)
+            .defaultReplyHeaders(this.getBaseHeaders())
             .delete('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId + '/security-marks/' + securityMarkId)
             .reply(200);
     }
