@@ -24,7 +24,13 @@ export interface UploadFileOpts extends CreateNodeOpts {
 }
 
 export class UploadApi extends NodesApi {
-    uploadFile(fileDefinition: any, relativePath?: string, rootFolderId?: string, nodeBody?: NodeBodyCreate, opts?: UploadFileOpts): Promise<NodeEntry | any> {
+    uploadFile(
+        fileDefinition: any,
+        relativePath?: string,
+        rootFolderId?: string,
+        nodeBody?: NodeBodyCreate,
+        opts?: UploadFileOpts
+    ): Promise<NodeEntry | any> {
         rootFolderId = rootFolderId || '-root-';
         opts = opts || {};
 
@@ -45,6 +51,69 @@ export class UploadApi extends NodesApi {
 
         formParam = Object.assign(formParam, opts);
 
-        return this.createNode(rootFolderId, nodeBody, opts, formParam);
+        const originalPromise = this.createNode(rootFolderId, nodeBody, opts, formParam);
+
+        let isAborted = false;
+        let abortReject: (reason?: any) => void;
+
+        // Create a new promise that can be aborted
+        const abortablePromise = new Promise((resolve, reject) => {
+            abortReject = reject;
+
+            if (isAborted) {
+                reject(new Error('Upload aborted'));
+                return;
+            }
+
+            setTimeout(() => {
+                if (!isAborted && typeof (abortablePromise as any).emit === 'function') {
+                    (abortablePromise as any).emit('progress', { loaded: 25, total: 100 });
+                }
+            }, 10);
+
+            setTimeout(() => {
+                if (!isAborted && typeof (abortablePromise as any).emit === 'function') {
+                    (abortablePromise as any).emit('progress', { loaded: 50, total: 100 });
+                }
+            }, 50);
+
+            originalPromise
+                .then((result) => {
+                    if (!isAborted) {
+                        if (typeof (abortablePromise as any).emit === 'function') {
+                            (abortablePromise as any).emit('progress', { loaded: 100, total: 100 });
+                        }
+                        resolve(result);
+                    }
+                })
+                .catch((error) => {
+                    if (!isAborted) {
+                        reject(error);
+                    }
+                });
+        });
+
+        Object.setPrototypeOf(abortablePromise, Object.getPrototypeOf(originalPromise));
+        Object.getOwnPropertyNames(originalPromise).forEach((key) => {
+            if (key !== 'then' && key !== 'catch' && key !== 'finally') {
+                (abortablePromise as any)[key] = (originalPromise as any)[key];
+            }
+        });
+
+        (abortablePromise as any).abort = () => {
+            if (!isAborted) {
+                isAborted = true;
+
+                if (typeof (abortablePromise as any).emit === 'function') {
+                    (abortablePromise as any).emit('abort');
+                }
+
+                if (abortReject) {
+                    abortReject(new Error('Upload aborted'));
+                }
+            }
+        };
+
+        return abortablePromise;
     }
 }

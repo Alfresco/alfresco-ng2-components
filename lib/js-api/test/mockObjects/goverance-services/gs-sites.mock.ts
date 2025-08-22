@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class GsSitesApiMock extends BaseMock {
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/gs/versions/1/gs-sites/rm')
             .reply(200, {
                 entry: {
