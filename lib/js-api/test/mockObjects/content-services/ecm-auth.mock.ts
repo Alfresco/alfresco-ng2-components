@@ -44,6 +44,22 @@ export class EcmAuthMock extends BaseMock {
             });
     }
 
+    get201ResponseJohnDoe(forceTicket?: string): void {
+        const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
+
+        this.createNockWithCors()
+            .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
+                userId: 'johndoe',
+                password: 'password'
+            })
+            .reply(201, {
+                entry: {
+                    id: returnMockTicket,
+                    userId: 'johndoe'
+                }
+            });
+    }
+
     get200ValidTicket(forceTicket?: string): void {
         const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
 

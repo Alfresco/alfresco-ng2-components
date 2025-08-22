@@ -48,20 +48,20 @@ describe('Ecm Auth test', () => {
         assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
 
-    it('should forget username on logout', (done) => {
+    it('should forget username on logout', async () => {
         const auth = new ContentAuth({}, alfrescoJsApi);
 
-        authEcmMock.get201Response();
+        authEcmMock.get201ResponseJohnDoe();
 
-        auth.login('johndoe', 'password');
-        assert.equal(auth.authentications.basicAuth.username, 'johndoe');
+        await auth.login('johndoe', 'password');
+        assert.equal(auth.authentications.basicAuth.username, 'ROLE_TICKET');
+        assert.equal(auth.storage.getItem('ACS_USERNAME'), 'johndoe');
 
         authEcmMock.get204ResponseLogout();
 
-        auth.logout().then(() => {
-            assert.equal(auth.authentications.basicAuth.username, null);
-            done();
-        });
+        await auth.logout();
+        assert.equal(auth.authentications.basicAuth.username, null);
+        assert.equal(auth.storage.getItem('ACS_USERNAME'), '');
     });
 
     describe('With Authentication', () => {
