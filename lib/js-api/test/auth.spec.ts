@@ -156,7 +156,7 @@ describe('Auth', () => {
                 it('should Ticket login be validate against the server is NOT valid', async () => {
                     const ticket = 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
 
-                    authResponseEcmMock.get400Response();
+                    authResponseEcmMock.get400ResponseGET();
                     try {
                         await alfrescoJsApi.loginTicket(ticket, null);
                         assert.fail('Expected loginTicket to throw an error');
