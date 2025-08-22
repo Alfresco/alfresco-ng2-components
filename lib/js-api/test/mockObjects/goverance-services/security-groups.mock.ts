@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
+import { th } from 'date-fns/locale';
 import { BaseMock } from '../base.mock';
+import nock from 'nock';
 
 export class SecurityGroupApiMock extends BaseMock {
     createSecurityGroup200Response(): void {
@@ -88,7 +90,7 @@ export class SecurityGroupApiMock extends BaseMock {
 
     deleteSecurityGroup200Response(securityGroupId: string): void {
         this.createNockWithCors()
-            .delete('/alfresco/api/-default-/public/alfresco/versions/1/security-groups/' + securityGroupId)
-            .reply(200);
+            .delete('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId)
+            .reply(204);
     }
 }
