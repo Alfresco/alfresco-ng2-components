@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ProcessMock extends BaseMock {
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/activiti-app/api/enterprise/process-instances/query')
             .reply(200, {
                 size: 2,
@@ -82,7 +81,7 @@ export class ProcessMock extends BaseMock {
     }
 
     get200getProcessDefinitionStartForm(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/activiti-app/api/enterprise/process-definitions/testProcess%3A1%3A7504/start-form')
             .reply(200, {
                 id: 2002,

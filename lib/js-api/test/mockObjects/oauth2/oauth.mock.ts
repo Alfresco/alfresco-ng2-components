@@ -29,13 +29,7 @@ export class OAuthMock extends BaseMock {
     }
 
     get200Response(mockToken?: string): void {
-        nock(this.host).options('/auth/realms/springboot/protocol/openid-connect/token').reply(200, '', {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Max-Age': '86400'
-        });
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/auth/realms/springboot/protocol/openid-connect/token')
             .reply(
                 200,
