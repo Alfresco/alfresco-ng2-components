@@ -44,6 +44,13 @@ export class BaseMock {
         };
     }
 
+    getBaseHeaders(): Record<string, string> {
+        return {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true'
+        };
+    }
+
     protected createNockWithCors(): nock.Scope {
         this.addCorsSupport();
         return nock(this.host, { encodedQueryParams: true }).defaultReplyHeaders(this.getDefaultHeaders());
