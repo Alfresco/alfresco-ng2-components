@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-process-services",
   "description": "Alfresco ADF process services",
-  "version": "9.0.0",
+  "version": "8.1.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -21,9 +21,9 @@
     "@angular/platform-browser": ">=14.1.3",
     "@angular/platform-browser-dynamic": ">=14.1.3",
     "@angular/router": ">=14.1.3",
-    "@alfresco/js-api": ">=10.0.0",
-    "@alfresco/adf-core": ">=9.0.0",
-    "@alfresco/adf-content-services": ">=9.0.0",
+    "@alfresco/js-api": ">=9.1.0",
+    "@alfresco/adf-core": ">=8.1.0",
+    "@alfresco/adf-content-services": ">=8.1.0",
     "@ngx-translate/core": ">=14.0.0"
   },
   "keywords": [

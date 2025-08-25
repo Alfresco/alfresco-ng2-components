@@ -1,6 +1,6 @@
 {
   "name": "@alfresco/eslint-plugin-eslint-angular",
-  "version": "9.0.0",
+  "version": "8.1.0",
   "description": "Alfresco ADF eslint angular custom rules",
   "main": "main.js",
   "author": "Hyland Software, Inc. and its affiliates",
