@@ -68,7 +68,7 @@ describe('WebScript', () => {
         webscriptApi.executeWebScript('GET', 'sample/folder/Company%20Home').then((data) => {
             try {
                 JSON.parse(data);
-            } catch (e) {
+            } catch {
                 done();
             }
         });
