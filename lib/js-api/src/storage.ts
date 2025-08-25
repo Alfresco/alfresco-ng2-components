@@ -16,7 +16,6 @@
  */
 
 export class Storage {
-
     private static instance: Storage;
 
     _storage: any;
@@ -28,8 +27,8 @@ export class Storage {
         }
     }
 
-    public static getInstance(){
-        if(!Storage.instance){
+    public static getInstance() {
+        if (!Storage.instance) {
             Storage.instance = new Storage();
         }
         return Storage.instance;
@@ -38,7 +37,7 @@ export class Storage {
     supportsStorage() {
         try {
             return 'localStorage' in window && window.localStorage !== null;
-        } catch (e) {
+        } catch {
             return false;
         }
     }
