@@ -129,7 +129,7 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 }
 
 export class MaxLengthFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT, FormFieldTypes.NUMBER];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && field.maxLength > 0;
