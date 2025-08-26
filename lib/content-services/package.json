@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-content-services",
   "description": "Alfresco ADF content services",
-  "version": "8.1.1",
+  "version": "8.2.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "@angular/router": ">=14.1.3",
     "@alfresco/js-api": ">=9.1.1",
     "@ngx-translate/core": ">=16.0.0",
-    "@alfresco/adf-core": ">=8.1.1"
+    "@alfresco/adf-core": ">=8.2.0"
   },
   "keywords": [
     "content-services",
