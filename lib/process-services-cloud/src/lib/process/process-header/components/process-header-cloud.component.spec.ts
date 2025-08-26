@@ -111,7 +111,7 @@ describe('ProcessHeaderCloudComponent', () => {
         await fixture.whenStable();
 
         const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-startDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.value.trim()).toBe('Mar 9, 2019');
+        expect(valueEl.nativeElement.innerText.trim()).toBe('Mar 9, 2019');
     });
 
     it('should display lastModified date', async () => {
@@ -121,7 +121,7 @@ describe('ProcessHeaderCloudComponent', () => {
         await fixture.whenStable();
 
         const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-lastModified"] .adf-property-value'));
-        expect(valueEl.nativeElement.value.trim()).toBe('Mar 9, 2019');
+        expect(valueEl.nativeElement.innerText.trim()).toBe('Mar 9, 2019');
     });
 
     it('should display parentId', async () => {
@@ -216,8 +216,8 @@ describe('ProcessHeaderCloudComponent', () => {
             const lastModifiedElement = fixture.debugElement.query(By.css('[data-automation-id="header-lastModified"] .adf-property-value'));
 
             expect(component.dateFormat).toEqual('full');
-            expect(startedDateElement.nativeElement.value.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');
-            expect(lastModifiedElement.nativeElement.value.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');
+            expect(startedDateElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');
+            expect(lastModifiedElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');
         });
     });
 });
