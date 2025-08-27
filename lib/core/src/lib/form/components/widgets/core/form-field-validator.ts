@@ -129,22 +129,32 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 }
 
 export class MaxLengthFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT, FormFieldTypes.NUMBER];
+    constructor(
+        private supportedTypes: FormFieldTypes[] = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT],
+        private maxLength?: number
+    ) {}
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && field.maxLength > 0;
+        return field && this.supportedTypes.indexOf(field.type) > -1 && this.getMaxLength(field) > 0;
     }
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
-            if (field.value.length <= field.maxLength) {
+            if (field.value.toString().length <= this.getMaxLength(field)) {
                 return true;
             }
+
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NO_LONGER_THAN`;
-            field.validationSummary.attributes.set('maxLength', field.maxLength.toLocaleString());
+            field.validationSummary.attributes.set('maxLength', this.getMaxLength(field).toLocaleString());
+
             return false;
         }
+
         return true;
+    }
+
+    getMaxLength(field: FormFieldModel): number | undefined {
+        return this.maxLength ?? field.maxLength;
     }
 }
 
@@ -299,6 +309,7 @@ export const FORM_FIELD_VALIDATORS = [
     new NumberFieldValidator(),
     new MinLengthFieldValidator(),
     new MaxLengthFieldValidator(),
+    new MaxLengthFieldValidator([FormFieldTypes.NUMBER], 10),
     new MinValueFieldValidator(),
     new MaxValueFieldValidator(),
     new RegExFieldValidator(),
