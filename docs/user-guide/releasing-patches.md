@@ -19,14 +19,24 @@
 
 4. Apply and commit your fix to **develop-patch-VERSION** branch.
 
-5. Run [release.sh](../../scripts/release.sh) script with proper patch version:
+5. Increment the version in the package.json with the following command where `-v` refers to the ADF version and `-vj` to the new js-api version.
+The js-api must have a major version that is one higher than the other packages. For example, if adf-core is at version `4.11.1`, then js-api should be at version `5.11.1`
+
+   ```bash
+   ./scripts/update-version.sh -v X.X.X -vj X.X.X
+
+   # e.g. ./scripts/update-version.sh -v 4.1.11 -vj 5.1.11
+   ```
+6. The `"@alfresco/js-api"` dependency in the `lib/cli/package.json` has to remain unchanged
+
+7. Run [release.sh](../../scripts/release.sh) script with proper patch version:
 
     ```bash
     scripts/release.sh -v VERSION
 
     # e.g. scripts/release.sh -v 4.11.1
     ```
-6. Push your changes and run all tests:
+8. Push your changes and run all tests:
 
     ```bash
     git push -u origin develop-patch-VERSION
@@ -39,28 +49,28 @@
     git push
     ```
 
-7. Verify if tests are green and if everything looks fine, you can proceed further.
+9. Verify if tests are green and if everything looks fine, you can proceed further.
 
-8. Create new branch from **master** and call it **master-patch-VERSION** (e.g. master-patch-4.11.1):
+10. Create new branch from **master** and call it **master-patch-VERSION** (e.g. master-patch-4.11.1):
 
     ```bash
     git checkout master
     git checkout -b master-patch-VERSION
     ```
 
-9. Merge **develop-patch-VERSION** into **master-patch-VERSION**:
+11. Merge **develop-patch-VERSION** into **master-patch-VERSION**:
 
     ```bash
     git checkout master-patch-VERSION
     git merge develop-patch-VERSION
     ```
 
-10. Push **master-patch-VERSION** branch:
+12. Push **master-patch-VERSION** branch:
 
     ```bash
     git push -u origin master-patch-VERSION
     ```
 
-11. Verify if build is green and check if proper [tag](https://github.com/Alfresco/alfresco-ng2-components/tags) was created.
+13. Verify if build is green and check if proper [tag](https://github.com/Alfresco/alfresco-ng2-components/tags) was created.
 
-12. After all is done, you can **cherry-pick** your fix to develop.
+14. After all is done, you can **cherry-pick** your fix to develop.
