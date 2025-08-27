@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import ee, { EmitterMethod, Emitter } from 'event-emitter';
+import { EventEmitter } from 'eventemitter3';
 import { ContentAuth } from './authentication/contentAuth';
 import { ProcessAuth } from './authentication/processAuth';
 import { Oauth2Auth } from './authentication/oauth2Auth';
@@ -26,11 +26,12 @@ import { AlfrescoApiConfig } from './alfrescoApiConfig';
 import { Authentication } from './authentication/authentication';
 import { AlfrescoApiType } from './to-deprecate/alfresco-api-type';
 import { HttpClient } from './api-clients/http-client.interface';
+import { AlfrescoApiClient, AlfrescoApiClientPromise } from './alfrescoApiClient';
 
-export class AlfrescoApi implements Emitter, AlfrescoApiType {
+type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+
+export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
     __type = 'legacy-client';
-    storage: Storage;
-    config: AlfrescoApiConfig;
     contentClient: ContentClient;
     contentPrivateClient: ContentClient;
     processClient: ProcessClient;
@@ -43,18 +44,11 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
     processAuth: ProcessAuth;
     contentAuth: ContentAuth;
 
-    on: EmitterMethod;
-    off: EmitterMethod;
-    once: EmitterMethod;
-
     bufferEvents: string[] = [];
-
-    emit: (type: string, ...args: any[]) => void;
-
     username: string;
 
-    constructor(config?: AlfrescoApiConfig, public httpClient?: HttpClient) {
-        ee(this);
+    constructor(config?: AlfrescoApiConfig, httpClient?: HttpClient) {
+        super(undefined, httpClient);
 
         if (config) {
             this.setConfig(config);
@@ -392,14 +386,15 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         return this.contentAuth.validateTicket();
     }
 
-    private loginBPMECM(username: string, password: string): Promise<[string, string]> {
+    private loginBPMECM(username: string, password: string): AlfrescoApiClientPromise<[string, string]> {
         const contentPromise = this.contentAuth.login(username, password);
         const processPromise = this.processAuth.login(username, password);
 
-        const promise: any = new Promise<[string, string]>((resolve, reject) => {
+        const eventEmitter: EventEmitterInstance = new EventEmitter();
+        const promise = new Promise<[string, string]>((resolve, reject) => {
             Promise.all([contentPromise, processPromise]).then(
                 (data) => {
-                    promise.emit('success');
+                    eventEmitter.emit('success');
                     resolve(data);
                 },
                 (error) => {
@@ -407,16 +402,15 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
                     this.processAuth.invalidateSession();
 
                     if (error.status === 401) {
-                        promise.emit('unauthorized');
+                        eventEmitter.emit('unauthorized');
                     }
-                    promise.emit('error');
+                    eventEmitter.emit('error');
                     reject(error);
                 }
             );
         });
 
-        ee(promise); // jshint ignore:line
-        return promise;
+        return this.addPromiseListeners(promise, eventEmitter);
     }
 
     /**
@@ -449,29 +443,29 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         return Promise.resolve();
     }
 
-    private _logoutBPMECM(): Promise<void> {
+    private _logoutBPMECM(): AlfrescoApiClientPromise<void> {
         const contentPromise = this.contentAuth.logout();
         const processPromise = this.processAuth.logout();
 
-        const promise: any = new Promise<void>((resolve, reject) => {
+        const eventEmitter: EventEmitterInstance = new EventEmitter();
+        const promise = new Promise<void>((resolve, reject) => {
             Promise.all([contentPromise, processPromise]).then(
                 () => {
                     this.config.ticket = undefined;
-                    promise.emit('logout');
+                    eventEmitter.emit('logout');
                     resolve();
                 },
                 (error) => {
                     if (error.status === 401) {
-                        promise.emit('unauthorized');
+                        eventEmitter.emit('unauthorized');
                     }
-                    promise.emit('error');
+                    eventEmitter.emit('error');
                     reject(error);
                 }
             );
         });
 
-        ee(promise); // jshint ignore:line
-        return promise;
+        return this.addPromiseListeners(promise, eventEmitter);
     }
 
     /**
