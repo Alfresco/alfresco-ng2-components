@@ -16,8 +16,6 @@ on:
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GITHUB_BRANCH: ${{ github.ref_name }}
   GH_BUILD_DIR: ${{ github.workspace }}
   GH_COMMIT: ${{ github.sha }}
