@@ -8,6 +8,8 @@ runs:
       shell: bash
       env:
         REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         packages=( dist nxcache node_modules )
         for i in "${packages[@]}"; do
