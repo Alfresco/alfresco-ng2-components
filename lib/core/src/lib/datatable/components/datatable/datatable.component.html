@@ -28,7 +28,7 @@
             </div>
 
             <!-- Columns -->
-            <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
+            <th *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox" role="columnheader">
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
                               [checked]="isSelectAllChecked"
                               (change)="onSelectAllClick($event)"
@@ -36,7 +36,7 @@
                               [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate">
                     {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
                 </mat-checkbox>
-            </div>
+            </th>
 
             <ng-container
                 *ngFor="
@@ -54,7 +54,7 @@
                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
                 [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
-                [attr.aria-label]="(col.title | translate) + (col.subtitle ? ' ' + col.subtitle : '')"
+                [attr.aria-label]="(col.title ? (col.title | translate) : '') + (col.subtitle ? ' ' + col.subtitle : '')"
                 (click)="onColumnHeaderClick(col, $event)"
                 (keyup.enter)="onColumnHeaderClick(col, $event)"
                 role="columnheader"
@@ -156,24 +156,27 @@
                 [class.adf-datatable-actions-menu-provided]="showProvidedActions"
             >
                 <ng-container *ngIf="mainActionTemplate">
-                    <button
-                        data-automation-id="adf-datatable-main-menu-button"
-                        title="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
-                        mat-icon-button
-                        #mainMenuTrigger="matMenuTrigger"
-                        (click)="onMainMenuOpen()"
-                        [matMenuTriggerFor]="mainMenu">
-                        <mat-icon>view_week_outline</mat-icon>
-                    </button>
-                    <mat-menu #mainMenu (closed)="onMainMenuClosed()">
-                        <div #mainMenuTemplate role="presentation" (keydown.tab)="$event.stopPropagation()">
-                            <ng-container
-                                [ngTemplateOutlet]="mainActionTemplate"
-                                [ngTemplateOutletContext]="{
-                                    $implicit: mainMenuTrigger
-                                }" />
-                        </div>
-                    </mat-menu>
+                    <td role="gridcell">
+                        <button
+                            data-automation-id="adf-datatable-main-menu-button"
+                            title="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
+                            [attr.aria-label]="'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate"
+                            mat-icon-button
+                            #mainMenuTrigger="matMenuTrigger"
+                            (click)="onMainMenuOpen()"
+                            [matMenuTriggerFor]="mainMenu">
+                            <mat-icon>view_week_outline</mat-icon>
+                        </button>
+                        <mat-menu #mainMenu (closed)="onMainMenuClosed()">
+                            <div #mainMenuTemplate role="presentation" (keydown.tab)="$event.stopPropagation()">
+                                <ng-container
+                                    [ngTemplateOutlet]="mainActionTemplate"
+                                    [ngTemplateOutletContext]="{
+                                        $implicit: mainMenuTrigger
+                                    }" />
+                            </div>
+                        </mat-menu>
+                    </td>
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
                 </ng-container>
             </div>
@@ -237,12 +240,12 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect"
+                <td *ngIf="multiselect"
                         (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                         (click)="onCheckboxLabelClick(row, $event)"
-                        [for]="'select-file-' + idx"
+                        role="gridcell"
                         class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
-                        tabindex="0">
+                        tabindex="-1">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
                         [disabled]="!row?.isSelectable"
@@ -256,7 +259,7 @@
                         class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
-                </label>
+                </td>
 
                 <div
                     *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
