@@ -1,7 +1,7 @@
 name: Pull Translations from Crowdin
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 7-17 * * 1-5"
   workflow_dispatch:
 jobs:
   pull-from-crowdin:
