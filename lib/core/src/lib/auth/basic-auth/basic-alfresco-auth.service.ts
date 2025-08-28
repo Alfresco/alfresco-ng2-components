@@ -46,8 +46,8 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     constructor(
         appConfig: AppConfigService,
         cookie: CookieService,
-        private contentAuth: ContentAuth,
-        private processAuth: ProcessAuth
+        private readonly contentAuth: ContentAuth,
+        private readonly processAuth: ProcessAuth
     ) {
         super(appConfig, cookie);
 

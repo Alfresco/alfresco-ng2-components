@@ -33,8 +33,8 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     onTokenReceived: Subject<any> = new Subject<any>();
 
     constructor(
-        private injector: Injector,
-        private redirectAuthService: RedirectAuthService
+        private readonly injector: Injector,
+        private readonly redirectAuthService: RedirectAuthService
     ) {
         this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
