@@ -32,7 +32,10 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     onLogout: Subject<any> = new Subject<any>();
     onTokenReceived: Subject<any> = new Subject<any>();
 
-    constructor(private injector: Injector, private redirectAuthService: RedirectAuthService) {
+    constructor(
+        private injector: Injector,
+        private redirectAuthService: RedirectAuthService
+    ) {
         this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
         this.redirectAuthService.onTokenReceived.subscribe((value) => this.onTokenReceived.next(value));
@@ -113,30 +116,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
             return this.oidcAuthenticationService.logout();
         } else {
             return from(this.basicAlfrescoAuthService.logout());
-        }
-    }
-
-    /**
-     * @deprecated use `isLoggedIn` instead
-     * @returns true if the ECM provider is logged in
-     */
-    isEcmLoggedIn(): boolean {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.isLoggedIn();
-        } else {
-            return this.basicAlfrescoAuthService.isEcmLoggedIn();
-        }
-    }
-
-    /**
-     * @deprecated use `isLoggedIn` instead
-     * @returns true if the BPM provider is logged in
-     */
-    isBpmLoggedIn(): boolean {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.isLoggedIn();
-        } else {
-            return this.basicAlfrescoAuthService.isBpmLoggedIn();
         }
     }
 

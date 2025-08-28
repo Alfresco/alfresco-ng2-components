@@ -56,28 +56,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         map(([authenticated, isDiscoveryDocumentLoaded]) => !authenticated && isDiscoveryDocumentLoaded)
     );
 
-    /**
-     * @deprecated use `isLoggedIn` instead
-     * @returns true if the ECM provider is logged in
-     */
-    isEcmLoggedIn(): boolean {
-        if (this.isECMProvider() || this.isALLProvider()) {
-            return this.isLoggedIn();
-        }
-        return false;
-    }
-
-    /**
-     * @deprecated use `isLoggedIn` instead
-     * @returns true if the BPM provider is logged in
-     */
-    isBpmLoggedIn(): boolean {
-        if (this.isBPMProvider() || this.isALLProvider()) {
-            return this.isLoggedIn();
-        }
-        return false;
-    }
-
     isLoggedIn(): boolean {
         return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();
     }

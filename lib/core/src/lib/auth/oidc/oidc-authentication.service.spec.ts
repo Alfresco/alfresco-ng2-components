@@ -66,7 +66,6 @@ const mockAuthService = {
 describe('OidcAuthenticationService', () => {
     let service: OidcAuthenticationService;
     let oauthService: OAuthService;
-    let appConfig: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -81,7 +80,6 @@ describe('OidcAuthenticationService', () => {
         });
         service = TestBed.inject(OidcAuthenticationService);
         oauthService = TestBed.inject(OAuthService);
-        appConfig = TestBed.inject(AppConfigService);
     });
 
     it('should be created', () => {
@@ -187,60 +185,6 @@ describe('OidcAuthenticationService', () => {
             mockOAuthService.hasValidIdToken.and.returnValue(false);
 
             expect(service.isLoggedIn()).toBeFalse();
-        });
-    });
-
-    describe('isEcmLoggedIn', () => {
-        beforeEach(() => {
-            mockOAuthService.hasValidAccessToken.and.returnValue(true);
-            mockOAuthService.hasValidIdToken.and.returnValue(true);
-        });
-
-        it('should return true if is ECM provider', () => {
-            spyOn(appConfig, 'get').and.returnValue('ECM');
-            expect(service.isEcmLoggedIn()).toBeTrue();
-        });
-
-        it('should return true if is all provider', () => {
-            spyOn(appConfig, 'get').and.returnValue('ALL');
-            expect(service.isEcmLoggedIn()).toBeTrue();
-        });
-
-        it('should return false if is not ECM provider', () => {
-            spyOn(appConfig, 'get').and.returnValue('BPM');
-            expect(service.isEcmLoggedIn()).toBeFalse();
-        });
-
-        it('should return false if provider is not defined', () => {
-            spyOn(appConfig, 'get').and.returnValue(undefined);
-            expect(service.isEcmLoggedIn()).toBeFalse();
-        });
-    });
-
-    describe('isBpmLoggedIn', () => {
-        beforeEach(() => {
-            mockOAuthService.hasValidAccessToken.and.returnValue(true);
-            mockOAuthService.hasValidIdToken.and.returnValue(true);
-        });
-
-        it('should return true if is BPM provider', () => {
-            spyOn(appConfig, 'get').and.returnValue('BPM');
-            expect(service.isBpmLoggedIn()).toBeTrue();
-        });
-
-        it('should return true if is all provider', () => {
-            spyOn(appConfig, 'get').and.returnValue('ALL');
-            expect(service.isBpmLoggedIn()).toBeTrue();
-        });
-
-        it('should return false if is not BPM provider', () => {
-            spyOn(appConfig, 'get').and.returnValue('ECM');
-            expect(service.isBpmLoggedIn()).toBeFalse();
-        });
-
-        it('should return false if provider is not defined', () => {
-            spyOn(appConfig, 'get').and.returnValue(undefined);
-            expect(service.isBpmLoggedIn()).toBeFalse();
         });
     });
 });
