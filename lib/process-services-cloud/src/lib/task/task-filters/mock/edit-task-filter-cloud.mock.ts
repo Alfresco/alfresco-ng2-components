@@ -23,7 +23,7 @@ export const mockAlfrescoApi: any = {
     oauth2Auth: {
         callCustomApi: () => Promise.resolve(fakeApplicationInstance)
     },
-    isEcmLoggedIn: () => false,
+    isLoggedIn: () => false,
     reply: jasmine.createSpy('reply')
 };
 
