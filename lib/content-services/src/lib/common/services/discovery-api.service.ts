@@ -39,8 +39,8 @@ export class DiscoveryApiService {
     ecmProductInfo$ = new Subject<RepositoryInfo>();
 
     constructor(
-        private authenticationService: AuthenticationService,
-        private alfrescoApiService: AlfrescoApiService
+        private readonly authenticationService: AuthenticationService,
+        private readonly alfrescoApiService: AlfrescoApiService
     ) {
         this.authenticationService.onLogin.subscribe(() => {
             this.alfrescoApiService.alfrescoApiInitialized

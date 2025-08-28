@@ -111,7 +111,7 @@ export class SearchControlComponent {
 
     constructor(
         public authService: AuthenticationService,
-        private thumbnailService: ThumbnailService
+        private readonly thumbnailService: ThumbnailService
     ) {}
 
     isNoSearchTemplatePresent(): boolean {
