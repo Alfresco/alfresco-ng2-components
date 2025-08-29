@@ -100,8 +100,8 @@ export class ProcessListCloudService extends BaseCloudService {
         );
     }
 
-    protected buildQueryData(requestNode: ProcessListRequestModel) {
-        const queryData: any = {
+    protected buildQueryData(requestNode: ProcessListRequestModel): { [key: string]: any } {
+        const queryData: { [key: string]: any } = {
             name: requestNode.name,
             id: requestNode.id,
             parentId: requestNode.parentId,
@@ -118,7 +118,8 @@ export class ProcessListCloudService extends BaseCloudService {
             suspendedFrom: requestNode.suspendedFrom,
             suspendedTo: requestNode.suspendedTo,
             processVariableKeys: requestNode.processVariableKeys,
-            processVariableFilters: requestNode.processVariableFilters
+            processVariableFilters: requestNode.processVariableFilters,
+            excludeByProcessCategoryName: requestNode.excludeByProcessCategoryName
         };
 
         if (requestNode.sorting) {

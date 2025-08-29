@@ -374,7 +374,7 @@ describe('ProcessListCloudComponent', () => {
                 expect(component.requestNode.appVersion).toEqual('1,2,3');
             });
 
-            it('should the payload NOT contain any app version when appVersion does not have a value', () => {
+            it('should the payload NOT contain any app version when appVersion does NOT have a value', () => {
                 spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
                 component.appVersion = undefined;
                 component.ngAfterContentInit();
@@ -476,7 +476,7 @@ describe('ProcessListCloudComponent', () => {
             expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
         });
 
-        it('should NOT request process variable if columns for process variables are not displayed', () => {
+        it('should NOT request process variable if columns for process variables are NOT displayed', () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             spyOn(preferencesService, 'getPreferences').and.returnValue(
                 of({
@@ -668,7 +668,7 @@ describe('ProcessListCloudComponent', () => {
             expect(component.processListRequestNode.appVersion).toEqual(['1', '2', '3']);
         });
 
-        it('should the payload NOT contain any app version when appVersion does not have a value', () => {
+        it('should the payload NOT contain any app version when appVersion does NOT have a value', () => {
             spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
             component.appVersion = undefined;
             component.ngAfterContentInit();
@@ -752,7 +752,7 @@ describe('ProcessListCloudComponent', () => {
             expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
         });
 
-        it('should NOT request process variable if columns for process variables are not displayed', () => {
+        it('should NOT request process variable if columns for process variables are NOT displayed', () => {
             spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
             spyOn(preferencesService, 'getPreferences').and.returnValue(
                 of({
@@ -844,6 +844,28 @@ describe('ProcessListCloudComponent', () => {
                 fixture.detectChanges();
                 expect(component.isListEmpty()).toBeFalsy();
                 expect(fetchProcessListSpy).toHaveBeenCalled();
+            });
+
+            it('should reload process list when excludeByProcessCategoryName changes', () => {
+                const fetchProcessListSpy = spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+
+                fixture.componentRef.setInput('excludeByProcessCategoryName', 'mock-category');
+                fixture.detectChanges();
+
+                fixture.componentRef.setInput('excludeByProcessCategoryName', 'mock-category-2');
+                fixture.detectChanges();
+
+                expect(fetchProcessListSpy).toHaveBeenCalledTimes(2);
+                expect(fetchProcessListSpy).toHaveBeenCalledWith(
+                    jasmine.objectContaining({
+                        excludeByProcessCategoryName: 'mock-category'
+                    })
+                );
+                expect(fetchProcessListSpy).toHaveBeenCalledWith(
+                    jasmine.objectContaining({
+                        excludeByProcessCategoryName: 'mock-category-2'
+                    })
+                );
             });
 
             it('should reload process list when sorting on a column changes', () => {
@@ -945,7 +967,7 @@ describe('ProcessListCloudComponent', () => {
             expect(component.columns.length).toEqual(2);
         });
 
-        it('should not shown columns selector by default', () => {
+        it('should NOT shown columns selector by default', () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);

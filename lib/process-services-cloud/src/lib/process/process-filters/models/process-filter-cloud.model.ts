@@ -24,31 +24,31 @@ import { ProcessVariableFilterModel } from '../../../models/process-variable-fil
 
 export class ProcessFilterCloudModel {
     id: string;
-    name: string;
-    key: string;
-    icon: string;
-    index: number;
-    appName: string;
+    name: string | null;
+    key: string | null;
+    icon: string | null;
+    index: number | null;
+    appName: string | null;
     appVersion?: number | number[];
-    parentId?: string;
-    processName: string;
-    processInstanceId: string;
-    initiator: string;
-    status: string;
-    sort: string;
-    order: string;
-    processDefinitionId: string;
-    processDefinitionName?: string;
-    processDefinitionKey: string;
-    lastModified: Date;
-    lastModifiedTo: Date;
-    lastModifiedFrom: Date;
-    startedDate: Date;
-    completedDateType: DateCloudFilterType;
-    startedDateType: DateCloudFilterType;
-    suspendedDateType: DateCloudFilterType;
-    completedDate: Date;
-    environmentId?: string;
+    parentId: string;
+    processName: string | null;
+    processInstanceId: string | null;
+    initiator: string | null;
+    status: string | null;
+    sort: string | null;
+    order: string | null;
+    processDefinitionId: string | null;
+    processDefinitionName: string | null;
+    processDefinitionKey: string | null;
+    lastModified: Date | null;
+    lastModifiedTo: Date | null;
+    lastModifiedFrom: Date | null;
+    startedDate: Date | null;
+    completedDateType: DateCloudFilterType | null;
+    startedDateType: DateCloudFilterType | null;
+    suspendedDateType: DateCloudFilterType | null;
+    completedDate: Date | null;
+    environmentId: string | null;
     showCounter: boolean;
 
     processDefinitionNames: string[] | null;
@@ -58,60 +58,64 @@ export class ProcessFilterCloudModel {
     initiators: string[] | null;
     appVersions: string[] | null;
     statuses: string[] | null;
+    excludeByProcessCategoryName: string | null;
 
     processVariableFilters?: ProcessVariableFilterModel[];
 
     private dateRangeFilterService = new DateRangeFilterService();
-    private _completedFrom: string;
-    private _completedTo: string;
-    private _startFrom: string;
-    private _startTo: string;
-    private _suspendedFrom: string;
-    private _suspendedTo: string;
+    private _completedFrom: string | null;
+    private _completedTo: string | null;
+    private _startFrom: string | null;
+    private _startTo: string | null;
+    private _suspendedFrom: string | null;
+    private _suspendedTo: string | null;
 
     constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || Math.random().toString(36).substring(2, 9);
-            this.name = obj.name || null;
-            this.key = obj.key || null;
-            this.environmentId = obj.environmentId;
-            this.showCounter = obj.showCounter || false;
-            this.icon = obj.icon || null;
-            this.index = obj.index || null;
-            this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
-            this.appVersion = obj.appVersion || null;
-
-            if (obj.appVersionMultiple && Array.isArray(obj.appVersionMultiple)) {
-                this.appVersion = obj.appVersionMultiple;
-            }
-
-            this.processInstanceId = obj.processInstanceId || null;
-            this.parentId = obj.parentId || '';
-            this.processName = obj.processName || null;
-            this.initiator = obj.initiator || null;
-            this.status = obj.status || null;
-            this.sort = obj.sort || null;
-            this.order = obj.order || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.processDefinitionName = obj.processDefinitionName || null;
-            this.processDefinitionKey = obj.processDefinitionKey || null;
-            this.lastModified = obj.lastModified || null;
-            this.lastModifiedTo = obj.lastModifiedTo || null;
-            this.lastModifiedFrom = obj.lastModifiedFrom || null;
-            this.startedDate = obj.startedDate || null;
-            this.startFrom = obj._startFrom || null;
-            this.startTo = obj._startTo || null;
-            this.completedDateType = obj.completedDateType || null;
-            this.startedDateType = obj.startedDateType || null;
-            this.suspendedDateType = obj.suspendedDateType || null;
-            this.completedFrom = obj._completedFrom || null;
-            this.completedTo = obj._completedTo || null;
-            this.completedDate = obj.completedDate || null;
-            this._suspendedFrom = obj._suspendedFrom || null;
-            this._suspendedTo = obj._suspendedTo || null;
-
-            this.initArrayProperties(obj);
+        if (!obj) {
+            return;
         }
+
+        this.id = obj.id || Math.random().toString(36).substring(2, 9);
+        this.name = obj.name || null;
+        this.key = obj.key || null;
+        this.environmentId = obj.environmentId || null;
+        this.showCounter = obj.showCounter || false;
+        this.icon = obj.icon || null;
+        this.index = obj.index || null;
+        this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
+        this.appVersion = obj.appVersion || null;
+
+        if (obj.appVersionMultiple && Array.isArray(obj.appVersionMultiple)) {
+            this.appVersion = obj.appVersionMultiple;
+        }
+
+        this.processInstanceId = obj.processInstanceId || null;
+        this.parentId = obj.parentId || '';
+        this.processName = obj.processName || null;
+        this.initiator = obj.initiator || null;
+        this.status = obj.status || null;
+        this.sort = obj.sort || null;
+        this.order = obj.order || null;
+        this.processDefinitionId = obj.processDefinitionId || null;
+        this.processDefinitionName = obj.processDefinitionName || null;
+        this.processDefinitionKey = obj.processDefinitionKey || null;
+        this.lastModified = obj.lastModified || null;
+        this.lastModifiedTo = obj.lastModifiedTo || null;
+        this.lastModifiedFrom = obj.lastModifiedFrom || null;
+        this.startedDate = obj.startedDate || null;
+        this.startFrom = obj._startFrom || null;
+        this.startTo = obj._startTo || null;
+        this.completedDateType = obj.completedDateType || null;
+        this.startedDateType = obj.startedDateType || null;
+        this.suspendedDateType = obj.suspendedDateType || null;
+        this.completedFrom = obj._completedFrom || null;
+        this.completedTo = obj._completedTo || null;
+        this.completedDate = obj.completedDate || null;
+        this.excludeByProcessCategoryName = obj.excludeByProcessCategoryName || null;
+        this._suspendedFrom = obj._suspendedFrom || null;
+        this._suspendedTo = obj._suspendedTo || null;
+
+        this.initArrayProperties(obj);
     }
 
     private initArrayProperties(obj) {

@@ -115,19 +115,32 @@ describe('ProcessListCloudService', () => {
     });
 
     describe('fetchProcessList', () => {
-        it('should append to the call all the parameters', async () => {
+        it('should append to the call all the query parameters', async () => {
             const processRequest = {
                 appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 }
+                pagination: { skipCount: 0, maxItems: 20 },
+                parentId: ['fakeParentId'],
+                excludeByProcessCategoryName: 'fakeCategory'
             } as ProcessListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
-            const res = await firstValueFrom(service.fetchProcessList(processRequest));
+            const requestQueryParams = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.skipCount).toBe(0);
-            expect(res.maxItems).toBe(20);
+            expect(requestQueryParams).toEqual({ skipCount: 0, maxItems: 20 });
+        });
+
+        it('should append to the call all the body parameters', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                parentId: ['fakeParentId'],
+                excludeByProcessCategoryName: 'fakeCategory'
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallBody);
+
+            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+            expect(requestBodyParams).toEqual({ excludeByProcessCategoryName: 'fakeCategory', parentId: ['fakeParentId'] });
         });
 
         it('should concat the app name to the request url', async () => {
@@ -137,34 +150,31 @@ describe('ProcessListCloudService', () => {
             } as ProcessListRequestModel;
             requestSpy.and.callFake(returnCallUrl);
 
-            const res = await firstValueFrom(service.fetchProcessList(processRequest));
+            const requestUrl = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res).toContain('/fakeName/query/v1/process-instances/search');
+            expect(requestUrl).toContain('/fakeName/query/v1/process-instances/search');
         });
 
-        it('should concat the sorting to append as parameters', async () => {
+        it('should concat the sorting to append as a body sort parameter', async () => {
             const processRequest = {
                 appName: 'fakeName',
                 pagination: { skipCount: 0, maxItems: 20 },
                 sorting: { orderBy: 'NAME', direction: 'DESC', isFieldProcessVariable: false }
             } as ProcessListRequestModel;
-            requestSpy.and.callFake(returnCallQueryParameters);
+            requestSpy.and.callFake(returnCallBody);
 
-            const res = await firstValueFrom(service.fetchProcessList(processRequest));
+            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
+            expect(requestBodyParams).toEqual({ sort: { field: 'NAME', direction: 'desc', isProcessVariable: false } });
         });
 
         it('should return an error when app name is not specified', async () => {
             const taskRequest = { appName: null } as ProcessListRequestModel;
             requestSpy.and.callFake(returnCallUrl);
 
-            const res = await firstValueFrom(service.fetchProcessList(taskRequest).pipe(catchError((error) => of(error.message))));
+            const error = await firstValueFrom(service.fetchProcessList(taskRequest).pipe(catchError((error) => of(error.message))));
 
-            expect(res).toBe('Appname not configured');
+            expect(error).toBe('Appname not configured');
         });
     });
 
