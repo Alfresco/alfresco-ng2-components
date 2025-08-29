@@ -51,7 +51,7 @@ describe('ProcessFiltersCloudComponent', () => {
                     provide: ProcessListCloudService,
                     useValue: {
                         getProcessCounter: () => of(10),
-                        getProcessListCounter: () => of(10)
+                        getProcessListCount: () => of(10)
                     }
                 },
                 { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock }
