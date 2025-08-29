@@ -1,7 +1,7 @@
 {
   "name": "alfresco-ng2-components",
   "description": "Alfresco Angular components",
-  "version": "8.2.0",
+  "version": "8.3.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "prepare": "husky install",
