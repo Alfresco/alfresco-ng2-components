@@ -1,37 +1,42 @@
 <h1 mat-dialog-title data-automation-id="adf-confirm-dialog-title">{{ title | translate }}</h1>
 <mat-dialog-content>
     <div class="adf-confirm-dialog-content">
-        <p *ngIf="!htmlContent; else customContent" data-automation-id="adf-confirm-dialog-base-message">
-            {{ message | translate }}
-        </p>
+        <p *ngIf="!htmlContent; else customContent" data-automation-id="adf-confirm-dialog-base-message">{{ message | translate }}</p>
         <ng-template #customContent>
-        <span [innerHTML]="sanitizedHtmlContent()" data-automation-id="adf-confirm-dialog-custom-content"></span>
+            <span [innerHTML]="sanitizedHtmlContent()" data-automation-id="adf-confirm-dialog-custom-content"></span>
         </ng-template>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <span class="adf-dialog-spacer" data-automation-id="adf-confirm-dialog-spacer"></span>
-    <button id="adf-confirm-accept"
-            class="adf-confirm-dialog-button"
-            mat-button
-            color="primary"
-            data-automation-id="adf-confirm-dialog-confirmation"
-            [mat-dialog-close]="true">
-        {{ yesLabel | translate }}
-    </button>
-    <button *ngIf="thirdOptionLabel"
-            id="adf-confirm-all"
-            class="adf-confirm-dialog-button"
-            mat-button
-            [mat-dialog-close]="thirdOptionLabel"
-            data-automation-id="adf-confirm-dialog-confirm-all">{{ thirdOptionLabel | translate }}
-    </button>
-    <button id="adf-confirm-cancel"
-            class="adf-confirm-dialog-button"
-            mat-button
-            [mat-dialog-close]="false"
-            data-automation-id="adf-confirm-dialog-reject"
-            cdkFocusInitial>
+    <button
+        id="adf-confirm-cancel"
+        class="adf-confirm-dialog-button"
+        mat-button
+        [mat-dialog-close]="false"
+        data-automation-id="adf-confirm-dialog-reject"
+    >
         {{ noLabel | translate }}
+    </button>
+    <button
+        *ngIf="thirdOptionLabel"
+        id="adf-confirm-all"
+        class="adf-confirm-dialog-button"
+        mat-button
+        [mat-dialog-close]="thirdOptionLabel"
+        data-automation-id="adf-confirm-dialog-confirm-all"
+    >
+        {{ thirdOptionLabel | translate }}
+    </button>
+    <button
+        id="adf-confirm-accept"
+        class="adf-confirm-dialog-button"
+        mat-button
+        color="primary"
+        data-automation-id="adf-confirm-dialog-confirmation"
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+    >
+        {{ yesLabel | translate }}
     </button>
 </mat-dialog-actions>
