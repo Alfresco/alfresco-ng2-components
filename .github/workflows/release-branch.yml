@@ -29,7 +29,7 @@ env:
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
-  GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
   STORYBOOK_DIR: "./dist/storybook/stories"
