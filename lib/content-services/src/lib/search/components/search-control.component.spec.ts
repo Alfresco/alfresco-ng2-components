@@ -69,7 +69,7 @@ describe('SearchControlComponent', () => {
         searchService = TestBed.inject(SearchService);
         authService = TestBed.inject(AuthenticationService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 

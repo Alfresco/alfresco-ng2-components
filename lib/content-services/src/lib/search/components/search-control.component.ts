@@ -109,13 +109,16 @@ export class SearchControlComponent {
     noSearchResultTemplate: TemplateRef<any> = null;
     searchTerm: string = '';
 
-    constructor(public authService: AuthenticationService, private thumbnailService: ThumbnailService) {}
+    constructor(
+        public authService: AuthenticationService,
+        private readonly thumbnailService: ThumbnailService
+    ) {}
 
     isNoSearchTemplatePresent(): boolean {
         return !!this.emptySearchTemplate;
     }
     isLoggedIn(): boolean {
-        return this.authService.isEcmLoggedIn();
+        return this.authService.isLoggedIn();
     }
 
     inputChange(value: string) {

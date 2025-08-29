@@ -65,7 +65,7 @@ class AppComponent {
 
     onLoggedIn() {
         this.userPreferences.setStoragePrefix(
-            this.authService.getEcmUsername()
+            this.authService.getUsername()
         );
     }
 }

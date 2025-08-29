@@ -32,7 +32,10 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     onLogout: Subject<any> = new Subject<any>();
     onTokenReceived: Subject<any> = new Subject<any>();
 
-    constructor(private injector: Injector, private redirectAuthService: RedirectAuthService) {
+    constructor(
+        private readonly injector: Injector,
+        private readonly redirectAuthService: RedirectAuthService
+    ) {
         this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
         this.redirectAuthService.onTokenReceived.subscribe((value) => this.onTokenReceived.next(value));
@@ -116,30 +119,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    /**
-     * @deprecated use `isLoggedIn` instead
-     * @returns true if the ECM provider is logged in
-     */
-    isEcmLoggedIn(): boolean {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.isLoggedIn();
-        } else {
-            return this.basicAlfrescoAuthService.isEcmLoggedIn();
-        }
-    }
-
-    /**
-     * @deprecated use `isLoggedIn` instead
-     * @returns true if the BPM provider is logged in
-     */
-    isBpmLoggedIn(): boolean {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.isLoggedIn();
-        } else {
-            return this.basicAlfrescoAuthService.isBpmLoggedIn();
-        }
-    }
-
     reset(): void {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.reset();
@@ -167,22 +146,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         } else {
             return this.basicAlfrescoAuthService.getUsername();
         }
-    }
-
-    /**
-     * @deprecated use `getUsername` instead
-     * @returns the logged username
-     */
-    getEcmUsername(): string {
-        return this.getUsername();
-    }
-
-    /**
-     * @deprecated use `getUsername` instead
-     * @returns the logged username
-     */
-    getBpmUsername(): string {
-        return this.getUsername();
     }
 
     getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {

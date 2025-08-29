@@ -36,7 +36,6 @@ class AlfrescoApiMock {
     isOauthConfiguration = () => true;
     isLoggedIn = () => true;
     isEcmConfiguration = () => true;
-    isEcmLoggedIn = () => true;
 }
 
 export class ContentApiMock {

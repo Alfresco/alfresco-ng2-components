@@ -43,7 +43,12 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         type: 'basic'
     };
 
-    constructor(appConfig: AppConfigService, cookie: CookieService, private contentAuth: ContentAuth, private processAuth: ProcessAuth) {
+    constructor(
+        appConfig: AppConfigService,
+        cookie: CookieService,
+        private readonly contentAuth: ContentAuth,
+        private readonly processAuth: ProcessAuth
+    ) {
         super(appConfig, cookie);
 
         this.appConfig.onLoad.subscribe(() => {
@@ -214,30 +219,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         }
     }
 
-    /**
-     * @deprecated
-     * @returns content auth token
-     */
-    getTicketEcm(): string {
-        return this.contentAuth.getToken();
-    }
-
-    /**
-     * @deprecated
-     * @returns process auth token
-     */
-    getTicketBpm(): string {
-        return this.processAuth.getToken();
-    }
-
-    isBpmLoggedIn(): boolean {
-        return this.processAuth.isLoggedIn();
-    }
-
-    isEcmLoggedIn(): boolean {
-        return this.contentAuth.isLoggedIn();
-    }
-
     isLoggedIn(): boolean {
         const authWithCredentials = this.isKerberosEnabled();
 
@@ -315,22 +296,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     private hasSelectedProviderAll(provider: string): boolean {
         return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
-    }
-
-    /**
-     * @deprecated use `getUsername()` instead
-     * @returns the username of the authenticated user
-     */
-    getBpmUsername(): string {
-        return this.processAuth.getUsername();
-    }
-
-    /**
-     * @deprecated use `getUsername()` instead
-     * @returns the username of the authenticated user
-     */
-    getEcmUsername(): string {
-        return this.contentAuth.getUsername();
     }
 
     /**

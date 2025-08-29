@@ -53,7 +53,7 @@ describe('TaskHeaderCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({})
         },
-        isEcmLoggedIn: () => false,
+        isLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 
