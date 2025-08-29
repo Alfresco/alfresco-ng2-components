@@ -83,7 +83,7 @@
     "@nx/js": "20.8.0",
     "@nx/node": "20.8.0",
     "@nx/storybook": "20.8.0",
-    "@nx/workspace": "20.8.0",
+    "@nx/workspace": "21.4.0",
     "@paperist/types-remark": "0.1.3",
     "@playwright/test": "1.46.1",
     "@schematics/angular": "19.2.7",
