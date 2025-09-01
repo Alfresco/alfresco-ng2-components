@@ -28,7 +28,7 @@ export const AuthGuardEcm: CanActivateFn = async (_: ActivatedRouteSnapshot, sta
         return authGuardBaseService.redirectSSOSuccessURL();
     }
 
-    if (authenticationService.isEcmLoggedIn() || authGuardBaseService.withCredentials) {
+    if (authenticationService.isLoggedIn() || authGuardBaseService.withCredentials) {
         return true;
     }
 

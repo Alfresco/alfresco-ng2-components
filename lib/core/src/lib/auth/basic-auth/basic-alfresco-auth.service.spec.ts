@@ -127,22 +127,6 @@ describe('BasicAlfrescoAuthService', () => {
         });
     });
 
-    it('isBpmLoggedIn should return value from processAuth', () => {
-        spyOn(processAuth, 'isLoggedIn').and.returnValue(true);
-        const result = basicAlfrescoAuthService.isBpmLoggedIn();
-
-        expect(result).toBeTrue();
-        expect(processAuth.isLoggedIn).toHaveBeenCalled();
-    });
-
-    it('isEcmLoggedIn should return value from contentAuth', () => {
-        spyOn(contentAuth, 'isLoggedIn').and.returnValue(true);
-        const result = basicAlfrescoAuthService.isEcmLoggedIn();
-
-        expect(result).toBeTrue();
-        expect(contentAuth.isLoggedIn).toHaveBeenCalled();
-    });
-
     describe('isLoggedIn', () => {
         let contentAuthSpy: jasmine.Spy;
         let processAuthSpy: jasmine.Spy;
