@@ -38,6 +38,8 @@ import { EventEmitter } from 'eventemitter3';
 
 type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 
+type EventEmitterEvents = 'progress' | 'success' | 'error' | 'forbidden' | 'abort' | 'unauthorized' | string;
+
 export interface Emitters {
     readonly eventEmitter: EventEmitterInstance;
     readonly apiClientEmitter: EventEmitterInstance;
@@ -71,22 +73,22 @@ export class AdfHttpClient implements JsApiHttpClient {
     }
 
     // EventEmitter delegation methods
-    on<T extends string | symbol>(event: T, fn: (...args: any[]) => void, context?: any): this {
+    on(event: EventEmitterEvents, fn: (...args: any[]) => void, context?: any): this {
         this.eventEmitter.on(event, fn, context);
         return this;
     }
 
-    off<T extends string | symbol>(event: T, fn?: (...args: any[]) => void, context?: any): this {
+    off(event: EventEmitterEvents, fn?: (...args: any[]) => void, context?: any): this {
         this.eventEmitter.off(event, fn, context);
         return this;
     }
 
-    once<T extends string | symbol>(event: T, fn: (...args: any[]) => void, context?: any): this {
+    once(event: EventEmitterEvents, fn: (...args: any[]) => void, context?: any): this {
         this.eventEmitter.once(event, fn, context);
         return this;
     }
 
-    emit<T extends string | symbol>(event: T, ...args: any[]): boolean {
+    emit(event: EventEmitterEvents, ...args: any[]): boolean {
         return this.eventEmitter.emit(event, ...args);
     }
 
