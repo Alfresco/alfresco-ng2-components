@@ -149,6 +149,11 @@ const getSimpleChanges = (currentValue: string, previousValue?: string): SimpleC
     nodeId: new SimpleChange(previousValue || null, currentValue, false)
 });
 
+const getSimpleChangesWithVersion = (nodeId: string, versionId?: string, previousNodeId?: string, previousVersionId?: string): SimpleChanges => ({
+    nodeId: new SimpleChange(previousNodeId || null, nodeId, false),
+    versionId: new SimpleChange(previousVersionId || null, versionId, false)
+});
+
 const verifyCustomElement = (component: any, selector: string, done: DoneFn) => {
     const customFixture = TestBed.createComponent(component);
     const customElement: HTMLElement = customFixture.nativeElement;
@@ -292,15 +297,91 @@ describe('AlfrescoViewerComponent', () => {
         expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(2);
     }));
 
-    it('should not setup the node twice if the node id is not changed', fakeAsync(() => {
-        spyOn(component['nodesApi'], 'getNode').and.stub();
+    it('should not setup the node twice if both nodeId and versionId remain the same', fakeAsync(() => {
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component['versionsApi'], 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
         component.showViewer = true;
         component.nodeId = 'id1';
-        component.ngOnChanges(getSimpleChanges('id0', 'id1'));
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
         tick();
-        component.ngOnChanges(getSimpleChanges('id1', 'id1'));
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0', 'id1', '1.0'));
         tick();
+
         expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should setup the node when versionId changes even if nodeId stays the same', fakeAsync(() => {
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component['versionsApi'], 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
+        tick();
+
+        component.versionId = '2.0';
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '2.0', 'id1', '1.0'));
+        tick();
+
+        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(2);
+    }));
+
+    it('should setup the node when nodeId changes and versionId stays the same', fakeAsync(() => {
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component['versionsApi'], 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
+        tick();
+
+        component.nodeId = 'id2';
+        component.ngOnChanges(getSimpleChangesWithVersion('id2', '1.0', 'id1', '1.0'));
+        tick();
+
+        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(2);
+    }));
+
+    it('should setup the node when both nodeId and versionId change', fakeAsync(() => {
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component['versionsApi'], 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
+        tick();
+
+        component.nodeId = 'id2';
+        component.versionId = '2.0';
+        component.ngOnChanges(getSimpleChangesWithVersion('id2', '2.0', 'id1', '1.0'));
+        tick();
+
+        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(2);
     }));
 
     it('should append version of the file to the file content URL', fakeAsync(() => {
