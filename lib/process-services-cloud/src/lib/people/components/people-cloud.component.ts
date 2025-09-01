@@ -31,7 +31,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -368,9 +368,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
         for (const user of this.getPreselectedUsers()) {
             try {
                 const validationResult = (
-                    await this.identityUserService
-                        .search(user.username, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
-                        .toPromise()
+                    await firstValueFrom(
+                        this.identityUserService.search(user.username, {
+                            roles: this.roles,
+                            withinApplication: this.appName,
+                            groups: this.groupsRestriction
+                        })
+                    )
                 )[0];
 
                 if (!this.equalsUsers(user, validationResult)) {

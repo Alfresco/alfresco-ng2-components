@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
@@ -112,56 +112,44 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
             const spyOnPost = spyOn<any>(service, 'post').and.returnValue(of({}));
             const params = ['fakeName', 'executionId_1', 'flowNodeId_1'] as const;
-            await service.replayServiceTaskRequest(...params).toPromise();
+            await firstValueFrom(service.replayServiceTaskRequest(...params));
             expect(spyOnPost).toHaveBeenCalledWith(expected.expectedQueryUrl, expected.expectedPayload);
         });
 
         it('should throw an exeption and execute logService error if appName is null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = [null, 'executionId_1', 'flowNodeId_1'] as const;
-            service
-                .replayServiceTaskRequest(...params)
-                .toPromise()
-                .catch((error) => {
-                    expect(error).toEqual(expectedErrorMessage);
-                    done();
-                });
+            firstValueFrom(service.replayServiceTaskRequest(...params)).catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                done();
+            });
         });
 
         it('should throw an exeption and execute logService error if executionId is null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = ['fakeName', null, 'flowNodeId_1'] as const;
-            service
-                .replayServiceTaskRequest(...params)
-                .toPromise()
-                .catch((error) => {
-                    expect(error).toEqual(expectedErrorMessage);
-                    done();
-                });
+            firstValueFrom(service.replayServiceTaskRequest(...params)).catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                done();
+            });
         });
 
         it('should throw an exeption and execute logService error if flowNodeId is null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = ['fakeName', 'executionId_1', null] as const;
-            service
-                .replayServiceTaskRequest(...params)
-                .toPromise()
-                .catch((error) => {
-                    expect(error).toEqual(expectedErrorMessage);
-                    done();
-                });
+            firstValueFrom(service.replayServiceTaskRequest(...params)).catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                done();
+            });
         });
 
         it('should throw an exeption and execute logService error if appName, executionId and flowNodeId are null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = [null, null, null] as const;
-            service
-                .replayServiceTaskRequest(...params)
-                .toPromise()
-                .catch((error) => {
-                    expect(error).toEqual(expectedErrorMessage);
-                    done();
-                });
+            firstValueFrom(service.replayServiceTaskRequest(...params)).catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                done();
+            });
         });
     });
 });

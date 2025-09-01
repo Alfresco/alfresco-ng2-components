@@ -21,7 +21,7 @@ import { PeopleContentQueryRequestModel, PeopleContentService } from './people-c
 import { TestBed } from '@angular/core/testing';
 import { PersonPaging } from '@alfresco/js-api';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, firstValueFrom, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 
@@ -83,14 +83,14 @@ describe('PeopleContentService', () => {
 
     it('should be able to fetch person details based on id', async () => {
         spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser } as any));
-        const person = await peopleContentService.getPerson('fake-id').toPromise();
+        const person = await firstValueFrom(peopleContentService.getPerson('fake-id'));
         expect(person.id).toEqual('fake-id');
         expect(person.email).toEqual('fakeEcm@ecmUser.com');
     });
 
     it('should be able to list people', async () => {
         spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
-        const response = await peopleContentService.listPeople().toPromise();
+        const response = await firstValueFrom(peopleContentService.listPeople());
         const people = response.entries;
         const pagination = response.pagination;
 
@@ -112,7 +112,7 @@ describe('PeopleContentService', () => {
         };
         const expectedValue = { skipCount: 10, maxItems: 20, orderBy: ['firstName ASC'] } as any;
 
-        await peopleContentService.listPeople(requestQueryParams).toPromise();
+        await firstValueFrom(peopleContentService.listPeople(requestQueryParams));
 
         expect(listPeopleSpy).toHaveBeenCalledWith(expectedValue);
     });
@@ -122,14 +122,14 @@ describe('PeopleContentService', () => {
         const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: undefined };
         const expectedValue = { skipCount: 10, maxItems: 20 };
 
-        await peopleContentService.listPeople(requestQueryParams).toPromise();
+        await firstValueFrom(peopleContentService.listPeople(requestQueryParams));
 
         expect(listPeopleSpy).toHaveBeenCalledWith(expectedValue);
     });
 
     it('should be able to create new person', async () => {
         spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser } as any));
-        const newUser = await peopleContentService.createPerson(createNewPersonMock).toPromise();
+        const newUser = await firstValueFrom(peopleContentService.createPerson(createNewPersonMock));
         expect(newUser.id).toEqual('fake-id');
         expect(newUser.email).toEqual('fakeEcm@ecmUser.com');
     });
@@ -150,12 +150,12 @@ describe('PeopleContentService', () => {
             Promise.resolve({ entry: fakeEcmAdminUser } as any)
         );
 
-        const user = await peopleContentService.getCurrentUserInfo().toPromise();
+        const user = await firstValueFrom(peopleContentService.getCurrentUserInfo());
         expect(user.id).toEqual('fake-id');
         expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
 
-        await peopleContentService.getCurrentUserInfo().toPromise();
+        await firstValueFrom(peopleContentService.getCurrentUserInfo());
 
         expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
@@ -165,13 +165,13 @@ describe('PeopleContentService', () => {
         const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(
             Promise.resolve({ entry: fakeEcmAdminUser } as any)
         );
-        await peopleContentService.getCurrentUserInfo().toPromise();
+        await firstValueFrom(peopleContentService.getCurrentUserInfo());
 
         getCurrentPersonSpy.and.returnValue(Promise.resolve({ entry: fakeEcmUser2 } as any));
-        await peopleContentService.getPerson('fake-id').toPromise();
+        await firstValueFrom(peopleContentService.getPerson('fake-id'));
 
         expect(getCurrentPersonSpy.calls.count()).toEqual(2);
-        const currentUser = await peopleContentService.getCurrentUserInfo().toPromise();
+        const currentUser = await firstValueFrom(peopleContentService.getCurrentUserInfo());
         expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
         expect(currentUser.id).toEqual(fakeEcmAdminUser.id);
         expect(currentUser.id).not.toEqual(fakeEcmUser2.id);

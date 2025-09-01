@@ -18,7 +18,7 @@
 import { AppConfigService } from '@alfresco/adf-core';
 import { ClassesApi, Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { PropertyGroup } from '../interfaces/property-group.interface';
@@ -253,7 +253,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeNode));
 
             expect(groupedProperties.length).toEqual(1);
             expect(groupedProperties[0].title).toEqual('Exif');
@@ -267,7 +267,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeNode));
 
             expect(groupedProperties.length).toEqual(1);
             expect(groupedProperties[0].title).toEqual('Exif');
@@ -284,7 +284,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeContentNode));
 
             expect(groupedProperties.length).toEqual(1);
             expect(groupedProperties[0].title).toEqual('Versionable');
@@ -301,7 +301,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeContentNode));
 
             expect(groupedProperties.length).toEqual(2);
             expect(groupedProperties[0].title).toEqual('Versionable');
@@ -319,7 +319,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeContentNode));
             expect(groupedProperties.length).toEqual(0);
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
@@ -335,7 +335,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeContentNode));
             expect(groupedProperties.length).toEqual(1);
             expect(groupedProperties[0].title).toEqual('Versionable');
 
@@ -351,7 +351,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeContentNode));
             expect(groupedProperties.length).toEqual(0);
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
@@ -367,7 +367,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeNode));
 
             expect(groupedProperties.length).toEqual(1);
             expect(groupedProperties[0].title).toEqual('Exif');
@@ -387,7 +387,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
-            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+            const groupedProperties = await firstValueFrom(service.getGroupedProperties(fakeNode));
 
             expect(groupedProperties.length).toEqual(2);
             expect(groupedProperties[0].title).toEqual('Exif');

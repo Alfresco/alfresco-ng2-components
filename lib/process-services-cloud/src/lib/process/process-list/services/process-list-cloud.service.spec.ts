@@ -182,7 +182,7 @@ describe('ProcessListCloudService', () => {
         it('should append to the call all the parameters', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
-            const request = await service.getAdminProcessByRequest(processRequest).toPromise();
+            const request = await firstValueFrom(service.getAdminProcessByRequest(processRequest));
 
             expect(request).toBeDefined();
             expect(request).not.toBeNull();
@@ -194,7 +194,7 @@ describe('ProcessListCloudService', () => {
         it('should concat the app name to the request url', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallUrl);
-            const requestUrl = await service.getAdminProcessByRequest(processRequest).toPromise();
+            const requestUrl = await firstValueFrom(service.getAdminProcessByRequest(processRequest));
 
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
@@ -213,7 +213,7 @@ describe('ProcessListCloudService', () => {
                 ]
             } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
-            const request = await service.getAdminProcessByRequest(processRequest).toPromise();
+            const request = await firstValueFrom(service.getAdminProcessByRequest(processRequest));
 
             expect(request).toBeDefined();
             expect(request).not.toBeNull();
@@ -225,7 +225,7 @@ describe('ProcessListCloudService', () => {
             requestSpy.and.callFake(returnCallUrl);
 
             try {
-                await service.getAdminProcessByRequest(processRequest).toPromise();
+                await firstValueFrom(service.getAdminProcessByRequest(processRequest));
 
                 fail('Should have thrown error');
             } catch (error) {
@@ -236,7 +236,7 @@ describe('ProcessListCloudService', () => {
         it('should make post request', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallOperation);
-            const adminProcessResponse = await service.getAdminProcessByRequest(processRequest).toPromise();
+            const adminProcessResponse = await firstValueFrom(service.getAdminProcessByRequest(processRequest));
             expect(adminProcessResponse).toBeDefined();
             expect(adminProcessResponse).not.toBeNull();
             expect(adminProcessResponse.httpMethod).toBe('POST');
@@ -251,7 +251,7 @@ describe('ProcessListCloudService', () => {
                 variableKeys: ['test-one', 'test-two']
             } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
-            const requestParams = await service.getAdminProcessByRequest(processRequest).toPromise();
+            const requestParams = await firstValueFrom(service.getAdminProcessByRequest(processRequest));
 
             expect(requestParams).toBeDefined();
             expect(requestParams).not.toBeNull();
@@ -267,7 +267,7 @@ describe('ProcessListCloudService', () => {
                 variableKeys: ['test-one', 'test-two']
             } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallBody);
-            const requestBodyParams = await service.getAdminProcessByRequest(processRequest).toPromise();
+            const requestBodyParams = await firstValueFrom(service.getAdminProcessByRequest(processRequest));
 
             expect(requestBodyParams).toBeDefined();
             expect(requestBodyParams).not.toBeNull();

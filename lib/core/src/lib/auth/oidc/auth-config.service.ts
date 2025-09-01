@@ -21,6 +21,7 @@ import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { firstValueFrom } from 'rxjs';
 
 /**
  * Create auth configuration factory
@@ -36,7 +37,10 @@ export function authConfigFactory(authConfigService: AuthConfigService): Promise
     providedIn: 'root'
 })
 export class AuthConfigService {
-    constructor(private appConfigService: AppConfigService, @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig) {}
+    constructor(
+        private appConfigService: AppConfigService,
+        @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
+    ) {}
 
     private _authConfig!: AuthConfig;
     get authConfig(): AuthConfig {
@@ -44,7 +48,7 @@ export class AuthConfigService {
     }
 
     loadConfig(): Promise<AuthConfig> {
-        return this.appConfigService.onLoad.pipe(take(1)).toPromise().then(this.loadAppConfig.bind(this));
+        return firstValueFrom(this.appConfigService.onLoad.pipe(take(1))).then(this.loadAppConfig.bind(this));
     }
 
     loadAppConfig(): AuthConfig {

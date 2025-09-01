@@ -28,7 +28,7 @@ import {
     OAuthSuccessEvent,
     OAuthInfoEvent
 } from 'angular-oauth2-oidc';
-import { of, Subject, timeout } from 'rxjs';
+import { firstValueFrom, of, Subject, timeout } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -389,8 +389,8 @@ describe('RedirectAuthService', () => {
     it('should NOT logout user if the refresh token failed first time', fakeAsync(async () => {
         const expectedFakeErrorEvent = new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {});
 
-        const firstEventOccurPromise = service.firstOauthErrorEventOccur$.toPromise();
-        const secondTokenRefreshErrorEventPromise = service.secondTokenRefreshErrorEventOccur$.pipe(timeout(1000)).toPromise();
+        const firstEventOccurPromise = firstValueFrom(service.firstOauthErrorEventOccur$);
+        const secondTokenRefreshErrorEventPromise = firstValueFrom(service.secondTokenRefreshErrorEventOccur$.pipe(timeout(1000)));
 
         oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
 
