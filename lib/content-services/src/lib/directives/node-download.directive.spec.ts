@@ -50,7 +50,7 @@ describe('NodeDownloadDirective', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve()
         },
-        isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn'),
+        isLoggedIn: jasmine.createSpy('isLoggedIn'),
         reply: jasmine.createSpy('reply')
     };
 

@@ -140,7 +140,7 @@ describe('AuthenticationService', () => {
             spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
 
-            expect(authService.isEcmLoggedIn()).toBeFalsy();
+            expect(authService.isLoggedIn()).toBeFalsy();
         });
 
         it('should require remember me set for ECM check', () => {
@@ -149,7 +149,7 @@ describe('AuthenticationService', () => {
             spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
 
-            expect(authService.isEcmLoggedIn()).toBeFalsy();
+            expect(authService.isLoggedIn()).toBeFalsy();
         });
 
         it('[ECM] should login in the ECM if no provider are defined calling the login', async () => {
@@ -167,7 +167,6 @@ describe('AuthenticationService', () => {
 
         it('[ECM] should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);
-            expect(authService.isEcmLoggedIn()).toBe(false);
         });
 
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
@@ -199,10 +198,6 @@ describe('AuthenticationService', () => {
         it('[ECM] should return isALLProvider false', () => {
             expect(authService.isALLProvider()).toBe(false);
         });
-
-        it('[ECM] should return isBpmLoggedIn false', () => {
-            expect(authService.isBpmLoggedIn()).toBe(false);
-        });
     });
 
     describe('when the setting is BPM', () => {
@@ -217,7 +212,7 @@ describe('AuthenticationService', () => {
             spyOn(authService, 'isBPMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
 
-            expect(authService.isBpmLoggedIn()).toBeFalsy();
+            expect(authService.isLoggedIn()).toBeFalsy();
         });
 
         it('should not require cookie service enabled for BPM check', () => {
@@ -225,7 +220,7 @@ describe('AuthenticationService', () => {
             spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isBPMProvider').and.returnValue(true);
 
-            expect(authService.isBpmLoggedIn()).toBeFalsy();
+            expect(authService.isLoggedIn()).toBeFalsy();
         });
 
         it('[BPM] should return an error when the logout return error', async () => {

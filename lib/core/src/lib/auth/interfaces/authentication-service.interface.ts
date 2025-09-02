@@ -42,14 +42,4 @@ export interface AuthenticationServiceInterface {
     getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
     addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders>;
     reset(): void;
-
-    /** @deprecated use `isLoggedIn` instead, use `isECMProvider` if you need to know the auth type */
-    isEcmLoggedIn(): boolean;
-    /** @deprecated use `isLoggedIn` instead, use `isBPMProvider` if you need to know the auth type */
-    isBpmLoggedIn(): boolean;
-
-    /** @deprecated use `getUsername` instead */
-    getEcmUsername(): string;
-    /** @deprecated use `getUsername` instead */
-    getBpmUsername(): string;
 }

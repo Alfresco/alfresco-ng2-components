@@ -71,7 +71,7 @@ describe('AuthGuardService ECM', () => {
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuardEcm(route, state)) as Promise<boolean>;
 
@@ -79,7 +79,7 @@ describe('AuthGuardService ECM', () => {
     });
 
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async () => {
-        spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuardEcm(route, state)) as Promise<boolean>;
@@ -88,7 +88,7 @@ describe('AuthGuardService ECM', () => {
     });
 
     it('if the alfresco js api is NOT logged in should canActivate be false', async () => {
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuardEcm(route, state)) as Promise<boolean>;
 
@@ -97,7 +97,7 @@ describe('AuthGuardService ECM', () => {
 
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async () => {
         appConfigService.config.loginRoute = 'login';
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuardEcm(route, state)) as Promise<boolean>;
 
@@ -106,7 +106,7 @@ describe('AuthGuardService ECM', () => {
     });
 
     it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async () => {
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
 
@@ -117,7 +117,7 @@ describe('AuthGuardService ECM', () => {
     });
 
     it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async () => {
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         spyOn(oidcAuthenticationService, 'isPublicUrl').and.returnValue(false);
         spyOn(oidcAuthenticationService, 'ssoLogin').and.stub();
@@ -139,7 +139,7 @@ describe('AuthGuardService ECM', () => {
     });
 
     it('should not redirect url if NOT logged in and isOAuth but no silentLogin configured', async () => {
-        spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
 

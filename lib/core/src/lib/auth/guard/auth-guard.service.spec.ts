@@ -89,7 +89,7 @@ describe('AuthGuardService', () => {
     });
 
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async () => {
-        spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;

@@ -83,7 +83,7 @@ describe('EditProcessFilterCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(fakeApplicationInstance)
         },
-        isEcmLoggedIn: () => false,
+        isLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 

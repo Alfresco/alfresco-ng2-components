@@ -35,7 +35,10 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
 
-    protected constructor(protected appConfig: AppConfigService, protected cookie: CookieService) {
+    protected constructor(
+        protected appConfig: AppConfigService,
+        protected cookie: CookieService
+    ) {
         ee(this);
     }
 
@@ -43,21 +46,8 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     abstract getToken(): string;
     abstract isLoggedIn(): boolean;
     abstract logout(): any;
-
-    /** @deprecated use `isLoggedIn` instead */
-    abstract isEcmLoggedIn(): boolean;
-
-    /** @deprecated use `isLoggedIn` instead */
-    abstract isBpmLoggedIn(): boolean;
-
     abstract reset(): void;
     abstract getUsername(): string;
-
-    /** @deprecated use `getUsername` instead */
-    abstract getEcmUsername(): string;
-
-    /** @deprecated use `getUsername` instead */
-    abstract getBpmUsername(): string;
 
     /**
      * Adds the auth token to an HTTP header using the 'bearer' scheme.
