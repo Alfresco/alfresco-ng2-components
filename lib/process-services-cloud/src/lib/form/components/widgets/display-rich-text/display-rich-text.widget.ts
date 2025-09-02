@@ -17,10 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
+import { Component, inject, InjectionToken, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, FormService } from '@alfresco/adf-core';
-import edjsHTML from 'editorjs-html';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RichTextParserService } from '../../../services/rich-text-parser.service';
+
+export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>('RichTextParserService', {
+    factory: () => new RichTextParserService()
+});
 
 @Component({
     selector: 'display-rich-text',
@@ -40,39 +44,22 @@ import { DomSanitizer } from '@angular/platform-browser';
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
-    parsedHTML: any;
+    parsedHTML: string | Error;
 
-    private static readonly CUSTOM_PARSER = {
-        header: (block: any): string => {
-            const paragraphAlign = block.data.alignment || block.data.align || block.tunes?.anyTuneName?.alignment;
-            if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center'].includes(paragraphAlign)) {
-                return `<h${block.data.level} class="ce-tune-alignment--${paragraphAlign}">${block.data.text}</h${block.data.level}>`;
-            } else {
-                return `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
-            }
-        },
-        paragraph: (block: any): string => {
-            const paragraphAlign = block.data.alignment || block.data.align || block.tunes?.anyTuneName?.alignment;
+    private readonly richTextParserService = inject(RICH_TEXT_PARSER_TOKEN);
+    private readonly sanitizer = inject(DomSanitizer);
 
-            if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center', 'justify'].includes(paragraphAlign)) {
-                return `<p class="ce-tune-alignment--${paragraphAlign}">${block.data.text}</p>`;
-            } else {
-                return `<p>${block.data.text}</p>`;
-            }
-        }
-    };
-
-    constructor(public formService: FormService, private readonly sanitizer: DomSanitizer) {
+    constructor(formService: FormService) {
         super(formService);
     }
 
     ngOnInit(): void {
-        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER, { strict: true }).parse(this.field.value);
+        this.parsedHTML = this.richTextParserService.parse(this.field.value);
 
-        if (!(this.parsedHTML instanceof Error)) {
-            this.sanitizeHtmlContent();
-        } else {
+        if (this.parsedHTML instanceof Error) {
             throw this.parsedHTML;
+        } else {
+            this.sanitizeHtmlContent();
         }
     }
 
