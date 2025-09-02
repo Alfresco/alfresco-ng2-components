@@ -366,6 +366,44 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
+
+        describe('MaxLengthFieldValidator with custom value', () => {
+            let customValidator: MaxLengthFieldValidator;
+
+            beforeEach(() => {
+                customValidator = new MaxLengthFieldValidator([FormFieldTypes.NUMBER], 3);
+            });
+
+            it('should validate integer values', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.NUMBER,
+                    value: '444'
+                });
+
+                const isValid = customValidator.validate(field);
+                expect(isValid).toBe(true);
+            });
+
+            it('should validate values exceeding maxLength', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.NUMBER,
+                    value: '4444'
+                });
+
+                const isValid = customValidator.validate(field);
+                expect(isValid).toBe(false);
+            });
+
+            it('should not validate not supported fields', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.TEXT,
+                    value: 'abcd'
+                });
+
+                const isSupported = customValidator.isSupported(field);
+                expect(isSupported).toBe(false);
+            });
+        });
     });
 
     describe('MinValueFieldValidator', () => {

@@ -1210,7 +1210,7 @@ describe('FormCloudComponent', () => {
         formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         const form = formComponent.parseForm(formComponent.formCloudRepresentationJSON);
         expect(formComponent.fieldValidators.length).toBe(1);
-        expect(form.fieldValidators.length).toBe(10);
+        expect(form.fieldValidators.length).toBe(11);
     });
 
     describe('form validations', () => {
