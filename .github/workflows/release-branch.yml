@@ -124,7 +124,6 @@ jobs:
   create-git-tag:
     runs-on: ubuntu-latest
     needs: [setup, release-npm]
-    if: ${{ inputs.create-tag }}
     name: Create github tag
     permissions:
       contents: write
