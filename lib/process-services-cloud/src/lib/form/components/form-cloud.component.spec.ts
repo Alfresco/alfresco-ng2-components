@@ -464,7 +464,8 @@ describe('FormCloudComponent', () => {
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcomeId = 'custom1';
+        const outcome = new FormOutcomeModel(formModel, { id: outcomeId, name: outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
@@ -474,7 +475,7 @@ describe('FormCloudComponent', () => {
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(saved).toBeFalse();
-        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName);
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, outcomeId);
     });
 
     it('should save form on [save] outcome click', () => {
@@ -940,7 +941,7 @@ describe('FormCloudComponent', () => {
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
 
-        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name);
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name, outcome.id);
     });
 
     it('should check visibility only if field with form provided', () => {

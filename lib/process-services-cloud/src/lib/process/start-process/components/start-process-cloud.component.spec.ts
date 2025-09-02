@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormModel } from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -820,9 +820,12 @@ describe('StartProcessCloudComponent', () => {
                 outcome: 'custom_outcome'
             });
 
+            const formOutcomeModel = new FormOutcomeModel(null, fakeFormModelJson.outcomes[0]);
+            const event = new FormOutcomeEvent(formOutcomeModel);
+
             fixture.detectChanges();
 
-            component.onCustomOutcomeClicked('custom_outcome');
+            component.onCustomOutcomeClicked(event);
 
             expect(startProcessWithFormSpy).toHaveBeenCalledWith(
                 component.appName,
