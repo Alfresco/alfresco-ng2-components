@@ -125,7 +125,7 @@ export class TaskFormCloudComponent {
 
     /** Emitted when the task is completed. */
     @Output()
-    taskCompleted = new EventEmitter<string>();
+    taskCompleted = new EventEmitter<FormModel>();
 
     /** Emitted when the task is claimed. */
     @Output()
@@ -167,7 +167,10 @@ export class TaskFormCloudComponent {
 
     loading: boolean = false;
 
-    constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
+    constructor(
+        private taskCloudService: TaskCloudService,
+        private formRenderingService: FormRenderingService
+    ) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
@@ -205,10 +208,6 @@ export class TaskFormCloudComponent {
         return this.readOnly || !this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
-    onCompleteTask() {
-        this.taskCompleted.emit(this.taskId);
-    }
-
     onClaimTask() {
         this.taskClaimed.emit(this.taskId);
     }
@@ -227,7 +226,7 @@ export class TaskFormCloudComponent {
 
     onFormCompleted(form: FormModel) {
         this.formCompleted.emit(form);
-        this.taskCompleted.emit(this.taskId);
+        this.taskCompleted.emit(form);
     }
 
     onError(data: any) {

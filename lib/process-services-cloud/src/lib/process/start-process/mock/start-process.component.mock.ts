@@ -323,7 +323,13 @@ export const fakeFormModelJson = {
             }
         }
     ],
-    outcomes: [],
+    outcomes: [
+        {
+            id: 'custom_outcome_id',
+            name: 'custom_outcome',
+            visibilityCondition: null
+        }
+    ],
     metadata: {},
     variables: []
 };
