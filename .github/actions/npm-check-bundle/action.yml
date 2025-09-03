@@ -23,4 +23,6 @@ runs:
           echo "TAG_NPM not set, aborting"
           exit 1
         fi
-        ./scripts/github/build/npm-check-bundles.sh
+        ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+        echo "check bundle on TAG_NPM='${TAG_NPM}' and ADF_VERSION='${ADF_VERSION}'"
+        ./scripts/github/build/npm-check-bundles.sh -v ${ADF_VERSION}
