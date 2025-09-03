@@ -18,12 +18,14 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DisplayRichTextWidgetComponent } from './display-rich-text.widget';
+import { DisplayRichTextWidgetComponent, RICH_TEXT_PARSER_TOKEN } from './display-rich-text.widget';
+import { RichTextParserService } from '../../../services/rich-text-parser.service';
 
 describe('DisplayRichTextWidgetComponent', () => {
     let widget: DisplayRichTextWidgetComponent;
     let fixture: ComponentFixture<DisplayRichTextWidgetComponent>;
     let debugEl: DebugElement;
+    let mockRichTextParserService: jasmine.SpyObj<RichTextParserService>;
 
     const cssSelector = {
         parsedHTML: '.adf-display-rich-text-widget-parsed-html'
@@ -79,13 +81,26 @@ describe('DisplayRichTextWidgetComponent', () => {
     };
 
     beforeEach(() => {
+        mockRichTextParserService = jasmine.createSpyObj('RichTextParserService', ['parse']);
+        mockRichTextParserService.parse.and.returnValue(
+            '<h1>Editor.js</h1><p class="ce-tune-alignment--left">Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark></p>'
+        );
+
         TestBed.configureTestingModule({
-            imports: [DisplayRichTextWidgetComponent]
+            imports: [DisplayRichTextWidgetComponent],
+            providers: [{ provide: RICH_TEXT_PARSER_TOKEN, useValue: mockRichTextParserService }]
         });
         fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;
         debugEl = fixture.debugElement;
         widget.field = fakeFormField;
+    });
+
+    it('should call RichTextParserService.parse() method', () => {
+        fixture.detectChanges();
+
+        expect(mockRichTextParserService.parse).toHaveBeenCalledWith(fakeFormField.value);
+        expect(mockRichTextParserService.parse).toHaveBeenCalledTimes(1);
     });
 
     it('should parse editorjs data to html', async () => {
