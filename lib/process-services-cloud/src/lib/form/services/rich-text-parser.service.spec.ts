@@ -15,26 +15,18 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { RichTextParserService } from './rich-text-parser.service';
 
 describe('RichTextParserService', () => {
-    let service: RichTextParserService;
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({});
-        service = TestBed.inject(RichTextParserService);
-    });
-
     it('should test CUSTOM_PARSER.header method works correctly', () => {
         const block = { data: { text: 'Test Header', level: 2, alignment: 'center' } };
-        const result = (service as any).CUSTOM_PARSER.header(block);
+        const result = (RichTextParserService as any).CUSTOM_PARSER.header(block);
         expect(result).toBe('<h2 class="ce-tune-alignment--center">Test Header</h2>');
     });
 
     it('should test CUSTOM_PARSER.paragraph method works correctly', () => {
         const block = { data: { text: 'Test paragraph text', alignment: 'justify' } };
-        const result = (service as any).CUSTOM_PARSER.paragraph(block);
+        const result = (RichTextParserService as any).CUSTOM_PARSER.paragraph(block);
         expect(result).toBe('<p class="ce-tune-alignment--justify">Test paragraph text</p>');
     });
 });
