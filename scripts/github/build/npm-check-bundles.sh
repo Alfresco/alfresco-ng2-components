@@ -2,6 +2,20 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+VERSION="alpha"
+while getopts "v:" opt; do
+    case $opt in
+        v)
+            VERSION="$OPTARG"
+            ;;
+        \?)
+            echo "Usage: $0 [-v version]" >&2
+            echo "  -v    Specify package version (default: alpha)" >&2
+            exit 1
+            ;;
+    esac
+done
+
 eval projects=( "js-api"
     "adf-core"
     "adf-insights"
@@ -29,10 +43,46 @@ do
     mkdir $PACKAGE
     cd $PACKAGE
 
-    PKG_VERSION=$(npm view @alfresco/$PACKAGE@alpha version)
+    # Handle js-api differently - increase major version by 1
+    if [ $PACKAGE == 'js-api' ]; then
+        if [ $VERSION == 'alpha' ] || [ $VERSION == 'beta' ] || [ $VERSION == 'latest' ]; then
+            # For tag versions, we need to get the current version and increment
+            CURRENT_VERSION=$(npm view @alfresco/$PACKAGE@$VERSION version)
+            MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d'.' -f1)
+            NEXT_MAJOR=$((MAJOR_VERSION + 1))
+            # Keep the rest of the version string
+            REST_VERSION=$(echo $CURRENT_VERSION | cut -d'.' -f2-)
+            PACKAGE_VERSION="${NEXT_MAJOR}.${REST_VERSION}"
+        else
+            # For specific versions, just increment the major number
+            MAJOR_VERSION=$(echo $VERSION | cut -d'.' -f1)
+            NEXT_MAJOR=$((MAJOR_VERSION + 1))
+            REST_VERSION=$(echo $VERSION | cut -d'.' -f2-)
+            PACKAGE_VERSION="${NEXT_MAJOR}.${REST_VERSION}"
+        fi
+    else
+        PACKAGE_VERSION=$VERSION
+    fi
+
+    # Try the calculated package version first
+    PKG_VERSION=$(npm view @alfresco/$PACKAGE@$PACKAGE_VERSION version 2>/dev/null)
+
+    # If that fails for js-api, try the original version
+    if [ -z "$PKG_VERSION" ] && [ $PACKAGE == 'js-api' ]; then
+        echo "Warning: js-api@$PACKAGE_VERSION not found, trying @$VERSION"
+        PACKAGE_VERSION=$VERSION
+        PKG_VERSION=$(npm view @alfresco/$PACKAGE@$PACKAGE_VERSION version 2>/dev/null)
+    fi
+
+    # If still no version found, exit with error
+    if [ -z "$PKG_VERSION" ]; then
+        error_out '31;1' "Package @alfresco/$PACKAGE@$PACKAGE_VERSION not found!" >&2
+        exit 1
+    fi
+
     echo "Inspecting: $PACKAGE@$PKG_VERSION"
 
-    npm pack '@alfresco/'$PACKAGE@$PKG_VERSION
+    npm pack '@alfresco/'$PACKAGE@$PACKAGE_VERSION
     tar zxf 'alfresco-'$PACKAGE-$PKG_VERSION.tgz
 
     if [ $PACKAGE == 'js-api' ]; then
