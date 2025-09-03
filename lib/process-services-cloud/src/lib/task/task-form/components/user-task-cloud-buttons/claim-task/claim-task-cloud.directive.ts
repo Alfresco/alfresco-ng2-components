@@ -18,6 +18,7 @@
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { IdentityUserService } from '../../../../../people/services/identity-user.service';
 import { TaskCloudService } from '../../../../services/task-cloud.service';
+import { firstValueFrom } from 'rxjs';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
@@ -86,7 +87,7 @@ export class ClaimTaskCloudDirective implements OnInit {
         const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
         try {
             this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');
-            const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
+            const result = await firstValueFrom(this.taskListService.claimTask(this.appName, this.taskId, currentUser));
             if (result) {
                 this.success.emit(result);
             }

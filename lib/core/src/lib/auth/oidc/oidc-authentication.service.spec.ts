@@ -214,7 +214,7 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
         };
         configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
 
-        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        const shouldPerformSsoLogin = await firstValueFrom(service.shouldPerformSsoLogin$);
         expect(shouldPerformSsoLogin).toBeTrue();
     });
 
@@ -225,7 +225,7 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
         };
         configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
 
-        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        const shouldPerformSsoLogin = await firstValueFrom(service.shouldPerformSsoLogin$);
         expect(shouldPerformSsoLogin).toBeFalse();
     });
 
@@ -236,7 +236,7 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
         };
         configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
 
-        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        const shouldPerformSsoLogin = await firstValueFrom(service.shouldPerformSsoLogin$);
         expect(shouldPerformSsoLogin).toBeFalse();
     });
 
@@ -247,7 +247,7 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
         };
         configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
 
-        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        const shouldPerformSsoLogin = await firstValueFrom(service.shouldPerformSsoLogin$);
         expect(shouldPerformSsoLogin).toBeFalse();
     });
 });

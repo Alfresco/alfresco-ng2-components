@@ -32,7 +32,7 @@ import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { EMPTY, of, throwError } from 'rxjs';
+import { EMPTY, firstValueFrom, of, throwError } from 'rxjs';
 import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
 import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -1144,7 +1144,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const verProp = queryDom('Versionable');
@@ -1164,7 +1164,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const verProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Versionable"]'));
@@ -1184,7 +1184,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const verProp = queryDom('Versionable');
@@ -1205,7 +1205,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const verProp = queryDom('Versionable');
@@ -1225,7 +1225,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const verProp = queryDom('Versionable');
@@ -1249,7 +1249,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const exifProp = queryDom('Exif');
@@ -1283,7 +1283,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
 
-            await component.groupedProperties$.toPromise();
+            await firstValueFrom(component.groupedProperties$);
             fixture.detectChanges();
 
             const exifProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Exif"]'));

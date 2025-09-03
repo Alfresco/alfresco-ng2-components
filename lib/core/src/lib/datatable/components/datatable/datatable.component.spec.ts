@@ -35,6 +35,7 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1353,7 +1354,7 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeFalsy();
 
         dataTable.resetSelection();
-        const rowClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
+        const rowClickPromise = firstValueFrom(dataTable.rowClick.pipe(take(1)));
         testingUtils.clickByCSS('[data-automation-id="datatable-row-0"] > div');
         fixture.detectChanges();
         await rowClickPromise;
@@ -1363,7 +1364,7 @@ describe('DataTable', () => {
         expect(rows2[1].isSelected).toBeFalsy();
 
         dataTable.resetSelection();
-        const cellClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
+        const cellClickPromise = firstValueFrom(dataTable.rowClick.pipe(take(1)));
         testingUtils.clickByCSS('[data-automation-id="datatable-row-1"] > div');
         fixture.detectChanges();
         await cellClickPromise;
