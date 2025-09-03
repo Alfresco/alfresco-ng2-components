@@ -78,7 +78,7 @@
     "@angular/cli": "19.2.14",
     "@angular/compiler-cli": "19.2.6",
     "@chromatic-com/storybook": "1.7.0",
-    "@nx/angular": "21.2.2",
+    "@nx/angular": "21.4.1",
     "@nx/eslint-plugin": "20.8.0",
     "@nx/js": "20.8.0",
     "@nx/node": "20.8.0",
