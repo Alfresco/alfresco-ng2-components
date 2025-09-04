@@ -872,7 +872,7 @@ describe('StartProcessCloudComponent', () => {
             );
         });
 
-        it('should output start event when process started successfully', () => {
+        it('should emit start event when process started successfully', () => {
             const emitSpy = spyOn(component.success, 'emit');
             component.startProcess();
             expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
@@ -1216,5 +1216,37 @@ describe('StartProcessCloudComponent', () => {
             });
             component.cancelStartProcess();
         });
+    });
+
+    it('should emit customOutcomeSelected and success events when onCustomOutcomeClicked is called', async () => {
+        const customOutcomeSelectedSpy = spyOn(component.customOutcomeSelected, 'emit');
+        const successSpy = spyOn(component.success, 'emit');
+
+        formDefinitionSpy.and.returnValue(of(fakeFormModelJson));
+        component.ngOnChanges({ appName: firstChange });
+        component.processForm.controls['processInstanceName'].setValue('My Process 1');
+        component.appName = 'test app name';
+        component.formCloud = new FormModel(JSON.stringify(fakeFormModelJson));
+        component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
+        component.processDefinitionCurrent = fakeProcessDefinitions[2];
+        component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+
+        const customOutcome = {
+            id: 'custom_outcome_id',
+            name: 'custom_outcome'
+        };
+        const formOutcomeModel = new FormOutcomeModel(null, customOutcome);
+        const event = new FormOutcomeEvent(formOutcomeModel);
+
+        fixture.detectChanges();
+
+        component.onCustomOutcomeClicked(event);
+
+        await fixture.whenStable();
+
+        expect(customOutcomeSelectedSpy).toHaveBeenCalledWith(customOutcome.id);
+        expect(successSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(component.customOutcomeName).toBe(customOutcome.name);
+        expect(component.customOutcomeId).toBe(customOutcome.id);
     });
 });
