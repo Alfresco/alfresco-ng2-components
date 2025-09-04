@@ -801,6 +801,7 @@ describe('FormCloudComponent', () => {
         );
 
         const outcome = 'complete';
+        const outcomeId = 'custom-outcome-id';
         let completed = false;
         formComponent.formCompleted.subscribe(() => (completed = true));
 
@@ -820,7 +821,7 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = taskId;
         formComponent.appName = appName;
         formComponent.processInstanceId = processInstanceId;
-        formComponent.completeTaskForm(outcome);
+        formComponent.completeTaskForm(outcome, outcomeId);
 
         expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(
             appName,
@@ -832,6 +833,7 @@ describe('FormCloudComponent', () => {
             appVersion
         );
         expect(completed).toBeTruthy();
+        expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
     });
 
     it('should open confirmation dialog on complete task', async () => {
@@ -866,9 +868,11 @@ describe('FormCloudComponent', () => {
         formComponent.appName = 'appName';
 
         spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel as any));
-        formComponent.completeTaskForm('complete');
+        const outcomeId = 'test-outcome-id';
+        formComponent.completeTaskForm('complete', outcomeId);
 
         expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+        expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
     });
 
     it('should not confirm form if user rejects', () => {
