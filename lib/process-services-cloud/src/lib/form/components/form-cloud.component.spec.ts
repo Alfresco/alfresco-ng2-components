@@ -1827,18 +1827,19 @@ describe('retrieve metadata on submit', () => {
 
         const outcome = 'approve';
         const outcomeId = 'custom-approve-id';
-        let formWithValues = null;
+        let emittedForm = null;
 
         spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as any));
-        spyOn(formComponent, 'onTaskCompleted').and.callFake((form) => {
-            formWithValues = form;
+
+        formComponent.formCompleted.subscribe((form) => {
+            emittedForm = form;
         });
 
         formComponent.completeTaskForm(outcome, outcomeId);
 
-        expect(formWithValues).not.toBeNull();
-        expect(formWithValues.selectedOutcome).toBe(outcome);
-        expect(formWithValues.selectedOutcomeId).toBe(outcomeId);
-        expect(formComponent.onTaskCompleted).toHaveBeenCalledWith(formComponent.form);
+        expect(emittedForm).not.toBeNull();
+        expect(emittedForm.selectedOutcome).toBe(outcome);
+        expect(emittedForm.selectedOutcomeId).toBe(outcomeId);
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
     });
 });
