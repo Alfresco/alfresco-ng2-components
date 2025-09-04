@@ -361,7 +361,7 @@ describe('UserTaskCloudComponent', () => {
         it('should emit taskCompletedScreen when task is completed', async () => {
             component.taskDetails.status = TASK_ASSIGNED_STATE;
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
-            spyOn(component.taskCompletedScreen, 'emit').and.stub();
+            spyOn(component.taskCompleted, 'emit').and.stub();
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const completeBtn = await loader.getHarnessOrNull(MatButtonHarness.with({ selector: '[adf-cloud-complete-task]' }));
@@ -369,7 +369,7 @@ describe('UserTaskCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.taskCompletedScreen.emit).toHaveBeenCalledTimes(1);
+            expect(component.taskCompleted.emit).toHaveBeenCalledTimes(1);
         });
 
         it('should emit taskClaimed when task is claimed', async () => {
