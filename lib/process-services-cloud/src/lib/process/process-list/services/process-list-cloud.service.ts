@@ -230,6 +230,17 @@ export class ProcessListCloudService extends BaseCloudService {
         return this.getProcess(callback, defaultQueryUrl, requestNode, queryUrl);
     }
 
+    getProcessListCount(requestNode: ProcessListRequestModel): Observable<number> {
+        if (!requestNode?.appName) {
+            return throwError(() => new Error('Appname not configured'));
+        }
+
+        const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/process-instances/count`;
+        const queryData = this.buildQueryData(requestNode);
+
+        return this.post<object, number>(queryUrl, queryData).pipe(map((response) => response || 0));
+    }
+
     private getVariableKeysFromQueryParams(queryParams: any): string[] {
         if (!queryParams['variableKeys'] || queryParams['variableKeys'].length <= 0) {
             return [];
