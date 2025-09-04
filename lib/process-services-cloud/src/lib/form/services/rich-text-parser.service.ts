@@ -16,13 +16,16 @@
  */
 
 import edjsHTML from 'editorjs-html';
-
+import { Injectable } from '@angular/core';
 export interface OutputData {
     version?: string;
     time?: number;
     blocks: any[];
 }
 
+@Injectable({
+    providedIn: 'root'
+})
 export class RichTextParserService {
     private static readonly CUSTOM_PARSER = {
         header: (block: any): string => {
