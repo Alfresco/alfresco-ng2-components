@@ -77,7 +77,7 @@ class TaskScreenCloudMockComponent {
     @Input() showNextTaskCheckbox = false;
 
     @Output() taskSaved = new EventEmitter();
-    @Output() taskCompletedScreen = new EventEmitter<any>();
+    @Output() taskCompleted = new EventEmitter<any>();
     @Output() error = new EventEmitter<any>();
     @Output() cancelTask = new EventEmitter<any>();
     @Output() claimTask = new EventEmitter<any>();
@@ -358,7 +358,7 @@ describe('UserTaskCloudComponent', () => {
             expect(component.cancelClick.emit).toHaveBeenCalledOnceWith('task1');
         });
 
-        it('should emit taskCompletedScreen when task is completed', async () => {
+        it('should emit taskCompleted when task is completed', async () => {
             component.taskDetails.status = TASK_ASSIGNED_STATE;
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
             spyOn(component.taskCompleted, 'emit').and.stub();
@@ -369,7 +369,7 @@ describe('UserTaskCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.taskCompleted.emit).toHaveBeenCalledTimes(1);
+            expect(component.taskCompleted.emit).toHaveBeenCalledOnceWith(false);
         });
 
         it('should emit taskClaimed when task is claimed', async () => {
