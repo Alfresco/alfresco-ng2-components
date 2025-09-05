@@ -18,6 +18,7 @@
 import assert from 'assert';
 import { AlfrescoApi } from '../src';
 import { BpmAuthMock, EcmAuthMock, OAuthMock } from './mockObjects';
+import nock from 'nock';
 
 describe('Basic configuration test', () => {
     describe('config parameter ', () => {
@@ -209,16 +210,23 @@ describe('Basic configuration test', () => {
     });
 
     describe('login', () => {
+        beforeEach(() => {
+            nock.cleanAll();
+        });
+
         it('Should login be rejected if username or password are not provided', async () => {
+            const hostEcm = 'https://testServer.com:1616';
+            const authEcmMock = new EcmAuthMock(hostEcm); // ✅ HAS MOCK
+
             const config = {
-                hostEcm: 'https://testServer.com:1616',
+                hostEcm,
                 contextRoot: 'strangeContextRoot',
                 withCredentials: true
             };
             const alfrescoJsApi = new AlfrescoApi(config);
 
             let error;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login(undefined, undefined);
             } catch (e) {

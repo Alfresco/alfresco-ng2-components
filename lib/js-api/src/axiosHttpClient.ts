@@ -256,7 +256,7 @@ export class AxiosHttpClient implements HttpClient {
 
         try {
             document.cookie = `CSRF-TOKEN=${token};path=/`;
-        } catch (err) {
+        } catch {
             /* continue regardless of error */
         }
     }
