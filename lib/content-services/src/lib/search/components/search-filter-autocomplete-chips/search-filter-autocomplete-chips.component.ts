@@ -30,6 +30,7 @@ import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplet
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SitesService } from '../../../common/services/sites.service';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
@@ -54,7 +55,11 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private tagService: TagService, private categoryService: CategoryService) {
+    constructor(
+        private tagService: TagService,
+        private categoryService: CategoryService,
+        private sitesService: SitesService
+    ) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 
@@ -120,6 +125,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         if (this.settings.field === AutocompleteField.CATEGORIES && value) {
             this.searchForExistingCategories(value);
         }
+        if (this.settings.field === AutocompleteField.LOCATION && value) {
+            this.populateSitesOptions();
+        }
     }
 
     optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
@@ -131,10 +139,16 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
             let queryFragments;
-            if (this.settings.field === AutocompleteField.CATEGORIES) {
-                queryFragments = this.selectedOptions.map((val) => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
-            } else {
-                queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
+            switch (this.settings.field) {
+                case AutocompleteField.CATEGORIES:
+                    queryFragments = this.selectedOptions.map((val) => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
+                    break;
+                case AutocompleteField.LOCATION:
+                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id}"`);
+                    break;
+                default:
+                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
+                    break;
             }
             this.context.queryFragments[this.id] = queryFragments.join(' OR ');
             if (updateContext) {
@@ -157,6 +171,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             case AutocompleteField.CATEGORIES:
                 this.autocompleteOptionsSubject$.next([]);
                 break;
+            case AutocompleteField.LOCATION:
+                this.autocompleteOptionsSubject$.next([]);
+                break;
             default:
                 this.autocompleteOptionsSubject$.next(this.settings.autocompleteOptions);
         }
@@ -172,5 +189,21 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 })
             );
         });
+    }
+
+    private populateSitesOptions(): void {
+        this.sitesService
+            .getSites()
+            .pipe(
+                map((sites) => {
+                    const predefinedOptions = this.settings?.autocompleteOptions || [];
+                    const sitesOptions = sites.list.entries.map((siteEntry) => ({
+                        id: siteEntry.entry.id,
+                        value: siteEntry.entry.title
+                    }));
+                    return [...sitesOptions, ...predefinedOptions];
+                })
+            )
+            .subscribe((options) => this.autocompleteOptionsSubject$.next(options));
     }
 }

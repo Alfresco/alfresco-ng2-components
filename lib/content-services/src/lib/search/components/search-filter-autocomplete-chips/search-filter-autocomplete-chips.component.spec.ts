@@ -22,11 +22,14 @@ import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomp
 import { EMPTY, of, ReplaySubject } from 'rxjs';
 import { AutocompleteField } from '../../models/autocomplete-option.interface';
 import { TagService } from '../../../tag/services/tag.service';
+import { SitesService } from '../../../common/services/sites.service';
+import { SitePaging } from '@alfresco/js-api';
 
 describe('SearchFilterAutocompleteChipsComponent', () => {
     let component: SearchFilterAutocompleteChipsComponent;
     let fixture: ComponentFixture<SearchFilterAutocompleteChipsComponent>;
     let tagService: TagService;
+    let sitesService: SitesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,6 +45,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         fixture = TestBed.createComponent(SearchFilterAutocompleteChipsComponent);
         component = fixture.componentInstance;
         tagService = TestBed.inject(TagService);
+        sitesService = TestBed.inject(SitesService);
         component.id = 'test-id';
         component.context = {
             queryFragments: {
@@ -159,5 +163,29 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option2' }, { value: 'option1' }]);
         expect(component.selectedOptions).toEqual([{ value: 'option2' }, { value: 'option1' }]);
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
+    });
+
+    it('should populate LOCATION field options with sites and predefined values from config', (done) => {
+        const sitesMock: SitePaging = {
+            list: {
+                pagination: {},
+                entries: [
+                    { entry: { guid: 'site1', id: 'site1', title: 'Marketing', visibility: 'public' } },
+                    { entry: { guid: 'site2', id: 'site2', title: 'Finance', visibility: 'private' } }
+                ]
+            }
+        };
+        component.settings.field = AutocompleteField.LOCATION;
+        component.settings.autocompleteOptions = [{ value: 'Repository', query: `PATH:'somePath'` }];
+        spyOn(sitesService, 'getSites').and.returnValue(of(sitesMock));
+        component.onInputChange('mark');
+        component.autocompleteOptions$.subscribe((result) => {
+            expect(result).toEqual([
+                { id: 'site1', value: 'Marketing' },
+                { id: 'site2', value: 'Finance' },
+                { value: 'Repository', query: `PATH:'somePath'` }
+            ]);
+            done();
+        });
     });
 });
