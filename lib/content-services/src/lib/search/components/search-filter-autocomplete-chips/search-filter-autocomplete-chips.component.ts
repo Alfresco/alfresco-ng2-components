@@ -56,9 +56,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(
-        private tagService: TagService,
-        private categoryService: CategoryService,
-        private sitesService: SitesService
+        private readonly tagService: TagService,
+        private readonly categoryService: CategoryService,
+        private readonly sitesService: SitesService
     ) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
