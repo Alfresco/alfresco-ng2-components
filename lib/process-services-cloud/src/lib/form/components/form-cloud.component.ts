@@ -395,7 +395,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    completeTaskForm(outcome?: string) {
+    completeTaskForm(outcome?: string, outcomeId?: string) {
         if (this.form?.confirmMessage?.show === true) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
@@ -406,22 +406,24 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
             dialogRef.afterClosed().subscribe((result) => {
                 if (result === true) {
-                    this.completeForm(outcome);
+                    this.completeForm(outcome, outcomeId);
                 }
             });
         } else {
-            this.completeForm(outcome);
+            this.completeForm(outcome, outcomeId);
         }
         this.displayModeService.onCompleteTask(this.id, this.displayMode, this.displayModeConfigurations);
     }
 
-    private completeForm(outcome?: string) {
+    private completeForm(outcome?: string, outcomeId?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: () => {
+                        this.form.selectedOutcome = outcome;
+                        this.form.selectedOutcomeId = outcomeId;
                         this.onTaskCompleted(this.form);
                     },
                     error: (error) => this.onTaskCompletedError(error)

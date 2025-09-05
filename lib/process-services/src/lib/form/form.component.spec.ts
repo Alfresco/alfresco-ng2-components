@@ -347,7 +347,7 @@ describe('FormComponent', () => {
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(saved).toBeFalse();
-        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName);
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, outcome.id);
     });
 
     it('should save form on [save] outcome click', () => {
@@ -707,7 +707,7 @@ describe('FormComponent', () => {
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
 
-        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name);
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name, outcome.id);
     });
 
     it('should check visibility only if field with form provided', () => {
