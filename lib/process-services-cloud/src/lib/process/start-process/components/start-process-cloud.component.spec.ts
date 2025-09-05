@@ -1222,7 +1222,10 @@ describe('StartProcessCloudComponent', () => {
         const customOutcomeSelectedSpy = spyOn(component.customOutcomeSelected, 'emit');
         const successSpy = spyOn(component.success, 'emit');
 
+        getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
         formDefinitionSpy.and.returnValue(of(fakeFormModelJson));
+        startProcessWithFormSpy.and.returnValue(of(fakeProcessInstance));
+
         component.ngOnChanges({ appName: firstChange });
         component.processForm.controls['processInstanceName'].setValue('My Process 1');
         component.appName = 'test app name';
@@ -1246,6 +1249,7 @@ describe('StartProcessCloudComponent', () => {
 
         expect(customOutcomeSelectedSpy).toHaveBeenCalledWith(customOutcome.id);
         expect(successSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
         expect(component.customOutcomeName).toBe(customOutcome.name);
         expect(component.customOutcomeId).toBe(customOutcome.id);
     });
