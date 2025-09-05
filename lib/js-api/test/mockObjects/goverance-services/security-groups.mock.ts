@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
+import { th } from 'date-fns/locale';
 import { BaseMock } from '../base.mock';
+import nock from 'nock';
 
 export class SecurityGroupApiMock extends BaseMock {
     createSecurityGroup200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/gs/versions/1/security-groups')
             .reply(200, {
                 entry: {
@@ -32,7 +33,7 @@ export class SecurityGroupApiMock extends BaseMock {
     }
 
     getSecurityGroups200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/gs/versions/1/security-groups')
             .reply(200, {
                 list: {
@@ -64,7 +65,7 @@ export class SecurityGroupApiMock extends BaseMock {
     }
 
     getSecurityGroupInfo200Response(securityGroupId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId)
             .reply(200, {
                 entry: {
@@ -76,7 +77,7 @@ export class SecurityGroupApiMock extends BaseMock {
     }
 
     updateSecurityGroup200Response(securityGroupId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .put('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId)
             .reply(200, {
                 entry: {
@@ -88,8 +89,8 @@ export class SecurityGroupApiMock extends BaseMock {
     }
 
     deleteSecurityGroup200Response(securityGroupId: string): void {
-        nock(this.host, { encodedQueryParams: true })
-            .delete('/alfresco/api/-default-/public/alfresco/versions/1/security-groups/' + securityGroupId)
-            .reply(200);
+        this.createNockWithCors()
+            .delete('/alfresco/api/-default-/public/gs/versions/1/security-groups/' + securityGroupId)
+            .reply(204);
     }
 }
