@@ -85,7 +85,7 @@ export const removeNilValues = (obj: Record<string | number, unknown>) => {
     }, {});
 };
 
-export const convertObjectToFormData = (formParams: Record<string | number, string | Blob>): FormData => {
+export const convertObjectToFormData = (formParams: Record<string | number, string | Blob | Array<any>>): FormData => {
     const formData = new FormData();
 
     for (const key in formParams) {
@@ -93,6 +93,8 @@ export const convertObjectToFormData = (formParams: Record<string | number, stri
             const value = formParams[key];
             if (value instanceof File) {
                 formData.append(key, value, value.name);
+            } else if (Array.isArray(value)) {
+                value.forEach((item) => formData.append(key, item));
             } else {
                 formData.append(key, value);
             }
