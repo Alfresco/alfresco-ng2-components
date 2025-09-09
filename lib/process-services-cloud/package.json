@@ -26,7 +26,8 @@
     "@alfresco/adf-content-services": ">=8.2.0",
     "@apollo/client": ">=3.7.2",
     "@ngx-translate/core": ">=14.0.0",
-    "apollo-angular": ">=4.0.1"
+    "apollo-angular": ">=4.0.1",
+    "editorjs-html": "^4.0.5"
   },
   "keywords": [
     "process-services-cloud",
