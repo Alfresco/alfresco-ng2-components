@@ -85,7 +85,7 @@ export const removeNilValues = (obj: Record<string | number, unknown>) => {
     }, {});
 };
 
-export const convertObjectToFormData = (formParams: Record<string | number, string | Blob | Array<any>>): FormData => {
+export const convertObjectToFormData = (formParams: Record<string | number, string | Blob | Array<string | Blob>>): FormData => {
     const formData = new FormData();
 
     for (const key in formParams) {
