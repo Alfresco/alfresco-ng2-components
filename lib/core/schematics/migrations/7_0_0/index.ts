@@ -16,7 +16,7 @@
  */
 
 import * as ts from 'typescript';
-import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 
 interface MigrationData {
     change: {
@@ -68,13 +68,13 @@ const migrations: MigrationData[] = [alfrescoApiServiceMigration, alfrescoApiMoc
  * @returns Schematic rule for updating imports
  */
 export function updateAlfrescoApiImports(): Rule {
-    return (tree: Tree, _context: SchematicContext) => {
+    return (tree: Tree) => {
         tree.visit((filePath: string) => visitor(filePath, tree));
         return tree;
     };
 }
 
-export const visitor = (filePath: string, tree: Pick<Tree, 'read' | 'overwrite'>) => {
+export const visitor = (filePath: string, tree: Pick<Tree, 'read' | 'overwrite'>): void => {
     if (
         !filePath.includes('/.git/') &&
         !filePath.includes('/node_modules/') &&
@@ -101,7 +101,7 @@ export const visitor = (filePath: string, tree: Pick<Tree, 'read' | 'overwrite'>
     }
 };
 
-export const moveImport = (bufferFileContent: Buffer, sourceFile: ts.SourceFile, migrationData: MigrationData): string | undefined => {
+const moveImport = (bufferFileContent: Buffer, sourceFile: ts.SourceFile, migrationData: MigrationData): string | undefined => {
     const fileContent = bufferFileContent.toString();
     const predictImport = fileContent.includes(migrationData.change.importedValue);
 
@@ -113,48 +113,42 @@ export const moveImport = (bufferFileContent: Buffer, sourceFile: ts.SourceFile,
             return currentImportSource === migrationData.change.importSource;
         });
 
-        if (!importDeclaration || !importDeclaration.importClause?.namedBindings) {
+        if (!importDeclaration?.importClause?.namedBindings) {
             return undefined;
         }
 
-        const namedBindings = importDeclaration.importClause.namedBindings;
-        if (!ts.isNamedImports(namedBindings)) {
+        if (!ts.isNamedImports(importDeclaration.importClause.namedBindings)) {
             return undefined;
         }
 
-        const namedImportsElements = namedBindings.elements;
+        const namedImportsElements = importDeclaration.importClause.namedBindings.elements;
         const importedValue = namedImportsElements.find((binding) => binding.name.text === migrationData.change.importedValue);
 
         if (importedValue) {
-            let updatedContent = fileContent;
-
-            if (namedImportsElements.length === 1) {
-                updatedContent = removeTextRange(updatedContent, importDeclaration.getFullStart(), importDeclaration.getEnd());
-            } else {
-                updatedContent = removeTextRange(updatedContent, importedValue.getFullStart(), importedValue.getEnd());
-            }
-
+            let updatedContent =
+                namedImportsElements.length === 1
+                    ? removeTextRange(fileContent, importDeclaration.getFullStart(), importDeclaration.getEnd())
+                    : removeTextRange(fileContent, importedValue.getFullStart(), importedValue.getEnd());
             const alreadyImported = moduleImports.some((moduleImport) => {
                 const currentImportSource = moduleImport.moduleSpecifier.getText().replace(/['"]/g, '');
                 return (
                     currentImportSource === migrationData.to.importSource &&
                     moduleImport.importClause?.namedBindings &&
                     ts.isNamedImports(moduleImport.importClause.namedBindings) &&
-                    moduleImport.importClause.namedBindings.elements.some((el) => el.name.text === migrationData.to.importedValue)
+                    moduleImport.importClause.namedBindings.elements.some((element) => element.name.text === migrationData.to.importedValue)
                 );
             });
 
             if (!alreadyImported) {
-                const firstNonImport = sourceFile.statements.find((stmt) => !ts.isImportDeclaration(stmt));
+                const firstNonImport = sourceFile.statements.find((statement) => !ts.isImportDeclaration(statement));
                 const insertPosition = firstNonImport ? firstNonImport.getFullStart() : fileContent.length;
 
                 updatedContent =
-                    updatedContent.slice(0, insertPosition).replace(/\s*$/, '') + // usuń nadmiarowe linie
+                    updatedContent.slice(0, insertPosition).replace(/\s*$/, '') +
                     `\nimport { ${migrationData.to.importedValue} } from '${migrationData.to.importSource}';\n` +
                     updatedContent.slice(insertPosition);
             }
-            updatedContent = updatedContent.replace(/^\s*\n+/g, '');
-            updatedContent = updatedContent.replace(/\n{3,}/g, '\n\n');
+            updatedContent = updatedContent.replace(/^\s*\n+/g, '').replace(/\n{3,}/g, '\n\n');
 
             return updatedContent;
         }
@@ -163,8 +157,6 @@ export const moveImport = (bufferFileContent: Buffer, sourceFile: ts.SourceFile,
     return undefined;
 };
 
-export const removeTextRange = (text: string, start: number, end: number): string => {
-    return text.slice(0, start) + text.slice(end);
-};
+const removeTextRange = (text: string, start: number, end: number): string => text.slice(0, start) + text.slice(end);
 
 export default updateAlfrescoApiImports;
