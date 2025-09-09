@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { th } from 'date-fns/locale';
 import { BaseMock } from '../base.mock';
-import nock from 'nock';
 
 export class SecurityGroupApiMock extends BaseMock {
     createSecurityGroup200Response(): void {

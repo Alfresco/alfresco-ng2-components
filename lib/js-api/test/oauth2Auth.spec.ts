@@ -19,6 +19,45 @@ import assert from 'assert';
 import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
 import { EcmAuthMock, OAuthMock } from './mockObjects';
 import { jest } from '@jest/globals';
+import nock from 'nock';
+
+const setupTestEnvironment = () => {
+    const originalDocument = global.document;
+    const originalSetInterval = global.setInterval;
+    const mockIntervals: { id: NodeJS.Timeout; unref: jest.Mock }[] = [];
+
+    delete (global as unknown as { document?: Document }).document;
+
+    global.setInterval = jest.fn((callback: () => void, delay: number) => {
+        const intervalId = originalSetInterval(callback, delay);
+        const mockInterval = {
+            id: intervalId,
+            unref: jest.fn(() => mockInterval)
+        };
+        mockIntervals.push(mockInterval);
+        return mockInterval;
+    });
+
+    return { originalDocument, originalSetInterval, mockIntervals };
+};
+
+const restoreTestEnvironment = (context: {
+    originalDocument: Document;
+    originalSetInterval: typeof setInterval;
+    mockIntervals: { id: NodeJS.Timeout; unref: jest.Mock }[];
+}) => {
+    context.mockIntervals.forEach((interval) => {
+        if (interval.id) {
+            clearInterval(interval.id);
+        }
+    });
+
+    global.setInterval = context.originalSetInterval;
+
+    if (context.originalDocument) {
+        global.document = context.originalDocument;
+    }
+};
 
 describe('Oauth2  test', () => {
     let alfrescoJsApi: AlfrescoApi;
@@ -191,75 +230,88 @@ describe('Oauth2  test', () => {
             });
         });
 
-        it('should refresh token when the login not use the implicitFlow ', (done) => {
-            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
-            oauth2Mock.get200Response();
+        it('should refresh token when the login not use the implicitFlow', async () => {
+            const testContext = setupTestEnvironment();
 
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout',
-                        implicitFlow: false,
-                        refreshTokenTimeout: 100
+            try {
+                oauth2Mock.get200Response();
+
+                const oauth2Auth = new Oauth2Auth(
+                    {
+                        oauth2: {
+                            host: 'https://myOauthUrl:30081/auth/realms/springboot',
+                            clientId: 'activiti',
+                            scope: 'openid',
+                            secret: '',
+                            redirectUri: '/',
+                            redirectUriLogout: '/logout',
+                            implicitFlow: false,
+                            refreshTokenTimeout: 100
+                        },
+                        authType: 'OAUTH'
                     },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
+                    alfrescoJsApi
+                );
 
-            let calls = 0;
-            oauth2Auth.refreshToken = () => {
-                calls++;
-                return Promise.resolve();
-            };
+                let refreshTokenCallCount = 0;
 
-            setTimeout(() => {
-                assert.equal(calls > 2, true);
-                oauth2Auth.logOut();
-                done();
-            }, 600);
+                jest.spyOn(oauth2Auth, 'refreshToken').mockImplementation(() => {
+                    refreshTokenCallCount++;
+                    return Promise.resolve();
+                });
 
-            oauth2Auth.login('admin', 'admin');
+                await oauth2Auth.login('admin', 'admin');
+                await new Promise((resolve) => setTimeout(resolve, 250));
+
+                expect(refreshTokenCallCount).toBeGreaterThanOrEqual(2);
+                expect(testContext.mockIntervals.length).toBe(1);
+                expect(testContext.mockIntervals[0].unref).toHaveBeenCalled();
+
+                await oauth2Auth.logOut();
+            } finally {
+                restoreTestEnvironment(testContext);
+            }
         });
 
-        it('should not hang the app also if the logout is missing', (done) => {
-            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
-            oauth2Mock.get200Response();
+        it('should not hang the app also if the logout is missing', async () => {
+            const testContext = setupTestEnvironment();
 
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout',
-                        implicitFlow: false,
-                        refreshTokenTimeout: 100
+            try {
+                oauth2Mock.get200Response();
+
+                const oauth2Auth = new Oauth2Auth(
+                    {
+                        oauth2: {
+                            host: 'https://myOauthUrl:30081/auth/realms/springboot',
+                            clientId: 'activiti',
+                            scope: 'openid',
+                            secret: '',
+                            redirectUri: '/',
+                            redirectUriLogout: '/logout',
+                            implicitFlow: false,
+                            refreshTokenTimeout: 100
+                        },
+                        authType: 'OAUTH'
                     },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
+                    alfrescoJsApi
+                );
 
-            let calls = 0;
-            oauth2Auth.refreshToken = () => {
-                calls++;
-                return Promise.resolve();
-            };
+                let refreshTokenCallCount = 0;
 
-            setTimeout(() => {
-                assert.equal(calls > 2, true);
-                done();
-            }, 600);
+                jest.spyOn(oauth2Auth, 'refreshToken').mockImplementation(() => {
+                    refreshTokenCallCount++;
+                    return Promise.resolve();
+                });
 
-            oauth2Auth.login('admin', 'admin');
+                await oauth2Auth.login('admin', 'admin');
+                await new Promise((resolve) => setTimeout(resolve, 250));
+
+                expect(refreshTokenCallCount).toBeGreaterThanOrEqual(2);
+                expect(testContext.mockIntervals.length).toBe(1);
+                expect(testContext.mockIntervals[0].unref).toHaveBeenCalled();
+            } finally {
+                restoreTestEnvironment(testContext);
+            }
         });
 
         it('should emit a token_issued event if login is ok ', (done) => {
@@ -353,6 +405,7 @@ describe('Oauth2  test', () => {
             authResponseMock.get200ValidTicket();
             const oauth2Auth = new Oauth2Auth(
                 {
+                    hostEcm: 'https://myOauthUrl:30081',
                     provider: 'ALL',
                     oauth2: {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
@@ -446,12 +499,9 @@ describe('Oauth2  test', () => {
             alfrescoApi.login('admin', 'admin');
         });
 
-        // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
-        // eslint-disable-next-line ban/ban
-        xit('should extend content session after oauth token refresh', function (done) {
-            jest.setTimeout(3000);
-
+        it('should extend content session after oauth token refresh', async () => {
             oauth2Mock.get200Response();
+            authResponseMock.get200ValidTicket();
             authResponseMock.get200ValidTicket();
 
             const alfrescoApi = new AlfrescoApi({
@@ -467,28 +517,46 @@ describe('Oauth2  test', () => {
                 authType: 'OAUTH'
             });
 
-            let counterCallEvent = 0;
-            alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
-                assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+            let ticketExchangeCount = 0;
 
-                const content = new ContentApi(alfrescoApi);
-                const URL = content.getContentUrl('FAKE-NODE-ID');
-                assert.equal(
-                    URL,
-                    'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
-                );
+            const ticketExchangePromise = new Promise<void>((resolve) => {
+                alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
+                    expect(alfrescoApi.config.ticketEcm).toBe('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                    expect(alfrescoApi.contentClient.config.ticketEcm).toBe('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
 
-                counterCallEvent++;
+                    const content = new ContentApi(alfrescoApi);
+                    const URL = content.getContentUrl('FAKE-NODE-ID');
+                    expect(URL).toBe(
+                        'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
+                    );
 
-                if (counterCallEvent === 2) {
-                    done();
-                }
+                    ticketExchangeCount++;
+
+                    if (ticketExchangeCount === 2) {
+                        resolve();
+                    }
+                });
             });
 
-            alfrescoApi.login('admin', 'admin');
-            jest.setTimeout(3000);
-            alfrescoApi.refreshToken();
+            jest.spyOn(alfrescoApi.oauth2Auth, 'refreshToken').mockImplementation(() => {
+                alfrescoApi.oauth2Auth.setToken('refreshed-test-token', 'new-refresh-token');
+                return Promise.resolve({
+                    access_token: 'refreshed-test-token',
+                    refresh_token: 'new-refresh-token'
+                });
+            });
+
+            await alfrescoApi.login('admin', 'admin');
+
+            await new Promise((resolve) => setTimeout(resolve, 100));
+
+            await alfrescoApi.oauth2Auth.refreshToken();
+
+            await ticketExchangePromise;
+
+            expect(ticketExchangeCount).toBe(2);
+
+            await alfrescoApi.oauth2Auth.logOut();
         });
 
         it('isLoggedIn should return true if the api is logged in', (done) => {
@@ -569,7 +637,6 @@ describe('Oauth2  test', () => {
                     return Promise.resolve();
                 };
 
-                // invalid hash location leads to a reject which leads to a logout
                 oauth2Auth.iFrameHashListener();
                 assert.equal(logoutCalled, true);
                 done();
