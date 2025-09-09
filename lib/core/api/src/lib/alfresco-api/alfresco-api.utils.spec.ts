@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { isConstructor, getQueryParamsWithCustomEncoder, removeNilValues } from './alfresco-api.utils';
+import { isConstructor, getQueryParamsWithCustomEncoder, removeNilValues, convertObjectToFormData } from './alfresco-api.utils';
 
 describe('AlfrescoApiUtils', () => {
     describe('isConstructor', () => {
@@ -91,6 +91,32 @@ describe('AlfrescoApiUtils', () => {
 
             expect(actual?.get('key2')).toEqual('value2');
             expect(actual?.getAll('key2')).toEqual(['value2', 'value3']);
+        });
+    });
+
+    describe('convertObjectToFormData', () => {
+        it('should create correct FormData entries for string values', () => {
+            const testParams: Record<string, string> = { name: 'file name', description: 'file description' };
+            const result = convertObjectToFormData(testParams);
+
+            expect(result.get('name')).toBe('file name');
+            expect(result.get('description')).toBe('file description');
+        });
+
+        it('should handle Blob files correctly', () => {
+            const testFile = new File(['content'], 'test.txt', { type: 'text/plain' });
+            const testParams: Record<string, Blob> = { file: testFile };
+
+            const result = convertObjectToFormData(testParams);
+            expect(result.get('file')).toEqual(testFile);
+        });
+
+        it('should create multiple entries with same key for arrays', () => {
+            const testParams: Record<string, Array<string>> = { categories: ['category1', 'category2', 'category3'] };
+            const result = convertObjectToFormData(testParams);
+
+            const values = result.getAll('categories');
+            expect(values).toEqual(['category1', 'category2', 'category3']);
         });
     });
 });
