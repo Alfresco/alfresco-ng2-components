@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PeopleProcessService } from './people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
-
-declare let jasmine: any;
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { of, throwError } from 'rxjs';
 
 const firstInvolvedUser: LightUserRepresentation = {
     id: 1,
@@ -45,21 +44,23 @@ describe('PeopleProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            providers: [
+                PeopleProcessService,
+                {
+                    provide: AlfrescoApiService,
+                    useValue: {
+                        getInstance: jasmine.createSpy('getInstance').and.returnValue({})
+                    }
+                }
+            ]
         });
         service = TestBed.inject(PeopleProcessService);
     });
 
     describe('when user is logged in', () => {
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should be able to retrieve people to involve in the task', fakeAsync(() => {
+            spyOn(service, 'getWorkflowUsers').and.returnValue(of(fakeInvolveUserList));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
@@ -69,14 +70,13 @@ describe('PeopleProcessService', () => {
                 expect(users[0].lastName).toEqual('fakeLast1');
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: fakeInvolveUserList }
-            });
+            tick();
+            expect(service.getWorkflowUsers).toHaveBeenCalledWith('fake-task-id', 'fake-filter');
         }));
 
         it('should be able to get people images for people retrieved', fakeAsync(() => {
+            spyOn(service, 'getWorkflowUsers').and.returnValue(of(fakeInvolveUserList));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
@@ -84,11 +84,7 @@ describe('PeopleProcessService', () => {
                 expect(service.getUserImage(users[1].id.toString())).toContain('/users/' + users[1].id + '/picture');
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: fakeInvolveUserList }
-            });
+            tick();
         }));
 
         it('should return user image url', () => {
@@ -98,77 +94,73 @@ describe('PeopleProcessService', () => {
         });
 
         it('should return empty list when there are no users to involve', fakeAsync(() => {
+            spyOn(service, 'getWorkflowUsers').and.returnValue(of([]));
+
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(0);
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
-            });
+            tick();
         }));
 
         it('getWorkflowUsers catch errors call', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                () => {},
-                (error) => {
+            spyOn(service, 'getWorkflowUsers').and.returnValue(throwError(errorResponse));
+
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe({
+                next: () => fail('Should have thrown an error'),
+                error: (error) => {
                     expect(error).toEqual(errorResponse);
                 }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
             });
+
+            tick();
         }));
 
         it('should be able to involve people in the task', fakeAsync(() => {
+            spyOn(service, 'involveUserWithTask').and.returnValue(of([]));
+
             service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().method).toBe('PUT');
-                expect(jasmine.Ajax.requests.mostRecent().url).toContain('tasks/fake-task-id/action/involve');
+                expect(service.involveUserWithTask).toHaveBeenCalledWith('fake-task-id', 'fake-user-id');
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
-            });
+            tick();
         }));
 
         it('involveUserWithTask catch errors call', fakeAsync(() => {
-            service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(
-                () => {},
-                (error) => {
+            spyOn(service, 'involveUserWithTask').and.returnValue(throwError(errorResponse));
+
+            service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe({
+                next: () => fail('Should have thrown an error'),
+                error: (error) => {
                     expect(error).toEqual(errorResponse);
                 }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
             });
+
+            tick();
         }));
 
         it('should be able to remove involved people from task', fakeAsync(() => {
+            spyOn(service, 'removeInvolvedUser').and.returnValue(of([]));
+
             service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().method).toBe('PUT');
-                expect(jasmine.Ajax.requests.mostRecent().url).toContain('tasks/fake-task-id/action/remove-involved');
+                expect(service.removeInvolvedUser).toHaveBeenCalledWith('fake-task-id', 'fake-user-id');
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
-            });
+            tick();
         }));
 
         it('removeInvolvedUser catch errors call', fakeAsync(() => {
-            service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(
-                () => {},
-                (error) => {
+            spyOn(service, 'removeInvolvedUser').and.returnValue(throwError(errorResponse));
+
+            service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe({
+                next: () => fail('Should have thrown an error'),
+                error: (error) => {
                     expect(error).toEqual(errorResponse);
                 }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
             });
+
+            tick();
         }));
     });
 });
