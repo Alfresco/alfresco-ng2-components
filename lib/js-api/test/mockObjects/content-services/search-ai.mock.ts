@@ -16,11 +16,10 @@
  */
 
 import { BaseMock } from '../base.mock';
-import nock from 'nock';
 
 export class SearchAiMock extends BaseMock {
     mockGetAsk200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/private/hxi/versions/1/agents/id1/questions', [
                 {
                     question: 'some question 1',
@@ -41,7 +40,7 @@ export class SearchAiMock extends BaseMock {
     }
 
     mockGetAnswer200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/private/hxi/versions/1/questions/id1/answers/-default-')
             .reply(200, {
                 entry: {
@@ -85,7 +84,7 @@ export class SearchAiMock extends BaseMock {
     }
 
     mockGetConfig200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/private/hxi/versions/1/config/-default-')
             .reply(200, {
                 entry: {
