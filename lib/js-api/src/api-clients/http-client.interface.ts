@@ -16,9 +16,7 @@
  */
 
 import { Authentication } from '../authentication/authentication';
-import { EventEmitter } from 'eventemitter3';
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+import { Emitter } from 'event-emitter';
 
 export interface RequestOptions {
     path: string;
@@ -95,13 +93,8 @@ export interface SecurityOptions {
 }
 
 export interface Emitters {
-    readonly eventEmitter: EventEmitterInstance;
-    readonly apiClientEmitter: {
-        on: EventEmitterInstance['on'];
-        off: EventEmitterInstance['off'];
-        once: EventEmitterInstance['once'];
-        emit: EventEmitterInstance['emit'];
-    };
+    readonly eventEmitter: Emitter;
+    readonly apiClientEmitter: Emitter;
 }
 
 export interface HttpClient {

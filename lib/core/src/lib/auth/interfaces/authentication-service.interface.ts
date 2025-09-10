@@ -16,20 +16,18 @@
  */
 
 import { HttpHeaders } from '@angular/common/http';
-import { EventEmitter } from 'eventemitter3';
+import ee from 'event-emitter';
 import { Observable } from 'rxjs';
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 
 export interface AuthenticationServiceInterface {
     onError: any;
     onLogin: any;
     onLogout: any;
 
-    on: EventEmitterInstance['on'];
-    off: EventEmitterInstance['off'];
-    once: EventEmitterInstance['once'];
-    emit: EventEmitterInstance['emit'];
+    on: ee.EmitterMethod;
+    off: ee.EmitterMethod;
+    once: ee.EmitterMethod;
+    emit: (type: string, ...args: any[]) => void;
 
     getToken(): string;
     isLoggedIn(): boolean;

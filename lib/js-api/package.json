@@ -15,7 +15,7 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
-    "eventemitter3": "^5.0.1",
+    "event-emitter": "^0.3.5",
     "superagent": "^9.0.1",
     "tslib": "^2.6.1"
   },
