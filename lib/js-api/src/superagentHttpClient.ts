@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EventEmitter } from 'eventemitter3';
+import ee, { Emitter } from 'event-emitter';
 import superagent, { Response, SuperAgentRequest } from 'superagent';
 import { Authentication } from './authentication/authentication';
 import { RequestOptions, HttpClient, SecurityOptions, Emitters } from './api-clients/http-client.interface';
@@ -25,8 +25,6 @@ import { isBrowser, paramToString } from './utils';
 
 declare const Blob: any;
 declare const Buffer: any;
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 
 const isProgressEvent = (event: ProgressEvent | unknown): event is ProgressEvent => (event as ProgressEvent)?.lengthComputable;
 
@@ -136,7 +134,7 @@ export class SuperagentHttpClient implements HttpClient {
         contentType: string,
         accept: string,
         responseType: string,
-        eventEmitter: EventEmitterInstance,
+        eventEmitter: ee.Emitter,
         returnType: string,
         securityOptions: SecurityOptions
     ) {
@@ -270,7 +268,7 @@ export class SuperagentHttpClient implements HttpClient {
         }
     }
 
-    private progress(event: ProgressEvent | unknown, eventEmitter: EventEmitterInstance): void {
+    private progress(event: ProgressEvent | unknown, eventEmitter: Emitter): void {
         if (isProgressEvent(event)) {
             const percent = Math.round((event.loaded / event.total) * 100);
 
