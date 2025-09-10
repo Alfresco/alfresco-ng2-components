@@ -198,7 +198,7 @@
     </mat-expansion-panel>
 
     <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
-        <div *ngFor="let group of groupedProperties; let first = first" class="adf-metadata-grouped-properties-container">
+        <div *ngFor="let group of groupedProperties; let first = first" class="adf-content-metadata-ai">
             <mat-expansion-panel
                 [attr.data-automation-id]="'adf-metadata-group-' + group.title"
                 [expanded]="multi ? !displayDefaultProperties && first || group.expanded : !displayDefaultProperties && first || currentPanel.panelTitle === group.title && currentPanel.expanded"
@@ -209,37 +209,7 @@
                 <mat-expansion-panel-header
                     class="adf-metadata-properties-header"
                     [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded">
-                    <adf-content-metadata-header [title]="group.title" [expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded">
-                        <button
-                            *ngIf="group.editable && !this.readOnly && !isPanelEditing(group.title)"
-                            mat-icon-button
-                            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                            data-automation-id="meta-data-card-toggle-edit"
-                            class="adf-edit-icon-buttons"
-                            (click)="toggleGroupEditing(group.title, $event)">
-                            <mat-icon>mode_edit</mat-icon>
-                        </button>
-                        <div class="adf-metadata-action-buttons" *ngIf="group.editable && isPanelEditing(group.title)">
-                            <button
-                                mat-icon-button
-                                [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                                (click)="cancelGroupEditing(group.title, $event)"
-                                data-automation-id="reset-metadata"
-                                class="adf-metadata-action-buttons-clear">
-                                <mat-icon>clear</mat-icon>
-                            </button>
-                            <button
-                                mat-icon-button
-                                [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                                (click)="saveChanges($event)"
-                                color="primary"
-                                data-automation-id="save-metadata"
-                                [disabled]="!hasMetadataChanged || invalidProperties.size > 0">
-                                <mat-icon>check</mat-icon>
-                            </button>
-                        </div>
-                    </adf-content-metadata-header>
+                    <adf-content-metadata-header [title]="group.title" [expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded" />
                 </mat-expansion-panel-header>
                 <div *ngIf="!showGroup(group) && group.editable && editedPanelTitle !== group.title" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate : { groupTitle: group.title | translate } }}
@@ -247,7 +217,7 @@
                 <adf-card-view
                     (keydown)="keyDown($event)"
                     [properties]="group.properties"
-                    [editable]="!readOnly && group.editable && isPanelEditing(group.title)"
+                    [editable]="false"
                     [displayEmpty]="displayEmpty"
                     [copyToClipboardAction]="copyToClipboardAction"
                     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
@@ -256,6 +226,7 @@
             </mat-expansion-panel>
         </div>
     </ng-container>
+
 
     <ng-template #loading>
         <mat-progress-bar mode="indeterminate" [attr.aria-label]="'DATA_LOADING' | translate" />
