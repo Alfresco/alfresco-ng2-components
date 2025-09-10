@@ -149,6 +149,11 @@ const getSimpleChanges = (currentValue: string, previousValue?: string): SimpleC
     nodeId: new SimpleChange(previousValue || null, currentValue, false)
 });
 
+const getSimpleChangesWithVersion = (nodeId: string, versionId?: string, previousNodeId?: string, previousVersionId?: string): SimpleChanges => ({
+    nodeId: new SimpleChange(previousNodeId || null, nodeId, false),
+    versionId: new SimpleChange(previousVersionId || null, versionId, false)
+});
+
 const verifyCustomElement = (component: any, selector: string, done: DoneFn) => {
     const customFixture = TestBed.createComponent(component);
     const customElement: HTMLElement = customFixture.nativeElement;
@@ -255,11 +260,11 @@ describe('AlfrescoViewerComponent', () => {
             const contentUrl = '/content/url/path';
 
             component.nodeId = '12';
-            spyOn(component['nodesApi'], 'getNode').and.returnValue(
+            spyOn(component.nodesApi, 'getNode').and.returnValue(
                 Promise.resolve(new NodeEntry({ entry: new Node({ name: displayName, id: '12', content: new ContentInfo() }) }))
             );
 
-            spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
+            spyOn(component.contentApi, 'getContentUrl').and.returnValue(contentUrl);
 
             component.ngOnChanges({});
             fixture.whenStable().then(() => {
@@ -271,7 +276,7 @@ describe('AlfrescoViewerComponent', () => {
     });
 
     it('should change display name every time node changes', fakeAsync(() => {
-        spyOn(component['nodesApi'], 'getNode').and.returnValues(
+        spyOn(component.nodesApi, 'getNode').and.returnValues(
             Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) })),
             Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file2', content: new ContentInfo() }) }))
         );
@@ -289,22 +294,98 @@ describe('AlfrescoViewerComponent', () => {
         tick();
 
         expect(component.fileName).toBe('file2');
-        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(2);
+        expect(component.nodesApi.getNode).toHaveBeenCalledTimes(2);
     }));
 
-    it('should not setup the node twice if the node id is not changed', fakeAsync(() => {
-        spyOn(component['nodesApi'], 'getNode').and.stub();
+    it('should not setup the node twice if both nodeId and versionId remain the same', fakeAsync(() => {
+        spyOn(component.nodesApi, 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component.versionsApi, 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
         component.showViewer = true;
         component.nodeId = 'id1';
-        component.ngOnChanges(getSimpleChanges('id0', 'id1'));
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
         tick();
-        component.ngOnChanges(getSimpleChanges('id1', 'id1'));
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0', 'id1', '1.0'));
         tick();
-        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(1);
+
+        expect(component.nodesApi.getNode).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should setup the node when versionId changes even if nodeId stays the same', fakeAsync(() => {
+        spyOn(component.nodesApi, 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component.versionsApi, 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
+        tick();
+
+        component.versionId = '2.0';
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '2.0', 'id1', '1.0'));
+        tick();
+
+        expect(component.nodesApi.getNode).toHaveBeenCalledTimes(2);
+    }));
+
+    it('should setup the node when nodeId changes even if versionId stays the same', fakeAsync(() => {
+        spyOn(component.nodesApi, 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component.versionsApi, 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
+        tick();
+
+        component.nodeId = 'id2';
+        component.ngOnChanges(getSimpleChangesWithVersion('id2', '1.0', 'id1', '1.0'));
+        tick();
+
+        expect(component.nodesApi.getNode).toHaveBeenCalledTimes(2);
+    }));
+
+    it('should setup the node when both nodeId and versionId change', fakeAsync(() => {
+        spyOn(component.nodesApi, 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+        spyOn(component.versionsApi, 'getVersion').and.returnValue(
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.versionId = '1.0';
+
+        component.ngOnChanges(getSimpleChangesWithVersion('id1', '1.0'));
+        tick();
+
+        component.nodeId = 'id2';
+        component.versionId = '2.0';
+        component.ngOnChanges(getSimpleChangesWithVersion('id2', '2.0', 'id1', '1.0'));
+        tick();
+
+        expect(component.nodesApi.getNode).toHaveBeenCalledTimes(2);
     }));
 
     it('should append version of the file to the file content URL', fakeAsync(() => {
-        spyOn(component['nodesApi'], 'getNode').and.returnValue(
+        spyOn(component.nodesApi, 'getNode').and.returnValue(
             Promise.resolve(
                 new NodeEntry({
                     entry: new Node({
@@ -315,7 +396,7 @@ describe('AlfrescoViewerComponent', () => {
                 })
             )
         );
-        spyOn(component['versionsApi'], 'getVersion').and.returnValue(Promise.resolve(undefined));
+        spyOn(component.versionsApi, 'getVersion').and.returnValue(Promise.resolve(undefined));
 
         component.nodeId = 'id1';
         component.showViewer = true;
@@ -328,11 +409,11 @@ describe('AlfrescoViewerComponent', () => {
     }));
 
     it('should change display name every time node`s version changes', fakeAsync(() => {
-        spyOn(component['nodesApi'], 'getNode').and.returnValue(
+        spyOn(component.nodesApi, 'getNode').and.returnValue(
             Promise.resolve(new NodeEntry({ entry: new Node({ name: 'node1', content: new ContentInfo() }) }))
         );
 
-        spyOn(component['versionsApi'], 'getVersion').and.returnValues(
+        spyOn(component.versionsApi, 'getVersion').and.returnValues(
             Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) })),
             Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file2', content: new ContentInfo() }) }))
         );
@@ -419,7 +500,7 @@ describe('AlfrescoViewerComponent', () => {
 
     describe('error handling', () => {
         it('should show unknown view when node file not found', (done) => {
-            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.reject(new Error('error')));
+            spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.reject(new Error('error')));
 
             component.nodeId = 'the-node-id-of-the-file-to-preview';
             component.mimeType = null;
@@ -433,7 +514,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should show unknown view when sharedLink file not found', (done) => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
+            spyOn(component.sharedLinksApi, 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -448,7 +529,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should raise an event when the shared link is invalid', fakeAsync(() => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
+            spyOn(component.sharedLinksApi, 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -667,8 +748,8 @@ describe('AlfrescoViewerComponent', () => {
 
             const node = new NodeEntry(nodeDetails);
 
-            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(node));
-            spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
+            spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(node));
+            spyOn(component.contentApi, 'getContentUrl').and.returnValue(contentUrl);
 
             component.ngOnChanges(getSimpleChanges('id1'));
             fixture.whenStable().then(() => {
@@ -689,7 +770,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should not render close viewer button if it is a shared link', (done) => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
+            spyOn(component.sharedLinksApi, 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;

@@ -315,8 +315,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                 await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
             } else {
                 await this.setUpNodeFile(this.nodeEntry.entry);
-                this.cdr.detectChanges();
             }
+            this.cdr.detectChanges();
         } catch {
             this.urlFileContent = 'invalid-node';
         }
@@ -462,7 +462,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                 throw new Error('A content source attribute value is missing.');
             }
 
-            if (changes.nodeId?.currentValue !== changes.nodeId?.previousValue) {
+            if (
+                changes.nodeId?.currentValue !== changes.nodeId?.previousValue ||
+                changes.versionId?.currentValue !== changes.versionId?.previousValue
+            ) {
                 this.setupNode();
             } else if (this.sharedLinkId) {
                 this.setupSharedLink();
