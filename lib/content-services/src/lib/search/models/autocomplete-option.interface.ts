@@ -24,5 +24,6 @@ export interface AutocompleteOption {
 
 export enum AutocompleteField {
     TAG = 'TAG',
-    CATEGORIES = 'cm:categories'
+    CATEGORIES = 'cm:categories',
+    LOCATION = 'SITE'
 }
