@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { firstValueFrom, of, timer } from 'rxjs';
+import { of, timer } from 'rxjs';
 import { FormFieldModel, FormModel, GroupModel, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -64,7 +64,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         component.searchTerm.setValue(text);
         fixture.detectChanges();
 
-        await firstValueFrom(timer(300));
+        await timer(300).toPromise();
         await fixture.whenStable();
         fixture.detectChanges();
 

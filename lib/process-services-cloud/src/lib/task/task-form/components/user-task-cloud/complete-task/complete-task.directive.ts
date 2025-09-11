@@ -17,7 +17,6 @@
 
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { TaskCloudService } from '../../../../services/task-cloud.service';
-import { firstValueFrom } from 'rxjs';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
@@ -42,11 +41,7 @@ export class CompleteTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(
-        private readonly el: ElementRef,
-        private readonly renderer: Renderer2,
-        private readonly taskListService: TaskCloudService
-    ) {}
+    constructor(private readonly el: ElementRef, private readonly renderer: Renderer2, private readonly taskListService: TaskCloudService) {}
 
     ngOnInit() {
         this.validateInputs();
@@ -76,7 +71,7 @@ export class CompleteTaskDirective implements OnInit {
     async onClick() {
         try {
             this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');
-            const result = await firstValueFrom(this.taskListService.completeTask(this.appName, this.taskId));
+            const result = await this.taskListService.completeTask(this.appName, this.taskId).toPromise();
             if (result) {
                 this.success.emit(result);
             }

@@ -27,7 +27,7 @@ import {
     IdentityJoinGroupRequestModel
 } from '../interfaces/identity-user.service.interface';
 import { mockIdentityGroups } from './identity-group.mock';
-import { firstValueFrom, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockIdentityUser1, mockIdentityUsers } from './identity-user.mock';
 
@@ -127,7 +127,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
     async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {
-            const users = await firstValueFrom(this.getUsers());
+            const users = await this.getUsers().toPromise();
 
             for (let i = 0; i < users.length; i++) {
                 const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
@@ -144,7 +144,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {
             const currentUser = this.getCurrentUserInfo();
-            let users = await firstValueFrom(this.getUsers());
+            let users = await this.getUsers().toPromise();
 
             users = users.filter(({ username }) => username !== currentUser.username);
 
@@ -160,7 +160,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
     }
 
     private async userHasAnyRole(userId: string, roleNames: string[]): Promise<boolean> {
-        const userRoles = await firstValueFrom(this.getUserRoles(userId));
+        const userRoles = await this.getUserRoles(userId).toPromise();
         const hasAnyRole = roleNames.some((roleName) => {
             const filteredRoles = userRoles.filter((userRole) => userRole.name.toLocaleLowerCase() === roleName.toLocaleLowerCase());
 

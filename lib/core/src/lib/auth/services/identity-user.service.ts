@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { firstValueFrom, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
@@ -36,11 +36,7 @@ import { OAuth2Service } from './oauth2.service';
     providedIn: 'root'
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
-    constructor(
-        private jwtHelperService: JwtHelperService,
-        private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService
-    ) {}
+    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
@@ -243,7 +239,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {
-            const users = await firstValueFrom(this.getUsers());
+            const users = await this.getUsers().toPromise();
 
             for (let i = 0; i < users.length; i++) {
                 const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
@@ -266,7 +262,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {
             const currentUser = this.getCurrentUserInfo();
-            let users = await firstValueFrom(this.getUsers());
+            let users = await this.getUsers().toPromise();
 
             users = users.filter(({ username }) => username !== currentUser.username);
 
@@ -282,7 +278,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     private async userHasAnyRole(userId: string, roleNames: string[]): Promise<boolean> {
-        const userRoles = await firstValueFrom(this.getUserRoles(userId));
+        const userRoles = await this.getUserRoles(userId).toPromise();
         const hasAnyRole = roleNames.some((roleName) => {
             const filteredRoles = userRoles.filter((userRole) => userRole.name.toLocaleLowerCase() === roleName.toLocaleLowerCase());
 
@@ -341,7 +337,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
                                     hasMoreItems: false,
                                     totalItems: totalCount
                                 }
-                            }) as IdentityUserQueryResponse
+                            } as IdentityUserQueryResponse)
                     )
                 )
             )

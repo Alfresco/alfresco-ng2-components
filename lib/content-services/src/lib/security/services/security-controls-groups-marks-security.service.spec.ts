@@ -21,7 +21,6 @@ import { fakeAuthorityClearanceApiResponse } from './mock/security-authorities.m
 import { fakeGroupsApiResponse, createNewSecurityGroupMock } from './mock/security-groups.mock';
 import { fakeMarksApiResponse, createNewSecurityMarkMock } from './mock/security-marks.mock';
 import { SecurityGroupBody, SecurityMarkBody, SecurityMarkEntry } from '@alfresco/js-api';
-import { firstValueFrom } from 'rxjs';
 
 describe('SecurityControlsService', () => {
     let service: SecurityControlsService;
@@ -79,7 +78,7 @@ describe('SecurityControlsService', () => {
                 }
             })
         );
-        const response = await firstValueFrom(service.createSecurityGroup(createNewSecurityGroupMock));
+        const response = await service.createSecurityGroup(createNewSecurityGroupMock).toPromise();
 
         securityGroupId = response.entry.id;
         expect(response.entry.groupName).toEqual('TestGroup');
@@ -177,7 +176,7 @@ describe('SecurityControlsService', () => {
 
     it('should delete a security group', async () => {
         spyOn(service.groupsApi, 'deleteSecurityGroup').and.returnValue(Promise.resolve());
-        await firstValueFrom(service.deleteSecurityGroup(securityGroupId));
+        await service.deleteSecurityGroup(securityGroupId).toPromise();
         expect(service.groupsApi.deleteSecurityGroup).toHaveBeenCalled();
     });
 
@@ -186,7 +185,7 @@ describe('SecurityControlsService', () => {
             Promise.resolve(fakeAuthorityClearanceApiResponse)
         );
         const clearancePromise = service.getClearancesForAuthority('test-id', 0, 10);
-        const clearance = await firstValueFrom(clearancePromise);
+        const clearance = await clearancePromise.toPromise();
 
         expect(getClearancesForAuthoritySpy).toHaveBeenCalledWith('test-id', {
             skipCount: 0,
@@ -211,15 +210,15 @@ describe('SecurityControlsService', () => {
                 }
             })
         );
-        const response = (await firstValueFrom(
-            service.updateClearancesForAuthority('test-id', [
+        const response = (await service
+            .updateClearancesForAuthority('test-id', [
                 {
                     groupId: 'test-group-id',
                     op: 'test-op',
                     id: 'test-id'
                 }
             ])
-        )) as SecurityMarkEntry;
+            .toPromise()) as SecurityMarkEntry;
 
         expect(response.entry.id).toEqual('test-id');
         expect(response.entry.groupId).toEqual('test-groupId');

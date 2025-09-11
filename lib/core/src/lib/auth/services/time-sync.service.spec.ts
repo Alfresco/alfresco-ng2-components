@@ -19,7 +19,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TimeSyncService } from './time-sync.service';
-import { firstValueFrom } from 'rxjs';
 
 describe('TimeSyncService', () => {
     let service: TimeSyncService;
@@ -31,7 +30,10 @@ describe('TimeSyncService', () => {
 
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [TimeSyncService, { provide: AppConfigService, useValue: appConfigSpy }]
+            providers: [
+                TimeSyncService,
+                { provide: AppConfigService, useValue: appConfigSpy }
+            ]
         });
 
         service = TestBed.inject(TimeSyncService);
@@ -43,6 +45,7 @@ describe('TimeSyncService', () => {
     });
 
     describe('checkTimeSync', () => {
+
         it('should check time sync and return outOfSync as false when time is within allowed skew', () => {
             appConfigSpy.get.and.returnValue('http://fake-server-time-url');
 
@@ -55,11 +58,15 @@ describe('TimeSyncService', () => {
 
             const serverTime = 1728911640000; // (GMT): Monday, October 14, 2024 1:14:00 PM
 
-            spyOn(Date, 'now').and.returnValues(timeBeforeCallingServerTimeEndpoint, timeResponseReceivedFromServerTimeEndpoint, localCurrentTime);
+            spyOn(Date, 'now').and.returnValues(
+                timeBeforeCallingServerTimeEndpoint,
+                timeResponseReceivedFromServerTimeEndpoint,
+                localCurrentTime
+            );
 
             // difference between localCurrentTime and serverTime is 60 seconds plus the round trip time of 1 second
             const allowedClockSkewInSec = 61;
-            service.checkTimeSync(allowedClockSkewInSec).subscribe((sync) => {
+            service.checkTimeSync(allowedClockSkewInSec).subscribe(sync => {
                 expect(sync.outOfSync).toBeFalse();
                 expect(sync.localDateTimeISO).toEqual('2024-10-14T13:13:00.000Z');
                 expect(sync.serverDateTimeISO).toEqual('2024-10-14T13:14:00.500Z');
@@ -82,12 +89,16 @@ describe('TimeSyncService', () => {
 
             const serverTime = 1728911640000; // (GMT): Monday, October 14, 2024 1:14:00 PM
 
-            spyOn(Date, 'now').and.returnValues(timeBeforeCallingServerTimeEndpoint, timeResponseReceivedFromServerTimeEndpoint, localCurrentTime);
+            spyOn(Date, 'now').and.returnValues(
+                timeBeforeCallingServerTimeEndpoint,
+                timeResponseReceivedFromServerTimeEndpoint,
+                localCurrentTime
+            );
 
             // difference between localCurrentTime and serverTime is 60 seconds plus the round trip time of 1 second
             // setting allowedClockSkewInSec to 60 seconds will make the local time out of sync
             const allowedClockSkewInSec = 60;
-            service.checkTimeSync(allowedClockSkewInSec).subscribe((sync) => {
+            service.checkTimeSync(allowedClockSkewInSec).subscribe(sync => {
                 expect(sync.outOfSync).toBeTrue();
                 expect(sync.localDateTimeISO).toEqual('2024-10-14T13:13:00.000Z');
                 expect(sync.serverDateTimeISO).toEqual('2024-10-14T13:14:00.500Z');
@@ -102,11 +113,12 @@ describe('TimeSyncService', () => {
             appConfigSpy.get.and.returnValue('');
 
             try {
-                await firstValueFrom(service.checkTimeSync(60));
+                await service.checkTimeSync(60).toPromise();
                 fail('Expected to throw an error');
             } catch (error) {
                 expect(error.message).toBe('serverTimeUrl is not configured.');
             }
+
         });
 
         it('should throw an error if the server time endpoint returns an error', () => {
@@ -118,7 +130,7 @@ describe('TimeSyncService', () => {
                 next: () => {
                     fail('Expected to throw an error');
                 },
-                error: (error) => {
+                error: error => {
                     expect(error.message).toBe('Error: Failed to get server time');
                 }
             });
@@ -127,10 +139,12 @@ describe('TimeSyncService', () => {
             expect(req.request.method).toBe('GET');
             req.error(new ProgressEvent(''));
         });
+
     });
 
     describe('isLocalTimeOutOfSync', () => {
         it('should return clock is out of sync', () => {
+
             appConfigSpy.get.and.returnValue('http://fake-server-time-url');
 
             const expectedServerTimeUrl = 'http://fake-server-time-url';
@@ -142,12 +156,16 @@ describe('TimeSyncService', () => {
 
             const serverTime = 1728911640000; // (GMT): Monday, October 14, 2024 1:14:00 PM
 
-            spyOn(Date, 'now').and.returnValues(timeBeforeCallingServerTimeEndpoint, timeResponseReceivedFromServerTimeEndpoint, localCurrentTime);
+            spyOn(Date, 'now').and.returnValues(
+                timeBeforeCallingServerTimeEndpoint,
+                timeResponseReceivedFromServerTimeEndpoint,
+                localCurrentTime
+            );
 
             // difference between localCurrentTime and serverTime is 60 seconds plus the round trip time of 1 second
             // setting allowedClockSkewInSec to 60 seconds will make the local time out of sync
             const allowedClockSkewInSec = 60;
-            service.isLocalTimeOutOfSync(allowedClockSkewInSec).subscribe((isOutOfSync) => {
+            service.isLocalTimeOutOfSync(allowedClockSkewInSec).subscribe(isOutOfSync => {
                 expect(isOutOfSync).toBeTrue();
             });
 
@@ -168,11 +186,15 @@ describe('TimeSyncService', () => {
 
             const serverTime = 1728911640000; // (GMT): Monday, October 14, 2024 1:14:00 PM
 
-            spyOn(Date, 'now').and.returnValues(timeBeforeCallingServerTimeEndpoint, timeResponseReceivedFromServerTimeEndpoint, localCurrentTime);
+            spyOn(Date, 'now').and.returnValues(
+                timeBeforeCallingServerTimeEndpoint,
+                timeResponseReceivedFromServerTimeEndpoint,
+                localCurrentTime
+            );
 
             // difference between localCurrentTime and serverTime is 60 seconds plus the round trip time of 1 second
             const allowedClockSkewInSec = 61;
-            service.isLocalTimeOutOfSync(allowedClockSkewInSec).subscribe((isOutOfSync) => {
+            service.isLocalTimeOutOfSync(allowedClockSkewInSec).subscribe(isOutOfSync => {
                 expect(isOutOfSync).toBeFalse();
             });
 
@@ -181,4 +203,6 @@ describe('TimeSyncService', () => {
             req.flush(serverTime);
         });
     });
+
+
 });

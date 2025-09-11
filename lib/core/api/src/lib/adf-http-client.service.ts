@@ -19,7 +19,7 @@ import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
 import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
 import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import {
     convertObjectToFormData,
@@ -179,8 +179,8 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         const abort$ = new Subject<void>();
         const { eventEmitter, apiClientEmitter } = emitters;
 
-        const promise = lastValueFrom(
-            request$.pipe(
+        const promise = request$
+            .pipe(
                 map((res) => {
                     if (isHttpUploadProgressEvent(res)) {
                         const percent = Math.round((res.loaded / res.total) * 100);
@@ -226,7 +226,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
                 }),
                 takeUntil(abort$)
             )
-        );
+            .toPromise();
 
         (promise as any).abort = function () {
             eventEmitter.emit('abort');

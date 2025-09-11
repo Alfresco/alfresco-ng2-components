@@ -20,7 +20,7 @@ import { NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction, AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
-import { firstValueFrom, from, Observable, Subject, throwError } from 'rxjs';
+import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, mapTo } from 'rxjs/operators';
 import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
 
@@ -36,11 +36,7 @@ export class ContentCloudNodeSelectorService {
 
     sourceNodeNotFound = false;
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private notificationService: NotificationService,
-        private dialog: MatDialog
-    ) {}
+    constructor(private apiService: AlfrescoApiService, private notificationService: NotificationService, private dialog: MatDialog) {}
 
     openUploadFileDialog(
         currentFolderId?: string,
@@ -69,25 +65,25 @@ export class ContentCloudNodeSelectorService {
     async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
         if (destinationFolderPath.alias && destinationFolderPath.path) {
             try {
-                return await firstValueFrom(this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path));
+                return await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
             } catch {
                 /*empty*/
             }
         }
 
-        return firstValueFrom(this.getNodeId(destinationFolderPath.alias));
+        return this.getNodeId(destinationFolderPath.alias).toPromise();
     }
 
     async getNodeIdFromFolderVariableValue(variableValue: string, defaultAlias?: string): Promise<string> {
         const isExistingNode = await this.isExistingNode(variableValue);
-        return isExistingNode ? variableValue : firstValueFrom(this.getNodeId(defaultAlias));
+        return isExistingNode ? variableValue : this.getNodeId(defaultAlias).toPromise();
     }
 
     async isExistingNode(nodeId: string): Promise<boolean> {
         let isExistingNode = false;
         if (nodeId) {
             try {
-                isExistingNode = await firstValueFrom(this.getNodeId(nodeId).pipe(mapTo(true)));
+                isExistingNode = await this.getNodeId(nodeId).pipe(mapTo(true)).toPromise();
             } catch {
                 /*empty*/
             }

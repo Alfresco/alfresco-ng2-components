@@ -46,7 +46,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
-import { firstValueFrom, Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
@@ -1616,7 +1616,7 @@ describe('Multilingual Form', () => {
         formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
         expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
 
-        await firstValueFrom(translateService.use('fr'));
+        await translateService.use('fr').toPromise();
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -1626,7 +1626,7 @@ describe('Multilingual Form', () => {
         expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
         expect(getLabelValue('amountField')).toEqual('Champ Montant');
 
-        await firstValueFrom(translateService.use('en'));
+        await translateService.use('en').toPromise();
 
         fixture.detectChanges();
         await fixture.whenStable();

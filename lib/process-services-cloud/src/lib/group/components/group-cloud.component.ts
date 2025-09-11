@@ -31,7 +31,7 @@ import {
 } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
@@ -248,7 +248,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     private async searchGroup(name: string): Promise<IdentityGroupModel> {
-        return (await firstValueFrom(this.identityGroupService.search(name)))[0];
+        return (await this.identityGroupService.search(name).toPromise())[0];
     }
 
     private getPreselectedGroups(): IdentityGroupModel[] {

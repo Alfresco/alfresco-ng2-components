@@ -19,7 +19,7 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { firstValueFrom, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { Pagination, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 
 describe('TagService', () => {
@@ -75,7 +75,7 @@ describe('TagService', () => {
             let lastValue: any;
             service.refresh.subscribe((res) => (lastValue = res));
 
-            await firstValueFrom(service.addTag('fake-node-id', 'fake-tag'));
+            await service.addTag('fake-node-id', 'fake-tag').toPromise();
             expect(lastValue).toBe(tagEntry);
         });
 
@@ -83,7 +83,7 @@ describe('TagService', () => {
             let lastValue = false;
             service.refresh.subscribe(() => (lastValue = true));
 
-            await firstValueFrom(service.deleteTag('fake-tag-id'));
+            await service.deleteTag('fake-tag-id').toPromise();
             expect(lastValue).toBeTrue();
         });
 
@@ -110,7 +110,7 @@ describe('TagService', () => {
                 spyOn(service.refresh, 'emit');
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve(tag));
 
-                await firstValueFrom(service.createTags([]));
+                await service.createTags([]).toPromise();
                 expect(service.refresh.emit).toHaveBeenCalledWith(tag);
             });
         });
@@ -248,7 +248,7 @@ describe('TagService', () => {
             it('should emit refresh when tag updated successfully', async () => {
                 spyOn(service.refresh, 'emit');
                 spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
-                await firstValueFrom(service.updateTag(tag.entry.id, tagBody));
+                await service.updateTag(tag.entry.id, tagBody).toPromise();
                 expect(service.refresh.emit).toHaveBeenCalledWith(updatedTag);
             });
         });

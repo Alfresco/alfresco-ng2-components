@@ -17,7 +17,7 @@
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { AuthConfigService } from './auth-config.service';
@@ -102,7 +102,7 @@ describe('AuthConfigService', () => {
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
 
         appConfigService = TestBed.inject(AppConfigService);
-        appConfigService.onLoad = of(true);
+        appConfigService.onLoad = EMPTY;
     });
 
     describe('load auth config using hash', () => {

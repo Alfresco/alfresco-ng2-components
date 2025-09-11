@@ -246,7 +246,7 @@ describe('ProcessFilterCloudService', () => {
         changedFilter.processDefinitionKey = 'modifiedProcessDefinitionKey';
         spyOn<any>(service, 'defaultProcessFilters').and.returnValue(fakeProcessCloudFilters);
 
-        await firstValueFrom(service.resetProcessFilterToDefaults('mock-appName', changedFilter));
+        await service.resetProcessFilterToDefaults('mock-appName', changedFilter).toPromise();
 
         expect(updatePreferenceSpy).toHaveBeenCalledWith('mock-appName', 'process-filters-mock-appName-mock-username', fakeProcessCloudFilters);
     });

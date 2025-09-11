@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { BehaviorSubject, firstValueFrom, of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import {
@@ -114,7 +114,7 @@ describe('NewVersionUploaderService', () => {
         });
 
         it('should open dialog with default configuration', fakeAsync(() => {
-            firstValueFrom(service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData));
+            service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).toPromise();
             tick();
             expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, expectedConfig);
         }));
@@ -124,7 +124,7 @@ describe('NewVersionUploaderService', () => {
                 panelClass: 'adf-custom-class',
                 width: '500px'
             };
-            firstValueFrom(service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration));
+            service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
             tick();
             expectedConfig.panelClass = 'adf-custom-class';
             expectedConfig.width = '500px';
@@ -135,7 +135,7 @@ describe('NewVersionUploaderService', () => {
             const mockDialogConfiguration: MatDialogConfig = {
                 height: '600px'
             };
-            firstValueFrom(service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration));
+            service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
             tick();
             expectedConfig.height = '600px';
             expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, expectedConfig);
@@ -143,7 +143,7 @@ describe('NewVersionUploaderService', () => {
 
         it('should not override dialog configuration, if dialog configuration is empty', fakeAsync(() => {
             const mockDialogConfiguration: MatDialogConfig = {};
-            firstValueFrom(service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration));
+            service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
             tick();
             expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, expectedConfig);
         }));
@@ -156,7 +156,7 @@ describe('NewVersionUploaderService', () => {
                 showComments: true,
                 allowDownload: true
             };
-            firstValueFrom(service.openUploadNewVersionDialog(mockNewVersionUploaderDialogDataWithVersionsOnly));
+            service.openUploadNewVersionDialog(mockNewVersionUploaderDialogDataWithVersionsOnly).toPromise();
             tick();
             expectedConfig.data.showVersionsOnly = true;
             expectedConfig.panelClass = ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-list'];
