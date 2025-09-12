@@ -11,11 +11,6 @@
     "move-out-alfresco-api": {
       "version": "7.0.0",
       "packages": {
-        "ts-morph": {
-          "version": "^20.0.0",
-          "alwaysAddToPackageJson": true,
-          "addToPackageJson": "devDependencies"
-        },
         "@alfresco/adf-content-services": {
           "version": "7.0.0",
           "alwaysAddToPackageJson": false
