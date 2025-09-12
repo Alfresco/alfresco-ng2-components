@@ -41,8 +41,7 @@
     "@alfresco/js-api": ">=9.1.1",
     "@alfresco/adf-extensions": ">=8.2.0",
     "minimatch": ">=10.0.0",
-    "pdfjs-dist": ">=3.3.122",
-    "ts-morph": ">=20.0.0"
+    "pdfjs-dist": ">=3.3.122"
   },
   "keywords": [
     "core",
