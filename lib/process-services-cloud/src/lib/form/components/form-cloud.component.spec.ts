@@ -464,7 +464,8 @@ describe('FormCloudComponent', () => {
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcomeId = 'custom1';
+        const outcome = new FormOutcomeModel(formModel, { id: outcomeId, name: outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
@@ -474,7 +475,7 @@ describe('FormCloudComponent', () => {
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(saved).toBeFalse();
-        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName);
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName, outcomeId);
     });
 
     it('should save form on [save] outcome click', () => {
@@ -800,8 +801,13 @@ describe('FormCloudComponent', () => {
         );
 
         const outcome = 'complete';
+        const outcomeId = 'custom-outcome-id';
         let completed = false;
-        formComponent.formCompleted.subscribe(() => (completed = true));
+        let completedForm = null;
+        formComponent.formCompleted.subscribe((form) => {
+            completed = true;
+            completedForm = form;
+        });
 
         const taskId = '123-223';
         const appVersion = 1;
@@ -819,7 +825,7 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = taskId;
         formComponent.appName = appName;
         formComponent.processInstanceId = processInstanceId;
-        formComponent.completeTaskForm(outcome);
+        formComponent.completeTaskForm(outcome, outcomeId);
 
         expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(
             appName,
@@ -831,6 +837,9 @@ describe('FormCloudComponent', () => {
             appVersion
         );
         expect(completed).toBeTruthy();
+        expect(completedForm.selectedOutcome).toBe(outcome);
+        expect(completedForm.selectedOutcomeId).toBe(outcomeId);
+        expect(completedForm).toBe(formComponent.form);
     });
 
     it('should open confirmation dialog on complete task', async () => {
@@ -865,9 +874,11 @@ describe('FormCloudComponent', () => {
         formComponent.appName = 'appName';
 
         spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel as any));
-        formComponent.completeTaskForm('complete');
+        const outcomeId = 'test-outcome-id';
+        formComponent.completeTaskForm('complete', outcomeId);
 
         expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+        expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
     });
 
     it('should not confirm form if user rejects', () => {
@@ -940,7 +951,7 @@ describe('FormCloudComponent', () => {
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
 
-        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name);
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name, outcome.id);
     });
 
     it('should check visibility only if field with form provided', () => {
@@ -1759,5 +1770,77 @@ describe('retrieve metadata on submit', () => {
         formService.formFieldValueChanged.next({} as FormFieldEvent);
 
         expect(formComponent.disableSaveButton).toBeFalse();
+    });
+
+    it('should handle outcomeId correctly when completing form with confirmation dialog', () => {
+        let matDialog = TestBed.inject(MatDialog);
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) } as any);
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as any));
+
+        const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+        formComponent.form = formModel;
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        const outcome = 'approve';
+        const outcomeId = 'approve-outcome-id';
+
+        formComponent.completeTaskForm(outcome, outcomeId);
+
+        expect(matDialog.open).toHaveBeenCalled();
+        expect(formComponent.form.selectedOutcome).toBe(outcome);
+        expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
+    });
+
+    it('should pass outcomeId when completing form without confirmation dialog', () => {
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as any));
+
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.taskId = 'task-123';
+        formComponent.appName = 'test-app';
+
+        const outcome = 'reject';
+        const outcomeId = 'reject-outcome-id';
+
+        formComponent.completeTaskForm(outcome, outcomeId);
+
+        expect(formComponent.form.selectedOutcome).toBe(outcome);
+        expect(formComponent.form.selectedOutcomeId).toBe(outcomeId);
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+    });
+
+    it('should set form values before calling onTaskCompleted', () => {
+        const formModel = new FormModel({
+            id: '23',
+            taskId: '123-223',
+            fields: [{ id: 'field1' }, { id: 'field2' }]
+        });
+
+        formComponent.form = formModel;
+        formComponent.taskId = '123-223';
+        formComponent.appName = 'test-app';
+
+        const outcome = 'approve';
+        const outcomeId = 'custom-approve-id';
+        let emittedForm = null;
+
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as any));
+
+        formComponent.formCompleted.subscribe((form) => {
+            emittedForm = form;
+        });
+
+        formComponent.completeTaskForm(outcome, outcomeId);
+
+        expect(emittedForm).not.toBeNull();
+        expect(emittedForm.selectedOutcome).toBe(outcome);
+        expect(emittedForm.selectedOutcomeId).toBe(outcomeId);
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
     });
 });
