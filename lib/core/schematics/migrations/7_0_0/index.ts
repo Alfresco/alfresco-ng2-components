@@ -144,7 +144,7 @@ const moveImport = (bufferFileContent: Buffer, sourceFile: ts.SourceFile, migrat
                 const insertPosition = firstNonImport ? firstNonImport.getFullStart() : fileContent.length;
 
                 updatedContent =
-                    updatedContent.slice(0, insertPosition).replace(/\s*$/, '') +
+                    updatedContent.slice(0, insertPosition).trimEnd() +
                     `\nimport { ${migrationData.to.importedValue} } from '${migrationData.to.importSource}';\n` +
                     updatedContent.slice(insertPosition);
             }
