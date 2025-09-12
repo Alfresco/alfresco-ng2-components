@@ -104,54 +104,54 @@ export const visitor = (filePath: string, tree: Pick<Tree, 'read' | 'overwrite'>
 const moveImport = (bufferFileContent: Buffer, sourceFile: ts.SourceFile, migrationData: MigrationData): string | undefined => {
     const fileContent = bufferFileContent.toString();
     const predictImport = fileContent.includes(migrationData.change.importedValue);
+    if (!predictImport) {
+        return undefined;
+    }
+    const moduleImports = sourceFile.statements.filter(ts.isImportDeclaration);
 
-    if (predictImport) {
-        const moduleImports = sourceFile.statements.filter(ts.isImportDeclaration);
+    const importDeclaration = moduleImports.find((moduleImport) => {
+        const currentImportSource = moduleImport.moduleSpecifier.getText().replace(/['"]/g, '');
+        return currentImportSource === migrationData.change.importSource;
+    });
 
-        const importDeclaration = moduleImports.find((moduleImport) => {
+    if (!importDeclaration?.importClause?.namedBindings) {
+        return undefined;
+    }
+
+    if (!ts.isNamedImports(importDeclaration.importClause.namedBindings)) {
+        return undefined;
+    }
+
+    const namedImportsElements = importDeclaration.importClause.namedBindings.elements;
+    const importedValue = namedImportsElements.find((binding) => binding.name.text === migrationData.change.importedValue);
+
+    if (importedValue) {
+        let updatedContent =
+            namedImportsElements.length === 1
+                ? removeTextRange(fileContent, importDeclaration.getFullStart(), importDeclaration.getEnd())
+                : removeTextRange(fileContent, importedValue.getFullStart(), importedValue.getEnd());
+        const alreadyImported = moduleImports.some((moduleImport) => {
             const currentImportSource = moduleImport.moduleSpecifier.getText().replace(/['"]/g, '');
-            return currentImportSource === migrationData.change.importSource;
+            return (
+                currentImportSource === migrationData.to.importSource &&
+                moduleImport.importClause?.namedBindings &&
+                ts.isNamedImports(moduleImport.importClause.namedBindings) &&
+                moduleImport.importClause.namedBindings.elements.some((element) => element.name.text === migrationData.to.importedValue)
+            );
         });
 
-        if (!importDeclaration?.importClause?.namedBindings) {
-            return undefined;
+        if (!alreadyImported) {
+            const firstNonImport = sourceFile.statements.find((statement) => !ts.isImportDeclaration(statement));
+            const insertPosition = firstNonImport ? firstNonImport.getFullStart() : fileContent.length;
+
+            updatedContent =
+                updatedContent.slice(0, insertPosition).trimEnd() +
+                `\nimport { ${migrationData.to.importedValue} } from '${migrationData.to.importSource}';\n` +
+                updatedContent.slice(insertPosition);
         }
+        updatedContent = updatedContent.replace(/^\s*\n+/g, '').replace(/\n{3,}/g, '\n\n');
 
-        if (!ts.isNamedImports(importDeclaration.importClause.namedBindings)) {
-            return undefined;
-        }
-
-        const namedImportsElements = importDeclaration.importClause.namedBindings.elements;
-        const importedValue = namedImportsElements.find((binding) => binding.name.text === migrationData.change.importedValue);
-
-        if (importedValue) {
-            let updatedContent =
-                namedImportsElements.length === 1
-                    ? removeTextRange(fileContent, importDeclaration.getFullStart(), importDeclaration.getEnd())
-                    : removeTextRange(fileContent, importedValue.getFullStart(), importedValue.getEnd());
-            const alreadyImported = moduleImports.some((moduleImport) => {
-                const currentImportSource = moduleImport.moduleSpecifier.getText().replace(/['"]/g, '');
-                return (
-                    currentImportSource === migrationData.to.importSource &&
-                    moduleImport.importClause?.namedBindings &&
-                    ts.isNamedImports(moduleImport.importClause.namedBindings) &&
-                    moduleImport.importClause.namedBindings.elements.some((element) => element.name.text === migrationData.to.importedValue)
-                );
-            });
-
-            if (!alreadyImported) {
-                const firstNonImport = sourceFile.statements.find((statement) => !ts.isImportDeclaration(statement));
-                const insertPosition = firstNonImport ? firstNonImport.getFullStart() : fileContent.length;
-
-                updatedContent =
-                    updatedContent.slice(0, insertPosition).trimEnd() +
-                    `\nimport { ${migrationData.to.importedValue} } from '${migrationData.to.importSource}';\n` +
-                    updatedContent.slice(insertPosition);
-            }
-            updatedContent = updatedContent.replace(/^\s*\n+/g, '').replace(/\n{3,}/g, '\n\n');
-
-            return updatedContent;
-        }
+        return updatedContent;
     }
 
     return undefined;
