@@ -72,6 +72,12 @@ export class WebSocketService {
         return this.apollo.use(apolloClientName).subscribe<T>({ errorPolicy: 'all', ...subscriptionOptions });
     }
 
+    private removeApolloClientIfExists(apolloClientName: string) {
+        if (this.apollo.use(apolloClientName)) {
+            this.apollo.removeClient(apolloClientName);
+        }
+    }
+
     private get contextRoot() {
         return this.appConfigService.get('bpmHost', '');
     }
@@ -135,9 +141,25 @@ export class WebSocketService {
                 max: Number.POSITIVE_INFINITY,
                 jitter: true
             },
-            attempts: {
-                max: 5,
-                retryIf: (error) => !!error
+            attempts: (count: number, _operation: Operation, error: any) => {
+                if (!error) {
+                    return false;
+                }
+
+                const isUnauthorizedError =
+                    (Array.isArray(error) &&
+                        error.some(
+                            (err: any) =>
+                                err?.extensions?.code === 'UNAUTHORIZED' ||
+                                err?.message?.includes('4401') ||
+                                err?.message?.toLowerCase().includes('unauthorized')
+                        )) ||
+                    (typeof error === 'string' && (error.includes('4401') || error.toLowerCase().includes('unauthorized'))) ||
+                    (error?.message && (error.message.includes('4401') || error.message.toLowerCase().includes('unauthorized')));
+
+                const shouldRetry = isUnauthorizedError ? this.authService.isLoggedIn() : count < 5;
+
+                return shouldRetry;
             }
         });
 
@@ -155,10 +177,13 @@ export class WebSocketService {
         this.wsLink = new GraphQLWsLink(
             createClient({
                 url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
-                connectionParams: {
+                connectionParams: () => ({
                     Authorization: 'Bearer ' + this.authService.getToken()
-                },
+                }),
                 on: {
+                    closed: () => {
+                        this.removeApolloClientIfExists(options.apolloClientName);
+                    },
                     error: () => {
                         this.apollo.removeClient(options.apolloClientName);
                         this.initSubscriptions(options);
