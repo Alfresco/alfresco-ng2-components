@@ -48,10 +48,6 @@ const setMigration = () => {
             const packagesToUpdate = packageJsonUpdates[migration.name]['packages'];
 
             Object.keys(packagesToUpdate).forEach((packageName) => {
-                if (packageName === 'ts-morph') {
-                    return;
-                }
-
                 if (packageName === '@alfresco/js-api') {
                     packagesToUpdate[packageName]['version'] = jsApiPackage.version;
                 } else {
