@@ -65,8 +65,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
-const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
-const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
+const DATE_TIME_IDENTIFIER_REG_EXP = /%{datetime}/i;
+const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -232,7 +232,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return this.translateService.instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL').toUpperCase();
     }
 
-    constructor(private translateService: TranslationService) {
+    constructor(private readonly translateService: TranslationService) {
         this.startProcessButtonLabel = this.defaultStartProcessButtonLabel;
         this.cancelButtonLabel = this.defaultCancelProcessButtonLabel;
     }
@@ -572,12 +572,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     getDefaultProcessName(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
         let processName = processNameFormat;
-        if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
+        if (DATE_TIME_IDENTIFIER_REG_EXP.exec(processName)) {
             const presentDateTime = getTime(new Date());
             processName = processName.replace(DATE_TIME_IDENTIFIER_REG_EXP, this.localizedDatePipe.transform(presentDateTime, 'medium'));
         }
 
-        if (processName.match(PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+        if (PROCESS_DEFINITION_IDENTIFIER_REG_EXP.exec(processName)) {
             const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
             processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
         }
