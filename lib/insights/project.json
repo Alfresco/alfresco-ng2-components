@@ -43,7 +43,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/insights/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/insights/**/*.scss --config stylelint-config.json"
           }
         ]
       }

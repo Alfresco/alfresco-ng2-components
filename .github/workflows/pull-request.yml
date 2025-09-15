@@ -48,10 +48,8 @@ env:
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   REDIRECT_URI: /
@@ -81,7 +79,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-         fetch-depth: 0
+          fetch-depth: 0
 
       - name: Get branch name
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@62d25370db3ca229de518fab5b32ec014a061101 # v8.33.1
@@ -168,8 +166,8 @@ jobs:
       - name: install
         run: |
           npm ci
-          npx nx run js-api:bundle
-          npx nx run cli:bundle
+          npm run bundle:js-api
+          npm run bundle:cli
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   unit-tests:
@@ -203,7 +201,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
 
   lint:
     # long timeout required when cache has to be recreated
@@ -233,8 +231,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci
+      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npm run build:affected -- $NX_CALCULATION_FLAGS --prod
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   PR-forbidden-labels:

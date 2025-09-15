@@ -43,7 +43,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
           }
         ]
       }

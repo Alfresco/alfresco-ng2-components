@@ -79,7 +79,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/content-services/**/*.scss --config stylelint-config.json"
           }
         ]
       }

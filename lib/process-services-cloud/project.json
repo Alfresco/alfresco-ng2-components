@@ -79,7 +79,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
+            "command": "playwright test --config='e2e-playwright/playwright.config.ts'"
           }
         ]
       }
@@ -89,7 +89,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
           }
         ]
       }
