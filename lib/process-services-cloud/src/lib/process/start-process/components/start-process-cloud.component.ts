@@ -342,9 +342,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 }
 
                 this.isFormCloudLoading = false;
-            },
-            error: () => {
-                this.isFormCloudLoading = false;
             }
         });
 
