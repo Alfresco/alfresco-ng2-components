@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormModel } from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -820,9 +820,12 @@ describe('StartProcessCloudComponent', () => {
                 outcome: 'custom_outcome'
             });
 
+            const formOutcomeModel = new FormOutcomeModel(null, fakeFormModelJson.outcomes[0]);
+            const event = new FormOutcomeEvent(formOutcomeModel);
+
             fixture.detectChanges();
 
-            component.onCustomOutcomeClicked('custom_outcome');
+            component.onCustomOutcomeClicked(event);
 
             expect(startProcessWithFormSpy).toHaveBeenCalledWith(
                 component.appName,
@@ -869,7 +872,7 @@ describe('StartProcessCloudComponent', () => {
             );
         });
 
-        it('should output start event when process started successfully', () => {
+        it('should emit start event when process started successfully', () => {
             const emitSpy = spyOn(component.success, 'emit');
             component.startProcess();
             expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
@@ -1213,5 +1216,41 @@ describe('StartProcessCloudComponent', () => {
             });
             component.cancelStartProcess();
         });
+    });
+
+    it('should emit customOutcomeSelected and success events when onCustomOutcomeClicked is called', async () => {
+        const customOutcomeSelectedSpy = spyOn(component.customOutcomeSelected, 'emit');
+        const successSpy = spyOn(component.success, 'emit');
+
+        getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+        formDefinitionSpy.and.returnValue(of(fakeFormModelJson));
+        startProcessWithFormSpy.and.returnValue(of(fakeProcessInstance));
+
+        component.ngOnChanges({ appName: firstChange });
+        component.processForm.controls['processInstanceName'].setValue('My Process 1');
+        component.appName = 'test app name';
+        component.formCloud = new FormModel(JSON.stringify(fakeFormModelJson));
+        component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
+        component.processDefinitionCurrent = fakeProcessDefinitions[2];
+        component.processPayloadCloud.processDefinitionKey = fakeProcessDefinitions[2].key;
+
+        const customOutcome = {
+            id: 'custom_outcome_id',
+            name: 'custom_outcome'
+        };
+        const formOutcomeModel = new FormOutcomeModel(null, customOutcome);
+        const event = new FormOutcomeEvent(formOutcomeModel);
+
+        fixture.detectChanges();
+
+        component.onCustomOutcomeClicked(event);
+
+        await fixture.whenStable();
+
+        expect(customOutcomeSelectedSpy).toHaveBeenCalledWith(customOutcome.id);
+        expect(successSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(startProcessWithFormSpy).toHaveBeenCalledTimes(1);
+        expect(component.customOutcomeName).toBe(customOutcome.name);
+        expect(component.customOutcomeId).toBe(customOutcome.id);
     });
 });

@@ -73,7 +73,6 @@ export class FormModel implements ProcessFormModel {
     readonly confirmMessage: ConfirmMessage;
     readonly taskName = FormModel.UNSET_TASK_NAME;
     readonly processDefinitionId: string;
-    readonly selectedOutcome: string;
     readonly enableFixedSpace: boolean;
     readonly displayMode: any;
 
@@ -88,6 +87,8 @@ export class FormModel implements ProcessFormModel {
     fieldValidators: FormFieldValidator[] = [];
     customFieldTemplates: FormFieldTemplates = {};
     theme?: ThemeModel;
+    selectedOutcomeId?: string;
+    selectedOutcome: string;
 
     className: string;
     readOnly = false;

@@ -348,6 +348,17 @@ describe('TaskFormCloudComponent', () => {
             expect(component.formLoaded.emit).toHaveBeenCalledOnceWith(mockForm);
         });
 
+        it('should emit both formCompleted and taskCompleted events when form is completed', () => {
+            const mockForm = new FormModel();
+            spyOn(component.formCompleted, 'emit').and.stub();
+            spyOn(component.taskCompleted, 'emit').and.stub();
+
+            component.onFormCompleted(mockForm);
+
+            expect(component.formCompleted.emit).toHaveBeenCalledOnceWith(mockForm);
+            expect(component.taskCompleted.emit).toHaveBeenCalledOnceWith(mockForm);
+        });
+
         it('should handle formLoaded event from adf-cloud-form and re-emit it', () => {
             const mockForm = new FormModel();
             spyOn(component.formLoaded, 'emit').and.stub();
