@@ -22,10 +22,9 @@ import { SuperagentHttpClient } from './superagentHttpClient';
 import { Emitters, HttpClient, LegacyHttpClient, RequestOptions, SecurityOptions } from './api-clients/http-client.interface';
 import { paramToString } from './utils';
 import { Storage } from './storage';
+import { EventEmitterInstance } from './types';
 
 declare const Buffer: any;
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 
 export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
     on: <K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) => AlfrescoApiClientPromise<T>;

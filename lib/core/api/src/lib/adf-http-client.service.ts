@@ -16,7 +16,7 @@
  */
 
 import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
-import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
+import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient, EventEmitterInstance, EventEmitterEvents } from '@alfresco/js-api';
 import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';
@@ -35,10 +35,6 @@ import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-e
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import { EventEmitter } from 'eventemitter3';
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
-
-type EventEmitterEvents = 'progress' | 'success' | 'error' | 'forbidden' | 'abort' | 'unauthorized' | string;
 
 export interface Emitters {
     readonly eventEmitter: EventEmitterInstance;

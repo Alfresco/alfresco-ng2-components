@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-import { EventEmitter } from 'eventemitter3';
 import superagent, { Response, SuperAgentRequest } from 'superagent';
 import { Authentication } from './authentication/authentication';
 import { RequestOptions, HttpClient, SecurityOptions, Emitters } from './api-clients/http-client.interface';
 import { Oauth2 } from './authentication/oauth2';
 import { BasicAuth } from './authentication/basicAuth';
 import { isBrowser, paramToString } from './utils';
+import { EventEmitterInstance } from './types';
 
 declare const Blob: any;
 declare const Buffer: any;
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 
 const isProgressEvent = (event: ProgressEvent | unknown): event is ProgressEvent => (event as ProgressEvent)?.lengthComputable;
 

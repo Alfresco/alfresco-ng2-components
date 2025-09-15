@@ -27,8 +27,7 @@ import { Authentication } from './authentication/authentication';
 import { AlfrescoApiType } from './to-deprecate/alfresco-api-type';
 import { HttpClient } from './api-clients/http-client.interface';
 import { AlfrescoApiClient, AlfrescoApiClientPromise } from './alfrescoApiClient';
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+import { EventEmitterInstance } from './types';
 
 export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
     __type = 'legacy-client';

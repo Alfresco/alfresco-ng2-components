@@ -21,10 +21,7 @@ import { Observable, Observer, ReplaySubject, throwError } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
-import { EventEmitter } from 'eventemitter3';
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
-
+import { EventEmitterInstance } from '@alfresco/js-api';
 export abstract class BaseAuthenticationService implements AuthenticationServiceInterface {
     on: EventEmitterInstance['on'];
     off: EventEmitterInstance['off'];

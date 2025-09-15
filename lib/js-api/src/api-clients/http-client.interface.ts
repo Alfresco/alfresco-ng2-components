@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
+import { EventEmitterInstance } from './../types';
 import { Authentication } from '../authentication/authentication';
-import { EventEmitter } from 'eventemitter3';
-
-type EventEmitterInstance = InstanceType<typeof EventEmitter>;
 
 export interface RequestOptions {
     path: string;
