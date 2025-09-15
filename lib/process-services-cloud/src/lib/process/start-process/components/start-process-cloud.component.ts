@@ -169,7 +169,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     isProcessStarting = false;
     isFormCloudLoaded = false;
-    isFormCloudLoading = false;
+    isFormCloudLoading = true;
     processDefinitionLoaded = false;
 
     showStartProcessButton$: Observable<boolean>;
@@ -238,7 +238,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        this.processDefinition.setValue(this.processDefinitionName);
+        if (this.processDefinitionName) {
+            this.processDefinition.setValue(this.processDefinitionName);
+        } else {
+            this.isFormCloudLoading = false;
+        }
+
         this.processDefinition.valueChanges
             .pipe(debounceTime(PROCESS_DEFINITION_DEBOUNCE))
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -290,8 +295,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private selectProcessDefinitionByProcessDefinitionName(processDefinitionName: string): void {
         this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
-
-        if (this.isProcessFormValid && this.filteredProcesses && this.filteredProcesses.length === 1) {
+        this.isFormCloudLoading = this.isProcessFormValid && this.filteredProcesses && this.filteredProcesses.length === 1;
+        if (this.isFormCloudLoading) {
             this.setProcessDefinitionOnForm(this.filteredProcesses[0].name);
         }
     }
@@ -309,30 +314,37 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             this.startProcessCloudService
                 .getStartEventConstants(this.appName, processDefinitionCurrent.id)
                 .pipe(catchError(() => of([] as TaskVariableCloud[])))
-        ]).subscribe(([staticMappings, constants]) => {
-            this.staticMappings = staticMappings;
-            this.resolvedValues = this.staticMappings.concat(this.values || []);
-            this.processDefinitionCurrent = processDefinitionCurrent;
-            this.isFormCloudLoading = false;
+        ]).subscribe({
+            next: ([staticMappings, constants]) => {
+                this.staticMappings = staticMappings;
+                this.resolvedValues = this.staticMappings.concat(this.values || []);
+                this.processDefinitionCurrent = processDefinitionCurrent;
 
-            const displayStart = constants?.find((constant) => constant.name === 'startEnabled');
-            const startLabel = constants?.find((constant) => constant.name === 'startLabel');
+                const displayStart = constants?.find((constant) => constant.name === 'startEnabled');
+                const startLabel = constants?.find((constant) => constant.name === 'startLabel');
 
-            const displayCancel = constants?.find((constant) => constant.name === 'cancelEnabled');
-            const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
+                const displayCancel = constants?.find((constant) => constant.name === 'cancelEnabled');
+                const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
 
-            if (displayStart) {
-                this.displayStartSubject.next(displayStart?.value);
-            }
-            if (startLabel) {
-                this.startProcessButtonLabel = startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
-            }
+                if (displayStart) {
+                    this.displayStartSubject.next(displayStart?.value);
+                }
+                if (startLabel) {
+                    this.startProcessButtonLabel =
+                        startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
+                }
 
-            if (displayCancel) {
-                this.showCancelButton = displayCancel?.value === 'true' && this.showCancelButton;
-            }
-            if (cancelLabel) {
-                this.cancelButtonLabel = cancelLabel?.value?.trim()?.length > 0 ? cancelLabel.value.trim() : this.defaultCancelProcessButtonLabel;
+                if (displayCancel) {
+                    this.showCancelButton = displayCancel?.value === 'true' && this.showCancelButton;
+                }
+                if (cancelLabel) {
+                    this.cancelButtonLabel = cancelLabel?.value?.trim()?.length > 0 ? cancelLabel.value.trim() : this.defaultCancelProcessButtonLabel;
+                }
+
+                this.isFormCloudLoading = false;
+            },
+            error: () => {
+                this.isFormCloudLoading = false;
             }
         });
 
@@ -374,8 +386,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.startProcessCloudService
             .getProcessDefinitions(this.appName)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
+            .subscribe({
+                next: (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     this.processDefinitionList = processDefinitionRepresentations;
                     if (processDefinitionRepresentations.length === 1) {
                         this.selectDefaultProcessDefinition();
@@ -388,14 +400,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                             this.setProcessDefinitionOnForm(processDefinition.name);
                             this.processDefinitionSelectionChanged(processDefinition);
                         }
+                    } else {
+                        this.isFormCloudLoading = false;
                     }
 
                     this.processDefinitionLoaded = true;
                 },
-                () => {
+                error: () => {
                     this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                    this.isFormCloudLoading = false;
                 }
-            );
+            });
     }
 
     private isValidName(name: string): boolean {

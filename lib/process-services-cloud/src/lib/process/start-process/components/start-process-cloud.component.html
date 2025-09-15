@@ -1,4 +1,4 @@
-@if (processDefinitionLoaded) {
+@if (processDefinitionLoaded && !isFormCloudLoading) {
     <mat-card appearance="outlined" class="adf-start-process">
         <mat-card-content>
             @if (showTitle) {
