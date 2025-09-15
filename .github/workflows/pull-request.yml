@@ -216,7 +216,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
+      - run: npm run lint:affected $NX_CALCULATION_FLAGS
 
   build-libs:
     # long timeout required when cache has to be recreated
