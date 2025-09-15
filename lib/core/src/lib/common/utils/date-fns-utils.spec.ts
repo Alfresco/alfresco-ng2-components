@@ -139,7 +139,7 @@ describe('DateFnsUtils', () => {
         expect(forceLocalDateJapan.getFullYear()).toBe(2020);
     });
 
-    it('should detect if a formatted string contains a timezone', () => {
+    it('should detect if a formatted string contains timezone', () => {
         let result = DateFnsUtils.stringDateContainsTimeZone('2021-06-09T14:10');
         expect(result).toEqual(false);
 
@@ -158,8 +158,8 @@ describe('DateFnsUtils', () => {
 
     it('should get the date from number', () => {
         const spyUtcToLocal = spyOn(DateFnsUtils, 'utcToLocal').and.callThrough();
-
         const date = DateFnsUtils.getDate(1623232200000);
+
         expect(date.toISOString()).toBe('2021-06-09T09:50:00.000Z');
         expect(spyUtcToLocal).not.toHaveBeenCalled();
     });
