@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class DiscoveryMock extends BaseMock {
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/discovery')
             .reply(200, {
                 entry: {

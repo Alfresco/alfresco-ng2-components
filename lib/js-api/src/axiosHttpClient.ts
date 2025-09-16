@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import superagent, { Response, SuperAgentRequest } from 'superagent';
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from 'axios';
 import { Authentication } from './authentication/authentication';
 import { RequestOptions, HttpClient, SecurityOptions, Emitters } from './api-clients/http-client.interface';
 import { Oauth2 } from './authentication/oauth2';
@@ -28,7 +28,7 @@ declare const Buffer: any;
 
 const isProgressEvent = (event: ProgressEvent | unknown): event is ProgressEvent => (event as ProgressEvent)?.lengthComputable;
 
-export class SuperagentHttpClient implements HttpClient {
+export class AxiosHttpClient implements HttpClient {
     /**
      * The default HTTP timeout for all API calls.
      */
@@ -50,11 +50,11 @@ export class SuperagentHttpClient implements HttpClient {
         return this.request<T>(url, { ...options, httpMethod: 'DELETE' }, securityOptions, emitters);
     }
 
-    request<T = any>(url: string, options: RequestOptions, securityOptions: SecurityOptions, emitters: Emitters): Promise<T> {
+    async request<T = any>(url: string, options: RequestOptions, securityOptions: SecurityOptions, emitters: Emitters): Promise<T> {
         const { httpMethod, queryParams, headerParams, formParams, bodyParam, contentType, accept, responseType, returnType } = options;
         const { eventEmitter, apiClientEmitter } = emitters;
 
-        let request = this.buildRequest(
+        const config = this.buildRequest(
             httpMethod,
             url,
             queryParams,
@@ -69,54 +69,55 @@ export class SuperagentHttpClient implements HttpClient {
             securityOptions
         );
 
+        const source = axios.CancelToken.source();
+        config.cancelToken = source.token;
+
         if (returnType === 'Binary') {
-            request = request.buffer(true).parse(superagent.parse['application/octet-stream']);
+            config.responseType = 'arraybuffer';
         }
 
-        const promise: any = new Promise((resolve, reject) => {
-            request.on('abort', () => {
-                eventEmitter.emit('abort');
-            });
-            request.end((error: any, response: Response) => {
-                if (error) {
-                    apiClientEmitter.emit('error', error);
-                    eventEmitter.emit('error', error);
-
-                    if (error.status === 401) {
-                        apiClientEmitter.emit('unauthorized');
-                        eventEmitter.emit('unauthorized');
+        const promise: any = axios(config)
+            .then((response: AxiosResponse<T>) => {
+                if (securityOptions.isBpmRequest) {
+                    const hasSetCookie = response.headers['set-cookie'];
+                    if (response.headers && hasSetCookie) {
+                        // mutate the passed value from AlfrescoApiClient class for backward compatibility
+                        securityOptions.authentications.cookie = hasSetCookie[0];
                     }
-
-                    if (response?.text) {
-                        error = error || {};
-                        reject(Object.assign(error, { message: response.text }));
-                    } else {
-                        // eslint-disable-next-line prefer-promise-reject-errors
-                        reject({ error });
-                    }
+                }
+                let data = {};
+                if (response.headers['content-type']?.includes('text/html')) {
+                    data = AxiosHttpClient.deserialize(response);
                 } else {
-                    if (securityOptions.isBpmRequest) {
-                        const hasSetCookie = Object.prototype.hasOwnProperty.call(response.header, 'set-cookie');
-                        if (response.header && hasSetCookie) {
-                            // mutate the passed value from AlfrescoApiClient class for backward compatibility
-                            securityOptions.authentications.cookie = response.header['set-cookie'][0];
-                        }
-                    }
-                    let data = {};
-                    if (response.type === 'text/html') {
-                        data = SuperagentHttpClient.deserialize(response);
-                    } else {
-                        data = SuperagentHttpClient.deserialize(response, returnType);
-                    }
+                    data = AxiosHttpClient.deserialize(response, returnType);
+                }
 
-                    eventEmitter.emit('success', data);
-                    resolve(data);
+                eventEmitter.emit('success', data);
+                return data;
+            })
+            .catch((error: AxiosError) => {
+                apiClientEmitter.emit('error', error);
+                eventEmitter.emit('error', error);
+
+                if (error.response?.status === 401) {
+                    apiClientEmitter.emit('unauthorized');
+                    eventEmitter.emit('unauthorized');
+                }
+
+                if (error.response?.data) {
+                    const responseError = error.response.data;
+                    const enrichedError = Object.assign(error, {
+                        message: typeof responseError === 'string' ? responseError : JSON.stringify(responseError)
+                    });
+                    throw enrichedError;
+                } else {
+                    throw { error };
                 }
             });
-        });
 
         promise.abort = function () {
-            request.abort();
+            eventEmitter.emit('abort');
+            source.cancel('Request aborted');
             return this;
         };
 
@@ -137,98 +138,124 @@ export class SuperagentHttpClient implements HttpClient {
         eventEmitter: EventEmitterInstance,
         returnType: string,
         securityOptions: SecurityOptions
-    ) {
-        const request = superagent(httpMethod, url);
-
+    ): AxiosRequestConfig {
         const { isBpmRequest, authentications, defaultHeaders = {}, enableCsrf, withCredentials = false } = securityOptions;
 
+        const config: AxiosRequestConfig = {
+            method: httpMethod as any,
+            url,
+            params: AxiosHttpClient.normalizeParams(queryParams),
+            headers: {
+                ...defaultHeaders,
+                ...AxiosHttpClient.normalizeParams(headerParams)
+            },
+            timeout: typeof this.timeout === 'number' ? this.timeout : this.timeout?.response,
+            withCredentials
+        };
+
         // apply authentications
-        this.applyAuthToRequest(request, authentications);
-
-        // set query parameters
-        request.query(SuperagentHttpClient.normalizeParams(queryParams));
-
-        // set header parameters
-        request.set(defaultHeaders).set(SuperagentHttpClient.normalizeParams(headerParams));
+        this.applyAuthToRequest(config, authentications);
 
         if (isBpmRequest && enableCsrf) {
-            this.setCsrfToken(request);
-        }
-
-        if (withCredentials) {
-            request.withCredentials();
+            this.setCsrfToken(config);
         }
 
         // add cookie for activiti
         if (isBpmRequest) {
-            request.withCredentials();
+            config.withCredentials = true;
             if (securityOptions.authentications.cookie) {
                 if (!isBrowser()) {
-                    request.set('Cookie', securityOptions.authentications.cookie);
+                    config.headers = {
+                        ...config.headers,
+                        Cookie: securityOptions.authentications.cookie
+                    };
                 }
             }
         }
 
-        // set request timeout
-        request.timeout(this.timeout);
-
         if (contentType && contentType !== 'multipart/form-data') {
-            request.type(contentType);
-        } else if (!(request as any).header['Content-Type'] && contentType !== 'multipart/form-data') {
-            request.type('application/json');
+            config.headers = {
+                ...config.headers,
+                'Content-Type': contentType
+            };
+        } else if (!config.headers?.['Content-Type'] && contentType !== 'multipart/form-data') {
+            config.headers = {
+                ...config.headers,
+                'Content-Type': 'application/json'
+            };
         }
 
         if (contentType === 'application/x-www-form-urlencoded') {
-            request.send(SuperagentHttpClient.normalizeParams(formParams)).on('progress', (event: any) => {
-                this.progress(event, eventEmitter);
+            const params = new URLSearchParams();
+            const normalizedParams = AxiosHttpClient.normalizeParams(formParams);
+            Object.keys(normalizedParams).forEach((key) => {
+                params.append(key, normalizedParams[key]);
             });
+            config.data = params;
+
+            config.onUploadProgress = (progressEvent) => {
+                this.progress(progressEvent, eventEmitter);
+            };
         } else if (contentType === 'multipart/form-data') {
-            const _formParams = SuperagentHttpClient.normalizeParams(formParams);
+            const formData = new FormData();
+            const _formParams = AxiosHttpClient.normalizeParams(formParams);
             for (const key in _formParams) {
                 if (Object.prototype.hasOwnProperty.call(_formParams, key)) {
-                    if (SuperagentHttpClient.isFileParam(_formParams[key])) {
+                    if (AxiosHttpClient.isFileParam(_formParams[key])) {
                         // file field
-                        request.attach(key, _formParams[key]).on('progress', (event: ProgressEvent) => {
-                            // jshint ignore:line
-                            this.progress(event, eventEmitter);
-                        });
+                        formData.append(key, _formParams[key]);
                     } else {
-                        request.field(key, _formParams[key]).on('progress', (event: ProgressEvent) => {
-                            // jshint ignore:line
-                            this.progress(event, eventEmitter);
-                        });
+                        formData.append(key, _formParams[key]);
                     }
                 }
             }
+            config.data = formData;
+            // Remove Content-Type header for multipart/form-data to let axios set the boundary
+            delete config.headers['Content-Type'];
+
+            config.onUploadProgress = (progressEvent) => {
+                this.progress(progressEvent, eventEmitter);
+            };
         } else if (bodyParam) {
-            request.send(bodyParam).on('progress', (event: any) => {
-                this.progress(event, eventEmitter);
-            });
+            config.data = bodyParam;
+
+            config.onUploadProgress = (progressEvent) => {
+                this.progress(progressEvent, eventEmitter);
+            };
         }
 
         if (accept) {
-            request.accept(accept);
+            config.headers = {
+                ...config.headers,
+                Accept: accept
+            };
         }
 
         if (returnType === 'blob' || returnType === 'Blob' || responseType === 'blob' || responseType === 'Blob') {
-            request.responseType('blob');
+            config.responseType = 'blob';
         } else if (returnType === 'String') {
-            request.responseType('string');
+            config.responseType = 'text';
         }
 
-        return request;
+        return config;
     }
 
-    setCsrfToken(request: SuperAgentRequest): void {
-        const token = SuperagentHttpClient.createCSRFToken();
-        request.set('X-CSRF-TOKEN', token);
+    setCsrfToken(config: AxiosRequestConfig): void {
+        const token = AxiosHttpClient.createCSRFToken();
+        config.headers = {
+            ...config.headers,
+            'X-CSRF-TOKEN': token
+        };
 
         if (!isBrowser()) {
-            request.set('Cookie', 'CSRF-TOKEN=' + token + ';path=/');
+            config.headers = {
+                ...config.headers,
+                Cookie: `CSRF-TOKEN=${token};path=/`
+            };
         }
 
         try {
-            document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
+            document.cookie = `CSRF-TOKEN=${token};path=/`;
         } catch {
             /* continue regardless of error */
         }
@@ -236,29 +263,38 @@ export class SuperagentHttpClient implements HttpClient {
 
     /**
      * Applies authentication headers to the request.
-     * @param request The request object created by a <code>superagent()</code> call.
+     * @param config The axios request config object.
      * @param authentications authentications
      */
-    private applyAuthToRequest(request: SuperAgentRequest, authentications: Authentication) {
+    private applyAuthToRequest(config: AxiosRequestConfig, authentications: Authentication) {
         if (authentications) {
             switch (authentications.type) {
                 case 'basic': {
                     const basicAuth: BasicAuth = authentications.basicAuth;
                     if (basicAuth.username || basicAuth.password) {
-                        request.auth(basicAuth.username || '', basicAuth.password || '');
+                        config.auth = {
+                            username: basicAuth.username || '',
+                            password: basicAuth.password || ''
+                        };
                     }
                     break;
                 }
                 case 'activiti': {
                     if (authentications.basicAuth.ticket) {
-                        request.set({ Authorization: authentications.basicAuth.ticket });
+                        config.headers = {
+                            ...config.headers,
+                            Authorization: authentications.basicAuth.ticket
+                        };
                     }
                     break;
                 }
                 case 'oauth2': {
                     const oauth2: Oauth2 = authentications.oauth2;
                     if (oauth2.accessToken) {
-                        request.set({ Authorization: 'Bearer ' + oauth2.accessToken });
+                        config.headers = {
+                            ...config.headers,
+                            Authorization: `Bearer ${oauth2.accessToken}`
+                        };
                     }
                     break;
                 }
@@ -285,34 +321,34 @@ export class SuperagentHttpClient implements HttpClient {
     private static createCSRFToken(a?: any): string {
         return a
             ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
-            : ([1e16] + (1e16).toString()).replace(/[01]/g, SuperagentHttpClient.createCSRFToken);
+            : ([1e16] + (1e16).toString()).replace(/[01]/g, AxiosHttpClient.createCSRFToken);
     }
 
     /**
      * Deserializes an HTTP response body into a value of the specified type.
-     * @param response A SuperAgent response object.
+     * @param response An Axios response object.
      * @param returnType The type to return. Pass a string for simple types
      * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
      * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
      * all properties on <code>data<code> will be converted to this type.
      * @returns A value of the specified type.
      */
-    private static deserialize(response: Response, returnType?: any): any {
+    private static deserialize(response: AxiosResponse, returnType?: any): any {
         if (response === null) {
             return null;
         }
 
-        let data = response.body;
+        let data = response.data;
 
         if (data === null) {
-            data = response.text;
+            data = response.statusText;
         }
 
         if (returnType) {
             if (returnType === 'blob' && isBrowser()) {
-                data = new Blob([data], { type: response.header['content-type'] });
+                data = new Blob([data], { type: response.headers['content-type'] });
             } else if (returnType === 'blob' && !isBrowser()) {
-                data = new Buffer.from(data, 'binary');
+                data = Buffer.from(data, 'binary');
             } else if (Array.isArray(data)) {
                 data = data.map((element) => new returnType(element));
             } else {
@@ -339,7 +375,7 @@ export class SuperagentHttpClient implements HttpClient {
         for (const key in params) {
             if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== undefined && params[key] !== null) {
                 const value = params[key];
-                if (SuperagentHttpClient.isFileParam(value) || Array.isArray(value)) {
+                if (AxiosHttpClient.isFileParam(value) || Array.isArray(value)) {
                     newParams[key] = value;
                 } else {
                     newParams[key] = paramToString(value);

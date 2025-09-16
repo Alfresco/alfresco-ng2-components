@@ -16,12 +16,12 @@
  */
 
 import assert from 'assert';
-import { SuperagentHttpClient } from '../src/superagentHttpClient';
-import { Response } from 'superagent';
+import { AxiosHttpClient } from '../src/axiosHttpClient';
+import { AxiosResponse } from 'axios';
 
-describe('SuperagentHttpClient', () => {
+describe('AxiosHttpClient', () => {
     describe('#buildRequest', () => {
-        const client = new SuperagentHttpClient();
+        const client = new AxiosHttpClient();
 
         it('should create a request with response type blob', () => {
             const queryParams = {};
@@ -62,16 +62,19 @@ describe('SuperagentHttpClient', () => {
             );
 
             assert.equal(response.url, '/fake-api/enterprise/process-instances/');
-            assert.equal(response.header.Accept, 'application/json');
-            assert.equal(response.header['Content-Type'], 'application/json');
-            assert.equal(response._responseType, 'blob');
+
+            // Fix the header property access - likely should be 'headers' (plural)
+            const headers = response.headers || response.header || {};
+            assert.equal(headers.Accept || headers.accept, 'application/json');
+            assert.equal(headers['Content-Type'] || headers['content-type'], 'application/json');
+            assert.equal(response.responseType || response._responseType, 'blob');
         });
     });
 
     describe('#deserialize', () => {
         it('should the deserializer return an array of object when the response is an array', () => {
-            const data = {
-                body: [
+            const data: AxiosResponse = {
+                data: [
                     {
                         id: '1',
                         name: 'test1'
@@ -80,9 +83,15 @@ describe('SuperagentHttpClient', () => {
                         id: '2',
                         name: 'test2'
                     }
-                ]
-            } as Response;
-            const result = SuperagentHttpClient['deserialize'](data);
+                ],
+                status: 200,
+                statusText: 'OK',
+                headers: {},
+                config: {
+                    headers: undefined
+                }
+            };
+            const result = AxiosHttpClient['deserialize'](data);
             const isArray = Array.isArray(result);
             assert.equal(isArray, true);
         });
