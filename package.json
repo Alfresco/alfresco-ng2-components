@@ -13,6 +13,9 @@
     "lint:affected": "nx affected:lint",
     "build:affected": "nx affected:build",
     "affected:libs": "nx affected:libs",
+    "build:libs": "nx run-many -t build --prod --skip-nx-cache",
+    "build:schematics": "nx run-many -t build-schematics",
+    "publish": "nx run-many -t npm-publish",
     "clean": "rimraf dist node_modules dist/libs"
   },
   "repository": {
