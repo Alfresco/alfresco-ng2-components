@@ -16,7 +16,7 @@
  */
 
 import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
-import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
+import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient, EventEmitterInstance, EventEmitterEvents } from '@alfresco/js-api';
 import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';
@@ -34,23 +34,20 @@ import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encod
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
-import ee, { Emitter } from 'event-emitter';
+import { EventEmitter } from 'eventemitter3';
 
 export interface Emitters {
-    readonly eventEmitter: Emitter;
-    readonly apiClientEmitter: Emitter;
+    readonly eventEmitter: EventEmitterInstance;
+    readonly apiClientEmitter: EventEmitterInstance;
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    _disableCsrf: boolean;
+export class AdfHttpClient implements JsApiHttpClient {
+    private eventEmitter = new EventEmitter();
 
-    emit: (type: string, ...args: any[]) => void;
+    _disableCsrf: boolean;
 
     get disableCsrf(): boolean {
         return this._disableCsrf;
@@ -68,7 +65,27 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     };
 
     constructor(private httpClient: HttpClient) {
-        ee(this);
+        // No need for ee(this) anymore - we use composition instead of inheritance
+    }
+
+    // EventEmitter delegation methods
+    on(event: EventEmitterEvents, fn: (...args: any[]) => void, context?: any): this {
+        this.eventEmitter.on(event, fn, context);
+        return this;
+    }
+
+    off(event: EventEmitterEvents, fn?: (...args: any[]) => void, context?: any): this {
+        this.eventEmitter.off(event, fn, context);
+        return this;
+    }
+
+    once(event: EventEmitterEvents, fn: (...args: any[]) => void, context?: any): this {
+        this.eventEmitter.once(event, fn, context);
+        return this;
+    }
+
+    emit(event: EventEmitterEvents, ...args: any[]): boolean {
+        return this.eventEmitter.emit(event, ...args);
     }
 
     setDefaultSecurityOption(options: any) {
@@ -136,24 +153,19 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
 
     private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any) {
         const eventPromise = Object.assign(promise, {
-            on() {
-                // eslint-disable-next-line prefer-spread, prefer-rest-params
-                eventEmitter.on.apply(eventEmitter, arguments);
+            on<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) {
+                eventEmitter.on(event, fn, context);
                 return this;
             },
-            once() {
-                // eslint-disable-next-line prefer-spread, prefer-rest-params
-                eventEmitter.once.apply(eventEmitter, arguments);
+            once<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) {
+                eventEmitter.once(event, fn, context);
                 return this;
             },
-            emit() {
-                // eslint-disable-next-line prefer-spread, prefer-rest-params
-                eventEmitter.emit.apply(eventEmitter, arguments);
-                return this;
+            emit<K extends string | symbol>(event: K, ...args: any[]): boolean {
+                return eventEmitter.emit(event, ...args);
             },
-            off() {
-                // eslint-disable-next-line prefer-spread, prefer-rest-params
-                eventEmitter.off.apply(eventEmitter, arguments);
+            off<K extends string | symbol>(event: K, fn?: (...args: any[]) => void, context?: any) {
+                eventEmitter.off(event, fn, context);
                 return this;
             }
         });
@@ -162,16 +174,17 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     }
 
     private getEventEmitters(): Emitters {
-        const apiClientEmitter = {
-            on: this.on.bind(this),
-            off: this.off.bind(this),
-            once: this.once.bind(this),
-            emit: this.emit.bind(this)
-        };
+        const apiClientEmitter: EventEmitterInstance = new EventEmitter();
+
+        // Bind this instance's methods to the apiClientEmitter for backward compatibility
+        apiClientEmitter.on = this.on.bind(this);
+        apiClientEmitter.off = this.off.bind(this);
+        apiClientEmitter.once = this.once.bind(this);
+        apiClientEmitter.emit = this.emit.bind(this);
 
         return {
             apiClientEmitter,
-            eventEmitter: ee({})
+            eventEmitter: new EventEmitter()
         };
     }
 
