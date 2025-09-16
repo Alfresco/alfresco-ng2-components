@@ -40,11 +40,9 @@ env:
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   REDIRECT_URI: /
@@ -67,36 +65,9 @@ jobs:
       - name: install
         run: |
           npm ci
-          npx nx run js-api:bundle
-          npx nx run cli:bundle
+          nx run js-api:bundle
+          nx run cli:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  release-storybook:
-    needs: [setup]
-    timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 1
-      - run: git fetch --all
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with:
-          dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/setup
-        with:
-          enable-cache: false
-          enable-node-modules-cache: false
-          act: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Storybook docker
-        run: |
-          npx nx run stories:build-storybook --configuration ci
-          . ./scripts/github/release/docker-tag.sh
-          ./scripts/github/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   release-npm:
     needs: [setup]
@@ -135,15 +106,15 @@ jobs:
             setMigrations();
       - name: build libraries
         run: |
-          npx nx run-many -t build --prod --skip-nx-cache
-          npx nx run-many -t build-schematics
+          nx run-many -t build --prod --skip-nx-cache
+          nx run-many -t build-schematics
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: npx nx run-many -t npm-publish --tag=$TAG_NPM || exit 1
+      - run: nx run-many -t npm-publish --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
@@ -152,7 +123,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: npx nx run-many -t npm-publish --tag=$TAG_NPM || exit 1
+      - run: nx run-many -t npm-publish --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
@@ -223,15 +194,15 @@ jobs:
           CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
 
   finalize:
-      if: always()
-      runs-on: ubuntu-latest
-      name: Final Results
-      needs: [release-storybook, release-npm, npm-check-bundle]
-      steps:
-        - name: Check job execution status
-          if: >-
-            ${{
-                contains(needs.*.result, 'failure')
-              || contains(needs.*.result, 'cancelled')
-            }}
-          run: exit 1
+    if: always()
+    runs-on: ubuntu-latest
+    name: Final Results
+    needs: [release-npm, npm-check-bundle]
+    steps:
+      - name: Check job execution status
+        if: >-
+          ${{
+              contains(needs.*.result, 'failure')
+            || contains(needs.*.result, 'cancelled')
+          }}
+        run: exit 1

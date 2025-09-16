@@ -38,48 +38,12 @@
         "lintFilePatterns": ["lib/content-services/**/*.ts", "lib/content-services/**/*.html"]
       }
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4400,
-        "browserTarget": "content-services:storybook",
-        "configDir": "lib/content-services/.storybook",
-        "compodoc": false,
-        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "options": {
-        "browserTarget": "content-services:build-storybook",
-        "configDir": "lib/content-services/.storybook",
-        "outputDir": "dist/storybook/content-services",
-        "compodoc": false,
-        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
     "stylelint": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/content-services/**/*.scss --config stylelint-config.json"
           }
         ]
       }

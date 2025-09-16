@@ -38,48 +38,12 @@
         "lintFilePatterns": ["lib/process-services-cloud/**/*.ts", "lib/process-services-cloud/**/*.html"]
       }
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4400,
-        "browserTarget": "process-services-cloud:storybook",
-        "configDir": "lib/process-services-cloud/.storybook",
-        "compodoc": false,
-        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "options": {
-        "browserTarget": "process-services-cloud:build-storybook",
-        "configDir": "lib/process-services-cloud/.storybook",
-        "outputDir": "dist/storybook/process-services-cloud",
-        "compodoc": false,
-        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
     "e2e-playwright": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
+            "command": "playwright test --config='e2e-playwright/playwright.config.ts'"
           }
         ]
       }
@@ -89,7 +53,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
           }
         ]
       }

@@ -7,8 +7,12 @@
     "prepare": "husky install",
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
+    "bundle:js-api": "nx run js-api:bundle",
+    "bundle:cli": "nx run cli:bundle",
+    "test:affected": "nx affected:test",
+    "lint:affected": "nx affected:lint",
+    "build:affected": "nx affected:build",
     "affected:libs": "nx affected:libs",
-    "affected:lint": "nx affected:lint",
     "clean": "rimraf dist node_modules dist/libs"
   },
   "repository": {
