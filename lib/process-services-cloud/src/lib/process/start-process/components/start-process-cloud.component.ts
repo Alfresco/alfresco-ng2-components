@@ -569,12 +569,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     getDefaultProcessName(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
         let processName = processNameFormat;
-        if (DATE_TIME_IDENTIFIER_REG_EXP.exec(processName)) {
+        if (DATE_TIME_IDENTIFIER_REG_EXP.test(processName)) {
             const presentDateTime = getTime(new Date());
             processName = processName.replace(DATE_TIME_IDENTIFIER_REG_EXP, this.localizedDatePipe.transform(presentDateTime, 'medium'));
         }
 
-        if (PROCESS_DEFINITION_IDENTIFIER_REG_EXP.exec(processName)) {
+        if (PROCESS_DEFINITION_IDENTIFIER_REG_EXP.test(processName)) {
             const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
             processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
         }
