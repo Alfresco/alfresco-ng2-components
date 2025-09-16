@@ -58,8 +58,8 @@ jobs:
       - name: install
         run: |
           npm ci
-          nx run js-api:bundle
-          nx run cli:bundle
+          npm run bundle:js-api
+          npm run bundle:cli
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   release-npm:
@@ -95,15 +95,15 @@ jobs:
             setMigrations();
       - name: Build libraries
         run: |
-          nx run-many --target=build --prod --skip-nx-cache
-          nx run-many --target=build-schematics
+          npm run build:libs
+          npm run build:schematics
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: nx run-many -t npm-publish --tag=branch || exit 1
+      - run: npm run publish -- --tag=branch || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
@@ -112,7 +112,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: nx run-many -t npm-publish --tag=branch || exit 1
+      - run: npm run publish -- --tag=branch || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
