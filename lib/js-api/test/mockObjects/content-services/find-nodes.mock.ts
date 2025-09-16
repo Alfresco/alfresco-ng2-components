@@ -20,7 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class FindNodesMock extends BaseMock {
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/queries/nodes?term=test')
             .reply(200, {
                 list: {
@@ -78,7 +78,7 @@ export class FindNodesMock extends BaseMock {
     }
 
     get401Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/queries/nodes?term=test')
             .reply(401, {
                 error: {

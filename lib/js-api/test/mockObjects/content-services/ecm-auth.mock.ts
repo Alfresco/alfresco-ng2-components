@@ -31,24 +31,45 @@ export class EcmAuthMock extends BaseMock {
     get201Response(forceTicket?: string): void {
         const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
 
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
-                userId: this.username,
-                password: this.password
+                userId: 'admin',
+                password: 'admin'
             })
-            .reply(201, { entry: { id: returnMockTicket, userId: 'admin' } });
+            .reply(201, {
+                entry: {
+                    id: returnMockTicket,
+                    userId: 'admin'
+                }
+            });
+    }
+
+    get201ResponseJohnDoe(forceTicket?: string): void {
+        const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
+
+        this.createNockWithCors()
+            .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
+                userId: 'johndoe',
+                password: 'password'
+            })
+            .reply(201, {
+                entry: {
+                    id: returnMockTicket,
+                    userId: 'johndoe'
+                }
+            });
     }
 
     get200ValidTicket(forceTicket?: string): void {
         const returnMockTicket = forceTicket || 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1';
 
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
             .reply(200, { entry: { id: returnMockTicket } });
     }
 
     get401InvalidTicket(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
             .reply(401, {
                 error: {
@@ -61,8 +82,22 @@ export class EcmAuthMock extends BaseMock {
             });
     }
 
+    get401InvalidRequest(): void {
+        this.createNockWithCors()
+            .get('/.*tickets.*/')
+            .reply(401, {
+                error: {
+                    errorKey: 'framework.exception.ApiDefault',
+                    statusCode: 401,
+                    briefSummary: '05210059 Authentication failed for Web Script org/alfresco/api/ResourceWebScript.get',
+                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                    descriptionURL: 'https://api-explorer.alfresco.com'
+                }
+            });
+    }
+
     get403Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: 'wrong',
                 password: 'name'
@@ -79,24 +114,56 @@ export class EcmAuthMock extends BaseMock {
     }
 
     get400Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        nock(this.host).options(/.*/).reply(200, '', {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
+            'Access-Control-Allow-Credentials': 'true'
+        });
+
+        nock(this.host)
+            .defaultReplyHeaders({
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true'
+            })
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: null,
                 password: null
             })
             .reply(400, {
                 error: {
-                    errorKey: 'Invalid login details.',
+                    errorKey: 'Bad Request',
                     statusCode: 400,
-                    briefSummary: '05160045 Invalid login details.',
-                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-                    descriptionURL: 'https://api-explorer.alfresco.com'
+                    briefSummary: 'userId and/or password are/is not provided'
+                }
+            });
+    }
+
+    get400ResponseGET(): void {
+        nock(this.host).persist().options(/.*/).reply(200, '', {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
+            'Access-Control-Allow-Credentials': 'true'
+        });
+
+        nock(this.host)
+            .defaultReplyHeaders({
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true'
+            })
+            .get('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
+            .reply(400, {
+                error: {
+                    errorKey: 'Bad Request',
+                    statusCode: 400,
+                    briefSummary: '05160045 Invalid login details.'
                 }
             });
     }
 
     get401Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
                 userId: 'wrong',
                 password: 'name'
@@ -113,10 +180,20 @@ export class EcmAuthMock extends BaseMock {
     }
 
     get204ResponseLogout(): void {
-        nock(this.host, { encodedQueryParams: true }).delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(204, '');
+        this.createNockWithCors().delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(204, '');
     }
 
     get404ResponseLogout(): void {
-        nock(this.host, { encodedQueryParams: true }).delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-').reply(404, '');
+        this.createNockWithCors()
+            .delete('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
+            .reply(404, {
+                error: {
+                    errorKey: 'Not Found',
+                    statusCode: 404,
+                    briefSummary: 'Not Found',
+                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                    descriptionURL: 'https://api-explorer.alfresco.com'
+                }
+            });
     }
 }
