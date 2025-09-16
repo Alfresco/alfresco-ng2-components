@@ -64,52 +64,12 @@
         ]
       }
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4400,
-        "browserTarget": "core:build",
-        "configDir": "lib/core/.storybook",
-        "compodoc": false,
-        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "options": {
-        "browserTarget": "core:build",
-        "configDir": "lib/core/.storybook",
-        "outputDir": "dist/storybook/core",
-        "compodoc": false,
-        "styles": [
-          "node_modules/cropperjs/dist/cropper.min.css",
-          "node_modules/pdfjs-dist/web/pdf_viewer.css",
-          "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-        ],
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
     "stylelint": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "npx stylelint lib/core/**/*.scss --config stylelint-config.json"
+            "command": "stylelint lib/core/**/*.scss --config stylelint-config.json"
           }
         ]
       }
@@ -119,7 +79,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+            "command": "license-checker --production --failOn 'GPL;GPL-2.0' > licenses.txt"
           }
         ]
       }

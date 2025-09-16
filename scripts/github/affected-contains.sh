@@ -11,7 +11,7 @@ if [ "${GITHUB_EVENT_NAME}" == "schedule" ]; then
   exit 0
 fi
 isAffected=false
-AFFECTED_LIBS=$(npx nx show projects --affected ${NX_CALCULATION_FLAGS} --plain)
+AFFECTED_LIBS=$(nx show projects --affected ${NX_CALCULATION_FLAGS} --plain)
 #echo "Verify if affected build contains $1"
 #echo "Affected libs:$AFFECTED_LIBS"
 if [[  $AFFECTED_LIBS =~ $verifyLib ]]; then

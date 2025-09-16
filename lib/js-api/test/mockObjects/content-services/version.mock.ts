@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class VersionMock extends BaseMock {
     post201Response(nodeId: string, versionId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + nodeId + '/versions/' + versionId + '/revert')
             .reply(201, { entry: { id: '3.0' } });
     }
 
     get200Response(nodeId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + nodeId + '/versions')
             .reply(200, {
                 list: {
@@ -43,7 +42,7 @@ export class VersionMock extends BaseMock {
     }
 
     get200ResponseVersionRenditions(nodeId: string, versionId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + nodeId + '/versions/' + versionId + '/renditions')
             .reply(200, {
                 list: {
@@ -103,7 +102,7 @@ export class VersionMock extends BaseMock {
     }
 
     get200VersionRendition(nodeId: string, versionId: string, renditionId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + nodeId + '/versions/' + versionId + '/renditions/' + renditionId)
             .reply(200, {
                 entry: {
@@ -115,7 +114,7 @@ export class VersionMock extends BaseMock {
     }
 
     create200VersionRendition(nodeId: string, versionId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + nodeId + '/versions/' + versionId + '/renditions', { id: 'pdf' })
             .reply(202, '');
     }

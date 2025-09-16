@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { EventEmitterInstance } from './../types';
 import { Authentication } from '../authentication/authentication';
-import { Emitter } from 'event-emitter';
 
 export interface RequestOptions {
     path: string;
@@ -93,8 +93,13 @@ export interface SecurityOptions {
 }
 
 export interface Emitters {
-    readonly eventEmitter: Emitter;
-    readonly apiClientEmitter: Emitter;
+    readonly eventEmitter: EventEmitterInstance;
+    readonly apiClientEmitter: {
+        on: EventEmitterInstance['on'];
+        off: EventEmitterInstance['off'];
+        once: EventEmitterInstance['once'];
+        emit: EventEmitterInstance['emit'];
+    };
 }
 
 export interface HttpClient {

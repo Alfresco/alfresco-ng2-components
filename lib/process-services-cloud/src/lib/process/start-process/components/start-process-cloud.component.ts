@@ -33,6 +33,7 @@ import {
     ConfirmDialogComponent,
     ContentLinkModel,
     FormModel,
+    FormOutcomeEvent,
     InplaceFormInputComponent,
     LocalizedDatePipe,
     TranslationService,
@@ -158,6 +159,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Output()
     processDefinitionSelection: EventEmitter<ProcessDefinitionCloud> = new EventEmitter<ProcessDefinitionCloud>();
 
+    @Output()
+    customOutcomeSelected: EventEmitter<string> = new EventEmitter<string>();
+
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent?: ProcessDefinitionCloud;
     errorMessageId: string = '';
@@ -165,7 +169,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     filteredProcesses: ProcessDefinitionCloud[] = [];
     staticMappings: TaskVariableCloud[] = [];
     resolvedValues?: TaskVariableCloud[];
-    customOutcome: string;
+    customOutcomeName: string;
+    customOutcomeId: string;
 
     isProcessStarting = false;
     isFormCloudLoaded = false;
@@ -433,8 +438,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         }
     }
 
-    onCustomOutcomeClicked(outcome: string) {
-        this.customOutcome = outcome;
+    onCustomOutcomeClicked(outcome: FormOutcomeEvent) {
+        this.customOutcomeName = outcome.outcome.name;
+        this.customOutcomeId = outcome.outcome.id;
         this.startProcess();
     }
 
@@ -451,7 +457,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                       processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
                       variables: this.variables ?? {},
                       values: this.formCloud.values,
-                      outcome: this.customOutcome
+                      outcome: this.customOutcomeName
                   })
               )
             : this.startProcessCloudService.startProcess(
@@ -465,6 +471,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
         action.subscribe({
             next: (res) => {
+                this.customOutcomeSelected.emit(this.customOutcomeId);
                 this.success.emit(res);
                 this.isProcessStarting = false;
             },

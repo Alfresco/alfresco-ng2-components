@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import ee from 'event-emitter';
+import { EventEmitter } from 'eventemitter3';
 import { AlfrescoApiClient } from '../alfrescoApiClient';
 import { AlfrescoApiConfig } from '../alfrescoApiConfig';
 import { Authentication } from './authentication';
@@ -604,7 +604,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
             }
         );
 
-        ee(promise); // jshint ignore:line
+        return this.addPromiseListeners(promise, new EventEmitter());
     }
 
     pollingRefreshToken() {
@@ -654,9 +654,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
             );
         });
 
-        ee(promise); // jshint ignore:line
-
-        return promise;
+        return this.addPromiseListeners(promise, new EventEmitter());
     }
 
     universalBtoa(stringToConvert: string) {

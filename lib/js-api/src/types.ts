@@ -15,22 +15,7 @@
  * limitations under the License.
  */
 
-import { BaseMock } from '../base.mock';
+import { EventEmitter } from 'eventemitter3';
 
-export class GsSitesApiMock extends BaseMock {
-    get200Response(): void {
-        this.createNockWithCors()
-            .get('/alfresco/api/-default-/public/gs/versions/1/gs-sites/rm')
-            .reply(200, {
-                entry: {
-                    role: 'SiteManager',
-                    visibility: 'PUBLIC',
-                    compliance: 'STANDARD',
-                    guid: 'fd870d47-57a0-46f7-83c8-c523a4da13c4',
-                    description: 'Records Management Description Test',
-                    id: 'rm',
-                    title: 'Records Management'
-                }
-            });
-    }
-}
+export type EventEmitterInstance = InstanceType<typeof EventEmitter>;
+export type EventEmitterEvents = 'progress' | 'success' | 'error' | 'forbidden' | 'abort' | 'unauthorized' | string;

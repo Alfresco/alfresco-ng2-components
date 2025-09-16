@@ -13,6 +13,7 @@ on:
     branches:
       - master
       - master-patch-*
+
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
@@ -31,13 +32,11 @@ env:
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
   BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   REDIRECT_URI: /
@@ -72,4 +71,3 @@ jobs:
         run: |
           git fetch --all --quiet
           BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
-

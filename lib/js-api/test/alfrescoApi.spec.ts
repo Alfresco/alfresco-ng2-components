@@ -18,6 +18,7 @@
 import assert from 'assert';
 import { AlfrescoApi } from '../src';
 import { BpmAuthMock, EcmAuthMock, OAuthMock } from './mockObjects';
+import nock from 'nock';
 
 describe('Basic configuration test', () => {
     describe('config parameter ', () => {
@@ -209,16 +210,23 @@ describe('Basic configuration test', () => {
     });
 
     describe('login', () => {
+        beforeEach(() => {
+            nock.cleanAll();
+        });
+
         it('Should login be rejected if username or password are not provided', async () => {
+            const hostEcm = 'https://testServer.com:1616';
+            const authEcmMock = new EcmAuthMock(hostEcm);
+
             const config = {
-                hostEcm: 'https://testServer.com:1616',
+                hostEcm,
                 contextRoot: 'strangeContextRoot',
                 withCredentials: true
             };
             const alfrescoJsApi = new AlfrescoApi(config);
 
             let error;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login(undefined, undefined);
             } catch (e) {
@@ -228,7 +236,7 @@ describe('Basic configuration test', () => {
             assert.equal(error, 'missing username or password');
 
             error = undefined;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login('username', undefined);
             } catch (e) {
@@ -238,7 +246,7 @@ describe('Basic configuration test', () => {
             assert.equal(error, 'missing username or password');
 
             error = undefined;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login(undefined, 'password');
             } catch (e) {
@@ -248,7 +256,7 @@ describe('Basic configuration test', () => {
             assert.equal(error, 'missing username or password');
 
             error = undefined;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login('', '');
             } catch (e) {
@@ -258,7 +266,7 @@ describe('Basic configuration test', () => {
             assert.equal(error, 'missing username or password');
 
             error = undefined;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login('username', '');
             } catch (e) {
@@ -268,7 +276,7 @@ describe('Basic configuration test', () => {
             assert.equal(error, 'missing username or password');
 
             error = undefined;
-
+            authEcmMock.get401InvalidRequest();
             try {
                 await alfrescoJsApi.login('', 'password');
             } catch (e) {
@@ -317,11 +325,15 @@ describe('Basic configuration test', () => {
         });
 
         it('Should logged-in be emitted when log in OAUTH', (done) => {
-            const oauth2Mock = new OAuthMock('https://myOauthUrl:30081');
+            const host = 'https://myOauthUrl:30081';
+            const oauth2Mock = new OAuthMock(host);
+            const authEcmMock = new EcmAuthMock(host);
 
             oauth2Mock.get200Response();
+            authEcmMock.get200ValidTicket();
 
             const alfrescoJsApi = new AlfrescoApi({
+                hostEcm: host,
                 oauth2: {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',

@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 
-import ee from 'event-emitter';
+import { EventEmitter } from 'eventemitter3';
 import { AlfrescoApiConfig } from './alfrescoApiConfig';
 import { Authentication } from './authentication/authentication';
-import { SuperagentHttpClient } from './superagentHttpClient';
+import { EventEmitterInstance } from './types';
 import { Emitters, HttpClient, LegacyHttpClient, RequestOptions, SecurityOptions } from './api-clients/http-client.interface';
 import { paramToString } from './utils';
 import { Storage } from './storage';
+import { AxiosHttpClient } from './axiosHttpClient';
 
 declare const Buffer: any;
 
 export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    emit: (type: string, ...args: any[]) => void;
+    on: <K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) => AlfrescoApiClientPromise<T>;
+    off: <K extends string | symbol>(event: K, fn?: (...args: any[]) => void, context?: any) => AlfrescoApiClientPromise<T>;
+    once: <K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any) => AlfrescoApiClientPromise<T>;
+    emit: <K extends string | symbol>(event: K, ...args: any[]) => boolean;
     abort?: () => void;
 };
 
@@ -62,11 +63,8 @@ export function buildCollectionParam(param: string[], collectionFormat: string):
     }
 }
 
-export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
-    on: ee.EmitterMethod;
-    off: ee.EmitterMethod;
-    once: ee.EmitterMethod;
-    emit: (type: string, ...args: any[]) => void;
+export class AlfrescoApiClient implements LegacyHttpClient {
+    private eventEmitter = new EventEmitter();
 
     storage: Storage;
     host: string;
@@ -105,13 +103,29 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
     constructor(host?: string, httpClient?: HttpClient) {
         this.host = host;
-
         this.storage = Storage.getInstance();
-
         // fallback for backward compatibility
-        this.httpClient = httpClient || new SuperagentHttpClient();
+        this.httpClient = httpClient || new AxiosHttpClient();
+    }
 
-        ee(this);
+    // EventEmitter delegation methods
+    on<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any): this {
+        this.eventEmitter.on(event, fn, context);
+        return this;
+    }
+
+    off<K extends string | symbol>(event: K, fn?: (...args: any[]) => void, context?: any): this {
+        this.eventEmitter.off(event, fn, context);
+        return this;
+    }
+
+    once<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any): this {
+        this.eventEmitter.once(event, fn, context);
+        return this;
+    }
+
+    emit<K extends string | symbol>(event: K, ...args: any[]): boolean {
+        return this.eventEmitter.emit(event, ...args);
     }
 
     request<T = any>(options: RequestOptions): Promise<T> {
@@ -325,7 +339,7 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
         return {
             apiClientEmitter,
-            eventEmitter: ee({})
+            eventEmitter: new EventEmitter()
         };
     }
 
@@ -374,27 +388,22 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: ee.Emitter): AlfrescoApiClientPromise<T> {
+    addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: EventEmitterInstance): AlfrescoApiClientPromise<T> {
         return Object.assign(promise, {
-            on() {
-                // eslint-disable-next-line prefer-spread,prefer-rest-params
-                eventEmitter.on.apply(eventEmitter, arguments);
-                return this;
+            on<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any): AlfrescoApiClientPromise<T> {
+                eventEmitter.on(event, fn, context);
+                return this as AlfrescoApiClientPromise<T>;
             },
-            once() {
-                // eslint-disable-next-line prefer-spread,prefer-rest-params
-                eventEmitter.once.apply(eventEmitter, arguments);
-                return this;
+            once<K extends string | symbol>(event: K, fn: (...args: any[]) => void, context?: any): AlfrescoApiClientPromise<T> {
+                eventEmitter.once(event, fn, context);
+                return this as AlfrescoApiClientPromise<T>;
             },
-            emit() {
-                // eslint-disable-next-line prefer-spread,prefer-rest-params
-                eventEmitter.emit.apply(eventEmitter, arguments);
-                return this;
+            emit<K extends string | symbol>(event: K, ...args: any[]): boolean {
+                return eventEmitter.emit(event, ...args);
             },
-            off() {
-                // eslint-disable-next-line prefer-spread,prefer-rest-params
-                eventEmitter.off.apply(eventEmitter, arguments);
-                return this;
+            off<K extends string | symbol>(event: K, fn?: (...args: any[]) => void, context?: any): AlfrescoApiClientPromise<T> {
+                eventEmitter.off(event, fn, context);
+                return this as AlfrescoApiClientPromise<T>;
             }
         });
     }

@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 import { SEARCH_LANGUAGE } from '@alfresco/js-api';
 
 export class SearchMock extends BaseMock {
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/alfresco/api/-default-/public/search/versions/1/search', {
                 query: {
                     query: 'select * from cmis:folder',

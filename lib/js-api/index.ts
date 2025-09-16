@@ -43,3 +43,4 @@ export * from './src/api-clients/api-client';
 export * from './src/api-clients/http-client.interface';
 export * from './src/utils';
 export * from './src/constants';
+export * from './src/types';
