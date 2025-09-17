@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ViewerComponent } from '../../../../viewer';
@@ -40,7 +39,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslatePipe, ViewerComponent, ErrorWidgetComponent],
+    imports: [TranslatePipe, ViewerComponent, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {

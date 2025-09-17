@@ -18,13 +18,12 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../../models/application-instance.model';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-cloud-app-details',
-    imports: [CommonModule, TranslatePipe, MatIconModule, MatCardModule],
+    imports: [CommonModule, MatIconModule, MatCardModule],
     templateUrl: './app-details-cloud.component.html',
     styleUrls: ['./app-details-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

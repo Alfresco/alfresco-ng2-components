@@ -1150,15 +1150,14 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: firstChange });
             component.processDefinitionList = fakeProcessDefinitions;
             component.processDefinitionName = fakeProcessDefinitions[0].name;
+            fixture.detectChanges();
         });
 
-        it('start process button should be enabled when isProcessStarting is false', async () => {
-            fixture.detectChanges();
+        it('start process button should be enabled when isProcessStarting is false', () => {
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
             component.isProcessStarting = false;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
@@ -1166,27 +1165,21 @@ describe('StartProcessCloudComponent', () => {
             expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeFalse();
         });
 
-        it('start process button should be disabled when isFormCloudLoading is true', async () => {
-            fixture.detectChanges();
+        it('start process button should be null when isFormCloudLoading is true', () => {
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
             component.isFormCloudLoading = true;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const startButton = fixture.debugElement.query(By.css('#button-start'));
-            expect(startButton).not.toBeNull();
-            expect(component.disableStartButton).toBeTrue();
-            expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeTrue();
+            expect(startButton).toBeFalsy();
         });
 
-        it('start process button should be disabled when isLoading is true', async () => {
-            fixture.detectChanges();
+        it('start process button should be disabled when isLoading is true', () => {
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
             component.isProcessStarting = true;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
