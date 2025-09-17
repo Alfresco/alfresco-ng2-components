@@ -56,7 +56,7 @@
     "angular-oauth2-oidc": "17.0.2",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "10.0.3",
-    "axios": "^1.11.0",
+    "axios": "^1.12.2",
     "chart.js": "4.4.4",
     "cropperjs": "1.6.2",
     "date-fns": "^2.30.0",
