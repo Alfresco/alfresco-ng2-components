@@ -37,7 +37,6 @@ import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { Buffer } from 'buffer';
 import { inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -104,7 +103,10 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(protected readonly appConfig: AppConfigService, protected readonly alfrescoApiService: AlfrescoApiService) {
+    protected constructor(
+        protected readonly appConfig: AppConfigService,
+        protected readonly alfrescoApiService: AlfrescoApiService
+    ) {
         this.resetToDefaults();
     }
 
@@ -490,9 +492,9 @@ export abstract class BaseQueryBuilderService {
                                         end: set.end,
                                         startInclusive: set.startInclusive,
                                         endInclusive: set.endInclusive
-                                    } as any)
+                                    }) as any
                             )
-                        } as any)
+                        }) as any
                 )
             };
         }
@@ -553,7 +555,7 @@ export abstract class BaseQueryBuilderService {
                             limit: facet.limit,
                             offset: facet.offset,
                             prefix: facet.prefix
-                        } as any)
+                        }) as any
                 )
             };
         }
@@ -579,7 +581,12 @@ export abstract class BaseQueryBuilderService {
      * Encodes filter configuration stored in filterRawParams object.
      */
     encodeQuery() {
-        this.encodedQuery = Buffer.from(JSON.stringify(this.filterRawParams)).toString('base64');
+        try {
+            this.encodedQuery = btoa(JSON.stringify(this.filterRawParams));
+        } catch (error) {
+            console.error('Failed to encode query parameters:', error);
+            this.encodedQuery = '';
+        }
     }
 
     /**
