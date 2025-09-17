@@ -17,7 +17,6 @@
 
 import { NgModule } from '@angular/core';
 import { FormCloudComponent } from './components/form-cloud.component';
-import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
@@ -39,7 +38,6 @@ export const FORM_CLOUD_DIRECTIVES = [
     FileViewerWidgetComponent,
     FilePropertiesTableCloudComponent,
     FormCustomOutcomesComponent,
-    FormDefinitionSelectorCloudComponent,
     RadioButtonsCloudWidgetComponent,
     AttachFileCloudWidgetComponent,
     UploadCloudWidgetComponent,

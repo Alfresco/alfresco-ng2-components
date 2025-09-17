@@ -7,7 +7,6 @@ coverage
 dist
 
 content-services/**/*.js
-!content-services/.storybook/*.js
 !content-services/karma.conf.js
 content-services/**/*.js.map
 content-services/**/*.d.ts
@@ -18,7 +17,6 @@ process-services/**/*.js.map
 process-services/**/*.d.ts
 
 core/**/*.js
-!core/.storybook/*.js
 !core/karma.conf.js
 core/**/*.js.map
 core/**/*.d.ts
@@ -29,7 +27,6 @@ insights/**/*.js.map
 insights/**/*.d.ts
 
 process-services-cloud/**/*.js
-!process-services-cloud/.storybook/*.js
 !process-services-cloud/karma.conf.js
 process-services-cloud/**/*.js.map
 process-services-cloud/**/*.d.ts

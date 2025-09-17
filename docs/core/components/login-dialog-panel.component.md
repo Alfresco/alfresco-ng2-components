@@ -17,11 +17,3 @@ Shows and manages a login dialog.
 | ---- | ---- | ----------- |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/src/lib/login/models/login-success.event.ts)`>` | Emitted when the login succeeds. |
 
-## Details
-
-This component has similar features to the [Login Dialog component](login-dialog.component.md)
-but it also creates and manages the dialog for you.
-
-## See also
-
--   [Login Dialog component](login-dialog.component.md)

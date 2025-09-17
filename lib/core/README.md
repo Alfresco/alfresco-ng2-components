@@ -9,7 +9,6 @@ Contains a variety of components, directives and services used throughout ADF
 - [Documentation](#documentation)
 - [Prerequisites](#prerequisites)
 - [Install](#install)
-- [Storybook](#storybook)
 - [License](#license)
 
 <!-- tocstop -->
@@ -32,21 +31,6 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ```sh
 npm install @alfresco/adf-core
-```
-
-## Storybook
-
-In case you would like to aggregate all the stories from core library use
-
-```
-nx run core:storybook
-```
-And navigate to `http://localhost:4400/`.
-
-To create a Storybook core library build use
-
-```
-nx run core:build-storybook
 ```
 
 ## License

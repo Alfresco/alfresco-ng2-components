@@ -17,7 +17,6 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { provideTranslations } from '@alfresco/adf-core';
-import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
@@ -28,12 +27,7 @@ import { PeopleCloudComponent } from './people/components/people-cloud.component
 import { provideCloudFormRenderer, provideCloudPreferences } from './providers';
 import { TaskListCloudService } from './task/task-list/services/task-list-cloud.service';
 
-export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [
-    ...APP_LIST_CLOUD_DIRECTIVES,
-    ...FORM_CLOUD_DIRECTIVES,
-    ...TASK_FORM_CLOUD_DIRECTIVES,
-    PeopleCloudComponent
-] as const;
+export const PROCESS_SERVICES_CLOUD_DIRECTIVES = [...FORM_CLOUD_DIRECTIVES, ...TASK_FORM_CLOUD_DIRECTIVES, PeopleCloudComponent] as const;
 
 /**
  * @deprecated this module is deprecated and will be removed in the future versions

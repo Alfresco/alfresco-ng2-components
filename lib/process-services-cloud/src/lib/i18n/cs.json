@@ -53,16 +53,6 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
-    "APPS": {
-      "NO_APPS": {
-        "TITLE": "Nenalezeny žádné aplikace",
-        "SUBTITLE": "Pro lepší přehlednost vytvořte novou aplikaci"
-      },
-      "ERROR": {
-        "TITLE": "Došlo k chybě",
-        "SUBTITLE": "Ověřte svá oprávnění pro přístup k aplikacím"
-      }
-    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Zahájit úkol",
