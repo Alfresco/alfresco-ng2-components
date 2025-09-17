@@ -53,16 +53,6 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
-    "APPS": {
-      "NO_APPS": {
-        "TITLE": "Inga program hittades",
-        "SUBTITLE": "Skapa ett nytt program som du enkelt hittar senare"
-      },
-      "ERROR": {
-        "TITLE": "Ett fel uppstod",
-        "SUBTITLE": "Kontrollera att du har behörighet att öppna programmen"
-      }
-    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Starta uppgift",

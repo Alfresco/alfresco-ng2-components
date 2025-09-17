@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { PathInfo } from '../../../models/path.model';
 import { DataColumn } from '../../data/data-column.model';
 
 export const mockCarsData: any = [
@@ -130,31 +129,5 @@ export const mockCarsSchemaDefinition: DataColumn[] = [
         title: 'Wikipedia',
         sortable: true,
         draggable: true
-    }
-];
-
-export const mockPathInfos: PathInfo[] = [
-    {
-        elements: [
-            { id: '1', name: 'User files', nodeType: 'folder' },
-            { id: '2', name: 'Favorite', nodeType: 'folder' },
-            { id: '3', name: 'Movies', nodeType: 'folder' }
-        ],
-        name: '/User files/Favorite/Movies'
-    },
-    {
-        elements: [
-            { id: '1', name: 'User files', nodeType: 'folder' },
-            { id: '4', name: 'Photos', nodeType: 'folder' }
-        ],
-        name: '/User files/Photos'
-    },
-    {
-        elements: [
-            { id: '1', name: 'User files', nodeType: 'folder' },
-            { id: '2', name: 'Favorite', nodeType: 'folder' },
-            { id: '5', name: 'Series', nodeType: 'folder' }
-        ],
-        name: '/User files/Favorite/Series'
     }
 ];

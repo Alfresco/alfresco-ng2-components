@@ -285,11 +285,6 @@
     "ACTION": {
       "HELP": "Tarvitsetko apua?",
       "REGISTER": "Rekisteröidy"
-    },
-    "DIALOG": {
-      "CANCEL": "Peruuta",
-      "CHOOSE": "Valitse",
-      "LOGIN": "Kirjaudu sisään"
     }
   },
   "ADF-DATATABLE": {
