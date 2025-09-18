@@ -33,6 +33,7 @@ export const LAYOUT_LIST: string = 'LIST';
 export const LAYOUT_GRID: string = 'GRID';
 export const DEPLOYED_STATUS: string = 'DEPLOYED';
 
+/** @deprecated this component will be removed because it's unused https://hyland.atlassian.net/browse/ACS-10178  */
 @Component({
     selector: 'adf-cloud-app-list',
     imports: [

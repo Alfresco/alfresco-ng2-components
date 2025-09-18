@@ -9,7 +9,6 @@ Contains a variety of components, directives and services used throughout ADF
 - [Documentation](#documentation)
 - [Prerequisites](#prerequisites)
 - [Install](#install)
-- [Storybook](#storybook)
 - [License](#license)
 
 <!-- tocstop -->
@@ -32,21 +31,6 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ```sh
 npm install @alfresco/adf-process-services-cloud
-```
-
-## Storybook
-
-In case you would like to aggregate all the stories from process services cloud library use
-
-```
-nx run process-services-cloud:storybook
-```
-And navigate to `http://localhost:4400/`.
-
-To create a Storybook process services cloud library build use
-
-```
-nx run process-services-cloud:build-storybook
 ```
 
 ## License

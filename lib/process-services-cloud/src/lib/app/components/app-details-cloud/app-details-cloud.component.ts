@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
+/** @deprecated this component will be removed because it's unused https://hyland.atlassian.net/browse/ACS-10178  */
 @Component({
     selector: 'adf-cloud-app-details',
     imports: [CommonModule, MatIconModule, MatCardModule],

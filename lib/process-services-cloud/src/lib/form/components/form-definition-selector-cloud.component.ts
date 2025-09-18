@@ -23,6 +23,7 @@ import { FormRepresentation } from '../../services/form-fields.interfaces';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
+/** @deprecated this component will be removed because it's unused https://hyland.atlassian.net/browse/ACS-10178  */
 @Component({
     selector: 'adf-cloud-form-definition-selector',
     imports: [CommonModule, TranslatePipe, MatSelectModule],

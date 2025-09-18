@@ -103,8 +103,6 @@ Create a file next to the project's `package.json`, call it `proxy.conf.json` an
 
 Note that if you are running the App, Content Service or Process Service on different ports, you should change the ports accordingly in your local configuration.
 
-For further details about how to configure a webpack proxy please refer to the [official documentation](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/proxy.md).
-
 
 ## Configure nginx proxy
 

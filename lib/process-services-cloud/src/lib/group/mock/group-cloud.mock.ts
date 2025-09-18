@@ -15,23 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { Observable, EMPTY, of } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
-import { IdentityGroupService } from '@alfresco/adf-process-services-cloud';
 
 export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine' };
 export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken' };
 
 export const mockFoodGroups = [mockVegetableAubergine, mockMeatChicken];
-
-@Injectable()
-export class IdentityGroupServiceMock extends IdentityGroupService {
-    search(name: string): Observable<IdentityGroupModel[]> {
-        if (name.trim() === '') {
-            return EMPTY;
-        }
-
-        return of(mockFoodGroups.filter((group) => group.name.toUpperCase().includes(name.toUpperCase())));
-    }
-}

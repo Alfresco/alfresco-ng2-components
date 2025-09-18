@@ -19,7 +19,6 @@ import { Observable } from 'rxjs';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
 
 export interface FormDefinitionSelectorCloudServiceInterface {
-
     getForms(appName: string): Observable<FormRepresentation[]>;
     getStandAloneTaskForms(appName: string): Observable<FormRepresentation[]>;
 }

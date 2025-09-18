@@ -22,6 +22,8 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
 import { FormDefinitionSelectorCloudServiceInterface } from './form-definition-selector-cloud.service.interface';
 
+/** @deprecated this service will be removed because it's component is unused https://hyland.atlassian.net/browse/ACS-10178  */
+
 @Injectable({
     providedIn: 'root'
 })
