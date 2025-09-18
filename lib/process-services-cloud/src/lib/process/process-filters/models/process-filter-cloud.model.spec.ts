@@ -43,6 +43,7 @@ describe('ProcessFilterCloudModel', () => {
         const model = new ProcessFilterCloudModel({
             suspendedDateType: DateCloudFilterType.TODAY
         });
+
         expect(model.suspendedFrom).toEqual(startOfDay(date).toISOString());
         expect(model.suspendedTo).toEqual(endOfDay(date).toISOString());
     });
