@@ -7,7 +7,11 @@
     class="adf-cloud-form-container adf-cloud-form-{{ displayConfiguration?.options?.fullscreen ? 'fullscreen' : 'inline' }}-container"
     [style]="formStyle"
 >
-    <div class="adf-cloud-form-content" [cdkTrapFocus]="displayConfiguration?.options?.trapFocus" cdkTrapFocusAutoCapture>
+    <div
+        class="adf-cloud-form-content"
+        [class.adf-cloud-form-content-standalone-fullscreen]="displayMode === 'standalone' && displayConfiguration?.options?.fullscreen"
+        [cdkTrapFocus]="displayConfiguration?.options?.trapFocus"
+        cdkTrapFocusAutoCapture>
         <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayConfiguration?.options?.displayToolbar">
             <div class="adf-cloud-form__form-title">
                 <span class="adf-cloud-form__display-name" [title]="form.taskName">
@@ -38,6 +42,7 @@
             appearance="outlined"
             class="adf-cloud-form-content-card"
             [class.adf-cloud-form-content-card-fullscreen]="displayMode === 'fullScreen'"
+            [class.adf-cloud-form-content-card-fullscreen-toolbar]="displayMode === 'fullScreen' && displayConfiguration?.options?.displayToolbar"
         >
             <div class="adf-cloud-form-content-card-container">
                 <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
