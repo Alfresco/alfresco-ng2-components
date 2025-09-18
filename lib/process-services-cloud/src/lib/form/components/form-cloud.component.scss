@@ -10,7 +10,14 @@
 }
 
 .adf-cloud-form {
+    &-content-standalone-fullscreen {
+        background-color: transparent;
+        border-radius: 14px;
+    }
+
     &-container {
+        border-radius: 14px;
+
         .adf-cloud-form-content {
             @extend .adf-full-screen;
 
@@ -22,11 +29,22 @@
     }
 
     &-fullscreen-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100000;
+        background-color: var(--adf-theme-mat-grey-color-a400);
+        display: block;
+        height: 100%;
+        width: 100vw;
+        overflow-y: auto;
+        border-radius: 0 0 14px;
+
         .adf-cloud-form-content {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100000;
+            width: calc(100% - 80px);
+            max-width: 1366px;
+            height: auto;
+            margin: 40px auto;
         }
     }
 
@@ -34,9 +52,10 @@
         @extend .adf-full-screen;
     }
 
-    &-toolbar {
+    &-toolbar ::ng-deep {
         #{ms.$mat-toolbar} {
             background-color: var(--adf-theme-background-card-color-087);
+            border-radius: 14px 14px 0 0;
         }
     }
 
@@ -72,12 +91,17 @@
         overflow-y: auto;
         position: static;
         height: 70%;
+        border-radius: 14px;
 
         &-fullscreen {
             padding: 0;
             height: 100%;
             width: 100%;
             position: relative;
+
+            &-toolbar {
+                border-radius: 0 0 14px 14px;
+            }
 
             &-container {
                 display: flex;
