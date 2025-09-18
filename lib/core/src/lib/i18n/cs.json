@@ -285,6 +285,11 @@
     "ACTION": {
       "HELP": "Potřebujete pomoc?",
       "REGISTER": "Zaregistrovat"
+    },
+    "DIALOG": {
+      "CANCEL": "Zrušit",
+      "CHOOSE": "Vybrat",
+      "LOGIN": "Přihlásit se"
     }
   },
   "ADF-DATATABLE": {

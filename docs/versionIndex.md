@@ -395,6 +395,7 @@ backend services have been tested with each released version of ADF.
 <!--v260 start-->
 
 -   [Login dialog panel component](core/components/login-dialog-panel.component.md)
+-   [Login dialog component](core/components/login-dialog.component.md)
 -   [Login dialog service](core/services/login-dialog.service.md)
 
 <!--v260 end-->
