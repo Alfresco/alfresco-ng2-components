@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-export * from './services/apps-process-cloud.service';
-export * from './models/application-instance.model';
-export * from './app-list-cloud.module';
-export * from './components/app-list-cloud/app-list-cloud.component';
-export * from './components/app-details-cloud/app-details-cloud.component';
+import { Observable } from 'rxjs';
+import { FormRepresentation } from '../../services/form-fields.interfaces';
+
+export interface FormDefinitionSelectorCloudServiceInterface {
+    getForms(appName: string): Observable<FormRepresentation[]>;
+    getStandAloneTaskForms(appName: string): Observable<FormRepresentation[]>;
+}
