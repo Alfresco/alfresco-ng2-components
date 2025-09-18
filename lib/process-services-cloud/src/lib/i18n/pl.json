@@ -53,6 +53,16 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "NO_APPS": {
+        "TITLE": "Nie znaleziono aplikacji.",
+        "SUBTITLE": "Utwórz nową aplikację, którą później będzie łatwo znaleźć."
+      },
+      "ERROR": {
+        "TITLE": "Wystąpił błąd",
+        "SUBTITLE": "Sprawdź, czy masz uprawnienie dostępu do aplikacji"
+      }
+    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Rozpocznij zadanie",

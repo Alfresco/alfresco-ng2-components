@@ -7,8 +7,6 @@ Last reviewed: 2018-10-02
 
 # [Login Dialog component](../../../lib/core/src/lib/login/components/login-dialog.component.ts "Defined in login-dialog.component.ts")
 
-This component is deprecated and will removed because it's unused.
-
 Allows a user to perform a login via a dialog.
 
 ## Details

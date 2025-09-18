@@ -53,6 +53,16 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "NO_APPS": {
+        "TITLE": "Ingen applikasjoner funnet",
+        "SUBTITLE": "Opprett en ny applikasjon som er lett å finne senere"
+      },
+      "ERROR": {
+        "TITLE": "Det oppstod en feil",
+        "SUBTITLE": "Sjekk at du har tillatelse til å gå inn i appene"
+      }
+    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Start oppgave",

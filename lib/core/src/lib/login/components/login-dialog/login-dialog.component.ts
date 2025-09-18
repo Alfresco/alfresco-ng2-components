@@ -22,7 +22,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { LoginDialogPanelComponent } from '../login-dialog-panel/login-dialog-panel.component';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 
-/** @deprecated this component will be removed because it's unused */
+/** @deprecated this component will be removed because it's unused https://hyland.atlassian.net/browse/ACS-10178  */
 @Component({
     selector: 'adf-login-dialog',
     templateUrl: './login-dialog.component.html',

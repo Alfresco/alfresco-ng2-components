@@ -8,9 +8,6 @@ Status: Active
 
 Allows one form to be selected from a dropdown list. For forms to be displayed in this component they will need to be compatible with standAlone tasks.
 
-This component will be removed because it's unused.
-
-
 ## Basic Usage
 
 ```html
