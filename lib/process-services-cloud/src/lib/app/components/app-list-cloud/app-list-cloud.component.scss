@@ -1,0 +1,41 @@
+@use '../../../flex' as flex;
+
+adf-cloud-app-list {
+    width: 100%;
+
+    .adf-app-list-item {
+        cursor: pointer;
+    }
+
+    .adf-app-list-spinner,
+    .adf-app-list-empty,
+    .adf-app-list-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
+
+        .adf-app-list-cloud-spinner {
+            margin: 0 auto;
+        }
+    }
+
+    .adf-app-apps-grid {
+        flex-flow: row wrap;
+        display: flex;
+
+        adf-cloud-app-details {
+            flex: 1 1 100%;
+            max-width: 33.3333%;
+
+            @include flex.layout-bp(lt-md) {
+                max-width: 50%;
+            }
+
+            @include flex.layout-bp(lt-sm) {
+                max-width: 100%;
+            }
+        }
+    }
+}
