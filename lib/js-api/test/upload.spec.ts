@@ -56,16 +56,15 @@ describe('Upload', () => {
             assert.equal(data.entry.name, 'testFile.txt');
         });
 
-        it('upload file should get 409 if new name clashes with an existing file in the current parent folder', async () => {
+        it('upload file should get 409 if new name clashes with an existing file in the current parent folder', (done) => {
             uploadMock.get409CreationFileNewNameClashes();
 
             const file = createTestFileStream('testFile.txt');
-            try {
-                await uploadApi.uploadFile(file);
-                assert.fail('Expected an error to be thrown');
-            } catch (error) {
+
+            uploadApi.uploadFile(file).catch((error: any) => {
                 assert.equal(error.status, 409);
-            }
+                done();
+            });
         });
 
         it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', async () => {

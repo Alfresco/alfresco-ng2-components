@@ -395,37 +395,24 @@ describe('AnalyticsReportParametersComponent', () => {
             beforeEach(async () => {
                 const reportId = 1;
                 const change = new SimpleChange(null, reportId, true);
+                component.ngOnChanges({ reportId: change });
+                fixture.detectChanges();
 
-                // Set up the mock response before triggering the change
-                jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+                jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'json',
                     responseText: analyticParamsMock.reportDefParamStatus
                 });
 
-                component.ngOnChanges({ reportId: change });
-                fixture.detectChanges();
                 await fixture.whenStable();
-
-                // Ensure the component has processed the report parameters
                 component.toggleParameters();
                 fixture.detectChanges();
-                await fixture.whenStable();
             });
 
             it('Should be able to change the report title', async () => {
                 spyOn(service, 'updateReport').and.returnValue(of(analyticParamsMock.reportDefParamStatus));
 
-                // Trigger change detection like the other working tests do
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                // Wait for the component to be properly initialized from the beforeEach
-                expect(component.reportParameters).toBeDefined();
-                expect(component.reportParameters.name).toBe('Fake Task overview status');
-
                 const title = element.querySelector<HTMLElement>('h4');
-                expect(title).not.toBeNull();
                 title.click();
                 fixture.detectChanges();
 

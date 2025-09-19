@@ -20,7 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class CategoriesMock extends BaseMock {
     get200ResponseSubcategories(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}/subcategories`)
             .reply(200, {
                 list: {
@@ -56,7 +56,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get404SubcategoryNotExist(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}/subcategories`)
             .reply(404, {
                 error: {
@@ -70,7 +70,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get200ResponseCategory(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}`)
             .reply(200, {
                 entry: {
@@ -84,7 +84,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get404CategoryNotExist(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}`)
             .reply(404, {
                 error: {
@@ -98,7 +98,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get200ResponseNodeCategoryLinks(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`)
             .reply(200, {
                 list: {
@@ -125,7 +125,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get403NodeCategoryLinksPermissionDenied(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`)
             .reply(403, {
                 error: {
@@ -135,7 +135,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get404NodeNotExist(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`)
             .reply(404, {
                 error: {
@@ -149,13 +149,13 @@ export class CategoriesMock extends BaseMock {
     }
 
     get204CategoryUnlinked(nodeId: string, categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links/${categoryId}`)
             .reply(204);
     }
 
     get403CategoryUnlinkPermissionDenied(nodeId: string, categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links/${categoryId}`)
             .reply(403, {
                 error: {
@@ -165,7 +165,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get404CategoryUnlinkNotFound(nodeId: string, categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links/${categoryId}`)
             .reply(404, {
                 error: {
@@ -179,7 +179,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get200ResponseCategoryUpdated(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}`, { name: 'testName1' })
             .reply(200, {
                 entry: {
@@ -193,7 +193,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get403CategoryUpdatePermissionDenied(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}`, { name: 'testName1' })
             .reply(403, {
                 error: {
@@ -203,7 +203,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get404CategoryUpdateNotFound(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}`, { name: 'testName1' })
             .reply(404, {
                 error: {
@@ -217,7 +217,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get201ResponseCategoryCreated(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}/subcategories`, [{ name: 'testName10' }])
             .reply(201, {
                 entry: {
@@ -231,7 +231,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get403CategoryCreatedPermissionDenied(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}/subcategories`, [{ name: 'testName10' }])
             .reply(403, {
                 error: {
@@ -241,7 +241,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get409CategoryCreateAlreadyExists(categoryId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/categories/${categoryId}/subcategories`, [{ name: 'testName10' }])
             .reply(409, {
                 error: {
@@ -255,7 +255,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get201ResponseCategoryLinked(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`, [{ categoryId: 'testId1' }])
             .reply(201, {
                 entry: {
@@ -269,7 +269,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get201ResponseCategoryLinkedArray(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`, [
                 { categoryId: 'testId1' },
                 { categoryId: 'testId2' }
@@ -308,7 +308,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get403CategoryLinkPermissionDenied(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`, [{ categoryId: 'testId1' }])
             .reply(403, {
                 error: {
@@ -318,7 +318,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get404CategoryLinkNotFound(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`, [{ categoryId: 'testId1' }])
             .reply(404, {
                 error: {
@@ -332,7 +332,7 @@ export class CategoriesMock extends BaseMock {
     }
 
     get405CategoryLinkCannotAssign(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post(`/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/category-links`, [{ categoryId: 'testId1' }])
             .reply(405, {
                 error: {

@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class GroupsMock extends BaseMock {
     get200GetGroups(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/groups')
             .reply(200, {
                 list: {
@@ -51,20 +52,20 @@ export class GroupsMock extends BaseMock {
     }
 
     getDeleteGroupSuccessfulResponse(groupName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete('/alfresco/api/-default-/public/alfresco/versions/1/groups/' + groupName)
             .query({ cascade: 'false' })
             .reply(200);
     }
 
     getDeleteMemberForGroupSuccessfulResponse(groupName: string, memberName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete('/alfresco/api/-default-/public/alfresco/versions/1/groups/' + groupName + '/members/' + memberName)
             .reply(200);
     }
 
     get200CreateGroupResponse(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/groups')
             .reply(200, {
                 entry: {
@@ -76,7 +77,7 @@ export class GroupsMock extends BaseMock {
     }
 
     get200GetSingleGroup(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/groups/GROUP_TEST')
             .reply(200, {
                 entry: {
@@ -88,7 +89,7 @@ export class GroupsMock extends BaseMock {
     }
 
     get200UpdateGroupResponse(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put('/alfresco/api/-default-/public/alfresco/versions/1/groups/GROUP_TEST')
             .reply(200, {
                 entry: {
@@ -100,7 +101,7 @@ export class GroupsMock extends BaseMock {
     }
 
     get200GetGroupMemberships(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/groups/GROUP_TEST/members')
             .reply(200, {
                 list: {
@@ -125,7 +126,7 @@ export class GroupsMock extends BaseMock {
     }
 
     get200AddGroupMembershipResponse(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/groups/GROUP_TEST/members')
             .reply(200, {
                 entry: {

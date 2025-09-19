@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class TaskFormMock extends BaseMock {
     get200getTaskFormVariables(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/task-forms/5028/variables')
             .reply(
                 200,

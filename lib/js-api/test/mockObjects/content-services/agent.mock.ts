@@ -16,10 +16,11 @@
  */
 
 import { BaseMock } from '../base.mock';
+import nock from 'nock';
 
 export class AgentMock extends BaseMock {
     mockGetAgents200Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/private/hxi/versions/1/agents')
             .reply(200, {
                 list: {

@@ -51,8 +51,8 @@ describe('Activiti Task Api', () => {
 
         assert.equal(data[0].id, 'initiator');
     });
-    // eslint-disable-next-line
-    xit('Check cookie settings', async () => {
+
+    it('Check cookie settings', async () => {
         taskFormMock.get200getTaskFormVariables();
 
         const taskId = '5028';

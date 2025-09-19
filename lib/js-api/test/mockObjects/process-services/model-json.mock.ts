@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ModelJsonBpmMock extends BaseMock {
     get200EditorDisplayJsonClient(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/app/rest/models/1/model-json')
             .reply(200, {
                 elements: [
@@ -86,7 +87,7 @@ export class ModelJsonBpmMock extends BaseMock {
     }
 
     get200HistoricEditorDisplayJsonClient(): void {
-        this.createNockWithCors()
+        nock('https://127.0.0.1:9999', { encodedQueryParams: true })
             .get('/activiti-app/app/rest/models/1/history/1/model-json')
             .reply(200, {
                 elements: [

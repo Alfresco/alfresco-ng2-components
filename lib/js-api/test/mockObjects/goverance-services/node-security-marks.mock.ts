@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class NodeSecurityMarksApiMock extends BaseMock {
     post200manageSecurityMarkOnNode(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/gs/versions/1/secured-nodes/' + nodeId + '/securing-marks')
             .reply(200, {
                 list: {
@@ -51,7 +52,7 @@ export class NodeSecurityMarksApiMock extends BaseMock {
     }
 
     get200SecurityMarkOnNode(nodeId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/gs/versions/1/secured-nodes/' + nodeId + '/securing-marks')
             .reply(200, {
                 list: {

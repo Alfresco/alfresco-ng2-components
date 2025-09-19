@@ -49,7 +49,7 @@ export class FilePlansMock extends BaseMock {
     }
 
     private nock200FilePlanRoles(filePlanId: string): nock.Interceptor {
-        return this.createNockWithCors().get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`);
+        return nock(this.host, { encodedQueryParams: true }).get(`/alfresco/api/-default-/public/gs/versions/1/file-plans/${filePlanId}/roles`);
     }
 
     private mockFilePlanRolePaging(): FilePlanRolePaging {
