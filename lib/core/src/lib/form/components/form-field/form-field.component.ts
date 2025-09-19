@@ -36,9 +36,15 @@ import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FieldStylePipe } from '../../pipes/field-style.pipe';
 import { FormFieldTypes } from '../widgets/core/form-field-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormWidget } from '../widgets/reactive-widget.interface';
 
 declare const adf: any;
 
+/**
+ * Component is a wrapper for widget components.
+ * It is responsible for instantiating the correct widget component
+ * based on the field type.
+ */
 @Component({
     selector: 'adf-form-field',
     templateUrl: './form-field.component.html',
@@ -98,7 +104,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                         }
                     });
 
-                    if (FormFieldTypes.isReactiveType(instance?.field?.type)) {
+                    if (FormFieldTypes.isReactiveWidget(instance)) {
                         this.updateReactiveFormControlOnFormRulesEvent(instance);
                     }
                 }
@@ -106,7 +112,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
     }
 
-    private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
+    private updateReactiveFormControlOnFormRulesEvent(instance: ReactiveFormWidget): void {
         instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             instance?.updateReactiveFormControl();
             instance?.field?.form.validateForm(instance?.field);

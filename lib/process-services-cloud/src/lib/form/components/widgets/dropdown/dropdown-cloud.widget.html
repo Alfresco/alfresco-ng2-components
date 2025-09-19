@@ -1,3 +1,4 @@
+<!-- TODO indentation -->
 <div
     class="adf-dropdown-widget {{field.className}}"
     [class.adf-invalid]="dropdownControl.invalid && dropdownControl.touched"
@@ -22,7 +23,7 @@
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
                 [disabled]="field.readOnly"
-                [required]="field.required "
+                [required]="field.required"
             >
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
 
