@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 const formValues = [
@@ -42,7 +41,7 @@ const formValues = [
 
 export class TasksMock extends BaseMock {
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/activiti-app/api/enterprise/tasks/query', {})
             .reply(200, {
                 size: 2,
@@ -128,7 +127,7 @@ export class TasksMock extends BaseMock {
     }
 
     get200ResponseGetTask(taskId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/activiti-app/api/enterprise/tasks/' + taskId)
             .reply(200, {
                 id: '10',
@@ -166,14 +165,14 @@ export class TasksMock extends BaseMock {
     }
 
     get400TaskFilter(): void {
-        nock(this.host, { encodedQueryParams: true }).post('/activiti-app/api/enterprise/tasks/filter', {}).reply(400, {
+        this.createNockWithCors().post('/activiti-app/api/enterprise/tasks/filter', {}).reply(400, {
             message: 'A valid filterId or filter params must be provided',
             messageKey: 'GENERAL.ERROR.BAD-REQUEST'
         });
     }
 
     get200TaskFilter(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .post('/activiti-app/api/enterprise/tasks/filter', { appDefinitionId: 1 })
             .reply(200, {
                 size: 2,
@@ -249,7 +248,7 @@ export class TasksMock extends BaseMock {
     }
 
     get404CompleteTask(taskId: string): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .put('/activiti-app/api/enterprise/tasks/' + taskId + '/action/complete')
             .reply(404, {
                 message: 'Task with id: ' + taskId + ' does not exist',
@@ -258,7 +257,7 @@ export class TasksMock extends BaseMock {
     }
 
     get200CreateTask(name: string): void {
-        nock(this.host, { encodedQueryParams: true }).post('/activiti-app/api/enterprise/tasks', { name }).reply(200, {
+        this.createNockWithCors().post('/activiti-app/api/enterprise/tasks', { name }).reply(200, {
             id: '10001',
             name: 'test-name',
             description: null,
@@ -293,7 +292,7 @@ export class TasksMock extends BaseMock {
     }
 
     get200getTaskForm(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get('/activiti-app/api/enterprise/task-forms/2518')
             .reply(200, {
                 id: 1,
@@ -1033,10 +1032,10 @@ export class TasksMock extends BaseMock {
     }
 
     get200getRestFieldValuesColumn(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/api/enterprise/task-forms/1/form-values/label/user').reply(200, formValues);
+        this.createNockWithCors().get('/activiti-app/api/enterprise/task-forms/1/form-values/label/user').reply(200, formValues);
     }
 
     get200getRestFieldValues(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/api/enterprise/task-forms/2/form-values/label').reply(200, formValues);
+        this.createNockWithCors().get('/activiti-app/api/enterprise/task-forms/2/form-values/label').reply(200, formValues);
     }
 }

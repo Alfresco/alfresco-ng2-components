@@ -18,6 +18,7 @@
 import assert from 'assert';
 import { AlfrescoApi, ModelsApi } from '../../src';
 import { BpmAuthMock, ModelsMock } from '../mockObjects';
+import nock from 'nock';
 
 describe('Activiti Models Api', () => {
     let authResponseBpmMock: BpmAuthMock;
@@ -25,6 +26,7 @@ describe('Activiti Models Api', () => {
     let modelsApi: ModelsApi;
 
     beforeEach(async () => {
+        nock.cleanAll();
         const hostBpm = 'https://127.0.0.1:9999';
 
         authResponseBpmMock = new BpmAuthMock(hostBpm);
