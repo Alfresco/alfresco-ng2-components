@@ -1,6 +1,36 @@
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-card-view-dateitem {
+    .adf-dateitem-editable {
+        cursor: pointer;
+        width: 100%;
+
+        &-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            #{ms.$mat-icon} {
+                opacity: 0.5;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            mat-datetimepicker-toggle {
+                transform: scale(0.8);
+            }
+
+            .adf-datepicker-span-button {
+                flex: 1 0 auto;
+                font-size: 14px;
+                top: 10px;
+                position: relative;
+            }
+        }
+    }
+
     .adf-property-value {
         padding-top: 6px;
         padding-bottom: 6px;
@@ -14,6 +44,21 @@
             border-radius: 6px;
             border-bottom: inherit;
             margin-bottom: 18px;
+
+            &:not(.adf-property-readonly-value) {
+                margin-top: 35px;
+            }
+
+            .adf-date-reset-icon {
+                top: 10px;
+                position: relative;
+                padding: 0;
+            }
+
+            .adf-dateitem-picker-toggle {
+                top: 10px;
+                position: relative;
+            }
         }
 
         &.adf-property-readonly-value {
@@ -36,38 +81,5 @@
         margin-bottom: -7px;
         border-bottom: 0;
         cursor: pointer;
-    }
-
-    .adf-dateitem-editable {
-        cursor: pointer;
-        width: 100%;
-
-        /* stylelint-disable-next-line no-descending-specificity */
-        &-controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            #{ms.$mat-icon} {
-                opacity: 0.5;
-
-                &:hover {
-                    opacity: 1;
-                }
-            }
-
-            mat-datetimepicker-toggle {
-                transform: scale(0.8);
-            }
-
-            .adf-datepicker-span-button {
-                flex: 1 0 auto;
-                font-size: 14px;
-            }
-
-            .adf-date-reset-icon {
-                position: relative;
-            }
-        }
     }
 }

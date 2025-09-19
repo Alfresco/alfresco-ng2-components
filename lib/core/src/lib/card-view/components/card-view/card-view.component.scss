@@ -9,7 +9,8 @@
         color: var(--adf-metadata-property-panel-text-color);
         display: flex;
         line-height: 20px;
-     
+        margin-bottom: 4px;
+
         &.adf-property-readonly-value {
             color: var(--adf-metadata-property-panel-label-color);
         }
