@@ -147,10 +147,13 @@ export class AxiosHttpClient implements HttpClient {
             params: AxiosHttpClient.normalizeParams(queryParams),
             headers: {
                 ...defaultHeaders,
-                ...AxiosHttpClient.normalizeParams(headerParams)
+                ...AxiosHttpClient.normalizeParams(headerParams),
+                priority: 'u=1, i'
             },
             timeout: typeof this.timeout === 'number' ? this.timeout : this.timeout?.response,
-            withCredentials
+            withCredentials,
+            httpAgent: false,
+            httpsAgent: false
         };
 
         // apply authentications
