@@ -15,22 +15,25 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 import { TagBody, TagEntry, TagPaging } from '../../../src/api/content-rest-api';
 
 export class TagMock extends BaseMock {
     get200Response(): void {
-        this.createNockWithCors().get('/alfresco/api/-default-/public/alfresco/versions/1/tags').reply(200, this.getPaginatedListOfTags());
+        nock(this.host, { encodedQueryParams: true })
+            .get('/alfresco/api/-default-/public/alfresco/versions/1/tags')
+            .reply(200, this.getPaginatedListOfTags());
     }
 
     getTagsByNameFilteredByMatching200Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/tags?where=(tag%20matches%20(%27*tag-test*%27))')
             .reply(200, this.getPaginatedListOfTags());
     }
 
     getTagsByNamesFilterByExactTag200Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/tags?where=(tag%3D%27tag-test-1%27)')
             .reply(200, {
                 list: {
@@ -46,7 +49,7 @@ export class TagMock extends BaseMock {
     }
 
     get401Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/tags')
             .reply(401, {
                 error: {
@@ -60,11 +63,13 @@ export class TagMock extends BaseMock {
     }
 
     createTags201Response(): void {
-        this.createNockWithCors().post('/alfresco/api/-default-/public/alfresco/versions/1/tags').reply(201, this.getPaginatedListOfTags());
+        nock(this.host, { encodedQueryParams: true })
+            .post('/alfresco/api/-default-/public/alfresco/versions/1/tags')
+            .reply(201, this.getPaginatedListOfTags());
     }
 
     get201ResponseForAssigningTagsToNode(body: TagBody[]): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/someNodeId/tags', JSON.stringify(body))
             .reply(201, body.length > 1 ? this.getPaginatedListOfTags() : this.mockTagEntry());
     }

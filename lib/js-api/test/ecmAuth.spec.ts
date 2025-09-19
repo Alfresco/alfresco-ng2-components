@@ -44,25 +44,24 @@ describe('Ecm Auth test', () => {
 
     it('should remember username on login', () => {
         const auth = new ContentAuth({}, alfrescoJsApi);
-        authEcmMock.get201ResponseJohnDoe();
         auth.login('johndoe', 'password');
         assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
 
-    it('should forget username on logout', async () => {
+    it('should forget username on logout', (done) => {
         const auth = new ContentAuth({}, alfrescoJsApi);
 
-        authEcmMock.get201ResponseJohnDoe();
+        authEcmMock.get201Response();
 
-        await auth.login('johndoe', 'password');
-        assert.equal(auth.authentications.basicAuth.username, 'ROLE_TICKET');
-        assert.equal(auth.storage.getItem('ACS_USERNAME'), 'johndoe');
+        auth.login('johndoe', 'password');
+        assert.equal(auth.authentications.basicAuth.username, 'johndoe');
 
         authEcmMock.get204ResponseLogout();
 
-        await auth.logout();
-        assert.equal(auth.authentications.basicAuth.username, null);
-        assert.equal(auth.storage.getItem('ACS_USERNAME'), '');
+        auth.logout().then(() => {
+            assert.equal(auth.authentications.basicAuth.username, null);
+            done();
+        });
     });
 
     describe('With Authentication', () => {
@@ -129,15 +128,16 @@ describe('Ecm Auth test', () => {
             );
         });
 
-        it('login should return an error if wrong credential are used 400 userId and/or password are/is not provided', async () => {
+        it('login should return an error if wrong credential are used 400 userId and/or password are/is not provided', (done) => {
             authEcmMock.get400Response();
 
-            try {
-                await contentAuth.login(null, null);
-                assert.fail('Login should have failed');
-            } catch (error) {
-                assert.equal(error.status, 400);
-            }
+            contentAuth.login(null, null).then(
+                () => {},
+                (error) => {
+                    assert.equal(error.status, 400);
+                    done();
+                }
+            );
         });
 
         describe('Events ', () => {
@@ -189,6 +189,8 @@ describe('Ecm Auth test', () => {
 
         describe('With Ticket Authentication', () => {
             it('Ticket should be present in the client', () => {
+                authEcmMock.get400Response();
+
                 contentAuth = new ContentAuth(
                     {
                         ticketEcm: 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1',
@@ -210,22 +212,24 @@ describe('Ecm Auth test', () => {
                 });
             });
 
-            it('Ticket should be absent in the client and the resolve promise should be called', async () => {
+            it('Ticket should be absent in the client and the resolve promise should be called', (done) => {
                 authEcmMock.get204ResponseLogout();
 
-                await contentAuth.logout();
-                assert.equal(contentAuth.config.ticket, undefined);
+                contentAuth.logout().then(() => {
+                    assert.equal(contentAuth.config.ticket, undefined);
+                    done();
+                });
             });
 
-            it('Logout should be rejected if the Ticket is already expired', async () => {
+            it('Logout should be rejected if the Ticket is already expired', (done) => {
                 authEcmMock.get404ResponseLogout();
-                try {
-                    await contentAuth.logout();
-                    assert.fail('Logout should have failed');
-                } catch (error) {
-                    assert.equal(error.status, 404);
-                    assert.equal(error.response.data.error.briefSummary, 'Not Found');
-                }
+                contentAuth.logout().then(
+                    () => {},
+                    (error) => {
+                        assert.equal(error.error.toString(), 'Error: Not Found');
+                        done();
+                    }
+                );
             });
         });
     });

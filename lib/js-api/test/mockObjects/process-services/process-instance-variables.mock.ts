@@ -34,13 +34,13 @@ const fakeVariablesList = [fakeVariable1, fakeVariable2];
 
 export class ProcessInstanceVariablesMock extends BaseMock {
     addListProcessInstanceVariables200Response(processInstanceId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables')
             .reply(200, fakeVariablesList);
     }
 
     addListProcessInstanceVariables500Response(processInstanceId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables')
             .reply(500, {
                 messageKey: 'UNKNOWN',
@@ -49,13 +49,13 @@ export class ProcessInstanceVariablesMock extends BaseMock {
     }
 
     addPutProcessInstanceVariables200Response(processInstanceId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables')
             .reply(200, fakeVariablesList);
     }
 
     addPutProcessInstanceVariables500Response(processInstanceId: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables')
             .reply(500, {
                 messageKey: 'UNKNOWN',
@@ -64,13 +64,13 @@ export class ProcessInstanceVariablesMock extends BaseMock {
     }
 
     addGetProcessInstanceVariable200Response(processInstanceId: string, variableName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables/' + variableName)
             .reply(200, fakeVariable1);
     }
 
     addGetProcessInstanceVariable500Response(processInstanceId: string, variableName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables/' + variableName)
             .reply(500, {
                 messageKey: 'UNKNOWN',
@@ -79,13 +79,13 @@ export class ProcessInstanceVariablesMock extends BaseMock {
     }
 
     addUpdateProcessInstanceVariable200Response(processInstanceId: string, variableName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables/' + variableName)
             .reply(200, fakeVariable1);
     }
 
     addUpdateProcessInstanceVariable500Response(processInstanceId: string, variableName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .put('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables/' + variableName)
             .reply(500, {
                 messageKey: 'UNKNOWN',
@@ -94,13 +94,13 @@ export class ProcessInstanceVariablesMock extends BaseMock {
     }
 
     addDeleteProcessInstanceVariable200Response(processInstanceId: string, variableName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables/' + variableName)
             .reply(200);
     }
 
     addDeleteProcessInstanceVariable500Response(processInstanceId: string, variableName: string): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables/' + variableName)
             .reply(500, {
                 messageKey: 'UNKNOWN',

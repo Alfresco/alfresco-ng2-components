@@ -20,7 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class NodeMock extends BaseMock {
     get200ResponseChildren(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/children')
             .reply(200, {
                 list: {
@@ -108,7 +108,7 @@ export class NodeMock extends BaseMock {
     }
 
     get200ResponseChildrenNonUTCTimes(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1320/children')
             .reply(200, {
                 list: {
@@ -140,7 +140,7 @@ export class NodeMock extends BaseMock {
     }
 
     get404ChildrenNotExist(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/children')
             .reply(404, {
                 error: {
@@ -154,19 +154,23 @@ export class NodeMock extends BaseMock {
     }
 
     get401CreationFolder(): void {
-        this.createNockWithCors().post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children').reply(401);
+        nock(this.host, { encodedQueryParams: true }).post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children').reply(401);
     }
 
     get204SuccessfullyDeleted(): void {
-        this.createNockWithCors().delete('/alfresco/api/-default-/public/alfresco/versions/1/nodes/80a94ac8-3ece-47ad-864e-5d939424c47c').reply(204);
+        nock(this.host, { encodedQueryParams: true })
+            .delete('/alfresco/api/-default-/public/alfresco/versions/1/nodes/80a94ac8-3ece-47ad-864e-5d939424c47c')
+            .reply(204);
     }
 
     get403DeletePermissionDenied(): void {
-        this.createNockWithCors().delete('/alfresco/api/-default-/public/alfresco/versions/1/nodes/80a94ac8-3ece-47ad-864e-5d939424c47c').reply(403);
+        nock(this.host, { encodedQueryParams: true })
+            .delete('/alfresco/api/-default-/public/alfresco/versions/1/nodes/80a94ac8-3ece-47ad-864e-5d939424c47c')
+            .reply(403);
     }
 
     get404DeleteNotFound(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .delete('/alfresco/api/-default-/public/alfresco/versions/1/nodes/80a94ac8-test-47ad-864e-5d939424c47c')
             .reply(404, {
                 error: {
@@ -180,7 +184,7 @@ export class NodeMock extends BaseMock {
     }
 
     get200ResponseChildrenFutureNewPossibleValue(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/children')
             .reply(200, {
                 list: {
@@ -228,7 +232,7 @@ export class NodeMock extends BaseMock {
     }
 
     post200ResponseInitiateFolderSizeCalculation(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details')
             .reply(200, {
                 entry: {
@@ -238,7 +242,7 @@ export class NodeMock extends BaseMock {
     }
 
     post404NodeIdNotFound(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details')
             .reply(404, {
                 error: {
@@ -253,7 +257,7 @@ export class NodeMock extends BaseMock {
     }
 
     get200ResponseGetFolderSizeInfo(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(
                 '/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details/5ade426e-8a04-4d50-9e42-6e8a041d50f3'
             )
@@ -270,7 +274,7 @@ export class NodeMock extends BaseMock {
     }
 
     get404JobIdNotFound(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get(
                 '/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/size-details/5ade426e-8a04-4d50-9e42-6e8a041d50f3'
             )

@@ -20,7 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class ProfileMock extends BaseMock {
     get200getProfile(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/profile')
             .reply(200, {
                 id: 1,
@@ -94,10 +94,10 @@ export class ProfileMock extends BaseMock {
     }
 
     get401getProfile(): void {
-        this.createNockWithCors().get('/activiti-app/api/enterprise/profile').reply(401);
+        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/api/enterprise/profile').reply(401);
     }
 
     get200getProfilePicture(): void {
-        this.createNockWithCors().get('/activiti-app/api/enterprise/profile-picture').reply(200, 'BUFFERSIZE');
+        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/api/enterprise/profile-picture').reply(200, 'BUFFERSIZE');
     }
 }

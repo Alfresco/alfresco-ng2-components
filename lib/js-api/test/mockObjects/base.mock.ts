@@ -24,54 +24,8 @@ export class BaseMock {
         this.host = host || 'https://127.0.0.1:8080';
     }
 
-    addCorsSupport() {
-        nock(this.host).persist().options(/.*/).reply(200, '', {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control, X-CSRF-TOKEN',
-            'Access-Control-Allow-Credentials': 'true',
-            'Access-Control-Max-Age': '86400'
-        });
-    }
-
-    getDefaultHeaders(): Record<string, string> {
-        return {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control, X-CSRF-TOKEN',
-            'Access-Control-Allow-Credentials': 'true',
-            'Access-Control-Max-Age': '86400'
-        };
-    }
-
-    getBaseHeaders(): Record<string, string> {
-        return {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': 'true'
-        };
-    }
-
-    protected createNockWithCors(): nock.Scope {
-        this.addCorsSupport();
-        return nock(this.host, { encodedQueryParams: true }).defaultReplyHeaders(this.getDefaultHeaders());
-    }
-
     put200GenericResponse(scriptSlug: string): void {
-        nock(this.host).persist().options(/.*/).reply(200, '', {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control, X-CSRF-TOKEN, Cookie',
-            'Access-Control-Allow-Credentials': 'true'
-        });
-        nock(this.host, { encodedQueryParams: true })
-            .defaultReplyHeaders({
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control, X-CSRF-TOKEN, Cookie',
-                'Access-Control-Allow-Credentials': 'true'
-            })
-            .put(scriptSlug)
-            .reply(200);
+        nock(this.host, { encodedQueryParams: true }).put(scriptSlug).reply(200);
     }
 
     play(): void {

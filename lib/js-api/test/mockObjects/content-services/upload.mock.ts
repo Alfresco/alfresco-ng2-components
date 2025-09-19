@@ -20,19 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class UploadMock extends BaseMock {
     get201CreationFile(): void {
-        nock(this.host).persist().options(/.*/).reply(200, '', {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
-            'Access-Control-Allow-Credentials': 'true'
-        });
-
-        // Handle POST request with any query parameters
-        nock(this.host)
-            .defaultReplyHeaders({
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': 'true'
-            })
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children')
             .reply(201, {
                 entry: {
@@ -59,7 +47,7 @@ export class UploadMock extends BaseMock {
     }
 
     get201CreationFileAutoRename(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children')
             .query({ autoRename: 'true' })
             .reply(201, {
@@ -87,7 +75,7 @@ export class UploadMock extends BaseMock {
     }
 
     get409CreationFileNewNameClashes(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children')
             .reply(409, {
                 error: {
@@ -101,7 +89,7 @@ export class UploadMock extends BaseMock {
     }
 
     get401Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children')
             .reply(401, {
                 error: {

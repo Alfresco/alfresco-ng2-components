@@ -29,15 +29,7 @@ export class BpmAuthMock extends BaseMock {
     }
 
     get200Response(): void {
-        this.addCorsSupport();
         nock(this.host, { encodedQueryParams: true })
-            .defaultReplyHeaders({
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control, X-CSRF-TOKEN',
-                'Access-Control-Allow-Credentials': 'true',
-                'Set-Cookie': 'ACTIVITI_REMEMBER_ME=NjdOdGwvcUtFTkVEczQyMGh4WFp5QT09OmpUL1UwdFVBTC94QTJMTFFUVFgvdFE9PQ; Path=/; HttpOnly'
-            })
             .post(
                 '/activiti-app/app/authentication',
                 'j_username=' + this.username + '&j_password=' + this.password + '&_spring_security_remember_me=true&submit=Login'
@@ -46,11 +38,11 @@ export class BpmAuthMock extends BaseMock {
     }
 
     get200ResponseLogout(): void {
-        this.createNockWithCors().get('/activiti-app/app/logout').reply(200);
+        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/app/logout', {}).reply(200);
     }
 
     get401Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/activiti-app/app/authentication', 'j_username=wrong&j_password=name&_spring_security_remember_me=true&submit=Login')
             .reply(401, {
                 error: {
@@ -61,7 +53,7 @@ export class BpmAuthMock extends BaseMock {
     }
 
     get403Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/activiti-app/app/authentication', 'j_username=wrong&j_password=name&_spring_security_remember_me=true&submit=Login')
             .reply(403, {
                 error: {

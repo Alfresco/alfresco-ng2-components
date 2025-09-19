@@ -18,11 +18,11 @@
 import { EventEmitter } from 'eventemitter3';
 import { AlfrescoApiConfig } from './alfrescoApiConfig';
 import { Authentication } from './authentication/authentication';
-import { EventEmitterInstance } from './types';
+import { SuperagentHttpClient } from './superagentHttpClient';
 import { Emitters, HttpClient, LegacyHttpClient, RequestOptions, SecurityOptions } from './api-clients/http-client.interface';
 import { paramToString } from './utils';
 import { Storage } from './storage';
-import { AxiosHttpClient } from './axiosHttpClient';
+import { EventEmitterInstance } from './types';
 
 declare const Buffer: any;
 
@@ -105,7 +105,7 @@ export class AlfrescoApiClient implements LegacyHttpClient {
         this.host = host;
         this.storage = Storage.getInstance();
         // fallback for backward compatibility
-        this.httpClient = httpClient || new AxiosHttpClient();
+        this.httpClient = httpClient || new SuperagentHttpClient();
     }
 
     // EventEmitter delegation methods

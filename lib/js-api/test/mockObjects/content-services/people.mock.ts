@@ -20,7 +20,7 @@ import { BaseMock } from '../base.mock';
 
 export class PeopleMock extends BaseMock {
     get201Response(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/people')
             .reply(201, {
                 entry: {
@@ -36,7 +36,7 @@ export class PeopleMock extends BaseMock {
     }
 
     get200ResponsePersons(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/people')
             .reply(200, {
                 list: {

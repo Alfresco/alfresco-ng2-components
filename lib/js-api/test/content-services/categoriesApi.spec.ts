@@ -39,131 +39,136 @@ describe('Categories', () => {
         categoriesApi = new CategoriesApi(alfrescoJsApi);
     });
 
-    it('should return 200 while getting subcategories for category with categoryId if all is ok', async () => {
+    it('should return 200 while getting subcategories for category with categoryId if all is ok', (done) => {
         categoriesMock.get200ResponseSubcategories('-root-');
-        const response: CategoryPaging = await categoriesApi.getSubcategories('-root-');
-        assert.equal(response.list.pagination.count, 2);
-        assert.equal(response.list.entries[0].entry.parentId, '-root-');
-        assert.equal(response.list.entries[0].entry.id, 'testId1');
+        categoriesApi.getSubcategories('-root-').then((response: CategoryPaging) => {
+            assert.equal(response.list.pagination.count, 2);
+            assert.equal(response.list.entries[0].entry.parentId, '-root-');
+            assert.equal(response.list.entries[0].entry.id, 'testId1');
+            done();
+        });
     });
 
-    it('should return 404 while getting subcategories for not existing category', async () => {
+    it('should return 404 while getting subcategories for not existing category', (done) => {
         categoriesMock.get404SubcategoryNotExist('notExistingId');
-        try {
-            await categoriesApi.getSubcategories('notExistingId');
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 404);
-        }
+        categoriesApi.getSubcategories('notExistingId').then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 404);
+                done();
+            }
+        );
     });
 
-    it('should return 200 while getting category with categoryId if category exists', async () => {
+    it('should return 200 while getting category with categoryId if category exists', (done) => {
         categoriesMock.get200ResponseCategory('testId1');
-        const response: CategoryEntry = await categoriesApi.getCategory('testId1');
-        assert.equal(response.entry.parentId, '-root-');
-        assert.equal(response.entry.id, 'testId1');
+        categoriesApi.getCategory('testId1').then((response: CategoryEntry) => {
+            assert.equal(response.entry.parentId, '-root-');
+            assert.equal(response.entry.id, 'testId1');
+            done();
+        });
     });
 
-    it('should return 404 while getting category with categoryId when category not exists', async () => {
+    it('should return 404 while getting category with categoryId when category not exists', (done) => {
         categoriesMock.get404CategoryNotExist('notExistingId');
-
-        try {
-            await categoriesApi.getCategory('notExistingId');
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 404);
-        }
+        categoriesApi.getCategory('notExistingId').then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 404);
+                done();
+            }
+        );
     });
 
-    it('should return 200 while getting categories linked to node with nodeId if node has some categories assigned', async () => {
+    it('should return 200 while getting categories linked to node with nodeId if node has some categories assigned', (done) => {
         categoriesMock.get200ResponseNodeCategoryLinks('testNode');
-        const response: CategoryPaging = await categoriesApi.getCategoryLinksForNode('testNode');
-        assert.equal(response.list.entries[0].entry.parentId, 'testNode');
-        assert.equal(response.list.entries[0].entry.id, 'testId1');
+        categoriesApi.getCategoryLinksForNode('testNode').then((response: CategoryPaging) => {
+            assert.equal(response.list.entries[0].entry.parentId, 'testNode');
+            assert.equal(response.list.entries[0].entry.id, 'testId1');
+            done();
+        });
     });
 
-    it('should return 403 while getting categories linked to node with nodeId if user has no rights to get from node', async () => {
+    it('should return 403 while getting categories linked to node with nodeId if user has no rights to get from node', (done) => {
         categoriesMock.get403NodeCategoryLinksPermissionDenied('testNode');
-        try {
-            await categoriesApi.getCategoryLinksForNode('testNode');
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 403);
-        }
+        categoriesApi.getCategoryLinksForNode('testNode').then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 403);
+                done();
+            }
+        );
     });
 
-    it('should return 404 while getting categories linked to node with nodeId if node does not exist', async () => {
+    it('should return 404 while getting categories linked to node with nodeId if node does not exist', (done) => {
         categoriesMock.get404NodeNotExist('testNode');
-        try {
-            await categoriesApi.getCategoryLinksForNode('testNode');
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 404);
-        }
+        categoriesApi.getCategoryLinksForNode('testNode').then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 404);
+                done();
+            }
+        );
     });
 
-    it('should return 204 after unlinking category', async () => {
+    it('should return 204 after unlinking category', (done) => {
         categoriesMock.get204CategoryUnlinked('testNode', 'testId1');
-        await categoriesApi.unlinkNodeFromCategory('testNode', 'testId1');
+        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(() => {
+            done();
+        });
     });
 
-    it('should return 404 while unlinking category if category with categoryId or node with nodeId does not exist', async () => {
+    it('should return 404 while unlinking category if category with categoryId or node with nodeId does not exist', (done) => {
         categoriesMock.get404CategoryUnlinkNotFound('testNode', 'testId1');
-
-        try {
-            await categoriesApi.unlinkNodeFromCategory('testNode', 'testId1');
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 404);
-        }
+        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 404);
+                done();
+            }
+        );
     });
 
-    it('should return 403 while unlinking category if user has no rights to unlink', async () => {
+    it('should return 403 while unlinking category if user has no rights to unlink', (done) => {
         categoriesMock.get403CategoryUnlinkPermissionDenied('testNode', 'testId1');
-        try {
-            await categoriesApi.unlinkNodeFromCategory('testNode', 'testId1');
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 403);
-        }
+        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 403);
+                done();
+            }
+        );
     });
 
-    it('should return 200 while updating category if all is ok', async () => {
+    it('should return 200 while updating category if all is ok', (done) => {
         categoriesMock.get200ResponseCategoryUpdated('testId1');
-        const response = await categoriesApi.updateCategory('testId1', { name: 'testName1' });
-        assert.equal(response.entry.id, 'testId1');
-        assert.equal(response.entry.name, 'testName1');
+        categoriesApi.updateCategory('testId1', { name: 'testName1' }).then((response) => {
+            assert.equal(response.entry.id, 'testId1');
+            assert.equal(response.entry.name, 'testName1');
+            done();
+        });
     });
 
-    it('should return 404 while updating category if category with categoryId does not exist', async () => {
+    it('should return 404 while updating category if category with categoryId does not exist', (done) => {
         categoriesMock.get404CategoryUpdateNotFound('testId1');
-        try {
-            await categoriesApi.updateCategory('testId1', { name: 'testName1' });
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 404);
-        }
-    });
-    it('should return 403 while updating category if user has no rights to update', async () => {
-        categoriesMock.get403CategoryUpdatePermissionDenied('testId1');
-
-        try {
-            await categoriesApi.updateCategory('testId1', { name: 'testName1' });
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.response.status, 403);
-        }
+        categoriesApi.updateCategory('testId1', { name: 'testName1' }).then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 404);
+                done();
+            }
+        );
     });
 
-    it('should return 403 while updating category if user has no rights to update', async () => {
+    it('should return 403 while updating category if user has no rights to update', (done) => {
         categoriesMock.get403CategoryUpdatePermissionDenied('testId1');
-
-        try {
-            await categoriesApi.updateCategory('testId1', { name: 'testName1' });
-            assert.fail('Expected error not thrown');
-        } catch (error) {
-            assert.equal(error.status, 403);
-        }
+        categoriesApi.updateCategory('testId1', { name: 'testName1' }).then(
+            () => {},
+            (error: { status: number }) => {
+                assert.equal(error.status, 403);
+                done();
+            }
+        );
     });
 
     it('should return 201 while creating category if all is ok', (done) => {

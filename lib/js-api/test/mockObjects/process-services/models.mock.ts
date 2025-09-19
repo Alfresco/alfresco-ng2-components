@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ModelsMock extends BaseMock {
     get200getModels(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/models')
             .query({ filter: 'myReusableForms', modelType: '2' })
             .reply(200, {

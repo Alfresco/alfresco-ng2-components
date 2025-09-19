@@ -161,17 +161,19 @@ describe('Node', () => {
             });
         });
 
-        it('should return 404 error on initiateFolderSizeCalculation API call if nodeId is not found', async () => {
+        it('should return 404 error on initiateFolderSizeCalculation API call if nodeId is not found', (done) => {
             nodeMock.post404NodeIdNotFound();
 
-            try {
-                await nodesApi.initiateFolderSizeCalculation('b4cff62a-664d-4d45-9302-98723eac1319');
-            } catch (err) {
-                const error = err.response.data.error;
-                assert.equal(error.statusCode, 404);
-                assert.equal(error.errorKey, 'framework.exception.EntityNotFound');
-                assert.equal(error.briefSummary, '11207522 The entity with id: b4cff62a-664d-4d45-9302-98723eac1319 was not found');
-            }
+            nodesApi.initiateFolderSizeCalculation('b4cff62a-664d-4d45-9302-98723eac1319').then(
+                () => {},
+                (err) => {
+                    const { error } = JSON.parse(err.response.text);
+                    assert.equal(error.statusCode, 404);
+                    assert.equal(error.errorKey, 'framework.exception.EntityNotFound');
+                    assert.equal(error.briefSummary, '11207522 The entity with id: b4cff62a-664d-4d45-9302-98723eac1319 was not found');
+                    done();
+                }
+            );
         });
 
         it('should return size details on getFolderSizeInfo API call if everything is ok', (done) => {
@@ -194,7 +196,7 @@ describe('Node', () => {
             nodesApi.getFolderSizeInfo('b4cff62a-664d-4d45-9302-98723eac1319', '5ade426e-8a04-4d50-9e42-6e8a041d50f3').then(
                 () => {},
                 (err) => {
-                    const error = err.response.data.error;
+                    const { error } = JSON.parse(err.response.text);
                     assert.equal(error.statusCode, 404);
                     assert.equal(error.errorKey, 'jobId does not exist');
                     assert.equal(error.briefSummary, '11207212 jobId does not exist');

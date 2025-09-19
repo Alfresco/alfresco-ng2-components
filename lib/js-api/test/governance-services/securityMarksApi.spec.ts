@@ -118,7 +118,6 @@ describe('Security Mark API test', () => {
 
     it('delete Security Mark', async () => {
         securityMarkApiMock.getDeleteSecurityMarkSuccessfulResponse(securityGroupId, securityMarkId);
-        securityGroupMock.deleteSecurityGroup200Response(securityGroupId);
         await securityGroupApi
             .deleteSecurityGroup(securityGroupId)
             .then((data) => {

@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class RenditionMock extends BaseMock {
     get200RenditionResponse(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/97a29e9c-1e4f-4d9d-bb02-1ec920dda045/renditions/pdf')
             .reply(200, {
                 entry: {
@@ -31,13 +32,13 @@ export class RenditionMock extends BaseMock {
     }
 
     createRendition200(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/97a29e9c-1e4f-4d9d-bb02-1ec920dda045/renditions', { id: 'pdf' })
             .reply(202, '');
     }
 
     get200RenditionList(): void {
-        this.createNockWithCors()
+        nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/97a29e9c-1e4f-4d9d-bb02-1ec920dda045/renditions')
             .reply(200, {
                 list: {
