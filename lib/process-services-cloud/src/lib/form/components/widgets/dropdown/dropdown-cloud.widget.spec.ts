@@ -1241,7 +1241,7 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
     });
 
     /*  Checking if events emitted in FormFieldComponent, are NOT triggering unnecessary calls to setValue in DropdownCloudWidgetComponent
-        This may result in overriding selected value with the previous one.
+        This may result in setting wrong value in component
         e.g. FormFieldComponent.updateReactiveFormControlOnFormRulesEvent
      */
     it('should set dropdown controller value only once', async () => {
