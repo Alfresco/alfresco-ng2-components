@@ -136,15 +136,19 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             e.g. every time if we focusin/focusout etc. we are calling a setValue.
         */
         this.debounceSetValue.pipe(debounceTime(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            let value: Array<FormFieldOption> | FormFieldOption | null | undefined;
+
             if (Array.isArray(this.field.value)) {
-                this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
+                value = this.field?.value;
             } else if (this.field?.value && typeof this.field?.value === 'object') {
-                this.dropdownControl.setValue({ id: this.field?.value.id, name: this.field?.value.name }, { emitEvent: false });
+                value = { id: this.field?.value.id, name: this.field?.value.name };
             } else if (this.field.value === null) {
-                this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
+                value = this.field.value;
             } else {
-                this.dropdownControl.setValue({ id: this.field?.value, name: '' }, { emitEvent: false });
+                value = { id: this.field?.value, name: '' };
             }
+
+            this.dropdownControl.setValue(value, { emitEvent: false });
         });
 
         this.setupDropdown();
