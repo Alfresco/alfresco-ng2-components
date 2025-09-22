@@ -134,8 +134,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         /*
             We can have a lot of 'control.setValue' caused by form rules events
             e.g. every time if we focusin/focusout etc. we are calling a setValue.
-            This may cause to update dropdown value with an old `field.value`, so in order to avoid it
-            we need to debounce it.
         */
         this.debounceSetValue.pipe(debounceTime(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             if (Array.isArray(this.field.value)) {

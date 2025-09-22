@@ -487,40 +487,6 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('multiple selection', () => {
-        // fit('should select value', fakeAsync(async () => {
-        //     widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
-        //         id: 'multiselect-id',
-        //         name: 'multiselect',
-        //         type: 'dropdown',
-        //         selectionType: 'multiple',
-        //         options: [
-        //             { id: 'option1', name: 'option1' },
-        //             { id: 'option2', name: 'option2' },
-        //             { id: 'other', name: 'other' }
-        //         ]
-        //     });
-
-        //     fixture.detectChanges();
-
-        //     const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-        //     await dropdown.open();
-        //     fixture.detectChanges();
-
-        //     await dropdown.clickOptions({ text: /option.*/ });
-        //     fixture.detectChanges();
-
-        //     await dropdown.close();
-        //     fixture.detectChanges();
-
-        //     const formEvent = new FormEvent(new FormModel(null));
-        //     const event = new FormRulesEvent('focusout', formEvent);
-        //     formService.formRulesEvent.next(event);
-
-        //     const selectedOption = await dropdown.getValueText();
-
-        //     expect(selectedOption).toEqual('option1, option2');
-        // }));
-
         it('should show preselected option', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
                 id: 'dropdown-id',

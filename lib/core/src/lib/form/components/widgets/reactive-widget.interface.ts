@@ -20,7 +20,7 @@ import { FormFieldModel } from './core/form-field.model';
 import { WidgetComponent } from './widget.component';
 
 export interface ReactiveFormWidget {
-    updateReactiveFormControl(skipValueUpdate?: boolean): void;
+    updateReactiveFormControl(): void;
     formService: FormService;
     field: FormFieldModel;
 }
