@@ -35,8 +35,8 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
-import { BehaviorSubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,6 +48,7 @@ export const DEFAULT_OPTION = {
     name: 'Choose one...'
 };
 export const HIDE_FILTER_LIMIT = 5;
+export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -91,6 +92,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
 
+    private debounceSetValue = new Subject<void>();
+
     get showRequiredMessage(): boolean {
         return this.dropdownControl.touched && this.dropdownControl.errors?.required && !this.isRestApiFailed && !this.variableOptionsFailed;
     }
@@ -128,6 +131,26 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
+        /*
+            We can have a lot of 'control.setValue' caused by form rules events
+            e.g. every time if we focusin/focusout etc. we are calling a setValue.
+        */
+        this.debounceSetValue.pipe(debounceTime(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            let value: Array<FormFieldOption> | FormFieldOption | null | undefined;
+
+            if (Array.isArray(this.field.value)) {
+                value = this.field?.value;
+            } else if (this.field?.value && typeof this.field?.value === 'object') {
+                value = { id: this.field?.value.id, name: this.field?.value.name };
+            } else if (this.field.value === null) {
+                value = this.field.value;
+            } else {
+                value = { id: this.field?.value, name: '' };
+            }
+
+            this.dropdownControl.setValue(value, { emitEvent: false });
+        });
+
         this.setupDropdown();
 
         this.formService.onFormVariableChanged.subscribe(({ field }) => {
@@ -138,9 +161,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     updateReactiveFormControl(): void {
-        if (!this.field.hasMultipleValues) {
-            this.setFormControlValue();
-        }
+        this.setFormControlValue();
+
         this.updateFormControlState();
         this.handleErrors();
     }
@@ -198,15 +220,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private setFormControlValue(): void {
-        if (Array.isArray(this.field.value)) {
-            this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
-        } else if (this.field?.value && typeof this.field?.value === 'object') {
-            this.dropdownControl.setValue({ id: this.field?.value.id, name: this.field?.value.name }, { emitEvent: false });
-        } else if (this.field.value === null) {
-            this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
-        } else {
-            this.dropdownControl.setValue({ id: this.field?.value, name: '' }, { emitEvent: false });
-        }
+        this.debounceSetValue.next();
     }
 
     private updateFormControlState(): void {

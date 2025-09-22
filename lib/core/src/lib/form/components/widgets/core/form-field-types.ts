@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { MaybeReactiveFormWidget, ReactiveFormWidget } from '../reactive-widget.interface';
+
 /* eslint-disable @angular-eslint/component-selector */
 
 export class FormFieldTypes {
@@ -69,6 +71,10 @@ export class FormFieldTypes {
 
     static isReactiveType(type: string): boolean {
         return FormFieldTypes.REACTIVE_TYPES.includes(type);
+    }
+
+    static isReactiveWidget(instance: MaybeReactiveFormWidget): instance is ReactiveFormWidget {
+        return FormFieldTypes.REACTIVE_TYPES.includes(instance?.field?.type);
     }
 
     static isConstantValueType(type: string): boolean {

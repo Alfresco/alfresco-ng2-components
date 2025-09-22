@@ -12,7 +12,8 @@
     <div>
         <mat-form-field class="adf-form-field-input">
             @if ( (field.name || this.field?.required) && !field.leftLabels) {
-            <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label> }
+                <mat-label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}</mat-label>
+            }
             <mat-select
                 class="adf-select"
                 [formControl]="dropdownControl"
@@ -22,14 +23,27 @@
                 panelClass="adf-select-filter"
                 [multiple]="field.hasMultipleValues"
                 [disabled]="field.readOnly"
-                [required]="field.required "
+                [required]="field.required"
             >
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
 
-                <mat-option *ngFor="let opt of list$ | async" [value]="opt" [id]="opt.id">{{opt.name}}</mat-option>
-                <mat-option id="readonlyOption" *ngIf="isReadOnlyType" [value]="field.value">{{field.value}}</mat-option>
+                @for(opt of (list$ | async); track opt.id) {
+                    <mat-option [value]="opt" [id]="opt.id">
+                        {{opt.name}}
+                    </mat-option>
+                }
+
+                @if(isReadOnlyType) {
+                    <mat-option
+                        [id]="'readonlyOption-' + field.id"
+                        [value]="field.value"
+                    >
+                        {{field.value}}
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
+
         <div
             class="adf-error-messages-container"
             [ngClass]="!previewState && !field.readOnly ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"

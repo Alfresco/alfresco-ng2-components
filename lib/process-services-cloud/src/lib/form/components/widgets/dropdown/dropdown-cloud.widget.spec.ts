@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import { DEFAULT_OPTION, DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { FormFieldModel, FormModel, FormService, FormFieldEvent, FormFieldTypes, UnitTestingUtils } from '@alfresco/adf-core';
+import { DEFAULT_OPTION, DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE, DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
+import {
+    FormFieldModel,
+    FormModel,
+    FormService,
+    FormFieldEvent,
+    FormFieldTypes,
+    UnitTestingUtils,
+    FormFieldComponent,
+    FormRenderingService
+} from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import {
     fakeOptionList,
@@ -294,11 +303,12 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(requiredErrorElement).toBeFalsy();
         });
 
-        it('should not display required error when selecting a valid option for a required dropdown', async () => {
+        it('should not display required error when selecting a valid option for a required dropdown', fakeAsync(async () => {
             widget.field.required = true;
             widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
 
@@ -307,7 +317,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement).toBeFalsy();
-        });
+        }));
 
         it('should not have a value when switching from an available option to the None option', async () => {
             widget.field.options = [{ id: 'empty', name: 'This is a mock none option' }, ...fakeOptionList];
@@ -985,48 +995,64 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.field.options.length).toEqual(0);
         };
 
-        it('should set dropdownControl value without emitting events if the mapping is a string', () => {
+        it('should set dropdownControl value without emitting events if the mapping is a string', fakeAsync(() => {
             widget.field = {
                 value: 'testValue',
                 options: [],
-                isVisible: true
+                isVisible: true,
+                markAsValid: () => {}
             } as any; // Mock field
+
+            fixture.detectChanges();
             spyOn(widget.dropdownControl, 'setValue').and.callThrough();
 
             widget['setFormControlValue']();
 
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+
             expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'testValue', name: '' }, { emitEvent: false });
             expect(widget.dropdownControl.value).toEqual({ id: 'testValue', name: '' });
-        });
+        }));
 
-        it('should set dropdownControl value when form field value gets changed', () => {
+        it('should set dropdownControl value when form field value gets changed', fakeAsync(() => {
             widget.field = {
                 value: { id: 'Id_1', name: 'Label 1' },
                 options: [],
                 isVisible: true,
                 markAsValid: () => {}
             } as FormFieldModel;
+
+            fixture.detectChanges();
+
             spyOn(widget.dropdownControl, 'setValue').and.callThrough();
 
             widget.updateReactiveFormControl();
 
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+
             expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'Id_1', name: 'Label 1' }, { emitEvent: false });
             expect(widget.dropdownControl.value).toEqual({ id: 'Id_1', name: 'Label 1' });
-        });
+        }));
 
-        it('should set dropdownControl value without emitting events if is an object', () => {
+        it('should set dropdownControl value without emitting events if is an object', fakeAsync(() => {
             widget.field = {
                 value: { id: 'testValueObj', name: 'testValueObjName' },
                 options: [],
-                isVisible: true
-            } as any; // Mock field
+                isVisible: true,
+                markAsValid: () => {}
+            } as FormFieldModel;
+
+            fixture.detectChanges();
+
             spyOn(widget.dropdownControl, 'setValue').and.callThrough();
 
             widget['setFormControlValue']();
 
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+
             expect(widget.dropdownControl.setValue).toHaveBeenCalledWith({ id: 'testValueObj', name: 'testValueObjName' }, { emitEvent: false });
             expect(widget.dropdownControl.value).toEqual({ id: 'testValueObj', name: 'testValueObjName' });
-        });
+        }));
 
         it('should display options persisted from process variable', async () => {
             widget.field = getVariableDropdownWidget(
@@ -1189,5 +1215,70 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[0].getText()).toEqual('New Country');
             expect(allOptions.length).toEqual(1);
         });
+    });
+});
+
+describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrapper', () => {
+    let formFieldFixture: ComponentFixture<FormFieldComponent>;
+    let formFieldComponent: FormFieldComponent;
+    let loader: HarnessLoader;
+    let formRenderingService: FormRenderingService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [FormFieldComponent]
+        });
+
+        formFieldFixture = TestBed.createComponent(FormFieldComponent);
+        formFieldComponent = formFieldFixture.componentInstance;
+
+        loader = TestbedHarnessEnvironment.loader(formFieldFixture);
+
+        formRenderingService = TestBed.inject(FormRenderingService);
+        formRenderingService.register({
+            [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent
+        });
+    });
+
+    /*  Checking if events emitted in FormFieldComponent are NOT triggering unnecessary calls to setValue in DropdownCloudWidgetComponent
+        This may result in setting wrong value in component
+        e.g. FormFieldComponent.updateReactiveFormControlOnFormRulesEvent
+     */
+    it('should set dropdown controller value only once', async () => {
+        formFieldComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
+            id: 'multiselect-id',
+            name: 'multiselect',
+            type: 'dropdown',
+            selectionType: 'multiple',
+            options: [
+                { id: 'option1', name: 'option1' },
+                { id: 'option2', name: 'option2' },
+                { id: 'other', name: 'other' }
+            ]
+        });
+
+        const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+        await dropdown.open();
+
+        const dropdownCloudWidgetInstanceComponent = formFieldFixture.debugElement.query(
+            By.directive(DropdownCloudWidgetComponent)
+        ).componentInstance;
+
+        const setValueSpy = spyOn(dropdownCloudWidgetInstanceComponent.dropdownControl, 'setValue').and.callThrough();
+
+        dropdownCloudWidgetInstanceComponent.event(new Event('focusin'));
+
+        // Not using dropdown.clickOptions from harness since it need ot be awaited
+        // I want to simulate other events at the same time
+        const option1 = formFieldFixture.debugElement.query(By.css('[ng-reflect-id="option1"]'));
+        option1.triggerEventHandler('click');
+        dropdownCloudWidgetInstanceComponent.event(new Event('focusout'));
+
+        await dropdown.close();
+
+        const selectedOption = await dropdown.getValueText();
+
+        expect(selectedOption).toEqual('option1');
+        expect(setValueSpy).toHaveBeenCalledTimes(1);
     });
 });
