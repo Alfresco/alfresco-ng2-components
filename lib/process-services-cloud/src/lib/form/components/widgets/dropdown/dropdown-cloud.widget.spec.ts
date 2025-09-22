@@ -26,8 +26,8 @@ import {
     FormFieldEvent,
     FormFieldTypes,
     UnitTestingUtils,
-    FormRulesEvent,
-    FormEvent
+    FormFieldComponent,
+    FormRenderingService
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import {
@@ -47,7 +47,7 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { DebugElement } from '@angular/core';
 import { FormUtilsService } from '../../../services/form-utils.service';
 
-fdescribe('DropdownCloudWidgetComponent', () => {
+describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
@@ -487,39 +487,39 @@ fdescribe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('multiple selection', () => {
-        fit('should select value', fakeAsync(async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
-                id: 'multiselect-id',
-                name: 'multiselect',
-                type: 'dropdown',
-                selectionType: 'multiple',
-                options: [
-                    { id: 'option1', name: 'option1' },
-                    { id: 'option2', name: 'option2' },
-                    { id: 'other', name: 'other' }
-                ]
-            });
+        // fit('should select value', fakeAsync(async () => {
+        //     widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
+        //         id: 'multiselect-id',
+        //         name: 'multiselect',
+        //         type: 'dropdown',
+        //         selectionType: 'multiple',
+        //         options: [
+        //             { id: 'option1', name: 'option1' },
+        //             { id: 'option2', name: 'option2' },
+        //             { id: 'other', name: 'other' }
+        //         ]
+        //     });
 
-            fixture.detectChanges();
+        //     fixture.detectChanges();
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            await dropdown.open();
-            fixture.detectChanges();
+        //     const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+        //     await dropdown.open();
+        //     fixture.detectChanges();
 
-            await dropdown.clickOptions({ text: /option.*/ });
-            fixture.detectChanges();
+        //     await dropdown.clickOptions({ text: /option.*/ });
+        //     fixture.detectChanges();
 
-            await dropdown.close();
-            fixture.detectChanges();
+        //     await dropdown.close();
+        //     fixture.detectChanges();
 
-            const formEvent = new FormEvent(new FormModel(null));
-            const event = new FormRulesEvent('focusout', formEvent);
-            formService.formRulesEvent.next(event);
+        //     const formEvent = new FormEvent(new FormModel(null));
+        //     const event = new FormRulesEvent('focusout', formEvent);
+        //     formService.formRulesEvent.next(event);
 
-            const selectedOption = await dropdown.getValueText();
+        //     const selectedOption = await dropdown.getValueText();
 
-            expect(selectedOption).toEqual('option1, option2');
-        }));
+        //     expect(selectedOption).toEqual('option1, option2');
+        // }));
 
         it('should show preselected option', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
@@ -1249,5 +1249,70 @@ fdescribe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[0].getText()).toEqual('New Country');
             expect(allOptions.length).toEqual(1);
         });
+    });
+});
+
+describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrapper', () => {
+    let formFieldFixture: ComponentFixture<FormFieldComponent>;
+    let formFieldComponent: FormFieldComponent;
+    let loader: HarnessLoader;
+    let formRenderingService: FormRenderingService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [FormFieldComponent]
+        });
+        formFieldFixture = TestBed.createComponent(FormFieldComponent);
+        formFieldComponent = formFieldFixture.componentInstance;
+
+        formRenderingService = TestBed.inject(FormRenderingService);
+
+        loader = TestbedHarnessEnvironment.loader(formFieldFixture);
+
+        formRenderingService.register({
+            [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent
+        });
+    });
+
+    /*  Checking if events emitted in FormFieldComponent, are NOT triggering unnecessary calls to setValue in DropdownCloudWidgetComponent
+        This may result in overriding selected value with the previous one.
+        e.g. FormFieldComponent.updateReactiveFormControlOnFormRulesEvent
+     */
+    it('should set dropdown controller value only once', async () => {
+        formFieldComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, id: 'form-id' }), {
+            id: 'multiselect-id',
+            name: 'multiselect',
+            type: 'dropdown',
+            selectionType: 'multiple',
+            options: [
+                { id: 'option1', name: 'option1' },
+                { id: 'option2', name: 'option2' },
+                { id: 'other', name: 'other' }
+            ]
+        });
+
+        const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+        await dropdown.open();
+
+        const dropdownCloudWidgetInstanceComponent = formFieldFixture.debugElement.query(
+            By.directive(DropdownCloudWidgetComponent)
+        ).componentInstance;
+
+        const setValueSpy = spyOn(dropdownCloudWidgetInstanceComponent.dropdownControl, 'setValue').and.callThrough();
+
+        dropdownCloudWidgetInstanceComponent.event(new Event('focusin'));
+
+        // Not using dropdown.clickOptions from harness since it need ot be awaited
+        // I want to simulate other events at the same time
+        const option1 = formFieldFixture.debugElement.query(By.css('[ng-reflect-id="option1"]'));
+        option1.triggerEventHandler('click');
+        dropdownCloudWidgetInstanceComponent.event(new Event('focusout'));
+
+        await dropdown.close();
+
+        const selectedOption = await dropdown.getValueText();
+
+        expect(selectedOption).toEqual('option1');
+        expect(setValueSpy).toHaveBeenCalledTimes(1);
     });
 });
