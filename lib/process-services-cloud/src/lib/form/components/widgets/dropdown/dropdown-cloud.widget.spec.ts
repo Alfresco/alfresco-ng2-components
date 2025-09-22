@@ -1228,19 +1228,19 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
         TestBed.configureTestingModule({
             imports: [FormFieldComponent]
         });
+
         formFieldFixture = TestBed.createComponent(FormFieldComponent);
         formFieldComponent = formFieldFixture.componentInstance;
 
-        formRenderingService = TestBed.inject(FormRenderingService);
-
         loader = TestbedHarnessEnvironment.loader(formFieldFixture);
 
+        formRenderingService = TestBed.inject(FormRenderingService);
         formRenderingService.register({
             [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent
         });
     });
 
-    /*  Checking if events emitted in FormFieldComponent, are NOT triggering unnecessary calls to setValue in DropdownCloudWidgetComponent
+    /*  Checking if events emitted in FormFieldComponent are NOT triggering unnecessary calls to setValue in DropdownCloudWidgetComponent
         This may result in setting wrong value in component
         e.g. FormFieldComponent.updateReactiveFormControlOnFormRulesEvent
      */
