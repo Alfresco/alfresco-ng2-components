@@ -32,7 +32,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
-import { Node } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -793,5 +793,92 @@ describe('AttachFileWidgetComponent', () => {
         widget.openSelectDialog({ repositoryUrl: 'repositoryUrl' });
         await fixture.whenStable();
         expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
+    });
+
+    describe('onAttachFileClicked', () => {
+        const regularFile: RelatedContentRepresentation = {
+            id: 123,
+            name: 'regular-file.pdf',
+            contentAvailable: true
+        };
+        const fileWithSourceId: RelatedContentRepresentation = {
+            id: 123,
+            name: 'test-file.pdf',
+            sourceId: '456'
+        };
+        const fileWithoutContent: RelatedContentRepresentation = {
+            id: 123,
+            name: 'no-content-file.pdf',
+            contentAvailable: false
+        };
+        const externalFile = {
+            id: 123,
+            name: 'external-file.pdf',
+            isExternal: true,
+            contentAvailable: true
+        } as RelatedContentRepresentation;
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+
+            spyOn(widget.formService.formContentClicked, 'next');
+        });
+
+        it('should call formContentClicked when file clicked and it has sourceId', () => {
+            widget.field.value = [fileWithSourceId];
+
+            widget.onAttachFileClicked(fileWithSourceId);
+
+            expect(widget.formService.formContentClicked.next).toHaveBeenCalledWith(fileWithSourceId);
+        });
+
+        it('should call formContentClicked when file is temporary', () => {
+            widget.field.value = [regularFile];
+            widget.field.params = allSourceParams;
+            spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+            widget.ngOnInit();
+
+            widget.onAttachFileClicked(regularFile);
+
+            expect(widget.formService.formContentClicked.next).toHaveBeenCalledWith(regularFile);
+        });
+
+        it('should fetch getContentPreview when file is neither temporary nor has sourceId', () => {
+            widget.field.value = [regularFile];
+            spyOn(processContentService, 'getContentPreview').and.returnValue(of(new Blob(['fake-content'], { type: 'application/pdf' })));
+
+            widget.onAttachFileClicked(regularFile);
+
+            expect(processContentService.getContentPreview).toHaveBeenCalledWith(123);
+            expect(widget.formService.formContentClicked.next).toHaveBeenCalled();
+        });
+
+        it('should not emit formContentClicked when file has no sourceId and contentAvailable is false', () => {
+            widget.field.value = [fileWithoutContent];
+
+            widget.onAttachFileClicked(fileWithoutContent);
+
+            expect(widget.formService.formContentClicked.next).not.toHaveBeenCalled();
+        });
+
+        it('should not emit formContentClicked when file is external', () => {
+            widget.field.value = [externalFile];
+
+            widget.onAttachFileClicked(externalFile);
+
+            expect(widget.formService.formContentClicked.next).not.toHaveBeenCalled();
+        });
+
+        it('should not emit formContentClicked when file has no sourceId and isStartProcessPage is true', () => {
+            widget.field.value = [fileWithoutContent];
+            widget.isStartProcessPage = true;
+
+            widget.onAttachFileClicked(fileWithoutContent);
+
+            expect(widget.formService.formContentClicked.next).not.toHaveBeenCalled();
+        });
     });
 });

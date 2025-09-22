@@ -168,7 +168,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (file.isExternal || (!file.sourceId && (this.isStartProcessPage || !file.contentAvailable))) {
             return;
         }
-        if (this.isTemporaryFile(file)) {
+        if (this.isTemporaryFile(file) || file.sourceId) {
             this.formService.formContentClicked.next(file);
         } else {
             this.fileClicked(file);
