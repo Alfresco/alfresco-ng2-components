@@ -10,6 +10,7 @@
     <div
         class="adf-cloud-form-content"
         [class.adf-cloud-form-content-standalone-fullscreen]="displayMode === 'standalone' && displayConfiguration?.options?.fullscreen"
+        [class.adf-cloud-form-content-toolbar]="!!displayConfiguration?.options?.displayToolbar"
         [cdkTrapFocus]="displayConfiguration?.options?.trapFocus"
         cdkTrapFocusAutoCapture>
         <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayConfiguration?.options?.displayToolbar">
