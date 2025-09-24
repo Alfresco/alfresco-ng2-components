@@ -10,9 +10,17 @@
 }
 
 .adf-cloud-form {
+    &-content {
+        padding-top: 40px;
+    }
+
     &-content-standalone-fullscreen {
         background-color: transparent;
         border-radius: 14px;
+    }
+
+    &-content-toolbar {
+        padding-top: 0;
     }
 
     &-container {
@@ -45,11 +53,19 @@
             max-width: 1366px;
             height: auto;
             margin: 40px auto;
+            padding-bottom: 40px;
+            border-radius: 14px;
         }
     }
 
     &-inline-container {
         @extend .adf-full-screen;
+
+        .adf-cloud-form-content {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            border-radius: 14px;
+        }
     }
 
     &-toolbar ::ng-deep {
@@ -87,7 +103,6 @@
     }
 
     &-content-card {
-        padding-bottom: 2em;
         overflow-y: auto;
         position: static;
         height: 70%;
