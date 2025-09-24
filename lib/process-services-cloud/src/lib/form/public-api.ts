@@ -41,7 +41,6 @@ export * from './components/widgets/radio-buttons/radio-buttons-cloud.schema';
 
 export * from './services/content-cloud-node-selector.service';
 export * from './services/form-cloud.service';
-export * from './services/form-definition-selector-cloud.service';
 export * from './services/content-cloud-node-selector.service';
 export * from './services/process-cloud-content.service';
 export * from './services/display-mode.service';

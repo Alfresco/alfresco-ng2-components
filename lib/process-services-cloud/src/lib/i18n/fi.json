@@ -53,16 +53,6 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
-    "APPS": {
-      "NO_APPS": {
-        "TITLE": "Yhtään sovellusta ei löydy",
-        "SUBTITLE": "Luo uusi sovellus, jonka löydät helposti myöhemmin"
-      },
-      "ERROR": {
-        "TITLE": "Tapahtui virhe",
-        "SUBTITLE": "Tarkista, että sinulla on oikeus käyttää sovelluksia"
-      }
-    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Aloita tehtävä",
@@ -74,7 +64,6 @@
           "CANDIDATE_GROUP": "Kandidaattiryhmä",
           "FORM": "Lomake",
           "DATE": "Valitse päivämäärä",
-          "NONE": "Ei mitään",
           "PRIORITY": "Prioriteetti"
         },
         "ACTION": {

@@ -364,11 +364,6 @@
     "ACTION": {
       "HELP": "Besoin d'aide ?",
       "REGISTER": "S'inscrire"
-    },
-    "DIALOG": {
-      "CANCEL": "Annuler",
-      "CHOOSE": "Choisir",
-      "LOGIN": "Connexion"
     }
   },
   "ADF-DATATABLE": {
