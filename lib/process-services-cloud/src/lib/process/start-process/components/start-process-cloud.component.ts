@@ -210,7 +210,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     get disableStartButton(): boolean {
-        return !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.isFormCloudLoading;
+        return !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.processDefinitionLoaded === false;
     }
 
     get isProcessDefinitionsEmpty(): boolean {
