@@ -245,8 +245,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     ngOnInit() {
         if (this.processDefinitionName) {
             this.processDefinition.setValue(this.processDefinitionName);
-        } else {
-            this.isFormCloudLoading = false;
         }
 
         this.processDefinition.valueChanges
