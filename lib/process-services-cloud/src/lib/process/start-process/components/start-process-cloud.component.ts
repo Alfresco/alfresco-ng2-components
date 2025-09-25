@@ -394,7 +394,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     if (processDefinitionRepresentations.length === 1) {
                         this.selectDefaultProcessDefinition();
                     } else if (this.processDefinitionName) {
-                        this.processDefinition.setValue(this.processDefinitionName);
+                        this.processDefinition.setValue(this.processDefinitionName, { emitEvent: false });
 
                         const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
                         if (processDefinition) {
