@@ -210,7 +210,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     get disableStartButton(): boolean {
-        return !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.processDefinitionLoaded === false;
+        return !this.appName || !this.processDefinition.valid || this.isProcessStarting || !this.processDefinitionLoaded || this.isFormCloudLoading;
     }
 
     get isProcessDefinitionsEmpty(): boolean {
@@ -415,16 +415,16 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     }
 
                     this.processDefinition.setValue(this.processDefinitionName);
-                    const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
+                    const selectedProcessDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
 
-                    if (!processDefinition) {
+                    if (!selectedProcessDefinition) {
                         return EMPTY;
                     }
 
-                    this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
-                    this.processDefinitionSelectionChanged(processDefinition);
+                    this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(selectedProcessDefinition.name);
+                    this.processDefinitionSelectionChanged(selectedProcessDefinition);
 
-                    return this.fetchStaticVariablesAndConstants(processDefinition.name);
+                    return this.fetchStaticVariablesAndConstants(selectedProcessDefinition.name);
                 })
             )
             .subscribe({
@@ -432,10 +432,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     if (staticMappings && constants) {
                         this.onFetchStaticVariablesAndConstants([staticMappings, constants]);
                     }
+                    this.processDefinitionLoaded = true;
                 },
                 error: () => {
                     this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-                    this.processDefinitionLoaded = true;
                 },
                 complete: () => {
                     this.processDefinitionLoaded = true;
@@ -587,7 +587,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.formContentClicked.emit(content);
     }
 
-    processDefinitionSelectionChanged(processDefinition: ProcessDefinitionCloud) {
+    processDefinitionSelectionChanged(processDefinition?: ProcessDefinitionCloud): void {
         if (processDefinition) {
             this.setDefaultProcessName(processDefinition.name);
             this.processDefinitionSelection.emit(processDefinition);
