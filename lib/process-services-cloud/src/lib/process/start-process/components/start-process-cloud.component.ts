@@ -41,7 +41,7 @@ import {
 } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { catchError, debounceTime, map } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
@@ -304,52 +304,63 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         }
     }
 
-    setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
-        this.isFormCloudLoading = true;
-        const processDefinitionCurrent = this.filteredProcesses.find(
-            (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
-        );
+    private fetchStaticVariablesAndConstants(selectedProcessDefinitionName: string): Observable<[TaskVariableCloud[], TaskVariableCloud[]]> {
+        const processDefinitionCurrent = this.selectProcessDefinition(selectedProcessDefinitionName);
 
-        forkJoin([
+        return forkJoin([
             this.startProcessCloudService
                 .getStartEventFormStaticValuesMapping(this.appName, processDefinitionCurrent.id)
                 .pipe(catchError(() => of([] as TaskVariableCloud[]))),
             this.startProcessCloudService
                 .getStartEventConstants(this.appName, processDefinitionCurrent.id)
                 .pipe(catchError(() => of([] as TaskVariableCloud[])))
-        ]).subscribe({
-            next: ([staticMappings, constants]) => {
-                this.staticMappings = staticMappings;
-                this.resolvedValues = this.staticMappings.concat(this.values || []);
-                this.processDefinitionCurrent = processDefinitionCurrent;
+        ]);
+    }
 
-                const displayStart = constants?.find((constant) => constant.name === 'startEnabled');
-                const startLabel = constants?.find((constant) => constant.name === 'startLabel');
+    private onFetchStaticVariablesAndConstants([staticMappings, constants]: [TaskVariableCloud[], TaskVariableCloud[]]): void {
+        this.staticMappings = staticMappings;
+        this.resolvedValues = this.staticMappings.concat(this.values || []);
 
-                const displayCancel = constants?.find((constant) => constant.name === 'cancelEnabled');
-                const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
+        const displayStart = constants?.find((constant) => constant.name === 'startEnabled');
+        const startLabel = constants?.find((constant) => constant.name === 'startLabel');
 
-                if (displayStart) {
-                    this.displayStartSubject.next(displayStart?.value);
-                }
-                if (startLabel) {
-                    this.startProcessButtonLabel =
-                        startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
-                }
+        const displayCancel = constants?.find((constant) => constant.name === 'cancelEnabled');
+        const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
 
-                if (displayCancel) {
-                    this.showCancelButton = displayCancel?.value === 'true' && this.showCancelButton;
-                }
-                if (cancelLabel) {
-                    this.cancelButtonLabel = cancelLabel?.value?.trim()?.length > 0 ? cancelLabel.value.trim() : this.defaultCancelProcessButtonLabel;
-                }
+        if (displayStart) {
+            this.displayStartSubject.next(displayStart?.value);
+        }
+        if (startLabel) {
+            this.startProcessButtonLabel = startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
+        }
 
-                this.isFormCloudLoading = false;
-            }
+        if (displayCancel) {
+            this.showCancelButton = displayCancel?.value === 'true' && this.showCancelButton;
+        }
+        if (cancelLabel) {
+            this.cancelButtonLabel = cancelLabel?.value?.trim()?.length > 0 ? cancelLabel.value.trim() : this.defaultCancelProcessButtonLabel;
+        }
+
+        this.isFormCloudLoading = false;
+    }
+
+    setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
+        // this.isFormCloudLoading = true;
+
+        this.fetchStaticVariablesAndConstants(selectedProcessDefinitionName).subscribe({
+            next: ([staticMappings, constants]) => this.onFetchStaticVariablesAndConstants([staticMappings, constants])
         });
 
-        this.isFormCloudLoaded = false;
-        this.processPayloadCloud.processDefinitionKey = processDefinitionCurrent.key;
+        // this.isFormCloudLoaded = false;
+        this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
+    }
+
+    selectProcessDefinition(keyOrName: string): ProcessDefinitionCloud | undefined {
+        this.processDefinitionCurrent = this.filteredProcesses.find(
+            (process: ProcessDefinitionCloud) => process.name === keyOrName || process.key === keyOrName
+        );
+
+        return this.processDefinitionCurrent;
     }
 
     private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {
@@ -382,28 +393,40 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     public loadProcessDefinitions() {
         this.resetErrorMessage();
+        debugger;
 
         this.startProcessCloudService
             .getProcessDefinitions(this.appName)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe({
-                next: (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
+            .pipe(
+                takeUntilDestroyed(this.destroyRef),
+                switchMap((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     this.processDefinitionList = processDefinitionRepresentations;
                     if (processDefinitionRepresentations.length === 1) {
                         this.selectDefaultProcessDefinition();
-                    } else if (this.processDefinitionName) {
+                        return of();
+                    }
+
+                    if (this.processDefinitionName) {
                         this.processDefinition.setValue(this.processDefinitionName);
 
                         const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
                         if (processDefinition) {
                             this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
-                            this.setProcessDefinitionOnForm(processDefinition.name);
                             this.processDefinitionSelectionChanged(processDefinition);
+
+                            return this.fetchStaticVariablesAndConstants(processDefinition.name);
                         }
-                    } else {
-                        this.isFormCloudLoading = false;
                     }
 
+                    return of();
+                })
+            )
+            .subscribe({
+                next: ([staticMappings, constants]: [TaskVariableCloud[], TaskVariableCloud[]]) => {
+                    if (staticMappings && constants) {
+                        this.onFetchStaticVariablesAndConstants([staticMappings, constants]);
+                    }
+                    this.isFormCloudLoading = false;
                     this.processDefinitionLoaded = true;
                 },
                 error: () => {
@@ -411,6 +434,32 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     this.isFormCloudLoading = false;
                 }
             });
+
+        // .subscribe({
+        //     next: (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
+        //         this.processDefinitionList = processDefinitionRepresentations;
+        //         if (processDefinitionRepresentations.length === 1) {
+        //             this.selectDefaultProcessDefinition();
+        //         } else if (this.processDefinitionName) {
+        //             this.processDefinition.setValue(this.processDefinitionName);
+
+        //             const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
+        //             if (processDefinition) {
+        //                 this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
+        //                 this.processDefinitionSelectionChanged(processDefinition);
+        //                 this.setProcessDefinitionOnForm(processDefinition.name);
+        //             }
+        //         } else {
+        //             this.isFormCloudLoading = false;
+        //         }
+
+        //         this.processDefinitionLoaded = true;
+        //     },
+        //     error: () => {
+        //         this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+        //         this.isFormCloudLoading = false;
+        //     }
+        // });
     }
 
     private isValidName(name: string): boolean {
