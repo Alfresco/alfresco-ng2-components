@@ -41,12 +41,12 @@ import {
 } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap, tap } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { BehaviorSubject, forkJoin, Observable, of, combineLatest } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, combineLatest, EMPTY } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
@@ -345,13 +345,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
-        // this.isFormCloudLoading = true;
-
         this.fetchStaticVariablesAndConstants(selectedProcessDefinitionName).subscribe({
             next: ([staticMappings, constants]) => this.onFetchStaticVariablesAndConstants([staticMappings, constants])
         });
 
-        // this.isFormCloudLoaded = false;
         this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
     }
 
@@ -393,17 +390,18 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     public loadProcessDefinitions() {
         this.resetErrorMessage();
-        debugger;
 
         this.startProcessCloudService
             .getProcessDefinitions(this.appName)
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
-                switchMap((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
+                tap((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     this.processDefinitionList = processDefinitionRepresentations;
+                }),
+                switchMap((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     if (processDefinitionRepresentations.length === 1) {
                         this.selectDefaultProcessDefinition();
-                        return of();
+                        return EMPTY;
                     }
 
                     if (this.processDefinitionName) {
@@ -418,7 +416,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                         }
                     }
 
-                    return of();
+                    return EMPTY;
                 })
             )
             .subscribe({
@@ -432,6 +430,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 error: () => {
                     this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
                     this.isFormCloudLoading = false;
+                },
+                complete: () => {
+                    this.isFormCloudLoading = false;
+                    this.processDefinitionLoaded = true;
+                    console.log('complete');
                 }
             });
 
