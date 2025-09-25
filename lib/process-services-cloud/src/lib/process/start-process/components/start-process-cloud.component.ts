@@ -173,8 +173,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     customOutcomeId: string;
 
     isProcessStarting = false;
+    isFormCloudLoading = false;
     isFormCloudLoaded = false;
-    isFormCloudLoading = true;
     processDefinitionLoaded = false;
 
     showStartProcessButton$: Observable<boolean>;
@@ -340,13 +340,19 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         if (cancelLabel) {
             this.cancelButtonLabel = cancelLabel?.value?.trim()?.length > 0 ? cancelLabel.value.trim() : this.defaultCancelProcessButtonLabel;
         }
-
-        this.isFormCloudLoading = false;
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
+        this.isFormCloudLoading = true;
+
         this.fetchStaticVariablesAndConstants(selectedProcessDefinitionName).subscribe({
-            next: ([staticMappings, constants]) => this.onFetchStaticVariablesAndConstants([staticMappings, constants])
+            next: ([staticMappings, constants]) => this.onFetchStaticVariablesAndConstants([staticMappings, constants]),
+            error: () => {
+                this.isFormCloudLoading = false;
+            },
+            complete: () => {
+                this.isFormCloudLoading = false;
+            }
         });
 
         this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
@@ -399,24 +405,26 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     this.processDefinitionList = processDefinitionRepresentations;
                 }),
                 switchMap((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
+                    if (!this.processDefinitionName) {
+                        return EMPTY;
+                    }
+
                     if (processDefinitionRepresentations.length === 1) {
                         this.selectDefaultProcessDefinition();
                         return EMPTY;
                     }
 
-                    if (this.processDefinitionName) {
-                        this.processDefinition.setValue(this.processDefinitionName);
+                    this.processDefinition.setValue(this.processDefinitionName);
+                    const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
 
-                        const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
-                        if (processDefinition) {
-                            this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
-                            this.processDefinitionSelectionChanged(processDefinition);
-
-                            return this.fetchStaticVariablesAndConstants(processDefinition.name);
-                        }
+                    if (!processDefinition) {
+                        return EMPTY;
                     }
 
-                    return EMPTY;
+                    this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
+                    this.processDefinitionSelectionChanged(processDefinition);
+
+                    return this.fetchStaticVariablesAndConstants(processDefinition.name);
                 })
             )
             .subscribe({
@@ -424,45 +432,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     if (staticMappings && constants) {
                         this.onFetchStaticVariablesAndConstants([staticMappings, constants]);
                     }
-                    this.isFormCloudLoading = false;
-                    this.processDefinitionLoaded = true;
                 },
                 error: () => {
                     this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-                    this.isFormCloudLoading = false;
+                    this.processDefinitionLoaded = true;
                 },
                 complete: () => {
-                    this.isFormCloudLoading = false;
                     this.processDefinitionLoaded = true;
-                    console.log('complete');
                 }
             });
-
-        // .subscribe({
-        //     next: (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
-        //         this.processDefinitionList = processDefinitionRepresentations;
-        //         if (processDefinitionRepresentations.length === 1) {
-        //             this.selectDefaultProcessDefinition();
-        //         } else if (this.processDefinitionName) {
-        //             this.processDefinition.setValue(this.processDefinitionName);
-
-        //             const processDefinition = this.processDefinitionList.find((process) => process.name === this.processDefinitionName);
-        //             if (processDefinition) {
-        //                 this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
-        //                 this.processDefinitionSelectionChanged(processDefinition);
-        //                 this.setProcessDefinitionOnForm(processDefinition.name);
-        //             }
-        //         } else {
-        //             this.isFormCloudLoading = false;
-        //         }
-
-        //         this.processDefinitionLoaded = true;
-        //     },
-        //     error: () => {
-        //         this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-        //         this.isFormCloudLoading = false;
-        //     }
-        // });
     }
 
     private isValidName(name: string): boolean {
