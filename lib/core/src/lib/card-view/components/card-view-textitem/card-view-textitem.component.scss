@@ -49,6 +49,14 @@
         #{ms.$mat-form-field-label} {
             margin-top: 6px;
         }
+
+        #{ms.$mat-form-field-infix} {
+            padding-top: 0;
+
+            .adf-property-value {
+                margin-left: 0;
+            }
+        }
     }
 
     .adf-textitem-clickable {
