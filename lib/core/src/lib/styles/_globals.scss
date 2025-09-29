@@ -1,6 +1,6 @@
 @use './mat-selectors' as ms;
 
-@mixin adf-globals() {
+@mixin globals() {
     #{ms.$mat-expansion-panel} {
         & #{ms.$mat-expansion-panel-header}.cdk-keyboard-focused,
         & #{ms.$mat-expansion-panel-header}.cdk-program-focused,
