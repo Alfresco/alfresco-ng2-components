@@ -46,7 +46,10 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
+    constructor(
+        @Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any,
+        private searchFilterQueryBuilder: SearchHeaderQueryBuilderService
+    ) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
 
@@ -104,8 +107,8 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     private initSearchHeader(currentFolderId: string) {
         this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
         if (this.value) {
-            Object.keys(this.value).forEach((columnKey) => {
-                this.searchFilterQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
+            Object.keys(this.value).forEach((key) => {
+                this.searchFilterQueryBuilder.setActiveFilter(key, this.value[key]);
             });
         }
     }
