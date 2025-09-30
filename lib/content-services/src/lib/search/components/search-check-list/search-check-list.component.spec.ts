@@ -231,6 +231,25 @@ describe('SearchCheckListComponent', () => {
         expect(component.context.update).not.toHaveBeenCalled();
     });
 
+    it('should handle initial populateFilters emission and no filter state properly', () => {
+        component.id = 'checkList';
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
+        ]);
+
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+
+        component.context.populateFilters.next({});
+        component.context.populateFilters.next({ checkList: [`TYPE:'cm:content'`] });
+        fixture.detectChanges();
+
+        expect(component.context.filterLoaded.next).toHaveBeenCalledTimes(1);
+    });
+
     it('should populate filter state when populate filters event has been observed', () => {
         component.id = 'checkList';
         component.options = new SearchFilterList<SearchListOption>([
