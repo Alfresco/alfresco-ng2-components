@@ -34,7 +34,7 @@ more information about color concepts.
 
 ## Using Angular Material theming
 
-ADF is based on Angular Material library which offers solutions for theming your application with either:
+ADF is based on Angular Material library, which offers solutions for theming your application with either:
 - Material Design 2 https://material.angular.dev/guide/material-2-theming
 - Material Design 3 https://material.angular.dev/guide/theming
 
@@ -42,7 +42,7 @@ If you already setup Angular Material theming in the application you use ADF in,
 
 ## Customizing deprecated theme variables
 
-Currently we an amount of custom variables around components to mange libraries look and feel consistently and globally. 
+Currently we have an amount of custom variables around components to mange libraries look and feel consistently and globally. 
 
 While they are getting deprecated to be replaced with [Angular Material system variables](https://material.angular.dev/guide/system-variables), for seamless integration with Angular Material's theming, you can provide values for those variables inside the `:root` element.
 
