@@ -70,8 +70,8 @@ describe('BasicAlfrescoAuthService', () => {
         expect(ticket).toEqual('Basic Mock Process Auth ticket');
     });
 
-    it('should return content services ticket when requestUrl does not contain ECM or BPM context root', () => {
-        const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/ooi-services');
+    it('should return content services ticket when requestUrl contains OOI_SERVICE_URL context root', () => {
+        const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/ooi-service');
         const base64Segment = ticket.split('Basic ')[1];
         expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
     });
