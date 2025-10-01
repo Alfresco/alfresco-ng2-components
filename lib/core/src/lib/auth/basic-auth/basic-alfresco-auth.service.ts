@@ -351,19 +351,18 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketEcmBase64(requestUrl: string): string | null {
-        let ticket = null;
-
         const bpmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app'}/`;
         const ecmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco'}/`;
 
         if (requestUrl?.includes(ecmRoot) && !requestUrl.includes(bpmRoot)) {
-            ticket = this.getContentServicesTicket();
+            return this.getContentServicesTicket();
         } else if (requestUrl?.includes(bpmRoot) && !requestUrl.includes(ecmRoot)) {
-            ticket = this.getProcessServicesTicket();
+            return this.getProcessServicesTicket();
         } else if (requestUrl?.includes(ecmRoot) && requestUrl.includes(bpmRoot)) {
-            ticket = requestUrl.indexOf(ecmRoot) < requestUrl.indexOf(bpmRoot) ? this.getContentServicesTicket() : this.getProcessServicesTicket();
+            return requestUrl.indexOf(ecmRoot) < requestUrl.indexOf(bpmRoot) ? this.getContentServicesTicket() : this.getProcessServicesTicket();
+        } else {
+            return this.getContentServicesTicket();
         }
-        return ticket;
     }
 
     private getProcessServicesTicket(): string {

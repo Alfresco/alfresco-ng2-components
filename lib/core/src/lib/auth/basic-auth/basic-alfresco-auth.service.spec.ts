@@ -70,6 +70,12 @@ describe('BasicAlfrescoAuthService', () => {
         expect(ticket).toEqual('Basic Mock Process Auth ticket');
     });
 
+    it('should return content services ticket when requestUrl does not contain ECM or BPM context root', () => {
+        const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/ooi-services');
+        const base64Segment = ticket.split('Basic ')[1];
+        expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
+    });
+
     describe('login', () => {
         let contentAuthSpy: jasmine.Spy;
         let processAuthSpy: jasmine.Spy;
