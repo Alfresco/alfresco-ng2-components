@@ -1489,6 +1489,10 @@
       "description": "Custom url for shared links",
       "type": "string"
     },
+    "ooiServiceUrl": {
+      "description": "Custom url for ooi-service links",
+      "type": "string"
+    },
     "locale": {
       "description": "Default application locale",
       "type": "string"

@@ -33,6 +33,7 @@ export enum AppConfigValues {
     OAUTHCONFIG = 'oauth2',
     ECMHOST = 'ecmHost',
     BASESHAREURL = 'baseShareUrl',
+    OOI_CONNECTOR_URL = 'ooiServiceUrl',
     BPMHOST = 'bpmHost',
     IDENTITY_HOST = 'identityHost',
     AUTHTYPE = 'authType',
