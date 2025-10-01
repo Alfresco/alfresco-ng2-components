@@ -32,79 +32,30 @@ an [online palette design tool](http://mcg.mbitson.com/).
 See the [Material Design Style page](https://material.io/guidelines/style/color.html#) for
 more information about color concepts.
 
-## Defining a custom theme
+## Using Angular Material theming
 
-When you want more customization than a pre-built theme offers, you can create your own theme file. You only need to include the packages you actually use in your application.
+ADF is based on Angular Material library, which offers solutions for theming your application with either:
+- Material Design 2 https://material.angular.dev/guide/material-2-theming
+- Material Design 3 https://material.angular.dev/guide/theming
 
-```scss
-/*
- *  Include only packages that you are using (and core by default)
- */
-@use '@angular/material' as mat;
-@import '~@angular/material/theming';
-@import '~@alfresco/adf-core/theming';
+If you already setup Angular Material theming in the application you use ADF in, there is no need for taking additional steps to theme ADF components - colors, typography and other parts of the theme will be taken from your setup.
 
-@include mat.core();
+## Customizing deprecated theme variables
 
-$primary: mat.define-palette($alfresco-accent-orange);
-$accent:  mat.define-palette($alfresco-accent-purple);
-$warn:    mat.define-palette($alfresco-warn);
-$theme:   mat.define-light-theme((
-    color: (
-        primary: $primary,
-        accent: $accent,
-        warn: $warn,
-    ),
-    typography: $alfresco-typography
-));
+Currently we have an amount of custom variables around components to mange libraries look and feel consistently and globally. 
 
-@include angular-material-theme($theme);
-@include alfresco-material-theme($theme);
-```
+While they are getting deprecated to be replaced with [Angular Material system variables](https://material.angular.dev/guide/system-variables), for seamless integration with Angular Material's theming, you can provide values for those variables inside the `:root` element.
 
-### Multiple themes
-
-You can create multiple themes for your application:
-
-#### Example of defining multiple themes
-
-```scss
-@import '~@angular/material/theming';
-@import '~@alfresco/adf-core/theming';
-
-@include mat-core($alfresco-typography);
-
-$primary: mat.define-palette($alfresco-accent-orange);
-$accent:  mat.define-palette($alfresco-accent-purple);
-$warn:    mat.define-palette($alfresco-warn);
-$theme:   mat.define-light-theme((
-    color: (
-        primary: $primary,
-        accent: $accent,
-        warn: $warn,
-    ),
-    typography: $alfresco-typography
-));
-
-$dark-theme:   mat.define-dark-theme((
-    color: (
-        primary: $primary,
-        accent: $accent,
-        warn: $warn,
-    ),
-    typography: $alfresco-typography
-));
-
-@include alfresco-material-theme($theme);
-...like above
-
-.adf-dark-theme {
-    @include alfresco-material-theme($dark-theme);
-    ...like above
+For example:
+```css
+:root {
+    --theme-primary-color: --mat-sys-primary;
+    --theme-accent-color: --mat-sys-tertiary;
 }
 ```
-Any component with the `add-dark-theme` class will use the dark theme, while other components will fall back to the default.
+**No new variables should be added to the project**
 
+[Reference list of overridable variables](https://github.com/Alfresco/alfresco-ng2-components/blob/29d341cc3b6a0842a776464027dcb1154875a8f0/lib/core/src/lib/styles/_index.scss#L25)
 
 ## Default reusable class
 
@@ -132,13 +83,13 @@ Avoid adding css variables with custom values, values should come from the theme
 --new-variable: mat.get-color-from-palette($primary, 50), // good 
 ```
 
-When styling components try to use theme related variables (colors, typography):
-```
+When styling components use Angular Material system variables (colors, typography, elevation):
+```scss
 .my-class {
   color:darkgrey;  // bad
-  color:var(--theme-primary-color);  // good
+  color:var(--mat-sys-primary);  // good
   font-size:23px; // bad
-  font-size:var(--theme-typography-body-1-font-size); // good
+  font:var(--mat-sys-body-small); // good
   background:yellow; // bad
   background:var(--my-component-nr-200-background-color);  // bad
   background:var(--theme-primary-color-50);  // good
@@ -148,7 +99,7 @@ When styling components try to use theme related variables (colors, typography):
 When using library like Angular Material try to follow patterns from this library. 
 It helps to style components built with this library (just apply theme instead of custom styling). 
 For example when creating input:
-```
+```html
 // bad
 <div class="my-custom-input">
   <div class="my-custom-label"></div>
@@ -165,4 +116,17 @@ For example when creating input:
   <mat-hint></mat-hint>
   <mat-error></mat-error>
 </mat-form-field>
+```
+
+Avoid customizing Angular Material's internal selectors:
+
+```scss
+// bad - targeting internal Angular Material selectors
+.mat-mdc-form-field .mdc-text-field__input {
+  color: red;
+}
+
+.mat-mdc-button .mdc-button__label {
+  font-weight: bold;
+}
 ```
