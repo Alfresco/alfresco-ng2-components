@@ -46,6 +46,7 @@ describe('BasicAlfrescoAuthService', () => {
         appConfigSpy = spyOn(appConfig, 'get');
         appConfigSpy.withArgs(AppConfigValues.CONTEXTROOTBPM).and.returnValue('activiti-app');
         appConfigSpy.withArgs(AppConfigValues.CONTEXTROOTECM).and.returnValue('alfresco');
+        appConfigSpy.withArgs(AppConfigValues.OOI_CONNECTOR_URL).and.returnValue('ooi-service');
     });
 
     it('should return content services ticket when requestUrl contains ECM context root', () => {
