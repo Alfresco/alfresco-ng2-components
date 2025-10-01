@@ -46,6 +46,7 @@ describe('BasicAlfrescoAuthService', () => {
         appConfigSpy = spyOn(appConfig, 'get');
         appConfigSpy.withArgs(AppConfigValues.CONTEXTROOTBPM).and.returnValue('activiti-app');
         appConfigSpy.withArgs(AppConfigValues.CONTEXTROOTECM).and.returnValue('alfresco');
+        appConfigSpy.withArgs(AppConfigValues.OOI_CONNECTOR_URL).and.returnValue('ooi-service');
     });
 
     it('should return content services ticket when requestUrl contains ECM context root', () => {
@@ -68,6 +69,12 @@ describe('BasicAlfrescoAuthService', () => {
     it('should return process services ticket when requestUrl contains both ECM and BPM context root, but BPM context root comes before', () => {
         const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/activiti-app/alfresco/mock-api-url');
         expect(ticket).toEqual('Basic Mock Process Auth ticket');
+    });
+
+    it('should return content services ticket when requestUrl contains OOI_SERVICE_URL context root', () => {
+        const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/ooi-service/mock-api-url');
+        const base64Segment = ticket.split('Basic ')[1];
+        expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
     });
 
     describe('login', () => {
