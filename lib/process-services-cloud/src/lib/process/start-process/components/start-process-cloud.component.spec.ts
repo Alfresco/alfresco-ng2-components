@@ -914,6 +914,26 @@ describe('StartProcessCloudComponent', () => {
             expect(errorEl.innerText.trim()).toBe('Process start failed');
         });
 
+        it('should use fallback error message when no specific error message is provided', async () => {
+            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+            const errorWithoutMessage = {
+                response: {
+                    body: {}
+                }
+            };
+            startProcessSpy = startProcessSpy.and.returnValue(throwError(errorWithoutMessage));
+            component.startProcess();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.errorMessageId).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START');
+            const errorEl = fixture.nativeElement.querySelector('#error-message');
+            expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START');
+        });
+
         it('should emit start event when start select a process and add a name', (done) => {
             const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
