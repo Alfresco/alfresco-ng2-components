@@ -30,6 +30,8 @@ export * from './services/identity-group.service';
 export * from './services/jwt-helper.service';
 export * from './services/oauth2.service';
 export * from './services/user-access.service';
+export * from './services/cross-app-auth-sync.service';
+export * from './services/cross-app-auth-integration.service';
 
 export * from './basic-auth/basic-alfresco-auth.service';
 export * from './basic-auth/process-auth';

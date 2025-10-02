@@ -20,6 +20,12 @@ import { InjectionToken } from '@angular/core';
 export interface AuthModuleConfig {
     readonly useHash: boolean;
     preventClearHashAfterLogin?: boolean;
+    /**
+     * Enable cross-application authentication synchronization.
+     * When enabled, authentication state will be synchronized across applications
+     * running on the same domain with different localStorage prefixes.
+     */
+    enableCrossAppSync?: boolean;
 }
 
 export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');
