@@ -801,4 +801,43 @@ describe('SearchQueryBuilder', () => {
             });
         });
     });
+
+    describe('updateSearchQueryParams', () => {
+        it('should use properly encoded query containing non-latin character when calls router.navigate', () => {
+            spyOn(router, 'navigate');
+            spyOn(console, 'error');
+            const service = TestBed.inject(SearchQueryBuilderService);
+            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
+
+            service.updateSearchQueryParams();
+            expect(console.error).not.toHaveBeenCalled();
+            expect(router.navigate).toHaveBeenCalledWith([], {
+                relativeTo: activatedRoute,
+                queryParams: {
+                    q: 'eyJ1c2VyUXVlcnkiOiIoKGNtOm5hbWU6XCJ3xIXFvCpcIiBPUiBjbTp0aXRsZTpcInfEhcW8KlwiIE9SIGNtOmRlc2NyaXB0aW9uOlwid8SFxbwqXCIgT1IgVEVYVDpcInfEhcW8KlwiIE9SIFRBRzpcInfEhcW8KlwiKSkifQ=='
+                },
+                queryParamsHandling: 'merge'
+            });
+        });
+    });
+
+    describe('navigateToSearch', () => {
+        it('should use properly encoded query containing non-latin character when calls router.navigate', async () => {
+            spyOn(router, 'navigate');
+            spyOn(console, 'error');
+            const searchUrl = 'search';
+            const service = TestBed.inject(SearchQueryBuilderService);
+            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
+            service.encodeQuery();
+
+            await service.navigateToSearch('', searchUrl);
+            expect(console.error).not.toHaveBeenCalled();
+            expect(router.navigate).toHaveBeenCalledWith([searchUrl], {
+                queryParams: {
+                    q: 'eyJ1c2VyUXVlcnkiOiIoKGNtOm5hbWU6XCJ3xIXFvCpcIiBPUiBjbTp0aXRsZTpcInfEhcW8KlwiIE9SIGNtOmRlc2NyaXB0aW9uOlwid8SFxbwqXCIgT1IgVEVYVDpcInfEhcW8KlwiIE9SIFRBRzpcInfEhcW8KlwiKSkifQ=='
+                },
+                queryParamsHandling: 'merge'
+            });
+        });
+    });
 });
