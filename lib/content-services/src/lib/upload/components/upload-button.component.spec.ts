@@ -25,6 +25,7 @@ import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
 import { UploadService } from '../../common/services/upload.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../../common/events/file.event';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('UploadButtonComponent', () => {
     const file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
@@ -43,6 +44,7 @@ describe('UploadButtonComponent', () => {
     let fixture: ComponentFixture<UploadButtonComponent>;
     let uploadService: UploadService;
     let nodesApiService: NodesApiService;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -53,6 +55,7 @@ describe('UploadButtonComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
 
         component = fixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
@@ -198,6 +201,16 @@ describe('UploadButtonComponent', () => {
         component.uploadFolders = true;
         fixture.detectChanges();
         expect(compiled.querySelector('#uploadFolder-label-static').textContent.trim()).toEqual('test-text');
+    });
+
+    it('should call onClickUploadButton when label for single file receives enter key', () => {
+        component.uploadFolders = false;
+        component.multipleFiles = false;
+        spyOn(component, 'onClickUploadButton');
+
+        unitTestingUtils.keyBoardEventByCSS('.adf-upload-button-label', 'keydown', 'Enter', 'Enter');
+
+        expect(component.onClickUploadButton).toHaveBeenCalled();
     });
 
     describe('fileSize', () => {
