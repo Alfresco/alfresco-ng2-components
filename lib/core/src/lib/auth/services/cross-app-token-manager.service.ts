@@ -19,44 +19,28 @@ import { Injectable, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { firstValueFrom } from 'rxjs';
 
-export interface CrossAppAuthConfig {
-    appPrefixes?: string[];
-}
-
 @Injectable()
-export class CrossAppAuthSyncService {
+export class CrossAppTokenManager {
     private readonly appConfigService = inject(AppConfigService);
 
     private appPrefixes: string[] = [];
 
     /**
-     * Initialize cross-app authentication synchronization
+     * Initializes the CrossAppTokenManager by waiting for the application configuration to load,
+     * then retrieves and sets the configured application prefixes.
+     * If no prefixes are found, logs an error to the console.
      *
-     * @param config Configuration containing app prefixes. If not provided, reads from app.config.json
+     * @returns A promise that resolves when initialization is complete.
      */
-    async initialize(config: CrossAppAuthConfig = {}): Promise<void> {
+    async initialize(): Promise<void> {
         await firstValueFrom(this.appConfigService.onLoad);
-        this.appPrefixes = config.appPrefixes || this.getConfiguredPrefixes();
+        this.appPrefixes = this.getConfiguredPrefixes();
 
         if (this.appPrefixes.length === 0) {
-            console.warn('CrossAppAuthSync: No app prefixes configured. Set appPrefixes or application.linkedStorageAuthPrefix in app.config.json');
+            console.error(
+                'CrossAppTokenManager: No app prefixes configured. Set appPrefixes or application.linkedStorageAuthPrefix in app.config.json'
+            );
         }
-    }
-
-    /**
-     * Check if any linked application has authentication tokens
-     * This indicates the user is likely authenticated with the identity provider
-     *
-     * @param excludePrefix Optional prefix to exclude from the check (current app)
-     * @returns true if tokens are found in any linked app storage
-     */
-    hasAuthTokensInLinkedApps(excludePrefix?: string): boolean {
-        const prefixesToCheck = excludePrefix ? this.appPrefixes.filter((prefix) => prefix !== excludePrefix) : this.appPrefixes;
-
-        return prefixesToCheck.some((prefix) => {
-            const accessTokenKey = this.buildStorageKey(prefix, 'access_token');
-            return localStorage.getItem(accessTokenKey) !== null;
-        });
     }
 
     /**
@@ -87,21 +71,30 @@ export class CrossAppAuthSyncService {
         });
     }
 
-    /**
-     * Get the current sync configuration
-     *
-     * @returns Current app prefixes configuration
-     */
-    getConfiguration(): string[] {
-        return [...this.appPrefixes];
-    }
-
     private buildStorageKey(prefix: string, item: string): string {
         return prefix ? `${prefix}${item}` : item;
     }
 
     private getConfiguredPrefixes(): string[] {
-        const linkedPrefixes = this.appConfigService.get<string[]>(AppConfigValues.LINKED_STORAGE_AUTH_PREFIX);
-        return Array.isArray(linkedPrefixes) ? linkedPrefixes : [];
+        const linkedPrefixes = this.appConfigService.get<string[]>(AppConfigValues.LINKED_STORAGE_AUTH_PREFIX) || [];
+        const currentAppPrefix = this.appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX);
+
+        const formattedLinkedPrefixes = linkedPrefixes.map((prefix) => (prefix.endsWith('_') ? prefix : `${prefix}_`));
+        const formattedCurrentAppPrefix = currentAppPrefix ? (currentAppPrefix.endsWith('_') ? currentAppPrefix : `${currentAppPrefix}_`) : '';
+
+        if (formattedLinkedPrefixes.length === 0 && !formattedCurrentAppPrefix) {
+            return [];
+        }
+
+        const allPrefixes = [...formattedLinkedPrefixes];
+        if (formattedCurrentAppPrefix) {
+            allPrefixes.push(formattedCurrentAppPrefix);
+        } else {
+            if (formattedLinkedPrefixes.length > 0) {
+                allPrefixes.push('');
+            }
+        }
+
+        return allPrefixes;
     }
 }

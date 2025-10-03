@@ -28,8 +28,7 @@ import { StorageService } from '../../common/services/storage.service';
 import { provideRouter } from '@angular/router';
 import { AUTH_ROUTES } from './auth.routes';
 import { Authentication, AuthenticationInterceptor } from '@alfresco/adf-core/auth';
-import { CrossAppAuthSyncService } from '../services/cross-app-auth-sync.service';
-import { CrossAppAuthIntegrationService } from '../services/cross-app-auth-integration.service';
+import { provideCrossAppAuth } from '../services/cross-app-auth.providers';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
@@ -88,15 +87,7 @@ export class AuthModule {
         const providers: (Provider | EnvironmentProviders)[] = [{ provide: AUTH_MODULE_CONFIG, useValue: config }];
 
         if (config.enableCrossAppSync) {
-            providers.push(
-                CrossAppAuthSyncService,
-                CrossAppAuthIntegrationService,
-                provideAppInitializer(() => {
-                    const crossAppIntegration = inject(CrossAppAuthIntegrationService);
-                    crossAppIntegration.initialize();
-                    return crossAppIntegration.attemptSilentLoginFromLinkedApps();
-                })
-            );
+            providers.push(...provideCrossAppAuth());
         }
         return {
             ngModule: AuthModule,

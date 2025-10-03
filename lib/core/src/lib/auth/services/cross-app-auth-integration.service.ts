@@ -16,72 +16,46 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { CrossAppAuthSyncService, CrossAppAuthConfig } from './cross-app-auth-sync.service';
+import { CrossAppTokenManager } from './cross-app-token-manager.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
 @Injectable()
 export class CrossAppAuthIntegrationService {
     private readonly redirectAuthService = inject(RedirectAuthService);
-    private readonly crossAppSyncService = inject(CrossAppAuthSyncService);
-
-    private currentAppPrefix = '';
+    private readonly crossAppTokenManager = inject(CrossAppTokenManager);
 
     /**
-     * Initialize cross-application authentication synchronization
+     * Initializes the cross-app authentication integration service.
      *
-     * @param config Configuration for cross-app sync. If not provided, reads from app.config.json
-     * @param currentAppPrefix The prefix for the current application
+     * This method performs the following actions:
+     * - Awaits the initialization of the cross-app synchronization service.
+     * - Subscribes to the logout event from the redirect authentication service.
+     *   When a logout occurs, it clears authentication tokens from all applications.
+     *
+     * @returns A promise that resolves when initialization is complete.
      */
-    async initialize(config?: CrossAppAuthConfig, currentAppPrefix = ''): Promise<void> {
-        this.currentAppPrefix = currentAppPrefix;
-        await this.crossAppSyncService.initialize(config || {});
+    async initialize(): Promise<void> {
+        await this.crossAppTokenManager.initialize();
 
         this.redirectAuthService.onLogout$.subscribe(() => {
-            this.crossAppSyncService.clearTokensFromAllApps();
+            this.crossAppTokenManager.clearTokensFromAllApps();
         });
     }
 
     /**
-     * Check if user is authenticated in another app and attempt silent login
-     * Uses OAuth prompt=none for true silent authentication
+     * Process cross-app authentication request by detecting the crossAppAuth URL parameter.
+     * If present, cleans up the URL parameter and clears authentication tokens to prepare
+     * for a fresh authentication flow initiated by the redirect-auth service.
      *
-     * @returns Promise resolving to true if silent login was attempted
+     * @returns True if crossAppAuth parameter was present and processed
      */
-    async attemptSilentLoginFromLinkedApps(): Promise<boolean> {
-        const isAlreadyAuthenticated = this.redirectAuthService.authenticated;
-        if (isAlreadyAuthenticated) {
-            return false;
-        }
+    async processCrossAppAuthRequest(): Promise<boolean> {
+        const shouldAttemptCrossAppAuth = this.hasCrossAppAuthParameter();
 
-        const hasLinkedTokensFromOtherApps = this.crossAppSyncService.hasAuthTokensInLinkedApps(this.currentAppPrefix);
-
-        if (hasLinkedTokensFromOtherApps) {
-            try {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const underlyingOAuthService = (this.redirectAuthService as any).oauthService;
-                if (underlyingOAuthService?.initLoginFlow) {
-                    const silentLoginParams = { prompt: 'none' };
-
-                    const originalCustomQueryParams = underlyingOAuthService.customQueryParams;
-                    underlyingOAuthService.customQueryParams = { ...originalCustomQueryParams, ...silentLoginParams };
-
-                    await this.redirectAuthService.ensureDiscoveryDocument();
-                    underlyingOAuthService.initLoginFlow();
-
-                    underlyingOAuthService.customQueryParams = originalCustomQueryParams;
-
-                    return true;
-                } else {
-                    const shouldFallbackToRegularLogin = true;
-                    if (shouldFallbackToRegularLogin) {
-                        this.redirectAuthService.login();
-                    }
-                    return true;
-                }
-            } catch {
-                const silentLoginFailed = true;
-                return !silentLoginFailed;
-            }
+        if (shouldAttemptCrossAppAuth) {
+            this.cleanupCrossAppAuthParameter();
+            this.crossAppTokenManager.clearTokensFromAllApps();
+            return true;
         }
 
         return false;
@@ -91,15 +65,17 @@ export class CrossAppAuthIntegrationService {
      * Clear authentication tokens from all configured applications
      */
     clearTokensFromAllApps(): void {
-        this.crossAppSyncService.clearTokensFromAllApps();
+        this.crossAppTokenManager.clearTokensFromAllApps();
     }
 
-    /**
-     * Get the underlying sync service for advanced usage
-     *
-     * @returns The CrossAppAuthSyncService instance
-     */
-    getSyncService(): CrossAppAuthSyncService {
-        return this.crossAppSyncService;
+    private hasCrossAppAuthParameter(): boolean {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('crossAppAuth') === 'true';
+    }
+
+    private cleanupCrossAppAuthParameter(): void {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('crossAppAuth');
+        window.history.replaceState({}, '', url.toString());
     }
 }
