@@ -2,7 +2,8 @@
   "COMMON": {
     "APPLY": "Apply",
     "CANCEL": "Cancel",
-    "NAME": "Name"
+    "NAME": "Name",
+    "CLEAR": "Clear"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {

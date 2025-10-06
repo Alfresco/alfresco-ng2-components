@@ -30,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
     selector: 'adf-add-permission-panel',
@@ -42,7 +43,8 @@ import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.co
         MatIconModule,
         MatListModule,
         UserIconColumnComponent,
-        SearchComponent
+        SearchComponent,
+        MatIconButton
     ],
     templateUrl: './add-permission-panel.component.html',
     styleUrls: ['./add-permission-panel.component.scss'],
