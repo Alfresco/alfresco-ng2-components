@@ -582,7 +582,7 @@ export abstract class BaseQueryBuilderService {
      */
     encodeQuery() {
         try {
-            this.encodedQuery = btoa(JSON.stringify(this.filterRawParams));
+            this.encodedQuery = btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(this.filterRawParams))));
         } catch (error) {
             console.error('Failed to encode query parameters:', error);
             this.encodedQuery = '';
