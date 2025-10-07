@@ -37,7 +37,7 @@
       "@alfresco/js-api": ["lib/js-api/src/index.ts"]
     }
   },
-  "exclude": ["lib/config", "integration", "scripts", "assets", "tools", "node_modules"],
+  "exclude": ["lib/config", "integration", "scripts", "assets", "node_modules"],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,

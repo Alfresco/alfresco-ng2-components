@@ -10,7 +10,6 @@ node_modules
 scripts
 src
 lib
-tools
 /angular.json
 /desktop.ini
 /cspell.json

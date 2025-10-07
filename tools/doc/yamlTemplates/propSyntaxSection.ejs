@@ -1,6 +1,0 @@
-    syntax:
-      return:
-        type: >-
-          <%- child['type'] ? include("type", {type: child.type}).trim() : '' %>
-        defaultValue: >-
-          <%- (child.defaultValue || "").length < 20 ? child.defaultValue : "" %>
