@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class WebScriptMock extends BaseMock {
@@ -34,7 +33,7 @@ export class WebScriptMock extends BaseMock {
     }
 
     get404Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get(this.scriptSlug)
             .reply(404, {
                 error: {
@@ -48,7 +47,7 @@ export class WebScriptMock extends BaseMock {
     }
 
     get200Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get(this.scriptSlug)
             .reply(200, {
                 randomStructure: {
@@ -59,7 +58,7 @@ export class WebScriptMock extends BaseMock {
     }
 
     get200ResponseHTMLFormat(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/alfresco/service/sample/folder/Company%20Home').reply(
+        this.createNockWithCors().get('/alfresco/service/sample/folder/Company%20Home').reply(
             200,
             // eslint-disable-next-line max-len
             '<html>\n  <head>\n    <title>/Company Home</title>\n  </head>\n  <body>\n    Folder: /Company Home\n    <br>\n    <table>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/Data%20Dictionary">Data Dictionary</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/Guest%20Home">Guest Home</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/User%20Homes">User Homes</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/Shared">Shared</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/Imap%20Attachments">Imap Attachments</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/IMAP%20Home">IMAP Home</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/Sites">Sites</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/x">x</a>\n     </tr>\n     <tr>\n         <td><td><a href="/alfresco/service/api/node/content/workspace/SpacesStore/2857abfd-0ac6-459d-a22d-ec78770570f3/testFile.txt">testFile.txt</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/newFolder">newFolder</a>\n     </tr>\n     <tr>\n         <td>&gt;<td><a href="/alfresco/service/sample/folder/Company%20Home/newFolder-1">newFolder-1</a>\n     </tr>\n     <tr>\n         <td><td><a href="/alfresco/service/api/node/content/workspace/SpacesStore/21ce66a9-6bc5-4c49-8ad3-43d3b824a9a3/testFile-1.txt">testFile-1.txt</a>\n     </tr>\n     <tr>\n         <td><td><a href="/alfresco/service/api/node/content/workspace/SpacesStore/ae314293-27e8-4221-9a09-699f103db5f3/testFile-2.txt">testFile-2.txt</a>\n     </tr>\n     <tr>\n         <td><td><a href="/alfresco/service/api/node/content/workspace/SpacesStore/935c1a72-647f-4c8f-aab6-e3b161978427/testFile-3.txt">testFile-3.txt</a>\n     </tr>\n    </table>\n  </body>\n</html>\n\n'
@@ -67,7 +66,7 @@ export class WebScriptMock extends BaseMock {
     }
 
     get401Response(): void {
-        nock(this.host, { encodedQueryParams: true })
+        this.createNockWithCors()
             .get(this.scriptSlug)
             .reply(401, {
                 error: {

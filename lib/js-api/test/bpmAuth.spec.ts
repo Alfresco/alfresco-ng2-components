@@ -17,8 +17,9 @@
 
 import assert from 'assert';
 import { ProcessAuth } from '../src';
-import { SuperagentHttpClient } from '../src/superagentHttpClient';
+
 import { BpmAuthMock } from './mockObjects';
+import { AxiosHttpClient } from '../src/axiosHttpClient';
 
 describe('Bpm Auth test', () => {
     const hostBpm = 'https://127.0.0.1:9999';
@@ -256,16 +257,16 @@ describe('Bpm Auth test', () => {
             let setCsrfTokenCalled = false;
 
             beforeEach(() => {
-                originalMethod = SuperagentHttpClient.prototype.setCsrfToken;
+                originalMethod = AxiosHttpClient.prototype.setCsrfToken;
                 setCsrfTokenCalled = false;
 
-                SuperagentHttpClient.prototype.setCsrfToken = () => {
+                AxiosHttpClient.prototype.setCsrfToken = () => {
                     setCsrfTokenCalled = true;
                 };
             });
 
             afterEach(() => {
-                SuperagentHttpClient.prototype.setCsrfToken = originalMethod;
+                AxiosHttpClient.prototype.setCsrfToken = originalMethod;
                 setCsrfTokenCalled = false;
             });
 

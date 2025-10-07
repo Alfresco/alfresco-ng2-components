@@ -374,7 +374,7 @@ describe('UploadDragAreaComponent', () => {
 
     describe('Events', () => {
         it('should raise an error if upload a file goes wrong', async () => {
-            spyOn(uploadService, 'getUploadPromise').and.callThrough();
+            spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
