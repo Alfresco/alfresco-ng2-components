@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "stylelint": {
+      "cache": true
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "runtimeCacheInputs": ["node -v"]
+      }
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/angular.json",
+      "{workspaceRoot}/e2e/protractor.excludes.json",
+      "{workspaceRoot}/e2e/protractor.conf.js"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.spec.[jt]s",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/karma.conf.js"
+    ]
+  },
+  "cacheDirectory": "nxcache",
+  "defaultBase": "develop"
+}

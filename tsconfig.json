@@ -1,46 +1,6 @@
 {
+  "extends": "./tsconfig.base.json",
   "compileOnSave": false,
-  "compilerOptions": {
-    "downlevelIteration": true,
-    "module": "esnext",
-    "rootDir": ".",
-    "outDir": "./dist/out-tsc",
-    "baseUrl": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "target": "es2015",
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"],
-    "types": ["jasmine", "node", "jasminewd2"],
-    "lib": ["es2018", "esnext.array", "esnext.asynciterable", "dom"],
-    "paths": {
-      "@alfresco/adf-content-services": ["lib/content-services/src/public-api.ts"],
-      "@alfresco/adf-core": ["lib/core/src/public-api.ts"],
-      "@alfresco/adf-core/*": ["lib/core/*/public-api.ts"],
-      "@alfresco/adf-core/api": ["lib/core/api/src/index.ts"],
-      "@alfresco/adf-core/auth": ["lib/core/auth/src/index.ts"],
-      "@alfresco/adf-core/breadcrumbs": ["lib/core/breadcrumbs/src/index.ts"],
-      "@alfresco/adf-core/feature-flags": ["lib/core/feature-flags/public-api.ts"],
-      "@alfresco/adf-core/shell": ["lib/core/shell/src/index.ts"],
-      "@alfresco/adf-extensions": ["lib/extensions/src/public-api.ts"],
-      "@alfresco/adf-insights": ["lib/insights/src/public-api.ts"],
-      "@alfresco/adf-process-services": ["lib/process-services/src/public-api.ts"],
-      "@alfresco/adf-process-services-cloud": ["lib/process-services-cloud/src/public-api.ts"],
-      "@alfresco/js-api": ["lib/js-api/src/index.ts"]
-    }
-  },
-  "exclude": ["lib/config", "integration", "scripts", "assets", "tools", "node_modules"],
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "strictTemplates": true
-  }
+  "files": [],
+  "references": []
 }
