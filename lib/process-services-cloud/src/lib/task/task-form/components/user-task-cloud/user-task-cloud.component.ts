@@ -186,7 +186,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnChanges(changes: SimpleChanges) {
-        debugger;
         const appName = changes['appName'];
         if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
             this.loadTask();
@@ -283,11 +282,17 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         this.nextTaskCheckboxCheckedChanged.emit(event);
     }
 
+    getTaskType(): void {
+        this.taskType = this.taskTypeResolverService.getUserTaskType(this.taskDetails?.formKey);
+        this.screenId = this.taskTypeResolverService.getScreenId(this.taskDetails?.formKey);
+    }
+
     private loadTask(): void {
         this.loading = true;
         const tasks$ = this.taskCloudService.getTaskById(this.appName, this.taskId);
         const candidateUsers$ = this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
         const candidateGroups$ = this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
+
         forkJoin({
             tasks: tasks$,
             candidateUsers: candidateUsers$,
@@ -303,9 +308,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             .subscribe(({ tasks, candidateGroups, candidateUsers }) => {
                 this.taskDetails = tasks;
 
-                this.taskType = this.taskTypeResolverService.getUserTaskType(this.taskDetails.formKey);
-                this.screenId = this.taskTypeResolverService.getScreenId(this.taskDetails.formKey);
-
+                this.getTaskType();
                 this.candidateUsers = candidateUsers;
                 this.candidateGroups = candidateGroups;
                 this.loading = false;
