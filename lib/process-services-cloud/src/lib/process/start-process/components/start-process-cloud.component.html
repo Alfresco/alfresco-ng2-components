@@ -109,6 +109,12 @@
                                 <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                             </adf-cloud-form-custom-outcomes>
                         </adf-cloud-form>
+                    } @else if (hasScreen) {
+                        <adf-cloud-task-screen
+                            #adfCloudTaskScreen
+                            [appName]="appName"
+                            [screenId]="screenId"
+                        />
                     } @else {
                         <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                     }

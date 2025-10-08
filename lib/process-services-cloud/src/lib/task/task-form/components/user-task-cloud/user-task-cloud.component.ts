@@ -32,14 +32,7 @@ import { TaskScreenCloudComponent } from '../../../../screen/components/screen-c
 import { CompleteTaskDirective } from './complete-task/complete-task.directive';
 import { catchError, EMPTY, forkJoin } from 'rxjs';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-
-const TaskTypes = {
-    Form: 'form',
-    Screen: 'screen',
-    None: ''
-} as const;
-
-type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
+import { UserTaskContentType, TaskTypeResolverService, UserTaskType } from '../../../../services/task-type-resolver/task-type-resolver.service';
 
 @Component({
     selector: 'adf-cloud-user-task',
@@ -183,15 +176,17 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     candidateUsers: string[] = [];
     candidateGroups: string[] = [];
     loading: boolean = false;
-    screenId: string;
     taskDetails: TaskDetailsCloudModel;
-    taskType: TaskTypesType;
-    taskTypeEnum = TaskTypes;
+    taskType: UserTaskType;
+    screenId: string;
+    taskTypeEnum = UserTaskContentType;
 
     private taskCloudService: TaskCloudService = inject(TaskCloudService);
+    private readonly taskTypeResolverService = inject(TaskTypeResolverService);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnChanges(changes: SimpleChanges) {
+        debugger;
         const appName = changes['appName'];
         if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
             this.loadTask();
@@ -221,22 +216,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     canUnclaimTask(): boolean {
         return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
-    }
-
-    getTaskType(): void {
-        if (this.taskDetails && !!this.taskDetails.formKey) {
-            if (this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
-                this.taskType = this.taskTypeEnum.Form;
-                return;
-            } else if (this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
-                this.taskType = this.taskTypeEnum.Screen;
-                const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
-                this.screenId = screenId;
-                return;
-            }
-        }
-
-        this.taskType = this.taskTypeEnum.None;
     }
 
     hasCandidateUsers(): boolean {
@@ -323,7 +302,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             )
             .subscribe(({ tasks, candidateGroups, candidateUsers }) => {
                 this.taskDetails = tasks;
-                this.getTaskType();
+
+                this.taskType = this.taskTypeResolverService.getUserTaskType(this.taskDetails.formKey);
+                this.screenId = this.taskTypeResolverService.getScreenId(this.taskDetails.formKey);
+
                 this.candidateUsers = candidateUsers;
                 this.candidateGroups = candidateGroups;
                 this.loading = false;

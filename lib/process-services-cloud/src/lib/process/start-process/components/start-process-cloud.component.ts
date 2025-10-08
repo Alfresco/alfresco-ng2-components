@@ -63,6 +63,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TaskScreenCloudComponent } from '../../../screen/components/screen-cloud/screen-cloud.component';
+import { TaskTypeResolverService } from '../../../services/task-type-resolver/task-type-resolver.service';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -85,7 +87,8 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
         MatAutocompleteModule,
         ReactiveFormsModule,
         FormCloudComponent,
-        FormCustomOutcomesComponent
+        FormCustomOutcomesComponent,
+        TaskScreenCloudComponent
     ],
     providers: [LocalizedDatePipe],
     templateUrl: './start-process-cloud.component.html',
@@ -197,6 +200,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly displayStartSubject = new BehaviorSubject<string>(null);
     private readonly hasVisibleOutcomesSubject = new BehaviorSubject<boolean>(false);
     private readonly dialog = inject(MatDialog);
+    private readonly taskTypeResolverService = inject(TaskTypeResolverService);
 
     showSaveButton = false;
     showCompleteButton = false;
@@ -226,7 +230,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     get hasForm(): boolean {
-        return !!this.processDefinitionCurrent?.formKey;
+        return this.taskTypeResolverService.isFormTask(this.processDefinitionCurrent?.formKey);
+    }
+
+    get hasScreen(): boolean {
+        return this.taskTypeResolverService.isScreenTask(this.processDefinitionCurrent?.formKey);
+    }
+
+    get screenId(): string {
+        return this.taskTypeResolverService.getScreenId(this.processDefinitionCurrent?.formKey);
     }
 
     get defaultStartProcessButtonLabel(): string {

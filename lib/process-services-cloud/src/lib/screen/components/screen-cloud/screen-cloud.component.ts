@@ -172,7 +172,6 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.componentRef.instance?.error) {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
         }
-
         if (this.componentRef.instance?.claimTask) {
             this.componentRef.instance.claimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
         }

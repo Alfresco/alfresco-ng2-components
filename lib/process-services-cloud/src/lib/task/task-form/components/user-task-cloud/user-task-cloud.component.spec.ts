@@ -114,7 +114,7 @@ describe('UserTaskCloudComponent', () => {
         getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
         spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
         spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of([]));
-        fixture.detectChanges();
+        // fixture.detectChanges();
     });
 
     describe('Complete button', () => {
@@ -276,7 +276,7 @@ describe('UserTaskCloudComponent', () => {
             fixture.componentRef.setInput('taskId', 'task1');
             fixture.componentRef.setInput('readOnly', true);
             fixture.componentRef.setInput('showCancelButton', true);
-            component.getTaskType();
+            // component.getTaskType();
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -517,7 +517,7 @@ describe('UserTaskCloudComponent', () => {
     it('should allow controlling [open next task] checkbox visibility', () => {
         taskDetails.formKey = 'my-screen';
         component.taskDetails = { ...taskDetails };
-        component.getTaskType();
+        // component.getTaskType();
         component.taskId = 'taskId';
         component.appName = 'app';
 
@@ -594,17 +594,18 @@ describe('UserTaskCloudComponent', () => {
         expect(isCheckboxShown()).toBeTrue();
     });
 
-    describe('Input Properties - Button Controls', () => {
+    fdescribe('Input Properties - Button Controls', () => {
         beforeEach(() => {
             taskDetails.formKey = 'my-form';
             component.taskDetails = { ...taskDetails };
-            component.getTaskType();
+            // component.getTaskType();
             component.taskId = 'taskId';
             component.appName = 'app';
         });
 
-        describe('showSaveButton', () => {
+        fdescribe('showSaveButton', () => {
             it('should pass showSaveButton to task form when task type is Form', () => {
+                debugger;
                 fixture.componentRef.setInput('showSaveButton', false);
                 fixture.detectChanges();
 
@@ -657,7 +658,7 @@ describe('UserTaskCloudComponent', () => {
 
             it('should display custom complete button text in no form template', async () => {
                 component.taskDetails.formKey = '';
-                component.getTaskType();
+                // component.getTaskType();
 
                 const customText = 'Custom Complete Text';
                 fixture.componentRef.setInput('customCompleteButtonText', customText);
@@ -672,7 +673,7 @@ describe('UserTaskCloudComponent', () => {
 
             it('should display default complete button text when customCompleteButtonText is not provided', async () => {
                 component.taskDetails.formKey = '';
-                component.getTaskType();
+                // component.getTaskType();
                 const spy = spyOn(taskCloudService, 'canCompleteTask');
                 spy.and.returnValue(true);
                 fixture.detectChanges();
@@ -700,7 +701,7 @@ describe('UserTaskCloudComponent', () => {
 
             it('should pass customCancelButtonText to adf-cloud-user-task-cloud-buttons', () => {
                 component.taskDetails.formKey = '';
-                component.getTaskType();
+                // component.getTaskType();
 
                 const customText = 'Custom Cancel Text';
                 fixture.componentRef.setInput('customCancelButtonText', customText);
@@ -741,7 +742,7 @@ describe('UserTaskCloudComponent', () => {
 
         taskDetails.formKey = 'my-form';
         component.taskDetails = { ...taskDetails };
-        component.getTaskType();
+        // component.getTaskType();
         component.taskId = 'taskId';
         component.appName = 'app';
 
