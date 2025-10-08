@@ -17,15 +17,6 @@
 
 import { InjectionToken, Provider, Type } from '@angular/core';
 
-export const CustomScreenSlots = {
-    userTask: 'userTask',
-    startProcess: 'startProcess'
-} as const;
-
-export interface CustomScreenConfiguration {
-    showOn?: Array<typeof CustomScreenSlots>;
-}
-
 export interface CustomScreen {
     key: string;
     component: Type<any>;

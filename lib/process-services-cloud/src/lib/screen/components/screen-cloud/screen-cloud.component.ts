@@ -115,7 +115,7 @@ export class TaskScreenCloudComponent implements OnInit {
         this.createDynamicComponent();
     }
 
-    createDynamicComponent() {
+    createDynamicComponent(): void {
         if (this.screenId) {
             const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
             this.componentRef = this.container.createComponent(componentType);
@@ -160,7 +160,7 @@ export class TaskScreenCloudComponent implements OnInit {
         }
     }
 
-    subscribeToOutputs() {
+    subscribeToOutputs(): void {
         if (this.componentRef.instance?.taskSaved) {
             this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
         }

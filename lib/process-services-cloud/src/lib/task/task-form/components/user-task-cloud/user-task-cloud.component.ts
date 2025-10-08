@@ -217,6 +217,11 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
+    getTaskType(): void {
+        this.taskType = this.taskTypeResolverService.getUserTaskType(this.taskDetails?.formKey);
+        this.screenId = this.taskTypeResolverService.getScreenId(this.taskDetails?.formKey);
+    }
+
     hasCandidateUsers(): boolean {
         return this.candidateUsers.length !== 0;
     }
@@ -262,6 +267,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     onExecuteOutcome(outcome: FormOutcomeEvent): void {
         this.executeOutcome.emit(outcome);
     }
+
     onFormContentClicked(content: ContentLinkModel): void {
         this.formContentClicked.emit(content);
     }
@@ -280,11 +286,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
 
     onNextTaskCheckboxCheckedChanged(event: MatCheckboxChange) {
         this.nextTaskCheckboxCheckedChanged.emit(event);
-    }
-
-    getTaskType(): void {
-        this.taskType = this.taskTypeResolverService.getUserTaskType(this.taskDetails?.formKey);
-        this.screenId = this.taskTypeResolverService.getScreenId(this.taskDetails?.formKey);
     }
 
     private loadTask(): void {
@@ -307,7 +308,6 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
             )
             .subscribe(({ tasks, candidateGroups, candidateUsers }) => {
                 this.taskDetails = tasks;
-
                 this.getTaskType();
                 this.candidateUsers = candidateUsers;
                 this.candidateGroups = candidateGroups;
