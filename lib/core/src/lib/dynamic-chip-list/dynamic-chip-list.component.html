@@ -6,13 +6,16 @@
     #nodeListContainer>
     <mat-chip-set
         [class.adf-dynamic-chip-list-full-width]="limitChipsDisplayed && !calculationsDone"
-        role="listbox"
+        role="list"
         [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
         <mat-chip
-            class="adf-dynamic-chip-list-chip"
             *ngFor="let chip of chipsToDisplay; let idx = index"
+            class="adf-dynamic-chip-list-chip"
             [style.border-radius]="roundUpChips ? '20px' : '10px'"
             [style.font-weight]="'bold'"
+            role="listitem"
+            tabIndex="0"
+            [attr.aria-label]="chip.name"
             (removed)="removedChip.emit(chip.id)">
             <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
             <mat-icon *ngIf="showDelete"
