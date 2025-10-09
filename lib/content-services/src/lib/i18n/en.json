@@ -556,6 +556,7 @@
       "ADD-ACTION": "ADD",
       "CLOSE-ACTION": "CANCEL",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Add user or group permission",
       "EVERYONE": "EVERYONE",
       "USER-GROUP-LIST": "User or Group List",
       "REMOVE_USER_GROUP": "Remove"

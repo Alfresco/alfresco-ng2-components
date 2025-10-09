@@ -1,4 +1,7 @@
-<h2 mat-dialog-title class='adf-add-permission-dialog-title' id="add-permission-dialog-title">
+<h2 mat-dialog-title
+    class='adf-add-permission-dialog-title'
+    id="add-permission-dialog-title"
+    [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.BASE_DIALOG_SCREEN_READER_TITLE' | translate">
     {{ (data?.title ? data?.title : "PERMISSION_MANAGER.ADD-PERMISSION.BASE-DIALOG-TITLE") | translate }}
 </h2>
 
