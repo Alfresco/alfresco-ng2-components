@@ -60,6 +60,8 @@
                                     class="adf-add-member-action"
                                     [style.display]="entry.row.obj.readonly ? 'none': 'block'"
                                     (click)="onMemberDelete(entry.row.obj)"
+                                    [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.REMOVE_USER_GROUP' | translate"
+                                    [attr.title]="'PERMISSION_MANAGER.ADD-PERMISSION.REMOVE_USER_GROUP' | translate"
                                     data-automation-id="adf-delete-permission-button">
                                 <mat-icon>highlight_off</mat-icon>
                             </button>

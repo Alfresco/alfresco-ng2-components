@@ -2,7 +2,8 @@
   "COMMON": {
     "APPLY": "Apply",
     "CANCEL": "Cancel",
-    "NAME": "Name"
+    "NAME": "Name",
+    "CLEAR": "Clear"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -556,7 +557,8 @@
       "CLOSE-ACTION": "CANCEL",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
       "EVERYONE": "EVERYONE",
-      "USER-GROUP-LIST": "User or Group List"
+      "USER-GROUP-LIST": "User or Group List",
+      "REMOVE_USER_GROUP": "Remove"
     },
     "COLUMN": {
       "NAME": "Users and Groups ({{ count }})",

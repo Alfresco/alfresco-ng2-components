@@ -10,16 +10,18 @@
         [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate"
         [value]="searchedWord"
     />
-
-    <mat-icon
+    <button
+        matSuffix
+        mat-icon-button
         *ngIf="searchedWord?.length > 0"
-        class="adf-permission-search-icon"
         data-automation-id="adf-permission-clear-input"
         id="adf-permission-clear-input"
-        matSuffix
+        class="adf-permission-search-input-clear-button"
         (click)="clearSearch()"
-        >clear
-    </mat-icon>
+        [attr.aria-label]="'COMMON.CLEAR' | translate"
+        [attr.title]="'COMMON.CLEAR' | translate">
+        <mat-icon class="adf-permission-search-icon">clear</mat-icon>
+    </button>
 
     <mat-icon *ngIf="searchedWord?.length === 0" class="adf-permission-search-icon" data-automation-id="adf-permission-search-icon" matSuffix
         >search
