@@ -198,10 +198,12 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             .pipe(
                 map((sites) => {
                     const predefinedOptions = this.settings?.autocompleteOptions || [];
-                    const sitesOptions = sites.list.entries.map<AutocompleteOption>((siteEntry) => ({
-                        id: siteEntry.entry.id,
-                        value: siteEntry.entry.title
-                    }));
+                    const sitesOptions = sites.list.entries
+                        .filter((siteEntry) => siteEntry.entry.visibility === 'public' || siteEntry.entry?.role)
+                        .map<AutocompleteOption>((siteEntry) => ({
+                            id: siteEntry.entry.id,
+                            value: siteEntry.entry.title
+                        }));
                     return [...sitesOptions, ...predefinedOptions];
                 })
             )

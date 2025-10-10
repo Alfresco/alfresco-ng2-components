@@ -169,10 +169,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         const sitesMock: SitePaging = {
             list: {
                 pagination: {},
-                entries: [
-                    { entry: { guid: 'site1', id: 'site1', title: 'Marketing', visibility: 'public' } },
-                    { entry: { guid: 'site2', id: 'site2', title: 'Finance', visibility: 'private' } }
-                ]
+                entries: [{ entry: { guid: 'site1', id: 'site1', title: 'Marketing', visibility: 'public' } }]
             }
         };
         component.settings.field = AutocompleteField.LOCATION;
@@ -182,8 +179,34 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.autocompleteOptions$.subscribe((result) => {
             expect(result).toEqual([
                 { id: 'site1', value: 'Marketing' },
-                { id: 'site2', value: 'Finance' },
                 { value: 'Repository', query: `PATH:'somePath'` }
+            ]);
+            done();
+        });
+    });
+
+    it('should filter LOCATION field options', (done) => {
+        const sitesMock: SitePaging = {
+            list: {
+                pagination: {},
+                entries: [
+                    { entry: { guid: 'site1', id: 'site1', title: 'Marketing', visibility: 'public' } },
+                    { entry: { guid: 'site2', id: 'site2', title: 'Finance', visibility: 'moderated' } },
+                    { entry: { guid: 'site3', id: 'site3', title: 'HR', visibility: 'private' } },
+                    { entry: { guid: 'site4', id: 'site4', title: 'Legal', visibility: 'private', role: 'Consumer' } },
+                    { entry: { guid: 'site5', id: 'site5', title: 'IT', visibility: 'moderated', role: 'SiteManager' } }
+                ]
+            }
+        };
+        component.settings.field = AutocompleteField.LOCATION;
+        component.settings.autocompleteOptions = [];
+        spyOn(sitesService, 'getSites').and.returnValue(of(sitesMock));
+        component.onInputChange('mark');
+        component.autocompleteOptions$.subscribe((result) => {
+            expect(result).toEqual([
+                { id: 'site1', value: 'Marketing' },
+                { id: 'site4', value: 'Legal' },
+                { id: 'site5', value: 'IT' }
             ]);
             done();
         });
