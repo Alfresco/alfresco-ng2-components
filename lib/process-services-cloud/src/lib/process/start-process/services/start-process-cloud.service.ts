@@ -25,7 +25,7 @@ import { BaseCloudService } from '../../../services/base-cloud.service';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 export interface QueryParams {
-    include: 'variables';
+    include: string;
     excludedCategory?: string;
 }
 
