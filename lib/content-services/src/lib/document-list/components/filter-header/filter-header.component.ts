@@ -47,8 +47,8 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(
-        @Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any,
-        private searchFilterQueryBuilder: SearchHeaderQueryBuilderService
+        @Inject(ADF_DOCUMENT_PARENT_COMPONENT) private readonly documentList: any,
+        private readonly searchFilterQueryBuilder: SearchHeaderQueryBuilderService
     ) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
@@ -105,11 +105,16 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     }
 
     private initSearchHeader(currentFolderId: string) {
-        this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
         if (this.value) {
             Object.keys(this.value).forEach((key) => {
                 this.searchFilterQueryBuilder.setActiveFilter(key, this.value[key]);
+
+                const operator = this.searchFilterQueryBuilder.getOperatorForFilterId(key) || ' OR ';
+                this.searchFilterQueryBuilder.filterRawParams[key] = this.value[key];
+                const query = Array.isArray(this.value[key]) ? this.value[key].join(operator) : this.value[key];
+                this.searchFilterQueryBuilder.queryFragments[key] = query;
             });
         }
+        this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
     }
 }
