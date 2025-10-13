@@ -66,8 +66,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { StartProcessScreenCloudComponent } from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
 import { TaskTypeResolverService } from '../../../services/task-type-resolver/task-type-resolver.service';
 
-export const PROCESS_DEFINITION_DEBOUNCE: number = 300;
 const MAX_NAME_LENGTH: number = 255;
+const PROCESS_DEFINITION_DEBOUNCE: number = 300;
 const DATE_TIME_IDENTIFIER_REG_EXP = /%{datetime}/i;
 const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
 
@@ -180,7 +180,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     isFormCloudLoading = true;
     processDefinitionLoaded = false;
 
-    disableButtonsForScreen = false;
+    disableStartProcessForScreen = false;
     showStartProcessButton$: Observable<boolean>;
     startProcessButtonLabel: string;
     cancelButtonLabel: string;
@@ -218,7 +218,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     get disableStartButton(): boolean {
-        return !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.isFormCloudLoading || this.disableButtonsForScreen;
+        return (
+            !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.isFormCloudLoading || this.disableStartProcessForScreen
+        );
     }
 
     get isProcessDefinitionsEmpty(): boolean {
@@ -311,7 +313,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     onDisableStartProcessButtonForScreen(disable: boolean): void {
-        this.disableButtonsForScreen = disable;
+        this.disableStartProcessForScreen = disable;
     }
 
     private getMaxNameLength(): number {
