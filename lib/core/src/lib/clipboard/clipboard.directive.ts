@@ -42,7 +42,7 @@ export class ClipboardDirective implements OnDestroy {
     private mouseLeaveTimeout: ReturnType<typeof setTimeout>;
 
     constructor(
-        private clipboardService: ClipboardService,
+        private readonly clipboardService: ClipboardService,
         public viewContainerRef: ViewContainerRef
     ) {}
 
