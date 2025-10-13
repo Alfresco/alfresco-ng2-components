@@ -28,7 +28,7 @@ import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-t
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
+import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/user-task-screen/screen-cloud.component';
 import { CompleteTaskDirective } from './complete-task/complete-task.directive';
 import { catchError, EMPTY, forkJoin } from 'rxjs';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';

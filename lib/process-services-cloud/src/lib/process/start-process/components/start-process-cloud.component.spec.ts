@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { Component, input, output, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -49,6 +49,23 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../../services/form-fields.interfaces';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+    StartProcessScreenCloud,
+    StartProcessScreenCloudComponent
+} from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
+import { provideScreen } from '../../../screen/services/provide-screen';
+
+@Component({
+    selector: 'adf-cloud-mock-screen-component',
+    template: `<div>Mock Screen Component</div>`
+})
+class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
+    processDefinitionId = input('');
+
+    defaultStartProcessButtonsConfigurationChange = output<{ show: true; disable: false }>();
+    startProcessPayloadChanged = output<unknown>();
+}
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;
@@ -57,7 +74,7 @@ describe('StartProcessCloudComponent', () => {
     let fixture: ComponentFixture<StartProcessCloudComponent>;
     let processService: StartProcessCloudService;
     let formCloudService: FormCloudService;
-    let getDefinitionsSpy: jasmine.Spy;
+    let getProcessDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
     let startProcessWithFormSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
@@ -65,6 +82,7 @@ describe('StartProcessCloudComponent', () => {
     let getStartEventConstantSpy: jasmine.Spy;
 
     const firstChange = new SimpleChange(undefined, 'myApp', true);
+    const screenComponentId = 'screen-1234-5678-121212-123456';
 
     const selectOptionByName = async (name: string) => {
         const arrowButton = await loader.getHarness(MatButtonHarness.with({ selector: '#adf-select-process-dropdown' }));
@@ -84,14 +102,15 @@ describe('StartProcessCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [StartProcessCloudComponent]
+            imports: [StartProcessCloudComponent, ReactiveFormsModule, StartProcessScreenCloudComponent],
+            providers: [provideScreen(screenComponentId, MockedTaskScreenCloudComponent)]
         });
         processService = TestBed.inject(StartProcessCloudService);
         formCloudService = TestBed.inject(FormCloudService);
         fixture = TestBed.createComponent(StartProcessCloudComponent);
         component = fixture.componentInstance;
 
-        getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions');
+        getProcessDefinitionsSpy = spyOn(processService, 'getProcessDefinitions');
         formDefinitionSpy = spyOn(formCloudService, 'getForm');
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(fakeProcessInstance));
@@ -143,7 +162,7 @@ describe('StartProcessCloudComponent', () => {
 
         component.name = 'My new process';
         component.processDefinitionName = 'processwithoutform2';
-        getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+        getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
         fixture.detectChanges();
 
         const change = new SimpleChange(null, 'MyApp', true);
@@ -162,7 +181,7 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'My formless new process';
             component.appName = 'myApp';
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             fixture.detectChanges();
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ appName: change });
@@ -172,7 +191,7 @@ describe('StartProcessCloudComponent', () => {
         it('should be able to start a process with a valid process name and process definition', fakeAsync(() => {
             component.name = 'My new process';
             component.processDefinitionName = 'processwithoutform2';
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
             fixture.detectChanges();
 
             const change = new SimpleChange(null, 'MyApp', true);
@@ -187,7 +206,7 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should create a process instance if the selection is valid', async () => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy = getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.name = 'My new process';
             component.processDefinitionName = 'process';
             await selectOptionByName('processwithoutform2');
@@ -276,11 +295,54 @@ describe('StartProcessCloudComponent', () => {
         });
     });
 
+    fdescribe('screen on start process event', () => {
+        beforeEach(async () => {
+            debugger;
+            fixture.detectChanges();
+
+            const processDefinitionWithScreen = fakeSingleProcessDefinition('processWithScreen', { formKey: screenComponentId });
+            const someOtherProcess = fakeSingleProcessDefinition('otherProcess');
+            getProcessDefinitionsSpy.and.returnValue(of([...processDefinitionWithScreen, ...someOtherProcess]));
+            component.processDefinitionName = 'processWithScreen';
+
+            component.ngOnChanges({ appName: new SimpleChange(null, 'startformwithoutupload', true) });
+            fixture.detectChanges();
+        });
+
+        it('should show screen', () => {
+            const screenComponent = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent));
+            expect(screenComponent).toBeDefined();
+        });
+
+        fit('should toggle default process buttons', () => {
+            const screenComponent = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent));
+            screenComponent.triggerEventHandler('defaultStartProcessButtonsConfigurationChanged', { show: false, disable: false });
+            fixture.detectChanges();
+
+            let startButton = fixture.nativeElement.querySelector('#button-start');
+            let cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+            expect(startButton).toBeNull();
+            expect(cancelButton).toBeNull();
+
+            debugger;
+            screenComponent.triggerEventHandler('defaultStartProcessButtonsConfigurationChanged', { show: true, disable: false });
+            fixture.detectChanges();
+            startButton = fixture.nativeElement.querySelector('#button-start');
+            cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+            expect(startButton).toBeDefined();
+            expect(cancelButton).toBeDefined();
+        });
+
+        it('should disable start process button', () => {});
+
+        it('should create process with payload', () => {});
+    });
+
     describe('start a process with start form', () => {
         beforeEach(() => {
             component.name = 'My new process with form';
             component.appName = 'startformwithoutupload';
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             fixture.detectChanges();
             const change = new SimpleChange(null, 'startformwithoutupload', true);
             component.ngOnChanges({ appName: change });
@@ -315,7 +377,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should be able to start a process with a valid form', async () => {
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
@@ -353,7 +415,7 @@ describe('StartProcessCloudComponent', () => {
             (fakeStartFormClone.formRepresentation as any).displayMode = FormCloudDisplayMode.fullScreen;
 
             formDefinitionSpy.and.returnValue(of(fakeStartFormClone));
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
@@ -371,7 +433,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should NOT be able to start a process with a form NOT valid', async () => {
             formDefinitionSpy.and.returnValue(of(fakeStartFormNotValid));
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
@@ -388,7 +450,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should be able to start a process with a prefilled valid form', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
@@ -409,7 +471,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should NOT be able to start a process with a prefilled NOT valid form', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
             formDefinitionSpy.and.returnValue(of(fakeStartFormNotValid));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
@@ -431,7 +493,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should display enabled start process button if the selection is valid', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithoutform2')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithoutform2')));
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithoutform2');
@@ -444,7 +506,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should have start button enabled when default values are set', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithoutform2')));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithoutform2')));
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
@@ -461,7 +523,7 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'My new process';
             component.appName = 'myApp';
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             fixture.detectChanges();
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ appName: change });
@@ -471,7 +533,7 @@ describe('StartProcessCloudComponent', () => {
         it('should call service to fetch process definitions with appId', async () => {
             await fixture.whenStable();
 
-            expect(getDefinitionsSpy).toHaveBeenCalledWith('MyApp');
+            expect(getProcessDefinitionsSpy).toHaveBeenCalledWith('MyApp');
         });
 
         it('should display the correct number of processes in the select list', async () => {
@@ -497,7 +559,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should indicate an error to the user if process defs cannot be loaded', async () => {
-            getDefinitionsSpy.and.returnValue(throwError({}));
+            getProcessDefinitionsSpy.and.returnValue(throwError({}));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
 
@@ -509,7 +571,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should show no process available message when no process definition is loaded', async () => {
-            getDefinitionsSpy.and.returnValue(of([]));
+            getProcessDefinitionsSpy.and.returnValue(of([]));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
 
@@ -522,7 +584,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should select automatically the processDefinition if the app contain only one', async () => {
-            getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
+            getProcessDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
 
@@ -533,7 +595,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should select automatically the form when processDefinition is selected as default', async () => {
-            getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[2]]));
+            getProcessDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[2]]));
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
@@ -553,7 +615,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should not select automatically any processDefinition if the app contain multiple process and does not have any processDefinition as input', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.appName = 'myApp';
             component.ngOnChanges({});
 
@@ -564,7 +626,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should select the right process when the processKey begins with the name', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
             component.name = 'My new process';
             component.processDefinitionName = 'process';
@@ -579,7 +641,7 @@ describe('StartProcessCloudComponent', () => {
         describe('dropdown', () => {
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async () => {
                 fixture.detectChanges();
-                getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+                getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
                 component.appName = 'myApp';
                 component.showSelectProcessDropdown = false;
                 component.ngOnChanges({});
@@ -593,7 +655,7 @@ describe('StartProcessCloudComponent', () => {
 
             it('should show the process dropdown button if showSelectProcessDropdown is false', async () => {
                 fixture.detectChanges();
-                getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+                getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
                 component.appName = 'myApp';
                 component.processDefinitionName = 'NewProcess 2';
                 component.showSelectProcessDropdown = true;
@@ -608,7 +670,7 @@ describe('StartProcessCloudComponent', () => {
 
             it('should show the process dropdown button by default', async () => {
                 fixture.detectChanges();
-                getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+                getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
                 component.appName = 'myApp';
                 component.processDefinitionName = 'NewProcess 2';
                 component.ngOnChanges({});
@@ -631,18 +693,18 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should reload processes when appName input changed', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: firstChange });
             component.ngOnChanges({ appName: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(getDefinitionsSpy).toHaveBeenCalledWith('myApp1');
+            expect(getProcessDefinitionsSpy).toHaveBeenCalledWith('myApp1');
         });
 
         it('should reload processes ONLY when appName input changed', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: firstChange });
             fixture.detectChanges();
 
@@ -650,19 +712,19 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(getDefinitionsSpy).toHaveBeenCalledTimes(1);
+            expect(getProcessDefinitionsSpy).toHaveBeenCalledTimes(1);
         });
 
         it('should get current processDef', () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
-            expect(getDefinitionsSpy).toHaveBeenCalled();
+            expect(getProcessDefinitionsSpy).toHaveBeenCalled();
             expect(component.processDefinitionList).toBe(fakeProcessDefinitions);
         });
 
         it('should display the matching results in the dropdown as the user types down', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
@@ -680,7 +742,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should display the process definion field as empty if are more than one process definition in the list', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: change });
 
             fixture.detectChanges();
@@ -696,7 +758,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             component.name = 'NewProcess 1';
             component.appName = 'myApp';
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             fixture.detectChanges();
         });
 
@@ -836,7 +898,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should call service with the correct parameters when variables are undefined and formCloud is defined', async () => {
-            getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[2]]));
+            getProcessDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[2]]));
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
@@ -894,7 +956,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should indicate an error to the user if process cannot be started', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
             const error = {
@@ -1040,7 +1102,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             let noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
             expect(noProcessElement).toBeNull();
-            getDefinitionsSpy.and.returnValue(of([]));
+            getProcessDefinitionsSpy.and.returnValue(of([]));
 
             component.loadProcessDefinitions();
             fixture.detectChanges();
@@ -1051,7 +1113,7 @@ describe('StartProcessCloudComponent', () => {
         it('should set the process name using the processName cloud pipe when a process definition gets selected', async () => {
             const getDefaultProcessNameSpy = spyOn(component, 'getDefaultProcessName').and.returnValue('fake-transformed-name');
             const expectedProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: fakeProcessDefinitions[0].name };
-            getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
+            getProcessDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
             formDefinitionSpy.and.stub();
 
             component.appName = 'myApp';
@@ -1085,7 +1147,7 @@ describe('StartProcessCloudComponent', () => {
                 done();
             });
 
-            getDefinitionsSpy.and.returnValue(of(definitions));
+            getProcessDefinitionsSpy.and.returnValue(of(definitions));
 
             const fakeTransformedName = 'fake-transformed-name';
             spyOn(component, 'getDefaultProcessName').and.returnValue(fakeTransformedName);
@@ -1166,7 +1228,7 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'NewProcess 1';
             component.appName = 'myApp';
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: firstChange });
             component.processDefinitionList = fakeProcessDefinitions;
             component.processDefinitionName = fakeProcessDefinitions[0].name;
@@ -1212,7 +1274,7 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'NewProcess 1';
             component.appName = 'myApp';
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.ngOnChanges({ appName: firstChange });
             fixture.detectChanges();
         });
@@ -1235,7 +1297,7 @@ describe('StartProcessCloudComponent', () => {
         const customOutcomeSelectedSpy = spyOn(component.customOutcomeSelected, 'emit');
         const successSpy = spyOn(component.success, 'emit');
 
-        getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+        getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
         formDefinitionSpy.and.returnValue(of(fakeFormModelJson));
         startProcessWithFormSpy.and.returnValue(of(fakeProcessInstance));
 

@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ScreenRenderingService } from '../../services/screen-rendering.service';
+import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
 
 @Component({

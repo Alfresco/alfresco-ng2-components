@@ -110,10 +110,15 @@
                             </adf-cloud-form-custom-outcomes>
                         </adf-cloud-form>
                     } @else if (hasScreen) {
-                        <adf-cloud-task-screen
-                            [appName]="appName"
-                            [screenId]="screenId"
-                        />
+                        <adf-cloud-start-process-screen-cloud
+                            [screenId]="processDefinitionCurrent.formKey"
+                            (screenStartProcessPayloadChange)="onScreenStartProcessPayloadChange($event)"
+                            (disableStartProcessButton)="onDisableStartProcessButtonForScreen($event)"
+                        >
+                            <adf-cloud-form-custom-outcomes>
+                                <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
+                            </adf-cloud-form-custom-outcomes>
+                        </adf-cloud-start-process-screen-cloud>
                     } @else {
                         <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                     }
