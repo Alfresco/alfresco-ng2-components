@@ -32,6 +32,7 @@ export interface ApplicationInstanceModel {
     descriptor?: Descriptor;
     environmentId?: string;
     environment?: string;
+    lastModifiedAt?: Date;
 }
 
 export interface Descriptor {
