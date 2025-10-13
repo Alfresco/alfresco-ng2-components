@@ -96,21 +96,24 @@ describe('CopyClipboardDirective', () => {
         fixture.detectChanges();
     });
 
-    it('should show tooltip when hover element', () => {
+    it('should show tooltip when hover element', fakeAsync(() => {
         testingUtils.hoverOverByCSS('span');
+        tick(200);
         fixture.detectChanges();
         expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
-    });
+    }));
 
-    it('should not show tooltip when element it is not hovered', () => {
+    it('should not show tooltip when element it is not hovered', fakeAsync(() => {
         testingUtils.hoverOverByCSS('span');
+        tick(200);
         fixture.detectChanges();
         expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
 
         testingUtils.mouseLeaveByCSS('span');
+        tick(150);
         fixture.detectChanges();
         expect(testingUtils.getByCSS('.adf-copy-tooltip')).toBeNull();
-    });
+    }));
 
     it('should copy the content of element when click it', fakeAsync(() => {
         spyOn(navigator.clipboard, 'writeText');
@@ -134,5 +137,32 @@ describe('CopyClipboardDirective', () => {
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
+    }));
+
+    it('should cleanup tooltip on destroy', fakeAsync(() => {
+        testingUtils.hoverOverByCSS('span');
+        tick(200);
+        fixture.detectChanges();
+        expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
+
+        // Manually trigger the directive's destroy method
+        const directive = fixture.componentInstance.clipboardDirective;
+        directive.ngOnDestroy();
+
+        // Tooltip should be cleaned up
+        expect(testingUtils.getByCSS('.adf-copy-tooltip')).toBeNull();
+    }));
+
+    it('should prevent flickering on rapid mouse movements', fakeAsync(() => {
+        testingUtils.hoverOverByCSS('span');
+        tick(50);
+        testingUtils.mouseLeaveByCSS('span');
+        tick(50);
+        testingUtils.hoverOverByCSS('span');
+        tick(200);
+        fixture.detectChanges();
+
+        const tooltips = testingUtils.getAllByCSS('.adf-copy-tooltip');
+        expect(tooltips.length).toBeLessThanOrEqual(1);
     }));
 });

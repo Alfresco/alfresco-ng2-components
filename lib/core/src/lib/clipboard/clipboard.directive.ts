@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Component, ViewContainerRef, ViewEncapsulation, OnInit } from '@angular/core';
+import { Directive, Input, HostListener, Component, ViewContainerRef, ViewEncapsulation, OnInit, ComponentRef, OnDestroy } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -23,7 +23,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: '[adf-clipboard]',
     exportAs: 'adfClipboard'
 })
-export class ClipboardDirective {
+export class ClipboardDirective implements OnDestroy {
     /** Translation key or message for the tooltip. */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('adf-clipboard')
@@ -37,19 +37,67 @@ export class ClipboardDirective {
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
 
-    constructor(private clipboardService: ClipboardService, public viewContainerRef: ViewContainerRef) {}
+    private tooltipComponentRef: ComponentRef<ClipboardComponent>;
+    private mouseEnterTimeout: ReturnType<typeof setTimeout>;
+    private mouseLeaveTimeout: ReturnType<typeof setTimeout>;
+
+    constructor(
+        private clipboardService: ClipboardService,
+        public viewContainerRef: ViewContainerRef
+    ) {}
+
+    ngOnDestroy(): void {
+        this.clearTimeouts();
+        this.hideTooltip();
+    }
 
     @HostListener('mouseenter')
     showTooltip() {
-        if (this.placeholder) {
-            const componentRef = this.viewContainerRef.createComponent(ClipboardComponent).instance;
-            componentRef.placeholder = this.placeholder;
+        if (this.mouseLeaveTimeout) {
+            clearTimeout(this.mouseLeaveTimeout);
+            this.mouseLeaveTimeout = null;
         }
+
+        if (this.tooltipComponentRef) {
+            return;
+        }
+
+        this.mouseEnterTimeout = setTimeout(() => {
+            if (this.placeholder && !this.tooltipComponentRef) {
+                this.tooltipComponentRef = this.viewContainerRef.createComponent(ClipboardComponent);
+                this.tooltipComponentRef.instance.placeholder = this.placeholder;
+            }
+        }, 150);
     }
 
     @HostListener('mouseleave')
     closeTooltip() {
-        this.viewContainerRef.remove();
+        if (this.mouseEnterTimeout) {
+            clearTimeout(this.mouseEnterTimeout);
+            this.mouseEnterTimeout = null;
+        }
+
+        this.mouseLeaveTimeout = setTimeout(() => {
+            this.hideTooltip();
+        }, 100);
+    }
+
+    private hideTooltip(): void {
+        if (this.tooltipComponentRef) {
+            this.tooltipComponentRef.destroy();
+            this.tooltipComponentRef = null;
+        }
+    }
+
+    private clearTimeouts(): void {
+        if (this.mouseEnterTimeout) {
+            clearTimeout(this.mouseEnterTimeout);
+            this.mouseEnterTimeout = null;
+        }
+        if (this.mouseLeaveTimeout) {
+            clearTimeout(this.mouseLeaveTimeout);
+            this.mouseLeaveTimeout = null;
+        }
     }
 
     @HostListener('keydown.enter', ['$event'])
