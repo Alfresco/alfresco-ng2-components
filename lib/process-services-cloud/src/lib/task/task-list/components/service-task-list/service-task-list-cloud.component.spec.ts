@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
@@ -396,15 +396,16 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
         expect(componentCustom.taskList.columns.length).toEqual(2);
     });
 
-    it('it should show copy tooltip when key is present in data-column', () => {
+    it('it should show copy tooltip when key is present in data-column', fakeAsync(() => {
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
         copyFixture.debugElement.query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]')).triggerEventHandler('mouseenter');
 
+        tick(200);
         copyFixture.detectChanges();
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
-    });
+    }));
 
     it('it should not show copy tooltip when key is not present in data-column', () => {
         customCopyComponent.taskList.reload();
@@ -461,7 +462,7 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
         fixture.destroy();
     });
 
-    it('shoud show tooltip if config copyContent flag is true', () => {
+    it('shoud show tooltip if config copyContent flag is true', fakeAsync(() => {
         taskSpy.and.returnValue(of(fakeServiceTask));
         component.presetColumn = 'fakeCustomSchema';
 
@@ -472,9 +473,10 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
 
         columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
+        tick(200);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
-    });
+    }));
 
     it('shoud not show tooltip if config copyContent flag is NOT true', () => {
         taskSpy.and.returnValue(of(fakeServiceTask));

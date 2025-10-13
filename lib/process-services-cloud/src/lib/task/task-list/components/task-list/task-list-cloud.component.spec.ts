@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
@@ -699,15 +699,16 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
         expect(componentCustom.taskList.columns.length).toEqual(3);
     });
 
-    it('it should show copy tooltip when key is present in data-column', () => {
+    it('it should show copy tooltip when key is present in data-column', fakeAsync(() => {
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
         copyFixture.debugElement.query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]')).triggerEventHandler('mouseenter');
 
+        tick(200);
         copyFixture.detectChanges();
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
-    });
+    }));
 
     it('it should not show copy tooltip when key is not present in data-column', () => {
         customCopyComponent.taskList.reload();
@@ -802,7 +803,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         fixture.destroy();
     });
 
-    it('should show tooltip if config copyContent flag is true', () => {
+    it('should show tooltip if config copyContent flag is true', fakeAsync(() => {
         component.presetColumn = 'fakeCustomSchema';
 
         component.reload();
@@ -812,9 +813,10 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
 
         columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
+        tick(200);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
-    });
+    }));
 
     it('should replace priority values', () => {
         component.presetColumn = 'fakeCustomSchema';
