@@ -84,6 +84,25 @@ describe('SearchHeaderQueryBuilderService', () => {
         });
     });
 
+    it('should return operator for a category by id', () => {
+        TestBed.runInInjectionContext(() => {
+            const config: SearchConfiguration = {
+                categories: [
+                    { id: 'cat1', columnKey: 'fake-key-1', enabled: true, component: { settings: { operator: 'operator' } } } as any,
+                    { id: 'cat2', columnKey: 'fake-key-2', enabled: true } as any
+                ]
+            };
+
+            const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+            const service = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
+
+            const operator = service.getOperatorForFilterId('cat1');
+            expect(operator).toBe('operator');
+            const operator1 = service.getOperatorForFilterId('cat2');
+            expect(operator1).toBeUndefined();
+        });
+    });
+
     it('should have empty user query by default', () => {
         TestBed.runInInjectionContext(() => {
             const alfrescoApiService = TestBed.inject(AlfrescoApiService);

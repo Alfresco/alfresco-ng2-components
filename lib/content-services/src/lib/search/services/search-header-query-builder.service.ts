@@ -36,7 +36,11 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
+    constructor(
+        appConfig: AppConfigService,
+        alfrescoApiService: AlfrescoApiService,
+        private nodeApiService: NodesApiService
+    ) {
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(filter((query) => !!query)).subscribe(() => {
@@ -125,6 +129,12 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
             foundCategory = this.categories.find((category) => category.columnKey === columnKey);
         }
         return foundCategory;
+    }
+
+    getOperatorForFilterId(id: string): string | undefined {
+        const foundCategory = this.categories?.find((category) => category.id === id);
+
+        return foundCategory?.component?.settings?.operator;
     }
 
     setCurrentRootFolderId(currentFolderId: string) {
