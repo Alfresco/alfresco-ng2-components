@@ -50,7 +50,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     context?: SearchQueryBuilderService;
     options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
-    startValue: string;
+    startValue: string | string[];
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
@@ -162,7 +162,6 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     setValue(value: any) {
         this.options.items.forEach((item) => (item.checked = value.includes(item.value)));
         this.isActive = true;
-        this.submitValues(false);
     }
 
     private getCheckedValues() {
