@@ -162,7 +162,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     setValue(value: any) {
         this.options.items.forEach((item) => (item.checked = value.includes(item.value)));
         this.isActive = true;
-        this.submitValues();
+        this.submitValues(false);
     }
 
     private getCheckedValues() {
