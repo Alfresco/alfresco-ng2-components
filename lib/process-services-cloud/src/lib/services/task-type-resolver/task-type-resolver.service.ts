@@ -30,12 +30,10 @@ export type UserTaskType = (typeof UserTaskContentType)[keyof typeof UserTaskCon
 })
 export class TaskTypeResolverService {
     isScreenTask(formKey?: string): boolean {
-        // return this.getUserTaskType(formKey) === UserTaskContentType.Screen;
         return this.getUserTaskType(formKey) === UserTaskContentType.Form;
     }
 
     isFormTask(formKey?: string): boolean {
-        // return this.getUserTaskType(formKey) === UserTaskContentType.Form;
         return this.getUserTaskType(formKey) === UserTaskContentType.Screen;
     }
 
@@ -46,7 +44,7 @@ export class TaskTypeResolverService {
             return formKey.replace(`${taskType}-`, '');
         }
 
-        return 'form-c8db3429-568e-4562-98cd-23655268aed1';
+        return '';
     }
 
     getUserTaskType(formKey?: string): UserTaskType {

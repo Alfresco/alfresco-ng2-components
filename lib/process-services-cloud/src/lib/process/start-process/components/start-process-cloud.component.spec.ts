@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, input, output, SimpleChange } from '@angular/core';
+import { Component, DebugElement, input, output, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -63,7 +63,7 @@ import { provideScreen } from '../../../screen/services/provide-screen';
 class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
     processDefinitionId = input('');
 
-    defaultStartProcessButtonsConfigurationChange = output<{ show: true; disable: false }>();
+    defaultStartProcessButtonsConfigurationChange = output<{ show: boolean; disable: boolean }>();
     startProcessPayloadChanged = output<unknown>();
 }
 
@@ -82,7 +82,7 @@ describe('StartProcessCloudComponent', () => {
     let getStartEventConstantSpy: jasmine.Spy;
 
     const firstChange = new SimpleChange(undefined, 'myApp', true);
-    const screenComponentId = 'screen-1234-5678-121212-123456';
+    const screenId = 'screen-1234-5678-121212-123456';
 
     const selectOptionByName = async (name: string) => {
         const arrowButton = await loader.getHarness(MatButtonHarness.with({ selector: '#adf-select-process-dropdown' }));
@@ -103,7 +103,7 @@ describe('StartProcessCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [StartProcessCloudComponent, ReactiveFormsModule, StartProcessScreenCloudComponent],
-            providers: [provideScreen(screenComponentId, MockedTaskScreenCloudComponent)]
+            providers: [provideScreen(screenId, MockedTaskScreenCloudComponent)]
         });
         processService = TestBed.inject(StartProcessCloudService);
         formCloudService = TestBed.inject(FormCloudService);
@@ -295,28 +295,34 @@ describe('StartProcessCloudComponent', () => {
         });
     });
 
-    fdescribe('screen on start process event', () => {
+    describe('screen on start process event', () => {
+        let screenComponent: StartProcessScreenCloud;
+        let screenDebugComponent: DebugElement;
+
         beforeEach(async () => {
-            debugger;
             fixture.detectChanges();
 
-            const processDefinitionWithScreen = fakeSingleProcessDefinition('processWithScreen', { formKey: screenComponentId });
+            const processDefinitionWithScreen = fakeSingleProcessDefinition('processWithScreen', { formKey: screenId });
             const someOtherProcess = fakeSingleProcessDefinition('otherProcess');
             getProcessDefinitionsSpy.and.returnValue(of([...processDefinitionWithScreen, ...someOtherProcess]));
             component.processDefinitionName = 'processWithScreen';
 
-            component.ngOnChanges({ appName: new SimpleChange(null, 'startformwithoutupload', true) });
+            component.ngOnChanges({ appName: new SimpleChange(null, 'myAppName', true) });
             fixture.detectChanges();
+
+            screenDebugComponent = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent));
+            screenComponent = screenDebugComponent.componentInstance;
         });
 
         it('should show screen', () => {
-            const screenComponent = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent));
             expect(screenComponent).toBeDefined();
+
+            const contentElement = screenDebugComponent.nativeElement.querySelector('div');
+            expect(contentElement.textContent).toBe('Mock Screen Component');
         });
 
-        fit('should toggle default process buttons', () => {
-            const screenComponent = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent));
-            screenComponent.triggerEventHandler('defaultStartProcessButtonsConfigurationChanged', { show: false, disable: false });
+        it('should toggle default process buttons', () => {
+            screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: false, disable: false });
             fixture.detectChanges();
 
             let startButton = fixture.nativeElement.querySelector('#button-start');
@@ -324,18 +330,39 @@ describe('StartProcessCloudComponent', () => {
             expect(startButton).toBeNull();
             expect(cancelButton).toBeNull();
 
-            debugger;
-            screenComponent.triggerEventHandler('defaultStartProcessButtonsConfigurationChanged', { show: true, disable: false });
+            screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: true, disable: false });
             fixture.detectChanges();
+
             startButton = fixture.nativeElement.querySelector('#button-start');
             cancelButton = fixture.nativeElement.querySelector('#cancel_process');
-            expect(startButton).toBeDefined();
-            expect(cancelButton).toBeDefined();
+            expect(startButton).not.toBeNull();
+            expect(cancelButton).not.toBeNull();
         });
 
-        it('should disable start process button', () => {});
+        it('should toggle disable start process button', () => {
+            screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: true, disable: true });
+            fixture.detectChanges();
+            const startButton = fixture.nativeElement.querySelector('#button-start');
 
-        it('should create process with payload', () => {});
+            expect(startButton.disabled).toBe(true);
+
+            screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: true, disable: false });
+            fixture.detectChanges();
+
+            expect(startButton.disabled).toBe(false);
+        });
+
+        it('should set payload for screen', () => {
+            const screenPayload = 'My payload';
+            screenComponent.defaultStartProcessButtonsConfigurationChange.emit({ show: true, disable: false });
+            screenComponent.startProcessPayloadChanged.emit(screenPayload);
+            fixture.detectChanges();
+
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            startButton.triggerEventHandler('click', null);
+
+            expect(startProcessWithFormSpy).toHaveBeenCalledWith('myAppName', screenId, 0, jasmine.objectContaining({ values: screenPayload }));
+        });
     });
 
     describe('start a process with start form', () => {
