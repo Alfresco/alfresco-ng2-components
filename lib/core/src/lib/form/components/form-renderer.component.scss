@@ -128,7 +128,7 @@
 
         #{ms.$mat-text-field-focused} {
             label {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
             }
         }
 
@@ -138,7 +138,7 @@
         }
 
         #{ms.$mat-form-field-prefix} {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 
@@ -178,8 +178,8 @@
         }
 
         & #{mat-tab-label-text} {
-            font-size: var(--theme-subheading-2-font-size);
-            line-height: var(--theme-headline-line-height);
+            font-size: var(--mat-sys-title-small-size);
+            line-height: var(--mat-sys-headline-small-line-height);
             letter-spacing: -0.4px;
             text-align: left;
             color: rgba(0, 0, 0, 0.54);
@@ -198,7 +198,7 @@
     }
 
     &-form-title {
-        font-size: var(--theme-title-font-size);
+        font-size: var(--mat-sys-title-medium-size);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -214,10 +214,10 @@
         position: absolute;
         right: 50px;
         top: 39px;
-        color: var(--theme-accent-color);
+        color: var(--mat-sys-secondary);
 
         & .adf-invalid-color {
-            color: var(--theme-warn-color);
+            color: var(--mat-sys-error);
         }
     }
 
@@ -282,7 +282,7 @@ form-field {
     width: 100%;
 
     #{ms.$mat-input-element} {
-        font-size: var(--theme-body-2-font-size);
+        font-size: var(--mat-sys-title-small-size);
         padding-top: 8px;
         line-height: normal;
     }

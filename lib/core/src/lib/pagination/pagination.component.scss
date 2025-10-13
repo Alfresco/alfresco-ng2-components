@@ -9,7 +9,7 @@ $adf-pagination-line-height: 20px;
     border-top: $adf-pagination-border;
     height: $adf-pagination-height;
     line-height: $adf-pagination-line-height;
-    color: var(--adf-theme-foreground-text-color);
+    color: var(--mat-sys-on-surface);
 
     &__block {
         display: flex;
@@ -58,7 +58,7 @@ $adf-pagination-line-height: 20px;
 
         &,
         & + button {
-            color: var(--adf-theme-foreground-text-color);
+            color: var(--mat-sys-on-surface);
         }
 
         & + button {

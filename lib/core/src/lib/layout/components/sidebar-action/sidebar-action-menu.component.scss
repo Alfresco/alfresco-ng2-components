@@ -8,10 +8,9 @@
             box-shadow: none;
             height: 37.5px;
             font-weight: bold;
-            background-color: var(--theme-primary-color);
-            color: var(--theme-primary-color-default-contrast);
+            background-color: var(--mat-sys-primary);
+            color: var(--mat-sys-on-primary);
             border-radius: 4px;
-
         }
 
         &-text {
@@ -23,11 +22,11 @@
 
     &-sidebar-action-menu-icon {
         margin: 18px 0 0 20px;
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--mat-sys-on-surface);
         cursor: pointer;
 
         &:hover {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 
@@ -36,14 +35,14 @@
         letter-spacing: -0.4px;
 
         button {
-            font-size: var(--theme-body-1-font-size);
-            color: var(--adf-theme-foreground-text-color-087);
+            font-size: var(--mat-sys-body-medium-size);
+            color: var(--mat-sys-on-surface);
             text-align: left;
             line-height: 1.5;
             letter-spacing: -0.4px;
 
             &:hover {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
                 opacity: inherit;
             }
         }

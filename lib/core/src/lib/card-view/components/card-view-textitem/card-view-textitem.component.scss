@@ -2,7 +2,7 @@
 
 .adf-card-view-textitem {
     .adf-textitem-error {
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
         padding-top: 6px;
 
         &::before {
@@ -26,11 +26,11 @@
         height: 30px;
         padding: 0;
         line-height: 20px;
-        color: var(--adf-theme-foreground-text-color-025);
+        color: color-mix(in srgb, var(--mat-sys-on-surface) 25%, transparent);
 
         &:hover,
         &:focus {
-            color: var(--adf-theme-foreground-text-color);
+            color: var(--mat-sys-on-surface);
         }
 
         #{ms.$mat-button-touch-target} {
@@ -64,28 +64,28 @@
         padding-top: 3px;
 
         .adf-textitem-action:hover {
-            color: var(--adf-theme-foreground-text-color);
+            color: var(--mat-sys-on-surface);
         }
 
         .adf-property-field {
             #{ms.$mat-input-element} {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
                 cursor: pointer;
             }
         }
     }
 
     .adf-textitem-default-value {
-        color: var(--adf-theme-foreground-text-color-054);
+        color: color-mix(in srgb, var(--mat-sys-on-surface) 54%, transparent);
     }
 
     .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        border-bottom: 1px solid color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
     }
 
     .adf-property-value-not-editable {
         /* stylelint-disable-next-line declaration-no-important */
-        color: var(--adf-metadata-property-panel-title-color);
+        color: var(--mat-sys-on-surface);
     }
 
     .adf-property-value-has-icon-suffix {

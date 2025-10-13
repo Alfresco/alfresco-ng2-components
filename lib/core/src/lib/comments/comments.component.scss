@@ -17,7 +17,7 @@ adf-comments {
                     #{ms.$mat-input-element} {
                         &::placeholder,
                         &:focus::placeholder {
-                            color: var(--theme-warn-color);
+                            color: var(--mat-sys-error);
                         }
                     }
                 }
@@ -33,7 +33,7 @@ adf-comments {
 
                 #{ms.$mat-input-element} {
                     &:focus::placeholder {
-                        color: var(--theme-primary-color);
+                        color: var(--mat-sys-primary);
                         -webkit-font-smoothing: subpixel-antialiased;
                     }
                 }
@@ -47,12 +47,12 @@ adf-comments {
     }
 
     .adf-comments-divider {
-        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+        border-bottom: 1px solid var(--mat-sys-outline);
     }
 
     .adf-comments-header {
         padding: 10px 0;
-        font-size: var(--theme-body-1-font-size);
+        font-size: var(--mat-sys-body-medium-size);
         font-weight: 600;
     }
 

@@ -1,5 +1,5 @@
 .adf-empty-content {
-    color: var(--adf-theme-foreground-text-color-054);
+    color: var(--mat-sys-on-surface);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,13 +8,13 @@
     width: 100%;
 
     &__icon > *:first-child {
-        font-size: var(--theme-display-3-font-size);
-        height: var(--theme-display-3-font-size);
-        width: var(--theme-display-3-font-size);
+        font-size: var(--mat-sys-display-medium-size);
+        height: var(--mat-sys-display-medium-size);
+        width: var(--mat-sys-display-medium-size);
     }
 
     &__title {
-        font-size: var(--theme-adf-task-title-font-size);
+        font-size: var(--mat-sys-title-large-size);
         font-weight: 600;
         line-height: 0;
         white-space: normal;
@@ -24,7 +24,7 @@
 
     &__subtitle,
     &__text {
-        font-size: var(--theme-body-1-font-size);
+        font-size: var(--mat-sys-body-medium-size);
         font-weight: 300;
         line-height: inherit;
         white-space: normal;

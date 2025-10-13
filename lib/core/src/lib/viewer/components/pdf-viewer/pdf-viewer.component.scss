@@ -59,7 +59,6 @@
             justify-content: flex-end;
             align-items: flex-end;
             display: flex;
-            color: var(--adf-theme-foreground-text-color-054);
         }
     }
 
@@ -100,23 +99,25 @@
 
         .adf-toolbar #{ms.$mat-toolbar} {
             max-height: 48px;
-            background-color: var(--adf-theme-background-card-color);
+            background-color: var(--mat-sys-surface);
             border-width: 0;
             border-radius: 2px;
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 20.4), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 2px 2px 0 rgba(0, 0, 0, 20.4),
+                0 0 2px 0 rgba(0, 0, 0, 0.12);
         }
 
         &-page-selector {
             padding-left: 10px;
             padding-right: 10px;
             white-space: nowrap;
-            font-size: var(--theme-body-1-font-size);
+            font-size: var(--mat-sys-body-medium-size);
 
             & > input {
-                border: 1px solid var(--adf-theme-foreground-text-color-007);
-                background-color: var(--adf-theme-background-card-color);
+                border: 1px solid var(--mat-sys-outline);
+                background-color: var(--mat-sys-surface);
                 color: inherit;
-                font-size: var(--theme-body-1-font-size);
+                font-size: var(--mat-sys-body-medium-size);
                 padding: 5px;
                 height: 24px;
                 line-height: 24px;
@@ -132,8 +133,8 @@
             cursor: default;
             width: 79px;
             height: 24px;
-            font-size: var(--theme-body-1-font-size);
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            font-size: var(--mat-sys-body-medium-size);
+            border: 1px solid var(--mat-sys-outline);
             text-align: center;
             line-height: 24px;
             margin-left: 4px;

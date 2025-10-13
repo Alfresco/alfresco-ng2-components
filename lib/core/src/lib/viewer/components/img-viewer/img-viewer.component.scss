@@ -6,7 +6,7 @@
     .adf-image-container {
         &:focus {
             outline-offset: -1px;
-            outline: 1px solid var(--theme-accent-color-a200);
+            outline: 1px solid var(--mat-sys-primary);
         }
 
         display: flex;
@@ -35,11 +35,13 @@
 
         .adf-toolbar #{ms.$mat-toolbar} {
             max-height: 48px;
-            background-color: var(--adf-theme-background-card-color);
+            background-color: var(--mat-sys-surface);
             border-width: 0;
             border-radius: 2px;
             /* stylelint-disable-next-line */
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 2px 2px 0 rgba(0, 0, 0, 0.24),
+                0 0 2px 0 rgba(0, 0, 0, 0.12);
         }
 
         .adf-main-toolbar {
@@ -55,8 +57,8 @@
             cursor: default;
             width: 79px;
             height: 24px;
-            font-size: var(--theme-body-1-font-size);
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            font-size: var(--mat-sys-body-medium-size);
+            border: 1px solid var(--mat-sys-outline);
             text-align: center;
             line-height: 24px;
             margin-left: 4px;

@@ -3,13 +3,9 @@
 @use '../../../styles/mixins' as mixins;
 @use '../../../styles/mat-selectors' as ms;
 
-$data-table-header-font-size: var(--theme-caption-font-size) !default;
-$data-table-header-sort-icon-size: var(--theme-subheading-2-font-size) !default;
-$data-table-row-height: var(--theme-display-3-font-size) !default;
 $data-table-column-spacing: 36px !default;
 $data-table-column-padding: 18px !default;
-$data-table-card-padding: var(--theme-headline-line-height) !default;
-$data-table-cell-top: calc($data-table-card-padding / 2);
+$data-table-row-height: var(--mat-sys-display-large-size);
 $data-table-thumbnail-width: 65px !default;
 $data-table-cell-min-width-1: 65px !default;
 $data-table-cell-min-width-2: 110px !default;
@@ -38,7 +34,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         &--divider {
             padding: 24px 0;
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            border: 1px solid var(--mat-sys-outline-variant);
         }
 
         &:hover {
@@ -57,8 +53,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 #{ms.$cdk-drag-preview} {
     display: flex;
     flex-direction: column;
-    background-color: var(--adf-theme-background-card-color);
-    border: 1px solid var(--adf-theme-foreground-text-color-007);
+    background-color: var(--mat-sys-surface);
+    border: var(--mat-sys-outline-variant);
     box-sizing: border-box;
     overflow-x: auto;
 
@@ -108,20 +104,20 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         &:not(.adf-datatable-data-loading) {
             &:hover,
             &:focus {
-                background-color: var(--adf-theme-background-hover-color);
+                background-color: var(--mat-sys-surface-container);
             }
         }
 
         &:focus {
             outline-offset: -1px;
-            outline: 1px solid var(--theme-accent-color-a200);
+            outline: 1px solid var(--mat-sys-primary);
         }
 
         .adf-cell-value,
         .adf-datatable-cell-header {
             &:focus {
                 outline-offset: -1px;
-                outline: 1px solid var(--theme-accent-color-a200);
+                outline: 1px solid var(--mat-sys-primary);
             }
         }
     }
@@ -133,7 +129,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-body {
         display: flex;
         flex-direction: column;
-        background-color: inherit;
+        background-color: var(--mat-sys-surface);
         width: 100%;
         min-width: 100%;
 
@@ -149,7 +145,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             @include mixins.material-animation-default(0.28s);
 
             transition-property: background-color;
-            border-top: 1px solid var(--adf-theme-foreground-text-color-007);
+            border-top: 1px solid var(--mat-sys-outline);
             min-height: $data-table-row-height;
             cursor: pointer;
 
@@ -157,7 +153,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
             &.adf-is-selected,
             &.adf-is-selected:hover {
-                background-color: var(--adf-theme-background-selected-button-color);
+                background-color: var(--mat-sys-surface-container);
             }
 
             &.adf-drag-row {
@@ -165,7 +161,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             }
 
             &:last-child {
-                border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+                border-bottom: 1px solid var(--mat-sys-outline);
             }
 
             label {
@@ -282,7 +278,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-datatable-cell {
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
         min-height: inherit;
     }
 
@@ -377,10 +373,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-location-cell {
         a {
             text-decoration: none;
-            color: var(--adf-theme-foreground-text-color);
+            color: var(--mat-sys-on-surface);
 
             &:hover {
-                color: var(--theme-accent-500);
+                color: var(--mat-sys-primary);
                 text-decoration: underline;
             }
         }
@@ -399,15 +395,15 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-is-selected {
-        background: var(--adf-theme-primary-100);
+        background: var(--mat-sys-primary-container);
     }
 
     .adf-datatable-link {
         text-decoration: none;
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
 
         &:hover {
-            color: var(--theme-accent-500);
+            color: var(--mat-sys-secondary);
             text-decoration: underline;
         }
     }
@@ -499,13 +495,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     /* stylelint-disable media-feature-range-notation */
 
     /* mobile phone */
-    @media all and (width <= 768px) {
+    @media all and (width <=768px) {
         .adf-desktop-only.adf-ellipsis-cell {
             display: none;
         }
     }
 
-    @media (device-width <= 768px) {
+    @media (device-width <=768px) {
         .adf-desktop-only.adf-ellipsis-cell {
             display: none;
         }
@@ -523,8 +519,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     line-height: 24px;
     letter-spacing: 0;
     min-height: $data-table-row-height;
-    font-size: $data-table-header-font-size;
-    color: var(--adf-theme-foreground-text-color);
+    font-size: var(--mat-sys-body-medium-size);
+    color: var(--mat-sys-on-surface);
     box-sizing: border-box;
 
     &_subtitle {
@@ -541,13 +537,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
     .adf-datatable__header--sorted-asc,
     .adf-datatable__header--sorted-desc {
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
         padding-right: 0.25rem;
 
         &::after {
             @include mixins.typo-icon;
 
-            font-size: $data-table-header-sort-icon-size;
             content: '\e5d8';
             left: 5px;
             right: 5px;
@@ -579,7 +574,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
 
         &--hovered {
-            background-color: var(--adf-theme-background-hover-color);
             border-radius: 6px;
         }
     }
@@ -606,7 +600,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 .adf-drop-header-cell-placeholder {
     display: flex;
     flex: 1;
-    background: var(--adf-theme-background-hover-color);
     border: dotted 1px rgba(0, 0, 0, 0.25);
     min-height: 55px;
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -633,13 +626,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     flex-direction: row;
     align-items: center;
     box-sizing: unset;
-    background-color: var(--theme-background-color);
-    border-top: 2px solid var(--theme-selected-background-color);
+    border-top: 2px solid var(--mat-sys-primary);
     opacity: 1;
 
     &.adf-datatable-cell-header {
         border-radius: 6px;
-        background-color: var(--theme-background-color);
+        background-color: var(--mat-sys-surface);
 
         @include mat.elevation-transition;
         @include mat.elevation(4);
@@ -665,8 +657,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-header {
         display: block;
         margin-right: 0;
-        border-top: 1px solid var(--adf-theme-foreground-text-color-007);
-        border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+        border-top: 1px solid var(--mat-sys-outline-variant);
+        border-bottom: 1px solid var(--mat-sys-outline-variant);
     }
 
     .adf-datatable-body {
@@ -679,15 +671,15 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
 .adf-upload__dragging {
     & > div {
-        border-top: 1px dashed var(--theme-accent-color-a200);
-        border-bottom: 1px dashed var(--theme-accent-color-a200);
+        border-top: 1px dashed var(--mat-sys-secondary);
+        border-bottom: 1px dashed var(--mat-sys-secondary);
 
         &:first-child {
-            border-left: 1px dashed var(--theme-accent-color-a200);
+            border-left: 1px dashed var(--mat-sys-secondary);
         }
 
         &:last-child {
-            border-right: 1px dashed var(--theme-accent-color-a200);
+            border-right: 1px dashed var(--mat-sys-secondary);
         }
     }
 }
@@ -702,7 +694,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-body[role='rowgroup'] {
         .adf-datatable-row {
             height: 100%;
-            background-color: var(--adf-theme-background-card-color);
+            background-color: var(--mat-sys-surface);
             border: none;
 
             &:hover,
@@ -716,7 +708,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
 .adf-datatable--empty--header-visible {
     .adf-datatable-header {
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
+        border: 1px solid var(--mat-sys-outline-variant);
     }
 
     .adf-datatable-body {
@@ -727,7 +719,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         .adf-datatable-row {
             height: 100%;
-            background-color: var(--adf-theme-background-card-color);
+            background-color: var(--mat-sys-surface);
             border: none;
 
             &:hover,
@@ -739,7 +731,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
-@media screen and (width <= 380px) {
+@media screen and (width <=380px) {
     .adf-datatable-header {
         max-height: 50%;
     }

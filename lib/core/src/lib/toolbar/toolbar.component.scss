@@ -10,10 +10,9 @@
     }
 
     .adf-toolbar-container.adf-toolbar-container-row {
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--mat-sys-on-surface);
         height: 64px;
-        font-size: var(--theme-body-1-font-size);
+        font-size: var(--mat-sys-body-medium-size);
         white-space: normal;
         padding: 0 16px;
     }

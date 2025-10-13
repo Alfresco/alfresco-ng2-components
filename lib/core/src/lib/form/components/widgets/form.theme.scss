@@ -4,7 +4,7 @@
 
 ul > li > form-field > .adf-focus {
     .adf-label {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
     }
 }
 
@@ -17,23 +17,23 @@ ul > li > form-field > .adf-focus {
     &-error-text {
         padding: 1px;
         height: 16px;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
         line-height: 1.33;
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
     }
 
     &-error-icon {
-        font-size: var(--theme-adf-icon-1-font-size);
-        color: var(--theme-warn-color);
+        font-size: var(--mat-sys-label-large-size);
+        color: var(--mat-sys-error);
     }
 
     &-label {
-        color: var(--adf-theme-foreground-secondary-text-color);
+        color: var(--mat-sys-on-surface-variant);
     }
 
     &-asterisk {
         padding-left: 2px;
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
     }
 
     &-invalid {
@@ -42,30 +42,30 @@ ul > li > form-field > .adf-focus {
         }
 
         #{ms.$mat-line-ripple} {
-            background-color: var(--theme-warn-color) !important;
+            background-color: var(--mat-sys-error) !important;
         }
 
         #{ms.$mat-select} {
             &-arrow {
-                color: var(--adf-theme-foreground-secondary-text-color) !important;
+                color: var(--mat-sys-on-surface-variant) !important;
             }
         }
 
         .adf-file {
-            border-color: var(--theme-warn-color);
+            border-color: var(--mat-sys-error);
         }
 
         #{ms.$mat-form-field-prefix} {
-            color: var(--adf-theme-foreground-secondary-text-color);
+            color: var(--mat-sys-on-surface-variant);
         }
 
         .adf-input {
-            border-color: var(--theme-warn-color);
+            border-color: var(--mat-sys-error);
         }
     }
 
     &-left-label {
-        color: var(--adf-theme-foreground-secondary-text-color);
+        color: var(--mat-sys-on-surface-variant);
     }
 }
 

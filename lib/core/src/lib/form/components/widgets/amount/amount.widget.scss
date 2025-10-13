@@ -26,7 +26,7 @@
 
         &:not(#{ms.$mat-focused}):not(#{ms.$mat-form-field-invalid}) {
             .adf-amount-widget__prefix-spacing {
-                color: var(--adf-theme-foreground-secondary-text-color);
+                color: var(--mat-sys-on-surface);
             }
         }
     }

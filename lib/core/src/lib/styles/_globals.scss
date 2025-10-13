@@ -6,7 +6,7 @@
         & #{ms.$mat-expansion-panel-header}.cdk-program-focused,
         &:not(#{ms.$mat-expanded}) #{ms.$mat-expansion-panel-header}:hover {
             &:not([aria-disabled='true']) {
-                background-color: var(--adf-theme-background-hover-color);
+                background-color: var(--mat-sys-surface-container);
             }
         }
     }
@@ -14,22 +14,22 @@
     #{ms.$mat-calendar} {
         #{ms.$mat-calendar-header} {
             button {
-                color: var(--adf-theme-foreground-text-color-087);
+                color: var(--mat-sys-on-surface);
 
                 &:disabled {
-                    color: var(--adf-theme-foreground-text-color-054);
+                    color: var(--mat-sys-on-surface);
                 }
             }
         }
 
         #{ms.$mat-calendar-content} {
             #{ms.$mat-calendar-table-header} th {
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--mat-sys-on-surface);
             }
 
             #{ms.$mat-calendar-body-disabled} > div {
                 /* stylelint-disable-next-line declaration-no-important */
-                color: var(--adf-theme-foreground-text-color-054) !important;
+                color: var(--mat-sys-on-surface) !important;
             }
         }
     }
@@ -51,11 +51,11 @@
 
         #{ms.$mat-datetimepicker-calendar-content} {
             #{ms.$mat-datetimepicker-calendar-table-header} th {
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--mat-sys-on-surface);
             }
 
             #{ms.$mat-datetimepicker-calendar-body-disabled} > div {
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--mat-sys-on-surface);
             }
         }
     }
@@ -72,7 +72,7 @@
 
     #{ms.$mat-input-element} {
         &:focus::placeholder {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 

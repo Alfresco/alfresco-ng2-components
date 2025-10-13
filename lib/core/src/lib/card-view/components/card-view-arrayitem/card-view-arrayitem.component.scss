@@ -6,12 +6,12 @@
     }
 
     &-array-item-action {
-        color: var(--adf-theme-foreground-text-color-025);
+        color: var(--mat-sys);
     }
 
     &-array-item-action:hover,
     &-array-item-action:focus {
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
     }
 
     &-card-array-item-default {
@@ -41,8 +41,8 @@
         display: flex;
         place-content: center space-between;
         align-items: center;
-        background: var(--adf-theme-background-card-color);
-        border-color: var(--adf-theme-foreground-divider-color);
+        background: var(--mat-sys-surface);
+        border-color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 12%, transparent);
         border-radius: 0;
 
         #{ms.$mat-chip}:hover {

@@ -7,20 +7,20 @@
 div.adf-tooltip-card {
     @include mat.elevation(8);
 
-    background-color: var(--adf-theme-background-card-color);
-    border: 1px solid var(--theme-primary-color);
+    background-color: var(--mat-sys-surface);
+    border: 1px solid var(--mat-sys-primary);
     padding: 12px;
     border-radius: 6px;
 
     p,
     div {
-        font-size: var(--theme-caption-font-size);
-        color: var(--adf-theme-foreground-text-color-075);
+        font-size: var(--mat-sys-body-small-size);
+        color: color-mix(in srgb, var(--mat-sys-on-surface) 75%, transparent);
         margin: 0;
     }
 
     hr {
-        border: 1px solid var(--theme-primary-color);
+        border: 1px solid var(--mat-sys-primary);
         margin: 6px 0;
     }
 
@@ -29,6 +29,7 @@ div.adf-tooltip-card {
     }
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 ::ng-deep .cdk-overlay-connected-position-bounding-box {
     margin-top: 10px;
 }

@@ -22,13 +22,13 @@
         &-content {
             padding: 0 8px 0 0;
             overflow: unset;
-            color: var(--adf-secondary-modal-text-color);
+            color: var(--mat-sys-on-surface);
 
             &-checkbox {
                 margin-top: 20px;
 
                 label {
-                    color: var(--adf-secondary-modal-text-color);
+                    color: var(--mat-sys-on-surface);
                 }
             }
         }
@@ -41,13 +41,12 @@
             align-items: flex-end;
 
             &-cancel-button {
-                background-color: var(--adf-secondary-button-background);
                 margin-right: 4px;
             }
 
             &-discard-changes-button {
                 color: white;
-                background-color: var(--adf-error-color);
+                background-color: var(--mat-sys-error);
             }
 
             &-cancel-button,

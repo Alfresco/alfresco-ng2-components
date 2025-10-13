@@ -20,12 +20,12 @@
         }
 
         &-clear-search-button {
-            font-size: var(--theme-button-font-size);
+            font-size: var(--mat-sys-label-large-size);
             cursor: pointer;
         }
     }
 
     .adf-highlight {
-        color: var(--adf-theme-primary-900);
+        color: var(--mat-sys-on-primary-container);
     }
 }

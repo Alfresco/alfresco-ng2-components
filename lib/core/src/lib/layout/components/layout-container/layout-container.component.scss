@@ -8,9 +8,9 @@ adf-layout-container {
 
     .adf-layout-container-sidenav {
         overflow: hidden;
-        border-right: 1px solid var(--adf-theme-foreground-text-color-007);
-        background-color: var(--theme-background-color);
-        color: var(--adf-theme-foreground-text-color);
+        border-right: 1px solid color-mix(in srgb, var(--mat-sys-on-surface) 7%, transparent);
+        background-color: var(--mat-sys-surface);
+        color: var(--mat-sys-on-surface);
     }
 }
 
