@@ -36,7 +36,6 @@
                         mat-icon-button
                         [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                         (click)="saveChanges($event)"
-                        color="primary"
                         data-automation-id="save-general-info-metadata"
                         [disabled]="!hasMetadataChanged || invalidProperties.size > 0">
                         <mat-icon>check</mat-icon>
@@ -90,8 +89,7 @@
                             mat-icon-button
                             [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                             (click)="saveChanges($event)"
-                            color="primary"
-                            data-automation-id="save-tags-metadata"
+                                data-automation-id="save-tags-metadata"
                             [disabled]="!hasMetadataChanged">
                             <mat-icon>check</mat-icon>
                         </button>
@@ -153,8 +151,7 @@
                             mat-icon-button
                             [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                             (click)="saveChanges($event)"
-                            color="primary"
-                            data-automation-id="save-categories-metadata"
+                                data-automation-id="save-categories-metadata"
                             [disabled]="!hasMetadataChanged">
                             <mat-icon>check</mat-icon>
                         </button>
@@ -233,8 +230,7 @@
                                 mat-icon-button
                                 [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                                 (click)="saveChanges($event)"
-                                color="primary"
-                                data-automation-id="save-metadata"
+                                        data-automation-id="save-metadata"
                                 [disabled]="!hasMetadataChanged || invalidProperties.size > 0">
                                 <mat-icon>check</mat-icon>
                             </button>

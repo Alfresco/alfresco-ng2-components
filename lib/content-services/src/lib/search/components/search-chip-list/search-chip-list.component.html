@@ -2,7 +2,6 @@
     <ng-container *ngIf="facetFiltersService.selectedBuckets.length">
         <mat-chip-option *ngIf="clearAll && facetFiltersService.selectedBuckets.length > 1"
             data-automation-id="reset-filter"
-            color="primary"
             selected
             class="adf-search-chip-list-item"
             title="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"

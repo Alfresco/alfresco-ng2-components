@@ -11,7 +11,6 @@
         <div class="adf-dialog-title-container" [ngClass]="{ 'adf-centered-title': data.headerIcon }">
             <mat-icon
                 *ngIf="data.headerIcon"
-                color="primary"
                 class="adf-dialog-header-icon"
             >
                 {{ data.headerIcon }}
@@ -55,7 +54,6 @@
                 <button
                     *ngFor="let additionalButton of additionalActionButtons"
                     mat-button
-                    color="primary"
                     class="{{ additionalButton.class }}"
                     (click)="additionalButton.onClick()"
                 >
@@ -68,7 +66,6 @@
             <button
                 *ngIf="!isCancelButtonHidden"
                 mat-stroked-button
-                color="primary"
                 mat-dialog-close
                 data-automation-id="adf-dialog-actions-cancel"
             >
@@ -77,7 +74,6 @@
 
             <button
                 mat-flat-button
-                color="primary"
                 data-automation-id="adf-dialog-actions-confirm"
                 [disabled]="isConfirmButtonDisabled$ | async"
                 (click)="onConfirm()"
