@@ -17,22 +17,54 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StartProcessScreenCloudComponent } from './start-process-screen-cloud.component';
+import { MockedTaskScreenCloudComponent } from '../../../../testing/start-process-screen-mock.component';
+import { provideScreen } from '../../../services/provide-screen';
+import { By } from '@angular/platform-browser';
+import { StartProcessScreenCloud, StartProcessScreenDefaultButtons } from './start-process-screen.model';
 
 describe('StartProcessScreenCloudComponent', () => {
     let component: StartProcessScreenCloudComponent;
     let fixture: ComponentFixture<StartProcessScreenCloudComponent>;
+    const screenId = 'screen-1234-5678-121212-123456';
+    const processDefinitionId = 'definition-id';
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [StartProcessScreenCloudComponent]
+            imports: [StartProcessScreenCloudComponent],
+            providers: [provideScreen(screenId, MockedTaskScreenCloudComponent)]
         }).compileComponents();
 
         fixture = TestBed.createComponent(StartProcessScreenCloudComponent);
         component = fixture.componentInstance;
+        fixture.componentRef.setInput('processDefinitionId', processDefinitionId);
+        fixture.componentRef.setInput('screenId', screenId);
+
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+    it('should create provided screen component', () => {
+        const screenDebugComponent = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent));
+        expect(screenDebugComponent).toBeTruthy();
+    });
+
+    it('should subscribe to outputs', () => {
+        const screenStartProcessPayloadChangeSpy = spyOn(component.screenStartProcessPayloadChange, 'emit');
+        const disableStartProcessButtonSpy = spyOn(component.disableStartProcessButton, 'emit');
+
+        const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
+
+        const startProcessScreenDefaultButtons: StartProcessScreenDefaultButtons = { show: true, disable: false };
+        const startProcessPayload = { payload: 'TEST' };
+        screenInstance.defaultStartProcessButtonsConfigurationChange.emit(startProcessScreenDefaultButtons);
+        screenInstance.startProcessPayloadChanged.emit(startProcessPayload);
+
+        expect(screenStartProcessPayloadChangeSpy).toHaveBeenCalledWith(startProcessPayload);
+        expect(disableStartProcessButtonSpy).toHaveBeenCalledWith(startProcessScreenDefaultButtons.disable);
+        expect(component.showStartProcessButtons()).toBe(startProcessScreenDefaultButtons.show);
+    });
+
+    it('should set process definition id', () => {
+        const screenInstance: StartProcessScreenCloud = fixture.debugElement.query(By.directive(MockedTaskScreenCloudComponent)).componentInstance;
+        expect(screenInstance.processDefinitionId()).toBe(processDefinitionId);
     });
 });

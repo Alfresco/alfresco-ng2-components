@@ -15,16 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, input, InputSignal, output, OutputEmitterRef, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.component';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-
-export interface StartProcessScreenCloud {
-    processDefinitionId: InputSignal<string>;
-    defaultStartProcessButtonsConfigurationChange: OutputEmitterRef<{ show: boolean; disable: boolean }>;
-    startProcessPayloadChanged: OutputEmitterRef<unknown>;
-}
+import { StartProcessScreenCloud } from './start-process-screen.model';
 
 @Component({
     selector: 'adf-cloud-start-process-screen-cloud',
@@ -43,7 +38,7 @@ export class StartProcessScreenCloudComponent extends BaseScreenCloudComponent<S
 
     protected setInputsForDynamicComponent(): void {
         if (this.processDefinitionId()) {
-            this.componentRef.setInput('processDefinitionId', this.processDefinitionId);
+            this.componentRef.setInput('processDefinitionId', this.processDefinitionId());
         }
     }
 

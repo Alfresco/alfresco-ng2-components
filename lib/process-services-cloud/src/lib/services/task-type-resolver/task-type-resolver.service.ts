@@ -30,11 +30,11 @@ export type UserTaskType = (typeof UserTaskContentType)[keyof typeof UserTaskCon
 })
 export class TaskTypeResolverService {
     isScreenTask(formKey?: string): boolean {
-        return this.getUserTaskType(formKey) === UserTaskContentType.Form;
+        return this.getUserTaskType(formKey) === UserTaskContentType.Screen;
     }
 
     isFormTask(formKey?: string): boolean {
-        return this.getUserTaskType(formKey) === UserTaskContentType.Screen;
+        return this.getUserTaskType(formKey) === UserTaskContentType.Form;
     }
 
     getScreenId(formKey?: string): string {

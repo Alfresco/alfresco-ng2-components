@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, input, output, SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -50,22 +50,10 @@ import { FormCloudDisplayMode } from '../../../services/form-fields.interfaces';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-    StartProcessScreenCloud,
-    StartProcessScreenCloudComponent
-} from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
+import { StartProcessScreenCloudComponent } from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
 import { provideScreen } from '../../../screen/services/provide-screen';
-
-@Component({
-    selector: 'adf-cloud-mock-screen-component',
-    template: `<div>Mock Screen Component</div>`
-})
-class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
-    processDefinitionId = input('');
-
-    defaultStartProcessButtonsConfigurationChange = output<{ show: boolean; disable: boolean }>();
-    startProcessPayloadChanged = output<unknown>();
-}
+import { StartProcessScreenCloud } from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen.model';
+import { MockedTaskScreenCloudComponent } from '../../../testing/start-process-screen-mock.component';
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;
@@ -296,8 +284,8 @@ describe('StartProcessCloudComponent', () => {
     });
 
     describe('screen on start process event', () => {
-        let screenComponent: StartProcessScreenCloud;
         let screenDebugComponent: DebugElement;
+        let screenComponent: StartProcessScreenCloud;
 
         beforeEach(async () => {
             fixture.detectChanges();
@@ -1004,7 +992,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should use fallback error message when no specific error message is provided', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            getProcessDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
             const errorWithoutMessage = {

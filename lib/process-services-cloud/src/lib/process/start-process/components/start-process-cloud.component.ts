@@ -202,6 +202,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly hasVisibleOutcomesSubject = new BehaviorSubject<boolean>(false);
     private readonly dialog = inject(MatDialog);
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
+
     private screenPayload: unknown;
 
     showSaveButton = false;
@@ -477,8 +478,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         let action: Observable<ProcessInstanceCloud>;
 
         if (this.hasForm || this.hasScreen) {
-            const payload = this.hasForm ? this.formCloud.values : this.screenPayload;
-
             action = this.startProcessCloudService.startProcessWithForm(
                 this.appName,
                 this.processDefinitionCurrent.formKey,
@@ -487,7 +486,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     processName: this.processInstanceName.value,
                     processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
                     variables: this.variables ?? {},
-                    values: payload ?? {},
+                    values: this.hasForm ? this.formCloud.values : this.screenPayload,
                     outcome: this.customOutcomeName
                 })
             );
