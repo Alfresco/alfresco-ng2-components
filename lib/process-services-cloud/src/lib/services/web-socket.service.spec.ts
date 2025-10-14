@@ -27,7 +27,7 @@ describe('WebSocketService', () => {
     let service: WebSocketService;
     const onLogoutSubject: Subject<void> = new Subject<void>();
 
-    const apolloMock = jasmine.createSpyObj('Apollo', ['use', 'createNamed', 'removeClient']);
+    const apolloMock = jasmine.createSpyObj('Apollo', ['use', 'createNamed']);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
