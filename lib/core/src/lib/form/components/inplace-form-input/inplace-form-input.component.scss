@@ -37,7 +37,7 @@ $adf-inplace-input-padding: 7px;
         }
 
         &:hover:not(:focus) {
-            border: 1px solid var(--mat-sys-surface-container);
+            border: 1px solid var(--mat-sys-outline);
             background-color: var(--mat-sys-surface-container);
         }
     }

@@ -27,10 +27,6 @@ ul > li > form-field > .adf-focus {
         color: var(--mat-sys-error);
     }
 
-    &-label {
-        color: var(--mat-sys-on-surface-variant);
-    }
-
     &-asterisk {
         padding-left: 2px;
         color: var(--mat-sys-error);
@@ -47,7 +43,7 @@ ul > li > form-field > .adf-focus {
 
         #{ms.$mat-select} {
             &-arrow {
-                color: var(--mat-sys-on-surface-variant) !important;
+                color: var(--mat-sys-on-surface) !important;
             }
         }
 
@@ -56,7 +52,7 @@ ul > li > form-field > .adf-focus {
         }
 
         #{ms.$mat-form-field-prefix} {
-            color: var(--mat-sys-on-surface-variant);
+            color: var(--mat-sys-on-surface);
         }
 
         .adf-input {
@@ -65,7 +61,7 @@ ul > li > form-field > .adf-focus {
     }
 
     &-left-label {
-        color: var(--mat-sys-on-surface-variant);
+        color: var(--mat-sys-on-surface);
     }
 }
 

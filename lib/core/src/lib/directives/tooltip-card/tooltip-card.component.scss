@@ -15,7 +15,7 @@ div.adf-tooltip-card {
     p,
     div {
         font-size: var(--mat-sys-body-small-size);
-        color: color-mix(in srgb, var(--mat-sys-on-surface) 75%, transparent);
+        color: var(--mat-sys-on-surface);
         margin: 0;
     }
 

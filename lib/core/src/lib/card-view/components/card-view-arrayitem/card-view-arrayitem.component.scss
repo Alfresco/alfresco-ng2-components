@@ -5,15 +5,6 @@
         margin-right: 5px;
     }
 
-    &-array-item-action {
-        color: var(--mat-sys);
-    }
-
-    &-array-item-action:hover,
-    &-array-item-action:focus {
-        color: var(--mat-sys-on-surface);
-    }
-
     &-card-array-item-default {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -41,8 +32,7 @@
         display: flex;
         place-content: center space-between;
         align-items: center;
-        background: var(--mat-sys-surface);
-        border-color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 12%, transparent);
+        border-color: var(--mat-sys-outline-variant);
         border-radius: 0;
 
         #{ms.$mat-chip}:hover {

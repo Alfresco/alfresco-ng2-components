@@ -9,12 +9,9 @@ $select-filter-height: 4em !default;
     .adf-select-filter-input-container {
         width: 100%;
         z-index: 100;
-        font-size: var(--mat-sys-body-medium-size);
-        color: color-mix(in srgb, var(--mat-sys-on-surface) 87%, transparent);
         line-height: 3em;
         height: $select-filter-height;
         padding: 5px 16px 0;
-        background: var(--mat-sys-surface);
     }
 
     #{ms.$mat-form-field} {

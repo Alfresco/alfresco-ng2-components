@@ -22,14 +22,9 @@
         &-content {
             padding: 0 8px 0 0;
             overflow: unset;
-            color: var(--mat-sys-on-surface);
 
             &-checkbox {
                 margin-top: 20px;
-
-                label {
-                    color: var(--mat-sys-on-surface);
-                }
             }
         }
 
