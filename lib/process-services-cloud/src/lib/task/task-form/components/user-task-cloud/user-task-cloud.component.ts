@@ -178,8 +178,8 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     loading: boolean = false;
     taskDetails: TaskDetailsCloudModel;
     taskType: UserTaskType;
-    screenId: string;
     taskTypeEnum = UserTaskContentType;
+    screenId: string;
 
     private taskCloudService: TaskCloudService = inject(TaskCloudService);
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
