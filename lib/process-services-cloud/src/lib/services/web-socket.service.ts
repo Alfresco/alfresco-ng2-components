@@ -16,7 +16,7 @@
  */
 
 import { createClient } from 'graphql-ws';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
@@ -30,14 +30,14 @@ import {
     split,
     SubscriptionOptions
 } from '@apollo/client/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { Kind, OperationTypeNode } from 'graphql';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
 
 interface serviceOptions {
@@ -50,26 +50,57 @@ interface serviceOptions {
 @Injectable({
     providedIn: 'root'
 })
-export class WebSocketService {
+export class WebSocketService implements OnDestroy {
     private appConfigService = inject(AppConfigService);
     private subscriptionProtocol = 'graphql-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
     private httpLinkHandler: HttpLinkHandler;
+    private destroy$ = new Subject<void>();
+    private tokenRefreshSubscription: Subscription;
+    private clientTokenMap = new Map<string, string>();
 
-    constructor(private readonly apollo: Apollo, private readonly httpLink: HttpLink, private readonly authService: AuthenticationService) {}
+    constructor(
+        private readonly apollo: Apollo,
+        private readonly httpLink: HttpLink,
+        private readonly authService: AuthenticationService
+    ) {
+        this.setupTokenRefreshListener();
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+        if (this.tokenRefreshSubscription) {
+            this.tokenRefreshSubscription.unsubscribe();
+        }
+    }
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
-        const { apolloClientName, subscriptionOptions } = options;
+        const uniqueClientName = this.generateUniqueClientName(options.apolloClientName);
+        const modifiedOptions = { ...options, apolloClientName: uniqueClientName };
+
         this.authService.onLogout.pipe(take(1)).subscribe(() => {
-            if (this.apollo.use(apolloClientName)) {
-                this.apollo.removeClient(apolloClientName);
+            if (this.apollo.use(uniqueClientName)) {
+                this.removeClient(uniqueClientName);
             }
         });
 
-        if (this.apollo.use(apolloClientName) === undefined) {
-            this.initSubscriptions(options);
+        const currentToken = this.authService.getToken();
+        const storedToken = this.clientTokenMap.get(uniqueClientName);
+
+        if (storedToken !== currentToken) {
+            if (this.apollo.use(uniqueClientName)) {
+                this.apollo.removeClient(uniqueClientName);
+            }
+
+            this.clientTokenMap.set(uniqueClientName, currentToken);
         }
-        return this.apollo.use(apolloClientName).subscribe<T>({ errorPolicy: 'all', ...subscriptionOptions });
+
+        if (this.apollo.use(uniqueClientName) === undefined) {
+            this.initSubscriptions(modifiedOptions);
+        }
+
+        return this.apollo.use(uniqueClientName).subscribe<T>({ errorPolicy: 'all', ...modifiedOptions.subscriptionOptions });
     }
 
     private get contextRoot() {
@@ -88,6 +119,29 @@ export class WebSocketService {
         const url = new URL(serviceUrl, this.contextRoot);
 
         return url.href;
+    }
+
+    private setupTokenRefreshListener(): void {
+        if (this.authService.onTokenReceived) {
+            this.tokenRefreshSubscription = this.authService.onTokenReceived.pipe(takeUntil(this.destroy$)).subscribe(() => {
+                this.handleTokenRefresh();
+            });
+        }
+    }
+
+    private handleTokenRefresh(): void {
+        this.clientTokenMap.forEach((_, clientName) => {
+            if (this.apollo.use(clientName)) {
+                this.apollo.removeClient(clientName);
+            }
+        });
+        this.clientTokenMap.clear();
+    }
+
+    private generateUniqueClientName(baseName: string): string {
+        const timestamp = Date.now();
+        const random = Math.random().toString(36).substring(2, 9);
+        return `${baseName}_${timestamp}_${random}`;
     }
 
     private initSubscriptions(options: serviceOptions): void {
@@ -126,6 +180,15 @@ export class WebSocketService {
 
             if (networkError) {
                 console.error(`[Network error]: ${networkError}`);
+                if (
+                    networkError.message &&
+                    (networkError.message.includes('Socket closed with event 4401') ||
+                        networkError.message.includes('Unauthorized') ||
+                        networkError.message.includes('4401') ||
+                        networkError.message.includes('4403'))
+                ) {
+                    this.removeClient(options.apolloClientName);
+                }
             }
         });
 
@@ -155,12 +218,12 @@ export class WebSocketService {
         this.wsLink = new GraphQLWsLink(
             createClient({
                 url: this.createWsUrl(options.wsUrl) + '/v2/ws/graphql',
-                connectionParams: {
+                connectionParams: () => ({
                     Authorization: 'Bearer ' + this.authService.getToken()
-                },
+                }),
                 on: {
                     error: () => {
-                        this.apollo.removeClient(options.apolloClientName);
+                        this.removeClient(options.apolloClientName);
                         this.initSubscriptions(options);
                     }
                 },
@@ -175,5 +238,10 @@ export class WebSocketService {
                   uri: this.createHttpUrl(options.httpUrl)
               })
             : undefined;
+    }
+
+    private removeClient(clientName: string): void {
+        this.apollo.removeClient(clientName);
+        this.clientTokenMap.delete(clientName);
     }
 }
