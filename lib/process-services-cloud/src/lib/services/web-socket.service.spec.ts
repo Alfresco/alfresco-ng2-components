@@ -20,8 +20,8 @@ import { Apollo, gql } from 'apollo-angular';
 import { lastValueFrom, of, Subject } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
 
 describe('WebSocketService', () => {
     let service: WebSocketService;
@@ -31,8 +31,8 @@ describe('WebSocketService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
+                provideHttpClientTesting(),
                 {
                     provide: Apollo,
                     useValue: apolloMock
