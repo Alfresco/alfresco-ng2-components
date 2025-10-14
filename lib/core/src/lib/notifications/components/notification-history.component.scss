@@ -89,11 +89,11 @@ $notification-item-height: 72px;
 
         .adf-notification-history-menu-item:focus {
             outline: none;
-            background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
+            background: var(-mat-sys-surface-container-high);
         }
 
         .adf-notification-history-menu-item:hover {
-            background-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, var(--mat-sys-surface));
+            background-color: var(--mat-sys-surface-container-high);
         }
 
         .adf-notification-history-menu-message:is(p) {
