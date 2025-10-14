@@ -21,7 +21,7 @@ import { lastValueFrom, of, Subject } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
 
 describe('WebSocketService', () => {
     let service: WebSocketService;
@@ -53,7 +53,7 @@ describe('WebSocketService', () => {
             ]
         });
         service = TestBed.inject(WebSocketService);
-        apolloMock.use.and.returnValues(undefined, undefined, { subscribe: () => of({}) });
+        apolloMock.use.and.returnValues(undefined, { subscribe: () => of({}) });
     });
 
     afterEach(() => {
@@ -66,25 +66,27 @@ describe('WebSocketService', () => {
         const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
-        apolloMock.use.and.returnValues(true, true, { subscribe: () => of({}) });
+        apolloMock.use.and.returnValues(true, { subscribe: () => of({}) });
 
         await lastValueFrom(service.getSubscription(wsOptions));
 
-        expectUseToBeCalledWithSameClientName(apolloClientName);
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
+        expect(apolloMock.use).toHaveBeenCalledWith(apolloClientName);
         expect(apolloMock.createNamed).not.toHaveBeenCalled();
     });
 
     it('should subscribe to Apollo client if not already in use', async () => {
         const apolloClientName = 'testClient';
+        const expectedApolloClientName = 'testClient';
         const subscriptionOptions: SubscriptionOptions = { query: gql(`subscription {testQuery}`) };
         const wsOptions = { apolloClientName, wsUrl: 'testUrl', subscriptionOptions };
 
         await lastValueFrom(service.getSubscription(wsOptions));
 
-        const uniqueClientName = expectUseToBeCalledWithSameClientName(apolloClientName);
-
+        expect(apolloMock.use).toHaveBeenCalledWith(expectedApolloClientName);
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
         expect(apolloMock.createNamed).toHaveBeenCalledTimes(1);
-        expect(apolloMock.createNamed).toHaveBeenCalledWith(uniqueClientName, jasmine.any(Object));
+        expect(apolloMock.createNamed).toHaveBeenCalledWith(expectedApolloClientName, jasmine.any(Object));
     });
 
     it('should create named client with the right authentication token when FF is on', async () => {
@@ -99,30 +101,8 @@ describe('WebSocketService', () => {
 
         await lastValueFrom(service.getSubscription(wsOptions));
 
-        expectUseToBeCalledWithSameClientName(apolloClientName);
+        expect(apolloMock.use).toHaveBeenCalledTimes(2);
         expect(apolloMock.createNamed).toHaveBeenCalled();
         expect(headers).toEqual(expectedHeaders);
     });
-
-    /**
-     * Helper method to verify that all calls to apollo.use are made with the same unique client name
-     *
-     * @param apolloClientName The base name of the Apollo client
-     * @returns The unique client name used in the calls
-     */
-    function expectUseToBeCalledWithSameClientName(apolloClientName: string): string {
-        expect(apolloMock.use).toHaveBeenCalledTimes(3);
-        const allCalls = apolloMock.use.calls.allArgs();
-        let uniqueClientName: string;
-        allCalls.forEach((args: string[]) => {
-            if (!uniqueClientName) {
-                uniqueClientName = args[0];
-                expect(uniqueClientName.startsWith(apolloClientName + '_')).toBeTrue();
-            }
-
-            expect(args[0]).toBe(uniqueClientName);
-        });
-
-        return uniqueClientName;
-    }
 });
