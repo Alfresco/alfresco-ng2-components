@@ -49,6 +49,7 @@ import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumb
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
+import { AnnotationMode } from 'pdfjs-dist';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -287,7 +288,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus,
-                annotationMode: 0
+                annotationMode: AnnotationMode.ENABLE
             });
 
             // cspell: disable-next
