@@ -203,7 +203,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly dialog = inject(MatDialog);
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
 
-    private screenPayload: unknown;
+    private screenSubmitPayload: unknown;
 
     showSaveButton = false;
     showCompleteButton = false;
@@ -315,6 +315,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     onDisableStartProcessButtonForScreen(disable: boolean): void {
         this.disableStartProcessForScreen = disable;
+    }
+
+    onScreenStartProcessPayloadChange(payload: unknown): void {
+        this.screenSubmitPayload = payload;
     }
 
     private getMaxNameLength(): number {
@@ -468,10 +472,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.startProcess();
     }
 
-    onScreenStartProcessPayloadChange(payload: unknown): void {
-        this.screenPayload = payload;
-    }
-
     startProcessWithoutConfirmation() {
         this.isProcessStarting = true;
 
@@ -486,7 +486,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                     processName: this.processInstanceName.value,
                     processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
                     variables: this.variables ?? {},
-                    values: this.hasForm ? this.formCloud.values : this.screenPayload,
+                    values: this.hasForm ? this.formCloud.values : this.screenSubmitPayload,
                     outcome: this.customOutcomeName
                 })
             );

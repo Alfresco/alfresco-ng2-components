@@ -102,7 +102,7 @@ export class TaskScreenCloudComponent extends BaseScreenCloudComponent<UserTaskC
 
     private readonly destroyRef = inject(DestroyRef);
 
-    protected setInputsForDynamicComponent(): void {
+    protected override setInputsForDynamicComponent(): void {
         if (this.taskId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskId')) {
             this.componentRef.setInput('taskId', this.taskId);
         }
