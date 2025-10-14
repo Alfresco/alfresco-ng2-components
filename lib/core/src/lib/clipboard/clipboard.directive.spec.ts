@@ -145,11 +145,9 @@ describe('CopyClipboardDirective', () => {
         fixture.detectChanges();
         expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
 
-        // Manually trigger the directive's destroy method
         const directive = fixture.componentInstance.clipboardDirective;
         directive.ngOnDestroy();
 
-        // Tooltip should be cleaned up
         expect(testingUtils.getByCSS('.adf-copy-tooltip')).toBeNull();
     }));
 
