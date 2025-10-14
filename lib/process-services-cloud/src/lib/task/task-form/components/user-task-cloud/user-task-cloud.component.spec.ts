@@ -26,7 +26,7 @@ import { of, throwError } from 'rxjs';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { UserTaskCloudComponent } from './user-task-cloud.component';
 import { By } from '@angular/platform-browser';
-import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
+import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/user-task-screen/screen-cloud.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 import {
@@ -42,7 +42,7 @@ import { TaskCloudService } from '../../../services/task-cloud.service';
 import { FormModel } from '../../../../../../../core';
 import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-task-cloud-buttons.component';
 
-const taskDetails: TaskDetailsCloudModel = {
+const createTaskDetailsCloudModel = (): TaskDetailsCloudModel => ({
     appName: 'simple-app',
     assignee: 'admin.adf',
     completedDate: null,
@@ -55,7 +55,7 @@ const taskDetails: TaskDetailsCloudModel = {
     standalone: false,
     status: TASK_ASSIGNED_STATE,
     permissions: [TASK_VIEW_PERMISSION]
-};
+});
 
 @Component({
     selector: 'adf-cloud-task-screen',
@@ -94,8 +94,11 @@ describe('UserTaskCloudComponent', () => {
     let loader: HarnessLoader;
     let identityUserService: IdentityUserService;
     let errorEmitSpy: jasmine.Spy;
+    let taskDetails: TaskDetailsCloudModel;
 
     beforeEach(() => {
+        taskDetails = createTaskDetailsCloudModel();
+
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule, NoopAuthModule, UserTaskCloudComponent, TaskFormCloudComponent]
         }).overrideComponent(UserTaskCloudComponent, {

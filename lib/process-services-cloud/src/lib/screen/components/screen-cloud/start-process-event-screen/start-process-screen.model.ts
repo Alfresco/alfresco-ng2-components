@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-export * from './components/screen-cloud/user-task-screen/screen-cloud.model';
-export * from './components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
-export * from './services/screen-rendering.service';
-export * from './services/provide-screen';
+import { InputSignal, OutputEmitterRef } from '@angular/core';
+
+export interface StartProcessScreenDefaultButtons {
+    show: boolean;
+    disable: boolean;
+}
+export interface StartProcessScreenCloud {
+    processDefinitionId: InputSignal<string>;
+    defaultStartProcessButtonsConfigurationChange: OutputEmitterRef<StartProcessScreenDefaultButtons>;
+    startProcessPayloadChanged: OutputEmitterRef<unknown>;
+}

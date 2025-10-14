@@ -16,19 +16,19 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { ScreenRenderingService } from '../../services/screen-rendering.service';
+import { Component, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { UserTaskCustomUi } from './screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.component';
 
 @Component({
     selector: 'adf-cloud-task-screen',
     imports: [CommonModule, MatCardModule],
     templateUrl: './screen-cloud.component.html'
 })
-export class TaskScreenCloudComponent implements OnInit {
+export class TaskScreenCloudComponent extends BaseScreenCloudComponent<UserTaskCustomUi> {
     /** Task id to fetch corresponding form and values. */
     @Input()
     taskId: string;
@@ -47,10 +47,6 @@ export class TaskScreenCloudComponent implements OnInit {
 
     @Input()
     showCancelButton: boolean;
-
-    /** Screen id to create dynamic component. */
-    @Input()
-    screenId: string = '';
 
     /** Process Instance Id to fetch corresponding data. */
     @Input()
@@ -104,27 +100,9 @@ export class TaskScreenCloudComponent implements OnInit {
     @Output()
     nextTaskCheckboxCheckedChanged = new EventEmitter<MatCheckboxChange>();
 
-    @ViewChild('container', { read: ViewContainerRef, static: true })
-    container: ViewContainerRef;
+    private readonly destroyRef = inject(DestroyRef);
 
-    private destroyRef = inject(DestroyRef);
-    componentRef: ComponentRef<UserTaskCustomUi>;
-    private readonly screenRenderingService = inject(ScreenRenderingService);
-
-    ngOnInit() {
-        this.createDynamicComponent();
-    }
-
-    createDynamicComponent() {
-        if (this.screenId) {
-            const componentType = this.screenRenderingService.resolveComponentType({ type: this.screenId });
-            this.componentRef = this.container.createComponent(componentType);
-            this.setInputsForDynamicComponent();
-            this.subscribeToOutputs();
-        }
-    }
-
-    setInputsForDynamicComponent(): void {
+    protected override setInputsForDynamicComponent(): void {
         if (this.taskId && Object.prototype.hasOwnProperty.call(this.componentRef.instance, 'taskId')) {
             this.componentRef.setInput('taskId', this.taskId);
         }
@@ -160,7 +138,7 @@ export class TaskScreenCloudComponent implements OnInit {
         }
     }
 
-    subscribeToOutputs() {
+    protected override subscribeToOutputs(): void {
         if (this.componentRef.instance?.taskSaved) {
             this.componentRef.instance.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.taskSaved.emit());
         }
@@ -172,7 +150,6 @@ export class TaskScreenCloudComponent implements OnInit {
         if (this.componentRef.instance?.error) {
             this.componentRef.instance.error.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.error.emit(data));
         }
-
         if (this.componentRef.instance?.claimTask) {
             this.componentRef.instance.claimTask.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => this.claimTask.emit(data));
         }
@@ -189,7 +166,7 @@ export class TaskScreenCloudComponent implements OnInit {
         }
     }
 
-    switchToDisplayMode(newDisplayMode?: string) {
+    switchToDisplayMode(newDisplayMode?: string): void {
         if (this.componentRef?.instance?.switchToDisplayMode) {
             this.componentRef.instance.switchToDisplayMode(newDisplayMode);
         }

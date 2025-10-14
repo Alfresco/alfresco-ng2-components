@@ -28,18 +28,11 @@ import { UserTaskCloudButtonsComponent } from '../user-task-cloud-buttons/user-t
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/screen-cloud.component';
+import { TaskScreenCloudComponent } from '../../../../screen/components/screen-cloud/user-task-screen/screen-cloud.component';
 import { CompleteTaskDirective } from './complete-task/complete-task.directive';
 import { catchError, EMPTY, forkJoin } from 'rxjs';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-
-const TaskTypes = {
-    Form: 'form',
-    Screen: 'screen',
-    None: ''
-} as const;
-
-type TaskTypesType = (typeof TaskTypes)[keyof typeof TaskTypes];
+import { UserTaskContentType, TaskTypeResolverService, UserTaskType } from '../../../../services/task-type-resolver/task-type-resolver.service';
 
 @Component({
     selector: 'adf-cloud-user-task',
@@ -183,12 +176,13 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     candidateUsers: string[] = [];
     candidateGroups: string[] = [];
     loading: boolean = false;
-    screenId: string;
     taskDetails: TaskDetailsCloudModel;
-    taskType: TaskTypesType;
-    taskTypeEnum = TaskTypes;
+    taskType: UserTaskType;
+    taskTypeEnum = UserTaskContentType;
+    screenId: string;
 
     private taskCloudService: TaskCloudService = inject(TaskCloudService);
+    private readonly taskTypeResolverService = inject(TaskTypeResolverService);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnChanges(changes: SimpleChanges) {
@@ -224,19 +218,8 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     }
 
     getTaskType(): void {
-        if (this.taskDetails && !!this.taskDetails.formKey) {
-            if (this.taskDetails.formKey.includes(this.taskTypeEnum.Form)) {
-                this.taskType = this.taskTypeEnum.Form;
-                return;
-            } else if (this.taskDetails.formKey.includes(this.taskTypeEnum.Screen)) {
-                this.taskType = this.taskTypeEnum.Screen;
-                const screenId = this.taskDetails.formKey.replace(this.taskTypeEnum.Screen + '-', '');
-                this.screenId = screenId;
-                return;
-            }
-        }
-
-        this.taskType = this.taskTypeEnum.None;
+        this.taskType = this.taskTypeResolverService.getUserTaskType(this.taskDetails?.formKey);
+        this.screenId = this.taskTypeResolverService.getScreenId(this.taskDetails?.formKey);
     }
 
     hasCandidateUsers(): boolean {
@@ -284,6 +267,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     onExecuteOutcome(outcome: FormOutcomeEvent): void {
         this.executeOutcome.emit(outcome);
     }
+
     onFormContentClicked(content: ContentLinkModel): void {
         this.formContentClicked.emit(content);
     }
@@ -309,6 +293,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         const tasks$ = this.taskCloudService.getTaskById(this.appName, this.taskId);
         const candidateUsers$ = this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
         const candidateGroups$ = this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
+
         forkJoin({
             tasks: tasks$,
             candidateUsers: candidateUsers$,

@@ -63,6 +63,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
 import { MatDialog } from '@angular/material/dialog';
+import { StartProcessScreenCloudComponent } from '../../../screen/components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
+import { TaskTypeResolverService } from '../../../services/task-type-resolver/task-type-resolver.service';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -85,7 +87,8 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
         MatAutocompleteModule,
         ReactiveFormsModule,
         FormCloudComponent,
-        FormCustomOutcomesComponent
+        FormCustomOutcomesComponent,
+        StartProcessScreenCloudComponent
     ],
     providers: [LocalizedDatePipe],
     templateUrl: './start-process-cloud.component.html',
@@ -177,6 +180,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     isFormCloudLoading = true;
     processDefinitionLoaded = false;
 
+    disableStartProcessForScreen = false;
     showStartProcessButton$: Observable<boolean>;
     startProcessButtonLabel: string;
     cancelButtonLabel: string;
@@ -197,6 +201,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private readonly displayStartSubject = new BehaviorSubject<string>(null);
     private readonly hasVisibleOutcomesSubject = new BehaviorSubject<boolean>(false);
     private readonly dialog = inject(MatDialog);
+    private readonly taskTypeResolverService = inject(TaskTypeResolverService);
+
+    private screenSubmitPayload: unknown;
 
     showSaveButton = false;
     showCompleteButton = false;
@@ -204,13 +211,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     get isProcessFormValid(): boolean {
         if (this.hasForm && this.isFormCloudLoaded) {
             return (this.formCloud ? !Object.keys(this.formCloud.values).length : false) || this.formCloud?.isValid || this.isProcessStarting;
+        } else if (this.hasScreen) {
+            return true;
         } else {
             return this.processForm.valid || this.isProcessStarting;
         }
     }
 
     get disableStartButton(): boolean {
-        return !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.isFormCloudLoading;
+        return (
+            !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.isFormCloudLoading || this.disableStartProcessForScreen
+        );
     }
 
     get isProcessDefinitionsEmpty(): boolean {
@@ -226,7 +237,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     get hasForm(): boolean {
-        return !!this.processDefinitionCurrent?.formKey;
+        return this.taskTypeResolverService.isFormTask(this.processDefinitionCurrent?.formKey);
+    }
+
+    get hasScreen(): boolean {
+        return this.taskTypeResolverService.isScreenTask(this.processDefinitionCurrent?.formKey);
+    }
+
+    get screenId(): string {
+        return this.taskTypeResolverService.getScreenId(this.processDefinitionCurrent?.formKey);
     }
 
     get defaultStartProcessButtonLabel(): string {
@@ -294,6 +313,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.hasVisibleOutcomesSubject.next(anyOutcomeVisible);
     }
 
+    onDisableStartProcessButtonForScreen(disable: boolean): void {
+        this.disableStartProcessForScreen = disable;
+    }
+
+    onScreenStartProcessPayloadChange(payload: unknown): void {
+        this.screenSubmitPayload = payload;
+    }
+
     private getMaxNameLength(): number {
         return this.maxNameLength > MAX_NAME_LENGTH ? MAX_NAME_LENGTH : this.maxNameLength;
     }
@@ -301,6 +328,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     private selectProcessDefinitionByProcessDefinitionName(processDefinitionName: string): void {
         this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
         this.isFormCloudLoading = this.isProcessFormValid && this.filteredProcesses && this.filteredProcesses.length === 1;
+
         if (this.isFormCloudLoading) {
             this.setProcessDefinitionOnForm(this.filteredProcesses[0].name);
         }
@@ -447,27 +475,31 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     startProcessWithoutConfirmation() {
         this.isProcessStarting = true;
 
-        const action = this.hasForm
-            ? this.startProcessCloudService.startProcessWithForm(
-                  this.appName,
-                  this.processDefinitionCurrent.formKey,
-                  this.processDefinitionCurrent.version,
-                  new ProcessWithFormPayloadCloud({
-                      processName: this.processInstanceName.value,
-                      processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
-                      variables: this.variables ?? {},
-                      values: this.formCloud.values,
-                      outcome: this.customOutcomeName
-                  })
-              )
-            : this.startProcessCloudService.startProcess(
-                  this.appName,
-                  new ProcessPayloadCloud({
-                      name: this.processInstanceName.value,
-                      processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
-                      variables: this.variables ?? {}
-                  })
-              );
+        let action: Observable<ProcessInstanceCloud>;
+
+        if (this.hasForm || this.hasScreen) {
+            action = this.startProcessCloudService.startProcessWithForm(
+                this.appName,
+                this.processDefinitionCurrent.formKey,
+                this.processDefinitionCurrent.version,
+                new ProcessWithFormPayloadCloud({
+                    processName: this.processInstanceName.value,
+                    processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
+                    variables: this.variables ?? {},
+                    values: this.hasForm ? this.formCloud.values : this.screenSubmitPayload,
+                    outcome: this.customOutcomeName
+                })
+            );
+        } else {
+            action = this.startProcessCloudService.startProcess(
+                this.appName,
+                new ProcessPayloadCloud({
+                    name: this.processInstanceName.value,
+                    processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
+                    variables: this.variables ?? {}
+                })
+            );
+        }
 
         action.subscribe({
             next: (res) => {

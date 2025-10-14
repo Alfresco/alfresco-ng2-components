@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-export * from './components/screen-cloud/user-task-screen/screen-cloud.model';
-export * from './components/screen-cloud/start-process-event-screen/start-process-screen-cloud.component';
-export * from './services/screen-rendering.service';
-export * from './services/provide-screen';
+import { Component, input, output } from '@angular/core';
+import {
+    StartProcessScreenCloud,
+    StartProcessScreenDefaultButtons
+} from '../screen/components/screen-cloud/start-process-event-screen/start-process-screen.model';
+
+@Component({
+    selector: 'adf-cloud-mock-screen-component',
+    template: `<div>Mock Screen Component</div>`
+})
+export class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {
+    processDefinitionId = input('');
+    defaultStartProcessButtonsConfigurationChange = output<StartProcessScreenDefaultButtons>();
+    startProcessPayloadChanged = output<unknown>();
+}
