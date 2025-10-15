@@ -39,7 +39,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     constructor(
         appConfig: AppConfigService,
         alfrescoApiService: AlfrescoApiService,
-        private nodeApiService: NodesApiService
+        private readonly nodeApiService: NodesApiService
     ) {
         super(appConfig, alfrescoApiService);
 

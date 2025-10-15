@@ -109,10 +109,11 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
             Object.keys(this.value).forEach((key) => {
                 this.searchFilterQueryBuilder.setActiveFilter(key, this.value[key]);
 
-                const operator = this.searchFilterQueryBuilder.getOperatorForFilterId(key) || ' OR ';
+                const operator = this.searchFilterQueryBuilder.getOperatorForFilterId(key) || 'OR';
                 this.searchFilterQueryBuilder.filterRawParams[key] = this.value[key];
-                const query = Array.isArray(this.value[key]) ? this.value[key].join(operator) : this.value[key];
-                this.searchFilterQueryBuilder.queryFragments[key] = query;
+                this.searchFilterQueryBuilder.queryFragments[key] = Array.isArray(this.value[key])
+                    ? this.value[key].join(` ${operator} `)
+                    : this.value[key];
             });
         }
         this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);

@@ -114,8 +114,7 @@ describe('FilterHeaderComponent', () => {
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
         spyOn(queryBuilder, 'setActiveFilter');
 
-        const initialFilterValue = { name: 'pinocchio' };
-        component.value = initialFilterValue;
+        component.value = { name: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
         component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
         fixture.detectChanges();
@@ -129,8 +128,7 @@ describe('FilterHeaderComponent', () => {
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
         spyOn(queryBuilder, 'setActiveFilter');
 
-        const initialFilterValue = undefined;
-        component.value = initialFilterValue;
+        component.value = undefined;
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
         component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
         fixture.detectChanges();
@@ -147,8 +145,7 @@ describe('FilterHeaderComponent', () => {
         await fixture.whenStable();
         expect(queryBuilder.getActiveFilters().length).toBe(0);
 
-        const initialFilterValue = { name: 'pinocchio' };
-        component.value = initialFilterValue;
+        component.value = { name: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
         component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
         fixture.detectChanges();
@@ -167,8 +164,7 @@ describe('FilterHeaderComponent', () => {
         await fixture.whenStable();
         expect(Object.keys(queryBuilder.filterRawParams).length).toBe(0);
 
-        const initialFilterValue = { name: 'pinocchio' };
-        component.value = initialFilterValue;
+        component.value = { name: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
         component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
         fixture.detectChanges();
