@@ -380,6 +380,7 @@
       "TITLE": "Filter",
       "TYPE": "Type",
       "FILTER_BY": "Filter by {{ category }}",
+      "ACTIVE_FILTER": "Active filter",
       "CLEAR": "Clear",
       "APPLY": "Apply",
       "FILTERS": {

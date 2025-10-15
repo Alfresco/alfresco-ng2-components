@@ -24,6 +24,7 @@
   "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "You have no notifications at this time.",
+    "UNREAD_MESSAGES": "You have unread notifications.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Mark all as read",
     "SYSTEM": "System",

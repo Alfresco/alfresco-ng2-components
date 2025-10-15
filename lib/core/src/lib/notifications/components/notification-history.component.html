@@ -1,7 +1,7 @@
 <button mat-button
         [matMenuTriggerFor]="menu"
         aria-hidden="false"
-        [attr.aria-label]="'NOTIFICATIONS.OPEN_HISTORY' | translate"
+        [attr.aria-label]="('NOTIFICATIONS.' + (notifications.length ? 'UNREAD_MESSAGES' : 'NO_MESSAGE') | translate) + ' ' + ('NOTIFICATIONS.OPEN_HISTORY' | translate)"
         title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
         class="adf-notification-history-menu_button"
         id="adf-notification-history-open-button"
