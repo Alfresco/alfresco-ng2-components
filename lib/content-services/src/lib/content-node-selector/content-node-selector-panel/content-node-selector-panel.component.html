@@ -13,11 +13,16 @@
             adf-auto-focus
             data-automation-id="content-node-selector-search-input">
 
-        <mat-icon *ngIf="searchTerm.length > 0"
-            matSuffix (click)="clear()"
-            class="adf-content-node-selector-content-input-icon"
-            data-automation-id="content-node-selector-search-clear">clear
-        </mat-icon>
+        <button
+            *ngIf="searchTerm.length > 0"
+            matSuffix
+            mat-icon-button
+            data-automation-id="content-node-selector-search-clear"
+            (click)="clear()"
+            [attr.aria-label]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate"
+        >
+            <mat-icon class="adf-content-node-selector-content-input-icon">clear </mat-icon>
+        </button>
 
         <mat-icon *ngIf="searchTerm.length === 0"
             matSuffix
