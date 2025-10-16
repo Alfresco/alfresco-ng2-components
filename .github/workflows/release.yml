@@ -38,9 +38,6 @@ env:
   GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  BUILT_LIBS_DIR: "./dist/libs"
-  NODE_MODULES_DIR: "./node_modules"
-  REDIRECT_URI: /
 
 jobs:
   setup:

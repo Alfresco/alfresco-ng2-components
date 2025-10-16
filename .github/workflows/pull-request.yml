@@ -47,9 +47,6 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  BUILT_LIBS_DIR: "./dist/libs"
-  NODE_MODULES_DIR: "./node_modules"
-  REDIRECT_URI: /
 
 jobs:
   pre-checks:
