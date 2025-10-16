@@ -24,11 +24,7 @@
         <mat-icon class="adf-permission-search-icon">clear</mat-icon>
     </button>
 
-    <mat-icon
-        *ngIf="searchedWord?.length === 0"
-        class="adf-permission-search-icon adf-permission-search-icon-no-pointer"
-        data-automation-id="adf-permission-search-icon"
-        matSuffix
+    <mat-icon *ngIf="searchedWord?.length === 0" class="adf-permission-search-icon" data-automation-id="adf-permission-search-icon" matSuffix
         >search
     </mat-icon>
 </mat-form-field>
