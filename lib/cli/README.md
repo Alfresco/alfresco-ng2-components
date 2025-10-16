@@ -45,7 +45,6 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 | changelog        | Generate changelog report for two branches of git repository   |
 | check-cs-env     | Check cs env is up                                             |
 | check-plugin-env | Check plugin status                                            |
-| docker           | Build and publish a docker image or create additional tag link |
 | init-aae-env     | Init env                                                       |
 | init-aps-env     | Init aps                                                       |
 | licenses         | Create a 3th party license file                                |
