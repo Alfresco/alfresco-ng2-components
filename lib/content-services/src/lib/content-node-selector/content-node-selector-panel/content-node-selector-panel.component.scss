@@ -95,6 +95,10 @@ h2.adf-search-results-label {
                 &:hover {
                     color: var(--adf-theme-foreground-base-color);
                 }
+
+                &-no-pointer {
+                    pointer-events: none;
+                }
             }
 
             #{ms.$mat-form-field-subscript-wrapper} {
