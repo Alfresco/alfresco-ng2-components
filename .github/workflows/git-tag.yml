@@ -32,8 +32,6 @@ env:
   NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
   BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-  REPO_OWNER: "Alfresco"
-  REPO_NAME: "alfresco-ng2-components"
 
 jobs:
 

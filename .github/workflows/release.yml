@@ -36,8 +36,6 @@ env:
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
   GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-  REPO_OWNER: "Alfresco"
-  REPO_NAME: "alfresco-ng2-components"
 
 jobs:
   setup:

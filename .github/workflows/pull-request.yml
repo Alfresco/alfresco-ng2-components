@@ -45,8 +45,6 @@ env:
   LOG_LEVEL: "ERROR"
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
-  REPO_OWNER: "Alfresco"
-  REPO_NAME: "alfresco-ng2-components"
 
 jobs:
   pre-checks:
