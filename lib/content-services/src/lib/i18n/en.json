@@ -660,8 +660,8 @@
   },
   "BREADCRUMB": {
     "ARIA-LABEL": {
-      "BREADCRUMB": "Breadcrumb",
-      "DROPDOWN": "Dropdown"
+      "BREADCRUMB": "Breadcrumb navigation",
+      "DROPDOWN": "Open breadcrumb menu for {{folderName}}"
     },
     "HEADER": {
       "SELECTED": "Selected ({{ count }})"
