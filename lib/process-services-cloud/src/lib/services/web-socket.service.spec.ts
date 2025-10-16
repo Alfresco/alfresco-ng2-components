@@ -21,7 +21,7 @@ import { lastValueFrom, of, Subject } from 'rxjs';
 import { WebSocketService } from './web-socket.service';
 import { SubscriptionOptions } from '@apollo/client/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { AppConfigService, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
 
 describe('WebSocketService', () => {
     let service: WebSocketService;
