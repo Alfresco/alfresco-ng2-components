@@ -145,6 +145,20 @@ describe('AmountWidgetComponent', () => {
         expect(widget.decimalProperty).toBe('1.0-0');
     });
 
+    it('should set initial values with correct currency icon', () => {
+        const returnedLanguages: string[] = ['en-GB'];
+        spyOnProperty(window, 'navigator', 'get').and.returnValue({
+            languages: returnedLanguages
+        } as any);
+        widget.field = new FormFieldModel(null, { id: 2, name: 'test', value: 25, currency: '¥' });
+        widget.enableDisplayBasedOnLocale = true;
+        widget.currency = '¥';
+        widget.setInitialValues();
+
+        expect(widget.amountWidgetValue).toBe('¥25');
+        expect(widget.decimalProperty).toBe('1.0-0');
+    });
+
     it('should set initial values without currency', () => {
         const returnedLanguages: string[] = ['en-GB'];
         spyOnProperty(window, 'navigator', 'get').and.returnValue({
