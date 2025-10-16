@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { NgIf } from '@angular/common';
+import { CurrencyPipe, NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation, InjectionToken, Inject, Optional } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,6 +29,7 @@ import { WidgetComponent } from '../widget.component';
 
 export interface AmountWidgetSettings {
     showReadonlyPlaceholder: boolean;
+    enableDisplayBasedOnLocale: boolean;
 }
 
 export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf-amount-settings');
@@ -49,13 +50,21 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
         '(select)': 'event($event)'
     },
     imports: [MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, TranslatePipe, NgIf],
+    providers: [CurrencyPipe],
     encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     static DEFAULT_CURRENCY: string = '$';
     private showPlaceholder = true;
 
+    amountWidgetValue: string;
     currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
+    currencyDisplay: string | boolean = 'symbol';
+    decimalProperty: string;
+    enableDisplayBasedOnLocale: boolean;
+    locale: string;
+    valueAsNumber: number;
+    valueAsString: string;
 
     get placeholder(): string {
         return this.showPlaceholder ? this.field.placeholder : '';
@@ -65,20 +74,81 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         public formService: FormService,
         @Inject(ADF_AMOUNT_SETTINGS)
         @Optional()
-        private settings: AmountWidgetSettings
+        private settings: AmountWidgetSettings,
+        private currencyPipe: CurrencyPipe
     ) {
         super(formService);
     }
 
     ngOnInit() {
+        this.enableDisplayBasedOnLocale = this.settings?.enableDisplayBasedOnLocale ?? false;
         if (this.field) {
             if (this.field.currency) {
                 this.currency = this.field.currency;
+            } else {
+                if (this.enableDisplayBasedOnLocale) {
+                    this.currency = '';
+                    this.currencyDisplay = '';
+                }
             }
 
             if (this.field.readOnly) {
                 this.showPlaceholder = this.settings?.showReadonlyPlaceholder;
             }
+            this.setInitialValues();
+        }
+    }
+
+    amountWidgetOnBlur() {
+        if (this.enableDisplayBasedOnLocale) {
+            if (this.amountWidgetValue) {
+                this.valueAsNumber = parseFloat(this.amountWidgetValue);
+                this.valueAsString = this.currencyPipe.transform(this.amountWidgetValue, this.currency, this.currencyDisplay, this.decimalProperty);
+                this.amountWidgetValue = this.valueAsString;
+            } else {
+                this.valueAsNumber = null;
+                this.valueAsString = null;
+                this.amountWidgetValue = null;
+            }
+        }
+    }
+
+    amountWidgetOnFocus() {
+        if (this.enableDisplayBasedOnLocale) {
+            this.amountWidgetValue = this.valueAsNumber || this.valueAsNumber === 0 ? this.valueAsNumber.toString() : null;
+        }
+    }
+
+    getLocale() {
+        const defaultLocale = 'en-US';
+        if (typeof window?.navigator === 'undefined') {
+            return defaultLocale;
+        }
+        const wn = window.navigator as any;
+        let lang = wn.languages ? wn.languages[0] : defaultLocale;
+        lang = lang || wn.language || wn.browserLanguage || wn.userLanguage;
+        return lang;
+    }
+
+    onFieldChangedAmountWidget() {
+        this.field.value = this.amountWidgetValue;
+        super.onFieldChanged(this.field);
+    }
+
+    setInitialValues(): void {
+        if (this.enableDisplayBasedOnLocale) {
+            this.decimalProperty = this.field.enableFractions ? '1.2-2' : '1.0-0';
+            this.locale = this.getLocale();
+            this.valueAsNumber = this.field.value;
+            this.amountWidgetValue = this.currencyPipe.transform(
+                this.field.value,
+                this.currency,
+                this.currencyDisplay,
+                this.decimalProperty,
+                this.locale
+            );
+        } else {
+            this.amountWidgetValue = this.field.value;
         }
     }
 }
