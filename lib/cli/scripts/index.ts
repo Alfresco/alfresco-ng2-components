@@ -19,8 +19,6 @@ export * from './audit';
 export * from './changelog';
 export * from './check-cs-env';
 export * from './check-plugin-env';
-export * from './docker';
-export * from './exec';
 export * from './init-aae-env';
 export * from './init-acs-env';
 export * from './init-aps-env';

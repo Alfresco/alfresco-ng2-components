@@ -144,23 +144,4 @@ To address this, include the following script tag within the <head> section of y
 </script>
 ```
 
-
-
-# Docker Environment Variables
-These settings can be customized in a Docker environment using the following environment variables:
-
-    APP_CONFIG_OAUTH2_HOST
-    APP_CONFIG_OAUTH2_CLIENTID
-    APP_CONFIG_OAUTH2_CLIENT_SECRET
-    APP_CONFIG_OAUTH2_IMPLICIT_FLOW
-    APP_CONFIG_OAUTH2_CODE_FLOW
-    APP_CONFIG_OAUTH2_AUDIENCE
-    APP_CONFIG_OAUTH2_SCOPE
-    APP_CONFIG_OAUTH2_LOGOUT_URL
-    APP_CONFIG_OAUTH2_LOGOUT_PARAMETERS
-    APP_CONFIG_OAUTH2_SILENT_LOGIN
-    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI
-    APP_CONFIG_OAUTH2_REDIRECT_LOGIN
-    APP_CONFIG_OAUTH2_REDIRECT_LOGOUT
-
 Adjust the above examples according to your specific environment and authentication provider settings. These configurations ensure that the application can securely authenticate users through OAuth2, aligning with the current best practices in web application security.
