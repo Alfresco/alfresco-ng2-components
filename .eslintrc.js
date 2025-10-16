@@ -1,16 +1,7 @@
 module.exports = {
     root: true,
 
-    ignorePatterns: [
-        'projects/**/*',
-        '**/node_modules/**/*',
-        'lib/cli/node_modules/**/*',
-        '**/node_modules',
-        '**/docker',
-        '**/assets',
-        '**/scripts',
-        '**/docs'
-    ],
+    ignorePatterns: ['projects/**/*', '**/node_modules/**/*', 'lib/cli/node_modules/**/*', '**/node_modules', '**/assets', '**/scripts', '**/docs'],
 
     plugins: ['@nx'],
 
