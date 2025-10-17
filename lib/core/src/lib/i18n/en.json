@@ -285,10 +285,10 @@
         "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Edit button",
         "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
-        "EDIT_ASPECTS": "Edit Aspect"
+        "EDIT_ASPECTS": "Edit Aspect",
+        "SECTION": "section"
       }
     },
     "SEARCH": {
