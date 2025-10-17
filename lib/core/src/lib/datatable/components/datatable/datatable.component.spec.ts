@@ -36,6 +36,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1393,6 +1394,33 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
         expect(rows[0].isSelected).toBeFalse();
         expect(rows[1].isSelected).toBeTrue();
+    });
+
+    it('should call stopPropagation on checkbox keydown enter event', () => {
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
+        dataTable.multiselect = true;
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
+        fixture.detectChanges();
+
+        const checkboxElement = fixture.debugElement.query(By.css('[data-adf-datatable-row-checkbox]')).nativeElement;
+
+        const enterEvent = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            bubbles: true,
+            cancelable: true
+        });
+
+        const stopPropagationSpy = jasmine.createSpy('stopPropagationSpy');
+
+        Object.assign(enterEvent, {
+            stopPropagation: stopPropagationSpy
+        });
+
+        checkboxElement.dispatchEvent(enterEvent);
+
+        expect(stopPropagationSpy).toHaveBeenCalled();
     });
 
     it('should be able to display column of type boolean', () => {
