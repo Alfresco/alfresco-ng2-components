@@ -253,7 +253,9 @@
                         [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
                         data-adf-datatable-row-checkbox
                         (change)="onCheckboxChange(row, $event)"
-                        class="adf-checkbox-sr-only">
+                        (keydown.enter)="$event.stopPropagation()"
+                        class="adf-checkbox-sr-only"
+                    >
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </label>
