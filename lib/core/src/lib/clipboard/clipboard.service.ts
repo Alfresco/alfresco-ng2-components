@@ -21,7 +21,10 @@ import { NotificationService } from '../notifications/services/notification.serv
 
 @Injectable({ providedIn: 'root' })
 export class ClipboardService {
-    constructor(@Inject(DOCUMENT) private document: any, private notificationService: NotificationService) {}
+    constructor(
+        @Inject(DOCUMENT) private document: any,
+        private notificationService: NotificationService
+    ) {}
 
     /**
      * Checks if the target element can have its text copied.
@@ -45,8 +48,6 @@ export class ClipboardService {
     copyToClipboard(target: HTMLInputElement | HTMLTextAreaElement, message?: string) {
         if (this.isTargetValid(target)) {
             try {
-                target.select();
-                target.setSelectionRange(0, target.value.length);
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(target.value);
                 } else {
