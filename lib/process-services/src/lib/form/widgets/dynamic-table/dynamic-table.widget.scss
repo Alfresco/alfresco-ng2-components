@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@import '../../../../../../core/src/lib/styles/mixins';
+@use '../../../../../../core/src/lib/styles/mixins' as *;
 
 $dynamic-table-font-size: var(--theme-body-1-font-size) !default;
 $dynamic-table-header-font-size: var(--theme-caption-font-size) !default;
@@ -65,7 +65,7 @@ dynamic-table-widget .adf-label {
 
         td,
         th {
-            padding: 0 $dynamic-table-column-padding 12px $dynamic-table-column-padding;
+            padding: 0 $dynamic-table-column-padding 12px;
             text-align: center;
 
             &:first-of-type {
