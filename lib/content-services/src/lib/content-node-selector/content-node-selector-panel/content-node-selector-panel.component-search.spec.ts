@@ -378,6 +378,19 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(clearIcon).not.toBeNull();
             }));
 
+            it('should call clear method on the X (clear) button click', fakeAsync(() => {
+                fixture.detectChanges();
+                typeToSearchBox('123');
+                tick(debounceSearch);
+
+                fixture.detectChanges();
+
+                spyOn(component, 'clear');
+                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                clearButton.nativeElement.click();
+                expect(component.clear).toHaveBeenCalled();
+            }));
+
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', async () => {
                 component.chosenNode = [entry];
 

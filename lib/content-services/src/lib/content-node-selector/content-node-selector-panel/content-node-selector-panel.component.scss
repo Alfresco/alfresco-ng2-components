@@ -77,7 +77,7 @@ h2.adf-search-results-label {
 
             .adf-content-node-selector-content-input-icon:is(mat-icon) {
                 color: var(--adf-theme-foreground-icon-color-054);
-                padding: 0 0 8px;
+                padding: 0 0 12px;
                 width: 1em;
                 height: 1em;
                 font-size: 20px;
@@ -86,8 +86,11 @@ h2.adf-search-results-label {
             .adf-content-node-selector-search-clear-button {
                 padding: 0;
                 width: 20px;
-                height: 32px;
-                margin-right: 1.5px;
+                height: 28px;
+
+                &:focus {
+                    outline-offset: -1.5px;
+                }
 
                 .adf-content-node-selector-content-input-icon:is(mat-icon) {
                     cursor: pointer;
