@@ -36,7 +36,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1403,7 +1402,7 @@ describe('DataTable', () => {
         dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
         fixture.detectChanges();
 
-        const checkboxElement = fixture.debugElement.query(By.css('[data-adf-datatable-row-checkbox]')).nativeElement;
+        const checkboxElement = testingUtils.getByCSS('[data-adf-datatable-row-checkbox]').nativeElement as HTMLElement;
 
         const enterEvent = new KeyboardEvent('keydown', {
             key: 'Enter',
