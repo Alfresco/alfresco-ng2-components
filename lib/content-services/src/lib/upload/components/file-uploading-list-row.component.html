@@ -10,7 +10,7 @@
     </span>
 
     <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version" tabindex="0" >
-        <mat-chip color="primary"
+        <mat-chip
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate: { version:  versionNumber }"
             [title]="'version' + versionNumber"
         >{{ versionNumber }}</mat-chip>

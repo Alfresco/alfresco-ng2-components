@@ -78,7 +78,7 @@
                         </mat-form-field>
                         <div class="adf-edit-task-filter-checkbox"
                              *ngIf="taskFilterProperty.type === 'checkbox'">
-                            <mat-checkbox color="primary"
+                            <mat-checkbox
                                           [formControlName]="taskFilterProperty.key"
                                           [attr.data-automation-id]="taskFilterProperty.key"
                             >{{taskFilterProperty.label | translate}}</mat-checkbox>
