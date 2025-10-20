@@ -71,7 +71,6 @@
 
     div[role='tab'].adf-info-drawer-tab {
         color: var(--mat-sys-secondary);
-        background-color: var(--mat-sys-surface);
         border-bottom: unset;
         opacity: 1;
 
@@ -85,18 +84,15 @@
 
         &--active {
             color: var(--mat-sys-primary);
-            background-color: var(--mat-sys-surface);
             border-bottom: 1px solid unset;
 
             &:focus {
-                color: var(--mat-sys-on-surface);
                 border-bottom: unset;
             }
         }
 
         &:hover:not([class*='--disabled'], [class*='--active']) {
             color: var(--mat-sys-secondary);
-            background-color: var(--mat-sys-surface);
             border-bottom: unset;
         }
 

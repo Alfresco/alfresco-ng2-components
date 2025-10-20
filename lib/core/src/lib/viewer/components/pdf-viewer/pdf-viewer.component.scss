@@ -111,13 +111,11 @@
             padding-left: 10px;
             padding-right: 10px;
             white-space: nowrap;
-            font-size: var(--mat-sys-body-medium-size);
 
             & > input {
                 border: 1px solid var(--mat-sys-outline);
                 background-color: var(--mat-sys-surface);
                 color: inherit;
-                font-size: var(--mat-sys-body-medium-size);
                 padding: 5px;
                 height: 24px;
                 line-height: 24px;

@@ -520,7 +520,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     letter-spacing: 0;
     min-height: $data-table-row-height;
     font-size: var(--mat-sys-body-medium-size);
-    color: var(--mat-sys-on-surface);
     box-sizing: border-box;
 
     &_subtitle {
@@ -537,7 +536,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
     .adf-datatable__header--sorted-asc,
     .adf-datatable__header--sorted-desc {
-        color: var(--mat-sys-on-surface);
         padding-right: 0.25rem;
 
         &::after {
@@ -631,7 +629,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
     &.adf-datatable-cell-header {
         border-radius: 6px;
-        background-color: var(--mat-sys-surface);
 
         @include mat.elevation-transition;
         @include mat.elevation(4);
@@ -694,7 +691,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-body[role='rowgroup'] {
         .adf-datatable-row {
             height: 100%;
-            background-color: var(--mat-sys-surface);
             border: none;
 
             &:hover,
@@ -719,7 +715,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         .adf-datatable-row {
             height: 100%;
-            background-color: var(--mat-sys-surface);
             border: none;
 
             &:hover,

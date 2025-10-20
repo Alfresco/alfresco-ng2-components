@@ -10,35 +10,6 @@ adf-comments {
             width: 100%;
             padding-bottom: 8px;
 
-            #{ms.$mat-form-field} {
-                width: 100%;
-
-                &#{ms.$mat-form-field-invalid} {
-                    #{ms.$mat-input-element} {
-                        &::placeholder,
-                        &:focus::placeholder {
-                            color: var(--mat-sys-error);
-                        }
-                    }
-                }
-            }
-
-            #{ms.$mat-form-field-wrapper} {
-                #{ms.$mat-form-field-flex} {
-                    #{ms.$mat-form-field-infix} {
-                        padding-bottom: 2px;
-                        padding-top: 25px;
-                    }
-                }
-
-                #{ms.$mat-input-element} {
-                    &:focus::placeholder {
-                        color: var(--mat-sys-primary);
-                        -webkit-font-smoothing: subpixel-antialiased;
-                    }
-                }
-            }
-
             textarea {
                 resize: vertical;
                 height: 20px;

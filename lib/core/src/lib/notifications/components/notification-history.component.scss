@@ -20,7 +20,6 @@ $notification-item-height: 72px;
             font-size: 24px;
             height: 24px;
             width: 24px;
-            color: var(--mat-sys-on-surface);
         }
     }
 
@@ -80,7 +79,6 @@ $notification-item-height: 72px;
                         p {
                             line-height: normal;
                             margin: 0;
-                            color: var(--mat-sys-on-surface);
                         }
                     }
                 }
@@ -89,7 +87,7 @@ $notification-item-height: 72px;
 
         .adf-notification-history-menu-item:focus {
             outline: none;
-            background: var(-mat-sys-surface-container-high);
+            background: var(--mat-sys-surface-container-high);
         }
 
         .adf-notification-history-menu-item:hover {
@@ -100,11 +98,9 @@ $notification-item-height: 72px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-size: var(--mat-sys-body-medium-size);
         }
 
         .adf-notification-history-item-list .adf-notification-history-menu-no-message-text {
-            color: var(--mat-sys-on-surface);
             margin: 0;
             padding: 12px 16px;
             opacity: inherit;
@@ -138,7 +134,6 @@ $notification-item-height: 72px;
         text-transform: uppercase;
         vertical-align: middle;
         line-height: 40px;
-        color: var(--mat-sys-surface-variant);
     }
 
     &-notification-history-load-more {

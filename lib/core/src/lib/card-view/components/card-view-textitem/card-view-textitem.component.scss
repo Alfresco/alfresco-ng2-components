@@ -55,13 +55,6 @@
     .adf-textitem-clickable {
         cursor: pointer;
         padding-top: 3px;
-
-        .adf-property-field {
-            #{ms.$mat-input-element} {
-                color: var(--mat-sys-primary);
-                cursor: pointer;
-            }
-        }
     }
 
     .adf-property-read-only:not(:has(.adf-property-readonly-value)) {

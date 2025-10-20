@@ -11,29 +11,6 @@
         }
     }
 
-    #{ms.$mat-calendar} {
-        #{ms.$mat-calendar-header} {
-            button {
-                color: var(--mat-sys-on-surface);
-
-                &:disabled {
-                    color: var(--mat-sys-on-surface);
-                }
-            }
-        }
-
-        #{ms.$mat-calendar-content} {
-            #{ms.$mat-calendar-table-header} th {
-                color: var(--mat-sys-on-surface);
-            }
-
-            #{ms.$mat-calendar-body-disabled} > div {
-                /* stylelint-disable-next-line declaration-no-important */
-                color: var(--mat-sys-on-surface) !important;
-            }
-        }
-    }
-
     #{ms.$mat-datetimepicker-calendar} {
         #{ms.$mat-datetimepicker-calendar-header} {
             #{ms.$mat-datetimepicker-calendar-header-year} {
@@ -67,12 +44,6 @@
             #{ms.$mat-snackbar-label} {
                 line-height: unset;
             }
-        }
-    }
-
-    #{ms.$mat-input-element} {
-        &:focus::placeholder {
-            color: var(--mat-sys-primary);
         }
     }
 

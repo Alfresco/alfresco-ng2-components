@@ -35,14 +35,11 @@
         letter-spacing: -0.4px;
 
         button {
-            font-size: var(--mat-sys-body-medium-size);
-            color: var(--mat-sys-on-surface);
             text-align: left;
             line-height: 1.5;
             letter-spacing: -0.4px;
 
             &:hover {
-                color: var(--mat-sys-primary);
                 opacity: inherit;
             }
         }

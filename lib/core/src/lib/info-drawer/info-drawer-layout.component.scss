@@ -15,7 +15,6 @@ $adf-info-drawer-icon-size-half: 24px !default;
 
         overflow: auto;
         width: 100%;
-        background-color: var(--mat-sys-surface);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
         & #{ms.$mat-tab-label-text} {
@@ -51,14 +50,12 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 letter-spacing: 0.15px;
                 text-align: left;
                 align-items: center;
-                color: color-mix(in srgb, var(--mat-sys-on-surface) 54%, transparent);
                 overflow: hidden;
 
                 & > div {
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
-                    color: var(--mat-sys-on-surface);
                 }
             }
         }
@@ -80,7 +77,6 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 .adf-manage-versions-no-permission {
                     margin: 0;
                     padding: $adf-info-drawer-icon-size-half;
-                    color: color-mix(in srgb, var(--mat-sys-on-surface) 54%, transparent);
                     text-align: center;
                     display: flex;
                     flex-direction: column;

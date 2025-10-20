@@ -21,10 +21,6 @@ $adf-columns-selector-space: 12px;
         align-items: center;
     }
 
-    &-header-label {
-        font-size: var(--mat-sys-body-medium-size);
-    }
-
     &-list-container {
         max-height: 350px;
         overflow: hidden auto;
@@ -89,7 +85,6 @@ $adf-columns-selector-space: 12px;
         outline: 0;
         border-radius: 6px;
         border: 1px solid var(--mat-sys-surface);
-        background: var(--mat-sys-surface);
 
         &:focus {
             outline: none;

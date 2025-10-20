@@ -56,10 +56,7 @@
 
     .adf-login-card-wide {
         border-radius: 8px;
-        background-color: var(--mat-sys-surface);
-        box-shadow:
-            0 2px 2px 0 rgba(0, 0, 0, 0.24),
-            0 0 2px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: var(--mat-sys-level2);
         width: 450px;
         min-width: 320px;
         padding: 21px 64px 34px;
@@ -205,13 +202,6 @@
                         font-size: var(--mat-sys-title-small-size);
                     }
                 }
-            }
-
-            & input:-webkit-autofill {
-                /* stylelint-disable */
-                -webkit-box-shadow: 0 0 0 1000px var(--mat-sys-surface) inset;
-                -webkit-text-fill-color: var(--mat-sys-on-surface);
-                /* stylelint-enable */
             }
         }
     }

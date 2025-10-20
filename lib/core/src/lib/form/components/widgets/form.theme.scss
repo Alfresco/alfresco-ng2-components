@@ -2,12 +2,6 @@
 /* stylelint-disable declaration-no-important */
 @use '../../../styles/mat-selectors' as ms;
 
-ul > li > form-field > .adf-focus {
-    .adf-label {
-        color: var(--mat-sys-primary);
-    }
-}
-
 .adf {
     &-error-container {
         height: 20px;
@@ -33,35 +27,9 @@ ul > li > form-field > .adf-focus {
     }
 
     &-invalid {
-        #{ms.$mat-checkbox} {
-            padding-bottom: 12px;
-        }
-
-        #{ms.$mat-line-ripple} {
-            background-color: var(--mat-sys-error) !important;
-        }
-
-        #{ms.$mat-select} {
-            &-arrow {
-                color: var(--mat-sys-on-surface) !important;
-            }
-        }
-
         .adf-file {
             border-color: var(--mat-sys-error);
         }
-
-        #{ms.$mat-form-field-prefix} {
-            color: var(--mat-sys-on-surface);
-        }
-
-        .adf-input {
-            border-color: var(--mat-sys-error);
-        }
-    }
-
-    &-left-label {
-        color: var(--mat-sys-on-surface);
     }
 }
 

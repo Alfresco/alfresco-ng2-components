@@ -123,25 +123,6 @@
         top: 1.8em;
     }
 
-    #{ms.$mat-focused} {
-        width: 100%;
-
-        #{ms.$mat-text-field-focused} {
-            label {
-                color: var(--mat-sys-primary);
-            }
-        }
-
-        label {
-            transition: transform 150ms linear;
-            background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
-        }
-
-        #{ms.$mat-form-field-prefix} {
-            color: var(--mat-sys-primary);
-        }
-    }
-
     #{ms.$mat-grid-tile} {
         overflow: visible;
         width: 80%;
@@ -178,8 +159,6 @@
         }
 
         & #{mat-tab-label-text} {
-            font-size: var(--mat-sys-title-small-size);
-            line-height: var(--mat-sys-headline-small-line-height);
             letter-spacing: -0.4px;
             text-align: left;
             color: rgba(0, 0, 0, 0.54);
@@ -280,10 +259,4 @@
 
 form-field {
     width: 100%;
-
-    #{ms.$mat-input-element} {
-        font-size: var(--mat-sys-title-small-size);
-        padding-top: 8px;
-        line-height: normal;
-    }
 }

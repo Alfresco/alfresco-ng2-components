@@ -4,16 +4,6 @@
 $adf-inplace-input-padding: 7px;
 
 .adf-inplace-input-container {
-    &-error {
-        .adf-inplace-input {
-            border: 1px solid var(--mat-sys-error);
-        }
-    }
-
-    #{ms.$mat-line-ripple} {
-        display: none;
-    }
-
     #{ms.$mat-form-text-field-infix} {
         display: flex;
         border-top: 0;
@@ -31,14 +21,5 @@ $adf-inplace-input-padding: 7px;
         padding: $adf-inplace-input-padding;
         border: 1px solid transparent;
         border-radius: 4px;
-
-        &:focus {
-            border: 1px solid var(--mat-sys-primary);
-        }
-
-        &:hover:not(:focus) {
-            border: 1px solid var(--mat-sys-outline);
-            background-color: var(--mat-sys-surface-container);
-        }
     }
 }
