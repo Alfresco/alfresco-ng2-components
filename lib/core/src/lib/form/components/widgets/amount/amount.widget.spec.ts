@@ -23,6 +23,7 @@ import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
+import { of } from 'rxjs';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -596,6 +597,52 @@ describe('AmountWidgetComponent - rendering', () => {
                 expect(widget.valueAsNumber).toBeUndefined();
                 expect(widget.amountWidgetValue).toBe('456789');
                 expect(fieldValue).toBe('456789');
+            });
+        });
+    });
+
+    describe('Test widget with ADF_AMOUNT_SETTINGS as observable', () => {
+        beforeEach(() => {
+            TestBed.resetTestingModule();
+        });
+
+        describe('set module for enableDisplayBasedOnLocale = true', () => {
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'TestAmount1',
+                name: 'Test Amount',
+                type: 'amount',
+                currency: 'USD',
+                enableFractions: true,
+                value: '1234.55'
+            });
+            beforeEach(async () => {
+                TestBed.configureTestingModule({
+                    imports: [AmountWidgetComponent],
+                    providers: [{ provide: ADF_AMOUNT_SETTINGS, useValue: of({ enableDisplayBasedOnLocale: true }) }]
+                });
+                fixture = TestBed.createComponent(AmountWidgetComponent);
+                widget = fixture.componentInstance;
+                const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
+                spyOnProperty(window, 'navigator', 'get').and.returnValue({
+                    languages: returnedLanguages
+                } as any);
+                fixture.componentRef.setInput('field', mockField);
+                loader = TestbedHarnessEnvironment.loader(fixture);
+                testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+                fixture.detectChanges();
+            });
+
+            it('should set enableDisplayBasedOnLocale to true', () => {
+                expect(widget.enableDisplayBasedOnLocale).toBeTrue();
+                expect(widget.decimalProperty).toBe('1.2-2');
+                expect(widget.locale).toBe('en-GB');
+                expect(widget.valueAsNumber).toBe('1234.55');
+                expect(widget.amountWidgetValue).toBe('$1,234.55');
+            });
+
+            it('should not display prefix with currency when enableDisplayBasedOnLocale = true', async () => {
+                const field = await testingUtils.getMatFormField();
+                expect(await field.getPrefixText()).toBe('');
             });
         });
     });

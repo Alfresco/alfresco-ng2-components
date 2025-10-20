@@ -26,13 +26,15 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
+import { isObservable, Observable } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface AmountWidgetSettings {
     showReadonlyPlaceholder: boolean;
     enableDisplayBasedOnLocale: boolean;
 }
 
-export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf-amount-settings');
+export const ADF_AMOUNT_SETTINGS = new InjectionToken<Observable<AmountWidgetSettings> | AmountWidgetSettings>('adf-amount-settings');
 
 @Component({
     selector: 'amount-widget',
@@ -63,6 +65,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     decimalProperty: string;
     enableDisplayBasedOnLocale: boolean;
     locale: string;
+    showReadonlyPlaceholder: boolean;
     valueAsNumber: number;
     valueAsString: string;
 
@@ -72,16 +75,25 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(
         public formService: FormService,
-        @Inject(ADF_AMOUNT_SETTINGS)
-        @Optional()
-        private settings: AmountWidgetSettings,
+        @Optional() @Inject(ADF_AMOUNT_SETTINGS) settings: Observable<AmountWidgetSettings> | AmountWidgetSettings,
         private currencyPipe: CurrencyPipe
     ) {
         super(formService);
+        if (isObservable(settings)) {
+            settings.pipe(takeUntilDestroyed()).subscribe((data: AmountWidgetSettings) => {
+                this.updateSettingsBasedProperties(data);
+            });
+        } else {
+            this.updateSettingsBasedProperties(settings);
+        }
+    }
+
+    updateSettingsBasedProperties(data: AmountWidgetSettings): void {
+        this.enableDisplayBasedOnLocale = data?.enableDisplayBasedOnLocale ?? false;
+        this.showReadonlyPlaceholder = data?.showReadonlyPlaceholder;
     }
 
     ngOnInit() {
-        this.enableDisplayBasedOnLocale = this.settings?.enableDisplayBasedOnLocale ?? false;
         if (this.field) {
             if (this.field.currency) {
                 this.currency = this.field.currency;
@@ -93,7 +105,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             }
 
             if (this.field.readOnly) {
-                this.showPlaceholder = this.settings?.showReadonlyPlaceholder;
+                this.showPlaceholder = this.showReadonlyPlaceholder;
             }
             this.setInitialValues();
         }
