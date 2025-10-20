@@ -30,6 +30,7 @@ import { SearchQueryBuilderService } from '../../search';
 import { mockSearchRequest } from '../../mock/search-query.mock';
 import { SitesService } from '../../common/services/sites.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
+import { UnitTestingUtils } from '../../../../../core/src/lib/testing/unit-testing-utils';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -60,13 +61,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
     const fakeNodeEntry = new Node({ id: 'fakeId' });
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
     let searchQueryBuilderService: SearchQueryBuilderService;
+    let testingUtils: UnitTestingUtils;
 
     const typeToSearchBox = (searchTerm = 'string-to-search') => {
-        const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
+        const searchInput = testingUtils.getByCSS('[data-automation-id="content-node-selector-search-input"]');
         searchInput.nativeElement.value = searchTerm;
         component.searchInput.setValue(searchTerm);
         fixture.detectChanges();
     };
+
+    const getSearchIcon = (type: string) => testingUtils.getByCSS(`[data-automation-id="content-node-selector-search-${type}"]`);
 
     const triggerSearchResults = (searchResults: ResultSetPaging) => {
         const service = fixture.debugElement.injector.get(SearchQueryBuilderService);
@@ -91,6 +95,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             searchQueryBuilderService = fixture.debugElement.injector.get(SearchQueryBuilderService);
             searchQueryBuilderService.resetToDefaults();
+
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
 
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(
@@ -196,7 +202,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(component, 'clearSearch');
 
                 fixture.detectChanges();
-                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                const clearIcon = getSearchIcon('clear');
                 clearIcon.nativeElement.click();
 
                 fixture.detectChanges();
@@ -357,8 +363,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
                 tick(debounceSearch);
 
-                const searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
-                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                const searchIcon = getSearchIcon('icon');
+                const clearIcon = getSearchIcon('clear');
 
                 expect(searchIcon).not.toBeNull();
                 expect(clearIcon).toBeNull();
@@ -371,8 +377,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 fixture.detectChanges();
 
-                const searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
-                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                const searchIcon = getSearchIcon('icon');
+                const clearIcon = getSearchIcon('clear');
 
                 expect(searchIcon).toBeNull();
                 expect(clearIcon).not.toBeNull();
@@ -386,7 +392,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 spyOn(component, 'clear');
-                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                const clearButton = getSearchIcon('clear');
                 clearButton.nativeElement.click();
                 expect(component.clear).toHaveBeenCalled();
             }));
@@ -566,7 +572,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should show the current folder content instead of search results if search was not performed', async () => {
-                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = testingUtils.getByDirective(DocumentListComponent);
                 expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
@@ -578,7 +584,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 fixture.detectChanges();
 
-                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = testingUtils.getByDirective(DocumentListComponent);
                 expect(documentList).not.toBeNull();
                 expect(
                     documentList.componentInstance.rowFilter({
@@ -606,7 +612,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 fixture.detectChanges();
 
-                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = testingUtils.getByDirective(DocumentListComponent);
                 expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.rowFilter).toBeTruthy();
 
@@ -620,7 +626,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 fixture.detectChanges();
 
-                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = testingUtils.getByDirective(DocumentListComponent);
                 expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
@@ -632,7 +638,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     triggerSearchResults(fakeResultSetPaging);
 
                     fixture.detectChanges();
-                    const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                    const documentList = testingUtils.getByCSS('[data-automation-id="content-node-selector-document-list"]');
                     expect(documentList).not.toBeNull();
                     expect(component.hasValidQuery).toEqual(true);
                     expect(documentList.componentInstance.currentFolderId).toBeNull();
@@ -677,12 +683,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        const clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                        const clearButton = getSearchIcon('clear');
                         expect(clearButton).not.toBeNull();
                         clearButton.triggerEventHandler('click', {});
                         fixture.detectChanges();
 
-                        const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                        const documentList = testingUtils.getByCSS('[data-automation-id="content-node-selector-document-list"]');
                         expect(documentList).not.toBeNull();
                         expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
                         done();
@@ -709,13 +715,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.siteChanged({ entry: { guid: 'Kame-Sennin Muten Roshi' } } as SiteEntry);
                 fixture.detectChanges();
 
-                let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                let documentList = testingUtils.getByCSS('[data-automation-id="content-node-selector-document-list"]');
                 expect(documentList.componentInstance.currentFolderId).toBe('Kame-Sennin Muten Roshi');
 
                 component.siteChanged({ entry: { guid: undefined } } as SiteEntry);
                 fixture.detectChanges();
 
-                documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                documentList = testingUtils.getByCSS('[data-automation-id="content-node-selector-document-list"]');
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
 
                 done();
@@ -724,7 +730,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             describe('Pagination "Load more" button', () => {
                 it('should NOT be shown by default', () => {
                     fixture.detectChanges();
-                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
+                    const pagination = testingUtils.getByCSS('[data-automation-id="adf-infinite-pagination-button"]');
                     expect(pagination).toBeNull();
                 });
 
