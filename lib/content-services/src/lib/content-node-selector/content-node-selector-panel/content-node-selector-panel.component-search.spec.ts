@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
@@ -63,16 +63,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let searchQueryBuilderService: SearchQueryBuilderService;
     let testingUtils: UnitTestingUtils;
 
-    const typeToSearchBox = (searchTerm = 'string-to-search') => {
+    const typeToSearchBox = (searchTerm = 'string-to-search'): void => {
         const searchInput = testingUtils.getByCSS('[data-automation-id="content-node-selector-search-input"]');
         searchInput.nativeElement.value = searchTerm;
         component.searchInput.setValue(searchTerm);
         fixture.detectChanges();
     };
 
-    const getSearchIcon = (type: string) => testingUtils.getByCSS(`[data-automation-id="content-node-selector-search-${type}"]`);
+    const getSearchIcon = (type: string): DebugElement => testingUtils.getByCSS(`[data-automation-id="content-node-selector-search-${type}"]`);
 
-    const triggerSearchResults = (searchResults: ResultSetPaging) => {
+    const triggerSearchResults = (searchResults: ResultSetPaging): void => {
         const service = fixture.debugElement.injector.get(SearchQueryBuilderService);
         service.executed.next(searchResults);
     };
