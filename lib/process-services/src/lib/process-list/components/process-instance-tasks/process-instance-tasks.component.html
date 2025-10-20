@@ -8,7 +8,7 @@
 
 <mat-chip-listbox>
     <span class="adf-chip-label">{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
-    <mat-chip-option class="adf-process-badge" color="accent" selected="true">{{activeTasks?.length}}</mat-chip-option>
+    <mat-chip-option class="adf-process-badge" selected="true">{{activeTasks?.length}}</mat-chip-option>
 </mat-chip-listbox>
 
 <div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
@@ -50,7 +50,7 @@
 <!-- COMPLETED FORM -->
 <mat-chip-listbox>
         <span class="adf-chip-label">{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
-        <mat-chip-option class="adf-process-badge" color="accent" selected="true">{{completedTasks?.length}}</mat-chip-option>
+        <mat-chip-option class="adf-process-badge" selected="true">{{completedTasks?.length}}</mat-chip-option>
 </mat-chip-listbox>
 
 <div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">

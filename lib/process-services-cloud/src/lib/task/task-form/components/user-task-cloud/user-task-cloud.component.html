@@ -83,8 +83,7 @@
                             [taskId]="taskId"
                             (success)="onCompleteTask(false, taskType)"
                             (error)="onError($event)"
-                            color="primary"
-                            id="adf-form-complete"
+                                id="adf-form-complete"
                         >
                             {{ customCompleteButtonText || ('ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate) }}
                         </button>
