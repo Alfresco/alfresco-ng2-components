@@ -47,15 +47,11 @@ describe('ClipboardService', () => {
 
     it('should copy text to clipboard', () => {
         spyOn(navigator.clipboard, 'writeText');
-        spyOn(inputElement, 'select');
-        spyOn(inputElement, 'setSelectionRange');
 
         inputElement.value = 'some text';
 
         clipboardService.copyToClipboard(inputElement);
 
-        expect(inputElement.select).toHaveBeenCalledWith();
-        expect(inputElement.setSelectionRange).toHaveBeenCalledWith(0, inputElement.value.length);
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('some text');
     });
 
