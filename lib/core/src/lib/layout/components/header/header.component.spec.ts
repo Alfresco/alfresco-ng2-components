@@ -239,7 +239,7 @@ describe('HeaderLayoutComponent', () => {
         @Component({
             selector: 'adf-test-layout-header',
             imports: [HeaderLayoutComponent],
-            template: ` <adf-layout-header title="test" color="primary">
+            template: ` <adf-layout-header title="test">
                 <p>Test text</p>
                 <p></p>
             </adf-layout-header>`
