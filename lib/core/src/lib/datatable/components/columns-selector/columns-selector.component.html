@@ -41,7 +41,6 @@
     <div class="adf-columns-selector-list-container">
         <div *ngFor="let column of (columnItems | columnsSearchFilter: searchQuery)" class="adf-columns-selector-list-item">
             <mat-checkbox
-                color="primary"
                 class="adf-columns-selector-column-checkbox"
                 [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
                 [checked]="!column.isHidden"
@@ -74,7 +73,6 @@
             mat-flat-button
             role="menuitem"
             data-automation-id="adf-columns-selector-apply-button"
-            color="primary"
             (click)="apply()">
             {{"ADF-DATATABLE.COLUMNS_SELECTOR.APPLY" | translate}}
         </button>

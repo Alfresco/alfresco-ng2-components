@@ -83,7 +83,6 @@
         <button
             id="adf-upload-dialog-cancel-all"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_ALL' | translate"
-            color="primary"
             mat-button
             *ngIf="canShowCancelAll()"
             (click)="toggleConfirmation()"
@@ -94,7 +93,6 @@
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_CLOSE' | translate"
             *ngIf="canCloseDialog()"
             mat-button
-            color="primary"
             (click)="close()"
         >{{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}</button>
     </footer>
@@ -112,7 +110,6 @@
             id="adf-upload-dialog-confirm"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CONTINUE' | translate"
             mat-button
-            color="primary"
             (click)="toggleConfirmation()"
         >{{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CONTINUE' | translate }}</button>
     </footer>

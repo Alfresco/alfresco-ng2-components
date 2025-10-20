@@ -136,7 +136,7 @@
     </mat-card>
 } @else {
     <div class="adf-loading-container">
-        <mat-progress-spinner class="adf-loading" color="primary" mode="indeterminate" />
+        <mat-progress-spinner class="adf-loading" mode="indeterminate" />
     </div>
 }
 
@@ -149,7 +149,6 @@
         }
         @if (showStartProcessButton$ | async) {
             <button
-                color="primary"
                 mat-raised-button
                 [disabled]="disableStartButton || !isProcessFormValid"
                 (click)="startProcess()"
