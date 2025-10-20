@@ -16,7 +16,6 @@
                 [value]="opt.id"
                 [checked]="isChecked(opt)"
                 (change)="onOptionClick(opt.id)"
-                color="primary"
                 class="adf-radio-button" *ngFor="let opt of field.options" >
                 {{opt.name}}
             </mat-radio-button>

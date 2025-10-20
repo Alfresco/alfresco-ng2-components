@@ -104,8 +104,7 @@
                     <div *ngIf="!report.hasDatasets()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
                     <div *ngIf="report.hasDatasets()">
                         <mat-checkbox
-                            color="primary"
-                            [id]="'stacked-id'"
+                                [id]="'stacked-id'"
                             [checked]="report.options.scales.xAxes[0].stacked"
                             [(ngModel)]="report.options.scales.xAxes[0].stacked"
                             (change)="refresh(report)"

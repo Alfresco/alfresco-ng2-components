@@ -4,7 +4,6 @@
                       [attr.title]="'CORE.METADATA.ACTIONS.TOGGLE' | translate"
                       [checked]="property.displayValue"
                       [disabled]="!isEditable"
-                      color="primary"
                       (change)="changed($event)">
             <div [attr.data-automation-id]="'card-boolean-label-' + property.key"
                  class="adf-property-label">{{ property.label | translate }}</div>

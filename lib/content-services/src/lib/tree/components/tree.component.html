@@ -19,8 +19,7 @@
                 <div class="adf-tree-expand-collapse-container">
                     <button class="adf-tree-load-more-button" mat-icon-button (click)="loadMoreSubnodes(node)">
                         <mat-progress-spinner
-                            color="primary"
-                            mode="indeterminate"
+                                mode="indeterminate"
                             [diameter]="24"
                             *ngIf="node.isLoading; else loadMoreIcon" />
                         <ng-template #loadMoreIcon>
@@ -53,8 +52,7 @@
                             (click)="expandCollapseNode(node)"
                             mat-icon-button>
                         <mat-progress-spinner
-                            color="primary"
-                            mode="indeterminate"
+                                mode="indeterminate"
                             [diameter]="24"
                             *ngIf="node.isLoading; else expandCollapseIcon" />
                         <ng-template #expandCollapseIcon>
@@ -64,16 +62,14 @@
                 </div>
                 <ng-container *ngIf="selectableNodes">
                     <mat-checkbox *ngIf="node.hasChildren; else noChildrenNodeCheckbox"
-                                  color="primary"
-                                  [id]="node.id"
+                                            [id]="node.id"
                                   [checked]="descendantsAllSelected(node)"
                                   [indeterminate]="descendantsPartiallySelected(node)"
                                   (change)="onNodeSelected(node)"
                                   data-automation-id="has-children-node-checkbox" />
                     <ng-template #noChildrenNodeCheckbox>
                         <mat-checkbox
-                            color="primary"
-                            [id]="node.id"
+                                [id]="node.id"
                             [checked]="treeNodesSelection.isSelected(node)"
                             (change)="onNodeSelected(node)"
                             data-automation-id="no-children-node-checkbox" />
@@ -114,7 +110,6 @@
 <ng-template #loadingSpinner>
     <div class="adf-tree-loading-spinner-container">
         <mat-progress-spinner
-            color="primary"
             mode="indeterminate" />
     </div>
 </ng-template>
