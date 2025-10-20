@@ -21,10 +21,7 @@ import { NotificationService } from '../notifications/services/notification.serv
 
 @Injectable({ providedIn: 'root' })
 export class ClipboardService {
-    constructor(
-        @Inject(DOCUMENT) private document: any,
-        private notificationService: NotificationService
-    ) {}
+    constructor(@Inject(DOCUMENT) private document: any, private notificationService: NotificationService) {}
 
     /**
      * Checks if the target element can have its text copied.
