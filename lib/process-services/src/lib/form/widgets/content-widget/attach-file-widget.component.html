@@ -5,14 +5,14 @@
     </label>
     <div class="adf-attach-widget-container">
         <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
-            <a mat-raised-button color="primary">
+            <a mat-raised-button>
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>file_upload</mat-icon>
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.id" (change)="onAttachFileChanged($event)" />
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
+            <button mat-raised-button [matMenuTriggerFor]="menu" [id]="field.id">
                 <mat-icon>attach_file</mat-icon>
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
             </button>

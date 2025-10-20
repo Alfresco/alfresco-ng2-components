@@ -24,11 +24,11 @@
 
         <mat-card-actions class="adf-attach-form-mat-card-actions">
             <div>
-                <button mat-button id="adf-attach-form-remove-button" color="warn" *ngIf="formKey" (click)="onRemoveButtonClick()">{{ 'ADF_TASK_LIST.ATTACH_FORM.REMOVE_FORM' | translate }}</button>
+                <button mat-button id="adf-attach-form-remove-button" *ngIf="formKey" (click)="onRemoveButtonClick()">{{ 'ADF_TASK_LIST.ATTACH_FORM.REMOVE_FORM' | translate }}</button>
             </div>
             <div>
                 <button mat-button id="adf-attach-form-cancel-button" (click)="onCancelButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
-                <button mat-button id="adf-attach-form-attach-button" [disabled]="disableSubmit" color="primary" (click)="onAttachFormButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
+                <button mat-button id="adf-attach-form-attach-button" [disabled]="disableSubmit" (click)="onAttachFormButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
             </div>
         </mat-card-actions>
     </mat-card>
