@@ -780,7 +780,7 @@ describe('UserTaskCloudComponent', () => {
         screenCompInstance.taskCompleted.emit(payload);
         fixture.detectChanges();
 
-        expect(onCompleteSpy).toHaveBeenCalledWith('screen', payload);
+        expect(onCompleteSpy).toHaveBeenCalledWith(payload, 'screen');
         expect(component.taskCompleted.emit).toHaveBeenCalledWith(payload);
         expect(getTaskSpy).not.toHaveBeenCalled();
     });
@@ -788,12 +788,12 @@ describe('UserTaskCloudComponent', () => {
     it('should load task for non task screen on complete', () => {
         spyOn(component.taskCompleted, 'emit');
 
-        component.onCompleteTask('form', true);
+        component.onCompleteTask(true, 'form');
 
         expect(component.taskCompleted.emit).toHaveBeenCalledTimes(1);
         expect(getTaskSpy).toHaveBeenCalledTimes(1);
 
-        component.onCompleteTask('', true);
+        component.onCompleteTask(true, '');
 
         expect(component.taskCompleted.emit).toHaveBeenCalledTimes(2);
         expect(getTaskSpy).toHaveBeenCalledTimes(2);
