@@ -45,8 +45,6 @@ export class ClipboardService {
     copyToClipboard(target: HTMLInputElement | HTMLTextAreaElement, message?: string) {
         if (this.isTargetValid(target)) {
             try {
-                target.select();
-                target.setSelectionRange(0, target.value.length);
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(target.value);
                 } else {
