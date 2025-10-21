@@ -1,5 +1,6 @@
 @use '../../../styles/mixins' as mixins;
 @use '../../../styles/mat-selectors' as ms;
+@use '@angular/material' as mat;
 
 .adf-login {
     @include mixins.flex-column;
@@ -110,11 +111,6 @@
     .adf-login-button {
         width: 100%;
         height: 36px;
-        line-height: normal;
-    }
-
-    .adf-login-button-label {
-        font-weight: bolder;
     }
 
     .adf-login-button.adf-isWelcome .adf-welcome-icon {
@@ -161,18 +157,6 @@
         opacity: 0.54;
     }
 
-    .adf-login-input:is(input) {
-        font-size: var(--mat-sys-title-small-size);
-    }
-
-    .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
-        color: var(--mat-sys-on-surface);
-        font-size: var(--mat-sys-title-small-size);
-        top: 9px;
-        position: relative;
-        left: 7px;
-    }
-
     .adf-login-controls:has(div) {
         padding: 0 0 26px;
         overflow: visible;
@@ -186,23 +170,6 @@
         .adf-login__field {
             display: block;
             padding-bottom: 16px;
-            font-size: var(--mat-sys-title-small-size);
-
-            #{ms.$mat-form-field-infix} {
-                min-height: 0;
-                padding-bottom: 3px;
-                padding-top: 20px;
-
-                .adf-login-form-input-label {
-                    font-size: var(--mat-sys-title-small-size);
-                }
-
-                #{ms.$mat-floating-label-required} {
-                    &::after {
-                        font-size: var(--mat-sys-title-small-size);
-                    }
-                }
-            }
         }
     }
 

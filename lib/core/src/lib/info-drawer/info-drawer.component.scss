@@ -65,12 +65,7 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .adf-info-drawer-tabs {
-    #{ms.$mat-tab-label-container} {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
     div[role='tab'].adf-info-drawer-tab {
-        color: var(--mat-sys-secondary);
         border-bottom: unset;
         opacity: 1;
 
@@ -89,17 +84,6 @@
             &:focus {
                 border-bottom: unset;
             }
-        }
-
-        &:hover:not([class*='--disabled'], [class*='--active']) {
-            color: var(--mat-sys-secondary);
-            border-bottom: unset;
-        }
-
-        &--disabled {
-            color: var(--adf-info-drawer-tab-disabled-color);
-            background-color: var(--adf-info-drawer-tab-disabled-background);
-            border-bottom: var(--adf-info-drawer-tab-disabled-bottom-line);
         }
     }
 }

@@ -85,15 +85,6 @@ $notification-item-height: 72px;
             }
         }
 
-        .adf-notification-history-menu-item:focus {
-            outline: none;
-            background: var(--mat-sys-surface-container-high);
-        }
-
-        .adf-notification-history-menu-item:hover {
-            background-color: var(--mat-sys-surface-container-high);
-        }
-
         .adf-notification-history-menu-message:is(p) {
             white-space: nowrap;
             overflow: hidden;
