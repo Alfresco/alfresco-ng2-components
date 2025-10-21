@@ -9,6 +9,7 @@
         hideToggle>
         <mat-expansion-panel-header
             class="adf-metadata-properties-header"
+            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.SECTION' | translate: { sectionName: ('CORE.METADATA.BASIC.HEADER' | translate) }"
             [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.PROPERTIES && currentPanel.expanded">
             <adf-content-metadata-header
                 [title]="'CORE.METADATA.BASIC.HEADER'"
@@ -18,7 +19,7 @@
                     mat-icon-button
                     (click)="toggleGroupEditing(DefaultPanels.PROPERTIES, $event)"
                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                    [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                    [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: ('CORE.METADATA.BASIC.HEADER' | translate) }"
                     data-automation-id="meta-data-general-info-edit"
                     class="adf-edit-icon-buttons">
                     <mat-icon>mode_edit</mat-icon>
@@ -65,6 +66,7 @@
             data-automation-id="adf-content-metadata-tags-panel">
             <mat-expansion-panel-header
                 class="adf-metadata-properties-header"
+                [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.SECTION' | translate: { sectionName: ('METADATA.BASIC.TAGS' | translate) }"
                 [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded">
                 <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded">
                     <button
@@ -72,7 +74,7 @@
                         mat-icon-button
                         (click)="toggleGroupEditing(DefaultPanels.TAGS, $event)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: ('METADATA.BASIC.TAGS' | translate) }"
                         data-automation-id="showing-tag-input-button"
                         class="adf-edit-icon-buttons">
                         <mat-icon>mode_edit</mat-icon>
@@ -126,6 +128,7 @@
             data-automation-id="adf-content-metadata-categories-panel">
             <mat-expansion-panel-header
                 class="adf-metadata-properties-header"
+                [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.SECTION' | translate: { sectionName: ('CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate) }"
                 [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.CATEGORIES && currentPanel.expanded">
                 <adf-content-metadata-header
                     [title]="'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE'"
@@ -135,7 +138,7 @@
                         mat-icon-button
                         (click)="toggleGroupEditing(DefaultPanels.CATEGORIES, $event)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: ('CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate) }"
                         data-automation-id="meta-data-categories-edit"
                         class="adf-categories-button adf-edit-icon-buttons">
                         <mat-icon>mode_edit</mat-icon>
@@ -188,6 +191,7 @@
         hideToggle>
         <mat-expansion-panel-header
             class="adf-metadata-properties-header"
+            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.SECTION' | translate: { sectionName: (customPanel.panelTitle | translate) }"
             [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === customPanel.panelTitle && currentPanel.expanded">
             <adf-content-metadata-header
                 class="adf-metadata-custom-panel-title"
@@ -208,13 +212,14 @@
                 hideToggle>
                 <mat-expansion-panel-header
                     class="adf-metadata-properties-header"
+                    [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.SECTION' | translate: { sectionName: (group.title | translate) }"
                     [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded">
                     <adf-content-metadata-header [title]="group.title" [expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded">
                         <button
                             *ngIf="group.editable && !this.readOnly && !isPanelEditing(group.title)"
                             mat-icon-button
                             [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: (group.title | translate) }"
                             data-automation-id="meta-data-card-toggle-edit"
                             class="adf-edit-icon-buttons"
                             (click)="toggleGroupEditing(group.title, $event)">
