@@ -97,6 +97,30 @@
             padding-left: 3px;
             padding-right: 3px;
         }
+
+        &-remove-row-button {
+            margin-top: 20px;
+
+            #{ms.$mat-icon} {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 20px;
+            }
+        }
+
+        &-container {
+            padding: 0 10px;
+
+            &-title {
+                margin: 5px 0 5px -10px;
+            }
+
+            &-multiple {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.54);
+                margin-bottom: 25px;
+            }
+        }
     }
 
     @include flex.layout-bp(lt-md) {

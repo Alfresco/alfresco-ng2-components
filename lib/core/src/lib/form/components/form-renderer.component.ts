@@ -16,7 +16,7 @@
  */
 
 import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,10 +26,12 @@ import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.
 import { FormService } from '../services/form.service';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
-import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
+import { ContainerModel, FormFieldModel, FormModel, TabModel, RepeatWidgetComponent } from './widgets';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
 import { FormSectionComponent } from './form-section/form-section.component';
 import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -60,11 +62,17 @@ import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware
         FormsModule,
         NgClass,
         HeaderWidgetComponent,
-        FormSectionComponent
+        FormSectionComponent,
+        RepeatWidgetComponent
     ],
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {
+    public readonly formService = inject(FormService);
+    private readonly formRulesManager = inject(FormRulesManager<T>);
+    private readonly dialog = inject(MatDialog);
+    private cdr = inject(ChangeDetectorRef);
+
     @Input({ required: true })
     formDefinition: FormModel;
 
@@ -76,8 +84,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     fields: FormFieldModel[];
 
     constructor(
-        public formService: FormService,
-        private formRulesManager: FormRulesManager<T>,
         @Optional()
         @Inject(FORM_FIELD_MODEL_RENDER_MIDDLEWARE)
         private middlewareServices?: FormFieldModelRenderMiddleware[]
@@ -143,6 +149,27 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
             )?.fields?.length;
         }
         return maxFieldSize;
+    }
+
+    displayDialogToRemoveRow(field: FormFieldModel, rowIndex: number) {
+        this.dialog
+            .open(ConfirmDialogComponent, {
+                data: {
+                    title: 'Delete the row',
+                    message: 'Are you sure you want to delete this row?',
+                    yesLabel: 'Delete row',
+                    noLabel: 'Cancel'
+                },
+                minWidth: '500px',
+                closeOnNavigation: true
+            })
+            .beforeClosed()
+            .subscribe((shouldRemove) => {
+                if (shouldRemove) {
+                    field.removeRow(rowIndex);
+                    this.cdr.detectChanges();
+                }
+            });
     }
 
     /**

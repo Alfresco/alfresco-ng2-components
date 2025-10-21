@@ -1,0 +1,55 @@
+<div [style]="element | adfFieldStyle" class="adf-container-widget-header">
+    @if (element?.hideHeader) {
+        <div>
+            <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
+        </div>
+    } @else {
+        <h4
+            id="container-header"
+            class="adf-container-widget-header__text"
+            [class.adf-collapsible]="element?.isCollapsible"
+        >
+            <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
+            <span
+                [id]="'container-header-label-' + element?.id"
+                role="button"
+                tabindex="0"
+                (keyup.enter)="onExpanderClicked(element)"
+                (click)="onExpanderClicked(element)"
+            >
+                {{ element.name | translate }}
+            </span>
+        </h4>
+
+        <ng-content />
+
+        @let shouldDisplayAddRowButton = !element.field.params.newRowsLimit || (element.field.params.newRowsLimit > getAddedRowsCount());
+        @if (!isEditor) {
+            @if (shouldDisplayAddRowButton) {
+                <button 
+                    mat-button
+                    color="primary"
+                    class="adf-container-widget-row-action"
+                    (click)="addRow()"
+                >
+                    <mat-icon>add</mat-icon> add
+                </button>
+            } @else {
+                <span class="adf-container-widget-row-action adf-container-widget-row-limit">Rows limit ({{element.field | rowsLimit}}) reached.</span>
+            }
+
+        }
+    }
+
+    <ng-template #expandButton let-element>
+        @if (element?.isCollapsible) {
+            <button
+                mat-icon-button
+                class="mdl-button--icon"
+                (click)="onExpanderClicked(element)"
+            >
+                <mat-icon> {{ element?.isExpanded ? 'expand_more' : 'expand_less' }} </mat-icon>
+            </button>
+        }
+    </ng-template>
+</div>

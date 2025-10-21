@@ -22,6 +22,7 @@ import { MaybeReactiveFormWidget, ReactiveFormWidget } from '../reactive-widget.
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
+    static REPEATABLE_SECTION: string = 'repeatable-section';
     static SECTION: string = 'section';
     static DYNAMIC_TABLE: string = 'dynamic-table';
     static TEXT: string = 'text';
@@ -53,7 +54,13 @@ export class FormFieldTypes {
     static DATA_TABLE: string = 'data-table';
     static DISPLAY_EXTERNAL_PROPERTY: string = 'display-external-property';
 
-    static READONLY_TYPES: string[] = [FormFieldTypes.HYPERLINK, FormFieldTypes.DISPLAY_VALUE, FormFieldTypes.READONLY_TEXT, FormFieldTypes.GROUP];
+    static READONLY_TYPES: string[] = [
+        FormFieldTypes.HYPERLINK,
+        FormFieldTypes.DISPLAY_VALUE,
+        FormFieldTypes.READONLY_TEXT,
+        FormFieldTypes.GROUP,
+        FormFieldTypes.REPEATABLE_SECTION
+    ];
 
     static VALIDATABLE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
@@ -87,5 +94,9 @@ export class FormFieldTypes {
 
     static isSectionType(type: string): boolean {
         return type === FormFieldTypes.SECTION;
+    }
+
+    static isRepeatableSectionType(type: string): boolean {
+        return type === FormFieldTypes.REPEATABLE_SECTION;
     }
 }
