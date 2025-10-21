@@ -28,7 +28,6 @@ export type ButtonColor = ThemePalette;
     selector: 'adf-button',
     imports: [CommonModule, MatButtonModule, MatIconModule],
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent {
