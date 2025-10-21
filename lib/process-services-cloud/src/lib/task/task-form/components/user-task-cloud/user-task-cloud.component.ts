@@ -247,8 +247,10 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
         this.taskClaimed.emit(this.taskId);
     }
 
-    onCompleteTask(openNextTask: boolean = false): void {
-        this.loadTask();
+    onCompleteTask(taskType: UserTaskType, openNextTask: boolean = false): void {
+        if (taskType !== UserTaskContentType.Screen) {
+            this.loadTask();
+        }
         this.taskCompleted.emit(openNextTask);
     }
 
