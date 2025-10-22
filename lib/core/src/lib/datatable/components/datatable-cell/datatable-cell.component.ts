@@ -37,14 +37,14 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
                 adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
                 [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
                 [attr.aria-label]="value$ | async"
-                [title]="tooltip"
+                [title]="tooltip ? tooltip : computedTitle"
                 class="adf-datatable-cell-value"
-                >{{ column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async) }}</span
+                >{{ column?.maxTextLength ? (value$ | async | truncate: column?.maxTextLength) : (value$ | async) }}</span
             >
         </ng-container>
         <ng-template #defaultCell>
-            <span [title]="tooltip" class="adf-datatable-cell-value">{{
-                column?.maxTextLength ? (value$ | async | truncate : column?.maxTextLength) : (value$ | async)
+            <span [title]="tooltip ? tooltip : computedTitle" class="adf-datatable-cell-value">{{
+                column?.maxTextLength ? (value$ | async | truncate: column?.maxTextLength) : (value$ | async)
             }}</span>
         </ng-template>
     `,
@@ -79,6 +79,7 @@ export class DataTableCellComponent implements OnInit {
     protected destroyRef = inject(DestroyRef);
     protected dataTableService = inject(DataTableService, { optional: true });
     value$ = new BehaviorSubject<any>('');
+    computedTitle: string = '';
 
     ngOnInit() {
         this.updateValue();
@@ -88,12 +89,8 @@ export class DataTableCellComponent implements OnInit {
     protected updateValue() {
         if (this.column?.key && this.row && this.data) {
             const value = this.data.getValue(this.row, this.column, this.resolverFn);
-
             this.value$.next(value);
-
-            if (!this.tooltip) {
-                this.tooltip = value;
-            }
+            this.computedTitle = this.computeTitle(value);
         }
     }
 
@@ -114,5 +111,20 @@ export class DataTableCellComponent implements OnInit {
 
     private getNestedPropertyValue(obj: any, path: string) {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
+    }
+
+    private computeTitle(value: string): string {
+        if (this.tooltip) {
+            return this.tooltip;
+        }
+
+        const rawValue = value;
+        const max = this.column?.maxTextLength;
+
+        if (typeof max === 'number' && max > 0 && rawValue.length > max) {
+            return rawValue;
+        }
+
+        return '';
     }
 }
