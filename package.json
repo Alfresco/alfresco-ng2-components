@@ -87,7 +87,6 @@
     "@nx/js": "20.8.0",
     "@nx/node": "20.8.0",
     "@nx/workspace": "20.8.0",
-    "@playwright/test": "1.46.1",
     "@schematics/angular": "19.2.7",
     "@types/ejs": "^3.1.5",
     "@types/jasmine": "4.0.3",

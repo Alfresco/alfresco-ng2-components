@@ -38,16 +38,6 @@
         "lintFilePatterns": ["lib/process-services-cloud/**/*.ts", "lib/process-services-cloud/**/*.html"]
       }
     },
-    "e2e-playwright": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "playwright test --config='e2e-playwright/playwright.config.ts'"
-          }
-        ]
-      }
-    },
     "stylelint": {
       "executor": "nx:run-commands",
       "options": {
