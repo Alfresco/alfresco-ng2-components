@@ -116,8 +116,7 @@ export class CustomResourcesService {
             '-TYPE:"fm:topic"',
             '-TYPE:"fm:post"',
             '-TYPE:"ia:calendarEvent"',
-            '-TYPE:"lnk:link"',
-            '-ASPECT:"app:linked"'
+            '-TYPE:"lnk:link"'
         ];
 
         return new Observable((observer) => {

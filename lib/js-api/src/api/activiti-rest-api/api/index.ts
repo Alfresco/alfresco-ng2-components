@@ -37,6 +37,7 @@ export * from './integrationAlfrescoCloud.api';
 export * from './integrationAlfrescoOnPremise.api';
 export * from './integrationBox.api';
 export * from './integrationDrive.api';
+export * from './integrationSSO.api';
 export * from './models.api';
 export * from './modelsBpmn.api';
 export * from './modelsHistory.api';
