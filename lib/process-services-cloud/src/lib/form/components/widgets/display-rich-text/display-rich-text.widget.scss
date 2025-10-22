@@ -2,11 +2,11 @@
     pre {
         min-height: 100px;
         font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-        color: #41314e;
+        color: var(--mat-sys-on-surface);
         line-height: 1.6em;
         font-size: 12px;
-        background: #f8f7fa;
-        border: 1px solid #f1f1f4;
+        background: var(--mat-sys-surface-container);
+        border: 1px solid var(--mat-sys-outline-variant);
         box-shadow: none;
         white-space: pre;
         word-wrap: normal;

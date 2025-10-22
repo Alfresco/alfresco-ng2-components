@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .adf {
     &-attach-widget-container {
         display: flex;
@@ -25,15 +27,6 @@
         align-items: center;
         margin-right: 8px;
         word-break: normal;
-
-        .adf-attach-widget__menu-upload__button {
-            line-height: 28px;
-            font-size: var(--theme-caption-font-size);
-        }
-
-        button span {
-            font-size: var(--theme-caption-font-size);
-        }
     }
 
     &-attach-widget__input-type {
@@ -55,14 +48,13 @@
         word-break: break-all;
         padding: 0.4375em;
         border-bottom: none;
-        background: var(--adf-theme-mat-grey-color-a200);
+        background: var(--mat-sys-surface-variant);
         min-height: 27px;
         margin-bottom: 12px;
 
         .adf-label {
             width: 100%;
-            font-size: var(--theme-caption-font-size);
-            line-height: var(--theme-headline-line-height);
+            font: var(--mat-sys-body-small);
             text-align: left;
             white-space: normal;
             margin-left: 8px;
@@ -72,10 +64,10 @@
     }
 
     &-attach-widget__icon {
-        font-size: var(--theme-adf-picture-1-font-size);
-        height: var(--theme-adf-picture-1-font-size);
-        width: var(--theme-adf-picture-1-font-size);
-        line-height: calc(var(--theme-adf-picture-1-font-size) - 2px);
+        font-size: 1.28rem;
+        height: 1.28rem;
+        width: 1.28rem;
+        line-height: 1.14rem;
     }
 
     &-attach-widget__reset {
@@ -93,7 +85,7 @@
     &-attach-selected-file-row {
         > div:first-child {
             .adf-datatable-selected {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
                 padding-right: 6px;
             }
         }
