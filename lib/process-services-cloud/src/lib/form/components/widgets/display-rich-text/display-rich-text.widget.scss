@@ -1,10 +1,10 @@
 .adf-display-rich-text-widget {
     pre {
         min-height: 100px;
-        font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+        font-family: monospace;
         color: var(--mat-sys-on-surface);
         line-height: 1.6em;
-        font-size: 12px;
+        font-size: var(--mat-sys-body-small-size);
         background: var(--mat-sys-surface-container);
         border: 1px solid var(--mat-sys-outline-variant);
         box-shadow: none;
