@@ -47,7 +47,7 @@
                     (cancelTask)="onCancelClick()"
                     (claimTask)="onClaimTask()"
                     (error)="onError($event)"
-                    (taskCompleted)="onCompleteTask($event)"
+                    (taskCompleted)="onCompleteTask($event, taskType)"
                     (taskSaved)="onFormSaved()"
                     (unclaimTask)="onUnclaimTask()"
                     (nextTaskCheckboxCheckedChanged)="onNextTaskCheckboxCheckedChanged($event)"
@@ -80,7 +80,7 @@
                             adf-cloud-complete-task
                             [appName]="appName"
                             [taskId]="taskId"
-                            (success)="onCompleteTask()"
+                            (success)="onCompleteTask(false, taskType)"
                             (error)="onError($event)"
                             color="primary"
                             id="adf-form-complete"
