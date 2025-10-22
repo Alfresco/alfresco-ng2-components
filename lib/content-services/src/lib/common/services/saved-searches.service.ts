@@ -22,6 +22,7 @@ import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/op
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
 import { AuthenticationService } from '@alfresco/adf-core';
+import { SavedSearchStrategy } from '../interfaces/saved-searches-strategy.interface';
 
 export interface SavedSearchesPreferencesApiService {
     getPreference: (personId: string, preferenceName: string, opts?: ContentFieldsQuery) => Promise<PreferenceEntry> | Observable<PreferenceEntry>;
@@ -33,7 +34,7 @@ export const SAVED_SEARCHES_SERVICE_PREFERENCES = new InjectionToken<SavedSearch
 @Injectable({
     providedIn: 'root'
 })
-export class SavedSearchesService {
+export class SavedSearchesService implements SavedSearchStrategy {
     private savedSearchFileNodeId: string;
     private _nodesApi: NodesApi;
     private _preferencesApi: SavedSearchesPreferencesApiService;
@@ -54,7 +55,8 @@ export class SavedSearchesService {
         return this._preferencesApi;
     }
 
-    readonly savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
+    private readonly _savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
+    readonly savedSearches$ = this._savedSearches$.asObservable();
 
     constructor(
         private readonly apiService: AlfrescoApiService,
@@ -65,11 +67,6 @@ export class SavedSearchesService {
         this.fetchSavedSearches();
     }
 
-    /**
-     * Gets a list of saved searches by user.
-     *
-     * @returns SavedSearch list containing user saved searches
-     */
     getSavedSearches(): Observable<SavedSearch[]> {
         const savedSearchesMigrated = localStorage.getItem(this.getLocalStorageKey()) ?? '';
         if (savedSearchesMigrated === 'true') {
@@ -89,13 +86,6 @@ export class SavedSearchesService {
         }
     }
 
-    /**
-     * Saves a new search into state and updates state. If there are less than 5 searches,
-     * it will be pushed on first place, if more it will be pushed to 6th place.
-     *
-     * @param newSaveSearch object { name: string, description: string, encodedUrl: string }
-     * @returns NodeEntry
-     */
     saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
         return this.getSavedSearches().pipe(
             take(1),
@@ -118,7 +108,7 @@ export class SavedSearchesService {
 
                 return from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSavedSearches))).pipe(
                     map((preference) => JSON.parse(preference.entry.value)),
-                    tap(() => this.savedSearches$.next(updatedSavedSearches))
+                    tap(() => this._savedSearches$.next(updatedSavedSearches))
                 );
             }),
             catchError((error) => {
@@ -128,12 +118,6 @@ export class SavedSearchesService {
         );
     }
 
-    /**
-     * Replace Save Search with new one and also updates the state.
-     *
-     * @param updatedSavedSearch - updated Save Search
-     * @returns NodeEntry
-     */
     editSavedSearch(updatedSavedSearch: SavedSearch): Observable<NodeEntry> {
         let previousSavedSearches: SavedSearch[];
         return this.savedSearches$.pipe(
@@ -143,7 +127,7 @@ export class SavedSearchesService {
                 return savedSearches.map((search) => (search.order === updatedSavedSearch.order ? updatedSavedSearch : search));
             }),
             tap((updatedSearches: SavedSearch[]) => {
-                this.savedSearches$.next(updatedSearches);
+                this._savedSearches$.next(updatedSearches);
             }),
             switchMap((updatedSearches: SavedSearch[]) =>
                 from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
@@ -151,18 +135,12 @@ export class SavedSearchesService {
                 )
             ),
             catchError((error) => {
-                this.savedSearches$.next(previousSavedSearches);
+                this._savedSearches$.next(previousSavedSearches);
                 return throwError(() => error);
             })
         );
     }
 
-    /**
-     * Deletes Save Search and update state.
-     *
-     * @param deletedSavedSearch - Save Search to delete
-     * @returns NodeEntry
-     */
     deleteSavedSearch(deletedSavedSearch: SavedSearch): Observable<NodeEntry> {
         let previousSavedSearchesOrder: SavedSearch[];
         return this.savedSearches$.pipe(
@@ -176,7 +154,7 @@ export class SavedSearchesService {
                 }));
             }),
             tap((updatedSearches: SavedSearch[]) => {
-                this.savedSearches$.next(updatedSearches);
+                this._savedSearches$.next(updatedSearches);
             }),
             switchMap((updatedSearches: SavedSearch[]) =>
                 from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
@@ -184,18 +162,12 @@ export class SavedSearchesService {
                 )
             ),
             catchError((error) => {
-                this.savedSearches$.next(previousSavedSearchesOrder);
+                this._savedSearches$.next(previousSavedSearchesOrder);
                 return throwError(() => error);
             })
         );
     }
 
-    /**
-     * Reorders saved search place
-     *
-     * @param previousIndex - previous index of saved search
-     * @param currentIndex - new index of saved search
-     */
     changeOrder(previousIndex: number, currentIndex: number): void {
         let previousSavedSearchesOrder: SavedSearch[];
         this.savedSearches$
@@ -210,14 +182,14 @@ export class SavedSearchesService {
                         order: index
                     }));
                 }),
-                tap((savedSearches: SavedSearch[]) => this.savedSearches$.next(savedSearches)),
+                tap((savedSearches: SavedSearch[]) => this._savedSearches$.next(savedSearches)),
                 switchMap((updatedSearches: SavedSearch[]) =>
                     from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
                         map((preference) => JSON.parse(preference.entry.value))
                     )
                 ),
                 catchError((error) => {
-                    this.savedSearches$.next(previousSavedSearchesOrder);
+                    this._savedSearches$.next(previousSavedSearchesOrder);
                     return throwError(() => error);
                 })
             )
@@ -255,7 +227,7 @@ export class SavedSearchesService {
     private fetchSavedSearches(): void {
         this.getSavedSearches()
             .pipe(take(1))
-            .subscribe((searches) => this.savedSearches$.next(searches));
+            .subscribe((searches) => this._savedSearches$.next(searches));
     }
 
     private migrateSavedSearches(): Observable<SavedSearch[]> {
