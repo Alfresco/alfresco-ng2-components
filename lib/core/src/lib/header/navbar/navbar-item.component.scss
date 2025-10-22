@@ -10,8 +10,8 @@
         border-radius: 0;
         opacity: 1;
 
-        @include mat.button-overrides {
+        @include mat.button-overrides ((
             outlined-container-color: var(--mat-sys-primary);
-        }
+        ));
     }
 }
