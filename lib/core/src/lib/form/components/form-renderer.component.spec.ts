@@ -38,6 +38,7 @@ import {
     formNumberTextJson,
     formNumberWidgetVisibility,
     formRequiredNumberWidget,
+    mockRepeatableSectionForm,
     mockSectionVisibilityForm,
     multilineWidgetFormVisibilityMock,
     numberMinMaxForm,
@@ -46,7 +47,9 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { FormModel, TextWidgetComponent } from './widgets';
+import { FormFieldModel, FormModel, TextWidgetComponent } from './widgets';
+import { MatDialog } from '@angular/material/dialog';
+import { of } from 'rxjs';
 
 const typeIntoInput = (testingUtils: UnitTestingUtils, selector: string, message: string) => {
     testingUtils.fillInputByCSS(selector, message);
@@ -87,6 +90,7 @@ describe('Form Renderer Component', () => {
     let formRenderingService: FormRenderingService;
     let rulesManager: FormRulesManager<any>;
     let testingUtils: UnitTestingUtils;
+    let dialog: MatDialog;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -96,6 +100,7 @@ describe('Form Renderer Component', () => {
         formRendererComponent = fixture.componentInstance;
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         formService = TestBed.inject(FormService);
+        dialog = TestBed.inject(MatDialog);
         formRenderingService = TestBed.inject(FormRenderingService);
         rulesManager = fixture.debugElement.injector.get(FormRulesManager);
     });
@@ -800,5 +805,93 @@ describe('Form Renderer Component', () => {
         });
     });
 
-    describe('Repeatable section', () => {});
+    describe('Repeatable section', () => {
+        const repeatableSectionField = new FormFieldModel(new FormModel(), {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows: 2,
+                allowInitialRowsDelete: true,
+                newRowsLimit: 1
+            },
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'Text0wwp7n',
+                        name: 'Text',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'Integer0rzkwq',
+                        name: 'Integer',
+                        type: 'integer',
+                        readOnly: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minValue: null,
+                        maxValue: null,
+                        required: false,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ]
+            }
+        });
+
+        it('should remove row if confimation dialog is true', () => {
+            spyOn(dialog, 'open').and.returnValue({
+                beforeClosed: () => of(true)
+            } as any);
+
+            spyOn(repeatableSectionField, 'removeRow').and.callThrough();
+
+            const rowIndex = 0;
+
+            fixture.detectChanges();
+
+            fixture.componentInstance.displayDialogToRemoveRow(repeatableSectionField, rowIndex);
+
+            expect(dialog.open).toHaveBeenCalled();
+            expect(repeatableSectionField.removeRow).toHaveBeenCalledWith(rowIndex);
+        });
+
+        it('should NOT remove row if confirmation dialog is false', () => {
+            spyOn(dialog, 'open').and.returnValue({
+                beforeClosed: () => of(false)
+            } as any);
+
+            spyOn(repeatableSectionField, 'removeRow').and.callThrough();
+
+            const rowIndex = 0;
+
+            fixture.detectChanges();
+
+            fixture.componentInstance.displayDialogToRemoveRow(repeatableSectionField, rowIndex);
+
+            expect(dialog.open).toHaveBeenCalled();
+            expect(repeatableSectionField.removeRow).not.toHaveBeenCalled();
+        });
+    });
 });
