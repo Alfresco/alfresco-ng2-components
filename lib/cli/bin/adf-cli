@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const minimist = require('minimist');
+const { parseArgs } = require('node:util');
 const { resolve, join }  = require('node:path');
 const { readFileSync, existsSync } = require('node:fs');
 const { argv, exit, env, cwd } = require('node:process');
@@ -10,9 +10,21 @@ function printHelp() {
     console.log(`${name} v${version}`);
 }
 
-const args = minimist(argv.slice(2), {
-    boolean: ['verbose']
+const { values, positionals } = parseArgs({
+    args: argv.slice(2),
+    options: {
+        verbose: {
+            type: 'boolean'
+        }
+    },
+    allowPositionals: true,
+    strict: false
 });
+
+const args = {
+    ...values,
+    _: positionals
+};
 
 if (args._.length === 0) {
     printHelp();

@@ -18,11 +18,23 @@ adf-cli <command> --help
 
 ## Developing
 
-Link the project as a global tool
+### Quick Setup
+
+Link the project as a global tool (builds and links in one command):
 
 ```bash
-npm link
+npm run link
 ```
+
+This will build the CLI and make the `adf-cli` command available globally on your system.
+
+When you're done developing:
+
+```bash
+npm run unlink
+```
+
+### Development Mode
 
 Build the tool in the **develop** mode (automatically watches for changes and rebuilds the commands):
 
@@ -37,6 +49,21 @@ DEVELOP=true adf-cli <command>
 ```
 
 In develop mode, the CLI takes the prebuilt scripts from the dist folder.
+
+### Manual Workflow
+
+If you need more control, you can manually build and link:
+
+```bash
+# Build the CLI
+npm run build
+
+# Or build with full distribution (includes copying resources)
+npm run dist
+
+# Link from the dist directory
+cd ../../dist/libs/cli && npm link
+```
 
 ## Commands
 

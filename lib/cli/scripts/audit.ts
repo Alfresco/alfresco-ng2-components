@@ -22,9 +22,7 @@ import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
 import { argv, exit } from 'node:process';
-import { Command } from 'commander';
-
-const program = new Command();
+import { parseArgs } from 'node:util';
 
 interface AuditCommandArgs {
     package?: string;
@@ -39,19 +37,39 @@ interface AuditCommandArgs {
  * @returns void
  */
 export default function main(_args: string[], workingDir: string) {
-    program
-        .description('Generate an audit report')
-        .usage('audit [options]')
-        .option('-p, --package <path>', 'Path to package file (default: package.json in working directory)')
-        .option('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
-        .parse(argv);
-
     if (argv.includes('-h') || argv.includes('--help')) {
-        program.outputHelp();
+        console.log(`
+Usage: audit [options]
+
+Generate an audit report
+
+Options:
+  -p, --package <path>  Path to package file (default: package.json in working directory)
+  -d, --outDir <dir>    Output directory (default: working directory)
+  -h, --help            Display help for command
+`);
         exit(0);
     }
 
-    const options: AuditCommandArgs = program.opts();
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            package: {
+                type: 'string',
+                short: 'p'
+            },
+            outDir: {
+                type: 'string',
+                short: 'd'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const options: AuditCommandArgs = {
+        package: values.package as string | undefined,
+        outDir: values.outDir as string | undefined
+    };
 
     let packagePath = path.resolve(workingDir, 'package.json');
 
