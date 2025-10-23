@@ -41,10 +41,10 @@ export class ClipboardDirective {
     @Input('clipboard-notification') message: string;
 
     constructor(
-        private clipboardService: ClipboardService,
+        private readonly clipboardService: ClipboardService,
         public viewContainerRef: ViewContainerRef,
-        @Self() private matTooltip: MatTooltip,
-        @Optional() private translate: TranslateService
+        @Self() private readonly matTooltip: MatTooltip,
+        @Optional() private readonly translate: TranslateService
     ) {}
 
     @HostListener('mouseenter')
