@@ -51,8 +51,9 @@
     </section>
 
     <section class="adf-upload-dialog__content"
-        [class.adf-upload-dialog--padding]="isConfirmation">
+        [class.adf-upload-dialog--padding]="isConfirmation" aria-live="polite">
         <adf-file-uploading-list
+            role="list"
             class="adf-file-uploading-list"
             [class.adf-upload-dialog--hide]="isConfirmation"
             #uploadList
