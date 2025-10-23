@@ -382,7 +382,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getUniqueId(field: FormFieldModel): string {
-        return field.id + ROW_ID_PREFIX + Math.random().toString(36).substring(2, 9);
+        return field.id + ROW_ID_PREFIX + window.crypto.getRandomValues(new Uint32Array(1))[0].toString();
     }
 
     private updateChildrenFieldsRowIndex() {

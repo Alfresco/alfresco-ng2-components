@@ -28,6 +28,6 @@ export class ContainerRowModel {
 
     constructor(isInitial: boolean = false) {
         this.isInitial = isInitial;
-        this.id = Math.random().toString(36).substring(2, 9);
+        this.id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString();
     }
 }
