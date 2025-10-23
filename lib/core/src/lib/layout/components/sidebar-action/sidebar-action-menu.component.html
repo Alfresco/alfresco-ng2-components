@@ -1,5 +1,5 @@
 <div class="adf-sidebar-action-menu">
-    <button *ngIf="isExpanded()" matButton="filled" class="adf-sidebar-action-menu-button" data-automation-id="create-button" [matMenuTriggerFor]="adfSidebarMenu">
+    <button *ngIf="isExpanded()" mat-button-flat class="adf-sidebar-action-menu-button" data-automation-id="create-button" [matMenuTriggerFor]="adfSidebarMenu">
         <span *ngIf="title" class="adf-sidebar-action-menu-text">{{ title }}</span>
         <ng-content select="[adf-sidebar-menu-title-icon], [sidebar-menu-title-icon]" />
     </button>
