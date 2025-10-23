@@ -7,7 +7,7 @@ All URIs are relative to */activiti-app/api*
 | [**getAccountInformation**](#getAccountInformation) | **GET** /api/enterprise/integration/sso/{repositoryId}/account | Get account information |
 
 
-## getAccountInformation 
+## getAccountInformation
 
 Returns account information.
 
