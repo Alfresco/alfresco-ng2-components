@@ -16,7 +16,7 @@
  */
 
 import { BaseApi } from './base.api';
-import { SSOUserAccountCredentialsRepresentation } from '../model/ssoUserAccountCredentialsRepresentation';
+import { SSOUserAccountCredentialsRepresentation } from '../model';
 
 /**
  * IntegrationSSOApi service.

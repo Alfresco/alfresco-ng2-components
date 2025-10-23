@@ -2,9 +2,9 @@
 
 All URIs are relative to */activiti-app/api*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**getAccountInformation**](IntegrationSSOApi.md#getAccountInformation) | **GET** /api/enterprise/integration/sso/{repositoryId}/account | Get account information
+| Method                                                                  | HTTP request                                                   | Description           |
+|------------------------------------------------------------------------ | -------------------------------------------------------------- | ----------------------|
+| [**getAccountInformation**](#getAccountInformation) | **GET** /api/enterprise/integration/sso/{repositoryId}/account | Get account information |
 
 
 ## getAccountInformation 
@@ -32,9 +32,9 @@ integrationSSOApi.getAccountInformation('1').then(() => {
 ```
 
 ### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **repositoryId** | **string**| Alfresco Repository instance ID configured in APS |
+| Name             | Type       | Description                                       | Notes |
+|----------------- | ---------- | ------------------------------------------------- | ----- |
+| **repositoryId** | **string** | Alfresco Repository instance ID configured in APS |       |
 
 ### Return type
 
