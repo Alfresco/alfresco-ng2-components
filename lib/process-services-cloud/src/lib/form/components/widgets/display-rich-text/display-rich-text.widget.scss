@@ -1,19 +1,10 @@
 .adf-display-rich-text-widget {
     pre {
         min-height: 100px;
-        font-family: monospace;
-        color: var(--mat-sys-on-surface);
-        line-height: 1.6em;
-        font-size: var(--mat-sys-body-small-size);
-        background: var(--mat-sys-surface-container);
-        border: 1px solid var(--mat-sys-outline-variant);
-        box-shadow: none;
         white-space: pre;
         word-wrap: normal;
         overflow-x: auto;
         resize: vertical;
-        border-radius: 3px;
-        outline: none;
         width: 100%;
     }
 }
