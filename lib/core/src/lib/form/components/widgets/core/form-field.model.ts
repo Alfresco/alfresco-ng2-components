@@ -669,13 +669,6 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.value ? this.value : null;
                 break;
             }
-            case FormFieldTypes.REPEATABLE_SECTION: {
-                if (!this.form.values[this.id]) {
-                    this.form.values[this.id] = [];
-                }
-
-                break;
-            }
             default:
                 if (this.shouldUpdateFormValues(this.type)) {
                     this.form.values[this.id] = this.value;

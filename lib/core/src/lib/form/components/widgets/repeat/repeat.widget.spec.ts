@@ -31,9 +31,10 @@ describe('RepeatWidgetComponent', () => {
      *
      * @param initialNumberOfRows initial number of rows
      * @param newRowsLimit limit for additional rows
+     * @param allowInitialRowsDelete should allow deleting rows
      * @returns repeatable section json based on params
      */
-    function getFormFieldJson(initialNumberOfRows: number = 2, newRowsLimit?: number) {
+    function getFormFieldJson(initialNumberOfRows: number = 2, newRowsLimit?: number, allowInitialRowsDelete: boolean = true) {
         return {
             id: 'RepeatableSection0tbw2y',
             name: 'Repeatable Section',
@@ -41,7 +42,7 @@ describe('RepeatWidgetComponent', () => {
             tab: null,
             params: {
                 initialNumberOfRows,
-                allowInitialRowsDelete: true,
+                allowInitialRowsDelete,
                 newRowsLimit
             },
             numberOfColumns: 2,
@@ -163,6 +164,32 @@ describe('RepeatWidgetComponent', () => {
 
             testingUtils.clickByCSS('button.adf-container-widget-row-action');
             expect(component.addRow).toHaveBeenCalled();
+        });
+
+        describe('getAddedRowsCount', () => {
+            it('should get correct rows count if initial rows are allowed to be deleted', () => {
+                component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+
+                fixture.detectChanges();
+
+                expect(component.getAddedRowsCount()).toBe(0);
+
+                component.addRow();
+
+                fixture.detectChanges();
+
+                expect(component.getAddedRowsCount()).toBe(1);
+            });
+
+            it('should get correct rows count if initial rows are NOT allowed to be deleted', () => {
+                component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1, false)));
+
+                expect(component.getAddedRowsCount()).toBe(0);
+
+                component.addRow();
+
+                expect(component.getAddedRowsCount()).toBe(1);
+            });
         });
     });
 });

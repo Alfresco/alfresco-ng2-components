@@ -852,7 +852,8 @@ describe('FormFieldModel', () => {
         FormFieldTypes.READONLY_TYPES.forEach((typeName) => {
             const field = new FormFieldModel(form, {
                 id: typeName,
-                type: typeName
+                type: typeName,
+                params: {}
             });
 
             field.value = '<some value>';

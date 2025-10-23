@@ -38,8 +38,9 @@ import {
     formNumberTextJson,
     formNumberWidgetVisibility,
     formRequiredNumberWidget,
-    mockRepeatableSectionForm,
     mockSectionVisibilityForm,
+    mockRepeatableSectionForm01,
+    mockRepeatableSectionForm02,
     multilineWidgetFormVisibilityMock,
     numberMinMaxForm,
     numberNotRequiredForm,
@@ -860,14 +861,17 @@ describe('Form Renderer Component', () => {
             }
         });
 
-        it('should display repeatable-section field', () => {
-            const formDefinition = new FormModel(mockRepeatableSectionForm);
-            const mockRepeatableSectionId = 'RepeatableSection0tbw2y';
+        beforeEach(() => {
+            const formDefinition = new FormModel(mockRepeatableSectionForm01.formRepresentation);
+            fixture.componentInstance.formDefinition = formDefinition;
 
-            fixture.componentRef.setInput('formDefinition', formDefinition);
             fixture.detectChanges();
+        });
 
-            expectElementToBeVisible(testingUtils, mockRepeatableSectionId);
+        it('should display repeatable-section field', () => {
+            const container = testingUtils.getByCSS('#field-RepeatableSection0tbw2y-container');
+
+            expect(container).toBeTruthy();
         });
 
         it('should remove row if confimation dialog is true', () => {
@@ -902,6 +906,43 @@ describe('Form Renderer Component', () => {
 
             expect(dialog.open).toHaveBeenCalled();
             expect(repeatableSectionField.removeRow).not.toHaveBeenCalled();
+        });
+
+        it('should display the correct number of initial rows', () => {
+            const rows = testingUtils.getAllByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
+
+            expect(rows.length).toBeTruthy(2);
+        });
+
+        describe('remove row button', () => {
+            it('should display remove button if allowed', () => {
+                const row = testingUtils.getByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
+
+                expect(row).toBeTruthy();
+
+                const removeRowButton = testingUtils.getByCSS(
+                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-remove-row-button'
+                );
+
+                expect(removeRowButton).toBeTruthy();
+            });
+
+            it('should NOT display remove button if NOT allowed', () => {
+                const formDefinition = new FormModel(mockRepeatableSectionForm02.formRepresentation);
+                fixture.componentInstance.formDefinition = formDefinition;
+
+                fixture.detectChanges();
+
+                const row = testingUtils.getByCSS('#field-RepeatableSection0tbw2y-container .adf-grid-list-container');
+
+                expect(row).toBeTruthy();
+
+                const removeRowButton = testingUtils.getByCSS(
+                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-remove-row-button'
+                );
+
+                expect(removeRowButton).toBeFalsy();
+            });
         });
     });
 });
