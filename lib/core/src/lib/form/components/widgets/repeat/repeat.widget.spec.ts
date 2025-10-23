@@ -99,34 +99,70 @@ describe('RepeatWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
-    it('should display add row button if no limit is defined', () => {
-        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
-        expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeTruthy();
-        expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
+    describe('is editor', () => {
+        it('should NOT display add row button or row limit', () => {
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
+
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeFalsy();
+            expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
+        });
     });
 
-    it('should display add row button if limit is defined but not reached', () => {
-        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
-        expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeTruthy();
-        expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
-    });
+    describe('is NOT editor', () => {
+        beforeEach(() => {
+            component.isEditor = false;
+        });
 
-    it('should NOT display add row button if limit is defined and reached', () => {
-        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 0)));
-        expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeFalsy();
-        expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeTruthy();
-    });
+        it('should display add row button if no limit is defined', () => {
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
 
-    it('should display row limit if limit has been reached', () => {
-        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 0)));
-        expect(testingUtils.getByCSS('span.adf-container-widget-row-action').nativeElement.textContent.trim()).toBe(
-            'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED'
-        );
-    });
+            fixture.detectChanges();
 
-    it('should add row when add row button is clicked', () => {
-        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
-        testingUtils.clickByCSS('button.adf-container-widget-row-action');
-        expect(component.addRow).toHaveBeenCalled();
+            expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeTruthy();
+            expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
+        });
+
+        it('should display add row button if limit is defined but not reached', () => {
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeTruthy();
+            expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
+        });
+
+        it('should NOT display add row button if limit is defined and reached', () => {
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+            spyOn(component, 'getAddedRowsCount').and.returnValue(1);
+
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeFalsy();
+            expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeTruthy();
+        });
+
+        it('should display row limit if limit has been reached', () => {
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+            spyOn(component, 'getAddedRowsCount').and.returnValue(1);
+
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeTruthy();
+            expect(testingUtils.getByCSS('span.adf-container-widget-row-action').nativeElement.textContent.trim()).toBe(
+                'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED'
+            );
+        });
+
+        it('should add row when add row button is clicked', () => {
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
+            spyOn(component, 'addRow').and.callThrough();
+
+            fixture.detectChanges();
+
+            testingUtils.clickByCSS('button.adf-container-widget-row-action');
+            expect(component.addRow).toHaveBeenCalled();
+        });
     });
 });
