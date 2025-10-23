@@ -31,7 +31,6 @@ import { spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
 import * as path from 'path';
 import { logger } from './logger';
-import { throwError } from 'rxjs';
 
 interface InitApsEnvArgs {
     host?: string;
@@ -251,9 +250,9 @@ async function hasDefaultTenant(tenantId: number, tenantName: string): Promise<b
         logger.info(`Aps: has default tenantId: ${tenantId} and name ${tenantName}`);
         return true;
     } else {
-        logger.info(`Wrong configuration. Another tenant has been created with id ${tenant.id} and name ${tenant.name}`);
-        throwError(`Wrong configuration. Another tenant has been created with id ${tenant.id} and name ${tenant.name}`);
-        return false;
+        const errorMessage = `Wrong configuration. Another tenant has been created with id ${tenant.id} and name ${tenant.name}`;
+        logger.error(errorMessage);
+        throw new Error(errorMessage);
     }
 }
 
