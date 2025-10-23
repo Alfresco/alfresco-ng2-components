@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { argv } from 'node:process';
+import { argv, exit } from 'node:process';
+import { parseArgs } from 'node:util';
 import { CheckEnv } from './plugins/check-env';
-import { Command } from 'commander';
 import { ProcessServiceCheckPlugin } from './plugins/process-service-check-plugin';
 import { ProcessAutomationCheckPlugin } from './plugins/process-automation-check-plugin';
 import { GovernanceCheckPlugin } from './plugins/governance-check-plugin';
 
-const program = new Command();
 let pluginEnv: CheckEnv;
 
 interface CheckPluginArgs {
@@ -39,18 +38,74 @@ interface CheckPluginArgs {
  * Check environment plugin
  */
 export default async function main() {
-    program
-        .version('0.1.0')
-        .option('--host [type]', 'Remote environment host')
-        .option('--pluginName [type]', 'pluginName')
-        .option('--clientId [type]', 'sso client', 'alfresco')
-        .option('--appName [type]', 'appName ', 'Deployed appName on activiti-cloud')
-        .option('-p, --password [type]', 'password ')
-        .option('-u, --username [type]', 'username ')
-        .option('--ui, --uiName [type]', 'uiName', 'Deployed app UI type on activiti-cloud')
-        .parse(argv);
+    if (argv.includes('-h') || argv.includes('--help')) {
+        console.log(`
+Usage: check-plugin-env [options]
 
-    const options = program.opts();
+Check plugin status
+
+Options:
+  -v, --version           Output the version number
+  --host <host>           Remote environment host
+  --pluginName <name>     Plugin name (processService, processAutomation, governance)
+  --clientId <id>         SSO client (default: "alfresco")
+  --appName <name>        Deployed appName on activiti-cloud
+  -p, --password <pass>   Password
+  -u, --username <user>   Username
+  --ui, --uiName <name>   Deployed app UI type on activiti-cloud
+  -h, --help              Display help for command
+`);
+        exit(0);
+    }
+
+    if (argv.includes('-v') || argv.includes('--version')) {
+        console.log('0.1.0');
+        exit(0);
+    }
+
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            host: {
+                type: 'string'
+            },
+            pluginName: {
+                type: 'string'
+            },
+            clientId: {
+                type: 'string',
+                default: 'alfresco'
+            },
+            appName: {
+                type: 'string'
+            },
+            password: {
+                type: 'string',
+                short: 'p'
+            },
+            username: {
+                type: 'string',
+                short: 'u'
+            },
+            ui: {
+                type: 'string'
+            },
+            uiName: {
+                type: 'string'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const options: CheckPluginArgs = {
+        host: values.host as string | undefined,
+        pluginName: values.pluginName as 'processService' | 'processAutomation' | 'governance' | undefined,
+        clientId: values.clientId as string | undefined,
+        appName: values.appName as string | undefined,
+        username: values.username as string | undefined,
+        password: values.password as string | undefined,
+        uiName: (values.ui || values.uiName) as string | undefined
+    };
 
     pluginEnv = new CheckEnv(options.host, options.username, options.password, options.clientId);
     await pluginEnv.checkEnv();

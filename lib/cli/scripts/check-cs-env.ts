@@ -17,7 +17,7 @@
 
 import { AlfrescoApi /*, NodesApi, UploadApi*/ } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
-import { Command } from 'commander';
+import { parseArgs } from 'node:util';
 import { logger } from './logger';
 
 interface CheckCsEnvArgs {
@@ -27,8 +27,6 @@ interface CheckCsEnvArgs {
     time?: number;
     retry?: number;
 }
-
-const program = new Command();
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 
@@ -39,18 +37,63 @@ let alfrescoJsApi: AlfrescoApi;
  * Check CS environment command
  */
 export default async function main() {
-    program
-        .version('0.1.0')
-        .description('Check Content service is up ')
-        .usage('check-cs-env [options]')
-        .option('--host [type]', 'Remote environment host adf.lab.com ')
-        .option('-p, --password [type]', 'password ')
-        .option('-u, --username [type]', 'username ')
-        .option('-t, --time [type]', 'time ')
-        .option('-r, --retry [type]', 'retry ')
-        .parse(argv);
+    if (argv.includes('-h') || argv.includes('--help')) {
+        console.log(`
+Usage: check-cs-env [options]
 
-    const opts = program.opts();
+Check Content service is up
+
+Options:
+  -v, --version         Output the version number
+  --host <host>         Remote environment host adf.lab.com
+  -p, --password <pass> Password
+  -u, --username <user> Username
+  -t, --time <ms>       Time in milliseconds
+  -r, --retry <num>     Retry count
+  -h, --help            Display help for command
+`);
+        exit(0);
+    }
+
+    if (argv.includes('-v') || argv.includes('--version')) {
+        console.log('0.1.0');
+        exit(0);
+    }
+
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            host: {
+                type: 'string'
+            },
+            password: {
+                type: 'string',
+                short: 'p'
+            },
+            username: {
+                type: 'string',
+                short: 'u'
+            },
+            time: {
+                type: 'string',
+                short: 't'
+            },
+            retry: {
+                type: 'string',
+                short: 'r'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const opts: CheckCsEnvArgs = {
+        host: values.host as string | undefined,
+        username: values.username as string | undefined,
+        password: values.password as string | undefined,
+        time: values.time ? parseInt(values.time as string, 10) : undefined,
+        retry: values.retry ? parseInt(values.retry as string, 10) : undefined
+    };
+
     await checkEnv(opts);
     // TODO: https://alfresco.atlassian.net/browse/ACS-5873
     // await checkDiskSpaceFullEnv();

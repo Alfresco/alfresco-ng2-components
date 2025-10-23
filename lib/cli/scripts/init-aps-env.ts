@@ -26,9 +26,9 @@ import {
     AppDefinitionUpdateResultRepresentation
 } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
+import { parseArgs } from 'node:util';
 import { spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
-import { Command } from 'commander';
 import * as path from 'path';
 import { logger } from './logger';
 import { throwError } from 'rxjs';
@@ -40,8 +40,6 @@ interface InitApsEnvArgs {
     password?: string;
     license?: string;
 }
-
-const program = new Command();
 const MAX_RETRY = 10;
 let counter = 0;
 const TIMEOUT = 6000;
@@ -56,16 +54,62 @@ let alfrescoJsApi: AlfrescoApi;
  * Init APS command
  */
 export default async function main() {
-    program
-        .version('0.1.0')
-        .option('--host [type]', 'Remote environment host')
-        .option('--clientId [type]', 'sso client', 'alfresco')
-        .option('-p, --password [type]', 'password ')
-        .option('-u, --username [type]', 'username ')
-        .option('--license [type]', 'APS license S3 path ')
-        .parse(argv);
+    if (argv.includes('-h') || argv.includes('--help')) {
+        console.log(`
+Usage: init-aps-env [options]
 
-    const opts = program.opts();
+Initialize APS environment
+
+Options:
+  -v, --version         Output the version number
+  --host <host>         Remote environment host
+  --clientId <id>       SSO client (default: "alfresco")
+  -p, --password <pass> Password
+  -u, --username <user> Username
+  --license <path>      APS license S3 path
+  -h, --help            Display help for command
+`);
+        exit(0);
+    }
+
+    if (argv.includes('-v') || argv.includes('--version')) {
+        console.log('0.1.0');
+        exit(0);
+    }
+
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            host: {
+                type: 'string'
+            },
+            clientId: {
+                type: 'string',
+                default: 'alfresco'
+            },
+            password: {
+                type: 'string',
+                short: 'p'
+            },
+            username: {
+                type: 'string',
+                short: 'u'
+            },
+            license: {
+                type: 'string'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const opts: InitApsEnvArgs = {
+        host: values.host as string | undefined,
+        clientId: values.clientId as string | undefined,
+        username: values.username as string | undefined,
+        password: values.password as string | undefined,
+        license: values.license as string | undefined
+    };
+
     await checkEnv(opts);
 
     logger.info(`***** Step 1 - Check License *****`);
