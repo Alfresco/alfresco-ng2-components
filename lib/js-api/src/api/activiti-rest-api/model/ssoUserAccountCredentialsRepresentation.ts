@@ -17,26 +17,17 @@
 
 import { DateAlfresco } from '../../content-custom-api';
 
-export class AlfrescoEndpointRepresentation {
-    accountUsername?: string;
-    alfrescoTenantId?: string;
-    authenticationType?: string;
-    created?: Date;
-    id?: number;
-    lastUpdated?: Date;
-    name?: string;
-    repositoryUrl?: string;
-    secret?: string;
-    shareUrl?: string;
-    tenantId?: number;
-    useShareConnector?: boolean;
-    version?: string;
+export class SSOUserAccountCredentialsRepresentation {
+    authenticationURL: string;
+    expireDate: Date;
+    name: string;
+    ownerEmail: string;
+    repositoryId: number;
 
-    constructor(input?: Partial<AlfrescoEndpointRepresentation>) {
+    constructor(input?: Partial<SSOUserAccountCredentialsRepresentation>) {
         if (input) {
             Object.assign(this, input);
-            this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
-            this.lastUpdated = input.lastUpdated ? DateAlfresco.parseDate(input.lastUpdated) : undefined;
+            this.expireDate = input.expireDate ? DateAlfresco.parseDate(input.expireDate) : undefined;
         }
     }
 }

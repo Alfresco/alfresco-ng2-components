@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **accountUsername** | **string** |  | [optional] [default to null]
 **alfrescoTenantId** | **string** |  | [optional] [default to null]
+**authenticationType** | **string** |  | [optional] [default to null] 
 **created** | [**Date**](Date.md) |  | [optional] [default to null]
 **id** | **number** |  | [optional] [default to null]
 **lastUpdated** | [**Date**](Date.md) |  | [optional] [default to null]
