@@ -20,14 +20,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { argv, exit } from 'node:process';
+import { parseArgs } from 'node:util';
 import * as shell from 'shelljs';
 import * as path from 'path';
-import { Command } from 'commander';
 import { logger } from './logger';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
-
-const program = new Command();
 
 interface Commit {
     hash: string;
@@ -151,28 +149,74 @@ function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
  * @returns void
  */
 export default function main(_args: string[], workingDir: string) {
-    program
-        .description('Generate changelog report for two branches of git repository')
-        .version('0.0.1', '-v, --version')
-        .usage('changelog [options]')
-        .option('-r, --range <range>', 'Commit range, e.g. origin/master..develop', 'origin/master..develop')
-        .option('-d, --dir <dir>', 'Working directory (default: working directory)')
-        .option('-m, --max <number>', 'Limit the number of commits to output')
-        .option('-o, --output <dir>', 'Output directory, will use console output if not defined')
-        .option('--skip <number>', 'Skip number commits before starting to show the commit output')
-        .option('-f, --format <format>', 'Output format (md, html)', 'md')
-        .option('-e --exclude <string>', 'Exclude authors from the output, comma-delimited list')
-        .parse(argv);
-
     if (argv.includes('-h') || argv.includes('--help')) {
-        program.outputHelp();
+        console.log(`
+Usage: changelog [options]
+
+Generate changelog report for two branches of git repository
+
+Options:
+  -v, --version          Output the version number
+  -r, --range <range>    Commit range, e.g. origin/master..develop (default: "origin/master..develop")
+  -d, --dir <dir>        Working directory (default: working directory)
+  -m, --max <number>     Limit the number of commits to output
+  -o, --output <dir>     Output directory, will use console output if not defined
+  --skip <number>        Skip number commits before starting to show the commit output
+  -f, --format <format>  Output format (md, html) (default: "md")
+  -e, --exclude <string> Exclude authors from the output, comma-delimited list
+  -h, --help             Display help for command
+`);
         exit(0);
     }
 
-    const options = program.opts();
+    if (argv.includes('-v') || argv.includes('--version')) {
+        console.log('0.0.1');
+        exit(0);
+    }
 
-    const dir = path.resolve(options.dir || workingDir);
-    const { range, skip, max, format, output, exclude } = options;
+    const { values } = parseArgs({
+        args: argv.slice(2),
+        options: {
+            range: {
+                type: 'string',
+                short: 'r',
+                default: 'origin/master..develop'
+            },
+            dir: {
+                type: 'string',
+                short: 'd'
+            },
+            max: {
+                type: 'string',
+                short: 'm'
+            },
+            output: {
+                type: 'string',
+                short: 'o'
+            },
+            skip: {
+                type: 'string'
+            },
+            format: {
+                type: 'string',
+                short: 'f',
+                default: 'md'
+            },
+            exclude: {
+                type: 'string',
+                short: 'e'
+            }
+        },
+        allowPositionals: true
+    });
+
+    const dir = path.resolve((values.dir as string) || workingDir);
+    const range = values.range as string;
+    const skip = values.skip ? parseInt(values.skip as string, 10) : undefined;
+    const max = values.max ? parseInt(values.max as string, 10) : undefined;
+    const format = values.format as string;
+    const output = values.output as string | undefined;
+    const exclude = values.exclude as string | undefined;
 
     const remote = getRemote(dir);
 
