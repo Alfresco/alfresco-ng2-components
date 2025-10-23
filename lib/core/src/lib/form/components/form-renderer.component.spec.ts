@@ -860,6 +860,16 @@ describe('Form Renderer Component', () => {
             }
         });
 
+        it('should display repeatable-section field', () => {
+            const formDefinition = new FormModel(mockRepeatableSectionForm);
+            const mockRepeatableSectionId = 'RepeatableSection0tbw2y';
+
+            fixture.componentRef.setInput('formDefinition', formDefinition);
+            fixture.detectChanges();
+
+            expectElementToBeVisible(testingUtils, mockRepeatableSectionId);
+        });
+
         it('should remove row if confimation dialog is true', () => {
             spyOn(dialog, 'open').and.returnValue({
                 beforeClosed: () => of(true)
