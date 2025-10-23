@@ -17,12 +17,9 @@ on:
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GH_COMMIT: ${{ github.sha }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
-  S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
   NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
