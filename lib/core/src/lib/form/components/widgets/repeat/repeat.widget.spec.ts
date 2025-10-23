@@ -17,9 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContainerModel } from '../core/container.model';
-import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { RepeatWidgetComponent } from './repeat.widget';
+import { FormModel } from '../core';
 import { UnitTestingUtils } from '../../../../testing';
 
 describe('RepeatWidgetComponent', () => {
@@ -27,99 +27,106 @@ describe('RepeatWidgetComponent', () => {
     let fixture: ComponentFixture<RepeatWidgetComponent>;
     let testingUtils: UnitTestingUtils;
 
+    /**
+     *
+     * @param initialNumberOfRows initial number of rows
+     * @param newRowsLimit limit for additional rows
+     * @returns repeatable section json based on params
+     */
+    function getFormFieldJson(initialNumberOfRows: number = 2, newRowsLimit?: number) {
+        return {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows,
+                allowInitialRowsDelete: true,
+                newRowsLimit
+            },
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        id: 'Text0wwp7n',
+                        name: 'Text',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ],
+                '2': [
+                    {
+                        id: 'Integer0rzkwq',
+                        name: 'Integer',
+                        type: 'integer',
+                        readOnly: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minValue: null,
+                        maxValue: null,
+                        required: false,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        }
+                    }
+                ]
+            }
+        };
+    }
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [RepeatWidgetComponent]
         });
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(RepeatWidgetComponent);
         component = fixture.componentInstance;
         testingUtils = new UnitTestingUtils(fixture.debugElement);
-        fixture.componentRef.setInput(
-            'element',
-            new ContainerModel(
-                new FormFieldModel(
-                    {
-                        onFormFieldChanged: () => {}
-                    },
-                    {
-                        type: FormFieldTypes.GROUP,
-                        name: 'test-name',
-                        id: 'test-id',
-                        params: {
-                            hideHeader: false,
-                            allowCollapse: false,
-                            collapseByDefault: false
-                        }
-                    }
-                )
-            )
+    });
+
+    it('should display add row button if no limit is defined', () => {
+        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
+        expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeTruthy();
+        expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
+    });
+
+    it('should display add row button if limit is defined but not reached', () => {
+        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+        expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeTruthy();
+        expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeFalsy();
+    });
+
+    it('should NOT display add row button if limit is defined and reached', () => {
+        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 0)));
+        expect(testingUtils.getByCSS('button.adf-container-widget-row-action')).toBeFalsy();
+        expect(testingUtils.getByCSS('span.adf-container-widget-row-action')).toBeTruthy();
+    });
+
+    it('should display row limit if limit has been reached', () => {
+        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 0)));
+        expect(testingUtils.getByCSS('span.adf-container-widget-row-action').nativeElement.textContent.trim()).toBe(
+            'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED'
         );
     });
 
-    it('should render header widget template when type is group', () => {
-        fixture.detectChanges();
-
-        expect(testingUtils.getByCSS('.adf-container-widget-header')).not.toBe(null);
-        expect(testingUtils.getByCSS('#container-header-label-test-id').nativeElement.textContent.trim()).toEqual('test-name');
-    });
-
-    it('should NOT render header widget template when type is different then group', () => {
-        spyOnProperty(component.element, 'isTypeFieldGroup').and.returnValue(false);
-
-        fixture.detectChanges();
-
-        expect(testingUtils.getByCSS('.adf-container-widget-header')).toBe(null);
-    });
-
-    it('should display header text when hideHeader is set to false', () => {
-        fixture.detectChanges();
-
-        expect(testingUtils.getByCSS('.adf-container-widget-header__text')).not.toBe(null);
-    });
-
-    it('should NOT display header text when hideHeader is set to true', () => {
-        component.element.json.params.hideHeader = true;
-
-        fixture.detectChanges();
-
-        expect(testingUtils.getByCSS('.adf-container-widget-header__text')).toBe(null);
-    });
-
-    it('should display expander when allowCollapse is set to true', () => {
-        component.element.json.params.allowCollapse = true;
-
-        fixture.detectChanges();
-
-        expect(testingUtils.getByCSS('.mdl-button--icon')).not.toBe(null);
-    });
-
-    it('should NOT display expander when allowCollapse is set to false', () => {
-        fixture.detectChanges();
-
-        expect(testingUtils.getByCSS('.mdl-button--icon')).toBe(null);
-    });
-
-    it('should call onExpanderClicked method when expander is clicked', () => {
-        component.element.json.params.allowCollapse = true;
-        fixture.detectChanges();
-
-        spyOn(component, 'onExpanderClicked');
-
-        testingUtils.clickByCSS('.mdl-button--icon');
-
-        expect(component.onExpanderClicked).toHaveBeenCalledWith(component.element);
-    });
-
-    it('should call onExpanderClicked method when header text is clicked', () => {
-        fixture.detectChanges();
-
-        spyOn(component, 'onExpanderClicked');
-
-        testingUtils.clickByCSS('#container-header-label-test-id');
-
-        expect(component.onExpanderClicked).toHaveBeenCalledWith(component.element);
+    it('should add row when add row button is clicked', () => {
+        component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson()));
+        testingUtils.clickByCSS('button.adf-container-widget-row-action');
+        expect(component.addRow).toHaveBeenCalled();
     });
 });

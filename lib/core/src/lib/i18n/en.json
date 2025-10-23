@@ -69,10 +69,21 @@
         "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
       "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
-      "ATTACH": "Attach"
+      "ATTACH": "Attach",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "add",
+        "ROW_LIMIT_REACHED": "Rows limit ({{ limit }}) reached."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Nameless task"
+      "NAMELESS_TASK": "Nameless task",
+      "ROW_LABEL": "Row {{ number }}",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Delete the row",
+        "MESSAGE": "Are you sure you want to delete this row?",
+        "YES_LABEL": "Delete row",
+        "NO_LABEL": "Cancel"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Font size",

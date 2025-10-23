@@ -18,15 +18,16 @@
 import { ContainerColumnModel } from './container-column.model';
 
 export class ContainerRowModel {
-    size: number = 12;
+    id: string;
+    isInitial: boolean;
     columns: ContainerColumnModel[] = [];
+
+    size: number = 12;
     colspan: number = 1;
     rowspan: number = 1;
-    isInitial: boolean;
-    id: number;
 
     constructor(isInitial: boolean = false) {
         this.isInitial = isInitial;
-        this.id = Math.random();
+        this.id = Math.random().toString(36).substring(2, 9);
     }
 }

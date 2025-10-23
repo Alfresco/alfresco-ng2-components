@@ -50,19 +50,15 @@ export class ContainerModel extends FormWidgetModel {
         return this.type === FormFieldTypes.GROUP;
     }
 
-    get isTypeFieldRepeatableSection(): boolean {
-        return this.type === FormFieldTypes.REPEATABLE_SECTION;
-    }
-
     get isCollapsible(): boolean {
-        return this.isTypeFieldGroup && this.isTypeFieldRepeatableSection && (this.field.params?.allowCollapse ?? false);
+        return this.isTypeFieldGroup && (this.field.params?.allowCollapse ?? false);
     }
 
     get isCollapsedByDefault(): boolean {
-        return this.isTypeFieldGroup && this.isTypeFieldRepeatableSection && (this.field.params?.collapseByDefault ?? false);
+        return this.isTypeFieldGroup && (this.field.params?.collapseByDefault ?? false);
     }
 
     get hideHeader(): boolean {
-        return this.isTypeFieldGroup && this.isTypeFieldRepeatableSection && (this.field.params?.hideHeader ?? false);
+        return this.isTypeFieldGroup && (this.field.params?.hideHeader ?? false);
     }
 }

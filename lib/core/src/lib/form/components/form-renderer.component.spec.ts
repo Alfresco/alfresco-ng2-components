@@ -799,4 +799,6 @@ describe('Form Renderer Component', () => {
             expectElementToBeVisible(testingUtils, mockSectionFieldId);
         });
     });
+
+    describe('Repeatable section', () => {});
 });

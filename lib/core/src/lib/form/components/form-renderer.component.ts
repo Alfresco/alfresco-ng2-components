@@ -155,10 +155,10 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         this.dialog
             .open(ConfirmDialogComponent, {
                 data: {
-                    title: 'Delete the row',
-                    message: 'Are you sure you want to delete this row?',
-                    yesLabel: 'Delete row',
-                    noLabel: 'Cancel'
+                    title: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.TITLE',
+                    message: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.MESSAGE',
+                    yesLabel: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.YES_LABEL',
+                    noLabel: 'FORM.FORM_RENDERER.REMOVE_ROW_DIALOG.NO_LABEL'
                 },
                 minWidth: '500px',
                 closeOnNavigation: true

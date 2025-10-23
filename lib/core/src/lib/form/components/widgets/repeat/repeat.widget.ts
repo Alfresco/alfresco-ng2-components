@@ -18,10 +18,8 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FieldStylePipe } from '../../../pipes/field-style.pipe';
 import { MatIconModule } from '@angular/material/icon';
-import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { RowsLimitPipe } from './rows-limit.pipe';
 import { ContainerModel } from '../core/container.model';
 
 @Component({
@@ -29,17 +27,11 @@ import { ContainerModel } from '../core/container.model';
     templateUrl: './repeat.widget.html',
     styleUrls: ['./repeat.widget.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet, RowsLimitPipe]
+    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe]
 })
 export class RepeatWidgetComponent {
     @Input() element: ContainerModel;
     @Input() isEditor: boolean = true;
-
-    onExpanderClicked(content: ContainerModel) {
-        if (content?.isCollapsible) {
-            content.isExpanded = !content.isExpanded;
-        }
-    }
 
     addRow() {
         this.element.field.addRow(this.element.json.fields, this.element.form);

@@ -36,13 +36,15 @@ export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
 
-interface ParentFieldModel {
+interface RepeatableSectionModel {
     id: string;
     uid: string;
     fields: FormFieldModel[];
     rowIndex: number;
     value?: any;
 }
+
+const ROW_ID_PREFIX = '-Row';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -103,7 +105,7 @@ export class FormFieldModel extends FormWidgetModel {
     schemaDefinition: DataColumn[];
     externalProperty?: string;
     style?: string;
-    parent?: ParentFieldModel;
+    parent?: RepeatableSectionModel;
 
     // container model members
     numberOfColumns: number = 1;
@@ -183,7 +185,7 @@ export class FormFieldModel extends FormWidgetModel {
         return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
     }
 
-    constructor(form: any, json?: any, parent?: ParentFieldModel) {
+    constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
@@ -360,7 +362,7 @@ export class FormFieldModel extends FormWidgetModel {
                 (field: any) =>
                     new FormFieldModel(form, field, {
                         id: this.id,
-                        uid: field.id + '-Row' + Math.random(),
+                        uid: this.getUniqueId(field),
                         fields: this.fields,
                         rowIndex: index ?? 0,
                         value: value?.[field.id]
@@ -377,6 +379,10 @@ export class FormFieldModel extends FormWidgetModel {
         });
 
         return columns;
+    }
+
+    private getUniqueId(field: FormFieldModel): string {
+        return field.id + ROW_ID_PREFIX + Math.random().toString(36).substring(2, 9);
     }
 
     private updateChildrenFieldsRowIndex() {
@@ -403,15 +409,31 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     addRow(fields: any, form: any) {
+        if (!this.shouldAddRow()) {
+            return;
+        }
+
         this.rows.push(this.createRow(fields, form, this.rows.length));
     }
 
+    private shouldAddRow(): boolean {
+        return this.rows.length < this.params.initialNumberOfRows + this.params.newRowsLimit;
+    }
+
     removeRow(index: number) {
+        if (!this.shouldRemoveRow(index)) {
+            return;
+        }
+
         this.rows.splice(index, 1);
         this.updateChildrenFieldsRowIndex();
 
         this.form.values[this.id].splice(index, 1);
         this.form.onFormFieldChanged(this);
+    }
+
+    private shouldRemoveRow(index: number): boolean {
+        return this.rows.length > index;
     }
 
     parseValue(json: any, initialValue?: any): any {
@@ -513,17 +535,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         if (this.parent) {
-            if (!this.form.values[this.parent.id]) {
-                this.form.values[this.parent.id] = [];
-            }
-
-            if (!this.form.values[this.parent.id][this.parent.rowIndex]) {
-                this.form.values[this.parent.id][this.parent.rowIndex] = this.createInitialValue(this.parent.fields);
-            }
-
-            this.form.values[this.parent.id][this.parent.rowIndex][this.id.split('-Row')[0]] = this.value;
-
-            this.form.onFormFieldChanged(this);
+            this.updateRepeatableSectionValue();
             return;
         }
 
@@ -669,6 +681,20 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = this.value;
                 }
         }
+
+        this.form.onFormFieldChanged(this);
+    }
+
+    private updateRepeatableSectionValue() {
+        if (!this.form.values[this.parent.id]) {
+            this.form.values[this.parent.id] = [];
+        }
+
+        if (!this.form.values[this.parent.id][this.parent.rowIndex]) {
+            this.form.values[this.parent.id][this.parent.rowIndex] = this.createInitialValue(this.parent.fields);
+        }
+
+        this.form.values[this.parent.id][this.parent.rowIndex][this.id.split(ROW_ID_PREFIX)[0]] = this.value;
 
         this.form.onFormFieldChanged(this);
     }

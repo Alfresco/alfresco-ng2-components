@@ -82,7 +82,7 @@
                             class="adf-grid-list-container"
                             [class.adf-grid-list-container-multiple]="hasMultipleRows"
                         >
-                            <h4 class="adf-grid-list-container-title">Row {{rowIndex + 1}}</h4>
+                            <h4 class="adf-grid-list-container-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</h4>
                             <section  class="adf-grid-list-column-view">
                                 @for (column of row.columns; track $index) {
                                     <div 
