@@ -16,41 +16,13 @@
  */
 
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({ template: '', standalone: true })
 export class FrontChannelLogoutComponent implements OnInit {
-    private readonly activatedRoute = inject(ActivatedRoute);
     private readonly authService = inject(AuthService);
 
     ngOnInit() {
-        const { issuerParam, sessionIdParam } = this.getIssuerAndSessionIdFromRouteParams();
-
-        const { storedIssuer, storedSessionId } = this.getIssuerAndSessionIdFromAuthService();
-
-        this.logoutIfIssuerAndSessionIdMatch(storedIssuer, issuerParam, storedSessionId, sessionIdParam);
-    }
-
-    private logoutIfIssuerAndSessionIdMatch(storedIssuer: string, issuerParam: string, storedSessionId: string, sessionIdParam: string) {
-        const storedIssuerMatchUrlIssuerParam = storedIssuer && issuerParam && storedIssuer === issuerParam;
-        const storedSessionIdMatchUrlSessionIdParam = storedSessionId && sessionIdParam && storedSessionId === sessionIdParam;
-
-        if (storedIssuerMatchUrlIssuerParam && storedSessionIdMatchUrlSessionIdParam) {
-            this.authService.logout();
-        }
-    }
-
-    private getIssuerAndSessionIdFromAuthService() {
-        const storedIssuer = this.authService.getStoredIssuer();
-        const storedSessionId = this.authService.getStoredSessionId();
-        return { storedIssuer, storedSessionId };
-    }
-
-    private getIssuerAndSessionIdFromRouteParams() {
-        const queryParamMap = this.activatedRoute.snapshot.queryParamMap;
-        const issuerParam = queryParamMap.get('iss');
-        const sessionIdParam = queryParamMap.get('sid');
-        return { issuerParam, sessionIdParam };
+        this.authService.logout();
     }
 }

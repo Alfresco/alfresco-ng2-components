@@ -318,16 +318,6 @@ export class RedirectAuthService extends AuthService {
             .then(() => this._getRedirectUrl());
     }
 
-    getStoredIssuer(): string {
-        const claims = this.oauthService.getIdentityClaims();
-        return claims?.['iss'] || '';
-    }
-
-    getStoredSessionId(): string {
-        const claims = this.oauthService.getIdentityClaims();
-        return claims?.['sid'] || '';
-    }
-
     private _getRedirectUrl() {
         const DEFAULT_REDIRECT = '/';
         const stateKey = this.oauthService.state;

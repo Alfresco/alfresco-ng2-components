@@ -71,18 +71,4 @@ export abstract class AuthService {
      */
     abstract loginCallback(loginOptions?: LoginOptions): Promise<string | undefined>;
     abstract updateIDPConfiguration(...args: any[]): void;
-
-    /**
-     * Get the stored issuer URL.
-     *
-     * @returns stored issuer URL
-     */
-    abstract getStoredIssuer(): string;
-
-    /**
-     * Get the stored session ID.
-     *
-     * @returns stored session ID
-     */
-    abstract getStoredSessionId(): string;
 }
