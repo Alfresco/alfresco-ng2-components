@@ -42,7 +42,6 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
         with:
-          enable-cache: false
           enable-node-modules-cache: false
       - name: install
         run: |
@@ -68,7 +67,6 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
         with:
-          enable-cache: false
           enable-node-modules-cache: false
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun

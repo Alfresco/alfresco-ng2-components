@@ -1,11 +1,6 @@
 name: 'Setup'
 description: 'Initialize cache, env var load'
 inputs:
-  enable-cache:
-    description: 'enable caching'
-    required: false
-    type: boolean
-    default: 'true'
   enable-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
