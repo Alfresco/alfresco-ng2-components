@@ -10,8 +10,9 @@
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
       </mat-radio-button>
       <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field" subscriptSizing="dynamic" floatLabel="always">
-        <mat-label>{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.QUANTITY' | translate }}</mat-label>
+        <mat-label id="adf-search-date-range-quantity-label">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.QUANTITY' | translate }}</mat-label>
         <input matInput [attr.aria-label]="'SEARCH.DATE_RANGE_ADVANCED.ARIA_LABEL.NUMBER_INPUT' | translate"
+               aria-labelledby="adf-search-date-range-quantity-label"
                type="number" min="1" formControlName="inLastValue"
                data-automation-id="date-range-in-last-input" (input)="narrowDownAllowedCharacters($event)"
                (keydown)="preventIncorrectNumberCharacters($event)">
