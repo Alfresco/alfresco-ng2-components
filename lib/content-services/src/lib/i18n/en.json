@@ -428,7 +428,8 @@
       "IN_LAST_LABELS": {
         "DAYS": "Days",
         "WEEKS": "Weeks",
-        "MONTHS": "Months"
+        "MONTHS": "Months",
+        "QUANTITY": "Quantity"
       },
       "IN_LAST_DISPLAY_LABELS": {
         "DAYS": "In the last {{value}} days",
@@ -437,7 +438,8 @@
       },
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Start Date",
-        "END_DATE": "End Date"
+        "END_DATE": "End Date",
+        "DATE_RANGE": "Date Range"
       },
       "ERROR": {
         "IN_LAST": "Value required",
@@ -468,7 +470,12 @@
         "GB": "GB"
       },
       "FILE_TYPE": "File Type",
-      "FILE_TYPE_PLACEHOLDER": "Add file type"
+      "FILE_TYPE_PLACEHOLDER": "Add file type",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "File size value",
+        "UNIT": "Unit"
+      }
     }
   },
   "PERMISSION": {

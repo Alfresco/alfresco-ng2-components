@@ -30,13 +30,22 @@ import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
 import { map } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-properties',
-    imports: [CommonModule, ReactiveFormsModule, TranslatePipe, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        TranslatePipe,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        SearchChipAutocompleteInputComponent
+    ],
     templateUrl: './search-properties.component.html',
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -97,7 +106,10 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private translateService: TranslateService
+    ) {}
 
     ngOnInit() {
         if (this.settings) {
