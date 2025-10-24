@@ -1,8 +1,8 @@
 <form [formGroup]="form" class="adf-search-properties-form">
-    <div role="group" aria-labelledby="file-size-label">
-        <label id="file-size-label" class="adf-search-properties-file-size-label">
+    <fieldset aria-labelledby="file-size-label">
+        <legend id="file-size-label" class="adf-search-properties-file-size-label">
             {{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE' | translate }}
-        </label>
+        </legend>
         <div class="adf-search-properties-file-size-container">
             <mat-form-field
                 class="adf-search-properties-form-field"
@@ -55,7 +55,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-    </div>
+    </fieldset>
     <p class="adf-search-properties-file-type-label">{{ 'SEARCH.SEARCH_PROPERTIES.FILE_TYPE' | translate }}</p>
     <adf-search-chip-autocomplete-input
         [autocompleteOptions]="autocompleteOptions"

@@ -107,8 +107,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(
-        private formBuilder: FormBuilder,
-        private translateService: TranslateService
+        private readonly formBuilder: FormBuilder,
+        private readonly translateService: TranslateService
     ) {}
 
     ngOnInit() {

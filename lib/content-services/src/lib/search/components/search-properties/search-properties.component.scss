@@ -3,6 +3,12 @@
 
 adf-search-properties {
     .adf-search-properties-form {
+        fieldset {
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
         .adf-search-properties-file-size-label {
             margin-top: 4px;
             margin-bottom: 10px;
