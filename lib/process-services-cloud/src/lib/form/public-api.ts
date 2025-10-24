@@ -20,7 +20,6 @@ export * from './models/task-variable-cloud.model';
 export * from './components/spinner/form-spinner.component';
 export * from './components/form-cloud-custom-outcomes.component';
 export * from './components/form-cloud.component';
-export * from './components/form-definition-selector-cloud.component';
 export * from './components/cloud-form-rendering.service';
 
 export * from './components/widgets/attach-file/attach-file-cloud-widget.component';
