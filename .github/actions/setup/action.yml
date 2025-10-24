@@ -1,11 +1,6 @@
 name: 'Setup'
 description: 'Initialize cache, env var load'
 inputs:
-  enable-cache:
-    description: 'enable caching'
-    required: false
-    type: boolean
-    default: 'true'
   enable-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
@@ -42,14 +37,6 @@ runs:
             node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
             node_modules-${{ runner.os }}-build-
             node_modules-${{ runner.os }}-
-      - name: pip cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        if: ${{ inputs.enable-cache == 'true' }}
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}
       - name: load "NPM TAG"
         uses: ./.github/actions/set-npm-tag
       - name: before install script

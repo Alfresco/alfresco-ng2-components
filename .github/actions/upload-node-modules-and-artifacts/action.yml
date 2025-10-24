@@ -4,16 +4,22 @@ description: "Upload build artifacts"
 runs:
   using: "composite"
   steps:
-    - name: tar and upload artifacts
-      shell: bash
-      env:
-        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"
-      run: |
-        packages=( dist nxcache node_modules )
-        for i in "${packages[@]}"; do
-          time tar czf $i.tar.gz $i
-          du -h $i.tar.gz
-          time aws s3 cp --no-progress $i.tar.gz "s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
-        done
+    - name: Save dist to cache
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: dist
+        key: dist-${{ github.run_id }}-${{ github.run_attempt }}
+
+    - name: Save nxcache to cache
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: nxcache
+        key: nxcache-${{ github.run_id }}-${{ github.run_attempt }}
+
+    - name: Save node_modules to cache
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: node_modules
+        key: node-modules-${{ github.run_id }}-${{ github.run_attempt }}
 
 
