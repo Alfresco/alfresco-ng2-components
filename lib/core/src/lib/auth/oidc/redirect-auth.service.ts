@@ -136,7 +136,11 @@ export class RedirectAuthService extends AuthService {
         'session_state'
     ];
 
-    constructor(private oauthService: OAuthService, private _oauthStorage: OAuthStorage, @Inject(AUTH_CONFIG) authConfig: AuthConfig) {
+    constructor(
+        private oauthService: OAuthService,
+        private _oauthStorage: OAuthStorage,
+        @Inject(AUTH_CONFIG) authConfig: AuthConfig
+    ) {
         super();
 
         this.authConfig = authConfig;
@@ -312,6 +316,16 @@ export class RedirectAuthService extends AuthService {
                 })
             )
             .then(() => this._getRedirectUrl());
+    }
+
+    getStoredIssuer(): string {
+        const claims = this.oauthService.getIdentityClaims();
+        return claims?.['iss'] || '';
+    }
+
+    getStoredSessionId(): string {
+        const claims = this.oauthService.getIdentityClaims();
+        return claims?.['sid'] || '';
     }
 
     private _getRedirectUrl() {

@@ -537,4 +537,42 @@ describe('RedirectAuthService', () => {
 
         expect(expectedLogoutIsEmitted).toBeTrue();
     });
+
+    describe('getStoredIssuer', () => {
+        it('should return the stored issuer from the OAuthStorage', () => {
+            const expectedIssuer = 'https://example.com/auth';
+            oauthServiceSpy.getIdentityClaims.and.returnValue({ iss: expectedIssuer });
+
+            const storedIssuer = service.getStoredIssuer();
+
+            expect(storedIssuer).toBe(expectedIssuer);
+        });
+
+        it('should return empty string if no issuer is stored in the OAuthStorage', () => {
+            oauthServiceSpy.getIdentityClaims.and.returnValue({ iss: null });
+
+            const storedIssuer = service.getStoredIssuer();
+
+            expect(storedIssuer).toBe('');
+        });
+    });
+
+    describe('getStoredSessionId', () => {
+        it('should return the stored session id from the OAuthStorage', () => {
+            const expectedSessionId = '12345678910';
+            oauthServiceSpy.getIdentityClaims.and.returnValue({ sid: expectedSessionId });
+
+            const storedSessionId = service.getStoredSessionId();
+
+            expect(storedSessionId).toBe(expectedSessionId);
+        });
+
+        it('should return string if no session id is stored in the OAuthStorage', () => {
+            oauthServiceSpy.getIdentityClaims.and.returnValue({ sid: null });
+
+            const storedSessionId = service.getStoredSessionId();
+
+            expect(storedSessionId).toBe('');
+        });
+    });
 });
