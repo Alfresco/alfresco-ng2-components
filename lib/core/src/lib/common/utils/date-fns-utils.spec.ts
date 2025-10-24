@@ -16,9 +16,50 @@
  */
 
 import { addMinutes, isValid } from 'date-fns';
+import { ar, cs, da, de, enUS, es, fi, fr, it as italian, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 import { DateFnsUtils } from './date-fns-utils';
 
 describe('DateFnsUtils', () => {
+    describe('getLocaleFromString', () => {
+        const localeTestCases = [
+            { localeCode: 'ar', expectedLocale: ar, description: 'Arabic' },
+            { localeCode: 'cs', expectedLocale: cs, description: 'Czech' },
+            { localeCode: 'da', expectedLocale: da, description: 'Danish' },
+            { localeCode: 'de', expectedLocale: de, description: 'German' },
+            { localeCode: 'en', expectedLocale: enUS, description: 'English (US)' },
+            { localeCode: 'es', expectedLocale: es, description: 'Spanish' },
+            { localeCode: 'fi', expectedLocale: fi, description: 'Finnish' },
+            { localeCode: 'fr', expectedLocale: fr, description: 'French' },
+            { localeCode: 'it', expectedLocale: italian, description: 'Italian' },
+            { localeCode: 'ja', expectedLocale: ja, description: 'Japanese' },
+            { localeCode: 'nb', expectedLocale: nb, description: 'Norwegian Bokmål' },
+            { localeCode: 'nl', expectedLocale: nl, description: 'Dutch' },
+            { localeCode: 'pl', expectedLocale: pl, description: 'Polish' },
+            { localeCode: 'pt', expectedLocale: ptBR, description: 'Portuguese' },
+            { localeCode: 'pt-BR', expectedLocale: ptBR, description: 'Portuguese (Brazilian)' },
+            { localeCode: 'ru', expectedLocale: ru, description: 'Russian' },
+            { localeCode: 'sv', expectedLocale: sv, description: 'Swedish' },
+            { localeCode: 'zh-CN', expectedLocale: zhCN, description: 'Chinese (Simplified)' }
+        ];
+
+        localeTestCases.forEach(({ localeCode, expectedLocale, description }) => {
+            it(`should return ${description} locale for '${localeCode}' locale code`, () => {
+                const locale = DateFnsUtils.getLocaleFromString(localeCode);
+                expect(locale).toBe(expectedLocale);
+            });
+        });
+
+        it('should return enUS locale for unknown locale code', () => {
+            const locale = DateFnsUtils.getLocaleFromString('unknown');
+            expect(locale).toBe(enUS);
+        });
+
+        it('should return enUS locale for empty string', () => {
+            const locale = DateFnsUtils.getLocaleFromString('');
+            expect(locale).toBe(enUS);
+        });
+    });
+
     describe('convertMomentToDateFnsFormat', () => {
         it('should convert moment date format', () => {
             const dateFnsFormat = DateFnsUtils.convertMomentToDateFnsFormat('YYYY-MM-DD');
