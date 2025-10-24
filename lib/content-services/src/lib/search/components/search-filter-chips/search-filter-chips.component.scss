@@ -44,10 +44,6 @@
         min-width: 320px;
         border-radius: 12px;
 
-        &:has(.adf-search-properties-file-size-operator) {
-            min-width: 365px;
-        }
-
         @include mat.elevation(2);
     }
 }

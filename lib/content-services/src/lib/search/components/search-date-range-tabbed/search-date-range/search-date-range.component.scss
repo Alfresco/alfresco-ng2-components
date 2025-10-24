@@ -32,14 +32,6 @@ adf-search-date-range {
                 padding-left: 10px;
                 flex: 1;
                 margin-bottom: 12px;
-
-                #{ms.$mat-form-field-flex} {
-                    align-items: center;
-
-                    #{ms.$mat-form-field-infix} {
-                        padding: 0.375em 0 4px;
-                    }
-                }
             }
         }
     }
