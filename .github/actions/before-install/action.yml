@@ -9,12 +9,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Before install
-      if: ${{ ! env.ACT }}
-      shell: bash
-      run: |
-        pip install --user --quiet awscli
-
     - name: base vars
       shell: bash
       run: |
