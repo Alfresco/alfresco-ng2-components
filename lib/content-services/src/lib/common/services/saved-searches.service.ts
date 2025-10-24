@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { NodesApi, NodeEntry, PreferencesApi, ContentFieldsQuery, PreferenceEntry } from '@alfresco/js-api';
+import { NodeEntry, PreferencesApi, ContentFieldsQuery, PreferenceEntry } from '@alfresco/js-api';
 import { inject, Injectable, InjectionToken } from '@angular/core';
-import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
+import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
 import { AuthenticationService } from '@alfresco/adf-core';
-import { SavedSearchStrategy } from '../interfaces/saved-searches-strategy.interface';
+import { SavedSearchesBaseService } from './saved-searches-base.service';
 
 export interface SavedSearchesPreferencesApiService {
     getPreference: (personId: string, preferenceName: string, opts?: ContentFieldsQuery) => Promise<PreferenceEntry> | Observable<PreferenceEntry>;
@@ -34,16 +34,10 @@ export const SAVED_SEARCHES_SERVICE_PREFERENCES = new InjectionToken<SavedSearch
 @Injectable({
     providedIn: 'root'
 })
-export class SavedSearchesService implements SavedSearchStrategy {
+export class SavedSearchesService extends SavedSearchesBaseService {
     private savedSearchFileNodeId: string;
-    private _nodesApi: NodesApi;
     private _preferencesApi: SavedSearchesPreferencesApiService;
     private preferencesService = inject(SAVED_SEARCHES_SERVICE_PREFERENCES, { optional: true });
-
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
 
     get preferencesApi(): SavedSearchesPreferencesApiService {
         if (this.preferencesService) {
@@ -55,26 +49,18 @@ export class SavedSearchesService implements SavedSearchStrategy {
         return this._preferencesApi;
     }
 
-    private readonly _savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
-    readonly savedSearches$ = this._savedSearches$.asObservable();
-
-    constructor(
-        private readonly apiService: AlfrescoApiService,
-        private readonly authService: AuthenticationService
-    ) {}
-
-    init(): void {
-        this.fetchSavedSearches();
+    constructor(apiService: AlfrescoApiService, authService: AuthenticationService) {
+        super(apiService, authService);
     }
 
-    getSavedSearches(): Observable<SavedSearch[]> {
+    protected fetchAllSavedSearches(): Observable<SavedSearch[]> {
         const savedSearchesMigrated = localStorage.getItem(this.getLocalStorageKey()) ?? '';
         if (savedSearchesMigrated === 'true') {
             return this.getSavedSearchesFromPreferenceApi();
         } else {
             return this.getSavedSearchesNodeId().pipe(
                 take(1),
-                concatMap(() => {
+                switchMap(() => {
                     if (this.savedSearchFileNodeId !== '') {
                         return this.migrateSavedSearches();
                     } else {
@@ -86,114 +72,10 @@ export class SavedSearchesService implements SavedSearchStrategy {
         }
     }
 
-    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
-        return this.getSavedSearches().pipe(
-            take(1),
-            switchMap((savedSearches: SavedSearch[]) => {
-                let updatedSavedSearches: SavedSearch[] = [];
-
-                if (savedSearches.length < 5) {
-                    updatedSavedSearches = [{ ...newSaveSearch, order: 0 }, ...savedSearches];
-                } else {
-                    const firstFiveSearches = savedSearches.slice(0, 5);
-                    const restOfSearches = savedSearches.slice(5);
-
-                    updatedSavedSearches = [...firstFiveSearches, { ...newSaveSearch, order: 5 }, ...restOfSearches];
-                }
-
-                updatedSavedSearches = updatedSavedSearches.map((search, index) => ({
-                    ...search,
-                    order: index
-                }));
-
-                return from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSavedSearches))).pipe(
-                    map((preference) => JSON.parse(preference.entry.value)),
-                    tap(() => this._savedSearches$.next(updatedSavedSearches))
-                );
-            }),
-            catchError((error) => {
-                console.error('Error saving new search:', error);
-                return throwError(() => error);
-            })
+    protected updateSavedSearches(updatedSavedSearches: SavedSearch[]): Observable<NodeEntry> {
+        return from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSavedSearches))).pipe(
+            map((preference) => JSON.parse(preference.entry.value))
         );
-    }
-
-    editSavedSearch(updatedSavedSearch: SavedSearch): Observable<NodeEntry> {
-        let previousSavedSearches: SavedSearch[];
-        return this.savedSearches$.pipe(
-            take(1),
-            map((savedSearches: SavedSearch[]) => {
-                previousSavedSearches = [...savedSearches];
-                return savedSearches.map((search) => (search.order === updatedSavedSearch.order ? updatedSavedSearch : search));
-            }),
-            tap((updatedSearches: SavedSearch[]) => {
-                this._savedSearches$.next(updatedSearches);
-            }),
-            switchMap((updatedSearches: SavedSearch[]) =>
-                from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
-                    map((preference) => JSON.parse(preference.entry.value))
-                )
-            ),
-            catchError((error) => {
-                this._savedSearches$.next(previousSavedSearches);
-                return throwError(() => error);
-            })
-        );
-    }
-
-    deleteSavedSearch(deletedSavedSearch: SavedSearch): Observable<NodeEntry> {
-        let previousSavedSearchesOrder: SavedSearch[];
-        return this.savedSearches$.pipe(
-            take(1),
-            map((savedSearches: SavedSearch[]) => {
-                previousSavedSearchesOrder = [...savedSearches];
-                const updatedSearches = savedSearches.filter((search) => search.order !== deletedSavedSearch.order);
-                return updatedSearches.map((search, index) => ({
-                    ...search,
-                    order: index
-                }));
-            }),
-            tap((updatedSearches: SavedSearch[]) => {
-                this._savedSearches$.next(updatedSearches);
-            }),
-            switchMap((updatedSearches: SavedSearch[]) =>
-                from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
-                    map((preference) => JSON.parse(preference.entry.value))
-                )
-            ),
-            catchError((error) => {
-                this._savedSearches$.next(previousSavedSearchesOrder);
-                return throwError(() => error);
-            })
-        );
-    }
-
-    changeOrder(previousIndex: number, currentIndex: number): void {
-        let previousSavedSearchesOrder: SavedSearch[];
-        this.savedSearches$
-            .pipe(
-                take(1),
-                map((savedSearches: SavedSearch[]) => {
-                    previousSavedSearchesOrder = [...savedSearches];
-                    const [movedSearch] = savedSearches.splice(previousIndex, 1);
-                    savedSearches.splice(currentIndex, 0, movedSearch);
-                    return savedSearches.map((search, index) => ({
-                        ...search,
-                        order: index
-                    }));
-                }),
-                tap((savedSearches: SavedSearch[]) => this._savedSearches$.next(savedSearches)),
-                switchMap((updatedSearches: SavedSearch[]) =>
-                    from(this.preferencesApi.updatePreference('-me-', 'saved-searches', JSON.stringify(updatedSearches))).pipe(
-                        map((preference) => JSON.parse(preference.entry.value))
-                    )
-                ),
-                catchError((error) => {
-                    this._savedSearches$.next(previousSavedSearchesOrder);
-                    return throwError(() => error);
-                })
-            )
-            .subscribe();
     }
 
     private getSavedSearchesNodeId(): Observable<string> {
@@ -222,12 +104,6 @@ export class SavedSearchesService implements SavedSearchStrategy {
 
     private getLocalStorageKey(): string {
         return `saved-searches-${this.authService.getUsername()}-migrated`;
-    }
-
-    private fetchSavedSearches(): void {
-        this.getSavedSearches()
-            .pipe(take(1))
-            .subscribe((searches) => this._savedSearches$.next(searches));
     }
 
     private migrateSavedSearches(): Observable<SavedSearch[]> {
