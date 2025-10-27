@@ -75,16 +75,29 @@ h2.adf-search-results-label {
             width: 100%;
             margin-bottom: 8px;
 
-            .adf-content-node-selector-content-input-icon {
+            .adf-content-node-selector-content-input-icon:is(mat-icon) {
                 color: var(--adf-theme-foreground-icon-color-054);
-                cursor: pointer;
                 padding: 0 0 8px;
                 width: 1em;
                 height: 1em;
                 font-size: 20px;
+            }
 
-                &:hover {
-                    color: var(--adf-theme-foreground-base-color);
+            .adf-content-node-selector-search-clear-button {
+                padding: 0;
+                width: 20px;
+                height: 28px;
+
+                &:focus {
+                    outline-offset: -1.5px;
+                }
+
+                .adf-content-node-selector-content-input-icon:is(mat-icon) {
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--adf-theme-foreground-base-color);
+                    }
                 }
             }
 

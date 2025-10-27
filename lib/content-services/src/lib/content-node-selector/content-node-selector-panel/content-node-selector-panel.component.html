@@ -13,18 +13,26 @@
             adf-auto-focus
             data-automation-id="content-node-selector-search-input">
 
-        <mat-icon *ngIf="searchTerm.length > 0"
-            matSuffix (click)="clear()"
-            class="adf-content-node-selector-content-input-icon"
-            data-automation-id="content-node-selector-search-clear">clear
-        </mat-icon>
+        <button
+            matSuffix
+            mat-icon-button
+            *ngIf="searchTerm.length > 0"
+            data-automation-id="content-node-selector-search-clear"
+            class="adf-content-node-selector-search-clear-button"
+            (click)="clear()"
+            [attr.aria-label]="'COMMON.CLEAR' | translate"
+            [attr.title]="'COMMON.CLEAR' | translate"
+        >
+            <mat-icon class="adf-content-node-selector-content-input-icon">clear</mat-icon>
+        </button>
 
-        <mat-icon *ngIf="searchTerm.length === 0"
+        <mat-icon
+            *ngIf="searchTerm.length === 0"
             matSuffix
             class="adf-content-node-selector-content-input-icon"
-            data-automation-id="content-node-selector-search-icon">search
+            data-automation-id="content-node-selector-search-icon"
+            >search
         </mat-icon>
-
     </mat-form-field>
     <adf-sites-dropdown
         *ngIf="showDropdownSiteList"

@@ -80,11 +80,6 @@ $search-result-height: calc(100% - 60px);
                 width: 1em;
                 height: 1em;
                 font-size: 20px;
-                cursor: pointer;
-
-                &:hover {
-                    color: var(--adf-theme-foreground-base-color);
-                }
             }
 
             .adf-permission-search-input-clear-button {
@@ -92,6 +87,14 @@ $search-result-height: calc(100% - 60px);
                 width: 20px;
                 height: 32px;
                 margin-right: 1.5px;
+
+                .adf-permission-search-icon:is(mat-icon) {
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--adf-theme-foreground-base-color);
+                    }
+                }
             }
         }
     }
