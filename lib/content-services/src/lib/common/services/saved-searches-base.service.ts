@@ -54,7 +54,7 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
     saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
         return this.fetchAllSavedSearches().pipe(
             take(1),
-            switchMap((savedSearches: SavedSearch[]) => {
+            switchMap((savedSearches) => {
                 let updatedSavedSearches: SavedSearch[] = [];
 
                 if (savedSearches.length < 5) {
@@ -80,14 +80,14 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
         let previousSavedSearches: SavedSearch[];
         return this.savedSearches$.pipe(
             take(1),
-            map((savedSearches: SavedSearch[]) => {
+            map((savedSearches) => {
                 previousSavedSearches = [...savedSearches];
                 return savedSearches.map((search) => (search.order === updatedSavedSearch.order ? updatedSavedSearch : search));
             }),
-            tap((updatedSearches: SavedSearch[]) => {
+            tap((updatedSearches) => {
                 this._savedSearches$.next(updatedSearches);
             }),
-            switchMap((updatedSearches: SavedSearch[]) => this.updateSavedSearches(updatedSearches)),
+            switchMap((updatedSearches) => this.updateSavedSearches(updatedSearches)),
             catchError((error) => {
                 this._savedSearches$.next(previousSavedSearches);
                 return throwError(() => error);
@@ -99,7 +99,7 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
         let previousSavedSearchesOrder: SavedSearch[];
         return this.savedSearches$.pipe(
             take(1),
-            map((savedSearches: SavedSearch[]) => {
+            map((savedSearches) => {
                 previousSavedSearchesOrder = [...savedSearches];
                 const updatedSearches = savedSearches.filter((search) => search.order !== deletedSavedSearch.order);
                 return updatedSearches.map((search, index) => ({ ...search, order: index }));
@@ -120,7 +120,7 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
         this.savedSearches$
             .pipe(
                 take(1),
-                map((savedSearches: SavedSearch[]) => {
+                map((savedSearches) => {
                     previousSavedSearchesOrder = [...savedSearches];
                     const [movedSearch] = savedSearches.splice(previousIndex, 1);
                     savedSearches.splice(currentIndex, 0, movedSearch);

@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from '../../services';
 import { NodeEntry } from '@alfresco/js-api';
 import { AlfrescoApiServiceMock } from '../../mock';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { SavedSearchesLegacyService } from './saved-searches-legacy.service';
@@ -28,7 +27,7 @@ describe('SavedSearchesLegacyService', () => {
     let service: SavedSearchesLegacyService;
     let authService: AuthenticationService;
     let testUserName: string;
-    let getNodeContentSpy: jasmine.Spy;
+    let getNodeContentSpy: jasmine.Spy<jasmine.Func>;
 
     const testNodeId = 'test-node-id';
     const SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id__';
@@ -49,7 +48,6 @@ describe('SavedSearchesLegacyService', () => {
     beforeEach(() => {
         testUserName = 'test-user';
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AuthenticationService, useValue: { getUsername: () => {}, onLogin: new Subject() } },

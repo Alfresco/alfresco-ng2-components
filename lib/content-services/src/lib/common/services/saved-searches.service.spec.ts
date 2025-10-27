@@ -20,7 +20,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock';
 import { NodeEntry } from '@alfresco/js-api';
 import { SavedSearchesService } from './saved-searches.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 
@@ -48,7 +47,6 @@ describe('SavedSearchesService', () => {
     beforeEach(() => {
         testUserName = 'test-user';
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AuthenticationService, useValue: { getUsername: () => {}, onLogin: new Subject() } },
