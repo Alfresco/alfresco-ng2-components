@@ -599,7 +599,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
 
         if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            this.loadFolder();
+            !this.filterValue && this.loadFolder();
         }
 
         if (this.data) {
@@ -816,7 +816,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
                 this.preserveExistingSelection();
             }
             this.onPreselectNodes();
-            this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
     }
@@ -1023,6 +1022,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
         this.pagination.next(nodePaging.list.pagination);
+        this.setLoadingState(false);
     }
 
     updatePagination(requestPaginationModel: RequestPaginationModel) {

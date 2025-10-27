@@ -203,18 +203,17 @@ describe('SearchCheckListComponent', () => {
         expect(checkedElements.length).toBe(0);
     });
 
-    it('should update query with startValue on init, if provided', () => {
+    it('should check the checkbox with startValue on init, if provided', () => {
         component.id = 'checkList';
         component.options = new SearchFilterList<SearchListOption>([
             { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
             { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
-        component.startValue = `TYPE:'cm:folder'`;
-        component.context.queryFragments[component.id] = 'query';
+        component.startValue = [`TYPE:'cm:folder'`];
         fixture.detectChanges();
-
-        expect(component.context.queryFragments[component.id]).toBe(`TYPE:'cm:folder'`);
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.options.items[0].checked).toBeTrue();
+        expect(component.options.items[1].checked).toBeFalse();
+        expect(component.isActive).toBeTrue();
     });
 
     it('should set query context as blank and not call query update, if no start value was provided', () => {
@@ -229,6 +228,25 @@ describe('SearchCheckListComponent', () => {
 
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).not.toHaveBeenCalled();
+    });
+
+    it('should handle initial populateFilters emission and no filter state properly', () => {
+        component.id = 'checkList';
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
+        ]);
+
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+
+        component.context.populateFilters.next({});
+        component.context.populateFilters.next({ checkList: [`TYPE:'cm:content'`] });
+        fixture.detectChanges();
+
+        expect(component.context.filterLoaded.next).toHaveBeenCalledTimes(1);
     });
 
     it('should populate filter state when populate filters event has been observed', () => {
