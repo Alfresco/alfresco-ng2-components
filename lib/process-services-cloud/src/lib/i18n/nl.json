@@ -53,16 +53,6 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
-    "APPS": {
-      "NO_APPS": {
-        "TITLE": "Geen toepassingen gevonden",
-        "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden"
-      },
-      "ERROR": {
-        "TITLE": "Er is een fout opgetreden",
-        "SUBTITLE": "Controleer of u rechten hebt voor toegang tot de apps"
-      }
-    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Taak starten",
@@ -72,9 +62,7 @@
           "ATTACHFORM": "Formulier bijvoegen",
           "ASSIGNEE": "Toegewezen persoon",
           "CANDIDATE_GROUP": "Kandidaatgroep",
-          "FORM": "Formulier",
           "DATE": "Datum kiezen",
-          "NONE": "Geen",
           "PRIORITY": "Prioriteit"
         },
         "ACTION": {

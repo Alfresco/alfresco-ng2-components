@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-export const DEFAULT_APP_INSTANCE_THEME = 'theme-2';
-export const DEFAULT_APP_INSTANCE_ICON = 'favorite_border';
-
 export interface ApplicationInstanceModel {
     name?: string;
     displayName?: string;
