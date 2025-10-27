@@ -1395,6 +1395,33 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTrue();
     });
 
+    it('should call stopPropagation on checkbox keydown enter event', () => {
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
+        dataTable.multiselect = true;
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
+        fixture.detectChanges();
+
+        const checkboxElement = testingUtils.getByCSS('[data-adf-datatable-row-checkbox]').nativeElement as HTMLElement;
+
+        const enterEvent = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            bubbles: true,
+            cancelable: true
+        });
+
+        const stopPropagationSpy = jasmine.createSpy('stopPropagationSpy');
+
+        Object.assign(enterEvent, {
+            stopPropagation: stopPropagationSpy
+        });
+
+        checkboxElement.dispatchEvent(enterEvent);
+
+        expect(stopPropagationSpy).toHaveBeenCalled();
+    });
+
     it('should be able to display column of type boolean', () => {
         dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
 
