@@ -26,7 +26,7 @@ import { AuthenticationService } from '@alfresco/adf-core';
 describe('SavedSearchesBaseService', () => {
     let service: MockSavedSearchesService;
 
-    const SAVED_SEARCHES_CONTENT = [
+    const SAVED_SEARCHES_CONTENT: SavedSearch[] = [
         { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 },
         { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1 }
     ];
@@ -61,8 +61,8 @@ describe('SavedSearchesBaseService', () => {
 
             expect(args[0]).toEqual({ ...newSearch, order: 0 });
 
-            service.savedSearches$.subscribe((v) => {
-                expect(v).toEqual(args);
+            service.savedSearches$.subscribe((savedSearches) => {
+                expect(savedSearches).toEqual(args);
                 done();
             });
         });
@@ -79,8 +79,8 @@ describe('SavedSearchesBaseService', () => {
 
             expect(args[5]).toEqual({ ...newSearch, order: 5 });
 
-            service.savedSearches$.subscribe((v) => {
-                expect(v).toEqual(args);
+            service.savedSearches$.subscribe((savedSearches) => {
+                expect(savedSearches).toEqual(args);
                 done();
             });
         });
@@ -94,8 +94,8 @@ describe('SavedSearchesBaseService', () => {
             const args = (service.updateSpy as jasmine.Spy).calls.mostRecent().args[0];
             expect(args[0]).toEqual(updatedSearch);
 
-            service.savedSearches$.subscribe((searches) => {
-                expect(searches[0]).toEqual(updatedSearch);
+            service.savedSearches$.subscribe((savedSearches) => {
+                expect(savedSearches[0]).toEqual(updatedSearch);
                 done();
             });
         });
@@ -107,19 +107,19 @@ describe('SavedSearchesBaseService', () => {
         const searchToDelete = { name: 'Search 1', order: 0 } as SavedSearch;
         service.deleteSavedSearch(searchToDelete).subscribe(() => {
             const args = (service.updateSpy as jasmine.Spy).calls.mostRecent().args[0];
-            expect(args.find((s: SavedSearch) => s.name === 'Search 1')).toBeUndefined();
+            expect(args.find((savedSearch: SavedSearch) => savedSearch.name === 'Search 1')).toBeUndefined();
 
-            service.savedSearches$.subscribe((searches) => {
-                expect(searches.length).toBe(1);
-                expect(searches[0].name).toBe('Search 2');
-                expect(searches[0].order).toBe(0);
+            service.savedSearches$.subscribe((savedSearches) => {
+                expect(savedSearches.length).toBe(1);
+                expect(savedSearches[0].name).toBe('Search 2');
+                expect(savedSearches[0].order).toBe(0);
                 done();
             });
         });
     });
 
     it('should change order of saved searches and emit updated saved searches', (done) => {
-        const updatedOrder = [
+        const updatedOrder: SavedSearch[] = [
             { ...SAVED_SEARCHES_CONTENT[1], order: 0 },
             { ...SAVED_SEARCHES_CONTENT[0], order: 1 }
         ];
@@ -127,12 +127,12 @@ describe('SavedSearchesBaseService', () => {
         service.init();
         service.changeOrder(1, 0);
 
-        service.savedSearches$.subscribe((searches) => {
+        service.savedSearches$.subscribe((savedSearches) => {
             expect(service.updateSpy).toHaveBeenCalledWith(updatedOrder);
 
-            expect(searches.length).toBe(SAVED_SEARCHES_CONTENT.length);
-            expect(searches[0]).toEqual(updatedOrder[0]);
-            expect(searches[1]).toEqual(updatedOrder[1]);
+            expect(savedSearches.length).toBe(SAVED_SEARCHES_CONTENT.length);
+            expect(savedSearches[0]).toEqual(updatedOrder[0]);
+            expect(savedSearches[1]).toEqual(updatedOrder[1]);
             done();
         });
     });
