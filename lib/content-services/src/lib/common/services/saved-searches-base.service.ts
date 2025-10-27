@@ -27,6 +27,8 @@ import { AlfrescoApiService } from '../../services';
 export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
     private _nodesApi: NodesApi;
 
+    private static readonly SAVE_MODE_THRESHOLD = 5;
+
     protected readonly _savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
     readonly savedSearches$: Observable<SavedSearch[]> = this._savedSearches$.asObservable();
 
@@ -35,7 +37,7 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
         return this._nodesApi;
     }
 
-    constructor(
+    protected constructor(
         protected readonly apiService: AlfrescoApiService,
         protected readonly authService: AuthenticationService
     ) {}
@@ -52,17 +54,18 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
     }
 
     saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
+        const limit = SavedSearchesBaseService.SAVE_MODE_THRESHOLD;
         return this.fetchAllSavedSearches().pipe(
             take(1),
             switchMap((savedSearches) => {
                 let updatedSavedSearches: SavedSearch[] = [];
 
-                if (savedSearches.length < 5) {
+                if (savedSearches.length < limit) {
                     updatedSavedSearches = [{ ...newSaveSearch, order: 0 }, ...savedSearches];
                 } else {
-                    const firstFiveSearches = savedSearches.slice(0, 5);
-                    const restOfSearches = savedSearches.slice(5);
-                    updatedSavedSearches = [...firstFiveSearches, { ...newSaveSearch, order: 5 }, ...restOfSearches];
+                    const upToLimitSearches = savedSearches.slice(0, limit);
+                    const restSearches = savedSearches.slice(limit);
+                    updatedSavedSearches = [...upToLimitSearches, { ...newSaveSearch, order: limit }, ...restSearches];
                 }
 
                 updatedSavedSearches = updatedSavedSearches.map((search, index) => ({ ...search, order: index }));

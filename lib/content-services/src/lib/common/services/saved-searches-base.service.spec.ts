@@ -51,7 +51,7 @@ describe('SavedSearchesBaseService', () => {
         service.init();
     });
 
-    it('should emit updated searches with correct order if total of saved searches is less than 5', (done) => {
+    it('should emit updated searches with correct order if total of saved searches is less than limit (5)', (done) => {
         service.mockFetch(SAVED_SEARCHES_CONTENT);
         const newSearch = { name: 'new-search' } as SavedSearch;
         service.saveSearch(newSearch).subscribe(() => {
@@ -68,7 +68,7 @@ describe('SavedSearchesBaseService', () => {
         });
     });
 
-    it('should emit updated searches with correct order if total of saved searches is more than 5', (done) => {
+    it('should emit updated searches with correct order if total of saved searches is more than limit (5)', (done) => {
         const moreSavedSearches = [...SAVED_SEARCHES_CONTENT, ...SAVED_SEARCHES_CONTENT, ...SAVED_SEARCHES_CONTENT];
         service.mockFetch(moreSavedSearches);
         const newSearch = { name: 'new-search' } as SavedSearch;
