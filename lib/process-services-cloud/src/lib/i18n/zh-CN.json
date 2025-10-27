@@ -53,16 +53,6 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
-    "APPS": {
-      "NO_APPS": {
-        "TITLE": "找不到应用程序",
-        "SUBTITLE": "创建您想要今后轻松查找的新应用程序"
-      },
-      "ERROR": {
-        "TITLE": "存在错误",
-        "SUBTITLE": "请确定您是否有访问应用程序的权限"
-      }
-    },
     "START_TASK": {
       "FORM": {
         "TITLE": "启动任务",
@@ -72,9 +62,7 @@
           "ATTACHFORM": "附加表单",
           "ASSIGNEE": "被指派者",
           "CANDIDATE_GROUP": "候选组",
-          "FORM": "表单",
           "DATE": "选择日期",
-          "NONE": "无",
           "PRIORITY": "优先级"
         },
         "ACTION": {

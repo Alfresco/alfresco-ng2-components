@@ -17,19 +17,12 @@
 
 import { NgModule } from '@angular/core';
 import { LoginDialogPanelComponent } from './components/login-dialog-panel/login-dialog-panel.component';
-import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { LoginFooterDirective } from './directives/login-footer.directive';
 import { LoginHeaderDirective } from './directives/login-header.directive';
 
-export const LOGIN_DIRECTIVES = [
-    LoginComponent,
-    LoginFooterDirective,
-    LoginHeaderDirective,
-    LoginDialogComponent,
-    LoginDialogPanelComponent
-] as const;
+export const LOGIN_DIRECTIVES = [LoginComponent, LoginFooterDirective, LoginHeaderDirective, LoginDialogPanelComponent] as const;
 
 /** @deprecated use `...LOGIN_DIRECTIVES` or import the standalone directives directly */
 @NgModule({

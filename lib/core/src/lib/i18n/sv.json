@@ -285,11 +285,6 @@
     "ACTION": {
       "HELP": "Behöver du hjälp?",
       "REGISTER": "Registrera"
-    },
-    "DIALOG": {
-      "CANCEL": "Avbryt",
-      "CHOOSE": "Välj",
-      "LOGIN": "Logga in"
     }
   },
   "ADF-DATATABLE": {
