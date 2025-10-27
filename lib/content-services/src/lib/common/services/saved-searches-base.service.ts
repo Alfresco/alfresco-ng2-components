@@ -21,7 +21,7 @@ import { AuthenticationService } from '@alfresco/adf-core';
 import { ReplaySubject, Observable, catchError, switchMap, take, tap, throwError, map } from 'rxjs';
 import { NodeEntry, NodesApi } from '@alfresco/js-api';
 import { SavedSearch } from '../interfaces/saved-search.interface';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiService } from '../../services';
 
 @Injectable()
 export abstract class SavedSearchesBaseService implements SavedSearchStrategy {

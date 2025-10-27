@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 import { MockSavedSearchesService } from '../../mock/saved-searches-derived.mock';
 import { SavedSearch } from '../interfaces/saved-search.interface';

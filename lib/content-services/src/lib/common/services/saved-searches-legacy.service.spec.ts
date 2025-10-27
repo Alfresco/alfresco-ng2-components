@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiService } from '../../services';
 import { NodeEntry } from '@alfresco/js-api';
 import { AlfrescoApiServiceMock } from '../../mock';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

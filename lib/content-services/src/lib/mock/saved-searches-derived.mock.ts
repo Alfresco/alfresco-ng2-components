@@ -16,11 +16,10 @@
  */
 
 import { NodeEntry } from '@alfresco/js-api';
-import { SavedSearchesBaseService } from '../common/services/saved-searches-base.service';
 import { of, Observable, ReplaySubject } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiService } from '../services';
 import { AuthenticationService } from '@alfresco/adf-core';
-import { SavedSearch } from '../common/interfaces/saved-search.interface';
+import { SavedSearch, SavedSearchesBaseService } from '../common';
 import { Injectable } from '@angular/core';
 
 @Injectable()

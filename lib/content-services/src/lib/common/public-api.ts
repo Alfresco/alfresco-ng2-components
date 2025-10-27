@@ -26,6 +26,7 @@ export * from './services/people-content.service';
 export * from './services/content.service';
 export * from './services/saved-searches.service';
 export * from './services/saved-searches-legacy.service';
+export * from './services/saved-searches-base.service';
 
 export * from './events/file.event';
 
