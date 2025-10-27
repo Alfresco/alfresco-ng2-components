@@ -69,6 +69,7 @@ export class DateFnsUtils {
             case 'pl':
                 dateFnsLocale = pl;
                 break;
+            case 'pt':
             case 'pt-BR':
                 dateFnsLocale = ptBR;
                 break;
