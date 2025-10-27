@@ -14,7 +14,9 @@
     "build:libs": "nx run-many -t build --prod --skip-nx-cache",
     "build:schematics": "nx run-many -t build-schematics",
     "publish": "nx run-many -t npm-publish",
-    "clean": "rimraf dist node_modules dist/libs"
+    "clean": "rimraf dist node_modules dist/libs",
+    "nx:run-target": "nx run",
+    "nx:run-many": "nx run-many"
   },
   "repository": {
     "type": "git",
