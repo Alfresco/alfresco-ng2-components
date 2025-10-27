@@ -33,7 +33,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { EMPTY, Observable, timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { debounce, startWith, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
@@ -104,7 +104,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
             .pipe(
                 startWith(''),
                 tap(() => (this.activeAnyOption = false)),
-                debounce((value: string) => (value ? timer(300) : EMPTY)),
+                debounce(() => timer(300)),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((value: string) => {

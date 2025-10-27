@@ -340,5 +340,17 @@ describe('SearchChipAutocompleteInputComponent', () => {
             component.selectedOptions = [option];
             expect(component.isOptionSelected(option)).toBeTrue();
         });
+
+        it('should clear filteredOptions after input is cleared', async () => {
+            enterNewInputValue('option');
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(component.filteredOptions.length).toBeGreaterThan(0);
+
+            enterNewInputValue('');
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(component.filteredOptions.length).toBe(0);
+        });
     });
 });
