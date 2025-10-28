@@ -97,7 +97,7 @@ describe('AmountWidgetComponent', () => {
 
     it('it should return locale based on browser', () => {
         const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
-        const mockLanguages = spyOnProperty(window, 'navigator', 'get').and.returnValue({
+        const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
             languages: returnedLanguages
         } as any);
         const locale = widget.getLocale();
@@ -108,7 +108,7 @@ describe('AmountWidgetComponent', () => {
 
     it('it should return default locale if browser does not return valid value', () => {
         const defaultLocale = 'en-US';
-        spyOnProperty(window, 'navigator', 'get').and.returnValue({
+        spyOnProperty(window, 'navigator').and.returnValue({
             languages: undefined
         } as any);
         const locale = widget.getLocale();
@@ -118,7 +118,7 @@ describe('AmountWidgetComponent', () => {
 
     it('should set initial values when enableDisplayBasedOnLocale is enabled', () => {
         const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator', 'get').and.returnValue({
+        spyOnProperty(window, 'navigator').and.returnValue({
             languages: returnedLanguages
         } as any);
         widget.field = new FormFieldModel(null, { id: 1, name: 'test', value: 25, currency: 'USD' });
@@ -134,7 +134,7 @@ describe('AmountWidgetComponent', () => {
 
     it('should set initial values with correct currency', () => {
         const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator', 'get').and.returnValue({
+        spyOnProperty(window, 'navigator').and.returnValue({
             languages: returnedLanguages
         } as any);
         widget.field = new FormFieldModel(null, { id: 2, name: 'test', value: 25, currency: 'GBP' });
@@ -148,7 +148,7 @@ describe('AmountWidgetComponent', () => {
 
     it('should set initial values with correct currency icon', () => {
         const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator', 'get').and.returnValue({
+        spyOnProperty(window, 'navigator').and.returnValue({
             languages: returnedLanguages
         } as any);
         widget.field = new FormFieldModel(null, { id: 2, name: 'test', value: 25, currency: '¥' });
@@ -162,7 +162,7 @@ describe('AmountWidgetComponent', () => {
 
     it('should set initial values without currency', () => {
         const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator', 'get').and.returnValue({
+        spyOnProperty(window, 'navigator').and.returnValue({
             languages: returnedLanguages
         } as any);
         widget.field = new FormFieldModel(null, { id: 3, name: 'test', value: 25, currency: '' });
@@ -217,14 +217,12 @@ describe('AmountWidgetComponent', () => {
         widget.amountWidgetOnBlur();
 
         expect(widget.valueAsNumber).toBe(1234.56);
-        expect(widget.valueAsString).toBe('$1,234.56');
         expect(widget.amountWidgetValue).toBe('$1,234.56');
 
         widget.amountWidgetValue = '';
         widget.amountWidgetOnBlur();
 
         expect(widget.valueAsNumber).toBe(null);
-        expect(widget.valueAsString).toBe(null);
         expect(widget.amountWidgetValue).toBe(null);
     });
 
@@ -589,7 +587,6 @@ describe('AmountWidgetComponent - rendering', () => {
                 expect(field).toBeDefined();
                 expect(widget.field.value).toBe('1234.55');
                 expect(widget.valueAsNumber).toBeUndefined();
-                expect(widget.valueAsString).toBeUndefined();
                 expect(fieldValueBeforeFocus).toBe('1234.55');
                 expect(focusSpy).toHaveBeenCalled();
                 expect(fieldValue).toBe('1234.55');
@@ -609,7 +606,6 @@ describe('AmountWidgetComponent - rendering', () => {
                 expect(field).toBeDefined();
                 expect(widget.field.value).toBe(newValue);
                 expect(widget.valueAsNumber).toBeUndefined();
-                expect(widget.valueAsString).toBeUndefined();
                 expect(fieldValueBeforeBlur).toBe('1234.55');
                 expect(blurSpy).toHaveBeenCalled();
                 expect(widget.valueAsNumber).toBeUndefined();
@@ -641,7 +637,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 fixture = TestBed.createComponent(AmountWidgetComponent);
                 widget = fixture.componentInstance;
                 const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
-                spyOnProperty(window, 'navigator', 'get').and.returnValue({
+                spyOnProperty(window, 'navigator').and.returnValue({
                     languages: returnedLanguages
                 } as any);
                 fixture.componentRef.setInput('field', mockField);

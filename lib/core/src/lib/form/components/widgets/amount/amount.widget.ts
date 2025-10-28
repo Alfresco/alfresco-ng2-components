@@ -65,9 +65,10 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     decimalProperty: string;
     enableDisplayBasedOnLocale: boolean;
     locale: string;
+    notShowDecimalDigits = '1.0-0';
+    showDecimalDigits = '1.2-2';
     showReadonlyPlaceholder: boolean;
     valueAsNumber: number;
-    valueAsString: string;
 
     get placeholder(): string {
         return this.showPlaceholder ? this.field.placeholder : '';
@@ -88,11 +89,6 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    updateSettingsBasedProperties(data: AmountWidgetSettings): void {
-        this.enableDisplayBasedOnLocale = data?.enableDisplayBasedOnLocale ?? false;
-        this.showReadonlyPlaceholder = data?.showReadonlyPlaceholder;
-    }
-
     ngOnInit() {
         if (this.field) {
             if (this.field.currency) {
@@ -111,45 +107,50 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    amountWidgetOnBlur() {
+    amountWidgetOnBlur(): void {
         if (this.enableDisplayBasedOnLocale) {
             if (this.amountWidgetValue) {
                 this.valueAsNumber = parseFloat(this.amountWidgetValue);
-                this.valueAsString = this.currencyPipe.transform(this.amountWidgetValue, this.currency, this.currencyDisplay, this.decimalProperty);
-                this.amountWidgetValue = this.valueAsString;
+                this.amountWidgetValue = this.currencyPipe.transform(
+                    this.amountWidgetValue,
+                    this.currency,
+                    this.currencyDisplay,
+                    this.decimalProperty
+                );
             } else {
                 this.valueAsNumber = null;
-                this.valueAsString = null;
                 this.amountWidgetValue = null;
             }
         }
+        this.markAsTouched();
     }
 
-    amountWidgetOnFocus() {
+    amountWidgetOnFocus(): void {
         if (this.enableDisplayBasedOnLocale) {
-            this.amountWidgetValue = this.valueAsNumber || this.valueAsNumber === 0 ? this.valueAsNumber.toString() : null;
+            const hasValue = this.valueAsNumber === 0 || this.valueAsNumber;
+            this.amountWidgetValue = hasValue ? this.valueAsNumber.toString() : null;
         }
     }
 
-    getLocale() {
+    getLocale(): string {
         const defaultLocale = 'en-US';
         if (typeof window?.navigator === 'undefined') {
             return defaultLocale;
         }
-        const wn = window.navigator as any;
+        const wn = window.navigator as Navigator;
         let lang = wn.languages ? wn.languages[0] : defaultLocale;
-        lang = lang || wn.language || wn.browserLanguage || wn.userLanguage;
+        lang = lang || wn.language;
         return lang;
     }
 
-    onFieldChangedAmountWidget() {
+    onFieldChangedAmountWidget(): void {
         this.field.value = this.amountWidgetValue;
         super.onFieldChanged(this.field);
     }
 
     setInitialValues(): void {
         if (this.enableDisplayBasedOnLocale) {
-            this.decimalProperty = this.field.enableFractions ? '1.2-2' : '1.0-0';
+            this.decimalProperty = this.field.enableFractions ? this.showDecimalDigits : this.notShowDecimalDigits;
             this.locale = this.getLocale();
             this.valueAsNumber = this.field.value;
             this.amountWidgetValue = this.currencyPipe.transform(
@@ -162,5 +163,10 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.amountWidgetValue = this.field.value;
         }
+    }
+
+    updateSettingsBasedProperties(data: AmountWidgetSettings): void {
+        this.enableDisplayBasedOnLocale = data?.enableDisplayBasedOnLocale ?? false;
+        this.showReadonlyPlaceholder = data?.showReadonlyPlaceholder;
     }
 }
