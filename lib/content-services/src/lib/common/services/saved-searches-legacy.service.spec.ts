@@ -27,7 +27,7 @@ describe('SavedSearchesLegacyService', () => {
     let service: SavedSearchesLegacyService;
     let authService: AuthenticationService;
     let testUserName: string;
-    let getNodeContentSpy: jasmine.Spy<jasmine.Func>;
+    let getNodeContentSpy: jasmine.Spy<(nodeId: string) => Promise<Blob>>;
 
     const testNodeId = 'test-node-id';
     const SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id__';
