@@ -331,14 +331,17 @@ export class FormFieldModel extends FormWidgetModel {
         this.fields = fields;
         this.rowspan = 1;
         this.colspan = 1;
+        this.rows = [];
 
-        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, value); i++) {
+        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.newRowsLimit, value); i++) {
             this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows));
         }
+
+        this.columns = this.rows[0].columns;
     }
 
-    private getNumberOfRows(initialNrRows: number = 1, value?: any) {
-        return value?.length ?? initialNrRows;
+    private getNumberOfRows(initialNrRows: number = 1, rowsLimit?: number, value?: any) {
+        return value?.length && !!rowsLimit ? Math.min(value?.length, initialNrRows + rowsLimit) : (value?.length ?? initialNrRows);
     }
 
     private createRow(fields: any, form: any, index: number, value?: any, isInitial: boolean = false) {
@@ -417,7 +420,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private shouldAddRow(): boolean {
-        return this.rows.length < this.params.initialNumberOfRows + this.params.newRowsLimit;
+        return !this.params.newRowsLimit || this.rows.length < this.params.initialNumberOfRows + this.params.newRowsLimit;
     }
 
     removeRow(index: number) {
@@ -667,6 +670,17 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.FUNCTIONAL_GROUP: {
                 this.form.values[this.id] = this.value ? this.value : null;
+                break;
+            }
+            case FormFieldTypes.REPEATABLE_SECTION: {
+                this.form.values[this.id] = this.value ? this.value : [];
+                this.repeatableSectionFactory(
+                    {
+                        ...this.json,
+                        value: this.value
+                    },
+                    this.form
+                );
                 break;
             }
             default:

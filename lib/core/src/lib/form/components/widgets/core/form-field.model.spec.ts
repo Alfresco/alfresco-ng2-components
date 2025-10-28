@@ -1337,6 +1337,14 @@ describe('FormFieldModel', () => {
                 expect(field.rows.length).toBe(3);
             });
 
+            it('should add row if no limit param is defined', () => {
+                field.params.newRowsLimit = null;
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(3);
+            });
+
             it('should NOT add row if NOT allowed by limit param', () => {
                 expect(field.rows.length).toBe(2);
 

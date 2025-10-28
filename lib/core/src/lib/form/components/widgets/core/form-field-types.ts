@@ -54,13 +54,7 @@ export class FormFieldTypes {
     static DATA_TABLE: string = 'data-table';
     static DISPLAY_EXTERNAL_PROPERTY: string = 'display-external-property';
 
-    static READONLY_TYPES: string[] = [
-        FormFieldTypes.HYPERLINK,
-        FormFieldTypes.DISPLAY_VALUE,
-        FormFieldTypes.READONLY_TEXT,
-        FormFieldTypes.GROUP,
-        FormFieldTypes.REPEATABLE_SECTION
-    ];
+    static READONLY_TYPES: string[] = [FormFieldTypes.HYPERLINK, FormFieldTypes.DISPLAY_VALUE, FormFieldTypes.READONLY_TEXT, FormFieldTypes.GROUP];
 
     static VALIDATABLE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 

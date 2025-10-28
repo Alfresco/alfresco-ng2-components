@@ -18,10 +18,15 @@
 import { FormFieldModel } from './form-field.model';
 
 export class ContainerColumnModel {
+    id: string;
     size: number = 12;
     fields: FormFieldModel[] = [];
     colspan: number = 1;
     rowspan: number = 1;
+
+    constructor() {
+        this.id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString();
+    }
 
     hasFields(): boolean {
         return !!this.fields?.length;
