@@ -243,7 +243,7 @@ export class LibraryDialogComponent implements OnInit {
                 fields: ['title']
             });
         } catch {
-            return { list: { entries: [] } } as SitePaging;
+            return new SitePaging({ list: { entries: [], pagination: {} } });
         }
     }
 
