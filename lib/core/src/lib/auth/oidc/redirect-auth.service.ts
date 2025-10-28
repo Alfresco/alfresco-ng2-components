@@ -339,7 +339,8 @@ export class RedirectAuthService extends AuthService {
         this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
         if (config.sessionChecksEnabled) {
-            this.oauthService.events.pipe(filter((event) => event.type === 'session_terminated')).subscribe(() => {
+            const sessionErrorTypesToPerformLogout = ['session_terminated', 'session_error'];
+            this.oauthService.events.pipe(filter((event) => sessionErrorTypesToPerformLogout.includes(event.type))).subscribe(() => {
                 this.oauthService.logOut();
             });
         }

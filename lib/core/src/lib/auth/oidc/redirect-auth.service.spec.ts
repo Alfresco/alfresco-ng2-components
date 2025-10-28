@@ -273,6 +273,21 @@ describe('RedirectAuthService', () => {
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
     });
 
+    it('should logout user if sessionChecksEnabled is true and event type session_error is emitted', async () => {
+        const mockTimeSync = { outOfSync: false } as TimeSync;
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
+
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        authConfigSpy.sessionChecksEnabled = true;
+
+        await service.init();
+
+        oauthEvents$.next({ type: 'session_error' } as OAuthEvent);
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+    });
+
     it('should NOT logout user if login success', async () => {
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
