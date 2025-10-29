@@ -1,7 +1,7 @@
 @use '../../../styles/flex' as flex;
 
 adf-layout-header .adf-toolbar-container-row {
-    color: var(--theme-header-text-color);
+    color: var(--mat-sys-on-primary);
     position: relative;
     padding: 0 24px;
 
@@ -36,14 +36,14 @@ adf-layout-header .adf-toolbar-container-row {
         margin: 0 5px;
 
         & > div {
-            background-color: var(--adf-theme-background-card-color);
+            background-color: var(--mat-sys-surface);
         }
     }
 
     .adf-header-delimiter {
         height: 24px;
         width: 2px;
-        background-color: var(--theme-primary-color-default-contrast);
+        background-color: var(--mat-sys-on-primary);
     }
 
     .adf-userinfo-container {

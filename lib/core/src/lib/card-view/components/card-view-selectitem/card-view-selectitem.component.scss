@@ -6,7 +6,6 @@
     }
 
     .adf-select-filter-input {
-        background: var(--adf-theme-background-card-color);
         position: sticky;
         top: 0;
         left: 0;
@@ -28,10 +27,6 @@
         #{ms.$mat-select} {
             margin-top: 0;
             border-radius: 6px;
-
-            #{ms.$mat-select-value} {
-                color: var(--adf-metadata-action-button-clear-color);
-            }
 
             #{ms.$mat-select-trigger} {
                 padding-left: 6px;
@@ -61,7 +56,7 @@
     }
 
     .adf-property-readonly-value {
-        color: var(--adf-metadata-property-panel-label-color);
+        color: var(--mat-sys-surface-dim);
     }
 
     .adf-property-label {

@@ -1,5 +1,4 @@
 @use '../../../styles/mixins' as mixins;
-@use '../../../styles/mat-selectors' as ms;
 
 .adf-login {
     @include mixins.flex-column;
@@ -56,15 +55,14 @@
 
     .adf-login-card-wide {
         border-radius: 8px;
-        background-color: var(--adf-theme-background-dialog-color);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: var(--mat-sys-level2);
         width: 450px;
         min-width: 320px;
         padding: 21px 64px 34px;
         box-sizing: border-box;
     }
 
-    @media screen and (width <= 482px) {
+    @media screen and (width <=482px) {
         .adf-login-card-wide {
             width: calc(100% - 32px);
         }
@@ -78,10 +76,10 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
         padding: 0;
         margin-bottom: 4px;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
     }
 
     .adf-error-message .adf-error-icon {
@@ -111,26 +109,6 @@
     .adf-login-button {
         width: 100%;
         height: 36px;
-        line-height: normal;
-        box-shadow: none;
-    }
-
-    .adf-login-button-label {
-        color: var(--theme-accent-color-default-contrast);
-        font-weight: bolder;
-    }
-
-    .adf-login-button.adf-isChecking {
-        background-color: #e0f7fa;
-    }
-
-    .adf-login-button.adf-isChecking .adf-login-button-label {
-        color: var(--theme-primary-color);
-    }
-
-    .adf-login-button.adf-isWelcome {
-        background-color: var(--theme-primary-color);
-        color: var(--theme-primary-color-default-contrast);
     }
 
     .adf-login-button.adf-isWelcome .adf-welcome-icon {
@@ -163,30 +141,18 @@
 
     .adf-is-active {
         background-color: transparent;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
         font-weight: normal;
         line-height: 1.33;
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
     }
 
     .adf-copyright {
         min-width: 320px;
         text-align: center;
         padding: 16px 0;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
         opacity: 0.54;
-    }
-
-    .adf-login-input:is(input) {
-        font-size: var(--theme-subheading-2-font-size);
-    }
-
-    .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
-        color: var(--adf-theme-foreground-text-color);
-        font-size: var(--theme-subheading-2-font-size);
-        top: 9px;
-        position: relative;
-        left: 7px;
     }
 
     .adf-login-controls:has(div) {
@@ -202,43 +168,19 @@
         .adf-login__field {
             display: block;
             padding-bottom: 16px;
-            font-size: var(--theme-subheading-2-font-size);
-
-            #{ms.$mat-form-field-infix} {
-                min-height: 0;
-                padding-bottom: 3px;
-                padding-top: 20px;
-
-                .adf-login-form-input-label {
-                    font-size: var(--theme-subheading-2-font-size);
-                }
-
-                #{ms.$mat-floating-label-required} {
-                    &::after {
-                        font-size: var(--theme-subheading-2-font-size);
-                    }
-                }
-            }
-
-            & input:-webkit-autofill {
-                /* stylelint-disable */
-                -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
-                -webkit-text-fill-color: var(--adf-theme-foreground-text-color);
-                /* stylelint-enable */
-            }
         }
     }
 
     .adf-login-validation {
         background-color: transparent;
-        color: var(--theme-warn-color);
-        font-size: var(--theme-caption-font-size);
+        color: var(--mat-sys-error);
+        font-size: var(--mat-sys-body-small-size);
     }
 
     .adf-login-error {
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
         position: absolute;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
         margin-top: -12px;
         display: block;
     }
@@ -256,7 +198,7 @@
     }
 
     .adf-login-remember-me:has(.adf-login-remember-me-label) {
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
     }
 
     .adf-login-action-container {

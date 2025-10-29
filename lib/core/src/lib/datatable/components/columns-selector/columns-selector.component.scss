@@ -25,7 +25,7 @@ adf-datatable-column-selector {
         }
 
         &-header-label {
-            font-size: var(--theme-body-1-font-size);
+            font: var(--mat-sys-body-medium);
         }
 
         &-list-container {
@@ -43,20 +43,20 @@ adf-datatable-column-selector {
             color: var(--theme-secondary-text);
         }
 
-        &-subtitle {
-            color: var(--adf-theme-foreground-text-color);
-            font-size: var(--theme-caption-font-size);
-            opacity: 0.6;
-            display: flex;
-            column-gap: 3px;
-            align-items: center;
-        }
+    &-subtitle {
+        color: var(--mat-sys-on-surface);
+        font-size: var(--mat-sys-body-small-size);
+        opacity: 0.6;
+        display: flex;
+        column-gap: 3px;
+        align-items: center;
+    }
 
         &-subtitle-icon {
             margin-top: 3px;
-            height: var(--theme-caption-font-size);
-            width: var(--theme-caption-font-size);
-            font-size: var(--theme-caption-font-size);
+            height: var(--mat-sys-label-medium-size);
+            width: var(--mat-sys-label-medium-size);
+            font-size: var(--mat-sys-label-medium-size);
         }
 
         &-column-checkbox {
@@ -92,24 +92,23 @@ adf-datatable-column-selector {
             margin-bottom: 9px;
         }
 
-        &-search-input {
-            padding: 10px 10px 10px 29px;
-            width: 100%;
-            outline: 0;
-            border-radius: 6px;
-            border: 1px solid var(--theme-background-color);
-            background: var(--theme-background-color);
+    &-search-input {
+        padding: 10px 10px 10px 29px;
+        width: 100%;
+        outline: 0;
+        border-radius: 6px;
+        border: 1px solid var(--mat-sys-surface);
+        background: var(--mat-sys-surface);
 
             &:focus {
                 outline: none;
             }
         }
 
-        &-search-input-icon {
-            position: absolute;
-            left: 17px;
-            top: 10px;
-            font-size: var(--theme-adf-icon-1-font-size);
-        }
+    &-search-input-icon {
+        position: absolute;
+        left: 17px;
+        top: 10px;
+        font-size: var(--mat-sys-label-large-size);
     }
 }
