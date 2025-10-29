@@ -2,7 +2,6 @@
 
 .adf-card-view-textitem {
     .adf-textitem-error {
-        font-size: var(--theme-caption-font-size);
         padding-top: 6px;
 
         &::before {
@@ -26,12 +25,6 @@
         height: 30px;
         padding: 0;
         line-height: 20px;
-        color: var(--adf-theme-foreground-text-color-025);
-
-        &:hover,
-        &:focus {
-            color: var(--adf-theme-foreground-text-color);
-        }
 
         #{ms.$mat-button-touch-target} {
             width: 30px;
@@ -62,30 +55,10 @@
     .adf-textitem-clickable {
         cursor: pointer;
         padding-top: 3px;
-
-        .adf-textitem-action:hover {
-            color: var(--adf-theme-foreground-text-color);
-        }
-
-        .adf-property-field {
-            #{ms.$mat-input-element} {
-                color: var(--theme-primary-color);
-                cursor: pointer;
-            }
-        }
-    }
-
-    .adf-textitem-default-value {
-        color: var(--adf-theme-foreground-text-color-054);
     }
 
     .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
-    }
-
-    .adf-property-value-not-editable {
-        /* stylelint-disable-next-line declaration-no-important */
-        color: var(--adf-metadata-property-panel-title-color);
+        border-bottom: 1px solid var(--mat-sys-outline-variant);
     }
 
     .adf-property-value-has-icon-suffix {

@@ -1,7 +1,7 @@
 @use '../styles/mixins' as mixins;
 @use '../styles/mat-selectors' as ms;
 
-$adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
+$adf-info-drawer-layout-title-font-size: var(--mat-sys-title-medium-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
 $adf-info-drawer-icon-size-half: 24px !default;
 
@@ -15,7 +15,6 @@ $adf-info-drawer-icon-size-half: 24px !default;
 
         overflow: auto;
         width: 100%;
-        background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
         & #{ms.$mat-tab-label-text} {
@@ -51,14 +50,12 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 letter-spacing: 0.15px;
                 text-align: left;
                 align-items: center;
-                color: var(--adf-theme-foreground-text-color-054);
                 overflow: hidden;
 
                 & > div {
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
-                    color: var(--adf-metadata-property-panel-title-color);
                 }
             }
         }
@@ -80,7 +77,6 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 .adf-manage-versions-no-permission {
                     margin: 0;
                     padding: $adf-info-drawer-icon-size-half;
-                    color: var(--adf-theme-foreground-text-color-054);
                     text-align: center;
                     display: flex;
                     flex-direction: column;

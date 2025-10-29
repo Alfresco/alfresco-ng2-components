@@ -6,7 +6,6 @@
     }
 
     .adf-select-filter-input {
-        background: var(--adf-theme-background-card-color);
         position: sticky;
         top: 0;
         left: 0;
@@ -29,10 +28,6 @@
             margin-top: 0;
             border-radius: 6px;
 
-            #{ms.$mat-select-value} {
-                color: var(--adf-metadata-action-button-clear-color);
-            }
-
             #{ms.$mat-select-trigger} {
                 padding-left: 6px;
                 padding-right: 6px;
@@ -54,7 +49,7 @@
         white-space: nowrap;
         cursor: default;
         padding: 6px 0;
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        border-bottom: 1px solid var(--mat-sys-outline-variant);
     }
 
     #{ms.$mat-line-ripple} {
@@ -62,7 +57,7 @@
     }
 
     .adf-property-readonly-value {
-        color: var(--adf-metadata-property-panel-label-color);
+        color: var(--mat-sys-surface-dim);
     }
 
     .adf-property-label {

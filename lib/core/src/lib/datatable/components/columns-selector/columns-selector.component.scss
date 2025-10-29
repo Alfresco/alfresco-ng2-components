@@ -21,10 +21,6 @@ $adf-columns-selector-space: 12px;
         align-items: center;
     }
 
-    &-header-label {
-        font-size: var(--theme-body-1-font-size);
-    }
-
     &-list-container {
         max-height: 350px;
         overflow: hidden auto;
@@ -34,7 +30,7 @@ $adf-columns-selector-space: 12px;
         margin-top: 10px;
 
         &:hover {
-            background-color: var(--adf-theme-background-hover-color);
+            background-color: var(--mat-sys-surface-container);
         }
     }
 
@@ -47,8 +43,8 @@ $adf-columns-selector-space: 12px;
     }
 
     &-subtitle {
-        color: var(--adf-theme-foreground-text-color);
-        font-size: var(--theme-caption-font-size);
+        color: var(--mat-sys-on-surface);
+        font-size: var(--mat-sys-body-small-size);
         opacity: 0.6;
         display: flex;
         column-gap: 3px;
@@ -57,9 +53,6 @@ $adf-columns-selector-space: 12px;
 
     &-subtitle-icon {
         margin-top: 3px;
-        height: var(--theme-caption-font-size);
-        width: var(--theme-caption-font-size);
-        font-size: var(--theme-caption-font-size);
     }
 
     &-column-checkbox {
@@ -91,8 +84,7 @@ $adf-columns-selector-space: 12px;
         width: 100%;
         outline: 0;
         border-radius: 6px;
-        border: 1px solid var(--theme-background-color);
-        background: var(--theme-background-color);
+        border: 1px solid var(--mat-sys-surface);
 
         &:focus {
             outline: none;
@@ -103,6 +95,7 @@ $adf-columns-selector-space: 12px;
         position: absolute;
         left: 17px;
         top: 10px;
-        font-size: var(--theme-adf-icon-1-font-size);
+        font-size: var(--mat-sys-label-large-size);
+        line-height: var(--mat-sys-label-large-line-height);
     }
 }
