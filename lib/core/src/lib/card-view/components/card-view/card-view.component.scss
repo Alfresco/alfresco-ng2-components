@@ -2,8 +2,14 @@
 
 .adf-property-list {
     border: unset;
-    border-color: var(--adf-theme-foreground-divider-color);
+    border-color: var(--mat-sys-outline);
     border-radius: 0;
+
+    .adf-property-label {
+        display: flex;
+        line-height: 20px;
+        margin-bottom: 4px;
+    }
 
     .adf-property-container {
         margin-bottom: 12px;

@@ -8,8 +8,6 @@
             box-shadow: none;
             height: 37.5px;
             font-weight: bold;
-            background-color: var(--theme-primary-color);
-            color: var(--theme-primary-color-default-contrast);
             border-radius: 4px;
         }
 
@@ -22,11 +20,11 @@
 
     &-sidebar-action-menu-icon {
         margin: 18px 0 0 20px;
-        color: var(--adf-theme-foreground-text-color-064);
+        color: var(--mat-sys-on-surface);
         cursor: pointer;
 
         &:hover {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 
@@ -35,14 +33,11 @@
         letter-spacing: -0.4px;
 
         button {
-            font-size: var(--theme-body-1-font-size);
-            color: var(--adf-theme-foreground-text-color-087);
             text-align: left;
             line-height: 1.5;
             letter-spacing: -0.4px;
 
             &:hover {
-                color: var(--theme-primary-color);
                 opacity: inherit;
             }
         }
