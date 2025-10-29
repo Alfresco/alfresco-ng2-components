@@ -284,15 +284,18 @@ export class LibraryDialogComponent implements OnInit {
             if (timer) {
                 clearTimeout(timer);
             }
-
             return new Promise((resolve) => {
                 timer = setTimeout(() => {
-                    this.sitesService.getSite(control.value).subscribe({
-                        next: () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
-                        error: () => resolve(null)
-                    });
+                    this.checkSite(control.value, resolve);
                 }, 300);
             });
         };
+    }
+
+    private checkSite(siteId: string, resolve: (result: ValidationErrors | null) => void): void {
+        this.sitesService.getSite(siteId).subscribe({
+            next: () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
+            error: () => resolve(null)
+        });
     }
 }
