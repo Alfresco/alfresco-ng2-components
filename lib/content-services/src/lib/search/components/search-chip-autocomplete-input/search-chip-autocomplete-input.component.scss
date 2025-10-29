@@ -10,26 +10,14 @@ adf-search-chip-autocomplete-input {
         margin-top: 4px;
     }
 
-    #{ms.$mat-form-text-field-infix} {
-        border: none;
-    }
-
-    .adf-chip-list#{ms.$mat-form-field} {
-        #{ms.$mat-form-field-infix} {
-            padding-top: 14px;
-            padding-bottom: 14px;
-            min-height: unset;
-        }
-    }
-
     .adf-search-properties-file-input {
         margin-left: 3px;
     }
 
     .adf-autocomplete-added-option-chips.adf-option-chips {
-        border: 1px solid var(--theme-text-color);
+        border: 1px solid var(--mat-sys-on-surface);
         border-radius: 10px;
-        background-color: var(--theme-primary-color-default-contrast);
+        background-color: var(--mat-sys-on-primary);
         height: auto;
         word-break: break-word;
         padding: 4px 0;
@@ -43,19 +31,19 @@ adf-search-chip-autocomplete-input {
     }
 
     .adf-option-chips-delete-button.adf-autocomplete-added-option-chips-delete-button {
-        font-size: 13px;
-        height: 13px;
-        width: 13px;
+        font: var(--mat-sys-body-small);
+        height: var(--mat-sys-body-small-size);
+        width: var(--mat-sys-body-small-size);
 
         .adf-option-chips-delete-icon.adf-autocomplete-added-option-chips-delete-icon {
-            font-size: 13px;
-            height: 13px;
-            width: 13px;
+            font: var(--mat-sys-body-small);
+            height: var(--mat-sys-body-small-size);
+            width: var(--mat-sys-body-small-size);
         }
     }
 }
 
 .adf-search-chip-autocomplete-added-option.adf-autocomplete-added-option {
-    background: var(--adf-theme-mat-grey-color-a200);
-    color: var(--adf-theme-primary-300);
+    background: var(--mat-sys-surface-variant);
+    color: var(--mat-sys-primary);
 }

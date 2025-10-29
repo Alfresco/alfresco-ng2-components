@@ -2,8 +2,6 @@
 
 adf-content-node-selector {
     .adf-upload-dialog {
-        box-shadow: none;
-
         &__content {
             max-height: 64%;
         }
@@ -47,61 +45,19 @@ adf-content-node-selector {
     }
 
     .adf-dropdown-breadcrumb-icon {
-        color: var(--adf-theme-foreground-base-color-045);
-    }
-
-    #{ms.$mat-dialog-title} {
-        margin-bottom: 0;
-        padding: 0;
-
-        &::before {
-            display: none;
-        }
-    }
-
-    .adf-content-node-selector-dialog-title {
-        font-size: var(--theme-title-font-size);
-        font-weight: 600;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.6;
-        letter-spacing: -0.5px;
-        color: var(--adf-theme-foreground-text-color-087);
-        margin-bottom: 20px;
-
-        h2 {
-            margin: unset;
-            font-size: unset;
-        }
+        color: var(--mat-sys-on-secondary-container);
     }
 
     .adf-content-node-selector-dialog-actions {
         padding: 8px;
         height: 77px;
-        background-color: var(--theme-background-color);
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        color: var(--adf-theme-foreground-text-color);
-
-        label {
-            text-transform: uppercase;
-            font-weight: normal;
-        }
-
-        .adf-choose-action {
-            &[disabled] {
-                color: var(--adf-theme-foreground-secondary-text-color);
-            }
-
-            &:enabled {
-                color: var(--theme-primary-color);
-            }
-        }
     }
 }
 
-@media screen and (width <= 768px) {
+@media screen and (width <=768px) {
     .adf-content-node-selector-dialog {
         height: 100vh;
     }

@@ -1,24 +1,9 @@
-@use '../../../mat-selectors.scss' as ms;
-
 $panel-properties-height: 56px !default;
 
 .adf {
     &-metadata-properties {
         .adf-content-metadata-panel {
-            box-shadow: none;
-            border: 1px solid var(--adf-metadata-property-panel-border-color);
-            border-radius: 12px;
             margin: 12px;
-
-            adf-card-view-textitem {
-                #{ms.$mat-form-field-subscript-wrapper} {
-                    display: none;
-                }
-
-                #{ms.$mat-form-field-infix} {
-                    padding-bottom: 0;
-                }
-            }
 
             .adf-property-list .adf-property .adf-property-field {
                 .adf-property-value:not(.adf-card-view-selectitem .adf-property-value) {
@@ -31,37 +16,17 @@ $panel-properties-height: 56px !default;
                 }
 
                 label {
-                    font-size: 19px;
-                    line-height: 20px;
+                    font: var(--mat-sys-headline-small);
                 }
             }
         }
 
         .adf-metadata-properties-header {
             height: $panel-properties-height;
-            padding: 0 12px;
-            border-radius: 12px 12px 0 0;
-
-            &.adf-metadata-properties-header-expanded {
-                border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
-            }
-        }
-
-        #{ms.$mat-expansion-panel-body} {
-            padding-top: 16px;
-
-            input {
-                border-color: transparent;
-                width: 100%;
-
-                &:focus-visible {
-                    outline: none;
-                }
-            }
         }
 
         .adf-edit-icon-buttons {
-            color: var(--adf-theme-foreground-text-color-054);
+            color: var(--mat-sys-on-secondary-container);
         }
 
         #{ms.$mat-chip} {
@@ -73,13 +38,14 @@ $panel-properties-height: 56px !default;
                 .mat-mdc-chip-action-label {
                     overflow: hidden;
                 }
+
                 /* stylelint-enable selector-class-pattern */
             }
         }
 
         .adf-metadata-no-item-added {
             word-break: break-all;
-            font-size: 15px;
+            font: var(--mat-sys-body-small);
             padding: 0 0 0 12px;
         }
 
@@ -93,23 +59,5 @@ $panel-properties-height: 56px !default;
     &-metadata-action-buttons {
         display: flex;
         justify-content: space-evenly;
-
-        &-clear {
-            color: var(--adf-metadata-action-button-clear-color);
-        }
-    }
-
-    &-metadata-categories-header {
-        .adf-categories-button {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 15px;
-            height: $panel-properties-height;
-
-            [hidden] {
-                visibility: hidden;
-            }
-        }
     }
 }

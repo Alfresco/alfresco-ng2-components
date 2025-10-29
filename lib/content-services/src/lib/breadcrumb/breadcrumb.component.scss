@@ -1,11 +1,8 @@
 .adf-breadcrumb {
     display: flex;
     flex: 1;
-    line-height: 24px;
-    font-size: var(--theme-body-1-font-size);
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    color: var(--adf-theme-foreground-text-color-054);
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-on-surface);
     overflow: hidden;
 
     &-container {
@@ -35,7 +32,7 @@
             margin-right: 5px;
 
             &:focus {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
                 outline: none;
             }
 
@@ -44,11 +41,11 @@
             }
 
             &-arrow {
-                font-size: var(--theme-adf-icon-1-font-size);
+                font: var(--mat-sys-body-small);
                 position: absolute;
                 left: 4px;
                 top: 4px;
-                color: white;
+                color: var(--mat-sys-on-secondary);
                 z-index: 2;
             }
 
@@ -70,30 +67,21 @@
         padding-right: 2px;
         overflow: hidden;
         display: flex;
-        line-height: 33px;
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 600;
-        letter-spacing: -0.2px;
+        font: var(--mat-sys-body-medium);
         text-align: left;
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--mat-sys-on-secondary-container);
         flex: 0 1 auto;
         min-width: 35px;
         margin-top: auto;
         text-overflow: ellipsis;
 
-        &:hover,
         &.adf-active {
-            color: var(--adf-theme-foreground-text-color-064);
-        }
-
-        &.adf-active {
-            color: var(--adf-theme-foreground-text-color-087);
+            color: var(--mat-sys-on-surface);
         }
 
         &-chevron {
-            opacity: 1;
             margin-top: 9px;
-            font-size: var(--theme-adf-icon-1-font-size);
+            font: var(--mat-sys-body-small);
         }
 
         &-anchor {
@@ -110,7 +98,7 @@
             text-align: start;
 
             &:focus {
-                outline: 1px solid var(--theme-accent-color-a200);
+                outline: 1px solid var(--mat-sys-outline-variant);
                 outline-offset: -1px;
             }
         }

@@ -11,14 +11,8 @@
 
     .adf-new-version-uploader-dialog-title {
         flex: 0 0 auto;
-        font-size: 20px;
-        font-weight: 600;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.6;
+        font: var(--mat-sys-title-medium);
         margin: 0;
-        letter-spacing: -0.5px;
-        color: var(--adf-theme-foreground-text-color-087);
     }
 
     section.adf-new-version-uploader-dialog-content {
@@ -34,12 +28,11 @@
         padding: 8px 8px 24px 8px;
         display: flex;
         justify-content: flex-end;
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--mat-sys-on-secondary-container);
         -webkit-font-smoothing: antialiased;
 
         button {
             text-transform: uppercase;
-            font-weight: normal;
         }
     }
 
