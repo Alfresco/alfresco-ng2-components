@@ -24,6 +24,7 @@ import {
     UntypedFormBuilder,
     UntypedFormControl,
     UntypedFormGroup,
+    ValidationErrors,
     Validators
 } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -41,7 +42,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoApiService } from '../../services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-interface visibilityOption {
+interface VisibilityOption {
     value: string;
     label: string;
     disabled: boolean;
@@ -83,7 +84,7 @@ export class LibraryDialogComponent implements OnInit {
     libraryTitleExists = false;
     form: UntypedFormGroup;
     visibilityOption: string;
-    visibilityOptions: visibilityOption[] = [
+    visibilityOptions: VisibilityOption[] = [
         { value: 'PUBLIC', label: 'LIBRARY.VISIBILITY.PUBLIC', disabled: false },
         { value: 'PRIVATE', label: 'LIBRARY.VISIBILITY.PRIVATE', disabled: false },
         {
@@ -276,7 +277,7 @@ export class LibraryDialogComponent implements OnInit {
               };
     }
 
-    private createSiteIdValidator() {
+    private createSiteIdValidator(): (control: AbstractControl) => Promise<ValidationErrors | null> {
         let timer;
 
         return (control: AbstractControl) => {
@@ -285,14 +286,12 @@ export class LibraryDialogComponent implements OnInit {
             }
 
             return new Promise((resolve) => {
-                timer = setTimeout(
-                    () =>
-                        this.sitesService.getSite(control.value).subscribe({
-                            next: () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
-                            error: () => resolve(null)
-                        }),
-                    300
-                );
+                timer = setTimeout(() => {
+                    this.sitesService.getSite(control.value).subscribe({
+                        next: () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
+                        error: () => resolve(null)
+                    });
+                }, 300);
             });
         };
     }

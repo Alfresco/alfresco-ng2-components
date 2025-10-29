@@ -361,7 +361,7 @@ describe('LibraryDialogComponent', () => {
     it('should catch error if findLibraryByTitle fails', async () => {
         findSitesSpy.and.returnValue(Promise.reject(new Error('error')));
         const result = await component['findLibraryByTitle']('library');
-        expect(result).toEqual({ list: { entries: [] } });
+        expect(result).toEqual(findSitesResponse);
     });
 
     it('should show correct error message when value is only spaces', () => {
