@@ -165,7 +165,7 @@ $dialog-padding: 24px;
             left: -$dialog-padding;
             display: block;
             height: 0;
-            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+            border-bottom: 1px solid var(--mat-sys-outline-variant);
             width: calc(100% + $dialog-padding * 2);
         }
     }
@@ -284,5 +284,5 @@ $dialog-padding: 24px;
 }
 
 .adf-additional-actions {
-    color: var(--theme-primary-color);
+    color: var(--mat-sys-primary);
 }

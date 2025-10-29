@@ -1,12 +1,10 @@
-@use '../../../styles/mat-selectors' as ms;
-
 .adf-image-viewer {
     width: 100%;
 
     .adf-image-container {
         &:focus {
             outline-offset: -1px;
-            outline: 1px solid var(--theme-accent-color-a200);
+            outline: 1px solid var(--mat-sys-primary);
         }
 
         display: flex;
@@ -33,15 +31,6 @@
         left: 50%;
         transform: translateX(-50%);
 
-        .adf-toolbar #{ms.$mat-toolbar} {
-            max-height: 48px;
-            background-color: var(--adf-theme-background-card-color);
-            border-width: 0;
-            border-radius: 2px;
-            /* stylelint-disable-next-line */
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
-        }
-
         .adf-main-toolbar {
             display: inline-block;
         }
@@ -55,8 +44,7 @@
             cursor: default;
             width: 79px;
             height: 24px;
-            font-size: var(--theme-body-1-font-size);
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            border: 1px solid var(--mat-sys-outline);
             text-align: center;
             line-height: 24px;
             margin-left: 4px;
