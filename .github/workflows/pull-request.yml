@@ -73,8 +73,11 @@ jobs:
 
       - name: ci:force flag parser
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$ACTOR" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
@@ -91,16 +94,21 @@ jobs:
 
       - name: show pr number
         shell: bash
+        env:
+          PR_NUMBER: ${{ steps.action.outputs.number }}
         run: |
-          echo "PR: ${{ steps.action.outputs.number }}"
+          echo "PR: $PR_NUMBER"
 
       - name: check if pr is approved
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
+          EVENT_NAME: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          PR_NUMBER: ${{ steps.action.outputs.number }}
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$ACTOR" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
             skip_check="true"
           elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
@@ -108,11 +116,11 @@ jobs:
             skip_check="true"
           fi
 
-          if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
+          if [ "$ACTOR" == "dependabot[bot]" ] || [ "$ACTOR" == "alfresco-build" ]; then
+            echo -e "\033[32mCommit by $ACTOR. No need for approval.\033[0m"
             skip_check="true"
           fi
-          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" == "schedule" ] || [ "$EVENT_NAME" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule event\033[0m"
             skip_check="true"
           fi
@@ -124,7 +132,7 @@ jobs:
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            prNumber=${{ steps.action.outputs.number }}
+            prNumber=$PR_NUMBER
             echo "PR: $prNumber"
             checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
@@ -184,8 +192,10 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
+        env:
+          EXCLUDE_PATTERN: ${{ matrix.unit-tests.exclude }}
         run: |
-          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npm run test:affected -- $NX_CALCULATION_FLAGS --exclude=$EXCLUDE_PATTERN
 
   lint:
     # long timeout required when cache has to be recreated
@@ -241,9 +251,12 @@ jobs:
               core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
             }
       - name: Check value after
+        env:
+          STEP_RESULT: ${{ toJson(steps.pr-forbidden.*.result) }}
+          HAS_FAILURE: ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}
         run: |
-          echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
-          echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
+          echo "result $STEP_RESULT" && echo "result $STEP_RESULT"
+          echo "result $HAS_FAILURE"
 
   finalize:
     if: ${{ always() }}
