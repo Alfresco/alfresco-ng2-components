@@ -2,8 +2,7 @@
     &-checkbox-label {
         position: relative;
         cursor: pointer;
-        font-size: var(--theme-subheading-2-font-size);
-        line-height: 24px;
+        font: var(--mat-sys-body-large);
         margin: 0;
     }
 }
