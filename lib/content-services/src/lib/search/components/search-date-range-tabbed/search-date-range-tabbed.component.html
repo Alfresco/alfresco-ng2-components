@@ -6,6 +6,7 @@
             [maxDate]="settings.maxDate"
             [field]="field"
             [initialValue]="preselectedValues[field]"
+            [onReset$]="reset$"
             (changed)="onDateRangedValueChanged($event, field)"
             (valid)="tabsValidity[field]=$event" />
     </ng-container>

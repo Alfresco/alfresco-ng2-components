@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DateRangeType } from './search-date-range/date-range-type';
 import { SearchDateRange } from './search-date-range/search-date-range';
@@ -42,6 +42,13 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
+    private value: { [key: string]: Partial<SearchDateRange> } = {};
+    private queryMapByField: Map<string, string> = new Map<string, string>();
+    private displayValueMapByField: Map<string, string> = new Map<string, string>();
+
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly resetSubject$ = new Subject<void>();
+
     displayValue$ = new ReplaySubject<string>(1);
     id: string;
     startValue: SearchDateRange = {
@@ -58,12 +65,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     tabsValidity: { [key: string]: boolean } = {};
     combinedQuery: string;
     combinedDisplayValue: string;
-
-    private value: { [key: string]: Partial<SearchDateRange> } = {};
-    private queryMapByField: Map<string, string> = new Map<string, string>();
-    private displayValueMapByField: Map<string, string> = new Map<string, string>();
-
-    private readonly destroyRef = inject(DestroyRef);
+    reset$ = this.resetSubject$.asObservable();
 
     constructor(private translateService: TranslationService) {}
 
@@ -121,6 +123,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.context.queryFragments[this.id] = undefined;
         this.context.filterRawParams[this.id] = undefined;
         this.submitValues(updateContext);
+        this.resetSubject$.next();
     }
 
     setValue(value: { [key: string]: SearchDateRange }) {

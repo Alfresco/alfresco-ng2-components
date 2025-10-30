@@ -32,6 +32,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable } from 'rxjs';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
@@ -69,6 +70,9 @@ export class SearchDateRangeComponent implements OnInit {
             this.form.patchValue(value);
         }
     }
+
+    @Input()
+    onReset$: Observable<void>;
 
     @Output()
     changed = new EventEmitter<Partial<SearchDateRange>>();
@@ -118,6 +122,7 @@ export class SearchDateRangeComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
         this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.onChange());
+        this.onReset$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
     }
     private updateValidators(dateRangeType: DateRangeType) {
         switch (dateRangeType) {
@@ -188,5 +193,15 @@ export class SearchDateRangeComponent implements OnInit {
             default:
                 return true;
         }
+    }
+
+    reset(): void {
+        this.form.reset({
+            dateRangeType: DateRangeType.ANY,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
+        });
     }
 }
