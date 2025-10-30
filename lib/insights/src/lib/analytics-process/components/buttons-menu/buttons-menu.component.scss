@@ -15,7 +15,6 @@
         display: flex;
 
         button {
-            color: black;
             padding: 0;
         }
 
@@ -24,7 +23,7 @@
         }
 
         button > #{ms.$material-icons} {
-            color: black;
+            color: var(--mat-sys-on-surface);
             margin: 0 10px;
         }
     }
