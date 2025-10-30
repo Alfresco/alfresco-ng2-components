@@ -19,14 +19,15 @@
           [yPosition]="menuPositionY"
           id="adf-notification-history-menu"
           class="adf-notification-history-menu adf-notification-history-menu-panel">
-    <div class="adf-notification-history-list-header">
+    <div class="adf-notification-history-list-header" aria-hidden="true">
         <span class="adf-notification-history-menu-title">{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
-        <button mat-menu-item
+        <button mat-icon-button
                 *ngIf="notifications.length"
                 id="adf-notification-history-mark-as-read"
                 class="adf-notification-history-mark-as-read"
                 title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
-                (click)="markAsRead()">
+                (click)="markAsRead()"
+                #markAsReadButton>
             <mat-icon class="adf-notification-history-mark-as-read-icon">done_all</mat-icon>
         </button>
     </div>
@@ -38,7 +39,8 @@
             <button mat-menu-item
                     *ngFor="let notification of paginatedNotifications"
                     (click)="onNotificationClick(notification, $event)"
-                    class="adf-notification-history-menu-item">
+                    class="adf-notification-history-menu-item"
+                    (keydown)="moveToMarkAllAsReadButton($event)">
                 <div class="adf-notification-history-menu-item-content">
                     <div *ngIf="notification.initiator; else no_avatar"
                          [outerHTML]="notification.initiator | usernameInitials : 'adf-notification-initiator-pic'"></div>

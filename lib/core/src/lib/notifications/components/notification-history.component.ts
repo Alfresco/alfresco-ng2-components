@@ -21,7 +21,7 @@ import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.mod
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -57,6 +57,9 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     @ViewChild(MatMenuTrigger, { static: true })
     trigger: MatMenuTrigger;
 
+    @ViewChild('markAsReadButton')
+    markAsReadButton: MatIconButton;
+
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
     menuPositionX: MenuPositionX = 'after';
@@ -75,7 +78,11 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
+    constructor(
+        private notificationService: NotificationService,
+        public storageService: StorageService,
+        public cd: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
@@ -143,6 +150,13 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
         if (notification.clickCallBack) {
             notification.clickCallBack(notification.args);
             this.trigger.closeMenu();
+        }
+    }
+
+    moveToMarkAllAsReadButton(event: KeyboardEvent) {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+            this.markAsReadButton.focus();
+            event.stopPropagation();
         }
     }
 }
