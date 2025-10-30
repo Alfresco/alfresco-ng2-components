@@ -255,8 +255,8 @@ jobs:
           STEP_RESULT: ${{ toJson(steps.pr-forbidden.*.result) }}
           HAS_FAILURE: ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}
         run: |
-          echo "result $STEP_RESULT" && echo "result $STEP_RESULT"
-          echo "result $HAS_FAILURE"
+          echo "Step result: $STEP_RESULT"
+          echo "Has failure: $HAS_FAILURE"
 
   finalize:
     if: ${{ always() }}
