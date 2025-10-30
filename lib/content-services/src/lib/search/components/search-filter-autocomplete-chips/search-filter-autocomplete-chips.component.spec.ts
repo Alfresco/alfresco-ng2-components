@@ -24,6 +24,7 @@ import { AutocompleteField } from '../../models/autocomplete-option.interface';
 import { TagService } from '../../../tag/services/tag.service';
 import { SitesService } from '../../../common/services/sites.service';
 import { SitePaging } from '@alfresco/js-api';
+import { CategoryService } from '../../../category';
 
 describe('SearchFilterAutocompleteChipsComponent', () => {
     let component: SearchFilterAutocompleteChipsComponent;
@@ -210,5 +211,32 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
             ]);
             done();
         });
+    });
+
+    it('should still call sitesService.getSites when input is empty for LOCATION field', () => {
+        component.settings.field = AutocompleteField.LOCATION;
+        const getSitesSpy = spyOn(sitesService, 'getSites').and.returnValue(
+            of({
+                list: { entries: [], pagination: {} }
+            })
+        );
+
+        component.onInputChange('');
+
+        expect(getSitesSpy).toHaveBeenCalled();
+    });
+
+    it('should still call categoryService.searchCategories when input is empty for CATEGORIES field', () => {
+        component.settings.field = AutocompleteField.CATEGORIES;
+        const categoryService = TestBed.inject(CategoryService);
+        const searchSpy = spyOn(categoryService, 'searchCategories').and.returnValue(
+            of({
+                list: { entries: [], pagination: {} }
+            })
+        );
+
+        component.onInputChange('');
+
+        expect(searchSpy).toHaveBeenCalledWith('', 0, 15);
     });
 });
