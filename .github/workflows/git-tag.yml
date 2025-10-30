@@ -52,6 +52,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - name: "Release tag"
+        env:
+          DRYRUN_FLAG: ${{ steps.set-dryrun.outputs.dryrun }}
         run: |
           git fetch --all --quiet
-          BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh $DRYRUN_FLAG
