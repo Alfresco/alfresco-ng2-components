@@ -108,7 +108,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((value: string) => {
-                this.filteredOptions = value ? this.filter(this.autocompleteOptions, value) : [];
+                this.filteredOptions = this.filter(this.autocompleteOptions, value);
                 this.inputChanged.emit(value);
             });
         this.onReset$?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
