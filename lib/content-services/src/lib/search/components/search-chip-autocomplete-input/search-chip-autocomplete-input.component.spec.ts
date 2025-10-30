@@ -345,12 +345,12 @@ describe('SearchChipAutocompleteInputComponent', () => {
             enterNewInputValue('option');
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(component.filteredOptions.length).toBeGreaterThan(0);
+            expect(component.filteredOptions.length).toBe(component.autocompleteOptions.length);
 
             enterNewInputValue('');
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(component.filteredOptions.length).toBe(0);
+            expect(component.filteredOptions.length).toBe(component.autocompleteOptions.length);
         });
     });
 });

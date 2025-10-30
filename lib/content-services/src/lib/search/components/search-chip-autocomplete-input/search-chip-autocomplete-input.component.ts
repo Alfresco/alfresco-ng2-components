@@ -77,7 +77,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
     @Input()
     filter = (options: AutocompleteOption[], value: string): AutocompleteOption[] => {
         const filterValue = value.toLowerCase();
-        return options.filter((option) => option.value.toLowerCase().includes(filterValue)).slice(0, 15);
+        return options?.filter((option) => option.value.toLowerCase().includes(filterValue)).slice(0, 15) ?? [];
     };
 
     @Output()
