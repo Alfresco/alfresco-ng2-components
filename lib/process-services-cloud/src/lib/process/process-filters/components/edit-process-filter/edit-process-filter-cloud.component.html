@@ -88,7 +88,7 @@
                                [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key" />
                             <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key" />
                             <div class="adf-edit-process-filter-date-error-container">
-                                <div *ngIf="hasError(processFilterProperty)">
+                                <mat-error *ngIf="hasError(processFilterProperty)">
                                     <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
                                     <mat-icon class="adf-error-icon" adf-icon="warning" />
                                 </div>

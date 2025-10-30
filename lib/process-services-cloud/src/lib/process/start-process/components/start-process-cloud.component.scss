@@ -1,9 +1,5 @@
 .adf {
     &-start-process {
-        .adf-start-process-input-label {
-            color: var(--adf-theme-mat-grey-color-a200-dark);
-        }
-
         &-cloud-actions {
             display: flex;
             justify-content: flex-end;
