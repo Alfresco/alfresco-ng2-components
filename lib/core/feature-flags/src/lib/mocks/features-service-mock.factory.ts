@@ -17,6 +17,7 @@
 
 import { of } from 'rxjs';
 import { FeaturesServiceToken, FlagChangeset, IFeaturesService } from '../interfaces/features.interface';
+import { signal } from '@angular/core';
 
 export interface MockFeatureFlags {
     [key: string]: boolean;
@@ -34,6 +35,14 @@ const assertFeatureFlag = (flagChangeset: FlagChangeset, key: string): void => {
 
 const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => ({
     init: () => of(flagChangeset),
+    isOn: (key) => {
+        assertFeatureFlag(flagChangeset, key);
+        return signal(flagChangeset[key].current);
+    },
+    isOff: (key) => {
+        assertFeatureFlag(flagChangeset, key);
+        return signal(!flagChangeset[key].current);
+    },
     isOn$: (key) => {
         assertFeatureFlag(flagChangeset, key);
         return of(flagChangeset[key].current);
@@ -42,6 +51,7 @@ const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => 
         assertFeatureFlag(flagChangeset, key);
         return of(!flagChangeset[key].current);
     },
+    getFlags: () => signal(flagChangeset),
     getFlags$: () => of(flagChangeset)
 });
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import {
@@ -28,6 +28,7 @@ import {
     WritableFeaturesServiceConfig
 } from '../interfaces/features.interface';
 import { FlagSetParser } from './flagset.parser';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
@@ -60,12 +61,24 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
         return of(initialFlagChangeSet);
     }
 
+    isOn(key: string): Signal<boolean> {
+        return toSignal(this.isOn$(key));
+    }
+
+    isOff(key: string): Signal<boolean> {
+        return toSignal(this.isOff$(key));
+    }
+
     isOn$(key: string): Observable<boolean> {
         return this.flags$.pipe(map((flags) => !!flags[key]?.current));
     }
 
     isOff$(key: string): Observable<boolean> {
         return this.flags$.pipe(map((flags) => !flags[key]?.current));
+    }
+
+    getFlags(): Signal<WritableFlagChangeset> {
+        return toSignal(this.flags$);
     }
 
     getFlags$(): Observable<WritableFlagChangeset> {

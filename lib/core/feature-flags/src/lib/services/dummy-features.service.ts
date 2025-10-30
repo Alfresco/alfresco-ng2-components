@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, signal, Signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IFeaturesService, FlagChangeset } from '../interfaces/features.interface';
 
@@ -25,12 +25,24 @@ export class DummyFeaturesService implements IFeaturesService {
         return of();
     }
 
+    isOn(_key: string): Signal<boolean> {
+        return signal(false);
+    }
+
+    isOff(_key: string): Signal<boolean> {
+        return signal(true);
+    }
+
     isOn$(): Observable<boolean> {
         return of(false);
     }
 
     isOff$(_key: string): Observable<boolean> {
         return of(true);
+    }
+
+    getFlags(): Signal<FlagChangeset> {
+        return signal({});
     }
 
     getFlags$(): Observable<FlagChangeset> {

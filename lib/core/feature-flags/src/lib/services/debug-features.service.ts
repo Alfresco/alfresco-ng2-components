@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import {
@@ -28,6 +28,7 @@ import {
     WritableFeaturesServiceConfig,
     FlagSet
 } from '../interfaces/features.interface';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class DebugFeaturesService implements IDebugFeaturesService {
@@ -54,6 +55,14 @@ export class DebugFeaturesService implements IDebugFeaturesService {
         });
     }
 
+    isOn(key: string): Signal<boolean> {
+        return toSignal(this.isOn$(key));
+    }
+
+    isOff(key: string): Signal<boolean> {
+        return toSignal(this.isOff$(key));
+    }
+
     isOn$(key: string): Observable<boolean> {
         return this.isInDebugMode$.pipe(
             switchMap((isInDebugMode) => (isInDebugMode ? this.writableFeaturesService : this.overriddenFeaturesService).isOn$(key))
@@ -64,6 +73,15 @@ export class DebugFeaturesService implements IDebugFeaturesService {
         return this.isInDebugMode$.pipe(
             switchMap((isInDebugMode) => (isInDebugMode ? this.writableFeaturesService : this.overriddenFeaturesService).isOff$(key))
         );
+    }
+
+    /**
+     * Gets the flags as a signal.
+     *
+     * @returns the signal that emits the flag changeset.
+     */
+    getFlags(): Signal<FlagChangeset> {
+        return toSignal(this.getFlags$());
     }
 
     /**

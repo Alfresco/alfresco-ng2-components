@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export const FeaturesServiceConfigToken = new InjectionToken<any>('FeatureServiceConfigToken');
@@ -53,8 +53,11 @@ export interface FlagSet {
 
 export interface IFeaturesService<T = FlagChangeset> {
     init(): Observable<T>;
+    isOn(key: string): Signal<boolean>;
+    isOff(key: string): Signal<boolean>;
     isOn$(key: string): Observable<boolean>;
     isOff$(key: string): Observable<boolean>;
+    getFlags(): Signal<T>;
     getFlags$(): Observable<T>;
 }
 
