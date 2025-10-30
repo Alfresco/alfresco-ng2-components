@@ -17,11 +17,13 @@ runs:
 
     - name: set TAG_NPM
       shell: bash
+      env:
+        BRANCH_NAME: ${{ inputs.branch_name }}
       run: |
         TAG_NPM="alpha"
         VERSION_IN_PACKAGE_JSON=$(node -p "require('./package.json')".version)
         echo "version in package.json=${VERSION_IN_PACKAGE_JSON}"
-        if [[ ${{ inputs.branch_name }} =~ ^master(-patch.*)?$ ]]; then
+        if [[ $BRANCH_NAME =~ ^master(-patch.*)?$ ]]; then
             # Pre-release versions
             if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
             then
@@ -31,7 +33,7 @@ runs:
                 TAG_NPM=latest
             fi
         fi
-        if [[ ${{ inputs.branch_name }} =~ ^develop(-patch.*)?$ ]]; then
+        if [[ $BRANCH_NAME =~ ^develop(-patch.*)?$ ]]; then
             TAG_NPM=alpha
         fi
         echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
