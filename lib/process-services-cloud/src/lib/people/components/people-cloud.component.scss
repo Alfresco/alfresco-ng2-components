@@ -2,16 +2,11 @@
     &-people-cloud {
         width: 100%;
 
-        &-option-not-active:not(&:active) {
-            background: inherit;
-            color: var(--adf-theme-foreground-secondary-text-color);
-        }
-
         &-title {
-            color: var(--adf-theme-foreground-secondary-text-color);
+            color: var(--mat-sys-on-surface-variant);
 
             &--focus {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
             }
         }
     }
@@ -21,14 +16,6 @@
         padding: 10px 0;
     }
 
-    &-people-cloud-option-active:not(&:disabled) {
-        color: var(--adf-theme-foreground-text-color);
-    }
-
-    &-people-cloud-option-not-active:not(&:active) {
-        color: var(--adf-theme-foreground-secondary-text-color);
-    }
-
     &-people-cloud-row {
         display: flex;
         align-items: center;
@@ -36,7 +23,7 @@
     }
 
     &-people-cloud-pic {
-        background: var(--theme-primary-color);
+        background: var(--mat-sys-primary);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -57,11 +44,5 @@
             line-height: 1.33;
             width: auto;
         }
-    }
-
-    &-error,
-    &-error-text,
-    &-error-icon {
-        color: var(--theme-warn-color);
     }
 }
