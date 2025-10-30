@@ -1,18 +1,17 @@
 .adf-process-filters {
-    margin-right: calc(-1 * var(--adf-theme-spacing));
+    margin-right: -16px;
 
     &__entry {
-        font-size: var(--theme-body-1-font-size);
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--mat-sys-on-surface-variant);
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex: 1;
         height: 100%;
-        gap: var(--adf-theme-spacing);
+        gap: 16px;
 
         &:hover {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
 
         &-counter {
@@ -20,16 +19,16 @@
             border-radius: 15px;
 
             &.adf-active {
-                background-color: var(--theme-accent-color);
-                color: var(--theme-accent-color-default-contrast);
-                font-size: smaller;
+                background-color: var(--mat-sys-secondary);
+                color: var(--mat-sys-on-secondary);
+                font: var(--mat-sys-body-small);
             }
         }
     }
 
     .adf-active {
         .adf-process-filters__entry {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 }
