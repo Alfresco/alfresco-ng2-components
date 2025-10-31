@@ -116,4 +116,29 @@ describe('DebugFeaturesService', () => {
             done();
         });
     });
+
+    it('should return signal for isOn', () => {
+        const flagKey = 'feature1';
+
+        const signal = TestBed.runInInjectionContext(() => service.isOn(flagKey));
+
+        expect(signal).toBeDefined();
+        expect(signal()).toBe(false);
+    });
+
+    it('should return signal for isOff', () => {
+        const flagKey = 'feature1';
+
+        const signal = TestBed.runInInjectionContext(() => service.isOff(flagKey));
+
+        expect(signal).toBeDefined();
+        expect(signal()).toBe(true);
+    });
+
+    it('should return signal for getFlags', () => {
+        const signal = TestBed.runInInjectionContext(() => service.getFlags());
+
+        expect(signal).toBeDefined();
+        expect(signal()).toEqual({});
+    });
 });

@@ -57,4 +57,25 @@ describe('DummyFeaturesService', () => {
             expect(flags).toEqual({});
         });
     });
+
+    it('should return false signal when isOn is called', () => {
+        const signal = TestBed.runInInjectionContext(() => service.isOn('anyKey'));
+
+        expect(signal).toBeDefined();
+        expect(signal()).toBe(false);
+    });
+
+    it('should return true signal when isOff is called', () => {
+        const signal = TestBed.runInInjectionContext(() => service.isOff('anyKey'));
+
+        expect(signal).toBeDefined();
+        expect(signal()).toBe(true);
+    });
+
+    it('should return empty object signal when getFlags is called', () => {
+        const signal = TestBed.runInInjectionContext(() => service.getFlags());
+
+        expect(signal).toBeDefined();
+        expect(signal()).toEqual({});
+    });
 });

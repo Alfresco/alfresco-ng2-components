@@ -167,6 +167,41 @@ describe('StorageFeaturesService', () => {
         it('should return custom storageFeaturesService key', () => {
             expect(storageFeaturesService.storageKey).toEqual('storage-key-test');
         });
+
+        it('should return signal for isOn', () => {
+            const flagKey = 'feature1';
+
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.isOn(flagKey));
+
+            expect(signal).toBeDefined();
+            expect(signal()).toBe(true);
+        });
+
+        it('should return signal for isOff', () => {
+            const flagKey = 'feature2';
+
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.isOff(flagKey));
+
+            expect(signal).toBeDefined();
+            expect(signal()).toBe(true);
+        });
+
+        it('should return signal for getFlags', () => {
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.getFlags());
+
+            expect(signal).toBeDefined();
+            expect(signal()).toEqual({
+                feature1: {
+                    current: true,
+                    previous: null
+                },
+                feature2: {
+                    current: false,
+                    fictive: true,
+                    previous: null
+                }
+            });
+        });
     });
 
     describe('if flags are not present in LocalStorage and no configuration is provided', () => {
@@ -183,6 +218,45 @@ describe('StorageFeaturesService', () => {
 
         it('should return default storageFeaturesService key', () => {
             expect(storageFeaturesService.storageKey).toEqual('feature-flags');
+        });
+
+        it('should return signal for isOn with non-existent flag', () => {
+            const flagKey = 'nonExistentFlag';
+
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.isOn(flagKey));
+
+            expect(signal).toBeDefined();
+            expect(signal()).toBe(false);
+        });
+
+        it('should return signal for isOff with non-existent flag', () => {
+            const flagKey = 'nonExistentFlag';
+
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.isOff(flagKey));
+
+            expect(signal).toBeDefined();
+            expect(signal()).toBe(true);
+        });
+
+        it('should return signal for getFlags with empty flags', () => {
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.getFlags());
+
+            expect(signal).toBeDefined();
+            expect(signal()).toEqual({});
+        });
+
+        it('should update signal when flag is changed', (done) => {
+            const flagKey = 'testFlag';
+            const signal = TestBed.runInInjectionContext(() => storageFeaturesService.isOn(flagKey));
+
+            expect(signal()).toBe(false);
+
+            storageFeaturesService.setFlag(flagKey, true);
+
+            setTimeout(() => {
+                expect(signal()).toBe(true);
+                done();
+            }, 10);
         });
     });
 });
