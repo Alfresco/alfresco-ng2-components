@@ -84,9 +84,7 @@ export class SavedSearchesService {
                         return this.getSavedSearchesFromPreferenceApi();
                     }
                 }),
-                catchError(() => {
-                    return this.getSavedSearchesFromPreferenceApi();
-                })
+                catchError(() => this.getSavedSearchesFromPreferenceApi())
             );
         }
     }
