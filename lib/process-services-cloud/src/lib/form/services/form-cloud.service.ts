@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { FormValues, FormModel, FormFieldOption, FormFieldValidator } from '@alfresco/adf-core';
+import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService } from '@alfresco/adf-core';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
@@ -211,9 +211,10 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @param json JSON data to create the form
      * @param data Values for the form's fields
      * @param readOnly Toggles whether the form should be read-only
+     * @param formService Implements Process Services form methods
      * @returns Form created from the JSON specification
      */
-    parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {
+    parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false, formService?: FormService): FormModel {
         if (json) {
             const flattenForm = {
                 ...json.formRepresentation,
@@ -226,7 +227,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
                 formValues[variable.name] = variable.value;
             });
 
-            return new FormModel(flattenForm, formValues, readOnly, undefined, undefined, this.fieldValidators);
+            return new FormModel(flattenForm, formValues, readOnly, formService, undefined, this.fieldValidators);
         }
         return null;
     }

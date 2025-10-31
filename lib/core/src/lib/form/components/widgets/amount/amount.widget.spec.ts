@@ -24,6 +24,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 import { of } from 'rxjs';
+import { FormFieldEvent, FormService } from '@alfresco/adf-core';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -277,6 +278,7 @@ describe('AmountWidgetComponent - rendering', () => {
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
     let testingUtils: UnitTestingUtils;
+    let formService: FormService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -286,6 +288,7 @@ describe('AmountWidgetComponent - rendering', () => {
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+        formService = TestBed.inject(FormService);
     });
 
     it('[C289915] - Should be able to display different currency icons', async () => {
@@ -478,6 +481,178 @@ describe('AmountWidgetComponent - rendering', () => {
         });
     });
 
+    describe('Test widget with ADF_AMOUNT_SETTINGS as observable', () => {
+        beforeEach(() => {
+            TestBed.resetTestingModule();
+        });
+
+        describe('set module for enableDisplayBasedOnLocale = true', () => {
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'TestAmount1',
+                name: 'Test Amount',
+                type: 'amount',
+                currency: 'USD',
+                enableFractions: true,
+                value: '1234.55'
+            });
+            beforeEach(async () => {
+                TestBed.configureTestingModule({
+                    imports: [AmountWidgetComponent],
+                    providers: [{ provide: ADF_AMOUNT_SETTINGS, useValue: of({ enableDisplayBasedOnLocale: true }) }]
+                });
+                fixture = TestBed.createComponent(AmountWidgetComponent);
+                widget = fixture.componentInstance;
+                const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
+                spyOnProperty(window, 'navigator').and.returnValue({
+                    languages: returnedLanguages
+                } as any);
+                fixture.componentRef.setInput('field', mockField);
+                loader = TestbedHarnessEnvironment.loader(fixture);
+                testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+                fixture.detectChanges();
+            });
+
+            it('should set enableDisplayBasedOnLocale to true', () => {
+                expect(widget.enableDisplayBasedOnLocale).toBeTrue();
+                expect(widget.decimalProperty).toBe('1.2-2');
+                expect(widget.locale).toBe('en-GB');
+                expect(widget.valueAsNumber).toBe('1234.55');
+                expect(widget.amountWidgetValue).toBe('$1,234.55');
+            });
+
+            it('should not display prefix with currency when enableDisplayBasedOnLocale = true', async () => {
+                const field = await testingUtils.getMatFormField();
+                expect(await field.getPrefixText()).toBe('');
+            });
+        });
+    });
+
+    describe('AmountWidgetComponent - subscribeToFieldChanges', () => {
+        it('should subscribe to formFieldValueChanged events for the specific field', () => {
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'amount-1',
+                name: 'Test Amount',
+                type: 'amount',
+                value: '100'
+            });
+            const subscriptionSpy = spyOn(formService.formFieldValueChanged, 'subscribe').and.callThrough();
+            widget.field = mockField;
+            widget.subscribeToFieldChanges();
+
+            expect(subscriptionSpy).toHaveBeenCalled();
+        });
+
+        it('should update value when field value changes and input is not in focus with enableDisplayBasedOnLocale enabled', async () => {
+            spyOn(widget, 'getLocale').and.returnValue('en-US');
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'amount-1',
+                name: 'Test Amount',
+                type: 'amount',
+                value: '100',
+                currency: 'USD'
+            });
+            widget.field = mockField;
+            widget.enableDisplayBasedOnLocale = true;
+            widget.isInputInFocus = false;
+            widget.currency = 'USD';
+            widget.decimalProperty = '1.0-0';
+            widget.ngOnInit();
+
+            const updateValueSpy = spyOn(widget, 'updateValue').and.callThrough();
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, { ...mockField, value: '200' } as FormFieldModel));
+            await fixture.whenStable();
+
+            expect(updateValueSpy).toHaveBeenCalledWith('200');
+            expect(widget.amountWidgetValue).toBe('$200');
+        });
+
+        it('should update amountWidgetValue when field value changes and input is not in focus with enableDisplayBasedOnLocale disabled', () => {
+            const updateValueSpy = spyOn(widget, 'updateValue').and.callThrough();
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'amount-1',
+                name: 'Test Amount',
+                type: 'amount',
+                value: '100'
+            });
+            widget.field = mockField;
+            widget.enableDisplayBasedOnLocale = false;
+            widget.isInputInFocus = false;
+            widget.ngOnInit();
+
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, { ...mockField, value: '200' } as FormFieldModel));
+
+            expect(updateValueSpy).not.toHaveBeenCalled();
+            expect(widget.amountWidgetValue).toBe('200');
+        });
+
+        it('should not update value with formService.formFieldValueChanged when input is in focus', () => {
+            spyOn(widget, 'getLocale').and.returnValue('en-US');
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'amount-1',
+                name: 'Test Amount',
+                type: 'amount',
+                value: '100'
+            });
+            widget.field = mockField;
+            widget.enableDisplayBasedOnLocale = true;
+            widget.isInputInFocus = true;
+            widget.amountWidgetValue = '100';
+            widget.ngOnInit();
+            const updateValueSpy = spyOn(widget, 'updateValue');
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, { ...mockField, value: '200' } as FormFieldModel));
+
+            expect(updateValueSpy).not.toHaveBeenCalled();
+            expect(widget.amountWidgetValue).toBe('100');
+        });
+
+        it('should not react to events from different fields', () => {
+            spyOn(widget, 'getLocale').and.returnValue('en-US');
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'amount-1',
+                name: 'Test Amount',
+                type: 'amount',
+                value: '100',
+                enableFractions: false
+            });
+            const otherField = new FormFieldModel(new FormModel(), {
+                id: 'amount-2',
+                name: 'Other Amount',
+                type: 'amount',
+                value: '200'
+            });
+            widget.field = mockField;
+            widget.currency = 'USD';
+            widget.enableDisplayBasedOnLocale = true;
+            widget.isInputInFocus = false;
+            widget.amountWidgetValue = '100';
+            widget.ngOnInit();
+
+            const updateValueSpy = spyOn(widget, 'updateValue').and.callThrough();
+
+            formService.formFieldValueChanged.next(new FormFieldEvent(otherField.form, otherField));
+
+            expect(updateValueSpy).not.toHaveBeenCalled();
+        });
+
+        it('should use field.value when updating without enableDisplayBasedOnLocale and input not in focus', () => {
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'amount-1',
+                name: 'Test Amount',
+                type: 'amount',
+                value: '100'
+            });
+            widget.field = mockField;
+            widget.enableDisplayBasedOnLocale = false;
+            widget.isInputInFocus = false;
+            widget.ngOnInit();
+
+            mockField.value = '300';
+            formService.formFieldValueChanged.next(new FormFieldEvent(mockField.form, mockField));
+
+            expect(widget.amountWidgetValue).toBe('300');
+        });
+    });
+
     describe('Test widget with different setting for enableDisplayBasedOnLocale', () => {
         beforeEach(() => {
             TestBed.resetTestingModule();
@@ -611,52 +786,6 @@ describe('AmountWidgetComponent - rendering', () => {
                 expect(widget.valueAsNumber).toBeUndefined();
                 expect(widget.amountWidgetValue).toBe('456789');
                 expect(fieldValue).toBe('456789');
-            });
-        });
-    });
-
-    describe('Test widget with ADF_AMOUNT_SETTINGS as observable', () => {
-        beforeEach(() => {
-            TestBed.resetTestingModule();
-        });
-
-        describe('set module for enableDisplayBasedOnLocale = true', () => {
-            const mockField = new FormFieldModel(new FormModel(), {
-                id: 'TestAmount1',
-                name: 'Test Amount',
-                type: 'amount',
-                currency: 'USD',
-                enableFractions: true,
-                value: '1234.55'
-            });
-            beforeEach(async () => {
-                TestBed.configureTestingModule({
-                    imports: [AmountWidgetComponent],
-                    providers: [{ provide: ADF_AMOUNT_SETTINGS, useValue: of({ enableDisplayBasedOnLocale: true }) }]
-                });
-                fixture = TestBed.createComponent(AmountWidgetComponent);
-                widget = fixture.componentInstance;
-                const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
-                spyOnProperty(window, 'navigator').and.returnValue({
-                    languages: returnedLanguages
-                } as any);
-                fixture.componentRef.setInput('field', mockField);
-                loader = TestbedHarnessEnvironment.loader(fixture);
-                testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
-                fixture.detectChanges();
-            });
-
-            it('should set enableDisplayBasedOnLocale to true', () => {
-                expect(widget.enableDisplayBasedOnLocale).toBeTrue();
-                expect(widget.decimalProperty).toBe('1.2-2');
-                expect(widget.locale).toBe('en-GB');
-                expect(widget.valueAsNumber).toBe('1234.55');
-                expect(widget.amountWidgetValue).toBe('$1,234.55');
-            });
-
-            it('should not display prefix with currency when enableDisplayBasedOnLocale = true', async () => {
-                const field = await testingUtils.getMatFormField();
-                expect(await field.getPrefixText()).toBe('');
             });
         });
     });
