@@ -177,6 +177,34 @@ describe('SavedSearchesService', () => {
         });
     });
 
+    it('should fallback to preferences API if getting saved searches node ID fails', (done) => {
+        spyOn(authService, 'getUsername').and.returnValue(testUserName);
+        spyOn(localStorage, 'getItem').and.returnValue('');
+        const error = new Error(JSON.stringify({ error: { statusCode: 500 } }));
+        (service.nodesApi.getNode as jasmine.Spy).and.returnValue(Promise.reject(error));
+
+        service.getSavedSearches().subscribe((searches) => {
+            expect(service.preferencesApi.getPreference).toHaveBeenCalledWith('-me-', 'saved-searches');
+            expect(searches.length).toBe(2);
+            done();
+        });
+    });
+
+    it('should handle 404 from getNode() by setting migration flag and falling back to preferences API', (done) => {
+        spyOn(authService, 'getUsername').and.returnValue(testUserName);
+        spyOn(localStorage, 'getItem').and.returnValue('');
+        spyOn(localStorage, 'setItem');
+        const notFoundError = new Error(JSON.stringify({ error: { statusCode: 404 } }));
+        (service.nodesApi.getNode as jasmine.Spy).and.returnValue(Promise.reject(notFoundError));
+
+        service.getSavedSearches().subscribe((searches) => {
+            expect(localStorage.setItem).toHaveBeenCalledWith(LOCAL_STORAGE_KEY, 'true');
+            expect(service.preferencesApi.getPreference).toHaveBeenCalledWith('-me-', 'saved-searches');
+            expect(searches.length).toBe(2);
+            done();
+        });
+    });
+
     /**
      * Prepares default mocks for service
      */
