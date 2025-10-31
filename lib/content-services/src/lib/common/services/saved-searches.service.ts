@@ -56,7 +56,10 @@ export class SavedSearchesService {
 
     readonly savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
 
-    constructor(private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {}
+    constructor(
+        private readonly apiService: AlfrescoApiService,
+        private readonly authService: AuthenticationService
+    ) {}
 
     init(): void {
         this.fetchSavedSearches();
@@ -70,10 +73,7 @@ export class SavedSearchesService {
     getSavedSearches(): Observable<SavedSearch[]> {
         const savedSearchesMigrated = localStorage.getItem(this.getLocalStorageKey()) ?? '';
         if (savedSearchesMigrated === 'true') {
-            return from(this.preferencesApi.getPreference('-me-', 'saved-searches')).pipe(
-                map((preference) => JSON.parse(preference.entry.value)),
-                catchError(() => of([]))
-            );
+            return this.getSavedSearchesFromPreferenceApi();
         } else {
             return this.getSavedSearchesNodeId().pipe(
                 take(1),
@@ -81,12 +81,10 @@ export class SavedSearchesService {
                     if (this.savedSearchFileNodeId !== '') {
                         return this.migrateSavedSearches();
                     } else {
-                        return from(this.preferencesApi.getPreference('-me-', 'saved-searches')).pipe(
-                            map((preference) => JSON.parse(preference.entry.value)),
-                            catchError(() => of([]))
-                        );
+                        return this.getSavedSearchesFromPreferenceApi();
                     }
-                })
+                }),
+                catchError(() => this.getSavedSearchesFromPreferenceApi())
             );
         }
     }
@@ -237,10 +235,8 @@ export class SavedSearchesService {
                 const errorStatusCode = JSON.parse(error.message).error.statusCode;
                 if (errorStatusCode === 404) {
                     localStorage.setItem(this.getLocalStorageKey(), 'true');
-                    return '';
-                } else {
-                    return throwError(() => error);
                 }
+                return throwError(() => error);
             })
         );
     }
@@ -269,6 +265,13 @@ export class SavedSearchesService {
                 localStorage.setItem(this.getLocalStorageKey(), 'true');
                 this.nodesApi.deleteNode(this.savedSearchFileNodeId, { permanent: true });
             })
+        );
+    }
+
+    private getSavedSearchesFromPreferenceApi(): Observable<SavedSearch[]> {
+        return from(this.preferencesApi.getPreference('-me-', 'saved-searches')).pipe(
+            map((preference) => JSON.parse(preference.entry.value)),
+            catchError(() => of([]))
         );
     }
 }
