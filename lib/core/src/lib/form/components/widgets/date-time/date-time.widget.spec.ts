@@ -23,9 +23,6 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 
 describe('DateTimeWidgetComponent', () => {
@@ -37,7 +34,7 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, MatNativeDatetimeModule, MatDatepickerModule, MatDatetimepickerModule, DateTimeWidgetComponent]
+            imports: [DateTimeWidgetComponent]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
         widget = fixture.componentInstance;
@@ -49,6 +46,24 @@ describe('DateTimeWidgetComponent', () => {
     afterEach(() => {
         fixture.destroy();
         TestBed.resetTestingModule();
+    });
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     it('should not call onFieldChanged on init', () => {
