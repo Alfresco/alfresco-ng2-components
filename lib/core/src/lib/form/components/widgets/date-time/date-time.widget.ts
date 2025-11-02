@@ -43,6 +43,9 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
     ],
     templateUrl: './date-time.widget.html',
     styleUrls: ['./date-time.widget.scss'],
+    host: {
+        '(click)': 'event($event)'
+    },
     imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
