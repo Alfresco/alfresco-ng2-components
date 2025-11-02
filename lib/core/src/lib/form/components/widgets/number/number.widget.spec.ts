@@ -18,8 +18,6 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
@@ -36,7 +34,7 @@ describe('NumberWidgetComponent', () => {
         mockDecimalNumberPipe = jasmine.createSpyObj('DecimalNumberPipe', ['transform']);
 
         await TestBed.configureTestingModule({
-            imports: [MatInputModule, MatIconModule]
+            imports: [NumberWidgetComponent]
         })
             .overrideComponent(NumberWidgetComponent, {
                 set: {
@@ -51,8 +49,22 @@ describe('NumberWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
-    it('should create', () => {
-        expect(widget).toBeTruthy();
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     describe('with readonly true', () => {
