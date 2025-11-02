@@ -18,7 +18,6 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UnitTestingUtils } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { CheckboxWidgetComponent } from './checkbox.widget';
@@ -31,7 +30,7 @@ describe('CheckboxWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatCheckboxModule]
+            imports: [CheckboxWidgetComponent]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
         widget = fixture.componentInstance;
@@ -39,7 +38,23 @@ describe('CheckboxWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
-    afterEach(() => fixture.destroy());
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
 
     describe('when template is ready', () => {
         beforeEach(() => {

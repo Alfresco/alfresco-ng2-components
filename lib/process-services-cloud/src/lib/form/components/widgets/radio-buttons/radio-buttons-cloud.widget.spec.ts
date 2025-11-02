@@ -56,6 +56,24 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
+
     it('should update form on values fetched', () => {
         spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         const taskId = '<form-id>';
