@@ -26,8 +26,11 @@ export class AppModule {}
 interface IFeaturesService<T = FlagChangeset> {
   init(): Observable<T>;
   isOn$(key: string): Observable<boolean>;
+  isOn(key: string): Signal<boolean>;
   isOff$(key: string): Observable<boolean>;
+  isOff(key: string): Signal<boolean>;
   getFlags$(): Observable<T>;
+  getFlags(): Signal<T>;
 }
 ```
 
