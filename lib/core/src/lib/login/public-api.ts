@@ -19,6 +19,8 @@ export * from './directives/login-header.directive';
 export * from './directives/login-footer.directive';
 
 export * from './components/login/login.component';
+export * from './components/login-dialog/login-dialog.component';
+export * from './components/login-dialog/login-dialog-component-data.interface';
 export * from './components/login-dialog-panel/login-dialog-panel.component';
 
 export * from './models/login-error.event';

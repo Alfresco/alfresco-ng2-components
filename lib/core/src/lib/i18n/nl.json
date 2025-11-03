@@ -285,6 +285,11 @@
     "ACTION": {
       "HELP": "Hulp nodig?",
       "REGISTER": "Registreren"
+    },
+    "DIALOG": {
+      "CANCEL": "Annuleren",
+      "CHOOSE": "Kiezen",
+      "LOGIN": "Aanmelden"
     }
   },
   "ADF-DATATABLE": {

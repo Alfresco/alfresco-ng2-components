@@ -53,6 +53,16 @@
     }
   },
   "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "NO_APPS": {
+        "TITLE": "No Applications Found",
+        "SUBTITLE": "Create a new application that you want to easily find later"
+      },
+      "ERROR": {
+        "TITLE": "There was an error",
+        "SUBTITLE": "Check you have permission to access the apps"
+      }
+    },
     "START_TASK": {
       "FORM": {
         "TITLE": "Start Task",
@@ -62,7 +72,9 @@
           "ATTACHFORM": "Attach Form",
           "ASSIGNEE": "Assignee",
           "CANDIDATE_GROUP": "Candidate Group",
+          "FORM": "Form",
           "DATE": "Choose Date",
+          "NONE": "None",
           "PRIORITY": "Priority"
         },
         "ACTION": {
