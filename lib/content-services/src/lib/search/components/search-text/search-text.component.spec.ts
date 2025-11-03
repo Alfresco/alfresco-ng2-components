@@ -123,7 +123,7 @@ describe('SearchTextComponent', () => {
 
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
-        expect(component.context.filterRawParams[component.id]).toBeUndefined();
+        expect(component.context.filterRawParams[component.id]).toBeNull();
     });
 
     it('should update query with startValue on init, if provided', () => {

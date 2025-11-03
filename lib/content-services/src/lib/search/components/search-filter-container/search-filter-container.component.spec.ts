@@ -94,7 +94,7 @@ describe('SearchFilterContainerComponent', () => {
         await applyButton.click();
 
         expect(queryBuilder.getActiveFilters().length).toBe(1);
-        expect(queryBuilder.getActiveFilters()[0].key).toBe('queryName');
+        expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
         expect(queryBuilder.getActiveFilters()[0].value).toBe('searchText');
 
         await menu.open();
@@ -103,12 +103,12 @@ describe('SearchFilterContainerComponent', () => {
 
         await applyButton.click();
         expect(queryBuilder.getActiveFilters().length).toBe(1);
-        expect(queryBuilder.getActiveFilters()[0].key).toBe('queryName');
+        expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
         expect(queryBuilder.getActiveFilters()[0].value).toBe('updated text');
     });
 
     it('should remove active filter after the Clear button is clicked', async () => {
-        queryBuilder.setActiveFilter('queryName', 'searchText');
+        queryBuilder.setActiveFilter('name', 'searchText');
 
         const menu = await loader.getHarness(MatMenuHarness);
         await menu.open();
