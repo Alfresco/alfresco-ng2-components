@@ -56,6 +56,24 @@ describe('PeopleWidgetComponent', () => {
         fixture.detectChanges();
     });
 
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
+
     describe('display name', () => {
         it('should return empty display name for missing model', () => {
             expect(widget.getDisplayName(null)).toBe('');
