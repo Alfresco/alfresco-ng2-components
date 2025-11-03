@@ -27,7 +27,8 @@
                 class="adf-notification-history-mark-as-read"
                 title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
                 (click)="markAsRead()"
-                #markAsReadButton>
+                #markAsReadButton
+                (keydown)="manageFocus($event)">
             <mat-icon class="adf-notification-history-mark-as-read-icon">done_all</mat-icon>
         </button>
     </div>
@@ -40,7 +41,7 @@
                     *ngFor="let notification of paginatedNotifications"
                     (click)="onNotificationClick(notification, $event)"
                     class="adf-notification-history-menu-item"
-                    (keydown)="moveToMarkAllAsReadButton($event)">
+                    (keydown)="manageFocus($event)">
                 <div class="adf-notification-history-menu-item-content">
                     <div *ngIf="notification.initiator; else no_avatar"
                          [outerHTML]="notification.initiator | usernameInitials : 'adf-notification-initiator-pic'"></div>
@@ -70,7 +71,7 @@
     <mat-divider/>
 
     <div class="adf-notification-history-load-more" *ngIf="hasMoreNotifications()">
-        <button mat-menu-item (click)="loadMore($event)">
+        <button mat-button (click)="loadMore($event)" #loadMoreButton (keydown)="manageFocus($event)">
             {{ 'NOTIFICATIONS.LOAD_MORE' | translate }}
         </button>
     </div>
