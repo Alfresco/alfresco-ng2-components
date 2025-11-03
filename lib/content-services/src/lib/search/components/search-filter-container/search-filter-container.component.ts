@@ -76,7 +76,7 @@ export class SearchFilterContainerComponent implements OnInit {
 
     ngOnInit() {
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
-        this.initialValue = this.value?.[this.category?.id];
+        this.initialValue = this.value?.[this.col.key] ? this.value[this.col.key] : undefined;
     }
 
     onKeyPressed(event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
@@ -88,7 +88,7 @@ export class SearchFilterContainerComponent implements OnInit {
 
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
-            this.searchFilterQueryBuilder.setActiveFilter(this.category.id, this.widgetContainer.getCurrentValue());
+            this.searchFilterQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
             this.filterChange.emit();
             this.widgetContainer.applyInnerWidget();
         } else {
@@ -103,7 +103,7 @@ export class SearchFilterContainerComponent implements OnInit {
 
     resetSearchFilter() {
         this.widgetContainer.resetInnerWidget();
-        this.searchFilterQueryBuilder.removeActiveFilter(this.category.id);
+        this.searchFilterQueryBuilder.removeActiveFilter(this.category.columnKey);
         this.filterChange.emit();
     }
 
@@ -115,7 +115,7 @@ export class SearchFilterContainerComponent implements OnInit {
     }
 
     isActive(): boolean {
-        return this.searchFilterQueryBuilder.getActiveFilters().findIndex((f: FilterSearch) => f.key === this.category.id) > -1;
+        return this.searchFilterQueryBuilder.getActiveFilters().findIndex((f: FilterSearch) => f.key === this.category.columnKey) > -1;
     }
 
     onMenuOpen() {

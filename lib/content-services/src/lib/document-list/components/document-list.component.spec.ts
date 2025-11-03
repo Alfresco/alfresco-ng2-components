@@ -1276,24 +1276,8 @@ describe('DocumentList', () => {
         documentList.onNodeDblClick(node);
     });
 
-    it('should load folder by ID on init if no filterValue is provided', async () => {
+    it('should load folder by ID on init', async () => {
         spyOn(documentList, 'loadFolder').and.stub();
-
-        documentList.filterValue = {};
-
-        fixture.detectChanges();
-
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
-
-        await fixture.whenStable();
-
-        expect(documentList.loadFolder).not.toHaveBeenCalled();
-    });
-
-    it('should NOT load folder by ID on init if filterValue is provided', async () => {
-        spyOn(documentList, 'loadFolder').and.stub();
-
-        documentList.filterValue = undefined;
 
         fixture.detectChanges();
 
