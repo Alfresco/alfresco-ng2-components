@@ -11,19 +11,16 @@
         autocomplete="off"
         adf-auto-focus
       />
-      @if(libraryTitleExists){
+      @if (libraryTitleExists) {
         <mat-hint>{{ 'LIBRARY.HINTS.SITE_TITLE_EXISTS' | translate }}</mat-hint>
       }
-      @if (form.controls['title'].hasError('maxlength')) {
+      @if (form.controls['title'].errors?.maxlength) {
         <mat-error>{{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}</mat-error>
-      }
-      @else if (form.controls['title'].hasError('minlength')) {
-        <mat-error>{{ 'LIBRARY.ERRORS.TITLE_TOO_SHORT' | translate }}</mat-error>
       }
       @else if (form.controls['title'].errors?.message) {
         <mat-error>{{ form.controls['title'].errors?.message | translate }}</mat-error>
       }
-      @else if(form.controls['title'].hasError('required')) {
+      @else if (form.controls['title'].errors?.required) {
         <mat-error>{{ 'LIBRARY.ERRORS.NAME_REQUIRED' | translate }}</mat-error>
       }
     </mat-form-field>
@@ -37,13 +34,13 @@
         autocomplete="off"
       />
 
-      @if(form.controls['id'].errors?.message){
+      @if (form.controls['id'].errors?.message) {
         <mat-error>{{ form.controls['id'].errors?.message | translate }}</mat-error>
       }
-      @else if (form.controls['id'].hasError('maxlength')) {
+      @else if (form.controls['id'].errors?.maxlength) {
         <mat-error>{{ 'LIBRARY.ERRORS.ID_TOO_LONG' | translate }}</mat-error>
       }
-      @else if (form.controls['id'].hasError('required')){
+      @else if (form.controls['id'].errors?.required) {
         <mat-error>{{ 'LIBRARY.ERRORS.ID_REQUIRED' | translate }}</mat-error>
       }
     </mat-form-field>
@@ -55,7 +52,7 @@
         rows="3"
         formControlName="description"
       ></textarea>
-      @if(form.controls['description'].hasError('maxlength')) {
+      @if (form.controls['description'].errors?.maxlength) {
         <mat-error>{{ 'LIBRARY.ERRORS.DESCRIPTION_TOO_LONG' | translate }}</mat-error>
       }
     </mat-form-field>

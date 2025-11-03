@@ -114,7 +114,7 @@ export class LibraryDialogComponent implements OnInit {
     ngOnInit() {
         const validators = {
             id: [Validators.required, Validators.maxLength(72), this.forbidSpecialCharacters],
-            title: [Validators.required, this.forbidOnlySpaces, Validators.minLength(2), Validators.maxLength(256)],
+            title: [Validators.required, this.forbidOnlySpaces, this.minLengthTrimmed, Validators.maxLength(256)],
             description: [Validators.maxLength(512)]
         };
 
@@ -274,6 +274,20 @@ export class LibraryDialogComponent implements OnInit {
             ? null
             : {
                   message: 'LIBRARY.ERRORS.ONLY_SPACES'
+              };
+    }
+
+    private minLengthTrimmed({ value }: UntypedFormControl) {
+        if (value === null || value.length === 0) {
+            return null;
+        }
+
+        const isValid: boolean = value.trim().length !== 1;
+
+        return isValid
+            ? null
+            : {
+                  message: 'LIBRARY.ERRORS.TITLE_TOO_SHORT'
               };
     }
 

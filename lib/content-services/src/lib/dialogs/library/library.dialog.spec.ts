@@ -22,24 +22,39 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { SiteEntry, SitePaging } from '@alfresco/js-api';
+import { FindQuery, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { SitesService } from '../../common/services/sites.service';
-import { NotificationService } from '@alfresco/adf-core';
+import { NotificationService, UnitTestingUtils } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioGroupHarness } from '@angular/material/radio/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;
     let component: LibraryDialogComponent;
     let sitesService: SitesService;
-    let findSitesSpy: jasmine.Spy<(term: string, opts?: any) => Promise<SitePaging>>;
+    let findSitesSpy: jasmine.Spy<(term: string, opts?: FindQuery) => Promise<SitePaging>>;
     let notificationService: NotificationService;
+    let unitTestingUtils: UnitTestingUtils;
+    let loader: HarnessLoader;
+
     const findSitesResponse = new SitePaging({ list: { entries: [], pagination: {} } });
     const dialogRef = {
         close: jasmine.createSpy('close')
     };
+
+    /**
+     *  Sets form field value and triggers necessary events to process value changes
+     *
+     *  @param fieldName Name of the form field
+     *  @param value Value to set
+     */
+    function setFormFieldValue(fieldName: string, value: string) {
+        component.form.controls[fieldName].setValue(value);
+        tick(500);
+        flush();
+        fixture.detectChanges();
+    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -52,6 +67,8 @@ describe('LibraryDialogComponent', () => {
         sitesService = TestBed.inject(SitesService);
         findSitesSpy = spyOn(component['queriesApi'], 'findSites');
         notificationService = TestBed.inject(NotificationService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement, loader);
     });
 
     afterEach(() => {
@@ -63,10 +80,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('libraryTitle');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'libraryTitle');
 
         expect(component.form.controls.id.value).toBe('libraryTitle');
     }));
@@ -76,10 +90,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('library title');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'library title');
 
         expect(component.form.controls.id.value).toBe('library-title');
     }));
@@ -89,16 +100,10 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.id.setValue('custom-id');
+        setFormFieldValue('id', 'custom-id');
         component.form.controls.id.markAsDirty();
-        tick(500);
-        flush();
-        fixture.detectChanges();
 
-        component.form.controls.title.setValue('library title');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'library title');
 
         expect(component.form.controls.id.value).toBe('custom-id');
     }));
@@ -107,10 +112,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.returnValue(of(null));
 
         fixture.detectChanges();
-        component.form.controls.id.setValue('existingLibrary');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('id', 'existingLibrary');
 
         expect(component.form.controls.id.errors).toEqual({
             message: 'LIBRARY.ERRORS.EXISTENT_SITE'
@@ -124,10 +126,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('library title');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'library title');
 
         component.submit();
         fixture.detectChanges();
@@ -156,10 +155,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.returnValue(of(null));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('existingLibrary');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'existingLibrary');
 
         component.submit();
         fixture.detectChanges();
@@ -188,84 +184,61 @@ describe('LibraryDialogComponent', () => {
         findSitesSpy.and.returnValue(Promise.resolve(sitePaging));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('test');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'test');
 
         expect(component.libraryTitleExists).toBe(true);
     }));
 
-    it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
-        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        const error = { message: '{ "error": { "statusCode": 409 } }' };
-        spyOn(sitesService, 'createSite').and.callFake(() => throwError(() => error));
-        spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
+    describe('create site error', () => {
+        /**
+         * Performs setup for create site errors related tests.
+         *
+         * @param statusCode Optional status code to include in the error message.
+         */
+        function throwCreateError(statusCode?: number) {
+            let error = {};
+            if (statusCode) {
+                error = { message: `{ "error": { "statusCode": ${statusCode} } }` };
+            }
 
-        fixture.detectChanges();
-        component.form.controls.title.setValue('test');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+            findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+            spyOn(sitesService, 'createSite').and.callFake(() => throwError(() => error));
+            spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
-        component.submit();
-        fixture.detectChanges();
-        flush();
+            fixture.detectChanges();
+            setFormFieldValue('title', 'test');
 
-        expect(component.form.controls.id.errors).toEqual({
-            message: 'LIBRARY.ERRORS.CONFLICT'
-        });
-    }));
+            component.submit();
+            fixture.detectChanges();
+            flush();
+        }
 
-    it('should show generic error notification on error code other than 409', fakeAsync(() => {
-        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        const error = { message: '{ "error": { "statusCode": 404 } }' };
-        spyOn(sitesService, 'createSite').and.callFake(() => throwError(() => error));
-        spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
-        spyOn(notificationService, 'showError').and.callThrough();
+        it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
+            throwCreateError(409);
+            expect(component.form.controls.id.errors).toEqual({
+                message: 'LIBRARY.ERRORS.CONFLICT'
+            });
+        }));
 
-        fixture.detectChanges();
-        component.form.controls.title.setValue('test');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        it('should show generic error notification on error code other than 409', fakeAsync(() => {
+            spyOn(notificationService, 'showError');
+            throwCreateError(404);
+            expect(notificationService.showError).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.GENERIC');
+        }));
 
-        component.submit();
-        fixture.detectChanges();
-        flush();
-
-        expect(notificationService.showError).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.GENERIC');
-    }));
-
-    it('should handle default errors and show generic error in snackbar', fakeAsync(() => {
-        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        const error = {};
-        spyOn(sitesService, 'createSite').and.callFake(() => throwError(() => error));
-        spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
-        spyOn(notificationService, 'showError').and.callThrough();
-
-        fixture.detectChanges();
-        component.form.controls.title.setValue('test');
-        tick(500);
-        flush();
-        fixture.detectChanges();
-
-        component.submit();
-        fixture.detectChanges();
-        flush();
-
-        expect(notificationService.showError).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.GENERIC');
-    }));
+        it('should handle default errors and show generic error in snackbar', fakeAsync(() => {
+            spyOn(notificationService, 'showError');
+            throwCreateError();
+            expect(notificationService.showError).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.GENERIC');
+        }));
+    });
 
     it('should not translate library title if value is not a valid id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('@@@####');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', '@@@####');
 
         expect(component.form.controls.id.value).toBe(null);
     }));
@@ -275,10 +248,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('@@@####library');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', '@@@####library');
 
         expect(component.form.controls.id.value).toBe('library');
     }));
@@ -288,10 +258,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('library     title');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'library     title');
 
         expect(component.form.controls.id.value).toBe('library-title');
     }));
@@ -301,12 +268,18 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'getSite').and.callFake(() => throwError(() => 'error'));
 
         fixture.detectChanges();
-        component.form.controls.title.setValue('l');
-        tick(500);
-        flush();
-        fixture.detectChanges();
+        setFormFieldValue('title', 'l');
 
-        expect(component.form.controls.title.errors['minlength']).toBeTruthy();
+        expect(component.form.controls.title.errors).toEqual({
+            message: 'LIBRARY.ERRORS.TITLE_TOO_SHORT'
+        });
+        expect(component.form.valid).toBe(false);
+
+        setFormFieldValue('title', 'l ');
+
+        expect(component.form.controls.title.errors).toEqual({
+            message: 'LIBRARY.ERRORS.TITLE_TOO_SHORT'
+        });
         expect(component.form.valid).toBe(false);
     }));
 
@@ -326,7 +299,6 @@ describe('LibraryDialogComponent', () => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         fixture.detectChanges();
 
-        const loader: HarnessLoader = TestbedHarnessEnvironment.loader(fixture);
         const radioGroup = await loader.getHarness(MatRadioGroupHarness);
         const radioButtons = await radioGroup.getRadioButtons();
 
@@ -347,7 +319,7 @@ describe('LibraryDialogComponent', () => {
     });
 
     it('should clear timeout if validator is called multiple times', () => {
-        spyOn(component['sitesService'], 'getSite').and.returnValue(of(null));
+        spyOn(sitesService, 'getSite').and.returnValue(of(null));
         spyOn(window, 'clearTimeout').and.callThrough();
 
         fixture.detectChanges();
@@ -385,8 +357,7 @@ describe('LibraryDialogComponent', () => {
         component.form.controls.title.markAsTouched();
         fixture.detectChanges();
 
-        const loader = TestbedHarnessEnvironment.loader(fixture);
-        const titleFormField = await loader.getHarness(MatFormFieldHarness);
+        const titleFormField = await unitTestingUtils.getMatFormField();
         const errors = await titleFormField.getTextErrors();
 
         expect(component.form.controls.title.errors).toEqual({ required: true });
@@ -400,9 +371,7 @@ describe('LibraryDialogComponent', () => {
         component.form.controls.id.markAsTouched();
         fixture.detectChanges();
 
-        const loader = TestbedHarnessEnvironment.loader(fixture);
-        const formFields = await loader.getAllHarnesses(MatFormFieldHarness);
-        const idFormField = formFields[1];
+        const idFormField = await unitTestingUtils.getMatFormFieldByCSS('.adf-library-dialog-form-field:nth-of-type(2)');
         const errors = await idFormField.getTextErrors();
 
         expect(component.form.controls.id.errors).toEqual({ required: true });
