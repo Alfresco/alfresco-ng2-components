@@ -1,0 +1,11 @@
+.adf-button-widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    &__button {
+        word-break: break-word;
+        overflow: hidden;
+    }
+}
