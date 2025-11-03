@@ -33,6 +33,7 @@
     </mat-chip-grid>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
                       (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">
+        <ng-container *ngIf="optionInput.value.length > 0">
             <mat-option
                 *ngFor="let option of filteredOptions"
                 [value]="option"
@@ -45,5 +46,6 @@
             >
                 {{ option.fullPath || option.value }}
             </mat-option>
+        </ng-container>
     </mat-autocomplete>
 </mat-form-field>
