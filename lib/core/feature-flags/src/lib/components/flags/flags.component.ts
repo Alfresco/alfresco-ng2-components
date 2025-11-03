@@ -16,7 +16,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, computed, signal, Signal, ViewEncapsulation, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
     FeaturesServiceToken,
     IDebugFeaturesService,
@@ -42,7 +41,6 @@ import { IconModule } from '@alfresco/adf-core';
     selector: 'adf-feature-flags-overrides',
     imports: [
         FlagsOverrideComponent,
-        CommonModule,
         FormsModule,
         MatTableModule,
         MatSlideToggleModule,
