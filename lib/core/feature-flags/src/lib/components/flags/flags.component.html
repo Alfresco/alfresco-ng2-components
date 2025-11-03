@@ -1,66 +1,68 @@
 <mat-toolbar class="adf-feature-flags-overrides-header">
-  <div class="adf-feature-flags-overrides-header-text" tabindex="0">
-    <adf-feature-flags-override-indicator
-      class="adf-activity-indicator"
-      size='large' />
-    <span>{{ "CORE.FEATURE-FLAGS.OVERRIDES" | translate }}</span>
-  </div>
-  <mat-slide-toggle
-    [checked]="isEnabled"
-    (change)="onEnable($event.checked)" />
-  <button class="adf-feature-flags-overrides-header-close" mat-icon-button mat-dialog-close>
-    <mat-icon adf-icon="close" />
-  </button>
+    <div class="adf-feature-flags-overrides-header-text" tabindex="0">
+        <adf-feature-flags-override-indicator class="adf-activity-indicator" size='large' />
+        <span>{{ "CORE.FEATURE-FLAGS.OVERRIDES" | translate }}</span>
+    </div>
+    <mat-slide-toggle [checked]="isEnabled" (change)="onEnable($event.checked)" />
+    <button class="adf-feature-flags-overrides-header-close" mat-icon-button mat-dialog-close>
+        <mat-icon adf-icon="close" />
+    </button>
 </mat-toolbar>
 
-<ng-container *ngIf="flags$ | async as flags">
-  <table mat-table [dataSource]="flags" class="adf-feature-flags-overrides-table mat-elevation-z0">
-    <ng-container matColumnDef="icon">
-      <th mat-header-cell class="adf-icon-col adf-header-cell" *matHeaderCellDef>
-        <mat-icon class="material-icons-outlined adf-search-icon" adf-icon="search" />
-      </th>
-      <td mat-cell class="adf-icon-col" *matCellDef="let element">
-        <button mat-icon-button *ngIf="element.fictive; else flagFromApi" class="adf-fictive-flag-button" (click)="onDelete(element.flag)">
-          <mat-icon class="material-icons-outlined adf-custom-flag-icon" adf-icon="memory" />
-          <mat-icon class="material-icons-outlined adf-trash-icon" adf-icon="delete" />
-        </button>
-      </td>
-    </ng-container>
+<ng-container *ngIf="flags()">
+    <table mat-table [dataSource]="flags()"
+        class="adf-feature-flags-overrides-table mat-elevation-z0">
+        <ng-container matColumnDef="icon">
+            <th mat-header-cell class="adf-icon-col adf-header-cell" *matHeaderCellDef>
+                <mat-icon class="material-icons-outlined adf-search-icon" adf-icon="search" />
+            </th>
+            <td mat-cell class="adf-icon-col" *matCellDef="let element">
+                <button mat-icon-button *ngIf="element.fictive; else flagFromApi"
+                    class="adf-fictive-flag-button" (click)="onDelete(element.flag)">
+                    <mat-icon class="material-icons-outlined adf-custom-flag-icon"
+                        adf-icon="memory" />
+                    <mat-icon class="material-icons-outlined adf-trash-icon" adf-icon="delete" />
+                </button>
+            </td>
+        </ng-container>
 
-    <ng-container matColumnDef="flag">
-      <th mat-header-cell class="flag-col header-cell" *matHeaderCellDef>
-        <mat-form-field class="adf-flag-form-field" appearance="fill" floatLabel="auto">
-          <input class="flag-input" [placeholder]="(isEnabled ? 'CORE.FEATURE-FLAGS.FILTER_OR_ADD_NEW' : 'CORE.FEATURE-FLAGS.FILTER') | translate" matInput type="text" [(ngModel)]="inputValue" (keyup)="onInputChange(inputValue)" (keypress)="onAdd($event)">
-        </mat-form-field>
-      </th>
-      <td mat-cell class="flag-col" *matCellDef="let element">{{ element.flag }}</td>
-    </ng-container>
+        <ng-container matColumnDef="flag">
+            <th mat-header-cell class="flag-col header-cell" *matHeaderCellDef>
+                <mat-form-field class="adf-flag-form-field" appearance="fill" floatLabel="auto">
+                    <input class="flag-input"
+                        [placeholder]="(isEnabled ? 'CORE.FEATURE-FLAGS.FILTER_OR_ADD_NEW' : 'CORE.FEATURE-FLAGS.FILTER') | translate"
+                        matInput type="text" [(ngModel)]="inputValue"
+                        (keyup)="onInputChange(inputValue)" (keypress)="onAdd($event)">
+                </mat-form-field>
+            </th>
+            <td mat-cell class="flag-col" *matCellDef="let element">{{ element.flag }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="value">
-      <th mat-header-cell class="adf-val-col header-cell" *matHeaderCellDef>
-        <div class="adf-input-field-buttons-container">
-          <button *ngIf="showPlusButton$ | async" mat-icon-button title="{{'CORE.FEATURE-FLAGS.ADD_NEW' | translate}}" color="accent" (click)="onAddButtonClick()">
-            <mat-icon class="material-icons-outlined" adf-icon="add_circle" />
-          </button>
-          <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearInput()" class="adf-clear-button">
-            <mat-icon adf-icon="cancel" />
-          </button>
-        </div>
-      </th>
-      <td mat-cell class="adf-val-col" *matCellDef="let element">
-        <mat-slide-toggle
-          [checked]="element.value"
-          (change)="onChange(element.flag, $event.checked)"
-          [disabled]="!isEnabled" />
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="value">
+            <th mat-header-cell class="adf-val-col header-cell" *matHeaderCellDef>
+                <div class="adf-input-field-buttons-container">
+                    <button *ngIf="showPlusButton()" mat-icon-button
+                        title="{{'CORE.FEATURE-FLAGS.ADD_NEW' | translate}}" color="accent"
+                        (click)="onAddButtonClick()">
+                        <mat-icon class="material-icons-outlined" adf-icon="add_circle" />
+                    </button>
+                    <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="onClearInput()" class="adf-clear-button">
+                        <mat-icon adf-icon="cancel" />
+                    </button>
+                </div>
+            </th>
+            <td mat-cell class="adf-val-col" *matCellDef="let element">
+                <mat-slide-toggle [checked]="element.value"
+                    (change)="onChange(element.flag, $event.checked)" [disabled]="!isEnabled" />
+            </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 </ng-container>
 
 <ng-template #flagFromApi>
-  <mat-icon class="material-icons-outlined" adf-icon="cloud" />
+    <mat-icon class="material-icons-outlined" adf-icon="cloud" />
 </ng-template>
-

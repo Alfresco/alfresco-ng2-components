@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FlagsComponent } from './flags.component';
 import { FeaturesDirective } from '../../directives/features.directive';
 import { WritableFeaturesServiceToken } from '../../interfaces/features.interface';
@@ -41,23 +41,25 @@ describe('FlagsComponent', () => {
 
         const storageFeaturesService = TestBed.inject(WritableFeaturesServiceToken);
         storageFeaturesService.init();
+    });
+
+    it('should initialize flags signal', fakeAsync(() => {
         fixture = TestBed.createComponent(FlagsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
-
-    it('should initialize flags$', (done) => {
-        component.flags$.subscribe((flags) => {
-            expect(flags).toEqual([
-                { fictive: false, flag: 'feature1', value: true },
-                { fictive: false, flag: 'feature2', value: false },
-                { fictive: false, flag: 'feature3', value: true }
-            ]);
-            done();
-        });
-    });
+        tick(100);
+        const flags = component.flags();
+        expect(flags).toEqual([
+            { fictive: false, flag: 'feature1', value: true },
+            { fictive: false, flag: 'feature2', value: false },
+            { fictive: false, flag: 'feature3', value: true }
+        ]);
+    }));
 
     it('should update inputValue$ when onInputChange is called', (done) => {
+        fixture = TestBed.createComponent(FlagsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
         component.onInputChange('test');
         component.inputValue$.subscribe((value) => {
             expect(value).toBe('test');
@@ -66,18 +68,23 @@ describe('FlagsComponent', () => {
     });
 
     it('should clear inputValue when onClearInput is called', () => {
+        fixture = TestBed.createComponent(FlagsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
         component.inputValue = 'test';
         component.onClearInput();
         expect(component.inputValue).toBe('');
     });
 
-    it('should filter flags when when onClearInput is called', (done) => {
+    it('should filter flags when input value changes', fakeAsync(() => {
+        fixture = TestBed.createComponent(FlagsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
         component.onInputChange('feature1');
-        component.flags$.subscribe((flags) => {
-            expect(flags).toEqual([{ fictive: false, flag: 'feature1', value: true }]);
-            done();
-        });
-    });
+        tick(150);
+        const flags = component.flags();
+        expect(flags).toEqual([{ fictive: false, flag: 'feature1', value: true }]);
+    }));
 
     afterEach(() => {
         fixture.destroy();

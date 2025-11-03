@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-import { of } from 'rxjs';
-import { FeaturesServiceToken, FlagChangeset, IFeaturesService } from '../interfaces/features.interface';
+import { BehaviorSubject, of } from 'rxjs';
+import {
+    FeaturesServiceToken,
+    FlagChangeset,
+    IFeaturesService,
+    IDebugFeaturesService,
+    WritableFlagChangeset
+} from '../interfaces/features.interface';
 import { signal } from '@angular/core';
 
 export interface MockFeatureFlags {
@@ -33,27 +39,35 @@ const assertFeatureFlag = (flagChangeset: FlagChangeset, key: string): void => {
     }
 };
 
-const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => ({
-    init: () => of(flagChangeset),
-    isOn: (key) => {
-        assertFeatureFlag(flagChangeset, key);
-        return signal(flagChangeset[key].current);
-    },
-    isOff: (key) => {
-        assertFeatureFlag(flagChangeset, key);
-        return signal(!flagChangeset[key].current);
-    },
-    isOn$: (key) => {
-        assertFeatureFlag(flagChangeset, key);
-        return of(flagChangeset[key].current);
-    },
-    isOff$: (key) => {
-        assertFeatureFlag(flagChangeset, key);
-        return of(!flagChangeset[key].current);
-    },
-    getFlags: () => signal(flagChangeset),
-    getFlags$: () => of(flagChangeset)
-});
+const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService & Partial<IDebugFeaturesService> => {
+    const isEnabled$ = new BehaviorSubject<boolean>(false);
+    const flags$ = new BehaviorSubject<WritableFlagChangeset>(flagChangeset as WritableFlagChangeset);
+
+    return {
+        init: () => of(flagChangeset),
+        isOn: (key) => {
+            assertFeatureFlag(flagChangeset, key);
+            return signal(flagChangeset[key].current);
+        },
+        isOff: (key) => {
+            assertFeatureFlag(flagChangeset, key);
+            return signal(!flagChangeset[key].current);
+        },
+        isOn$: (key) => {
+            assertFeatureFlag(flagChangeset, key);
+            return of(flagChangeset[key].current);
+        },
+        isOff$: (key) => {
+            assertFeatureFlag(flagChangeset, key);
+            return of(!flagChangeset[key].current);
+        },
+        getFlags: () => signal(flagChangeset as WritableFlagChangeset),
+        getFlags$: () => flags$.asObservable(),
+        isEnabled$: () => isEnabled$.asObservable(),
+        enable: (on: boolean) => isEnabled$.next(on),
+        resetFlags: () => {}
+    };
+};
 
 const arrayToFlagChangeset = (featureFlags: string[]): FlagChangeset => {
     const flagChangeset: FlagChangeset = {};

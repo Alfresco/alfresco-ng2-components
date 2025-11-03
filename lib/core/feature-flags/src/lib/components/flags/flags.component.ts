@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, Signal, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     FeaturesServiceToken,
@@ -24,8 +24,8 @@ import {
     WritableFeaturesServiceToken,
     WritableFlagChangeset
 } from '../../interfaces/features.interface';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { debounceTime, map, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -35,7 +35,7 @@ import { FormsModule } from '@angular/forms';
 import { FlagsOverrideComponent } from '../feature-override-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { IconModule } from '@alfresco/adf-core';
 
 @Component({
@@ -63,22 +63,20 @@ export class FlagsComponent {
     private readonly writableFeaturesService = inject<IWritableFeaturesService>(WritableFeaturesServiceToken);
 
     displayedColumns: string[] = ['icon', 'flag', 'value'];
-    flags$: Observable<{ fictive: boolean; flag: string; value: any }[]>;
-    isEnabled = false;
+    flags: Signal<{ fictive: boolean; flag: string; value: any }[]>;
+    isEnabled: Signal<boolean>;
 
     inputValue = '';
     inputValue$ = new BehaviorSubject<string>('');
-    showPlusButton$!: Observable<boolean>;
+    showPlusButton: Signal<boolean>;
     writableFlagChangeset: WritableFlagChangeset = {};
-    constructor() {
-        if (this.featuresService.isEnabled$) {
-            this.featuresService
-                .isEnabled$()
-                .pipe(takeUntilDestroyed())
-                .subscribe((isEnabled) => {
-                    this.isEnabled = isEnabled;
-                });
-        }
+    constructor(
+        @Inject(FeaturesServiceToken)
+        private featuresService: IDebugFeaturesService & IFeaturesService<WritableFlagChangeset>,
+        @Inject(WritableFeaturesServiceToken)
+        private writableFeaturesService: IWritableFeaturesService
+    ) {
+        this.isEnabled = this.featuresService.isEnabled$() ? toSignal(this.featuresService.isEnabled$()) : signal(false);
 
         const flags$ = this.featuresService.getFlags$().pipe(
             tap((flags) => (this.writableFlagChangeset = flags)),
@@ -93,19 +91,20 @@ export class FlagsComponent {
 
         const debouncedInputValue$ = this.inputValue$.pipe(debounceTime(100));
 
-        this.flags$ = combineLatest([flags$, debouncedInputValue$]).pipe(
-            map(([flags, inputValue]) => {
-                if (!inputValue) {
-                    return flags;
-                }
+        this.flags = toSignal(
+            combineLatest([flags$, debouncedInputValue$]).pipe(
+                map(([flags, inputValue]) => {
+                    if (!inputValue) {
+                        return flags;
+                    }
 
-                return flags.filter((flag) => flag.flag.includes(inputValue));
-            })
+                    return flags.filter((flag) => flag.flag.includes(inputValue));
+                })
+            ),
+            { initialValue: [] }
         );
 
-        this.showPlusButton$ = this.flags$.pipe(
-            map((filteredFlags) => this.isEnabled && filteredFlags.length === 0 && this.inputValue.trim().length > 0)
-        );
+        this.showPlusButton = computed(() => this.isEnabled() && this.flags()?.length === 0 && this.inputValue.trim().length > 0);
     }
 
     protected onChange(flag: string, value: boolean) {
@@ -130,11 +129,9 @@ export class FlagsComponent {
     }
 
     protected onAdd(event: KeyboardEvent) {
-        this.showPlusButton$.pipe(take(1)).subscribe((showPlusButton) => {
-            if (showPlusButton && event.key === 'Enter' && event.shiftKey) {
-                this.writableFeaturesService.setFlag(this.inputValue, false);
-            }
-        });
+        if (this.showPlusButton() && event.key === 'Enter' && event.shiftKey) {
+            this.writableFeaturesService.setFlag(this.inputValue, false);
+        }
     }
 
     protected onAddButtonClick() {
