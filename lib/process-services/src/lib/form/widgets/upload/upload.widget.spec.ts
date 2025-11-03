@@ -383,5 +383,23 @@ describe('UploadWidgetComponent', () => {
                 fileJpegIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             });
         });
+
+        describe('event tracking', () => {
+            let eventSpy: jasmine.Spy;
+
+            beforeEach(() => {
+                eventSpy = spyOn(uploadWidgetComponent, 'event').and.callThrough();
+                uploadWidgetComponent.field = new FormFieldModel(new FormModel(), {});
+                fixture.detectChanges();
+            });
+
+            it('should call event method only once when widget is clicked', () => {
+                const clickEvent = new MouseEvent('click', { bubbles: true });
+                fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+                expect(eventSpy).toHaveBeenCalledTimes(1);
+                expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+            });
+        });
     });
 });

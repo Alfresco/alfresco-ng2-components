@@ -56,17 +56,6 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
     imports: [CommonModule, ErrorWidgetComponent, TranslatePipe, MatIconModule, FilePropertiesTableCloudComponent, MatButtonModule],
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
