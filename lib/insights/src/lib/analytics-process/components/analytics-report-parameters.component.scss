@@ -7,15 +7,15 @@
 }
 
 .adf-dropdown-widget__invalid .adf-dropdown-widget__select {
-    border-color: var(--theme-warn-color);
+    border-color: var(--mat-sys-error);
 }
 
 .adf-dropdown-widget__invalid .adf-dropdown-widget__label {
-    color: var(--theme-warn-color);
+    color: var(--mat-sys-error);
 }
 
 .adf-dropdown-widget__invalid .adf-dropdown-widget__label::after {
-    background-color: var(--theme-warn-color);
+    background-color: var(--mat-sys-error);
 }
 
 .adf-full-width-input {
@@ -23,7 +23,7 @@
 
     .adf-edit-report-title[type='text'] {
         float: left;
-        font-size: var(--theme-title-font-size);
+        font-size: var(--mat-sys-title-medium-size);
         padding-top: 19px;
     }
 }
@@ -40,7 +40,7 @@
     margin-bottom: 12px;
 
     :hover .adf-report-icon {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
         visibility: visible;
     }
 }
@@ -56,7 +56,7 @@
 }
 
 .adf-report-report-container {
-    border-bottom: solid 1px var(--adf-theme-foreground-divider-color);
+    border-bottom: solid 1px var(--mat-sys-outline);
     padding-top: 10px;
 
     .adf-toolbar-container.adf-toolbar-container-row {
@@ -74,7 +74,7 @@
 }
 
 .adf-export-message {
-    background-color: var(--theme-background-color);
+    background-color: var(--mat-sys-surface);
 }
 
 .adf-save-export-input {
