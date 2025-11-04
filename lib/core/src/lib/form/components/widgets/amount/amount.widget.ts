@@ -29,6 +29,7 @@ import { WidgetComponent } from '../widget.component';
 import { filter, isObservable, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormFieldEvent } from '../../../events/form-field.event';
+import { TranslationService } from '../../../../translation/translation.service';
 
 export interface AmountWidgetSettings {
     showReadonlyPlaceholder: boolean;
@@ -80,7 +81,8 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     constructor(
         public formService: FormService,
         @Optional() @Inject(ADF_AMOUNT_SETTINGS) settings: Observable<AmountWidgetSettings> | AmountWidgetSettings,
-        private currencyPipe: CurrencyPipe
+        private currencyPipe: CurrencyPipe,
+        private translationService: TranslationService
     ) {
         super(formService);
         if (isObservable(settings)) {
@@ -139,7 +141,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     getLocale(): string {
-        const defaultLocale = 'en-US';
+        const defaultLocale = this.translationService.userLang;
         if (typeof window?.navigator === 'undefined') {
             return defaultLocale;
         }

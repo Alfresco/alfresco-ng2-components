@@ -24,7 +24,9 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../../testing/unit-testing-utils';
 import { of } from 'rxjs';
-import { FormFieldEvent, FormService } from '@alfresco/adf-core';
+import { FormService } from '../../../services/form.service';
+import { FormFieldEvent } from '../../../events/form-field.event';
+import { TranslationService } from '../../../../translation/translation.service';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -34,8 +36,10 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AmountWidgetComponent]
+            imports: [AmountWidgetComponent],
+            providers: [{ provide: TranslationService, useValue: { userLang: 'en-US' } }]
         });
+
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
