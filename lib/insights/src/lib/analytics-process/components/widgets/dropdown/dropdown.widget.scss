@@ -7,13 +7,13 @@
 }
 
 .adf-dropdown-widget__invalid .adf-dropdown-widget__select {
-    border-color: var(--theme-warn-color);
+    border-color: var(--mat-sys-error);
 }
 
 .adf-dropdown-widget__invalid .adf-dropdown-widget__label {
-    color: var(--theme-warn-color);
+    color: var(--mat-sys-error);
 }
 
 .adf-dropdown-widget__invalid .adf-dropdown-widget__label::after {
-    background-color: var(--theme-warn-color);
+    background-color: var(--mat-sys-error);
 }

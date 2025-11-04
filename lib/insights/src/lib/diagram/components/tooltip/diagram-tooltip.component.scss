@@ -4,16 +4,14 @@
         transform-origin: top center;
         z-index: 999;
         display: inline-block;
-        font-weight: 500;
-        line-height: 14px;
-        font-size: var(--theme-body-1-font-size);
+        font-size: var(--mat-sys-body-medium-size);
         max-width: 300px;
         position: fixed;
         top: -500px;
         left: -500px;
         text-align: left;
         will-change: unset;
-        border: 1px solid #c5c5c5;
+        border: 1px solid var(--mat-sys-outline);
         word-wrap: break-word;
     }
 
@@ -22,17 +20,17 @@
     }
 
     &-diagram-tooltip-header {
-        background-color: rgba(43, 65, 79, 0.95);
-        color: #fff;
+        background-color: var(--mat-sys-surface-container-high);
+        color: var(--mat-sys-on-surface);
         padding: 8px;
-        font-weight: bold;
+        font: var(--mat-sys-title-medium);
         min-width: 200px;
-        line-height: 20px;
+        display: block;
     }
 
     &-diagram-tooltip-body {
-        color: #4a4a4a;
-        background-color: rgba(255, 255, 255, 0.95);
+        color: var(--mat-sys-on-surface);
+        background-color: var(--mat-sys-surface);
     }
 
     &-diagram-tooltip-body > div {
@@ -48,7 +46,6 @@
     }
 
     &-diagram-propertyName {
-        font-weight: bold;
         margin-right: 5px;
     }
 
