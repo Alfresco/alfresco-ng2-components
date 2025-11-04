@@ -1,0 +1,11 @@
+<button
+    mat-flat-button
+    class="adf-button-widget__button"
+    [color]="'primary'"
+    [matTooltip]="field?.tooltip"
+    [matTooltipShowDelay]="tooltipShowDelay"
+    [disabled]="field?.readOnly ?? false"
+    (click)="onClick($event)"
+>
+    {{ field?.name | translate }}
+</button>

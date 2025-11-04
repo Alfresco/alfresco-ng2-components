@@ -31,6 +31,7 @@ import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
 import { BaseViewerWidgetComponent } from './base-viewer/base-viewer.widget';
 import { DecimalWidgetComponent } from './decimal/decimal.component';
+import { ButtonWidgetComponent } from './button/button.widget';
 
 // core
 export * from './widget.component';
@@ -52,6 +53,7 @@ export * from './date-time/date-time.widget';
 export * from './json/json.widget';
 export * from './base-viewer/base-viewer.widget';
 export * from './text/text-mask.component';
+export * from './button/button.widget';
 
 // widgets with schema
 export * from './display-text';
@@ -72,7 +74,8 @@ export const WIDGET_DIRECTIVES = [
     ErrorWidgetComponent,
     DateTimeWidgetComponent,
     JsonWidgetComponent,
-    BaseViewerWidgetComponent
+    BaseViewerWidgetComponent,
+    ButtonWidgetComponent
 ] as const;
 
 export const MASK_DIRECTIVE = [InputMaskDirective] as const;

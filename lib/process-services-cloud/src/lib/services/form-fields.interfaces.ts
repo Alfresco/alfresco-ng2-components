@@ -258,7 +258,8 @@ export enum FormFieldType {
     uploadFolder = 'uploadFolder',
     displayValue = 'readonly',
     displayText = 'readonly-text',
-    fileViewer = 'file-viewer'
+    fileViewer = 'file-viewer',
+    button = 'button'
 }
 
 export interface FormCloudDisplayModeConfigurationOptions {
