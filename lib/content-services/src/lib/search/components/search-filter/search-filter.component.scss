@@ -1,10 +1,10 @@
 .adf-search-filter {
     .adf-search-filter-header-title {
-        font-size: var(--theme-body-1-font-size);
-        color: var(--adf-theme-foreground-text-color-087);
+        font: var(--mat-sys-body-medium);
+        color: var(--mat-sys-on-secondary-container);
     }
 
     .adf-search-check-list-label {
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--mat-sys-on-secondary-container);
     }
 }

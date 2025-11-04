@@ -1,26 +1,7 @@
-@use '../../mat-selectors.scss' as ms;
-
 .adf-folder-dialog {
     .adf-folder-dialog-content {
         padding: 0;
         overflow: unset;
-
-        #{ms.$mat-form-field-infix} {
-            padding-bottom: 3.5px;
-        }
-
-        #{ms.$mat-form-field-hide-placeholder} {
-            #{ms.$mat-floating-label} {
-                padding-top: 20px;
-            }
-        }
-
-        #{ms.$mat-form-field-hint-wrapper} {
-            padding-left: 0;
-            margin-left: -2px;
-            color: var(--adf-theme-foreground-secondary-text-color);
-            font-size: 10.5px;
-        }
     }
 
     .adf-folder-dialog-title {
@@ -41,14 +22,14 @@
 }
 
 .adf-dialog-action-button:enabled {
-    color: var(--theme-primary-color);
+    color: var(--mat-sys-primary);
 }
 
 .adf-dialog-action-button:disabled > span {
-    color: var(--adf-theme-foreground-text-color-054);
+    color: var(--mat-sys-on-secondary-container);
 }
 
-@media screen and (width <= 380px) {
+@media screen and (width <=380px) {
     .adf-folder-dialog-title {
         margin: 0;
     }

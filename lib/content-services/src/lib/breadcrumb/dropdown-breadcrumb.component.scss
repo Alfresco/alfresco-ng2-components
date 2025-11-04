@@ -6,11 +6,8 @@ $dropdown-horizontal-offset: 30px;
     &-dropdown-breadcrumb {
         display: flex;
         flex: 1;
-        line-height: 24px;
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 600;
-        letter-spacing: -0.2px;
-        color: var(--adf-theme-foreground-text-color-054);
+        font: var(--mat-sys-body-medium);
+        color: var(--mat-sys-on-secondary-container);
         overflow: hidden;
         margin-top: 10px;
 
@@ -36,7 +33,7 @@ $dropdown-horizontal-offset: 30px;
         width: 25px;
 
         &:focus {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
             outline: none;
         }
     }
@@ -61,12 +58,12 @@ $dropdown-horizontal-offset: 30px;
         text-overflow: ellipsis;
         display: inline-block;
         width: 75%;
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
     }
 
     &-dropdown-breadcrumb-path-option.adf-dropdown-breadcrumb-path-option-node {
         padding: 0 12px;
-        font-size: var(--theme-caption-font-size);
+        font-size: var(--mat-sys-body-small-size);
     }
 
     &-dropdown-breadcrumb-path-option.adf-dropdown-breadcrumb-path-option-node:first-child {

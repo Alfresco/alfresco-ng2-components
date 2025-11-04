@@ -1,31 +1,17 @@
-@use '../../mat-selectors.scss' as ms;
-
 /* stylelint-disable no-descending-specificity */
 $content-node-selector-thumbnail-width: 35px !default;
 $content-node-selector-thumbnail-max-width: 40px !default;
 
 h2.adf-search-results-label {
     flex: 1;
-    font-weight: 600;
-    font-size: var(--theme-body-1-font-size);
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.43;
-    letter-spacing: -0.2px;
-    color: var(--adf-theme-foreground-text-color-087);
-}
-
-#{ms.$mdc-dialog} {
-    #{ms.$mat-dialog-surface}:is(div) {
-        padding-bottom: 0;
-    }
+    font: var(--mat-sys-body-medium);
 }
 
 .adf-content-node-selector-panel {
     .adf-toolbar .adf-toolbar-container.adf-toolbar-container-row {
         max-height: 48px;
         border-bottom-width: 0;
-        font-size: var(--theme-body-1-font-size);
+        font-size: var(--mat-sys-body-medium-size);
         height: auto;
     }
 }
@@ -41,34 +27,6 @@ h2.adf-search-results-label {
     }
 
     &-content {
-        #{ms.$mat-input-element} {
-            &:focus::placeholder {
-                color: var(--theme-primary-color);
-            }
-        }
-
-        #{ms.$mat-form-field-wrapper} {
-            #{ms.$mat-form-field-flex} {
-                align-items: center;
-
-                #{ms.$mat-form-field-infix} {
-                    padding-bottom: 0;
-                }
-            }
-        }
-
-        .adf-sites-dropdown-form-field {
-            label {
-                &#{ms.$mat-form-field-label} {
-                    top: 32px;
-                }
-            }
-        }
-
-        #{ms.$mat-form-field-subscript-wrapper} {
-            height: 16px;
-        }
-
         padding-top: 0;
 
         &-input {
@@ -76,11 +34,11 @@ h2.adf-search-results-label {
             margin-bottom: 8px;
 
             .adf-content-node-selector-content-input-icon:is(mat-icon) {
-                color: var(--adf-theme-foreground-icon-color-054);
+                color: var(--mat-sys-on-secondary-container);
+                font: var(--mat-sys-body-medium);
                 padding: 0 0 8px;
                 width: 1em;
                 height: 1em;
-                font-size: 20px;
             }
 
             .adf-content-node-selector-search-clear-button {
@@ -96,13 +54,9 @@ h2.adf-search-results-label {
                     cursor: pointer;
 
                     &:hover {
-                        color: var(--adf-theme-foreground-base-color);
+                        color: var(--mat-sys-on-surface);
                     }
                 }
-            }
-
-            #{ms.$mat-form-field-subscript-wrapper} {
-                display: none;
             }
         }
 
@@ -120,20 +74,16 @@ h2.adf-search-results-label {
             outline: none;
 
             .adf-dropdown-breadcrumb-icon {
-                color: var(--adf-theme-foreground-base-color-045);
-
-                &:hover {
-                    color: var(--adf-theme-foreground-base-color-065);
-                }
+                color: var(--mat-sys-on-secondary-container);
             }
 
             &:focus .adf-dropdown-breadcrumb-icon {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
             }
         }
 
         .adf-dropdown-breadcrumb-item-chevron {
-            color: var(--adf-theme-foreground-base-color-045);
+            color: var(--mat-sys-on-secondary-container);
         }
     }
 
@@ -141,7 +91,7 @@ h2.adf-search-results-label {
     &-list {
         height: 40vh;
         overflow: auto;
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
+        border: 1px solid var(--mat-sys-outline-variant);
         border-top: 0;
         position: relative;
 
@@ -152,7 +102,7 @@ h2.adf-search-results-label {
         }
 
         .adf-highlight {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
 
         .adf-datatable-list {
@@ -168,7 +118,7 @@ h2.adf-search-results-label {
             }
 
             .adf-datatable-selected > svg {
-                fill: var(--theme-primary-color);
+                fill: var(--mat-sys-primary);
             }
 
             .adf-no-content-container.adf-datatable-cell {

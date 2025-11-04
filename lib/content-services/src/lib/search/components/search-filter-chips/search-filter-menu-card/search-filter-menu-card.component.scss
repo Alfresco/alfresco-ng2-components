@@ -1,21 +1,13 @@
 .adf-search-filter-menu-card {
-    color: var(--adf-theme-foreground-text-color);
-    background: var(--adf-theme-background-card-color);
-
     .adf-search-filter-title {
         display: flex;
         justify-content: space-between;
-        color: var(--adf-theme-foreground-text-color-054);
         align-items: center;
         padding: 16px 12px;
         height: 32px;
-        font-size: var(--theme-body-1-font-size);
-        letter-spacing: 0.15px;
-        font-weight: bold;
-        font-style: inherit;
+        font: var(--mat-sys-body-medium);
 
         &-action {
-            color: var(--adf-theme-foreground-text-color-087);
             float: right;
         }
     }

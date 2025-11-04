@@ -10,11 +10,11 @@
 
         .adf-list-tag {
             display: block;
-            font-size: var(--theme-subheading-2-font-size);
+            font-size: var(--mat-sys-title-small-size);
 
             .adf-tag-list-chip {
-                color: var(--theme-primary-color-default-contrast);
-                background-color: var(--theme-primary-color);
+                color: var(--mat-sys-on-primary);
+                background-color: var(--mat-sys-primary);
             }
         }
     }
