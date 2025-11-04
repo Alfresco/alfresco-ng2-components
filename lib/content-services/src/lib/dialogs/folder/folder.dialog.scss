@@ -21,14 +21,6 @@
     text-transform: uppercase;
 }
 
-.adf-dialog-action-button:enabled {
-    color: var(--mat-sys-primary);
-}
-
-.adf-dialog-action-button:disabled > span {
-    color: var(--mat-sys-on-secondary-container);
-}
-
 @media screen and (width <=380px) {
     .adf-folder-dialog-title {
         margin: 0;
