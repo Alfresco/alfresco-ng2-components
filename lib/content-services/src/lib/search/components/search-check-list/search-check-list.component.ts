@@ -23,7 +23,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ReplaySubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,7 +50,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     context?: SearchQueryBuilderService;
     options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
-    startValue: string | string[];
+    startValue: string;
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
@@ -81,9 +81,9 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
             }
         }
         this.context.populateFilters
+            .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                filter((filterQuery) => filterQuery !== undefined),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
@@ -160,8 +160,8 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     }
 
     setValue(value: any) {
-        this.options.items.forEach((item) => (item.checked = value.includes(item.value)));
-        this.isActive = true;
+        this.options.items.filter((item) => value.includes(item.value)).forEach((item) => (item.checked = true));
+        this.submitValues();
     }
 
     private getCheckedValues() {
