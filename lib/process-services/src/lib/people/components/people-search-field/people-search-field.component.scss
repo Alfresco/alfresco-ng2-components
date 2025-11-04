@@ -20,14 +20,13 @@
     }
 
     .adf-people-pic {
-        background: var(--theme-primary-color);
+        background: var(--mat-sys-primary);
         width: 30px;
         padding: 10px 5px;
         border-radius: 90%;
-        color: #fff;
+        color: var(--mat-sys-on-primary);
         text-align: center;
-        font-weight: bolder;
-        font-size: var(--theme-adf-picture-1-font-size);
+        font: var(--mat-sys-label-large);
         text-transform: uppercase;
         vertical-align: text-bottom;
     }

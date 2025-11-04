@@ -15,17 +15,17 @@
     }
 
     .adf-search-list-action-container {
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--mat-sys-outline-variant);
         text-align: right;
         padding: 5px 0;
         margin-top: 5px;
 
         > button {
-            opacity: 0.54;
-            font-weight: bolder;
+            color: var(--mat-sys-on-surface-variant);
+            font: var(--mat-sys-label-large);
 
             &:hover {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
             }
         }
     }
