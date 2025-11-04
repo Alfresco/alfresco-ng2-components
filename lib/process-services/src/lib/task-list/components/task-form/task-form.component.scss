@@ -18,9 +18,8 @@
         & #{ms.$mat-button-label} {
             width: 58px;
             height: 20px;
-            opacity: 0.54;
-            font-size: var(--theme-body-2-font-size);
-            font-weight: bold;
+            font: var(--mat-sys-title-small);
+            color: var(--mat-sys-on-surface-variant);
         }
     }
 }

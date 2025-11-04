@@ -2,24 +2,11 @@
 
 .adf-attach-file-widget-dialog {
     #{ms.$mat-dialog-actions} {
-        background-color: var(--theme-background-color);
         display: flex;
         justify-content: flex-end;
-        color: var(--adf-theme-foreground-text-color);
 
         button {
             text-transform: uppercase;
-            font-weight: normal;
-        }
-
-        .adf-choose-action {
-            &[disabled] {
-                color: var(--adf-theme-foreground-secondary-text-color);
-            }
-
-            &:enabled {
-                color: var(--theme-primary-color);
-            }
         }
     }
 

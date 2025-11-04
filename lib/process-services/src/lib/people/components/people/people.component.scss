@@ -1,7 +1,7 @@
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-assignment-header {
-    border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
     padding: 6px 20px;
 }
 
@@ -18,16 +18,15 @@
     float: right;
     padding: 8px;
     height: 26px;
-    opacity: 0.54;
     cursor: pointer;
 
     &:hover {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
     }
 }
 
 .adf-assignment-top-container#{ms.$mat-card} {
-    border-top: 1px solid var(--adf-theme-foreground-divider-color);
+    border-top: 1px solid var(--mat-sys-outline-variant);
     margin: 0;
     padding: 0;
     display: flex;
@@ -45,7 +44,7 @@
 
 .adf-assignment-container {
     padding: 10px 20px;
-    border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
     max-width: 100%;
 }
 
@@ -80,14 +79,13 @@ adf-people-list adf-datatable {
 }
 
 .adf-people-search-people-pic {
-    background: var(--theme-primary-color);
+    background: var(--mat-sys-primary);
     width: 30px;
     padding: 10px 5px;
     border-radius: 100px;
-    color: #fff;
+    color: var(--mat-sys-on-primary);
     text-align: center;
-    font-weight: bolder;
-    font-size: var(--theme-adf-picture-1-font-size);
+    font: var(--mat-sys-label-large);
     text-transform: uppercase;
     vertical-align: text-bottom;
 }

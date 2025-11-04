@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 .row-editor {
     padding: 8px;
 }
@@ -8,6 +9,6 @@
 
 .row-editor__invalid .row-editor__validation-summary {
     padding: 8px 16px;
-    color: #d50000;
+    color: var(--mat-sys-error);
     visibility: visible;
 }
