@@ -41,17 +41,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {

@@ -29,7 +29,6 @@ import { FormFieldModel } from './core';
     selector: 'base-widget',
     template: '',
     host: {
-        '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
         '(focus)': 'event($event)',

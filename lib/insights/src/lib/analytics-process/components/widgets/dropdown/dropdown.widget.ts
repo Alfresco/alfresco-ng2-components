@@ -28,6 +28,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
+    host: {
+        '(click)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements OnInit {

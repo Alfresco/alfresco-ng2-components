@@ -42,6 +42,24 @@ describe('DateWidgetComponent', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
+
     it('should not call onFieldChanged on init', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
         expect(widget.onFieldChanged).not.toHaveBeenCalled();

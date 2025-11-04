@@ -29,15 +29,7 @@ import { WidgetComponent } from '../widget.component';
     templateUrl: './base-viewer.widget.html',
     styleUrls: ['./base-viewer.widget.scss'],
     host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
+        '(click)': 'event($event)'
     },
     imports: [TranslatePipe, ViewerComponent, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None

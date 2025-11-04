@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DisplayRichTextWidgetComponent, RICH_TEXT_PARSER_TOKEN } from './display-rich-text.widget';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
+import { FormFieldModel, FormModel } from '@alfresco/adf-core';
 
 describe('DisplayRichTextWidgetComponent', () => {
     let widget: DisplayRichTextWidgetComponent;
@@ -94,6 +95,24 @@ describe('DisplayRichTextWidgetComponent', () => {
         widget = fixture.componentInstance;
         debugEl = fixture.debugElement;
         widget.field = fakeFormField;
+    });
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     it('should call RichTextParserService.parse() method', () => {

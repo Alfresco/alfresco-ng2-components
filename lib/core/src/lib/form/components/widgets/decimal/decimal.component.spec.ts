@@ -18,7 +18,6 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatInputModule } from '@angular/material/input';
 import { UnitTestingUtils } from '../../../../testing';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
@@ -32,7 +31,7 @@ describe('DecimalComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatInputModule, DecimalWidgetComponent],
+            imports: [DecimalWidgetComponent],
             providers: [FormService]
         });
 
@@ -40,6 +39,24 @@ describe('DecimalComponent', () => {
         widget = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
         testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+    });
+
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     describe('when tooltip is set', () => {

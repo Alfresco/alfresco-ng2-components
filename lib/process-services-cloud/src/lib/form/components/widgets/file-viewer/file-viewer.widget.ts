@@ -27,17 +27,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [ErrorWidgetComponent, AlfrescoViewerComponent, TranslatePipe],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {

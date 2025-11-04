@@ -52,6 +52,24 @@ describe('BaseViewerWidgetComponent', () => {
         widget = fixture.componentInstance;
     });
 
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event');
+            widget.field = new FormFieldModel(new FormModel(), { value: { urlFile: '' } });
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
+
     it('should set the file id corretly when the field value is an array', (done) => {
         assertFileId([fakePngAnswer], '1933', fakeForm, widget, fixture, done);
     });

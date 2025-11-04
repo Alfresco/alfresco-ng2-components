@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel, NoopAuthModule, CoreModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel, NoopAuthModule } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
@@ -33,7 +33,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), NoopAuthModule, PeopleCloudWidgetComponent]
+            imports: [NoopAuthModule, PeopleCloudWidgetComponent]
         });
         identityUserService = TestBed.inject(IdentityUserService);
         fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
@@ -43,8 +43,22 @@ describe('PeopleCloudWidgetComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    afterEach(() => {
-        fixture.destroy();
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
     });
 
     it('should preselect the current user', () => {

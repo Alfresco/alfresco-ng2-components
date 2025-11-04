@@ -29,17 +29,6 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslatePipe],
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],
-    host: {
-        '(click)': 'event($event)',
-        '(blur)': 'event($event)',
-        '(change)': 'event($event)',
-        '(focus)': 'event($event)',
-        '(focusin)': 'event($event)',
-        '(focusout)': 'event($event)',
-        '(input)': 'event($event)',
-        '(invalid)': 'event($event)',
-        '(select)': 'event($event)'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWidgetComponent extends BaseViewerWidgetComponent {

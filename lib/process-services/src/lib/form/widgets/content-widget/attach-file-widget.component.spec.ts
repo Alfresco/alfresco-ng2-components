@@ -207,6 +207,27 @@ describe('AttachFileWidgetComponent', () => {
         return showFileButton.isDisabled();
     };
 
+    describe('event tracking', () => {
+        let eventSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([]));
+            spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({}));
+            eventSpy = spyOn(widget, 'event').and.callThrough();
+
+            widget.field = new FormFieldModel(new FormModel(), {});
+            fixture.detectChanges();
+        });
+
+        it('should call event method only once when widget is clicked', () => {
+            const clickEvent = new MouseEvent('click', { bubbles: true });
+            fixture.debugElement.nativeElement.dispatchEvent(clickEvent);
+
+            expect(eventSpy).toHaveBeenCalledTimes(1);
+            expect(eventSpy).toHaveBeenCalledWith(clickEvent);
+        });
+    });
+
     it('should add file to tempFilesList when form has value and file source is configured', () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(widget, 'isFileSourceConfigured').and.returnValue(true);
