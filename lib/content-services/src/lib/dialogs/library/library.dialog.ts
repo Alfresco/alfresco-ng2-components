@@ -30,7 +30,7 @@ import {
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { NotificationService } from '@alfresco/adf-core';
-import { debounceTime, finalize, map, mergeMap } from 'rxjs/operators';
+import { debounceTime, finalize, map, mergeMap, take } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -125,6 +125,10 @@ export class LibraryDialogComponent implements OnInit {
         });
 
         this.visibilityOption = this.visibilityOptions[0].value;
+
+        this.form.controls['title'].valueChanges
+            .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.form.controls['title'].markAsTouched());
 
         this.form.controls['title'].valueChanges
             .pipe(
@@ -248,13 +252,13 @@ export class LibraryDialogComponent implements OnInit {
         }
     }
 
-    private forbidSpecialCharacters({ value }: UntypedFormControl) {
+    private forbidSpecialCharacters({ value }: UntypedFormControl): ValidationErrors | null {
         if (value === null || value.length === 0) {
             return null;
         }
 
         const validCharacters: RegExp = /[^A-Za-z0-9-]/;
-        const isValid: boolean = !validCharacters.test(value);
+        const isValid = !validCharacters.test(value);
 
         return isValid
             ? null
@@ -263,12 +267,12 @@ export class LibraryDialogComponent implements OnInit {
               };
     }
 
-    private forbidOnlySpaces({ value }: UntypedFormControl) {
+    private forbidOnlySpaces({ value }: UntypedFormControl): ValidationErrors | null {
         if (value === null || value.length === 0) {
             return null;
         }
 
-        const isValid: boolean = !!value.trim();
+        const isValid = !!value.trim();
 
         return isValid
             ? null
@@ -277,12 +281,12 @@ export class LibraryDialogComponent implements OnInit {
               };
     }
 
-    private minLengthTrimmed({ value }: UntypedFormControl) {
+    private minLengthTrimmed({ value }: UntypedFormControl): ValidationErrors | null {
         if (value === null || value.length === 0) {
             return null;
         }
 
-        const isValid: boolean = value.trim().length !== 1;
+        const isValid = value.trim().length !== 1;
 
         return isValid
             ? null

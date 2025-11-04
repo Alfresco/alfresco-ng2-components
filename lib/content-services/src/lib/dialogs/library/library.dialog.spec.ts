@@ -350,11 +350,27 @@ describe('LibraryDialogComponent', () => {
         expect(component.form.controls.id.errors).toEqual({ message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS' });
     });
 
+    it('should not show required error on opening dialog', async () => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        fixture.detectChanges();
+        const titleFormField = await unitTestingUtils.getMatFormField();
+        const errors = await titleFormField.getTextErrors();
+        expect(errors.length).toBe(0);
+    });
+
+    it('should mark title as touched on value change', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(sitesService, 'getSite').and.returnValue(of(null));
+        fixture.detectChanges();
+        expect(component.form.controls.title.touched).toBeFalse();
+        setFormFieldValue('title', 'library title');
+        expect(component.form.controls.title.touched).toBeTrue();
+    }));
+
     it('should show correct error message when there is no library title', async () => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         fixture.detectChanges();
         component.form.controls.title.setValue('');
-        component.form.controls.title.markAsTouched();
         fixture.detectChanges();
 
         const titleFormField = await unitTestingUtils.getMatFormField();
