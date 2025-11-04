@@ -1,8 +1,6 @@
-$file-uploading-row-hover-color: #eee !default;
-
 adf-file-uploading-list-row:not(:first-child) {
     display: block;
-    border-top: 1px solid var(--adf-theme-foreground-text-color-014);
+    border-top: 1px solid var(--mat-sys-outline-variant);
 }
 
 .adf-file-uploading-row {
@@ -12,7 +10,7 @@ adf-file-uploading-list-row:not(:first-child) {
     cursor: default;
 
     &:hover {
-        background: $file-uploading-row-hover-color;
+        background: var(--mat-sys-surface);
     }
 
     &__name {
@@ -29,8 +27,7 @@ adf-file-uploading-list-row:not(:first-child) {
         min-width: 100px;
         display: flex;
         justify-content: flex-end;
-        line-height: 40px;
-        height: 40px;
+        font: var(--mat-sys-body-large);
         align-items: center;
         padding: 0 12px;
     }
@@ -39,24 +36,23 @@ adf-file-uploading-list-row:not(:first-child) {
         cursor: pointer;
         display: flex;
         align-items: center;
-        height: 40px;
-        line-height: 40px;
+        font: var(--mat-sys-body-large);
     }
 
     &__status--done {
-        color: var(--theme-accent-color);
+        color: var(--mat-sys-secondary);
     }
 
     &__status--error {
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
         padding: 0 12px;
     }
 
     &__action--cancel {
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
     }
 
     &__action--remove {
-        color: var(--theme-warn-color);
+        color: var(--mat-sys-error);
     }
 }

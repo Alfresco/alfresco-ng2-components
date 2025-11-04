@@ -1,5 +1,3 @@
-@use '../../mat-selectors.scss' as ms;
-
 .adf-categories-management {
     margin: 5px 0;
 
@@ -35,23 +33,11 @@
         height: 100%;
         overflow-wrap: anywhere;
         padding: 5px 0;
-        font-size: 14px;
-        background-color: inherit;
-        color: inherit;
-
-        &:not(#{ms.$mat-list-item-disabled}):hover {
-            cursor: pointer;
-            background: var(--adf-theme-mat-grey-color-a200);
-        }
-
-        & span {
-            padding: 0;
-        }
     }
 
     .adf-existing-categories-label {
-        font-size: 10px;
-        color: var(--theme-secondary-text-color);
+        font: var(--mat-sys-body-small);
+        color: var(--mat-sys-on-secondary-container);
         margin-bottom: 2px;
     }
 
@@ -64,12 +50,8 @@
     min-height: 22vh;
 
     .adf-create-category-label {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
         cursor: pointer;
         overflow-wrap: anywhere;
-    }
-
-    #{ms.$mat-list-item-disabled} #{ms.$mat-list-item-primary-text} {
-        opacity: 1;
     }
 }
