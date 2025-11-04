@@ -1,5 +1,3 @@
-@use '@angular/material' as mat;
-
 .adf-navbar-item {
     .adf-navbar-item-btn {
         height: 100%;
@@ -9,9 +7,5 @@
     .adf-navbar-item-active {
         border-radius: 0;
         opacity: 1;
-
-        @include mat.button-overrides ((
-            outlined-container-color: var(--mat-sys-primary);
-        ));
     }
 }
