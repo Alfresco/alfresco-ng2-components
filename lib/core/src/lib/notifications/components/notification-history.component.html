@@ -70,8 +70,15 @@
 
     <mat-divider/>
 
-    <div class="adf-notification-history-load-more" *ngIf="hasMoreNotifications()">
-        <button mat-button (click)="loadMore($event)" #loadMoreButton (keydown)="manageFocus($event)">
+    <div
+        class="adf-notification-history-load-more"
+        *ngIf="hasMoreNotifications()"
+        aria-hidden="true">
+        <button
+            mat-button
+            (click)="loadMore($event)"
+            #loadMoreButton
+            (keydown)="manageFocus($event)">
             {{ 'NOTIFICATIONS.LOAD_MORE' | translate }}
         </button>
     </div>
