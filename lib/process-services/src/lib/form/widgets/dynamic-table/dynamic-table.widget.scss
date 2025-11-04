@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@use '../../../../../../core/src/lib/styles/mixins' as mixins;
+@use 'mixins' as mixins;
 
 $dynamic-table-font-size: var(--mat-sys-body-medium-size) !default;
 $dynamic-table-header-font-size: var(--mat-sys-body-small-size) !default;
