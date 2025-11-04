@@ -26,12 +26,12 @@
 
     .adf-version-list-icon {
         margin: 0 16px;
-        color: var(--theme-sidenav-user-menu-color);
+        color: var(--mat-sys-on-surface);
     }
 
     &.adf-version-list-element {
         .adf-version-list-item {
-            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+            border-bottom: 1px solid var(--mat-sys-outline-variant);
             width: 100%;
             height: 88px;
         }
@@ -50,7 +50,7 @@
         width: auto;
         opacity: 0.5;
 
-        @media screen and (width <= 629px) {
+        @media screen and (width <=629px) {
             width: 97%;
         }
     }

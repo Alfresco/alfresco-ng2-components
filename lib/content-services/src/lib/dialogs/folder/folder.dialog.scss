@@ -1,5 +1,3 @@
-@use '../../mat-selectors.scss' as ms;
-
 .adf-folder-dialog {
     .adf-folder-dialog-content {
         padding: 0;
@@ -28,14 +26,14 @@
 }
 
 .adf-dialog-action-button:enabled {
-    color: var(--theme-primary-color);
+    color: var(--mat-sys-primary);
 }
 
 .adf-dialog-action-button:disabled > span {
-    color: var(--adf-theme-foreground-text-color-064);
+    color: var(--mat-sys-on-secondary-container);
 }
 
-@media screen and (width <= 380px) {
+@media screen and (width <=380px) {
     .adf-folder-dialog-title {
         margin: 0;
     }

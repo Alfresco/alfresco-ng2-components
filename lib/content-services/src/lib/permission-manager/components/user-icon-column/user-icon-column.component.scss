@@ -1,27 +1,22 @@
 .adf-cell-value {
     .adf-people-initial {
-        background: var(--theme-primary-color);
+        background: var(--mat-sys-primary);
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 40px;
         height: 40px;
-        color: var(--theme-primary-color-default-contrast);
-        font-weight: bolder;
-        font-size: var(--theme-adf-picture-1-font-size);
+        color: var(--mat-sys-on-primary);
+        font: var(--mat-sys-body-small);
         text-transform: uppercase;
     }
 
     .adf-group-icon {
-        height: 20px;
-        width: 20px;
-        background: var(--theme-primary-color);
+        background: var(--mat-sys-primary);
         border-radius: 50%;
         padding: 10px;
-        color: var(--theme-primary-color-default-contrast);
-        font-weight: bolder;
-        font-size: var(--theme-title-font-size);
+        color: var(--mat-sys-on-primary);
     }
 
     .adf-datatable-selected {
@@ -35,7 +30,7 @@
         margin: 0;
 
         svg {
-            fill: var(--theme-accent-color);
+            fill: var(--mat-sys-secondary);
             width: 40px;
             height: 40px;
         }
