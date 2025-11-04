@@ -415,7 +415,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Columns",
       "SEARCH": "Search",
-      "APPLY": "Apply"
+      "APPLY": "Apply",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
