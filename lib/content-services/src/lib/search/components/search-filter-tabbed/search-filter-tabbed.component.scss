@@ -6,11 +6,7 @@ adf-search-filter-tabbed {
     }
 
     .adf-search-tab-label-active {
-        border-bottom: 1px solid var(--theme-primary-color);
-
-        #{ms.$mat-tab-label-text} {
-            color: var(--adf-theme-foreground-secondary-text-color);
-        }
+        border-bottom: 1px solid var(--mat-sys-primary);
     }
 
     // The important tag is used here as a workaround for a bug in angular material, when MatTabs are used in conjunction with MatMenu

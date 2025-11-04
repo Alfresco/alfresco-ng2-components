@@ -1,23 +1,10 @@
-@use '../../../mat-selectors.scss' as ms;
-
-#{ms.$mdc-dialog} {
-    #{ms.$mat-dialog-surface}:is(div) {
-        padding-bottom: 0;
-    }
-}
-
 .adf-add-permission-dialog {
     .adf-add-permission-dialog-title {
         margin-bottom: 28px;
         margin-left: 20px;
         margin-right: 20px;
-        font-size: var(--theme-title-font-size);
-        font-weight: 600;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.6;
-        letter-spacing: -0.5px;
-        color: var(--adf-theme-foreground-text-color-087);
+        font: var(--mat-sys-title-medium);
+        color: var(--mat-sys-on-surface);
     }
 
     .adf-add-permission-dialog-content {
@@ -30,17 +17,6 @@
             &-search-user-button {
                 width: 100%;
                 justify-content: unset;
-
-                #{ms.$mat-button-label} {
-                    padding-right: 0;
-                }
-
-                #{ms.$mat-icon} {
-                    font-size: 24px;
-                    width: 24px;
-                    height: 24px;
-                    margin-left: 0;
-                }
             }
 
             &-add-member-action {
@@ -59,23 +35,22 @@
 
     .adf-add-permission-dialog-actions {
         padding: 0 24px;
-        background-color: var(--theme-background-color);
+        background-color: var(--mat-sys-surface);
         display: flex;
         justify-content: flex-end;
-        color: var(--adf-theme-foreground-text-color);
+        color: var(--mat-sys-on-surface);
 
         button {
             text-transform: uppercase;
-            font-weight: normal;
         }
 
         .adf-choose-action {
             &[disabled] {
-                color: var(--adf-theme-foreground-secondary-text-color);
+                color: var(--mat-sys-on-surface-variant);
             }
 
             &:enabled {
-                color: var(--theme-primary-color);
+                color: var(--mat-sys-primary);
             }
         }
     }
