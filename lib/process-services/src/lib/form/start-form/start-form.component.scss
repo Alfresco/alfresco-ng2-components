@@ -18,11 +18,7 @@
     }
 
     & #{ms.$mat-tab-label-text} {
-        font-size: var(--theme-subheading-2-font-size);
-        line-height: var(--theme-headline-line-height);
-        letter-spacing: -0.4px;
         text-align: left;
-        color: var(--adf-theme-foreground-text-color-064);
         text-transform: uppercase;
     }
 
@@ -38,7 +34,7 @@
 .adf-form-container-card {
     .adf {
         &-form-title {
-            font-size: var(--theme-title-font-size);
+            font: var(--mat-sys-title-medium);
         }
 
         &-form-debug-container {
@@ -48,10 +44,6 @@
         &-form-debug-container .adf-debug-toggle-text {
             padding-left: 15px;
             cursor: pointer;
-        }
-
-        &-form-debug-container .adf-debug-toggle-text:hover {
-            font-weight: bold;
         }
 
         &-form-reload-button {
@@ -64,10 +56,10 @@
             position: absolute;
             right: 50px;
             top: 39px;
-            color: var(--theme-accent-color);
+            color: var(--mat-sys-primary);
 
             & .adf-invalid-color {
-                color: var(--theme-warn-color);
+                color: var(--mat-sys-error);
             }
         }
 
@@ -82,8 +74,7 @@
         &-label {
             width: 32px;
             height: 16px;
-            font-size: var(--theme-caption-font-size);
-            line-height: var(--theme-headline-line-height);
+            font: var(--mat-sys-body-small);
             text-align: left;
             white-space: nowrap;
         }
@@ -101,9 +92,7 @@
             & #{ms.$mat-button-label} {
                 width: 58px;
                 height: 20px;
-                opacity: 0.54;
-                font-size: var(--theme-body-2-font-size);
-                font-weight: bold;
+                font: var(--mat-sys-body-large);
             }
         }
     }
@@ -111,12 +100,6 @@
 
 form-field {
     width: 100%;
-
-    #{ms.$mat-input-element} {
-        font-size: var(--theme-body-2-font-size);
-        padding-top: 8px;
-        line-height: normal;
-    }
 }
 
 [dir='rtl'] .adf-form-validation-button {

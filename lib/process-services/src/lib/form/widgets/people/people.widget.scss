@@ -1,18 +1,14 @@
-@use '../../../styles/mat-selectors' as ms;
-
 .adf {
     &-people-widget {
         width: 100%;
 
-        #{ms.$mat-form-field-label} {
-            top: 10px;
-        }
-
         .adf-people-widget-field {
+            top: 10px;
+
             .adf-people-widget-field-chip {
-                border: 1px solid var(--adf-chip-border-color);
+                border: 1px solid var(--mat-sys-outline);
                 border-radius: 10px;
-                background-color: var(--theme-primary-color-default-contrast);
+                background-color: var(--mat-sys-secondary);
                 height: auto;
                 word-break: break-word;
                 padding: 4px 0;
@@ -31,23 +27,22 @@
     }
 
     &-people-widget-pic {
-        background: var(--theme-primary-color);
+        background: var(--mat-sys-primary);
         display: flex;
         justify-content: center;
         align-items: center;
         width: 40px;
         height: 40px;
         border-radius: 100px;
-        color: var(--adf-theme-foreground-text-color);
-        font-weight: bolder;
-        font-size: var(--theme-adf-picture-1-font-size);
+        color: var(--mat-sys-on-surface);
+        font: var(--mat-sys-label-large);
         text-transform: uppercase;
     }
 
     &-people-widget-image {
         margin-left: -44px;
         left: 21px;
-        background: var(--adf-theme-background-dialog-color);
+        background: var(--mat-sys-surface-container-high);
         border-radius: 100px;
         width: 40px;
         height: 40px;
