@@ -54,7 +54,7 @@
                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
                 [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
-                [attr.aria-label]="(col.title | translate) + (col.subtitle ? ' ' + col.subtitle : '')"
+                [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : (col.title | translate) + (col.subtitle ? ' ' + (col.subtitle | translate) : '')"
                 (click)="onColumnHeaderClick(col, $event)"
                 (keyup.enter)="onColumnHeaderClick(col, $event)"
                 role="columnheader"
@@ -279,7 +279,11 @@
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="data.getColumnType(row, col)">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">
-                                <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
+                                <mat-icon
+                                    [attr.aria-label]="col.srTitle? (col.srTitle | translate) : null"
+                                    [attr.aria-hidden]="!asIconValue(row, col)"
+                                    *ngIf="isIconValue(row, col); else no_iconvalue">
+                                    {{ asIconValue(row, col) }}
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
                                     <mat-icon class="adf-datatable-selected"
