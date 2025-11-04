@@ -30,10 +30,21 @@ import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
+import { ContainerRowModel } from './container-row.model';
 
 export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
+
+interface RepeatableSectionModel {
+    id: string;
+    uid: string;
+    fields: FormFieldModel[];
+    rowIndex: number;
+    value?: any;
+}
+
+const ROW_ID_PREFIX = '-Row';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -94,11 +105,13 @@ export class FormFieldModel extends FormWidgetModel {
     schemaDefinition: DataColumn[];
     externalProperty?: string;
     style?: string;
+    parent?: RepeatableSectionModel;
 
     // container model members
     numberOfColumns: number = 1;
     fields: FormFieldModel[] = [];
     columns: ContainerColumnModel[] = [];
+    rows: ContainerRowModel[] = [];
 
     // util members
     emptyOption: FormFieldOption;
@@ -172,11 +185,11 @@ export class FormFieldModel extends FormWidgetModel {
         return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
     }
 
-    constructor(form: any, json?: any) {
+    constructor(form: any, json?: any, parent?: RepeatableSectionModel) {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
-            this.id = json.id;
+            this.id = parent ? parent.uid : json.id;
             this.name = json.name;
             this.type = json.type;
             this.roles = json.roles;
@@ -221,8 +234,9 @@ export class FormFieldModel extends FormWidgetModel {
             this.schemaDefinition = json.schemaDefinition;
             this.precision = json.precision;
             this.externalProperty = json.externalProperty;
-            this._value = this.parseValue(json);
+            this._value = this.parseValue(json, parent?.value);
             this.style = json.style;
+            this.parent = parent;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -236,6 +250,10 @@ export class FormFieldModel extends FormWidgetModel {
 
             if (FormFieldTypes.isContainerType(this.type) || FormFieldTypes.isSectionType(this.type)) {
                 this.containerFactory(json, form);
+            }
+
+            if (FormFieldTypes.isRepeatableSectionType(this.type)) {
+                this.repeatableSectionFactory(json, form);
             }
         }
 
@@ -306,14 +324,123 @@ export class FormFieldModel extends FormWidgetModel {
         });
     }
 
+    private repeatableSectionFactory(json: any, form: any): void {
+        const { numberOfColumns = 1, params, value, fields = {} } = json;
+
+        this.numberOfColumns = numberOfColumns;
+        this.fields = fields;
+        this.rowspan = 1;
+        this.colspan = 1;
+        this.rows = [];
+
+        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.newRowsLimit, value); i++) {
+            this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows));
+        }
+
+        this.columns = this.rows[0].columns;
+    }
+
+    private getNumberOfRows(initialNrRows: number = 1, rowsLimit?: number, value?: any) {
+        return value?.length && !!rowsLimit ? Math.min(value?.length, initialNrRows + rowsLimit) : (value?.length ?? initialNrRows);
+    }
+
+    private createRow(fields: any, form: any, index: number, value?: any, isInitial: boolean = false) {
+        const row = new ContainerRowModel(isInitial);
+
+        row.columns.push(...this.createColumns(fields, form, index, value));
+
+        return row;
+    }
+
+    private createColumns(fields: any, form: any, index?: number, value?: any) {
+        const columns: ContainerColumnModel[] = [];
+
+        Object.keys(fields).forEach((currentField) => {
+            if (!Object.prototype.hasOwnProperty.call(fields, currentField)) {
+                return;
+            }
+
+            const col = new ContainerColumnModel();
+            col.fields = (fields[currentField] || []).map(
+                (field: any) =>
+                    new FormFieldModel(form, field, {
+                        id: this.id,
+                        uid: this.getUniqueId(field),
+                        fields: this.fields,
+                        rowIndex: index ?? 0,
+                        value: value?.[field.id]
+                    })
+            );
+            col.rowspan = fields[currentField].length;
+
+            if (!FormFieldTypes.isSectionType(this.type)) {
+                this.updateContainerColspan(col.fields);
+            }
+
+            this.rowspan = Math.max(this.rowspan, col.rowspan);
+            columns.push(col);
+        });
+
+        return columns;
+    }
+
+    private getUniqueId(field: FormFieldModel): string {
+        return field.id + ROW_ID_PREFIX + window.crypto.getRandomValues(new Uint32Array(1))[0].toString();
+    }
+
+    private updateChildrenFieldsRowIndex() {
+        this.rows.forEach((row: ContainerRowModel, index: number) => {
+            for (const column of row.columns) {
+                for (const field of column.fields) {
+                    field.parent.rowIndex = index;
+                }
+            }
+        });
+    }
+
+    private createInitialValue(fields: any) {
+        return Object.keys(fields)
+            .map((currentField) => (fields[currentField] || []).map((field) => field.id))
+            .flat(1)
+            .reduce((acc, curr) => ((acc[curr] = null), acc), {});
+    }
+
     private updateContainerColspan(fields: FormFieldModel[]): void {
         fields.forEach((colField: FormFieldModel) => {
             this.colspan = Math.max(this.colspan, colField.colspan);
         });
     }
 
-    parseValue(json: any): any {
-        const value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
+    addRow(fields: any, form: any) {
+        if (!this.shouldAddRow()) {
+            return;
+        }
+
+        this.rows.push(this.createRow(fields, form, this.rows.length));
+    }
+
+    private shouldAddRow(): boolean {
+        return !this.params.newRowsLimit || this.rows.length < this.params.initialNumberOfRows + this.params.newRowsLimit;
+    }
+
+    removeRow(index: number) {
+        if (!this.shouldRemoveRow(index)) {
+            return;
+        }
+
+        this.rows.splice(index, 1);
+        this.updateChildrenFieldsRowIndex();
+
+        this.form.values[this.id].splice(index, 1);
+        this.form.onFormFieldChanged(this);
+    }
+
+    private shouldRemoveRow(index: number): boolean {
+        return this.rows.length > index;
+    }
+
+    parseValue(json: any, initialValue?: any): any {
+        const value = initialValue ?? (Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null);
 
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
@@ -407,6 +534,11 @@ export class FormFieldModel extends FormWidgetModel {
 
     updateForm() {
         if (!this.form) {
+            return;
+        }
+
+        if (this.parent) {
+            this.updateRepeatableSectionValue();
             return;
         }
 
@@ -540,11 +672,36 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.value ? this.value : null;
                 break;
             }
+            case FormFieldTypes.REPEATABLE_SECTION: {
+                this.form.values[this.id] = this.value ? this.value : [];
+                this.repeatableSectionFactory(
+                    {
+                        ...this.json,
+                        value: this.value
+                    },
+                    this.form
+                );
+                break;
+            }
             default:
                 if (this.shouldUpdateFormValues(this.type)) {
                     this.form.values[this.id] = this.value;
                 }
         }
+
+        this.form.onFormFieldChanged(this);
+    }
+
+    private updateRepeatableSectionValue() {
+        if (!this.form.values[this.parent.id]) {
+            this.form.values[this.parent.id] = [];
+        }
+
+        if (!this.form.values[this.parent.id][this.parent.rowIndex]) {
+            this.form.values[this.parent.id][this.parent.rowIndex] = this.createInitialValue(this.parent.fields);
+        }
+
+        this.form.values[this.parent.id][this.parent.rowIndex][this.id.split(ROW_ID_PREFIX)[0]] = this.value;
 
         this.form.onFormFieldChanged(this);
     }

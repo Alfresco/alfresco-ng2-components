@@ -1,0 +1,25 @@
+.adf-container-widget {
+    &-repeat__text {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+        padding-bottom: 10px;
+        cursor: default;
+        user-select: none;
+        font-size: var(--adf-header-font-size);
+        font-weight: var(--adf-header-font-weight);
+        color: var(--adf-header-color);
+        line-height: normal;
+
+        &.adf-collapsible {
+            cursor: pointer;
+        }
+    }
+
+    &-row-action {
+        margin-left: 10px;
+    }
+
+    &-row-limit {
+        color: rgba(0, 0, 0, 0.67);
+        font-size: 12px;
+    }
+}

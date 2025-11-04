@@ -22,6 +22,7 @@ import { MaybeReactiveFormWidget, ReactiveFormWidget } from '../reactive-widget.
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
+    static REPEATABLE_SECTION: string = 'repeatable-section';
     static SECTION: string = 'section';
     static DYNAMIC_TABLE: string = 'dynamic-table';
     static TEXT: string = 'text';
@@ -87,5 +88,9 @@ export class FormFieldTypes {
 
     static isSectionType(type: string): boolean {
         return type === FormFieldTypes.SECTION;
+    }
+
+    static isRepeatableSectionType(type: string): boolean {
+        return type === FormFieldTypes.REPEATABLE_SECTION;
     }
 }

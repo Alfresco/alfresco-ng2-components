@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from './form-field.model';
+import { ContainerColumnModel } from './container-column.model';
 
-export class ContainerColumnModel {
+export class ContainerRowModel {
     id: string;
+    isInitial: boolean;
+    columns: ContainerColumnModel[] = [];
+
     size: number = 12;
-    fields: FormFieldModel[] = [];
     colspan: number = 1;
     rowspan: number = 1;
 
-    constructor() {
+    constructor(isInitial: boolean = false) {
+        this.isInitial = isInitial;
         this.id = window.crypto.getRandomValues(new Uint32Array(1))[0].toString();
-    }
-
-    hasFields(): boolean {
-        return !!this.fields?.length;
     }
 }

@@ -56,6 +56,7 @@ export * from './text/text-mask.component';
 // widgets with schema
 export * from './display-text';
 export * from './header';
+export * from './repeat/repeat.widget';
 
 export const WIDGET_DIRECTIVES = [
     UnknownWidgetComponent,

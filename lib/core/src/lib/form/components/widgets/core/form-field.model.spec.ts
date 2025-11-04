@@ -852,7 +852,8 @@ describe('FormFieldModel', () => {
         FormFieldTypes.READONLY_TYPES.forEach((typeName) => {
             const field = new FormFieldModel(form, {
                 id: typeName,
-                type: typeName
+                type: typeName,
+                params: {}
             });
 
             field.value = '<some value>';
@@ -1265,5 +1266,147 @@ describe('FormFieldModel', () => {
         });
 
         expect(field.tooltip).toBe('');
+    });
+
+    describe('repeatable section', () => {
+        let form: FormModel;
+        let field: FormFieldModel;
+
+        beforeEach(() => {
+            form = new FormModel();
+            field = new FormFieldModel(form, {
+                id: 'RepeatableSection0tbw2y',
+                name: 'Repeatable Section',
+                type: 'repeatable-section',
+                tab: null,
+                params: {
+                    initialNumberOfRows: 2,
+                    allowInitialRowsDelete: true,
+                    newRowsLimit: 3
+                },
+                numberOfColumns: 2,
+                fields: {
+                    '1': [
+                        {
+                            id: 'Text0wwp7n',
+                            name: 'Text',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ],
+                    '2': [
+                        {
+                            id: 'Integer0rzkwq',
+                            name: 'Integer',
+                            type: 'integer',
+                            readOnly: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minValue: null,
+                            maxValue: null,
+                            required: false,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ]
+                }
+            });
+        });
+
+        describe('add row', () => {
+            it('should add row if allowed by limit param', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(3);
+            });
+
+            it('should add row if no limit param is defined', () => {
+                field.params.newRowsLimit = null;
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(3);
+            });
+
+            it('should NOT add row if NOT allowed by limit param', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.addRow(field.fields, form);
+                field.addRow(field.fields, form);
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(5);
+
+                field.addRow(field.fields, form);
+                expect(field.rows.length).toBe(5);
+            });
+        });
+
+        describe('remove row', () => {
+            it('should remove row if target index exists', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.removeRow(1);
+                expect(field.rows.length).toBe(1);
+            });
+
+            it('should NOT remove row if target index does NOT exist', () => {
+                expect(field.rows.length).toBe(2);
+
+                field.removeRow(2);
+                expect(field.rows.length).toBe(2);
+            });
+
+            it('should update children fields rowIndex', () => {
+                expect(field.rows[0].columns[0].fields[0].parent.rowIndex).toBe(0);
+                expect(field.rows[1].columns[0].fields[0].parent.rowIndex).toBe(1);
+
+                field.removeRow(0);
+                expect(field.rows[0].columns[0].fields[0].parent.rowIndex).toBe(0);
+            });
+
+            it('should update form value', () => {
+                const formValues = {
+                    initialState: [
+                        {
+                            Text0wwp7n: 'mock-1',
+                            Integer0rzkwq: 1
+                        },
+                        {
+                            Text0wwp7n: 'mock-2',
+                            Integer0rzkwq: 2
+                        }
+                    ],
+                    removeState: [
+                        {
+                            Text0wwp7n: 'mock-2',
+                            Integer0rzkwq: 2
+                        }
+                    ]
+                };
+
+                form.values[field.id] = formValues.initialState;
+                expect(form.values[field.id]).toEqual(formValues.initialState);
+
+                field.removeRow(0);
+                expect(form.values[field.id]).toEqual(formValues.removeState);
+            });
+        });
     });
 });
