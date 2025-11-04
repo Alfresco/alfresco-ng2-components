@@ -166,6 +166,22 @@ export class AppConfigService {
         return location.port ? prefix + location.port : '';
     }
 
+    /**
+     * Determines the preferred locale for the current user.
+     *
+     * @param defaultLocale Fallback locale to use when browser data is unavailable
+     * @returns Locale identifier resolved from the browser or the default translation locale
+     */
+    getLocale(defaultLocale: string): string {
+        if (typeof window?.navigator === 'undefined') {
+            return defaultLocale;
+        }
+        const wn = window.navigator as Navigator;
+        let lang = wn.languages ? wn.languages[0] : defaultLocale;
+        lang = lang || wn.language;
+        return lang;
+    }
+
     protected onLoaded() {
         this.onLoadSubject.next(this.config);
     }

@@ -27,6 +27,7 @@ import { of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldEvent } from '../../../events/form-field.event';
 import { TranslationService } from '../../../../translation/translation.service';
+import { AppConfigService } from '../../../../app-config/app-config.service';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -37,7 +38,10 @@ describe('AmountWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [AmountWidgetComponent],
-            providers: [{ provide: TranslationService, useValue: { userLang: 'en-US' } }]
+            providers: [
+                { provide: TranslationService, useValue: { userLang: 'de' } },
+                { provide: AppConfigService, useValue: { getLocale: () => 'en-US' } }
+            ]
         });
 
         fixture = TestBed.createComponent(AmountWidgetComponent);
@@ -101,31 +105,16 @@ describe('AmountWidgetComponent', () => {
     });
 
     it('it should return locale based on browser', () => {
-        const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
-        const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
-            languages: returnedLanguages
-        } as any);
-        const locale = widget.getLocale();
+        const expectedLanguage = 'en-US';
+        widget.enableDisplayBasedOnLocale = true;
+        widget.field = new FormFieldModel(null, { id: 1, name: 'test', value: 25, currency: 'USD' });
+        widget.setInitialValues();
+        fixture.detectChanges();
 
-        expect(locale).toBe(returnedLanguages[0]);
-        expect(mockLanguages).toHaveBeenCalled();
-    });
-
-    it('it should return default locale if browser does not return valid value', () => {
-        const defaultLocale = 'en-US';
-        spyOnProperty(window, 'navigator').and.returnValue({
-            languages: undefined
-        } as any);
-        const locale = widget.getLocale();
-
-        expect(locale).toBe(defaultLocale);
+        expect(widget.locale).toBe(expectedLanguage);
     });
 
     it('should set initial values when enableDisplayBasedOnLocale is enabled', () => {
-        const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator').and.returnValue({
-            languages: returnedLanguages
-        } as any);
         widget.field = new FormFieldModel(null, { id: 1, name: 'test', value: 25, currency: 'USD' });
         widget.enableDisplayBasedOnLocale = true;
         widget.currency = 'USD';
@@ -133,7 +122,6 @@ describe('AmountWidgetComponent', () => {
 
         expect(widget.amountWidgetValue).toBe('$25');
         expect(widget.decimalProperty).toBe('1.0-0');
-        expect(widget.locale).toBe(returnedLanguages[0]);
         expect(widget.valueAsNumber).toBe(25);
     });
 
@@ -547,7 +535,6 @@ describe('AmountWidgetComponent - rendering', () => {
         });
 
         it('should update value when field value changes and input is not in focus with enableDisplayBasedOnLocale enabled', async () => {
-            spyOn(widget, 'getLocale').and.returnValue('en-US');
             const mockField = new FormFieldModel(new FormModel(), {
                 id: 'amount-1',
                 name: 'Test Amount',
@@ -590,7 +577,6 @@ describe('AmountWidgetComponent - rendering', () => {
         });
 
         it('should not update value with formService.formFieldValueChanged when input is in focus', () => {
-            spyOn(widget, 'getLocale').and.returnValue('en-US');
             const mockField = new FormFieldModel(new FormModel(), {
                 id: 'amount-1',
                 name: 'Test Amount',
@@ -610,7 +596,6 @@ describe('AmountWidgetComponent - rendering', () => {
         });
 
         it('should not react to events from different fields', () => {
-            spyOn(widget, 'getLocale').and.returnValue('en-US');
             const mockField = new FormFieldModel(new FormModel(), {
                 id: 'amount-1',
                 name: 'Test Amount',
