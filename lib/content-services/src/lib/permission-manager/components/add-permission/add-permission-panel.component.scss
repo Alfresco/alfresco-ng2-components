@@ -1,5 +1,3 @@
-@use '../../../mat-selectors.scss' as ms;
-
 $search-result-height: calc(100% - 60px);
 
 .adf {
@@ -7,11 +5,7 @@ $search-result-height: calc(100% - 60px);
         display: flex;
         height: $search-result-height;
         overflow: auto;
-        border: 2px solid var(--adf-theme-foreground-text-color-007);
-
-        #{ms.$mat-list-item-end} {
-            display: none;
-        }
+        border: 2px solid var(--mat-sys-outline-variant);
 
         &-elements {
             width: 100%;
@@ -38,7 +32,7 @@ $search-result-height: calc(100% - 60px);
         justify-content: space-around;
         height: $search-result-height;
         overflow: auto;
-        border: 2px solid var(--adf-theme-foreground-text-color-007);
+        border: 2px solid var(--mat-sys-outline-variant);
     }
 
     &-permission-no-result {
@@ -54,24 +48,9 @@ $search-result-height: calc(100% - 60px);
             padding-bottom: 0;
             padding-top: 12px;
 
-            #{ms.$mat-form-field-wrapper} {
-                #{ms.$mat-form-field-flex} {
-                    align-items: center;
-
-                    #{ms.$mat-form-field-infix} {
-                        padding-top: 0;
-                        padding-bottom: 0;
-                    }
-                }
-            }
-
-            #{ms.$mat-form-field-subscript-wrapper} {
-                height: 16px;
-            }
-
             .adf-permission-search-input-control {
                 &:focus::placeholder {
-                    color: var(--theme-primary-color);
+                    color: var(--mat-sys-primary);
                 }
             }
 
@@ -79,7 +58,6 @@ $search-result-height: calc(100% - 60px);
                 padding: 0 0 12px;
                 width: 1em;
                 height: 1em;
-                font-size: 20px;
             }
 
             .adf-permission-search-input-clear-button {
@@ -92,7 +70,7 @@ $search-result-height: calc(100% - 60px);
                     cursor: pointer;
 
                     &:hover {
-                        color: var(--adf-theme-foreground-base-color);
+                        color: var(--mat-sys-on-surface);
                     }
                 }
             }
@@ -105,7 +83,7 @@ $search-result-height: calc(100% - 60px);
         }
 
         &:enabled {
-            color: var(--theme-primary-color);
+            color: var(--mat-sys-primary);
         }
     }
 }

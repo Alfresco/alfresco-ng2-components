@@ -30,7 +30,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: 'adf-add-permission',
     imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslatePipe],
     templateUrl: './add-permission.component.html',
-    styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 /*
@@ -53,7 +52,10 @@ export class AddPermissionComponent implements OnInit {
     currentNode: Node;
     currentNodeRoles: RoleModel[];
 
-    constructor(private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
+    constructor(
+        private nodePermissionService: NodePermissionService,
+        private contentService: ContentService
+    ) {}
 
     ngOnInit(): void {
         this.nodePermissionService.getNodeWithRoles(this.nodeId).subscribe(({ node, roles }) => {

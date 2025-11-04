@@ -1,9 +1,9 @@
 .adf-search-chip-list-item:focus {
-    color: var(--theme-accent-color-default-contrast);
-    background-color: var(--theme-accent-color);
+    color: var(--mat-sys-on-secondary);
+    background-color: var(--mat-sys-secondary);
 
     .adf-search-chip-list-item-remove {
-        color: var(--theme-accent-color-default-contrast);
+        color: var(--mat-sys-on-secondary);
         opacity: 1;
     }
 }

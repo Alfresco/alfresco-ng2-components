@@ -25,7 +25,6 @@ import { SortingPickerComponent } from '@alfresco/adf-core';
     selector: 'adf-search-sorting-picker',
     imports: [CommonModule, SortingPickerComponent],
     templateUrl: './search-sorting-picker.component.html',
-    styleUrls: ['./search-sorting-picker.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-sorting-picker' }
 })

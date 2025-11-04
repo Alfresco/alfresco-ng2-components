@@ -6,14 +6,12 @@
     }
 
     &-content-type-dialog-title {
-        font-size: large;
-        font-weight: 200;
+        font: var(--mat-sys-title-large);
         margin-top: 0;
     }
 
     &-content-type-dialog-description {
-        font-size: small;
-        line-height: normal;
+        font: var(--mat-sys-body-small);
     }
 
     &-content-type-table {
@@ -21,6 +19,6 @@
     }
 
     &-content-type-dialog-apply-button {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
     }
 }

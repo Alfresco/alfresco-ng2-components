@@ -21,7 +21,7 @@
 
         .adf-facet-search-container {
             border-radius: 6px;
-            background: var(--theme-background-color);
+            background: var(--mat-sys-surface);
             display: flex;
             height: 32px;
 
@@ -30,7 +30,7 @@
                 margin-top: -3px;
 
                 .adf-search-field-icon {
-                    font-size: var(--theme-subheading-1-font-size);
+                    font: var(--mat-sys-body-large);
                 }
             }
 
@@ -38,9 +38,7 @@
                 padding: 2px;
                 flex: 1;
                 margin-top: -16px;
-                font-size: var(--theme-body-1-font-size);
-                line-height: 24px;
-                letter-spacing: 0.25px;
+                font: var(--mat-sys-body-medium);
             }
         }
     }
@@ -58,6 +56,6 @@
     }
 
     .adf-facet-label {
-        color: var(--adf-theme-foreground-text-color-064);
+        color: var(--mat-sys-on-secondary-container);
     }
 }

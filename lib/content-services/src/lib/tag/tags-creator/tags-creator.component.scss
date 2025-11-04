@@ -1,5 +1,3 @@
-@use '../../mat-selectors.scss' as ms;
-
 adf-tags-creator {
     display: block;
 
@@ -17,13 +15,7 @@ adf-tags-creator {
     }
 
     .adf-tag-search-field {
-        background: var(--adf-metadata-buttons-background-color);
-        border-radius: 12px;
         padding: 5px 6px;
-        border: none;
-        outline: none;
-        font: inherit;
-        color: currentcolor;
         margin: 0;
         vertical-align: bottom;
         text-align: inherit;
@@ -31,7 +23,7 @@ adf-tags-creator {
     }
 
     .adf-create-tag-label {
-        color: var(--theme-primary-color);
+        color: var(--mat-sys-primary);
         cursor: pointer;
         margin-top: -1px;
         padding-left: 12px;
@@ -56,7 +48,7 @@ adf-tags-creator {
 
         .adf-existing-tags-label {
             font-size: 10px;
-            color: var(--theme-secondary-text-color);
+            color: var(--mat-sys-on-surface-variant);
             padding-left: 12px;
             margin-bottom: 2px;
         }
@@ -77,11 +69,6 @@ adf-tags-creator {
                 background-color: inherit;
                 color: inherit;
 
-                &:not(#{ms.$mat-list-item-disabled}):hover {
-                    cursor: pointer;
-                    background: var(--adf-theme-mat-grey-color-a200);
-                }
-
                 & span {
                     padding: 0;
                 }
@@ -91,10 +78,6 @@ adf-tags-creator {
                 margin: auto;
                 overflow: unset;
                 min-height: 62px;
-            }
-
-            #{ms.$mat-list-item-disabled} #{ms.$mat-list-item-primary-text} {
-                opacity: 1;
             }
         }
     }
@@ -109,6 +92,7 @@ adf-tags-creator {
             word-break: break-all;
         }
     }
+
     /* stylelint-enable selector-class-pattern */
 
     [hidden] {

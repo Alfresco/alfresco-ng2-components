@@ -1,31 +1,20 @@
-@use '../mat-selectors.scss' as ms;
-
 .adf-share-link-dialog {
     .adf-share-link {
-        #{ms.$mat-form-field-flex} {
-            height: 48px;
-        }
-
         &__dialog-content {
             display: flex;
             flex-direction: column;
         }
 
         &__dialog-container {
-            background-color: var(--theme-card-background-color);
+            background-color: var(--mat-sys-surface);
             border-radius: 16px;
         }
 
         &__label,
         &__title,
         &__info {
-            letter-spacing: -0.4px;
-            line-height: 2;
-            font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            font-size: var(--theme-body-1-font-size);
-            color: var(--adf-theme-foreground-text-color-087);
+            font: var(--mat-sys-body-medium);
+            color: var(--mat-sys-on-surface);
         }
 
         &__label {
@@ -35,25 +24,19 @@
         &__form {
             padding-top: 8px;
 
-            #{ms.$mat-form-field-infix}:has(.adf-share-link__input) {
-                border-top: 0.9375em solid transparent;
-                border-bottom: 0.9375em solid transparent;
-                height: 16px;
-            }
-
             &--field {
                 padding-bottom: 16px;
             }
         }
 
         &__public-content {
-            color: var(--adf-theme-foreground-text-color-064);
-            font-size: var(--theme-caption-font-size);
+            color: var(--mat-sys-on-secondary-container);
+            font: var(--mat-sys-body-small);
         }
 
         &__warn {
-            color: var(--theme-warn-color-a700);
-            font-size: var(--theme-caption-font-size);
+            color: var(--mat-sys-error);
+            font: var(--mat-sys-body-small);
         }
 
         &--row {
@@ -82,12 +65,8 @@
             padding-bottom: 0;
         }
 
-        &__input {
-            color: var(--adf-theme-foreground-text-color-087);
-        }
-
         &__separation-line {
-            border: 1px solid var(--theme-grey-background-color);
+            border: 1px solid var(--mat-sys-outline-variant);
             margin: 8px -24px;
         }
 
@@ -97,7 +76,7 @@
         }
 
         &__icon {
-            color: var(--adf-theme-foreground-icon-color-054);
+            color: var(--mat-sys-on-secondary-container);
             padding-bottom: 0;
             padding-right: 0;
         }
@@ -109,7 +88,7 @@
 
         &__heading {
             font-weight: 700;
-            font-size: var(--theme-subheading-2-font-size);
+            font-size: var(--mat-sys-title-small-size);
         }
 
         &__copy-icon {
@@ -133,7 +112,7 @@
         }
 
         &__border-color {
-            border: 1px solid var(--theme-warn-color-a700);
+            border: 1px solid var(--mat-sys-error);
         }
     }
 
@@ -158,8 +137,6 @@
         margin: 8px 0 0;
 
         & > button {
-            color: var(--adf-theme-foreground-base-color);
-            background-color: var(--theme-grey-text-background-color);
             margin-right: 12px;
         }
     }

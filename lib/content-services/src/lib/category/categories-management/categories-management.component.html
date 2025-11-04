@@ -1,6 +1,6 @@
 <div class="adf-categories-management">
     <div *ngIf="categoryNameControlVisible" class="adf-category-name-field">
-        <input #categoryNameInput
+        <input #categoryNameInput matInput
             [formControl]="categoryNameControl"
             (keyup.enter)="addCategory()"
             placeholder="{{'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}"
