@@ -152,6 +152,22 @@ export class TranslationService {
     }
 
     /**
+     * Determines the preferred locale for the current user.
+     *
+     * @returns Locale identifier resolved from the browser or the default translation locale
+     */
+    getLocale(): string {
+        const defaultLocale = this.userLang || this.defaultLang;
+        if (typeof window?.navigator === 'undefined') {
+            return defaultLocale;
+        }
+        const wn = window.navigator as Navigator;
+        let lang = wn.languages ? wn.languages[0] : defaultLocale;
+        lang = lang || wn.language;
+        return lang;
+    }
+
+    /**
      * Directly returns the translation for the supplied key.
      *
      * @param key Key to translate

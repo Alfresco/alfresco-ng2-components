@@ -41,6 +41,8 @@ export class NoopTranslationService implements TranslationService {
         return of(key);
     }
 
+    getLocale(): any {}
+
     instant(key: string | Array<string>): string | any {
         return key;
     }

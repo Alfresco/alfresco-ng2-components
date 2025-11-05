@@ -27,7 +27,6 @@ import { of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldEvent } from '../../../events/form-field.event';
 import { TranslationService } from '../../../../translation/translation.service';
-import { AppConfigService } from '../../../../app-config/app-config.service';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -38,10 +37,7 @@ describe('AmountWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [AmountWidgetComponent],
-            providers: [
-                { provide: TranslationService, useValue: { userLang: 'de' } },
-                { provide: AppConfigService, useValue: { getLocale: () => 'en-US' } }
-            ]
+            providers: [{ provide: TranslationService, useValue: { getLocale: () => 'en-US' } }]
         });
 
         fixture = TestBed.createComponent(AmountWidgetComponent);
@@ -126,10 +122,6 @@ describe('AmountWidgetComponent', () => {
     });
 
     it('should set initial values with correct currency', () => {
-        const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator').and.returnValue({
-            languages: returnedLanguages
-        } as any);
         widget.field = new FormFieldModel(null, { id: 2, name: 'test', value: 25, currency: 'GBP' });
         widget.enableDisplayBasedOnLocale = true;
         widget.currency = 'GBP';
@@ -140,10 +132,6 @@ describe('AmountWidgetComponent', () => {
     });
 
     it('should set initial values with correct currency icon', () => {
-        const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator').and.returnValue({
-            languages: returnedLanguages
-        } as any);
         widget.field = new FormFieldModel(null, { id: 2, name: 'test', value: 25, currency: '¥' });
         widget.enableDisplayBasedOnLocale = true;
         widget.currency = '¥';
@@ -154,10 +142,6 @@ describe('AmountWidgetComponent', () => {
     });
 
     it('should set initial values without currency', () => {
-        const returnedLanguages: string[] = ['en-GB'];
-        spyOnProperty(window, 'navigator').and.returnValue({
-            languages: returnedLanguages
-        } as any);
         widget.field = new FormFieldModel(null, { id: 3, name: 'test', value: 25, currency: '' });
         widget.enableDisplayBasedOnLocale = true;
         widget.currency = '';
@@ -490,14 +474,13 @@ describe('AmountWidgetComponent - rendering', () => {
             beforeEach(async () => {
                 TestBed.configureTestingModule({
                     imports: [AmountWidgetComponent],
-                    providers: [{ provide: ADF_AMOUNT_SETTINGS, useValue: of({ enableDisplayBasedOnLocale: true }) }]
+                    providers: [
+                        { provide: ADF_AMOUNT_SETTINGS, useValue: of({ enableDisplayBasedOnLocale: true }) },
+                        { provide: TranslationService, useValue: { getLocale: () => 'en-US' } }
+                    ]
                 });
                 fixture = TestBed.createComponent(AmountWidgetComponent);
                 widget = fixture.componentInstance;
-                const returnedLanguages: string[] = ['en-GB', 'en-US', 'en', 'de-DE', 'pl'];
-                spyOnProperty(window, 'navigator').and.returnValue({
-                    languages: returnedLanguages
-                } as any);
                 fixture.componentRef.setInput('field', mockField);
                 loader = TestbedHarnessEnvironment.loader(fixture);
                 testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
@@ -507,7 +490,7 @@ describe('AmountWidgetComponent - rendering', () => {
             it('should set enableDisplayBasedOnLocale to true', () => {
                 expect(widget.enableDisplayBasedOnLocale).toBeTrue();
                 expect(widget.decimalProperty).toBe('1.2-2');
-                expect(widget.locale).toBe('en-GB');
+                expect(widget.locale).toBe('en-US');
                 expect(widget.valueAsNumber).toBe('1234.55');
                 expect(widget.amountWidgetValue).toBe('$1,234.55');
             });

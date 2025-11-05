@@ -29,7 +29,6 @@ import { WidgetComponent } from '../widget.component';
 import { filter, isObservable, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormFieldEvent } from '../../../events/form-field.event';
-import { AppConfigService } from '../../../../app-config/app-config.service';
 import { TranslationService } from '../../../../translation/translation.service';
 
 export interface AmountWidgetSettings {
@@ -83,7 +82,6 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         public formService: FormService,
         @Optional() @Inject(ADF_AMOUNT_SETTINGS) settings: Observable<AmountWidgetSettings> | AmountWidgetSettings,
         private currencyPipe: CurrencyPipe,
-        private appConfigService: AppConfigService,
         private translationService: TranslationService
     ) {
         super(formService);
@@ -150,8 +148,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     setInitialValues(): void {
         if (this.enableDisplayBasedOnLocale) {
             this.decimalProperty = this.field.enableFractions ? this.showDecimalDigits : this.notShowDecimalDigits;
-            const defaultLocale = this.translationService.userLang;
-            this.locale = this.appConfigService.getLocale(defaultLocale);
+            this.locale = this.translationService.getLocale();
             this.updateValue(this.field.value);
         } else {
             this.amountWidgetValue = this.field.value;

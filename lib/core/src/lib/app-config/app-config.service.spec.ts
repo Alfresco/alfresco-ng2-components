@@ -204,34 +204,4 @@ describe('AppConfigService', () => {
         expect(appConfigService.get<any>('objectKey').secondUrl).toEqual('http://localhost:8080');
         expect(appConfigService.get<any>('objectKey').thirdUrl).toEqual('http://localhost:8080');
     });
-
-    describe('getLocale', () => {
-        it('returns the first language from navigator.languages when available', () => {
-            const returnedLanguages: string[] = ['fr-FR', 'en-US'];
-            const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
-                language: 'en-GB',
-                languages: returnedLanguages
-            } as any);
-
-            expect(appConfigService.getLocale('en-US')).toBe('fr-FR');
-            expect(mockLanguages).toHaveBeenCalled();
-        });
-
-        it('falls back to navigator.language when languages list is absent', () => {
-            const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
-                language: 'de-DE',
-                languages: []
-            } as any);
-
-            expect(appConfigService.getLocale('en-US')).toBe('de-DE');
-            expect(mockLanguages).toHaveBeenCalled();
-        });
-
-        it('falls back to the provided default locale when navigator is unavailable', () => {
-            const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue(undefined);
-
-            expect(appConfigService.getLocale('en-US')).toBe('en-US');
-            expect(mockLanguages).toHaveBeenCalled();
-        });
-    });
 });
