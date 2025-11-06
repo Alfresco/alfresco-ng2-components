@@ -1,5 +1,12 @@
 <div class="adf-new-version-max-width">
-    <mat-radio-group class="adf-new-version-radio-group" [(ngModel)]="semanticVersion" (change)="onVersionChange()">
+    <label id="adf-version-type-label" class="adf-version-type-label">
+        {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.VERSION_TYPE_LABEL' | translate }}
+    </label>
+    <mat-radio-group
+        class="adf-new-version-radio-group"
+        [(ngModel)]="semanticVersion"
+        (change)="onVersionChange()"
+        [attr.aria-labelledby]="'adf-version-type-label'">
         <mat-radio-button class="adf-new-version-radio-button" id="adf-new-version-minor" [value]="'minor'">
             {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.MINOR' | translate: { version: minorVersion } }}
         </mat-radio-button>
