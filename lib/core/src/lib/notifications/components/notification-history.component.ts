@@ -136,7 +136,7 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
 
     onMenuOpened() {
         this.createPagination();
-        setTimeout(() => this.initializeFocusManager(1));
+        setTimeout(() => this.initializeFocusManager(0));
     }
 
     markAsRead() {

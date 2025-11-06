@@ -23,7 +23,7 @@
         <span class="adf-notification-history-menu-title">{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
         <button mat-icon-button
                 *ngIf="notifications.length"
-                id="adf-notification-history-mark-as-read"
+                data-automation-id="adf-notification-history-mark-as-read"
                 class="adf-notification-history-mark-as-read"
                 title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
                 (click)="markAsRead()"
@@ -75,6 +75,7 @@
         *ngIf="hasMoreNotifications()"
         aria-hidden="true">
         <button
+            data-automation-id="adf-notification-history-load-more"
             mat-button
             (click)="loadMore($event)"
             #loadMoreButton

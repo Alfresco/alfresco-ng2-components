@@ -32,6 +32,7 @@ import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testin
 import { MatToolbarHarness } from '@angular/material/toolbar/testing';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
+import { MatListOptionHarness } from '@angular/material/list/testing';
 
 export class UnitTestingUtils {
     constructor(
@@ -433,5 +434,15 @@ export class UnitTestingUtils {
     async getMatProgressBarHost(): Promise<TestElement> {
         const progress = await this.loader.getHarness(MatProgressBarHarness);
         return progress.host();
+    }
+
+    /** MatListOption related methods */
+
+    async getMatListOption(): Promise<MatListOptionHarness> {
+        return this.loader.getHarness(MatListOptionHarness);
+    }
+
+    async getAllMatListOptions(): Promise<MatListOptionHarness[]> {
+        return this.loader.getAllHarnesses(MatListOptionHarness);
     }
 }
