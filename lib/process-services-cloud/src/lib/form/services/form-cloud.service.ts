@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { FormValues, FormModel, FormFieldOption, FormFieldValidator } from '@alfresco/adf-core';
+import { inject, Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { FormValues, FormModel, FormFieldOption, FormFieldValidator, FormService } from '@alfresco/adf-core';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/models/task-details-cloud.model';
@@ -35,6 +35,7 @@ export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<Form
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
     private _uploadApi: UploadApi;
     private fieldValidators: FormFieldValidator[];
+    private formService = inject(FormService);
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
@@ -226,7 +227,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
                 formValues[variable.name] = variable.value;
             });
 
-            return new FormModel(flattenForm, formValues, readOnly, undefined, undefined, this.fieldValidators);
+            return new FormModel(flattenForm, formValues, readOnly, this.formService, undefined, this.fieldValidators);
         }
         return null;
     }
