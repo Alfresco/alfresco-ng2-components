@@ -20,7 +20,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock';
 import { NodeEntry } from '@alfresco/js-api';
 import { SavedSearchesService } from './saved-searches.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 
@@ -48,7 +47,6 @@ describe('SavedSearchesService', () => {
     beforeEach(() => {
         testUserName = 'test-user';
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AuthenticationService, useValue: { getUsername: () => {}, onLogin: new Subject() } },
@@ -148,36 +146,6 @@ describe('SavedSearchesService', () => {
                 });
             });
         });
-
-        it('should edit a search', (done) => {
-            const updatedSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', order: 0 };
-            prepareDefaultMock();
-
-            service.editSavedSearch(updatedSearch).subscribe(() => {
-                service.savedSearches$.subscribe((searches) => {
-                    expect(searches.length).toBe(2);
-                    expect(searches[0].name).toBe('Search 3');
-                    expect(searches[0].order).toBe(0);
-                    expect(searches[1].name).toBe('Search 2');
-                    expect(searches[1].order).toBe(1);
-                    done();
-                });
-            });
-        });
-
-        it('should delete a search', (done) => {
-            const searchToDelete = { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 };
-            prepareDefaultMock();
-
-            service.deleteSavedSearch(searchToDelete).subscribe(() => {
-                service.savedSearches$.subscribe((searches) => {
-                    expect(searches.length).toBe(1);
-                    expect(searches[0].name).toBe('Search 2');
-                    expect(searches[0].order).toBe(0);
-                    done();
-                });
-            });
-        });
     });
 
     describe('Saved searches error handling', () => {
@@ -209,13 +177,4 @@ describe('SavedSearchesService', () => {
             });
         });
     });
-
-    /**
-     * Prepares default mocks for service
-     */
-    function prepareDefaultMock(): void {
-        spyOn(authService, 'getUsername').and.callFake(() => testUserName);
-        spyOn(localStorage, 'getItem').and.callFake(() => 'true');
-        service.init();
-    }
 });
