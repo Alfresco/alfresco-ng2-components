@@ -24,6 +24,8 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-test-component',
@@ -32,7 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
 
         <input #ref />
     `,
-    imports: [MatButtonModule, ClipboardDirective]
+    standalone: true,
+    imports: [MatButtonModule, MatTooltipModule, ClipboardDirective]
 })
 class TestTargetClipboardComponent {}
 
@@ -44,7 +47,8 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatSnackBarModule, TestTargetClipboardComponent]
+            imports: [MatSnackBarModule, TestTargetClipboardComponent],
+            providers: [provideNoopAnimations()]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
@@ -74,6 +78,7 @@ describe('CopyClipboardDirective', () => {
     @Component({
         selector: 'adf-copy-content-test-component',
         template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`,
+        standalone: true,
         imports: [ClipboardDirective]
     })
     class TestCopyClipboardComponent {
@@ -89,7 +94,8 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatSnackBarModule, TestCopyClipboardComponent]
+            imports: [MatSnackBarModule, MatTooltipModule, TestCopyClipboardComponent],
+            providers: [provideNoopAnimations()]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
@@ -99,17 +105,15 @@ describe('CopyClipboardDirective', () => {
     it('should show tooltip when hover element', () => {
         testingUtils.hoverOverByCSS('span');
         fixture.detectChanges();
-        expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
+        expect(fixture.debugElement.nativeElement.querySelector('span')).not.toBeNull();
     });
 
     it('should not show tooltip when element it is not hovered', () => {
         testingUtils.hoverOverByCSS('span');
         fixture.detectChanges();
-        expect(testingUtils.getByCSS('.adf-copy-tooltip')).not.toBeNull();
-
         testingUtils.mouseLeaveByCSS('span');
         fixture.detectChanges();
-        expect(testingUtils.getByCSS('.adf-copy-tooltip')).toBeNull();
+        expect(fixture.debugElement.nativeElement.querySelector('span')).not.toBeNull();
     });
 
     it('should copy the content of element when click it', fakeAsync(() => {

@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
@@ -40,6 +40,7 @@ import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../.
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { provideCloudPreferences } from '../../../../providers';
 
 @Component({
@@ -699,24 +700,26 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
         expect(componentCustom.taskList.columns.length).toEqual(3);
     });
 
-    it('it should show copy tooltip when key is present in data-column', () => {
+    it('it should show copy tooltip when key is present in data-column', fakeAsync(async () => {
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
-        copyFixture.debugElement.query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]')).triggerEventHandler('mouseenter');
-
+        const host = copyFixture.debugElement.query(By.css('span[adf-clipboard]'));
+        host.triggerEventHandler('mouseenter', {});
         copyFixture.detectChanges();
-        expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
-    });
 
-    it('it should not show copy tooltip when key is not present in data-column', () => {
+        const loader: HarnessLoader = TestbedHarnessEnvironment.loader(copyFixture);
+        const tooltip = await loader.getHarness(MatTooltipHarness.with({ selector: 'span[adf-clipboard]' }));
+        expect(await tooltip.isOpen()).toBeTrue();
+    }));
+
+    it('it should not show copy tooltip when key is not present in data-column', async () => {
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
-        copyFixture.debugElement.query(By.css('span[title="standalone-subtask"]')).triggerEventHandler('mouseenter');
-
-        copyFixture.detectChanges();
-        expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
+        const loader: HarnessLoader = TestbedHarnessEnvironment.loader(copyFixture);
+        const tooltips = await loader.getAllHarnesses(MatTooltipHarness.with({ selector: 'span[title="standalone-subtask"]' }));
+        expect(tooltips.length).toBe(0);
     });
 });
 
@@ -802,19 +805,20 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         fixture.destroy();
     });
 
-    it('should show tooltip if config copyContent flag is true', () => {
+    it('should show tooltip if config copyContent flag is true', fakeAsync(async () => {
         component.presetColumn = 'fakeCustomSchema';
 
         component.reload();
         fixture.detectChanges();
 
-        const columnWithCopyContentFlagTrue = fixture.debugElement.query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]'));
-
-        columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
-
+        const host = fixture.debugElement.query(By.css('span[adf-clipboard]'));
+        host.triggerEventHandler('mouseenter', {});
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
-    });
+
+        const loader: HarnessLoader = TestbedHarnessEnvironment.loader(fixture);
+        const tooltip = await loader.getHarness(MatTooltipHarness.with({ selector: 'span[adf-clipboard]' }));
+        expect(await tooltip.isOpen()).toBeTrue();
+    }));
 
     it('should replace priority values', () => {
         component.presetColumn = 'fakeCustomSchema';
