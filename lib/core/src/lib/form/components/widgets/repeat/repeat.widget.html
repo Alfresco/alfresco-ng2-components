@@ -1,4 +1,4 @@
-<div [style]="element | adfFieldStyle" class="adf-container-widget-repeat">
+<div [style]="element | adfFieldStyle" class="adf-container-widget-repeat" [class.adf-readonly]="element.field.readOnly">
     <h4
         id="container-repeat"
         class="adf-container-widget-repeat__text"
@@ -17,6 +17,7 @@
                 mat-button
                 color="primary"
                 class="adf-container-widget-row-action"
+                [disabled]="element.field.readOnly"
                 (click)="addRow()"
             >
                 <mat-icon>add</mat-icon> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}

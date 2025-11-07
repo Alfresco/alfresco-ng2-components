@@ -78,6 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nameless task",
       "ROW_LABEL": "Row {{ number }}",
+      "DELETE_ROW": "Delete row",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Delete the row",
         "MESSAGE": "Are you sure you want to delete this row?",

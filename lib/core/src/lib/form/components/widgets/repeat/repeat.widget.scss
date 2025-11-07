@@ -8,10 +8,6 @@
         font-weight: var(--adf-header-font-weight);
         color: var(--adf-header-color);
         line-height: normal;
-
-        &.adf-collapsible {
-            cursor: pointer;
-        }
     }
 
     &-row-action {
@@ -21,5 +17,20 @@
     &-row-limit {
         color: rgba(0, 0, 0, 0.67);
         font-size: 12px;
+    }
+}
+
+.adf-readonly {
+    .adf-container-widget {
+        &-repeat__text {
+            color: var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+            border-bottom: 1px solid var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+            cursor: default;
+        }
+
+        &-row-limit {
+            color: var(--mdc-text-button-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+            font-size: 12px;
+        }
     }
 }
