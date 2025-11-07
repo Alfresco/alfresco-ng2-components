@@ -83,6 +83,12 @@
             height: 32px;
         }
 
+        &:focus-visible {
+            outline: 2px solid var(--theme-blue-button-color);
+            border-radius: 4px;
+            outline-offset: -2px;
+        }
+
         &--active {
             color: var(--theme-primary-color);
             background-color: var(--adf-theme-background-card-color);
