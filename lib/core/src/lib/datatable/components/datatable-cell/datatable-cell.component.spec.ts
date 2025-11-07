@@ -120,4 +120,23 @@ describe('DataTableCellComponent', () => {
         checkDisplayedText('hello worl...');
         checkDisplayedTooltip('hello world');
     });
+
+    it('should compute empty title when column value is undefined', () => {
+        const row: DataRow = {
+            id: '1',
+            isSelected: false,
+            hasValue: () => false,
+            getValue: () => undefined,
+            obj: 'Initial Value',
+            cache: []
+        };
+
+        component.data = new ObjectDataTableAdapter();
+        component.column = { key: 'car_name', type: 'text', maxTextLength: 10 };
+        component.row = row;
+
+        expect(() => fixture.detectChanges()).not.toThrow();
+        expect(component.computedTitle).toBe('');
+        expect(testingUtils.getByCSS('span').nativeElement.title).toBe('');
+    });
 });

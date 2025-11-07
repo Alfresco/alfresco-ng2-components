@@ -117,14 +117,12 @@ export class DataTableCellComponent implements OnInit {
         if (this.tooltip) {
             return this.tooltip;
         }
-
         const rawValue = value;
         const max = this.column?.maxTextLength;
 
-        if (typeof max === 'number' && max > 0 && rawValue.length > max) {
+        if (typeof max === 'number' && max > 0 && rawValue?.length > max) {
             return rawValue;
         }
-
         return '';
     }
 }
