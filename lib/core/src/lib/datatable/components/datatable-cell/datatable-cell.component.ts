@@ -113,18 +113,16 @@ export class DataTableCellComponent implements OnInit {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
     }
 
-    private computeTitle(value: string): string {
+    computeTitle(value) {
         if (this.tooltip) {
             return this.tooltip;
         }
-
         const rawValue = value;
         const max = this.column?.maxTextLength;
 
-        if (typeof max === 'number' && max > 0 && rawValue.length > max) {
+        if (typeof max === 'number' && max > 0 && rawValue?.length > max) {
             return rawValue;
         }
-
         return '';
     }
 }
