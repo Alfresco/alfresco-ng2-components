@@ -18,7 +18,8 @@
         "MINOR": "minor changes ({{version}})",
         "COMMENT": "Leave a comment",
         "ADD": "Add New Version",
-        "CANCEL": "Cancel"
+        "CANCEL": "Cancel",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
