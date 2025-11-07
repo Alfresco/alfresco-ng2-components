@@ -15,7 +15,7 @@
     $colors: (
         red: color.red($color),
         green: color.green($color),
-        blue: color.blue($color),
+        blue: color.blue($color)
     );
 
     @each $name, $value in $colors {
@@ -32,7 +32,7 @@
         $colors: map.merge(
             $colors,
             (
-                $name: $value,
+                $name: $value
             )
         );
     }
@@ -91,10 +91,10 @@
     $color900: color.mix($dark, $color, 75%);
 
     /* stylelint-disable scss/dollar-variable-pattern */
-    $colorA100: color.adjust(saturate(color.mix($dark, $color, 15%), 80%), $lightness: 45.6%);
-    $colorA200: color.adjust(saturate(color.mix($dark, $color, 15%), 80%), $lightness: 35.6%);
-    $colorA400: color.adjust(saturate(color.mix($dark, $color, 15%), 100%), $lightness: 25.6%);
-    $colorA700: color.adjust(saturate(color.mix($dark, $color, 15%), 100%), $lightness: 20.5%);
+    $colorA100: color.adjust(color.adjust(color.mix($dark, $color, 15%), $saturation: 80%), $lightness: 45.6%);
+    $colorA200: color.adjust(color.adjust(color.mix($dark, $color, 15%), $saturation: 80%), $lightness: 35.6%);
+    $colorA400: color.adjust(color.adjust(color.mix($dark, $color, 15%), $saturation: 100%), $lightness: 25.6%);
+    $colorA700: color.adjust(color.adjust(color.mix($dark, $color, 15%), $saturation: 100%), $lightness: 20.5%);
     /* stylelint-enable scss/dollar-variable-pattern */
 
     $contrast50: create-text-color($color50, $colorType);
@@ -126,30 +126,28 @@
         700: $color700,
         800: $color800,
         900: $color900,
-        /* stylelint-disable value-keyword-case */
-        A100: $colorA100,
+        /* stylelint-disable value-keyword-case */ A100: $colorA100,
         A200: $colorA200,
         A400: $colorA400,
         A700: $colorA700,
         /* stylelint-enable value-keyword-case */
         contrast: (
-            50: $contrast50,
-            100: $contrast100,
-            200: $contrast200,
-            300: $contrast300,
-            400: $contrast400,
-            500: $contrast500,
-            600: $contrast600,
-            700: $contrast700,
-            800: $contrast800,
-            900: $contrast900,
-            /* stylelint-disable value-keyword-case */
-            A100: $contrastA100,
-            A200: $contrastA200,
-            A400: $contrastA400,
-            A700: $contrastA700,
-            /* stylelint-enable value-keyword-case */
-        ),
+                50: $contrast50,
+                100: $contrast100,
+                200: $contrast200,
+                300: $contrast300,
+                400: $contrast400,
+                500: $contrast500,
+                600: $contrast600,
+                700: $contrast700,
+                800: $contrast800,
+                900: $contrast900,
+                /* stylelint-disable value-keyword-case */ A100: $contrastA100,
+                A200: $contrastA200,
+                A400: $contrastA400,
+                A700: $contrastA700,
+                /* stylelint-enable value-keyword-case */
+            )
     );
 
     @return $palette;
