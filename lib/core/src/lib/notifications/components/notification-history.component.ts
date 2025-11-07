@@ -100,9 +100,9 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     private menuItems: QueryList<MatMenuItem>;
 
     constructor(
-        private notificationService: NotificationService,
-        public storageService: StorageService,
-        public cd: ChangeDetectorRef
+        private readonly notificationService: NotificationService,
+        private readonly storageService: StorageService,
+        private readonly cd: ChangeDetectorRef
     ) {}
 
     ngOnInit() {
