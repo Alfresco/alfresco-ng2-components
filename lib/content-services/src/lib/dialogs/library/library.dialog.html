@@ -11,21 +11,18 @@
         autocomplete="off"
         adf-auto-focus
       />
-
-      <mat-hint *ngIf="libraryTitleExists">{{
-        'LIBRARY.HINTS.SITE_TITLE_EXISTS' | translate
-      }}</mat-hint>
-      <mat-error *ngIf="form.controls['title'].hasError('maxlength')">
-        {{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}
-      </mat-error>
-
-      <mat-error *ngIf="form.controls['title'].hasError('minlength')">
-        {{ 'LIBRARY.ERRORS.TITLE_TOO_SHORT' | translate }}
-      </mat-error>
-
-      <mat-error *ngIf="form.controls['title'].errors?.message">
-        {{ form.controls['title'].errors?.message | translate }}
-      </mat-error>
+      @if (libraryTitleExists) {
+        <mat-hint>{{ 'LIBRARY.HINTS.SITE_TITLE_EXISTS' | translate }}</mat-hint>
+      }
+      @if (form.controls['title'].errors?.maxlength) {
+        <mat-error>{{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}</mat-error>
+      }
+      @else if (form.controls['title'].errors?.message) {
+        <mat-error>{{ form.controls['title'].errors?.message | translate }}</mat-error>
+      }
+      @else if (form.controls['title'].errors?.required) {
+        <mat-error>{{ 'LIBRARY.ERRORS.NAME_REQUIRED' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="adf-library-dialog-form-field">
@@ -37,13 +34,15 @@
         autocomplete="off"
       />
 
-      <mat-error *ngIf="form.controls['id'].errors?.message">
-        {{ form.controls['id'].errors?.message | translate }}
-      </mat-error>
-
-      <mat-error *ngIf="form.controls['id'].hasError('maxlength')">
-        {{ 'LIBRARY.ERRORS.ID_TOO_LONG' | translate }}
-      </mat-error>
+      @if (form.controls['id'].errors?.message) {
+        <mat-error>{{ form.controls['id'].errors?.message | translate }}</mat-error>
+      }
+      @else if (form.controls['id'].errors?.maxlength) {
+        <mat-error>{{ 'LIBRARY.ERRORS.ID_TOO_LONG' | translate }}</mat-error>
+      }
+      @else if (form.controls['id'].errors?.required) {
+        <mat-error>{{ 'LIBRARY.ERRORS.ID_REQUIRED' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="adf-library-dialog-form-field adf-library-dialog-form-field-description">
@@ -53,10 +52,9 @@
         rows="3"
         formControlName="description"
       ></textarea>
-
-      <mat-error *ngIf="form.controls['description'].hasError('maxlength')">
-        {{ 'LIBRARY.ERRORS.DESCRIPTION_TOO_LONG' | translate }}
-      </mat-error>
+      @if (form.controls['description'].errors?.maxlength) {
+        <mat-error>{{ 'LIBRARY.ERRORS.DESCRIPTION_TOO_LONG' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <mat-radio-group
@@ -65,17 +63,18 @@
       [(ngModel)]="visibilityOption"
       (change)="visibilityChangeHandler($event)"
     >
-      <mat-radio-button
-        color="primary"
-        class="adf-library-dialog-radio-group-button"
-        [disabled]="option.disabled"
-        *ngFor="let option of visibilityOptions"
-        [attr.data-automation-id]="option.value"
-        [value]="option.value"
-        [checked]="visibilityOption.value === option.value"
-      >
-        {{ option.label | translate }}
-      </mat-radio-button>
+      @for (option of visibilityOptions; track option.value) {
+        <mat-radio-button
+          color="primary"
+          class="adf-library-dialog-radio-group-button"
+          [disabled]="option.disabled"
+          [attr.data-automation-id]="option.value"
+          [value]="option.value"
+          [checked]="visibilityOption === option.value"
+        >
+          {{ option.label | translate }}
+        </mat-radio-button>
+      }
     </mat-radio-group>
   </form>
 </mat-dialog-content>

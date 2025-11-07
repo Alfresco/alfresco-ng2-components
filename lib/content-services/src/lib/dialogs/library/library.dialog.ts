@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
     AbstractControl,
@@ -24,22 +24,29 @@ import {
     UntypedFormBuilder,
     UntypedFormControl,
     UntypedFormGroup,
+    ValidationErrors,
     Validators
 } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { NotificationService } from '@alfresco/adf-core';
-import { debounceTime, finalize, mergeMap } from 'rxjs/operators';
+import { debounceTime, finalize, map, mergeMap, take } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoApiService } from '../../services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+interface VisibilityOption {
+    value: string;
+    label: string;
+    disabled: boolean;
+}
 
 @Component({
     selector: 'adf-library-dialog',
@@ -71,13 +78,13 @@ export class LibraryDialogComponent implements OnInit {
      * newly-created library.
      */
     @Output()
-    success = new EventEmitter<any>();
+    success = new EventEmitter<SiteEntry>();
 
     createTitle = 'LIBRARY.DIALOG.CREATE_TITLE';
     libraryTitleExists = false;
     form: UntypedFormGroup;
-    visibilityOption: any;
-    visibilityOptions = [
+    visibilityOption: string;
+    visibilityOptions: VisibilityOption[] = [
         { value: 'PUBLIC', label: 'LIBRARY.VISIBILITY.PUBLIC', disabled: false },
         { value: 'PRIVATE', label: 'LIBRARY.VISIBILITY.PRIVATE', disabled: false },
         {
@@ -107,7 +114,7 @@ export class LibraryDialogComponent implements OnInit {
     ngOnInit() {
         const validators = {
             id: [Validators.required, Validators.maxLength(72), this.forbidSpecialCharacters],
-            title: [Validators.required, this.forbidOnlySpaces, Validators.minLength(2), Validators.maxLength(256)],
+            title: [Validators.required, this.forbidOnlySpaces, this.minLengthTrimmed, Validators.maxLength(256)],
             description: [Validators.maxLength(512)]
         };
 
@@ -120,12 +127,13 @@ export class LibraryDialogComponent implements OnInit {
         this.visibilityOption = this.visibilityOptions[0].value;
 
         this.form.controls['title'].valueChanges
+            .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.form.controls['title'].markAsTouched());
+
+        this.form.controls['title'].valueChanges
             .pipe(
                 debounceTime(500),
-                mergeMap(
-                    (title) => this.checkLibraryNameExists(title),
-                    (title) => title
-                ),
+                mergeMap((title) => from(this.checkLibraryNameExists(title)).pipe(map(() => title))),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((title: string) => {
@@ -168,16 +176,16 @@ export class LibraryDialogComponent implements OnInit {
         this.disableCreateButton = true;
         this.create()
             .pipe(finalize(() => (this.disableCreateButton = false)))
-            .subscribe(
-                (node: SiteEntry) => {
+            .subscribe({
+                next: (node: SiteEntry) => {
                     this.success.emit(node);
                     dialog.close(node);
                 },
-                (error) => this.handleError(error)
-            );
+                error: (error) => this.handleError(error)
+            });
     }
 
-    visibilityChangeHandler(event) {
+    visibilityChangeHandler(event: MatRadioChange) {
         this.visibilityOption = event.value;
     }
 
@@ -224,13 +232,7 @@ export class LibraryDialogComponent implements OnInit {
     }
 
     private async checkLibraryNameExists(libraryTitle: string) {
-        let entries = [];
-
-        try {
-            entries = (await this.findLibraryByTitle(libraryTitle)).list.entries;
-        } catch {
-            entries = [];
-        }
+        const entries = (await this.findLibraryByTitle(libraryTitle)).list.entries;
 
         if (entries.length) {
             this.libraryTitleExists = entries[0].entry.title.toLowerCase() === libraryTitle.toLowerCase();
@@ -239,20 +241,24 @@ export class LibraryDialogComponent implements OnInit {
         }
     }
 
-    private findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
-        return this.queriesApi.findSites(libraryTitle, {
-            maxItems: 1,
-            fields: ['title']
-        });
+    private async findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
+        try {
+            return await this.queriesApi.findSites(libraryTitle, {
+                maxItems: 1,
+                fields: ['title']
+            });
+        } catch {
+            return new SitePaging({ list: { entries: [], pagination: {} } });
+        }
     }
 
-    private forbidSpecialCharacters({ value }: UntypedFormControl) {
+    private forbidSpecialCharacters({ value }: UntypedFormControl): ValidationErrors | null {
         if (value === null || value.length === 0) {
             return null;
         }
 
         const validCharacters: RegExp = /[^A-Za-z0-9-]/;
-        const isValid: boolean = !validCharacters.test(value);
+        const isValid = !validCharacters.test(value);
 
         return isValid
             ? null
@@ -261,12 +267,12 @@ export class LibraryDialogComponent implements OnInit {
               };
     }
 
-    private forbidOnlySpaces({ value }: UntypedFormControl) {
+    private forbidOnlySpaces({ value }: UntypedFormControl): ValidationErrors | null {
         if (value === null || value.length === 0) {
             return null;
         }
 
-        const isValid: boolean = !!(value || '').trim();
+        const isValid = !!value.trim();
 
         return isValid
             ? null
@@ -275,24 +281,39 @@ export class LibraryDialogComponent implements OnInit {
               };
     }
 
-    private createSiteIdValidator() {
+    private minLengthTrimmed({ value }: UntypedFormControl): ValidationErrors | null {
+        if (value === null || value.length === 0) {
+            return null;
+        }
+
+        const isValid = value.trim().length !== 1;
+
+        return isValid
+            ? null
+            : {
+                  message: 'LIBRARY.ERRORS.TITLE_TOO_SHORT'
+              };
+    }
+
+    private createSiteIdValidator(): (control: AbstractControl) => Promise<ValidationErrors | null> {
         let timer;
 
         return (control: AbstractControl) => {
             if (timer) {
                 clearTimeout(timer);
             }
-
             return new Promise((resolve) => {
-                timer = setTimeout(
-                    () =>
-                        this.sitesService.getSite(control.value).subscribe(
-                            () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
-                            () => resolve(null)
-                        ),
-                    300
-                );
+                timer = setTimeout(() => {
+                    this.checkSite(control.value, resolve);
+                }, 300);
             });
         };
+    }
+
+    private checkSite(siteId: string, resolve: (result: ValidationErrors | null) => void): void {
+        this.sitesService.getSite(siteId).subscribe({
+            next: () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
+            error: () => resolve(null)
+        });
     }
 }

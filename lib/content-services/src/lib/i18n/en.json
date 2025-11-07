@@ -659,7 +659,9 @@
       "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
       "ILLEGAL_CHARACTERS": "Use numbers and letters only",
       "ONLY_SPACES": "Library name can't contain only spaces",
-      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties"
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Library properties updated"
