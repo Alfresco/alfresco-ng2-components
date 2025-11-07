@@ -99,10 +99,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
                 throw new Error('Missing the required oauth2 scope parameter');
             }
 
-            if (this.config.oauth2.secret === undefined || this.config.oauth2.secret === null) {
-                this.config.oauth2.secret = '';
-            }
-
             if ((this.config.oauth2.redirectUri === undefined || this.config.oauth2.redirectUri === null) && this.config.oauth2.implicitFlow) {
                 throw new Error('Missing redirectUri required parameter');
             }
@@ -559,54 +555,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
         }
     }
 
-    /**
-     * login Alfresco API
-     * @returns A promise that returns {new authentication token} if resolved and {error} if rejected.
-     */
-    login(username: string, password: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.grantPasswordLogin(username, password, resolve, reject);
-        });
-    }
-
-    grantPasswordLogin(username: string, password: string, resolve: any, reject: any) {
-        this.invalidateSession();
-
-        const headerParams = {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        };
-
-        const formParams = {
-            username,
-            password,
-            grant_type: 'password',
-            client_id: this.config.oauth2.clientId,
-            client_secret: this.config.oauth2.secret
-        };
-
-        const contentTypes = ['application/x-www-form-urlencoded'];
-        const accepts = ['application/json'];
-
-        const promise = this.callCustomApi(this.discovery.tokenEndpoint, 'POST', {}, {}, headerParams, formParams, {}, contentTypes, accepts).then(
-            (data: any) => {
-                this.saveUsername(username);
-                this.silentRefresh();
-                this.storeAccessToken(data.access_token, data.expires_in, data.refresh_token);
-
-                resolve(data);
-            },
-            (error) => {
-                if ((error.error && error.error.status === 401) || error.status === 401) {
-                    this.emit('unauthorized');
-                }
-                this.emit('error');
-                reject(error.error);
-            }
-        );
-
-        return this.addPromiseListeners(promise, new EventEmitter());
-    }
-
     pollingRefreshToken() {
         this.refreshTokenIntervalPolling = setInterval(async () => {
             try {
@@ -624,7 +572,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
      * @returns promise of void
      */
     refreshToken(): Promise<any> {
-        const auth = 'Basic ' + this.universalBtoa(this.config.oauth2.clientId + ':' + this.config.oauth2.secret);
+        const auth = 'Basic ' + this.universalBtoa(this.config.oauth2.clientId);
         const headerParams = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cache-Control': 'no-cache',

@@ -23,7 +23,6 @@ export interface OauthConfigModel {
     codeFlow?: boolean;
     redirectUri: string;
     silentLogin?: boolean;
-    secret?: string;
     redirectUriLogout?: string;
     logoutUrl?: string;
     audience?: string;

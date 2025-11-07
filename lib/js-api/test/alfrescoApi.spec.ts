@@ -326,7 +326,6 @@ describe('Basic configuration test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },

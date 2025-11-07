@@ -121,52 +121,7 @@ describe('Oauth2  test', () => {
     });
 
     describe('With Authentication', () => {
-        it('should be possible have different user login in different instance of the oauth2Auth class', async () => {
-            const oauth2AuthInstanceOne = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout'
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            const oauth2AuthInstanceTwo = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout'
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            const mock = new OAuthMock('https://myOauthUrl:30081');
-            mock.get200Response('superman-token');
-            const loginInstanceOne = await oauth2AuthInstanceOne.login('superman', 'crypto');
-
-            mock.get200Response('barman-token');
-            const loginInstanceTwo = await oauth2AuthInstanceTwo.login('barman', 'IamBarman');
-
-            assert.equal(loginInstanceOne.access_token, 'superman-token');
-            assert.equal(loginInstanceTwo.access_token, 'barman-token');
-
-            oauth2AuthInstanceOne.logOut();
-            oauth2AuthInstanceTwo.logOut();
-        });
-
-        it('login should return the Token if is ok', (done) => {
+        it('should emit a token_issued event if setToken is called with a valid token', (done) => {
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -175,129 +130,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout'
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            oauth2Auth.login('admin', 'admin').then((data) => {
-                assert.equal(data.access_token, 'test-token');
-                oauth2Auth.logOut();
-                done();
-            });
-        });
-
-        it('should refresh token when the login not use the implicitFlow ', (done) => {
-            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
-            oauth2Mock.get200Response();
-
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout',
-                        implicitFlow: false,
-                        refreshTokenTimeout: 100
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            let calls = 0;
-            oauth2Auth.refreshToken = () => {
-                calls++;
-                return Promise.resolve();
-            };
-
-            setTimeout(() => {
-                assert.equal(calls > 2, true);
-                oauth2Auth.logOut();
-                done();
-            }, 600);
-
-            oauth2Auth.login('admin', 'admin');
-        });
-
-        it('should not hang the app also if the logout is missing', (done) => {
-            jest.spyOn(window, 'document', 'get').mockReturnValueOnce(undefined);
-            oauth2Mock.get200Response();
-
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout',
-                        implicitFlow: false,
-                        refreshTokenTimeout: 100
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            let calls = 0;
-            oauth2Auth.refreshToken = () => {
-                calls++;
-                return Promise.resolve();
-            };
-
-            setTimeout(() => {
-                assert.equal(calls > 2, true);
-                done();
-            }, 600);
-
-            oauth2Auth.login('admin', 'admin');
-        });
-
-        it('should emit a token_issued event if login is ok ', (done) => {
-            oauth2Mock.get200Response();
-
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout'
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            oauth2Auth.once('token_issued', () => {
-                oauth2Auth.logOut();
-                done();
-            });
-
-            oauth2Auth.login('admin', 'admin');
-        });
-
-        it('should not emit a token_issued event if setToken is null ', (done) => {
-            oauth2Mock.get200Response();
-
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -331,7 +163,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -345,7 +176,7 @@ describe('Oauth2  test', () => {
                 done();
             });
 
-            oauth2Auth.login('admin', 'admin');
+            oauth2Auth.setToken('test-token', null);
         });
 
         it('should emit a token_issued if provider is ALL', (done) => {
@@ -358,7 +189,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -372,7 +202,7 @@ describe('Oauth2  test', () => {
                 done();
             });
 
-            oauth2Auth.login('admin', 'admin');
+            oauth2Auth.setToken('test-token', null);
         });
 
         it('should after token_issued event exchange the access_token for the alf_ticket', (done) => {
@@ -385,7 +215,6 @@ describe('Oauth2  test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },
@@ -407,7 +236,7 @@ describe('Oauth2  test', () => {
                 done();
             });
 
-            alfrescoApi.login('admin', 'admin');
+            alfrescoApi.oauth2Auth.setToken('test-token', null);
         });
 
         it('should after token_issued event exchange the access_token for the alf_ticket with the compatibility layer', (done) => {
@@ -420,7 +249,6 @@ describe('Oauth2  test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },
@@ -443,7 +271,7 @@ describe('Oauth2  test', () => {
                 done();
             });
 
-            alfrescoApi.login('admin', 'admin');
+            alfrescoApi.oauth2Auth.setToken('test-token', null);
         });
 
         // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
@@ -460,7 +288,6 @@ describe('Oauth2  test', () => {
                     host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
-                    secret: '',
                     redirectUri: '/',
                     redirectUriLogout: '/logout'
                 },
@@ -486,7 +313,7 @@ describe('Oauth2  test', () => {
                 }
             });
 
-            alfrescoApi.login('admin', 'admin');
+            alfrescoApi.oauth2Auth.setToken('test-token', null);
             jest.setTimeout(3000);
             alfrescoApi.refreshToken();
         });
@@ -500,7 +327,6 @@ describe('Oauth2  test', () => {
                         host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
-                        secret: '',
                         redirectUri: '/',
                         redirectUriLogout: '/logout'
                     },
@@ -509,36 +335,10 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            oauth2Auth.login('admin', 'admin').then(() => {
-                assert.equal(oauth2Auth.isLoggedIn(), true);
-                oauth2Auth.logOut();
-                done();
-            });
-        });
-
-        it('login password should be removed after login', (done) => {
-            oauth2Mock.get200Response();
-
-            const oauth2Auth = new Oauth2Auth(
-                {
-                    oauth2: {
-                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
-                        clientId: 'activiti',
-                        scope: 'openid',
-                        secret: '',
-                        redirectUri: '/',
-                        redirectUriLogout: '/logout'
-                    },
-                    authType: 'OAUTH'
-                },
-                alfrescoJsApi
-            );
-
-            oauth2Auth.login('admin', 'admin').then(() => {
-                assert.notEqual(oauth2Auth.authentications.basicAuth.password, 'admin');
-                oauth2Auth.logOut();
-                done();
-            });
+            oauth2Auth.setToken('test-token', null);
+            assert.equal(oauth2Auth.isLoggedIn(), true);
+            oauth2Auth.logOut();
+            done();
         });
 
         describe('With mocked DOM', () => {
@@ -549,7 +349,6 @@ describe('Oauth2  test', () => {
                             host: 'https://myOauthUrl:30081/auth/realms/springboot',
                             clientId: 'activiti',
                             scope: 'openid',
-                            secret: '',
                             redirectUri: '/',
                             redirectUriLogout: '/logout'
                         },
@@ -586,7 +385,6 @@ describe('Oauth2  test', () => {
                             host: 'https://myOauthUrl:30081/auth/realms/springboot',
                             clientId: 'activiti',
                             scope: 'openid',
-                            secret: '',
                             redirectUri: '/',
                             redirectUriLogout: '/logout'
                         },

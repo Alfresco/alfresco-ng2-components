@@ -38,7 +38,6 @@ export interface ConfigArgs {
     oauth: string;
     tokenEndpoint: string;
     clientId: string;
-    secret: string;
     scope: string;
     host: string;
     tag: string;
@@ -450,7 +449,6 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
             tokenUrl: `${ssoHost}/${configArgs.tokenEndpoint}`,
             clientId: `${configArgs.clientId}`,
             scope: `${configArgs.scope}`,
-            secret: `${configArgs.secret}`,
             implicitFlow: false,
             silentLogin: false,
             redirectUri: '/'
@@ -776,10 +774,6 @@ Options:
             clientId: {
                 type: 'string'
             },
-            secret: {
-                type: 'string',
-                default: ''
-            },
             scope: {
                 type: 'string',
                 default: 'openid'
@@ -815,7 +809,6 @@ Options:
         host: values.host as string,
         oauth: values.oauth as string,
         clientId: values.clientId as string,
-        secret: values.secret as string,
         scope: values.scope as string,
         tokenEndpoint: values.tokenEndpoint as string,
         modelerUsername: values.modelerUsername as string,
@@ -836,7 +829,6 @@ Options:
         oauth: options.oauth,
         tokenEndpoint: options.tokenEndpoint,
         scope: options.scope,
-        secret: options.secret,
         tag: options.tag,
         envs: options.envs
     };

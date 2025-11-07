@@ -1535,9 +1535,6 @@
           "type": "string",
           "description": "The client's id as registered with the auth server"
         },
-        "secret": {
-          "type": "string"
-        },
         "redirectUri": {
           "type": "string",
           "description": "The client's redirectUri as registered with the auth server"
