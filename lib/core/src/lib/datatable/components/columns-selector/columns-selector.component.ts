@@ -28,6 +28,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
+import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 
 @Component({
     selector: 'adf-datatable-column-selector',
@@ -39,7 +40,9 @@ import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
         MatDividerModule,
         ReactiveFormsModule,
         MatCheckboxModule,
-        ColumnsSearchFilterPipe
+        ColumnsSearchFilterPipe,
+        MatSelectionList,
+        MatListOption
     ],
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],
@@ -85,8 +88,8 @@ export class ColumnsSelectorComponent implements OnInit {
         this.mainMenuTrigger.closeMenu();
     }
 
-    changeColumnVisibility(dataColumn: DataColumn): void {
-        const selectedColumn = this.columnItems.find((column) => column.id === dataColumn.id);
+    changeColumnVisibility(event: MatSelectionListChange): void {
+        const selectedColumn = this.columnItems.find((column) => column.id === event.options[0].value);
         selectedColumn.isHidden = !selectedColumn.isHidden;
     }
 

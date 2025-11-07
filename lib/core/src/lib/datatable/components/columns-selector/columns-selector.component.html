@@ -13,7 +13,6 @@
         <button
             data-automation-id="adf-columns-selector-close-button"
             mat-icon-button
-            role="menuitem"
             [attr.aria-label]="'CLOSE' | translate"
             (click)="closeMenu()"
         >
@@ -34,21 +33,21 @@
             class="adf-columns-selector-search-input"
             data-automation-id="adf-columns-selector-search-input"
             type="text"
-            role="menuitem"
             [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
     </div>
 
-    <div class="adf-columns-selector-list-container">
+    <mat-selection-list
+        class="adf-columns-selector-list-container"
+        (selectionChange)="changeColumnVisibility($event)"
+        [attr.aria-label]='"ADF-DATATABLE.COLUMNS_SELECTOR.COLUMNS_VISIBILITY" | translate'>
         <div *ngFor="let column of (columnItems | columnsSearchFilter: searchQuery)" class="adf-columns-selector-list-item">
-            <mat-checkbox
+            <mat-list-option
                 color="primary"
                 class="adf-columns-selector-column-checkbox"
                 [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
-                [checked]="!column.isHidden"
-                role="menuitem"
+                [selected]="!column.isHidden"
                 [disabled]="isCheckboxDisabled(column)"
-                (keydown.enter)="changeColumnVisibility(column)"
-                (change)="changeColumnVisibility(column)">
+                [value]="column.id">
                 <div class="adf-columns-selector-list-content">
                     {{column.title | translate}}
                 </div>
@@ -63,16 +62,15 @@
                         {{column.subtitle | translate}}
                     </span>
                 </div>
-            </mat-checkbox>
+            </mat-list-option>
         </div>
-    </div>
+    </mat-selection-list>
 
     <mat-divider class="adf-columns-selector-divider" />
 
     <div class="adf-columns-selector-footer">
         <button
             mat-flat-button
-            role="menuitem"
             data-automation-id="adf-columns-selector-apply-button"
             color="primary"
             (click)="apply()">

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
@@ -24,6 +24,7 @@ import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.mod
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { provideCoreAuthTesting } from '../../testing/noop-auth.module';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 describe('Notification History Component', () => {
     let fixture: ComponentFixture<NotificationHistoryComponent>;
@@ -46,7 +47,7 @@ describe('Notification History Component', () => {
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
-        testingUtils = new UnitTestingUtils(fixture.debugElement);
+        testingUtils = new UnitTestingUtils(fixture.debugElement, TestbedHarnessEnvironment.loader(fixture));
 
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);
@@ -63,6 +64,15 @@ describe('Notification History Component', () => {
     });
 
     describe('ui ', () => {
+        const getMarkAllAsReadButton = (): HTMLButtonElement =>
+            overlayContainerElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-notification-history-mark-as-read"]');
+
+        const getLoadMoreButton = (): HTMLButtonElement =>
+            overlayContainerElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-notification-history-load-more"]');
+
+        const getNotificationElements = (): NodeListOf<HTMLButtonElement> =>
+            overlayContainerElement.querySelectorAll<HTMLButtonElement>('.adf-notification-history-menu-item');
+
         it('should empty message be present when there are no notifications in the history', (done) => {
             openNotification();
             fixture.detectChanges();
@@ -80,8 +90,7 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(component.notifications.length).toBe(1);
-                const markAllAsRead = overlayContainerElement.querySelector<HTMLButtonElement>('#adf-notification-history-mark-as-read');
-                markAllAsRead.click();
+                getMarkAllAsReadButton().click();
                 fixture.detectChanges();
                 expect(storage.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)).toBeNull();
                 expect(component.notifications.length).toBe(0);
@@ -115,8 +124,7 @@ describe('Notification History Component', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const notification = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-menu-item');
-                notification.click();
+                getNotificationElements()[0].click();
                 expect(callBackSpy).toHaveBeenCalled();
                 done();
             });
@@ -133,9 +141,8 @@ describe('Notification History Component', () => {
             openNotification();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const loadMoreButton = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-load-more');
                 expect(component.paginatedNotifications.length).toBe(5);
-                expect(loadMoreButton).toBeDefined();
+                expect(getLoadMoreButton()).toBeDefined();
                 done();
             });
         });
@@ -155,8 +162,7 @@ describe('Notification History Component', () => {
             openNotification();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const notification = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-menu-item');
-                expect(notification).toBeDefined();
+                expect(getNotificationElements()[0]).toBeDefined();
                 done();
             });
         }, 10000);
@@ -173,10 +179,140 @@ describe('Notification History Component', () => {
             openNotification();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const notifications = overlayContainerElement.querySelectorAll('.adf-notification-history-menu-item');
-                expect(notifications.length).toBe(6);
+                expect(getNotificationElements().length).toBe(6);
                 done();
             });
         }, 45000);
+
+        describe('focus change', () => {
+            let markAllAsReadButton: HTMLButtonElement;
+            let loadMoreButton: HTMLButtonElement;
+            let notifications: NodeListOf<HTMLButtonElement>;
+
+            beforeEach(fakeAsync(() => {
+                spyOn(storage, 'getItem').and.returnValue(
+                    JSON.stringify([
+                        {
+                            messages: ['My new message 1']
+                        },
+                        {
+                            messages: ['My new message 2']
+                        },
+                        {
+                            messages: ['My new message 3']
+                        },
+                        {
+                            messages: ['My new message 4']
+                        },
+                        {
+                            messages: ['My new message 5']
+                        },
+                        {
+                            messages: ['My new message 6']
+                        }
+                    ] as NotificationModel[])
+                );
+                openNotification();
+                tick();
+                markAllAsReadButton = getMarkAllAsReadButton();
+                loadMoreButton = getLoadMoreButton();
+                notifications = getNotificationElements();
+            }));
+
+            it('should focus mark all as read button when menu has been opened', () => {
+                expect(document.activeElement).toBe(markAllAsReadButton);
+            });
+
+            it('should focus load more button when pressing arrow up when mark all as read button is focused', () => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowUp'
+                    })
+                );
+                expect(document.activeElement).toBe(loadMoreButton);
+            });
+
+            it('should focus first notification when pressing arrow down when mark all as read button is focused', () => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowDown'
+                    })
+                );
+                expect(document.activeElement).toBe(notifications[0]);
+            });
+
+            it('should focus mark all as read button when pressing arrow up when first notification is focused', () => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowDown'
+                    })
+                );
+
+                notifications[0].dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowUp'
+                    })
+                );
+                expect(document.activeElement).toBe(markAllAsReadButton);
+            });
+
+            it('should focus second notification when pressing arrow down when first notification is focused', () => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowDown'
+                    })
+                );
+
+                notifications[0].dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowDown'
+                    })
+                );
+                expect(document.activeElement).toBe(notifications[1]);
+            });
+
+            it('should focus mark all as read button when pressing arrow down when load more button is focused', () => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowUp'
+                    })
+                );
+
+                loadMoreButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowDown'
+                    })
+                );
+                expect(document.activeElement).toBe(markAllAsReadButton);
+            });
+
+            it('should last paged notification when pressing arrow up when load more button is focused', () => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowUp'
+                    })
+                );
+
+                loadMoreButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowUp'
+                    })
+                );
+                expect(document.activeElement).toBe(notifications[4]);
+            });
+
+            it('should focus correct notification after loading more', fakeAsync(() => {
+                markAllAsReadButton.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'ArrowUp'
+                    })
+                );
+
+                loadMoreButton.click();
+                fixture.detectChanges();
+                tick();
+                expect(document.activeElement).toBe(getNotificationElements()[5]);
+            }));
+        });
     });
 });
