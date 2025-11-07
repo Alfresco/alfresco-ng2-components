@@ -86,18 +86,18 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
+    @ViewChild('markAsReadButton')
+    private readonly markAsReadButton: MatIconButton;
+
+    @ViewChild('loadMoreButton')
+    private readonly loadMoreButton: MatButton;
+
+    @ViewChildren(MatMenuItem)
+    private readonly menuItems: QueryList<MatMenuItem>;
+
     private readonly destroyRef = inject(DestroyRef);
 
     private focusKeyManager: FocusKeyManager<MatIconButton | MatMenuItem | MatButton>;
-
-    @ViewChild('markAsReadButton')
-    private markAsReadButton: MatIconButton;
-
-    @ViewChild('loadMoreButton')
-    private loadMoreButton: MatButton;
-
-    @ViewChildren(MatMenuItem)
-    private menuItems: QueryList<MatMenuItem>;
 
     constructor(
         private readonly notificationService: NotificationService,
