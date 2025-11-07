@@ -120,4 +120,11 @@ describe('DataTableCellComponent', () => {
         checkDisplayedText('hello worl...');
         checkDisplayedTooltip('hello world');
     });
+
+    it('should return empty title when value is undefined', () => {
+        component.column = { key: 'car_name', type: 'text', maxTextLength: 10 };
+
+        expect(() => component.computeTitle(undefined)).not.toThrow();
+        expect(component.computeTitle(undefined)).toBe('');
+    });
 });
