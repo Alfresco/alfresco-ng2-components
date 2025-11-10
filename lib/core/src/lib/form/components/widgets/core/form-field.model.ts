@@ -598,7 +598,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (this.parent) {
             this.updateRepeatableSectionValue(formValue);
         } else {
-            this.form.values[this.id] = formValue;
+            this.updateValue(formValue);
         }
 
         this.form.onFormFieldChanged(this);
@@ -744,6 +744,14 @@ export class FormFieldModel extends FormWidgetModel {
         }
     }
 
+    private updateValue(value: any) {
+        if (value === undefined) {
+            return;
+        }
+
+        this.form.values[this.id] = value;
+    }
+
     private updateRepeatableSectionValue(value: string) {
         if (this.type === FormFieldTypes.SECTION) {
             return;
@@ -758,8 +766,6 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.form.values[this.parent.id][this.parent.rowIndex][this.id.split(ROW_ID_PREFIX)[0]] = value;
-
-        this.form.onFormFieldChanged(this);
     }
 
     /**
