@@ -24,6 +24,7 @@
   "CLOSE": "Zamknij",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Aktualnie brak powiadomień.",
+    "UNREAD_MESSAGES": "Masz nieprzeczytane powiadomienia.",
     "TITLE": "Powiadomienia",
     "MARK_AS_READ": "Oznacz wszystkie jako przeczytane",
     "SYSTEM": "System",
@@ -68,10 +69,21 @@
         "NO_LONGER_THAN": "Możesz wprowadzić maksymalnie następującą liczbę znaków: {{ maxLength }}."
       },
       "FILE_ALREADY_UPLOADED": "Plik o tej samej nazwie został już przesłany.",
-      "ATTACH": "Załącz"
+      "ATTACH": "Załącz",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "dodaj",
+        "ROW_LIMIT_REACHED": "Osiągnięto limit wierszy ({{ limit }})."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Zadanie bez nazwy"
+      "NAMELESS_TASK": "Zadanie bez nazwy",
+      "ROW_LABEL": "Wiersz {{ number }}",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Usuń wiersz",
+        "MESSAGE": "Czy na pewno chcesz usunąć ten wiersz?",
+        "YES_LABEL": "Usuń wiersz",
+        "NO_LABEL": "Anuluj"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Rozmiar czcionki",
@@ -287,7 +299,8 @@
         "EDIT": "Przycisk Edytuj",
         "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Wartość skopiowano do schowka",
-        "EDIT_ASPECTS": "Edycja aspektu"
+        "EDIT_ASPECTS": "Edycja aspektu",
+        "SECTION": "Sekcja {{ sectionName }}"
       }
     },
     "SEARCH": {
@@ -413,7 +426,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Kolumny",
       "SEARCH": "Szukaj",
-      "APPLY": "Zastosuj"
+      "APPLY": "Zastosuj",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {

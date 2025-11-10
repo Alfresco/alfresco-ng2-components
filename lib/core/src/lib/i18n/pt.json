@@ -24,6 +24,7 @@
   "CLOSE": "FECHAR",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "De momento, não tem notificações.",
+    "UNREAD_MESSAGES": "Você tem notificações não lidas.",
     "TITLE": "Notificações",
     "MARK_AS_READ": "Marcar todas como lidas",
     "SYSTEM": "Sistema",
@@ -68,10 +69,21 @@
         "NO_LONGER_THAN": "Não introduzir mais de {{ maxLength }} caracteres"
       },
       "FILE_ALREADY_UPLOADED": "Já foi carregado um ficheiro com o mesmo nome.",
-      "ATTACH": "Anexar"
+      "ATTACH": "Anexar",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "adicionar",
+        "ROW_LIMIT_REACHED": "Limite de linhas ({{ limit }}) atingido."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Tarefa sem nome"
+      "NAMELESS_TASK": "Tarefa sem nome",
+      "ROW_LABEL": "Linha {{ number }}",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Excluir linha",
+        "MESSAGE": "Tem certeza que deseja excluir esta linha?",
+        "YES_LABEL": "Excluir linha",
+        "NO_LABEL": "Cancelar"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Tamanho do tipo de letra",
@@ -287,7 +299,8 @@
         "EDIT": "Botão Editar",
         "DATEPICKER": "Utilize as teclas de setas para navegar entre datas. Para cima e para baixo passam para a semana seguinte ou anterior, mas no mesmo dia. A esquerda e a direita deslocam-se para o dia seguinte ou anterior.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado para a área de transferência",
-        "EDIT_ASPECTS": "Editar aspeto"
+        "EDIT_ASPECTS": "Editar aspeto",
+        "SECTION": "Seção {{ sectionName }}"
       }
     },
     "SEARCH": {
@@ -413,7 +426,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Colunas",
       "SEARCH": "Pesquisar",
-      "APPLY": "Aplicar"
+      "APPLY": "Aplicar",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {

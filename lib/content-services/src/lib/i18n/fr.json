@@ -2,7 +2,8 @@
   "COMMON": {
     "APPLY": "Appliquer",
     "CANCEL": "Annuler",
-    "NAME": "Nom"
+    "NAME": "Nom",
+    "CLEAR": "Effacer"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -17,7 +18,8 @@
         "MINOR": "changements mineurs ({{version}})",
         "COMMENT": "Laisser un commentaire",
         "ADD": "Ajouter une nouvelle version",
-        "CANCEL": "Annuler"
+        "CANCEL": "Annuler",
+        "VERSION_TYPE_LABEL": "Select version type"
       }
     },
     "CONFIRM_DELETE": {
@@ -379,6 +381,7 @@
       "TITLE": "Filtre",
       "TYPE": "Type",
       "FILTER_BY": "Filtrer par {{ category }}",
+      "ACTIVE_FILTER": "Filtre actif",
       "CLEAR": "Supprimer",
       "APPLY": "Appliquer",
       "FILTERS": {
@@ -426,7 +429,8 @@
       "IN_LAST_LABELS": {
         "DAYS": "Jours",
         "WEEKS": "Semaines",
-        "MONTHS": "Mois"
+        "MONTHS": "Mois",
+        "QUANTITY": "Quantité"
       },
       "IN_LAST_DISPLAY_LABELS": {
         "DAYS": "Au cours des {{value}} derniers jours",
@@ -435,7 +439,8 @@
       },
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Date de début",
-        "END_DATE": "Date de fin"
+        "END_DATE": "Date de fin",
+        "DATE_RANGE": "Plage de dates"
       },
       "ERROR": {
         "IN_LAST": "Valeur obligatoire",
@@ -466,7 +471,12 @@
         "GB": "GO"
       },
       "FILE_TYPE": "Type de fichier",
-      "FILE_TYPE_PLACEHOLDER": "Ajouter un type de fichier"
+      "FILE_TYPE_PLACEHOLDER": "Ajouter un type de fichier",
+      "ACCESSIBILITY": {
+        "CONDITION": "Condition",
+        "SIZE_VALUE": "Valeur de la taille du fichier",
+        "UNIT": "Unité"
+      }
     }
   },
   "PERMISSION": {
@@ -555,8 +565,10 @@
       "ADD-ACTION": "Ajouter",
       "CLOSE-ACTION": "Annuler",
       "BASE-DIALOG-TITLE": "Rechercher un groupe ou une personne à ajouter...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Ajouter une permission utilisateur ou groupe",
       "EVERYONE": "Tout le monde",
-      "USER-GROUP-LIST": "Liste des utilisateurs ou des groupes"
+      "USER-GROUP-LIST": "Liste des utilisateurs ou des groupes",
+      "REMOVE_USER_GROUP": "Supprimer"
     },
     "COLUMN": {
       "NAME": "Utilisateurs et groupes ({{ count }})",
@@ -648,7 +660,9 @@
       "TITLE_TOO_SHORT": "Le titre doit comporter au moins 2 caractères",
       "ILLEGAL_CHARACTERS": "Utilisez uniquement des chiffres et des lettres",
       "ONLY_SPACES": "Un nom de bibliothèque ne peut pas contenir uniquement des espaces",
-      "LIBRARY_UPDATE_ERROR": "Une erreur est survenue pendant la mise à jour des propriétés de la bibliothèque"
+      "LIBRARY_UPDATE_ERROR": "Une erreur est survenue pendant la mise à jour des propriétés de la bibliothèque",
+      "NAME_REQUIRED": "Library name is required",
+      "ID_REQUIRED": "Library ID is required"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Les propriétés de la bibliothèque ont été mises à jour"

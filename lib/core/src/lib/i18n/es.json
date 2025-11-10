@@ -24,6 +24,7 @@
   "CLOSE": "Cerrar",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "No tiene notificaciones en este momento.",
+    "UNREAD_MESSAGES": "Tienes notificaciones sin leer.",
     "TITLE": "Notificaciones",
     "MARK_AS_READ": "Marcar todo como leído",
     "SYSTEM": "Sistema",
@@ -68,10 +69,21 @@
         "NO_LONGER_THAN": "No introducir más de {{ maxLength }} caracteres"
       },
       "FILE_ALREADY_UPLOADED": "Ya se ha cargado un fichero con el mismo nombre.",
-      "ATTACH": "Adjuntar"
+      "ATTACH": "Adjuntar",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "añadir",
+        "ROW_LIMIT_REACHED": "Límite de filas ({{ limit }}) alcanzado."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Tarea sin nombre"
+      "NAMELESS_TASK": "Tarea sin nombre",
+      "ROW_LABEL": "Fila {{ number }}",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Eliminar la fila",
+        "MESSAGE": "¿Está seguro de que desea eliminar esta fila?",
+        "YES_LABEL": "Eliminar fila",
+        "NO_LABEL": "Cancelar"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Tamaño de fuente",
@@ -287,7 +299,8 @@
         "EDIT": "Botón Editar",
         "DATEPICKER": "Utilice las teclas de dirección para cambiar de fecha. Las teclas de arriba y abajo pasan al mismo día de la semana siguiente o anterior; y las de izquierda y derecha pasan al día siguiente o anterior. Pulse la tecla de entrada para seleccionar una fecha.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado al portapapeles",
-        "EDIT_ASPECTS": "Editar aspecto"
+        "EDIT_ASPECTS": "Editar aspecto",
+        "SECTION": "Sección {{ sectionName }}"
       }
     },
     "SEARCH": {
@@ -413,7 +426,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Columnas",
       "SEARCH": "Buscar",
-      "APPLY": "Aplicar"
+      "APPLY": "Aplicar",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {
