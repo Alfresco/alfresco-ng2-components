@@ -351,15 +351,15 @@ export class FormFieldModel extends FormWidgetModel {
         this.colspan = 1;
         this.rows = [];
 
-        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.newRowsLimit, value); i++) {
+        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.maxNumberOfRows, value); i++) {
             this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows));
         }
 
         this.columns = this.rows[0].columns;
     }
 
-    private getNumberOfRows(initialNrRows: number = 1, rowsLimit?: number, value?: any) {
-        return value?.length && !!rowsLimit ? Math.min(value?.length, initialNrRows + rowsLimit) : (value?.length ?? initialNrRows);
+    private getNumberOfRows(initialNrRows: number = 1, maximumNrRows?: number, value?: any) {
+        return value?.length <= maximumNrRows ? value?.length : initialNrRows;
     }
 
     private createRow(fields: any, form: any, index: number, value?: any, isInitial: boolean = false) {
@@ -476,7 +476,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private shouldAddRow(): boolean {
-        return !this.params.newRowsLimit || this.rows.length < this.params.initialNumberOfRows + this.params.newRowsLimit;
+        return !this.params.maxNumberOfRows || this.rows.length < this.params.maxNumberOfRows;
     }
 
     removeRow(index: number) {
@@ -740,7 +740,7 @@ export class FormFieldModel extends FormWidgetModel {
                     return this.value;
                 }
 
-                return null;
+                return undefined;
         }
     }
 

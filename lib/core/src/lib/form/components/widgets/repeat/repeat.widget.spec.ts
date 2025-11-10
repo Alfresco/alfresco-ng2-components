@@ -30,11 +30,11 @@ describe('RepeatWidgetComponent', () => {
     /**
      *
      * @param initialNumberOfRows initial number of rows
-     * @param newRowsLimit limit for additional rows
+     * @param maxNumberOfRows maximum number of rows
      * @param allowInitialRowsDelete should allow deleting rows
      * @returns repeatable section json based on params
      */
-    function getFormFieldJson(initialNumberOfRows: number = 2, newRowsLimit?: number, allowInitialRowsDelete: boolean = true) {
+    function getFormFieldJson(initialNumberOfRows: number = 2, maxNumberOfRows?: number, allowInitialRowsDelete: boolean = true) {
         return {
             id: 'RepeatableSection0tbw2y',
             name: 'Repeatable Section',
@@ -43,7 +43,7 @@ describe('RepeatWidgetComponent', () => {
             params: {
                 initialNumberOfRows,
                 allowInitialRowsDelete,
-                newRowsLimit
+                maxNumberOfRows
             },
             numberOfColumns: 2,
             fields: {
@@ -126,7 +126,7 @@ describe('RepeatWidgetComponent', () => {
         });
 
         it('should display add row button if limit is defined but not reached', () => {
-            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 3)));
 
             fixture.detectChanges();
 
@@ -135,7 +135,7 @@ describe('RepeatWidgetComponent', () => {
         });
 
         it('should NOT display add row button if limit is defined and reached', () => {
-            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 2)));
             spyOn(component, 'getAddedRowsCount').and.returnValue(1);
 
             fixture.detectChanges();
@@ -145,7 +145,7 @@ describe('RepeatWidgetComponent', () => {
         });
 
         it('should display row limit if limit has been reached', () => {
-            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
+            component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 2)));
             spyOn(component, 'getAddedRowsCount').and.returnValue(1);
 
             fixture.detectChanges();
@@ -164,32 +164,6 @@ describe('RepeatWidgetComponent', () => {
 
             testingUtils.clickByCSS('button.adf-container-widget-row-action');
             expect(component.addRow).toHaveBeenCalled();
-        });
-
-        describe('getAddedRowsCount', () => {
-            it('should get correct rows count if initial rows are allowed to be deleted', () => {
-                component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1)));
-
-                fixture.detectChanges();
-
-                expect(component.getAddedRowsCount()).toBe(0);
-
-                component.addRow();
-
-                fixture.detectChanges();
-
-                expect(component.getAddedRowsCount()).toBe(1);
-            });
-
-            it('should get correct rows count if initial rows are NOT allowed to be deleted', () => {
-                component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 1, false)));
-
-                expect(component.getAddedRowsCount()).toBe(0);
-
-                component.addRow();
-
-                expect(component.getAddedRowsCount()).toBe(1);
-            });
         });
     });
 });

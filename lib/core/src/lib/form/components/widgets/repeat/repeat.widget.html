@@ -11,7 +11,7 @@
     <ng-content />
 
     @if (!isEditor) {
-        @let shouldDisplayAddRowButton = !element.field.params.newRowsLimit || (element.field.params.newRowsLimit > getAddedRowsCount());
+        @let shouldDisplayAddRowButton = !element.field.params.maxNumberOfRows || (element.field.params.maxNumberOfRows > element.field.rows.length);
         @if (shouldDisplayAddRowButton) {
             <button 
                 mat-button
@@ -23,8 +23,7 @@
                 <mat-icon>add</mat-icon> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}
             </button>
         } @else {
-            @let rowLimit = element.field.params.initialNumberOfRows + (element.field.params.newRowsLimit ?? 0);
-            <span class="adf-container-widget-row-action adf-container-widget-row-limit">{{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: rowLimit } }}</span>
+            <span class="adf-container-widget-row-action adf-container-widget-row-limit">{{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: element.field.params.maxNumberOfRows } }}</span>
         }
     }
 </div>
