@@ -24,6 +24,7 @@
   "CLOSE": "Fermer",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Aucune notification n'est disponible pour l'instant.",
+    "UNREAD_MESSAGES": "Vous avez des notifications non lues.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Marquer tout comme lu",
     "SYSTEM": "Système",
@@ -68,10 +69,21 @@
         "NO_LONGER_THAN": "Saisir {{ maxLength }} caractères maximum"
       },
       "FILE_ALREADY_UPLOADED": "Un fichier du même nom a déjà été importé.",
-      "ATTACH": "Joindre"
+      "ATTACH": "Joindre",
+      "REPEATABLE_SECTION": {
+        "ADD_ROW": "ajouter",
+        "ROW_LIMIT_REACHED": "Limite des lignes ({{ limit }}) atteinte."
+      }
     },
     "FORM_RENDERER": {
-      "NAMELESS_TASK": "Tâche sans nom"
+      "NAMELESS_TASK": "Tâche sans nom",
+      "ROW_LABEL": "Ligne {{ number }}",
+      "REMOVE_ROW_DIALOG": {
+        "TITLE": "Supprimer la ligne",
+        "MESSAGE": "Voulez-vous vraiment supprimer cette ligne ?",
+        "YES_LABEL": "Supprimer la ligne",
+        "NO_LABEL": "Annuler"
+      }
     },
     "FIELD_STYLE": {
       "FONT_SIZE": "Taille de la police",
@@ -287,7 +299,8 @@
         "EDIT": "Bouton Modifier",
         "DATEPICKER": "Utilisez les touches de direction pour naviguer entre les dates : haut et bas pour passer à la semaine suivante ou précédente en conservant le même jour ; gauche et droite pour passer au jour suivant ou précédent. Appuyez sur Entrée (Saut de ligne) pour sélectionner une date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Valeur copiée dans le Presse-papiers",
-        "EDIT_ASPECTS": "Modifier aspect"
+        "EDIT_ASPECTS": "Modifier aspect",
+        "SECTION": "Section {{ sectionName }}"
       }
     },
     "SEARCH": {
@@ -413,7 +426,8 @@
     "COLUMNS_SELECTOR": {
       "COLUMNS": "Colonnes",
       "SEARCH": "Rechercher",
-      "APPLY": "Appliquer"
+      "APPLY": "Appliquer",
+      "COLUMNS_VISIBILITY": "Select columns to display"
     }
   },
   "USER_PROFILE": {

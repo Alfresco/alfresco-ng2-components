@@ -2,7 +2,8 @@
   "COMMON": {
     "APPLY": "Anwenden",
     "CANCEL": "Abbrechen",
-    "NAME": "Name"
+    "NAME": "Name",
+    "CLEAR": "Löschen"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -17,7 +18,8 @@
         "MINOR": "kleine Änderungen ({{version}})",
         "COMMENT": "Kommentar abgeben",
         "ADD": "Neue Version hinzufügen",
-        "CANCEL": "Abbrechen"
+        "CANCEL": "Abbrechen",
+        "VERSION_TYPE_LABEL": "Versionstyp auswählen"
       }
     },
     "CONFIRM_DELETE": {
@@ -379,6 +381,7 @@
       "TITLE": "Filtern",
       "TYPE": "Typ",
       "FILTER_BY": "Filtern nach {{ category }}",
+      "ACTIVE_FILTER": "Aktiver Filter",
       "CLEAR": "Löschen",
       "APPLY": "Anwenden",
       "FILTERS": {
@@ -426,7 +429,8 @@
       "IN_LAST_LABELS": {
         "DAYS": "Tage",
         "WEEKS": "Wochen",
-        "MONTHS": "Monate"
+        "MONTHS": "Monate",
+        "QUANTITY": "Anzahl"
       },
       "IN_LAST_DISPLAY_LABELS": {
         "DAYS": "In den letzten {{value}} Tagen",
@@ -435,7 +439,8 @@
       },
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Startdatum",
-        "END_DATE": "Enddatum"
+        "END_DATE": "Enddatum",
+        "DATE_RANGE": "Datumsbereich"
       },
       "ERROR": {
         "IN_LAST": "Wert erforderlich",
@@ -466,7 +471,12 @@
         "GB": "SF"
       },
       "FILE_TYPE": "Dateityp",
-      "FILE_TYPE_PLACEHOLDER": "Dateityp hinzufügen"
+      "FILE_TYPE_PLACEHOLDER": "Dateityp hinzufügen",
+      "ACCESSIBILITY": {
+        "CONDITION": "Bedingung",
+        "SIZE_VALUE": "Dateigrößenwert",
+        "UNIT": "Einheit"
+      }
     }
   },
   "PERMISSION": {
@@ -555,8 +565,10 @@
       "ADD-ACTION": "Hinzufügen",
       "CLOSE-ACTION": "Abbrechen",
       "BASE-DIALOG-TITLE": "Es wird nach Gruppen oder Personen gesucht, die hinzugefügt werden können...",
+      "BASE_DIALOG_SCREEN_READER_TITLE": "Benutzer- oder Gruppenberechtigung hinzufügen",
       "EVERYONE": "Jeder",
-      "USER-GROUP-LIST": "Benutzer- oder Gruppenliste"
+      "USER-GROUP-LIST": "Benutzer- oder Gruppenliste",
+      "REMOVE_USER_GROUP": "Entfernen"
     },
     "COLUMN": {
       "NAME": "Benutzer und Gruppen ({{ count }})",
@@ -648,7 +660,9 @@
       "TITLE_TOO_SHORT": "Titel muss mindestens zwei Zeichen lang sein",
       "ILLEGAL_CHARACTERS": "Verwenden Sie nur Zahlen und Buchstaben",
       "ONLY_SPACES": "Bibliotheksname darf nicht nur aus Leerzeichen bestehen.",
-      "LIBRARY_UPDATE_ERROR": "Beim Aktualisieren der Bibliothekseigenschaften ist ein Fehler aufgetreten"
+      "LIBRARY_UPDATE_ERROR": "Beim Aktualisieren der Bibliothekseigenschaften ist ein Fehler aufgetreten",
+      "NAME_REQUIRED": "Bibliotheksname ist erforderlich",
+      "ID_REQUIRED": "Bibliothek-ID ist erforderlich"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Bibliothekseigenschaften aktualisiert"
