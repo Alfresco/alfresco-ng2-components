@@ -136,7 +136,6 @@ describe('RepeatWidgetComponent', () => {
 
         it('should NOT display add row button if limit is defined and reached', () => {
             component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 2)));
-            spyOn(component, 'getAddedRowsCount').and.returnValue(1);
 
             fixture.detectChanges();
 
@@ -146,7 +145,6 @@ describe('RepeatWidgetComponent', () => {
 
         it('should display row limit if limit has been reached', () => {
             component.element = new ContainerModel(new FormFieldModel(new FormModel(), getFormFieldJson(2, 2)));
-            spyOn(component, 'getAddedRowsCount').and.returnValue(1);
 
             fixture.detectChanges();
 
