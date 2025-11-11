@@ -30,6 +30,7 @@ export interface ApplicationInstanceModel {
     environmentId?: string;
     environment?: string;
     lastModifiedAt?: Date;
+    quickRunDeployment?: boolean;
 }
 
 export interface Descriptor {
