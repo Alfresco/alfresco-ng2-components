@@ -921,7 +921,7 @@ describe('Form Renderer Component', () => {
                 expect(row).toBeTruthy();
 
                 const removeRowButton = testingUtils.getByCSS(
-                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-remove-row-button'
+                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-row-remove-button'
                 );
 
                 expect(removeRowButton).toBeTruthy();
@@ -938,7 +938,7 @@ describe('Form Renderer Component', () => {
                 expect(row).toBeTruthy();
 
                 const removeRowButton = testingUtils.getByCSS(
-                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-remove-row-button'
+                    '#field-RepeatableSection0tbw2y-container .adf-grid-list-container .adf-grid-list-row-remove-button'
                 );
 
                 expect(removeRowButton).toBeFalsy();

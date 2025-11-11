@@ -1,4 +1,4 @@
-<div [style]="element | adfFieldStyle" class="adf-container-widget-repeat">
+<div [style]="element | adfFieldStyle" class="adf-container-widget-repeat" [class.adf-readonly]="element.field.readOnly">
     <h4
         id="container-repeat"
         class="adf-container-widget-repeat__text"
@@ -11,19 +11,19 @@
     <ng-content />
 
     @if (!isEditor) {
-        @let shouldDisplayAddRowButton = !element.field.params.newRowsLimit || (element.field.params.newRowsLimit > getAddedRowsCount());
+        @let shouldDisplayAddRowButton = !element.field.params.maxNumberOfRows || (element.field.params.maxNumberOfRows > element.field.rows.length);
         @if (shouldDisplayAddRowButton) {
             <button 
                 mat-button
                 color="primary"
                 class="adf-container-widget-row-action"
+                [disabled]="element.field.readOnly"
                 (click)="addRow()"
             >
                 <mat-icon>add</mat-icon> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}
             </button>
         } @else {
-            @let rowLimit = element.field.params.initialNumberOfRows + (element.field.params.newRowsLimit ?? 0);
-            <span class="adf-container-widget-row-action adf-container-widget-row-limit">{{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: rowLimit } }}</span>
+            <span class="adf-container-widget-row-action adf-container-widget-row-limit">{{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: element.field.params.maxNumberOfRows } }}</span>
         }
     }
 </div>

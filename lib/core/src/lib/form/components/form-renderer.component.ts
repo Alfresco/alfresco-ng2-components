@@ -32,6 +32,7 @@ import { FormSectionComponent } from './form-section/form-section.component';
 import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -63,7 +64,8 @@ import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/conf
         NgClass,
         HeaderWidgetComponent,
         FormSectionComponent,
-        RepeatWidgetComponent
+        RepeatWidgetComponent,
+        MatTooltipModule
     ],
     encapsulation: ViewEncapsulation.None
 })

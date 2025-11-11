@@ -81,8 +81,24 @@
                         <div 
                             class="adf-grid-list-container"
                             [class.adf-grid-list-container-multiple]="hasMultipleRows"
-                        >
-                            <h4 class="adf-grid-list-container-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</h4>
+                            [class.adf-grid-list-container-disabled]="currentRootElement.field.readOnly"
+                        >   
+                            <div class="adf-grid-list-row">
+                                <span  class="adf-grid-list-row-label">{{ 'FORM.FORM_RENDERER.ROW_LABEL' | translate: {number: rowIndex + 1} }}</span>
+
+                                @let shouldDisplayRemoveRowButton = !currentRootElement.field.rows[rowIndex].isInitial || (currentRootElement.field.rows[rowIndex].isInitial && currentRootElement.field.params.allowInitialRowsDelete);
+                                @if (shouldDisplayRemoveRowButton) {
+                                    <button 
+                                        mat-icon-button
+                                        class="adf-grid-list-row-remove-button"
+                                        [disabled]="currentRootElement.field.readOnly"
+                                        [matTooltip]="'FORM.FORM_RENDERER.DELETE_ROW' | translate"
+                                        (click)="displayDialogToRemoveRow(currentRootElement.field, rowIndex)"
+                                    >
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                }
+                            </div>
                             <section  class="adf-grid-list-column-view">
                                 @for (column of row.columns; track $index) {
                                     <div 
@@ -99,17 +115,6 @@
                                             }
                                         }
                                     </div>
-                                }
-
-                                @let shouldDisplayRemoveRowButton = !currentRootElement.field.rows[rowIndex].isInitial || (currentRootElement.field.rows[rowIndex].isInitial && currentRootElement.field.params.allowInitialRowsDelete);
-                                @if (shouldDisplayRemoveRowButton) {
-                                    <button 
-                                        mat-icon-button
-                                        class="adf-grid-list-remove-row-button"
-                                        (click)="displayDialogToRemoveRow(currentRootElement.field, rowIndex)"
-                                    >
-                                        <mat-icon>close</mat-icon>
-                                    </button>
                                 }
                             </section>
                         </div>

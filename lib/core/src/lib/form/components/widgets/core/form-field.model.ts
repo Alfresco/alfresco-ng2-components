@@ -137,6 +137,12 @@ export class FormFieldModel extends FormWidgetModel {
 
     set readOnly(readOnly: boolean) {
         this._readOnly = readOnly;
+
+        if (this.type === FormFieldTypes.REPEATABLE_SECTION) {
+            this.updateRepeatableSectionReadOnlyState(readOnly);
+            return;
+        }
+
         this.updateForm();
     }
 
@@ -312,7 +318,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
 
             const col = new ContainerColumnModel();
-            col.fields = (fields[currentField] || []).map((field: any) => new FormFieldModel(form, field));
+            col.fields = (fields[currentField] || []).map((field: any) => new FormFieldModel(form, field, this.setupParentConfig(field)));
             col.rowspan = fields[currentField].length;
 
             if (!FormFieldTypes.isSectionType(this.type)) {
@@ -324,6 +330,18 @@ export class FormFieldModel extends FormWidgetModel {
         });
     }
 
+    private setupParentConfig(field: any) {
+        if (this.parent) {
+            return {
+                ...this.parent,
+                uid: this.getUniqueId(field, this.parent.uid.split(ROW_ID_PREFIX)[1]),
+                value: this.parent.value?.[field.id]
+            };
+        }
+
+        return undefined;
+    }
+
     private repeatableSectionFactory(json: any, form: any): void {
         const { numberOfColumns = 1, params, value, fields = {} } = json;
 
@@ -333,26 +351,26 @@ export class FormFieldModel extends FormWidgetModel {
         this.colspan = 1;
         this.rows = [];
 
-        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.newRowsLimit, value); i++) {
+        for (let i = 0; i < this.getNumberOfRows(params.initialNumberOfRows, params.maxNumberOfRows, value); i++) {
             this.rows.push(this.createRow(fields, form, i, value?.[i], i < params?.initialNumberOfRows));
         }
 
         this.columns = this.rows[0].columns;
     }
 
-    private getNumberOfRows(initialNrRows: number = 1, rowsLimit?: number, value?: any) {
-        return value?.length && !!rowsLimit ? Math.min(value?.length, initialNrRows + rowsLimit) : (value?.length ?? initialNrRows);
+    private getNumberOfRows(initialNrRows: number = 1, maxNrRows?: number, value?: any) {
+        return value?.length ? (maxNrRows ? Math.min(value.length, maxNrRows) : value.length) : initialNrRows;
     }
 
     private createRow(fields: any, form: any, index: number, value?: any, isInitial: boolean = false) {
         const row = new ContainerRowModel(isInitial);
 
-        row.columns.push(...this.createColumns(fields, form, index, value));
+        row.columns.push(...this.createColumns(fields, form, row.id, index, value));
 
         return row;
     }
 
-    private createColumns(fields: any, form: any, index?: number, value?: any) {
+    private createColumns(fields: any, form: any, rowId: string, index?: number, value?: any) {
         const columns: ContainerColumnModel[] = [];
 
         Object.keys(fields).forEach((currentField) => {
@@ -365,10 +383,10 @@ export class FormFieldModel extends FormWidgetModel {
                 (field: any) =>
                     new FormFieldModel(form, field, {
                         id: this.id,
-                        uid: this.getUniqueId(field),
+                        uid: this.getUniqueId(field, rowId),
                         fields: this.fields,
                         rowIndex: index ?? 0,
-                        value: value?.[field.id]
+                        value: field.type === FormFieldTypes.SECTION ? value : value?.[field.id]
                     })
             );
             col.rowspan = fields[currentField].length;
@@ -384,8 +402,34 @@ export class FormFieldModel extends FormWidgetModel {
         return columns;
     }
 
-    private getUniqueId(field: FormFieldModel): string {
-        return field.id + ROW_ID_PREFIX + window.crypto.getRandomValues(new Uint32Array(1))[0].toString();
+    private updateRepeatableSectionReadOnlyState(state: boolean) {
+        for (const row of this.rows) {
+            for (const column of row.columns) {
+                for (const field of column.fields) {
+                    if (field.type === FormFieldTypes.SECTION) {
+                        this.updateInnerSectionReadOnlyState(field, state);
+                    }
+
+                    field.readOnly = this.getRepeatableSectionFieldReadOnlyState(field, state);
+                }
+            }
+        }
+    }
+
+    private updateInnerSectionReadOnlyState(section: FormFieldModel, state: boolean) {
+        for (const column of section.columns) {
+            for (const field of column.fields) {
+                field.readOnly = this.getRepeatableSectionFieldReadOnlyState(field, state);
+            }
+        }
+    }
+
+    private getRepeatableSectionFieldReadOnlyState(field: FormFieldModel, state: boolean): boolean {
+        return state || field.json.readOnly;
+    }
+
+    private getUniqueId(field: FormFieldModel, rowId: string): string {
+        return field.id + ROW_ID_PREFIX + rowId;
     }
 
     private updateChildrenFieldsRowIndex() {
@@ -400,9 +444,21 @@ export class FormFieldModel extends FormWidgetModel {
 
     private createInitialValue(fields: any) {
         return Object.keys(fields)
-            .map((currentField) => (fields[currentField] || []).map((field) => field.id))
-            .flat(1)
+            .map((currentField) => (fields[currentField] || []).map((field) => this.getFieldId(field)))
+            .flat(2)
             .reduce((acc, curr) => ((acc[curr] = null), acc), {});
+    }
+
+    private getFieldId(field: any) {
+        if (field.type === FormFieldTypes.SECTION) {
+            const fields = field.fields;
+
+            return Object.keys(fields)
+                .map((currentField) => (fields[currentField] || []).map((e) => e.id))
+                .flat(1);
+        }
+
+        return field.id;
     }
 
     private updateContainerColspan(fields: FormFieldModel[]): void {
@@ -420,7 +476,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private shouldAddRow(): boolean {
-        return !this.params.newRowsLimit || this.rows.length < this.params.initialNumberOfRows + this.params.newRowsLimit;
+        return !this.params.maxNumberOfRows || this.rows.length < this.params.maxNumberOfRows;
     }
 
     removeRow(index: number) {
@@ -526,7 +582,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         if (this.isCheckboxField(json)) {
-            return json.value === 'true' || json.value === true;
+            return json.value === 'true' || json.value === true || initialValue === true || initialValue === 'true';
         }
 
         return value;
@@ -537,16 +593,22 @@ export class FormFieldModel extends FormWidgetModel {
             return;
         }
 
+        const formValue = this.getFormValue();
+
         if (this.parent) {
-            this.updateRepeatableSectionValue();
-            return;
+            this.updateRepeatableSectionValue(formValue);
+        } else {
+            this.updateValue(formValue);
         }
 
+        this.form.onFormFieldChanged(this);
+    }
+
+    getFormValue() {
         switch (this.type) {
             case FormFieldTypes.DROPDOWN: {
                 if (!this.value) {
-                    this.form.values[this.id] = null;
-                    break;
+                    return null;
                 }
 
                 /*
@@ -554,63 +616,57 @@ export class FormFieldModel extends FormWidgetModel {
                  but saving back as object: { id: <id>, name: <name> }
                  */
                 if (Array.isArray(this.value)) {
-                    this.form.values[this.id] = this.value;
-                    break;
+                    return this.value;
                 }
 
                 if (typeof this.value === 'string') {
                     if (this.value === 'empty' || this.value === '') {
-                        this.form.values[this.id] = null;
-                        break;
+                        return null;
                     }
 
                     const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value);
 
-                    this.form.values[this.id] = matchingOption || null;
+                    return matchingOption || null;
                 }
 
                 if (typeof this.value === 'object') {
                     if (this.value.id === 'empty' || this.value.id === '') {
-                        this.form.values[this.id] = null;
-                        break;
+                        return null;
                     }
 
                     const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value.id);
 
-                    this.form.values[this.id] = matchingOption;
+                    return matchingOption;
                 }
-                break;
+
+                return null;
             }
             case FormFieldTypes.RADIO_BUTTONS: {
                 const radioButton: FormFieldOption = this.options.find((opt) => opt.id === this.value);
 
                 if (this.optionType === 'rest') {
-                    this.form.values[this.id] = radioButton
-                        ? { ...radioButton, options: this.options }
-                        : { id: null, name: null, options: this.options };
-                } else {
-                    this.form.values[this.id] = radioButton ? { ...radioButton } : null;
+                    return radioButton ? { ...radioButton, options: this.options } : { id: null, name: null, options: this.options };
                 }
 
-                break;
+                return radioButton ? { ...radioButton } : null;
             }
             case FormFieldTypes.UPLOAD: {
                 this.form.hasUpload = true;
+
                 if (this.value && this.value.length > 0) {
-                    this.form.values[this.id] = Array.isArray(this.value) ? this.value.map((elem) => elem.id).join(',') : [this.value];
-                } else {
-                    this.form.values[this.id] = null;
+                    return Array.isArray(this.value) ? this.value.map((elem) => elem.id).join(',') : [this.value];
                 }
-                break;
+
+                return null;
             }
             case FormFieldTypes.TYPEAHEAD: {
                 const typeAheadEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value || opt.name === this.value);
+
                 if (typeAheadEntry.length > 0) {
-                    this.form.values[this.id] = typeAheadEntry[0];
-                } else if (this.options.length > 0) {
-                    this.form.values[this.id] = null;
+                    return typeAheadEntry[0];
                 }
-                break;
+
+                return null;
             }
             case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
@@ -618,6 +674,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 let dateValue;
+
                 try {
                     dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
                 } catch {
@@ -626,12 +683,13 @@ export class FormFieldModel extends FormWidgetModel {
 
                 if (isValidDate(dateValue)) {
                     const datePart = DateFnsUtils.formatDate(dateValue, 'yyyy-MM-dd');
-                    this.form.values[this.id] = `${datePart}T00:00:00.000Z`;
-                } else {
-                    this.form.values[this.id] = null;
-                    this._value = this.value;
+
+                    return `${datePart}T00:00:00.000Z`;
                 }
-                break;
+
+                this._value = this.value;
+
+                return null;
             }
             case FormFieldTypes.DATETIME: {
                 if (typeof this.value === 'string' && this.value === 'now') {
@@ -641,39 +699,32 @@ export class FormFieldModel extends FormWidgetModel {
                 const dateTimeValue = this.value !== null ? DateFnsUtils.getDate(this.value) : null;
 
                 if (isValidDate(dateTimeValue)) {
-                    this.form.values[this.id] = dateTimeValue.toISOString();
-                } else {
-                    this.form.values[this.id] = null;
-                    this._value = this.value;
+                    return dateTimeValue.toISOString();
                 }
-                break;
+
+                this._value = this.value;
+
+                return null;
             }
             case FormFieldTypes.NUMBER: {
-                this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
-                break;
+                return this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
             }
             case FormFieldTypes.AMOUNT: {
-                this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
-                break;
+                return this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
             }
             case FormFieldTypes.DECIMAL: {
-                this.form.values[this.id] = parseFloat(this.value);
-                break;
+                return parseFloat(this.value);
             }
             case FormFieldTypes.BOOLEAN: {
-                this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
-                break;
+                return this.value !== null && this.value !== undefined ? this.value : false;
             }
             case FormFieldTypes.PEOPLE: {
-                this.form.values[this.id] = this.value ? this.value : null;
-                break;
+                return this.value ? this.value : null;
             }
             case FormFieldTypes.FUNCTIONAL_GROUP: {
-                this.form.values[this.id] = this.value ? this.value : null;
-                break;
+                return this.value ? this.value : null;
             }
             case FormFieldTypes.REPEATABLE_SECTION: {
-                this.form.values[this.id] = this.value ? this.value : [];
                 this.repeatableSectionFactory(
                     {
                         ...this.json,
@@ -681,18 +732,31 @@ export class FormFieldModel extends FormWidgetModel {
                     },
                     this.form
                 );
-                break;
+
+                return this.value ? this.value : this.form.values[this.id];
             }
             default:
                 if (this.shouldUpdateFormValues(this.type)) {
-                    this.form.values[this.id] = this.value;
+                    return this.value;
                 }
-        }
 
-        this.form.onFormFieldChanged(this);
+                return undefined;
+        }
     }
 
-    private updateRepeatableSectionValue() {
+    private updateValue(value: any) {
+        if (value === undefined) {
+            return;
+        }
+
+        this.form.values[this.id] = value;
+    }
+
+    private updateRepeatableSectionValue(value: string) {
+        if (this.type === FormFieldTypes.SECTION) {
+            return;
+        }
+
         if (!this.form.values[this.parent.id]) {
             this.form.values[this.parent.id] = [];
         }
@@ -701,9 +765,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.form.values[this.parent.id][this.parent.rowIndex] = this.createInitialValue(this.parent.fields);
         }
 
-        this.form.values[this.parent.id][this.parent.rowIndex][this.id.split(ROW_ID_PREFIX)[0]] = this.value;
-
-        this.form.onFormFieldChanged(this);
+        this.form.values[this.parent.id][this.parent.rowIndex][this.id.split(ROW_ID_PREFIX)[0]] = value;
     }
 
     /**

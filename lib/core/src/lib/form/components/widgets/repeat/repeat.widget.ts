@@ -36,10 +36,4 @@ export class RepeatWidgetComponent {
     addRow() {
         this.element.field.addRow(this.element.json.fields, this.element.form);
     }
-
-    getAddedRowsCount(): number {
-        return this.element.json.params.allowInitialRowsDelete
-            ? this.element.field.rows.length - this.element.json.params.initialNumberOfRows
-            : this.element.field.rows.filter((row) => !row.isInitial).length;
-    }
 }

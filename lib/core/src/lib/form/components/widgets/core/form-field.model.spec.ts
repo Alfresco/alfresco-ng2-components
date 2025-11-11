@@ -1272,61 +1272,121 @@ describe('FormFieldModel', () => {
         let form: FormModel;
         let field: FormFieldModel;
 
+        const fields = {
+            '1': [
+                {
+                    id: 'Text0wwp7n',
+                    name: 'Text',
+                    type: 'text',
+                    readOnly: false,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minLength: 0,
+                    maxLength: 0,
+                    regexPattern: null,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                }
+            ],
+            '2': [
+                {
+                    id: 'Integer0rzkwq',
+                    name: 'Integer',
+                    type: 'integer',
+                    readOnly: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minValue: null,
+                    maxValue: null,
+                    required: false,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                }
+            ]
+        };
+
+        const fieldsDisabled = {
+            '1': [
+                {
+                    id: 'Text0wwp7n',
+                    name: 'Text',
+                    type: 'text',
+                    readOnly: true,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minLength: 0,
+                    maxLength: 0,
+                    regexPattern: null,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                }
+            ],
+            '2': [
+                {
+                    id: 'Integer0rzkwq',
+                    name: 'Integer',
+                    type: 'integer',
+                    readOnly: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    placeholder: null,
+                    minValue: null,
+                    maxValue: null,
+                    required: false,
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    }
+                }
+            ]
+        };
+
+        const json = {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows: 2,
+                allowInitialRowsDelete: true,
+                maxNumberOfRows: 5
+            },
+            numberOfColumns: 2,
+            fields
+        };
+
+        const jsonDisabled = {
+            id: 'RepeatableSection0tbw2y',
+            name: 'Repeatable Section',
+            type: 'repeatable-section',
+            tab: null,
+            params: {
+                initialNumberOfRows: 2,
+                allowInitialRowsDelete: true,
+                maxNumberOfRows: 5
+            },
+            numberOfColumns: 2,
+            fields: fieldsDisabled
+        };
+
         beforeEach(() => {
             form = new FormModel();
-            field = new FormFieldModel(form, {
-                id: 'RepeatableSection0tbw2y',
-                name: 'Repeatable Section',
-                type: 'repeatable-section',
-                tab: null,
-                params: {
-                    initialNumberOfRows: 2,
-                    allowInitialRowsDelete: true,
-                    newRowsLimit: 3
-                },
-                numberOfColumns: 2,
-                fields: {
-                    '1': [
-                        {
-                            id: 'Text0wwp7n',
-                            name: 'Text',
-                            type: 'text',
-                            readOnly: false,
-                            required: false,
-                            colspan: 1,
-                            rowspan: 1,
-                            placeholder: null,
-                            minLength: 0,
-                            maxLength: 0,
-                            regexPattern: null,
-                            visibilityCondition: null,
-                            params: {
-                                existingColspan: 1,
-                                maxColspan: 2
-                            }
-                        }
-                    ],
-                    '2': [
-                        {
-                            id: 'Integer0rzkwq',
-                            name: 'Integer',
-                            type: 'integer',
-                            readOnly: false,
-                            colspan: 1,
-                            rowspan: 1,
-                            placeholder: null,
-                            minValue: null,
-                            maxValue: null,
-                            required: false,
-                            visibilityCondition: null,
-                            params: {
-                                existingColspan: 1,
-                                maxColspan: 2
-                            }
-                        }
-                    ]
-                }
-            });
+            field = new FormFieldModel(form, json);
         });
 
         describe('add row', () => {
@@ -1406,6 +1466,65 @@ describe('FormFieldModel', () => {
 
                 field.removeRow(0);
                 expect(form.values[field.id]).toEqual(formValues.removeState);
+            });
+        });
+
+        describe('disabled state', () => {
+            const textWidgetId = 'Text0wwp7n';
+
+            /**
+             *
+             * @param expectation expectation function
+             */
+            function checkChildrenWidgets(expectation: any) {
+                for (const row of field.rows) {
+                    for (const column of row.columns) {
+                        for (const child of column.fields) {
+                            expectation(child);
+                        }
+                    }
+                }
+            }
+            it('should make all children fields disabled if repeatable section is disabled', () => {
+                field.readOnly = true;
+
+                checkChildrenWidgets((child) => {
+                    expect(child.readOnly).toBeTruthy();
+                });
+            });
+
+            it('should allow for initial disabled children widgets if repeatable section is enabled', () => {
+                field = new FormFieldModel(form, jsonDisabled);
+
+                checkChildrenWidgets((child) => {
+                    if (child.id.startsWith(textWidgetId)) {
+                        expect(child.readOnly).toBeTruthy();
+                        return;
+                    }
+
+                    expect(child.readOnly).toBeFalsy();
+                });
+            });
+
+            it('should keep initial disabled children widgets if repeatable section is re-enabled', () => {
+                field = new FormFieldModel(form, jsonDisabled);
+                field.rows[0].columns[0].fields[0].readOnly = true;
+                field.readOnly = true;
+
+                checkChildrenWidgets((child) => {
+                    expect(child.readOnly).toBeTruthy();
+                });
+
+                field.readOnly = false;
+
+                checkChildrenWidgets((child) => {
+                    if (child.id.startsWith(textWidgetId)) {
+                        expect(child.readOnly).toBeTruthy();
+                        return;
+                    }
+
+                    expect(child.readOnly).toBeFalsy();
+                });
             });
         });
     });
