@@ -122,7 +122,8 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
                     this.amountWidgetValue,
                     this.currency,
                     this.currencyDisplay,
-                    this.decimalProperty
+                    this.decimalProperty,
+                    this.locale
                 );
             } else {
                 this.valueAsNumber = null;
