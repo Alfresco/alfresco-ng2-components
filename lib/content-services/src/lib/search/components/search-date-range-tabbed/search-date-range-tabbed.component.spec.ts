@@ -225,16 +225,20 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.context.update).toHaveBeenCalled();
     });
 
-    it('should clear values and search filter when widget is reset', () => {
+    it('should clear values and search filter when widget is reset', (done) => {
         spyOn(component.displayValue$, 'next');
+        component.reset$.subscribe(() => {
+            expect(component.combinedQuery).toBe('');
+            expect(component.combinedDisplayValue).toBe('');
+            expect(component.displayValue$.next).toHaveBeenCalledWith('');
+            expect(component.context.queryFragments['dateRange']).toEqual('');
+            expect(component.context.update).toHaveBeenCalled();
+            component.fields.forEach((field) => expect(component.context.filterRawParams[field]).toBeUndefined());
+            done();
+        });
+
         component.reset();
         fixture.detectChanges();
-        expect(component.combinedQuery).toBe('');
-        expect(component.combinedDisplayValue).toBe('');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('');
-        expect(component.context.queryFragments['dateRange']).toEqual('');
-        expect(component.context.update).toHaveBeenCalled();
-        component.fields.forEach((field) => expect(component.context.filterRawParams[field]).toBeUndefined());
     });
 
     it('should populate filter state when populate filters event has been observed', () => {

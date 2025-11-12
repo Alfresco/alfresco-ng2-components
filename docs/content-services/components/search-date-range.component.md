@@ -25,12 +25,13 @@ before that release, please ensure that your component configuration is updated 
 
 ### Properties
 
-| Name         | Type            | Description                                                                                                                                                                                                                                                |
-|--------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| field        | string          | Field to apply the query to. Required value                                                                                                                                                                                                                |
-| maxDate      | string          | A fixed date (default format: dd-MMM-yy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                                                              |
-| dateFormat   | string          | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yy (sample date - 07-Jun-23) |
-| initialValue | SearchDateRange | Initial value for the component                                                                                                                                                                                                                            |
+| Name         | Type                        | Description                                                                                                                                                                                                           |
+|--------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| field        | string                      | Field to apply the query to. Required value                                                                                                                                                                           |
+| maxDate      | string                      | A fixed date (default format: dd-MMM-yy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                         |
+| dateFormat   | string                      | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yy (sample date - 07-Jun-23) |
+| initialValue | SearchDateRange             | Initial value for the component                                                                                                                                                                                       |
+| onReset$     | [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` | Reset event observable                                                                                                                                                                                                |
 
 ### Events
 

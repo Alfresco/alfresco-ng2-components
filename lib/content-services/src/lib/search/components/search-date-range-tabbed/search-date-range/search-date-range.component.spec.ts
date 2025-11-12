@@ -25,6 +25,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCalendarHarness, MatDatepickerToggleHarness } from '@angular/material/datepicker/testing';
 import { MatRadioButtonHarness } from '@angular/material/radio/testing';
+import { Subject } from 'rxjs';
 
 describe('SearchDateRangeComponent', () => {
     let component: SearchDateRangeComponent;
@@ -33,6 +34,7 @@ describe('SearchDateRangeComponent', () => {
 
     const startDateSampleValue = parse('05-Jun-23', 'dd-MMM-yy', new Date());
     const endDateSampleValue = parse('07-Jun-23', 'dd-MMM-yy', new Date());
+    const resetSubject = new Subject<void>();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -51,6 +53,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: null,
             betweenEndDate: null
         });
+        component.onReset$ = resetSubject.asObservable();
         loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         fixture.detectChanges();
     });
@@ -295,5 +298,21 @@ describe('SearchDateRangeComponent', () => {
         component.betweenEndDateFormControl.setValue(endDateSampleValue);
         fixture.detectChanges();
         expect(component.changed.emit).toHaveBeenCalledWith(value);
+    });
+
+    it('should reset the form when onReset event is received', () => {
+        spyOn(component, 'reset').and.callThrough();
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
+        component.form.controls.betweenStartDate.setValue(startDateSampleValue);
+        component.form.controls.betweenEndDate.setValue(endDateSampleValue);
+        fixture.detectChanges();
+
+        resetSubject.next();
+        fixture.detectChanges();
+
+        expect(component.form.controls.dateRangeType.value).toEqual(component.DateRangeType.ANY);
+        expect(component.form.controls.betweenStartDate.value).toBeNull();
+        expect(component.form.controls.betweenEndDate.value).toBeNull();
+        expect(component.reset).toHaveBeenCalled();
     });
 });
