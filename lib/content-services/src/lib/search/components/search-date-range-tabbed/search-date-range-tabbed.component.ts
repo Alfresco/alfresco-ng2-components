@@ -43,9 +43,9 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     private value: { [key: string]: Partial<SearchDateRange> } = {};
-    private queryMapByField = new Map<string, string>();
-    private displayValueMapByField = new Map<string, string>();
 
+    private readonly queryMapByField = new Map<string, string>();
+    private readonly displayValueMapByField = new Map<string, string>();
     private readonly destroyRef = inject(DestroyRef);
     private readonly resetSubject$ = new Subject<void>();
 
