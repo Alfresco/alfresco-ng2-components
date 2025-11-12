@@ -27,6 +27,11 @@ import { of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldEvent } from '../../../events/form-field.event';
 import { TranslationService } from '../../../../translation/translation.service';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -258,7 +263,8 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AmountWidgetComponent]
+            imports: [AmountWidgetComponent],
+            providers: [{ provide: TranslationService, useValue: { getLocale: () => 'en-US' } }]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -471,6 +477,7 @@ describe('AmountWidgetComponent - rendering', () => {
                 enableFractions: true,
                 value: '1234.55'
             });
+
             beforeEach(async () => {
                 TestBed.configureTestingModule({
                     imports: [AmountWidgetComponent],
@@ -639,17 +646,20 @@ describe('AmountWidgetComponent - rendering', () => {
                 enableFractions: true,
                 value: '1234.55'
             });
+
             beforeEach(async () => {
                 TestBed.configureTestingModule({
                     imports: [AmountWidgetComponent],
-                    providers: [{ provide: ADF_AMOUNT_SETTINGS, useValue: { enableDisplayBasedOnLocale: true } }]
+                    providers: [
+                        { provide: ADF_AMOUNT_SETTINGS, useValue: { enableDisplayBasedOnLocale: true } },
+                        { provide: TranslationService, useValue: { getLocale: () => 'en-US' } }
+                    ]
                 });
                 fixture = TestBed.createComponent(AmountWidgetComponent);
                 widget = fixture.componentInstance;
-
-                fixture.componentRef.setInput('field', mockField);
                 loader = TestbedHarnessEnvironment.loader(fixture);
                 testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+                fixture.componentRef.setInput('field', mockField);
                 fixture.detectChanges();
             });
 
@@ -692,6 +702,71 @@ describe('AmountWidgetComponent - rendering', () => {
                 expect(widget.valueAsNumber).toBe(parseFloat(newValue));
                 expect(widget.amountWidgetValue).toBe('$456,789.00');
                 expect(fieldValue).toBe('$456,789.00');
+            });
+        });
+
+        describe('set module for enableDisplayBasedOnLocale = true for German locale', () => {
+            const mockField = new FormFieldModel(new FormModel(), {
+                id: 'TestAmount1',
+                name: 'Test Amount',
+                type: 'amount',
+                currency: 'USD',
+                enableFractions: true,
+                value: '1234.55'
+            });
+
+            beforeEach(async () => {
+                TestBed.configureTestingModule({
+                    imports: [AmountWidgetComponent],
+                    providers: [
+                        { provide: ADF_AMOUNT_SETTINGS, useValue: { enableDisplayBasedOnLocale: true } },
+                        { provide: TranslationService, useValue: { getLocale: () => 'de-DE' } }
+                    ]
+                });
+                fixture = TestBed.createComponent(AmountWidgetComponent);
+                widget = fixture.componentInstance;
+                loader = TestbedHarnessEnvironment.loader(fixture);
+                testingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+                fixture.componentRef.setInput('field', mockField);
+                fixture.detectChanges();
+            });
+
+            it('should call method on focus and change input value', async () => {
+                const focusSpy = spyOn(widget, 'amountWidgetOnFocus').and.callThrough();
+                fixture.detectChanges();
+
+                const field = await testingUtils.getMatInput();
+                const fieldValueBeforeFocus = await field.getValue();
+                await field.focus();
+                const fieldValue = await field.getValue();
+                const expectedValue = '1.234,55 $'.replace(' ', '\u00A0');
+                expect(field).toBeDefined();
+                expect(widget.field.value).toBe('1234.55');
+                expect(fieldValueBeforeFocus).toBe(expectedValue);
+                expect(focusSpy).toHaveBeenCalled();
+                expect(fieldValue).toBe('1234.55');
+            });
+
+            it('should transform value on blur', async () => {
+                const newValue = '456789';
+                const blurSpy = spyOn(widget, 'amountWidgetOnBlur').and.callThrough();
+                fixture.detectChanges();
+
+                const field = await testingUtils.getMatInput();
+                const fieldValueBeforeBlur = await field.getValue();
+                await field.setValue(newValue);
+                await field.blur();
+                const fieldValue = await field.getValue();
+                const expectedValue = '1.234,55 $'.replace(' ', '\u00A0');
+                const expectedValueAfterBlur = '456.789,00 $'.replace(' ', '\u00A0');
+
+                expect(field).toBeDefined();
+                expect(widget.field.value).toBe(newValue);
+                expect(fieldValueBeforeBlur).toBe(expectedValue);
+                expect(blurSpy).toHaveBeenCalled();
+                expect(widget.valueAsNumber).toBe(parseFloat(newValue));
+                expect(widget.amountWidgetValue).toBe(expectedValueAfterBlur);
+                expect(fieldValue).toBe(expectedValueAfterBlur);
             });
         });
         describe('set module for enableDisplayBasedOnLocale = false', () => {
