@@ -43,14 +43,14 @@ adf-datatable-column-selector {
             color: var(--theme-secondary-text);
         }
 
-    &-subtitle {
-        color: var(--mat-sys-on-surface);
-        font-size: var(--mat-sys-body-small-size);
-        opacity: 0.6;
-        display: flex;
-        column-gap: 3px;
-        align-items: center;
-    }
+        &-subtitle {
+            color: var(--mat-sys-on-surface);
+            font-size: var(--mat-sys-body-small-size);
+            opacity: 0.6;
+            display: flex;
+            column-gap: 3px;
+            align-items: center;
+        }
 
         &-subtitle-icon {
             margin-top: 3px;
@@ -92,23 +92,24 @@ adf-datatable-column-selector {
             margin-bottom: 9px;
         }
 
-    &-search-input {
-        padding: 10px 10px 10px 29px;
-        width: 100%;
-        outline: 0;
-        border-radius: 6px;
-        border: 1px solid var(--mat-sys-surface);
-        background: var(--mat-sys-surface);
+        &-search-input {
+            padding: 10px 10px 10px 29px;
+            width: 100%;
+            outline: 0;
+            border-radius: 6px;
+            border: 1px solid var(--mat-sys-surface);
+            background: var(--mat-sys-surface);
 
             &:focus {
                 outline: none;
             }
         }
 
-    &-search-input-icon {
-        position: absolute;
-        left: 17px;
-        top: 10px;
-        font-size: var(--mat-sys-label-large-size);
+        &-search-input-icon {
+            position: absolute;
+            left: 17px;
+            top: 10px;
+            font-size: var(--mat-sys-label-large-size);
+        }
     }
 }
