@@ -43,14 +43,14 @@ adf-datatable-column-selector {
             color: var(--theme-secondary-text);
         }
 
-    &-subtitle {
-        color: var(--mat-sys-on-surface);
-        font-size: var(--mat-sys-body-small-size);
-        opacity: 0.6;
-        display: flex;
-        column-gap: 3px;
-        align-items: center;
-    }
+        &-subtitle {
+            color: var(--mat-sys-on-surface);
+            font-size: var(--mat-sys-body-small-size);
+            opacity: 0.6;
+            display: flex;
+            column-gap: 3px;
+            align-items: center;
+        }
 
         &-subtitle-icon {
             margin-top: 3px;
