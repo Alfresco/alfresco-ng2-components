@@ -193,9 +193,38 @@ const alfrescoApi = new AlfrescoApi({
 
 #### Password Flow
 
-> **DEPRECATED**: The OAuth2 password flow with username/password login is deprecated and has been removed due to security concerns. The `secret` parameter should never be exposed in browser-based applications as it creates a security vulnerability.
->
-> **For OAuth2 authentication, use the Implicit Flow or Authorization Code Flow with PKCE instead** (see examples above).
+**Example**
+
+```javascript
+const alfrescoApi = new AlfrescoApi({
+    oauth2: {
+        host: 'HOST_OAUTH2_SERVER',
+        clientId: 'YOUR_CLIENT_ID',
+    },
+    authType: 'OAUTH',
+    provider: 'ALL'
+});
+
+try {
+    await alfrescoJsApi.login('admin', 'admin');
+    console.log('API called successfully Login in with authorization server performed');
+} catch (error) {
+    console.error(error);
+}
+```
+
+After the login if you want refresh your token you can use this call
+
+**Example**
+
+```javascript
+try {
+    await alfrescoJsApi.refreshToken();
+    console.log('Your token has been refreshed');
+} catch (error) {
+    console.error(error);
+}
+```
 
 ## Logout
 
