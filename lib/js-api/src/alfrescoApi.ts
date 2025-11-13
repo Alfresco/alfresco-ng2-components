@@ -312,30 +312,38 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
 
         this.username = username;
 
-        if (this.isBpmConfiguration()) {
-            const promise = this.processAuth.login(username, password);
-            promise.then((ticketBpm) => {
-                this.config.ticketBpm = ticketBpm;
+        if (this.isOauthConfiguration()) {
+            const promise = this.oauth2Auth.login(username, password);
+            promise.then((accessToken) => {
+                this.config.accessToken = accessToken;
             });
             return promise;
-        } else if (this.isEcmConfiguration()) {
-            const promise = this.contentAuth.login(username, password);
-            promise.then((ticketEcm) => {
-                this.setAuthenticationClientECMBPM(this.contentAuth.getAuthentication(), null);
-                this.config.ticketEcm = ticketEcm;
-            });
-            return promise;
-        } else if (this.isEcmBpmConfiguration()) {
-            const contentProcessPromise = this.loginBPMECM(username, password);
-
-            contentProcessPromise.then((data) => {
-                this.config.ticketEcm = data[0];
-                this.config.ticketBpm = data[1];
-            });
-
-            return contentProcessPromise;
         } else {
-            return Promise.reject(new Error('Unknown configuration'));
+            if (this.isBpmConfiguration()) {
+                const promise = this.processAuth.login(username, password);
+                promise.then((ticketBpm) => {
+                    this.config.ticketBpm = ticketBpm;
+                });
+                return promise;
+            } else if (this.isEcmConfiguration()) {
+                const promise = this.contentAuth.login(username, password);
+                promise.then((ticketEcm) => {
+                    this.setAuthenticationClientECMBPM(this.contentAuth.getAuthentication(), null);
+                    this.config.ticketEcm = ticketEcm;
+                });
+                return promise;
+            } else if (this.isEcmBpmConfiguration()) {
+                const contentProcessPromise = this.loginBPMECM(username, password);
+
+                contentProcessPromise.then((data) => {
+                    this.config.ticketEcm = data[0];
+                    this.config.ticketBpm = data[1];
+                });
+
+                return contentProcessPromise;
+            } else {
+                return Promise.reject(new Error('Unknown configuration'));
+            }
         }
     }
 
