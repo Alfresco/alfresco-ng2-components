@@ -195,7 +195,7 @@ export class FormFieldModel extends FormWidgetModel {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
-            this.id = parent ? parent.uid : json.id;
+            this.id = this.getId(json.id, parent);
             this.name = json.name;
             this.type = json.type;
             this.roles = json.roles;
@@ -233,7 +233,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.tooltip = json.tooltip || '';
             this.selectionType = json.selectionType;
             this.alignmentType = json.alignmentType;
-            this.rule = json.rule;
+            this.rule = this.getRule(json.rule, parent);
             this.selectLoggedUser = json.selectLoggedUser;
             this.groupsRestriction = json.groupsRestriction?.groups;
             this.variableConfig = json.variableConfig;
@@ -287,6 +287,23 @@ export class FormFieldModel extends FormWidgetModel {
             originalType = jsonField.params.field.type;
         }
         return originalType === FormFieldTypes.DATETIME ? this.defaultDateTimeFormat : this.defaultDateFormat;
+    }
+
+    private getId(id: string, parent?: RepeatableSectionModel): string {
+        return parent ? parent.uid : id;
+    }
+
+    private getRule(rule: FormFieldRule, parent?: RepeatableSectionModel): FormFieldRule {
+        return rule && parent
+            ? ({
+                  ...rule,
+                  ruleOn: this.getRepeatableSectionChildRuleOn(rule.ruleOn)
+              } as FormFieldRule)
+            : rule;
+    }
+
+    private getRepeatableSectionChildRuleOn(ruleOn: string) {
+        return ruleOn + ROW_ID_PREFIX + this.id.split(ROW_ID_PREFIX)[1];
     }
 
     private isTypeaheadFieldType(type: string): boolean {
