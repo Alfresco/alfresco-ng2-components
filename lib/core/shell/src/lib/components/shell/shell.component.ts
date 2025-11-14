@@ -102,7 +102,11 @@ export class ShellLayoutComponent implements OnInit {
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((event: NavigationEnd) => {
-                this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
+                this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => {
+                    const previousNavigation = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl;
+                    const previousPath = previousNavigation ? this.router.serializeUrl(previousNavigation) : '';
+                    return event.urlAfterRedirects.includes(el) && !previousPath.includes(el);
+                });
                 this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
 
                 this.updateState();
