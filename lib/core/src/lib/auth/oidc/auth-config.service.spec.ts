@@ -111,7 +111,7 @@ describe('AuthConfigService', () => {
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
-                dummyClientSecret: ''
+                dummyClientSecret: 'dummyClientSecret'
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -128,7 +128,7 @@ describe('AuthConfigService', () => {
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
                 responseType: 'code',
-                dummyClientSecret: ''
+                dummyClientSecret: 'dummyClientSecret'
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
