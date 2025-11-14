@@ -179,8 +179,6 @@ describe('AppLayoutComponent', () => {
             toggleMenu: () => {}
         };
 
-        spyOn(component.layout.container, 'toggleMenu');
-
         fixture.detectChanges();
         await routerHarness.navigateByUrl('/minimize?query=123');
         fixture.detectChanges();
