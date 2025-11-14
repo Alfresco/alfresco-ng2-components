@@ -33,7 +33,7 @@ OAuth2 is a protocol that allows the application to authorize operations without
     
     silentLogin: Enables silent authentication.
     
-    secret: The application's secret, used for secure authentication.
+    secret: Deprecated and removed. The application's secret, used for secure authentication.
     
     redirectUri: Where to redirect after a successful login.
     
@@ -86,7 +86,6 @@ OAuth2 is a protocol that allows the application to authorize operations without
   "oauth2": {
     "host": "https://your-idp.auth0.com",
     "clientId": "",
-    "secret": "",
     "scope": "openid profile email offline_access",
     "implicitFlow": false,
     "codeFlow": true,
@@ -112,7 +111,6 @@ OAuth2 is a protocol that allows the application to authorize operations without
     "oauth2": {
         "host": "https://cognito-idp.your-idp-url",
         "clientId": "",
-        "secret": "",
         "scope": "openid profile email",
         "implicitFlow": false,
         "codeFlow": true,

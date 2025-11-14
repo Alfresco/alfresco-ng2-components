@@ -128,7 +128,7 @@ If your want to redirect to the authorization server and login there, you can us
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|
 | host                    | Your oauth2 server URL                                                                                                                                                                                                                                                                                                                                                                                                                                                            | null                            |
 | clientId                | Your clientId oauth2                                                                                                                                                                                                                                                                                                                                                                                                                                                              | null                            |
-| secret                  | Your secret oauth2                                                                                                                                                                                                                                                                                                                                                                                                                                                                | null                            |
+| secret                  | **Deprecated** - Not used in implicit flow and should not be included in browser applications                                                                                                                                                                                                                                                                                                                                                                                     | null                            |
 | scope                   | Your scope                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | null                            |
 | implicitFlow            | true/false                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | false                           |
 | redirectUri             | url to be redirect after login                                                                                                                                                                                                                                                                                                                                                                                                                                                    | null                            |
@@ -160,7 +160,6 @@ const alfrescoApi = new AlfrescoApi({
     oauth2: {
         host: 'HOST_OAUTH2_SERVER',
         clientId: 'YOUR_CLIENT_ID',
-        secret: 'SECRET',
         scope: 'openid',
         implicitFlow: true,
         redirectUri: 'YOUR_HOME_APP_URL',
@@ -180,7 +179,6 @@ const alfrescoApi = new AlfrescoApi({
     oauth2: {
         host: 'HOST_OAUTH2_SERVER',
         clientId: 'YOUR_CLIENT_ID',
-        secret: 'SECRET',
         scope: 'openid',
         implicitFlow: true,
         redirectUri: 'YOUR_HOME_APP_URL',
@@ -202,7 +200,6 @@ const alfrescoApi = new AlfrescoApi({
     oauth2: {
         host: 'HOST_OAUTH2_SERVER',
         clientId: 'YOUR_CLIENT_ID',
-        secret: 'SECRET'
     },
     authType: 'OAUTH',
     provider: 'ALL'

@@ -69,7 +69,7 @@ export class AuthConfigService {
             postLogoutRedirectUri: this.generatePostLogoutUri(origin, oauth2.redirectUriLogout),
             clientId: oauth2.clientId,
             scope: oauth2.scope,
-            dummyClientSecret: oauth2.secret || '',
+            dummyClientSecret: 'dummyClientSecret',
             logoutUrl: oauth2.logoutUrl,
             customQueryParams,
             ...(oauth2.codeFlow && { responseType: 'code' }),

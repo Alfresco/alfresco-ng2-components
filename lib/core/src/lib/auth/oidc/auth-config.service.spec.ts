@@ -31,7 +31,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
@@ -44,7 +43,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
@@ -57,7 +55,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
@@ -70,7 +67,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
@@ -83,7 +79,6 @@ describe('AuthConfigService', () => {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
-        secret: '',
         implicitFlow: false,
         codeFlow: true,
         silentLogin: true,
@@ -116,7 +111,7 @@ describe('AuthConfigService', () => {
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
-                dummyClientSecret: ''
+                dummyClientSecret: 'dummyClientSecret'
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -133,7 +128,7 @@ describe('AuthConfigService', () => {
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
                 responseType: 'code',
-                dummyClientSecret: ''
+                dummyClientSecret: 'dummyClientSecret'
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -180,7 +175,6 @@ describe('AuthConfigService', () => {
                 host: 'http://localhost:3000/auth/realms/alfresco',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
-                secret: '',
                 implicitFlow: true,
                 silentLogin: true,
                 redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
