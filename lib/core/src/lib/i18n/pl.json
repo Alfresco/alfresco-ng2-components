@@ -78,6 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Zadanie bez nazwy",
       "ROW_LABEL": "Wiersz {{ number }}",
+      "DELETE_ROW": "Usuń wiersz",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Usuń wiersz",
         "MESSAGE": "Czy na pewno chcesz usunąć ten wiersz?",
@@ -427,7 +428,7 @@
       "COLUMNS": "Kolumny",
       "SEARCH": "Szukaj",
       "APPLY": "Zastosuj",
-      "COLUMNS_VISIBILITY": "Select columns to display"
+      "COLUMNS_VISIBILITY": "Wybierz kolumny do wyświetlenia"
     }
   },
   "USER_PROFILE": {
