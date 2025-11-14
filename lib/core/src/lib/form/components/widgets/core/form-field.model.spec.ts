@@ -1467,6 +1467,23 @@ describe('FormFieldModel', () => {
                 field.removeRow(0);
                 expect(form.values[field.id]).toEqual(formValues.removeState);
             });
+
+            it('should call onFormFieldChanged if form values contains field id', () => {
+                spyOn(field.form, 'onFormFieldChanged').and.callThrough();
+
+                field.removeRow(1);
+
+                expect(field.form.onFormFieldChanged).toHaveBeenCalled();
+            });
+
+            it('should NOT call onFormFieldChanged if form values does NOT contain field id', () => {
+                spyOn(field.form, 'onFormFieldChanged').and.callThrough();
+
+                field.form.values = {};
+                field.removeRow(1);
+
+                expect(field.form.onFormFieldChanged).not.toHaveBeenCalled();
+            });
         });
 
         describe('disabled state', () => {
