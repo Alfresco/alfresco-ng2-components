@@ -78,6 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tarefa sem nome",
       "ROW_LABEL": "Linha {{ number }}",
+      "DELETE_ROW": "Delete row",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Excluir linha",
         "MESSAGE": "Tem certeza que deseja excluir esta linha?",

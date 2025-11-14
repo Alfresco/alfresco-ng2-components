@@ -78,6 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Namenlose Aufgabe",
       "ROW_LABEL": "Seite {{ number }}",
+      "DELETE_ROW": "Zeile löschen",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Zeile löschen",
         "MESSAGE": "Sind Sie sicher, dass Sie diese Zeile löschen möchten?",
