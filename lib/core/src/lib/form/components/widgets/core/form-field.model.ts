@@ -487,6 +487,10 @@ export class FormFieldModel extends FormWidgetModel {
         this.rows.splice(index, 1);
         this.updateChildrenFieldsRowIndex();
 
+        if (!this.form.values[this.id]) {
+            return;
+        }
+
         this.form.values[this.id].splice(index, 1);
         this.form.onFormFieldChanged(this);
     }
