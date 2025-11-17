@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChanges } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipGridHarness } from '@angular/material/chips/testing';
@@ -126,6 +126,16 @@ describe('SearchChipAutocompleteInputComponent', () => {
         component.preselectedOptions = [{ value: 'option1' }];
         component.ngOnInit();
         expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+    });
+
+    it('should assign preselected values whenever they are changed', async () => {
+        const preselectedOptionsChange: SimpleChanges = {
+            preselectedOptions: { currentValue: [{ value: 'option1' }], previousValue: [], firstChange: false, isFirstChange: () => false }
+        };
+        component.ngOnChanges(preselectedOptionsChange);
+        fixture.detectChanges();
+        expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+        expect(await getChipValue(0)).toBe('option1');
     });
 
     it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', async () => {
