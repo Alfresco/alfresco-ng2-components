@@ -31,20 +31,12 @@ import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
 import { ContainerRowModel } from './container-row.model';
+import { RepeatableSectionModel, ROW_ID_PREFIX } from './repeatable-section.model';
+import { formFieldRuleHandler } from './handlers/form-field-rule.handler';
 
 export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
 export type FieldAlignmentType = 'vertical' | 'horizontal';
-
-interface RepeatableSectionModel {
-    id: string;
-    uid: string;
-    fields: FormFieldModel[];
-    rowIndex: number;
-    value?: any;
-}
-
-const ROW_ID_PREFIX = '-Row';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -195,7 +187,7 @@ export class FormFieldModel extends FormWidgetModel {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
-            this.id = parent ? parent.uid : json.id;
+            this.id = this.getId(json.id, parent);
             this.name = json.name;
             this.type = json.type;
             this.roles = json.roles;
@@ -233,7 +225,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.tooltip = json.tooltip || '';
             this.selectionType = json.selectionType;
             this.alignmentType = json.alignmentType;
-            this.rule = json.rule;
+            this.rule = formFieldRuleHandler.getRule(this.id, json.rule, parent);
             this.selectLoggedUser = json.selectLoggedUser;
             this.groupsRestriction = json.groupsRestriction?.groups;
             this.variableConfig = json.variableConfig;
@@ -287,6 +279,10 @@ export class FormFieldModel extends FormWidgetModel {
             originalType = jsonField.params.field.type;
         }
         return originalType === FormFieldTypes.DATETIME ? this.defaultDateTimeFormat : this.defaultDateFormat;
+    }
+
+    private getId(id: string, parent?: RepeatableSectionModel): string {
+        return parent ? parent.uid : id;
     }
 
     private isTypeaheadFieldType(type: string): boolean {

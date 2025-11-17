@@ -1291,6 +1291,38 @@ describe('FormFieldModel', () => {
                         existingColspan: 1,
                         maxColspan: 2
                     }
+                },
+                {
+                    id: 'Dropdown0e7tn4',
+                    name: 'Dropdown',
+                    type: 'dropdown',
+                    readOnly: false,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    optionType: 'manual',
+                    options: [
+                        {
+                            id: 'Id_1',
+                            name: 'Label 1'
+                        },
+                        {
+                            id: 'Id_2',
+                            name: 'Label 2'
+                        }
+                    ],
+                    authName: null,
+                    restUrl: null,
+                    restResponsePath: null,
+                    restIdProperty: null,
+                    restLabelProperty: null,
+                    selectionType: 'single',
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    },
+                    rule: null
                 }
             ],
             '2': [
@@ -1309,6 +1341,50 @@ describe('FormFieldModel', () => {
                     params: {
                         existingColspan: 1,
                         maxColspan: 2
+                    }
+                },
+                {
+                    id: 'Dropdown0wgm63',
+                    name: 'Dropdown',
+                    type: 'dropdown',
+                    readOnly: false,
+                    required: false,
+                    colspan: 1,
+                    rowspan: 1,
+                    optionType: 'manual',
+                    options: [],
+                    authName: null,
+                    restUrl: null,
+                    restResponsePath: null,
+                    restIdProperty: null,
+                    restLabelProperty: null,
+                    selectionType: 'single',
+                    visibilityCondition: null,
+                    params: {
+                        existingColspan: 1,
+                        maxColspan: 2
+                    },
+                    rule: {
+                        ruleOn: 'Dropdown0e7tn4',
+                        entries: [
+                            {
+                                key: 'Id_1',
+                                options: [
+                                    {
+                                        id: 'Id_3',
+                                        name: 'Label 3'
+                                    },
+                                    {
+                                        id: 'Id_4',
+                                        name: 'Label 4'
+                                    }
+                                ]
+                            },
+                            {
+                                key: 'Id_2',
+                                options: []
+                            }
+                        ]
                     }
                 }
             ]
@@ -1541,6 +1617,47 @@ describe('FormFieldModel', () => {
                     }
 
                     expect(child.readOnly).toBeFalsy();
+                });
+            });
+        });
+
+        describe('widgets', () => {
+            describe('id property', () => {
+                let textWidget: FormFieldModel;
+
+                beforeEach(() => {
+                    textWidget = field.rows[0].columns[0].fields[0];
+                });
+
+                it('should set id to parent uid', () => {
+                    expect(textWidget.id).toBe(textWidget.parent.uid);
+                });
+
+                it('should NOT set id to json id', () => {
+                    const textWidgetJson = json.fields['1'][0];
+
+                    expect(textWidget.id).not.toBe(textWidgetJson.id);
+                });
+            });
+
+            describe('rule property', () => {
+                let conditionalDropdown: FormFieldModel;
+                let targetDropdown: FormFieldModel;
+
+                beforeEach(() => {
+                    conditionalDropdown = field.rows[0].columns[1].fields[1];
+                });
+
+                it('should set ruleOn property of rule to target id', () => {
+                    targetDropdown = field.rows[0].columns[0].fields[1];
+
+                    expect(conditionalDropdown.rule.ruleOn).toBe(targetDropdown.id);
+                });
+
+                it('should NOT set ruleOn property of rule to target json id', () => {
+                    const targetDropdownJson = json.fields['1'][1];
+
+                    expect(conditionalDropdown.rule.ruleOn).not.toBe(targetDropdownJson.id);
                 });
             });
         });
