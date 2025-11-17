@@ -122,6 +122,9 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
                     ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value)
                     : [];
         }
+        if (changes.preselectedOptions) {
+            this.selectedOptions = changes.preselectedOptions.currentValue ?? [];
+        }
     }
 
     add(event: MatChipInputEvent) {
