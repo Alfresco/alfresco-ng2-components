@@ -1,4 +1,6 @@
 .adf-toolbar {
+    padding: 8px 24px 0;
+
     &--spacer {
         flex: 1 1 auto;
     }
@@ -10,7 +12,6 @@
     }
 
     .adf-toolbar-container.adf-toolbar-container-row {
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
         color: var(--adf-theme-foreground-text-color-054);
         height: 64px;
         font-size: var(--theme-body-1-font-size);

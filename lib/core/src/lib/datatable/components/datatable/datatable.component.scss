@@ -20,6 +20,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     overflow-y: scroll;
     height: 100%;
     display: block;
+    padding-top: 4px;
 
     .adf-full-width {
         width: 100%;
@@ -58,7 +59,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     display: flex;
     flex-direction: column;
     background-color: var(--adf-theme-background-card-color);
-    border: 1px solid var(--adf-theme-foreground-text-color-007);
     box-sizing: border-box;
     overflow-x: auto;
 
