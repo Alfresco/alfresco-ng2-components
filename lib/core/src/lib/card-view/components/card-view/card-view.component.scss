@@ -9,6 +9,7 @@
         display: flex;
         line-height: 20px;
         margin-bottom: 4px;
+        color: var(--mat-sys-on-surface);
     }
 
     .adf-property-container {
@@ -18,10 +19,13 @@
     .adf-property {
         .adf-property-field {
             width: 100%;
+            margin-top: 10px;
 
             #{ms.$mat-input-element} {
                 text-overflow: ellipsis;
                 line-height: 20px;
+                width: 90%;
+                padding: 0 0 0 12px;
             }
 
             .adf-card-view__key-value-pairs__row {
