@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-cli",
   "description": "Alfresco ADF cli and utils",
-  "version": "8.3.0",
+  "version": "8.2.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "bin": {
     "adf-cli": "bin/adf-cli",
@@ -22,7 +22,7 @@
     "unlink": "cd ../../dist/libs/cli && npm unlink"
   },
   "dependencies": {
-    "@alfresco/js-api": ">=8.4.0-0",
+    "@alfresco/js-api": ">=9.2.0",
     "ejs": "^3.1.10",
     "license-checker": "^25.0.1",
     "node-fetch": "^2.7.0",
