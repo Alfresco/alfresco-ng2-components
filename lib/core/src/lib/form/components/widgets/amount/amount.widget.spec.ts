@@ -105,6 +105,18 @@ describe('AmountWidgetComponent', () => {
         expect(widget.placeholder).toBe('1234');
     });
 
+    it('should setup placeholder when enableDisplayBasedOnLocale is true', () => {
+        widget.enableDisplayBasedOnLocale = true;
+        widget.field = new FormFieldModel(null, {
+            readOnly: false,
+            placeholder: '1234',
+            currency: 'USD'
+        });
+
+        widget.ngOnInit();
+        expect(widget.placeholder).toBe('$1,234');
+    });
+
     it('it should return locale based on browser', () => {
         const expectedLanguage = 'en-US';
         widget.enableDisplayBasedOnLocale = true;

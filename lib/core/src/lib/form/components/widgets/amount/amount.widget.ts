@@ -75,7 +75,10 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     valueAsNumber: number;
 
     get placeholder(): string {
-        return this.showPlaceholder ? this.field.placeholder : '';
+        if (!this.showPlaceholder) return '';
+        return this.enableDisplayBasedOnLocale
+            ? this.currencyPipe.transform(this.field.placeholder, this.currency, this.currencyDisplay, this.decimalProperty, this.locale)
+            : this.field.placeholder;
     }
 
     constructor(
