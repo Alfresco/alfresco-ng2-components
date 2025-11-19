@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from './form-field.model';
-
 export const ROW_ID_PREFIX = '-Row';
 
 export interface RepeatableSectionModel {
     id: string;
     uid: string;
-    fields: FormFieldModel[];
+    fields: any;
     rowIndex: number;
     value?: any;
 }

@@ -17,7 +17,13 @@
 
 import { formFieldRuleHandler } from './form-field-rule.handler';
 import { FormFieldRule } from '../form-field-rule';
-import { RepeatableSectionModel } from '../repeatable-section.model';
+import {
+    mockParentRule,
+    mockParentWithFields,
+    mockParentWithoutFields,
+    mockParentWithSectionFields,
+    mockRule
+} from '../mocks/form-field-rule.handler.mock';
 
 describe('formFieldRuleHandler', () => {
     it('should return null if provided rule is null', () => {
@@ -26,15 +32,6 @@ describe('formFieldRuleHandler', () => {
 
     it('should return undefined if provided rule is undefined', () => {
         expect(formFieldRuleHandler.getRule('mock-id', undefined)).toBe(undefined);
-    });
-
-    it('should return provided rule if rule is provided', () => {
-        const rule: FormFieldRule = {
-            ruleOn: 'mock-rule-on',
-            entries: []
-        };
-
-        expect(formFieldRuleHandler.getRule('mock-id', rule)).toEqual(rule);
     });
 
     it('should return provided rule if rule is provided and no parent is provided', () => {
@@ -46,24 +43,40 @@ describe('formFieldRuleHandler', () => {
         expect(formFieldRuleHandler.getRule('mock-id', rule)).toEqual(rule);
     });
 
-    it('should return rule with parent ruleOn property if rule and parent are provided', () => {
-        const rule: FormFieldRule = {
-            ruleOn: 'mock-rule-on',
-            entries: []
-        };
+    describe('rule and parent provided', () => {
+        it('should return provided rule if parent has no fields', () => {
+            const expectedRule: FormFieldRule = {
+                ruleOn: 'mock-rule-on',
+                entries: []
+            };
 
-        const parent: RepeatableSectionModel = {
-            id: 'mock-parent-id',
-            uid: 'mock-id-Row123456789',
-            fields: [],
-            rowIndex: 0
-        };
+            expect(formFieldRuleHandler.getRule('mock-id-Row123456789', mockRule, mockParentWithoutFields)).toEqual(expectedRule);
+        });
+        it('should return provided rule if ruleOn does not belong to parent fields', () => {
+            const expectedRule: FormFieldRule = {
+                ruleOn: 'mock-rule-on',
+                entries: []
+            };
 
-        const expectedRule: FormFieldRule = {
-            ruleOn: 'mock-rule-on-Row123456789',
-            entries: []
-        };
+            expect(formFieldRuleHandler.getRule('mock-id-Row123456789', mockRule, mockParentWithFields)).toEqual(expectedRule);
+        });
 
-        expect(formFieldRuleHandler.getRule('mock-id-Row123456789', rule, parent)).toEqual(expectedRule);
+        it('should return rule with parent ruleOn property if ruleOn belongs to parent fields', () => {
+            const expectedRule: FormFieldRule = {
+                ruleOn: 'Text0c0ydk-Row123456789',
+                entries: []
+            };
+
+            expect(formFieldRuleHandler.getRule('mock-id-Row123456789', mockParentRule, mockParentWithFields)).toEqual(expectedRule);
+        });
+
+        it('should return rule with parent ruleOn property if ruleOn belongs to parent fields and sections are present', () => {
+            const expectedRule: FormFieldRule = {
+                ruleOn: 'Text0c0ydk-Row123456789',
+                entries: []
+            };
+
+            expect(formFieldRuleHandler.getRule('mock-id-Row123456789', mockParentRule, mockParentWithSectionFields)).toEqual(expectedRule);
+        });
     });
 });
