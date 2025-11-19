@@ -78,7 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tâche sans nom",
       "ROW_LABEL": "Ligne {{ number }}",
-      "DELETE_ROW": "Delete row",
+      "DELETE_ROW": "Supprimer la ligne",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Supprimer la ligne",
         "MESSAGE": "Voulez-vous vraiment supprimer cette ligne ?",
