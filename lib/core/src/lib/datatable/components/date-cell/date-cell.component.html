@@ -3,9 +3,17 @@
 @if (date) {
     <span [title]="tooltip ? tooltip : computedTitle" class="adf-datatable-cell-value">
         @if (config.format === 'timeAgo') {
-            {{ date | adfTimeAgo: config.locale }}
+            @if (config.locale) {
+                {{ date | adfTimeAgo: config.locale }}
+            } @else {
+                {{ date | adfTimeAgo }}
+            }
         } @else {
-            {{ date | adfLocalizedDate: config.format: config.locale }}
+            @if (config.locale) {
+                {{ date | adfLocalizedDate: config.format: config.locale }}
+            } @else {
+                {{ date | adfLocalizedDate: config.format }}
+            }
         }
     </span>
 }
