@@ -19,16 +19,17 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, i
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
-import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-    imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
+    imports: [LocalizedDatePipe, TimeAgoPipe, AsyncPipe],
     selector: 'adf-date-cell',
     templateUrl: './date-cell.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [LocalizedDatePipe]
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
@@ -37,6 +38,7 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     config: DateConfig = {};
 
     private readonly appConfig: AppConfigService = inject(AppConfigService);
+    private readonly localizedDatePipe: LocalizedDatePipe = inject(LocalizedDatePipe);
 
     readonly defaultDateConfig: DateConfig = {
         format: 'medium',
@@ -45,8 +47,18 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     };
 
     ngOnInit(): void {
-        super.ngOnInit();
         this.setConfig();
+        super.ngOnInit();
+    }
+
+    protected override computeTitle(value: any): string {
+        if (this.tooltip) {
+            return this.tooltip;
+        }
+        if (value) {
+            return this.localizedDatePipe.transform(value, this.config.tooltipFormat, this.config.locale) || '';
+        }
+        return '';
     }
 
     private setConfig(): void {

@@ -113,7 +113,7 @@ export class DataTableCellComponent implements OnInit {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
     }
 
-    private computeTitle(value: string): string {
+    protected computeTitle(value: string): string {
         if (this.tooltip) {
             return this.tooltip;
         }
