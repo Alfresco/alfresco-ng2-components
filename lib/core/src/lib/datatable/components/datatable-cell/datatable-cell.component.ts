@@ -31,22 +31,25 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
     imports: [CommonModule, ClipboardDirective, TruncatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container>
+        @let title = tooltip ? tooltip : computedTitle;
+        @let value = value$ | async;
+        @let displayValue = column?.maxTextLength ? (value | truncate: column?.maxTextLength) : value;
+
+        @if (copyContent) {
             <span
-                *ngIf="copyContent; else defaultCell"
                 adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
                 [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
-                [attr.aria-label]="value$ | async"
-                [title]="tooltip ? tooltip : computedTitle"
+                [attr.aria-label]="value"
+                [title]="title"
                 class="adf-datatable-cell-value"
-                >{{ column?.maxTextLength ? (value$ | async | truncate: column?.maxTextLength) : (value$ | async) }}</span
             >
-        </ng-container>
-        <ng-template #defaultCell>
-            <span [title]="tooltip ? tooltip : computedTitle" class="adf-datatable-cell-value">{{
-                column?.maxTextLength ? (value$ | async | truncate: column?.maxTextLength) : (value$ | async)
-            }}</span>
-        </ng-template>
+                {{ displayValue }}
+            </span>
+        } @else {
+            <span [title]="title" class="adf-datatable-cell-value">
+                {{ displayValue }}
+            </span>
+        }
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
