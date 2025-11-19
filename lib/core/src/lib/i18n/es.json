@@ -78,7 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tarea sin nombre",
       "ROW_LABEL": "Fila {{ number }}",
-      "DELETE_ROW": "Delete row",
+      "DELETE_ROW": "Eliminar fila",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Eliminar la fila",
         "MESSAGE": "¿Está seguro de que desea eliminar esta fila?",
