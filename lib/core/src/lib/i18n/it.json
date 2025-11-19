@@ -78,7 +78,7 @@
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Compito senza nome",
       "ROW_LABEL": "Riga {{ number }}",
-      "DELETE_ROW": "Delete row",
+      "DELETE_ROW": "Elimina riga",
       "REMOVE_ROW_DIALOG": {
         "TITLE": "Elimina la riga",
         "MESSAGE": "Sei sicuro di voler eliminare questa riga?",

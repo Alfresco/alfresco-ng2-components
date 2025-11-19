@@ -5,7 +5,7 @@ inputs:
   branch_name:
     description: "override GITHUB_REF_NAME"
     required: false
-    default: $GITHUB_REF_NAME
+    default: ${{ github.ref_name }}
 
 runs:
   using: "composite"
