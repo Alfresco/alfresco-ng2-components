@@ -15,24 +15,33 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { CommonModule } from '@angular/common';
 import { FileSizePipe } from '../../../pipes';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'adf-filesize-cell',
-    imports: [CommonModule, FileSizePipe],
+    imports: [FileSizePipe, AsyncPipe],
     template: `
-        <ng-container *ngIf="value$ | async | adfFileSize as fileSize">
-            <span [title]="tooltip">{{ fileSize }}</span>
-        </ng-container>
+        @let value = value$ | async;
+        <span [title]="title()" class="adf-datatable-cell-value">{{ value | adfFileSize }}</span>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-filesize-cell' }
+    host: { class: 'adf-filesize-cell' },
+    providers: [FileSizePipe]
 })
 export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
+    private readonly fileSizePipe = inject(FileSizePipe);
+
     ngOnInit(): void {
         super.ngOnInit();
+    }
+
+    protected override computeTitle(value: any): string {
+        if (value != null) {
+            return this.fileSizePipe.transform(value);
+        }
+        return '';
     }
 }

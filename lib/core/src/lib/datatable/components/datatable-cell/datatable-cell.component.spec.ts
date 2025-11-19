@@ -31,9 +31,23 @@ describe('DataTableCellComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const renderTextCell = (value: string, tooltip: string) => {
+        // Set up mock data if not already set
+        if (!component.data) {
+            component.data = {
+                getValue: () => value
+            } as any;
+        }
+        if (!component.row) {
+            component.row = { id: '1', getValue: () => value } as any;
+        }
+        if (!component.column) {
+            component.column = { key: 'text' } as any;
+        }
+
         component.value$ = new BehaviorSubject<string>(value);
         component.tooltip = tooltip;
 
+        component.ngOnInit();
         fixture.detectChanges();
     };
 
@@ -136,7 +150,7 @@ describe('DataTableCellComponent', () => {
         component.row = row;
 
         expect(() => fixture.detectChanges()).not.toThrow();
-        expect(component.computedTitle).toBe('');
+        expect(component.title()).toBe('');
         expect(testingUtils.getByCSS('span').nativeElement.title).toBe('');
     });
 });

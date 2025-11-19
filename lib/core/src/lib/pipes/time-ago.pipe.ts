@@ -20,12 +20,13 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
 import { differenceInDays, formatDistance } from 'date-fns';
-import * as Locales from 'date-fns/locale';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DateFnsUtils } from '../common/utils/date-fns-utils';
 
 @Pipe({
     standalone: true,
-    name: 'adfTimeAgo'
+    name: 'adfTimeAgo',
+    pure: false
 })
 export class TimeAgoPipe implements PipeTransform {
     static DEFAULT_LOCALE = 'en-US';
@@ -34,7 +35,10 @@ export class TimeAgoPipe implements PipeTransform {
     defaultLocale: string;
     defaultDateTimeFormat: string;
 
-    constructor(public userPreferenceService: UserPreferencesService, public appConfig: AppConfigService) {
+    constructor(
+        public userPreferenceService: UserPreferencesService,
+        public appConfig: AppConfigService
+    ) {
         this.userPreferenceService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntilDestroyed())
@@ -52,7 +56,8 @@ export class TimeAgoPipe implements PipeTransform {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
                 return datePipe.transform(value, this.defaultDateTimeFormat);
             } else {
-                return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: Locales[actualLocale] });
+                const dateFnsLocale = DateFnsUtils.getLocaleFromString(actualLocale);
+                return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: dateFnsLocale });
             }
         }
         return '';
