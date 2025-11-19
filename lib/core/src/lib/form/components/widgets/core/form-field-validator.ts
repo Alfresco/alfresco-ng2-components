@@ -51,7 +51,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.isVisible) {
+        if (this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
                 const option = field.options.find((opt) => opt.id === field.value);
                 return !!option;
@@ -89,7 +89,7 @@ export class NumberFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.isVisible) {
+        if (this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value === null || field.value === undefined || field.value === '') {
                 return true;
             }
@@ -116,7 +116,7 @@ export class MinLengthFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value.length >= field.minLength) {
                 return true;
             }
@@ -139,7 +139,7 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value.toString().length <= this.getMaxLength(field)) {
                 return true;
             }
@@ -166,7 +166,7 @@ export class MinValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             const value: number = +field.value;
             const minValue: number = +field.minValue;
 
@@ -190,7 +190,7 @@ export class MaxValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             const value: number = +field.value;
             const maxValue: number = +field.maxValue;
 
@@ -214,7 +214,7 @@ export class RegExFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
+        if (this.isSupported(field) && field.value && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
                 return true;
             }
@@ -253,7 +253,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.isVisible) {
+        if (this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field)) {
             if (this.hasStringValue(field) && this.hasOptions(field) && !this.hasValidNameOrValidId(field)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
                 return false;
@@ -271,7 +271,7 @@ export class DecimalFieldValidator implements FormFieldValidator {
     }
 
     validate(field: FormFieldModel): boolean {
-        const shouldValidateField = this.isSupported(field) && field.isVisible;
+        const shouldValidateField = this.isSupported(field) && field.form && !field.form.isFieldOrParentHidden(field);
 
         if (!shouldValidateField) {
             return true;

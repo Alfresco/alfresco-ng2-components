@@ -41,6 +41,7 @@ Contains the value and metadata for a form.
 |isValid | true||is form valid|
 |processVariables| ProcessVariableModel[] | []|process variables|
 |variables| FormVariableModel[] | []|variables|
+|enableParentVisibilityCheck| boolean | false|Enables checking parent container/group/section visibility for validation. When enabled, fields with `checkParentVisibilityForValidation: true` will skip validation if their parent is hidden.|
 
 ## Methods
 
@@ -112,3 +113,5 @@ Contains the value and metadata for a form.
     Changes variable value
 -   `loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void`
     Checks it there are any injectedValidators and adds them to the array of field validators.
+-   `isFieldOrParentHidden(field: FormFieldModel): boolean`
+    Checks if a field or any of its parent containers/groups/sections is hidden. Returns true if the field should skip validation. Only checks parent visibility if `enableParentVisibilityCheck` is true and the field has `checkParentVisibilityForValidation` set to true.
