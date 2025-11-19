@@ -136,7 +136,7 @@ describe('DataTableCellComponent', () => {
         component.row = row;
 
         expect(() => fixture.detectChanges()).not.toThrow();
-        expect(component.computedTitle).toBe('');
+        expect(component.title()).toBe('');
         expect(testingUtils.getByCSS('span').nativeElement.title).toBe('');
     });
 });
