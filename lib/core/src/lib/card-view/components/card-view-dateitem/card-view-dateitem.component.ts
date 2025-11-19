@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, effect, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
@@ -25,7 +25,7 @@ import {
     MatDatetimepickerModule
 } from '@mat-datetimepicker/core';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
-import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
@@ -40,7 +40,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
@@ -83,8 +82,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     cardViewDateTimeControl: FormControl<Date> = new FormControl<Date>(null);
 
-    private readonly destroyRef = inject(DestroyRef);
-
     constructor(
         private dateAdapter: DateAdapter<Date>,
         private userPreferencesService: UserPreferencesService,
@@ -95,12 +92,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => {
-                this.property.locale = locale;
-            });
+        // Use effect to react to locale signal changes
+        effect(() => {
+            this.property.locale = this.userPreferencesService.localeSignal();
+        });
 
         (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
 

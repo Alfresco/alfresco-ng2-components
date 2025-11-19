@@ -120,3 +120,56 @@ A set of basic properties is added into the enumeration [`UserPreferenceValues`]
         console.log(CSRFflag); //this will be true;
     });
 ```
+
+### Convenience Observables and Signals
+
+For commonly accessed preferences like `locale`, the service provides both observables and signals that simplify access patterns.
+
+#### Using Signals (Recommended - No Subscription Needed!)
+
+Signals automatically handle cleanup and don't require manual unsubscription:
+
+```ts
+export class MyComponent {
+    private userPreferences = inject(UserPreferencesService);
+    
+    // Signal - automatically reactive, no subscription needed!
+    currentLocale = this.userPreferences.localeSignal;
+    
+    // Use in template or computed values
+    displayText = computed(() => `Current locale: ${this.currentLocale()}`);
+}
+```
+
+Available signals:
+- `localeSignal` - Current locale value
+- `paginationSizeSignal` - Current pagination size
+- `supportedPageSizesSignal` - Supported page sizes array
+
+**Benefits of signals:**
+- ✅ No manual subscription/unsubscription needed
+- ✅ Automatic cleanup when component is destroyed
+- ✅ Better performance with fine-grained reactivity
+- ✅ Simpler code - just read the value with `()`
+
+#### Using Observables (For Advanced Cases)
+
+If you need RxJS operators or imperative subscriptions:
+
+```ts
+constructor(private userPreferences: UserPreferencesService) {
+    // Observable - requires takeUntilDestroyed() to prevent memory leaks
+    this.userPreferences.locale$
+        .pipe(takeUntilDestroyed())
+        .subscribe(locale => {
+            this.currentLocale = locale;
+        });
+}
+```
+
+Available observables:
+- `locale$` - Observable for locale changes
+- `paginationSize$` - Observable for pagination size changes  
+- `supportedPageSizes$` - Observable for supported page sizes changes
+
+**Note:** When subscribing to observables from a singleton service in a component, always use `takeUntilDestroyed()` or `takeUntil()` to prevent memory leaks.

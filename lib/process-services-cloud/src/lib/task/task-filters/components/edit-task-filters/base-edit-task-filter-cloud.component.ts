@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DestroyRef, Directive, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { DestroyRef, Directive, effect, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
@@ -24,7 +24,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/
 import { debounceTime, filter, finalize, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
@@ -32,7 +32,6 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
 import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
 import { isValid } from 'date-fns';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -146,10 +145,11 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
+        // Use effect to react to locale signal changes - automatic cleanup!
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            this.dateAdapter.setLocale(locale);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

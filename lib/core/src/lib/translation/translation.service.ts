@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { effect, Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
@@ -71,7 +71,10 @@ export class TranslationService {
             }
         }
 
-        userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+        // Use effect to reactively update translations when locale signal changes
+        // Note: This is a singleton service, so no cleanup needed
+        effect(() => {
+            const locale = userPreferencesService.localeSignal();
             if (locale) {
                 this.userLang = locale;
                 this.use(this.userLang);

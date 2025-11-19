@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    effect,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +41,7 @@ import {
     ProcessFilterProperties,
     ProcessSortFilterProperty
 } from '../../models/process-filter-cloud.model';
-import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../../services/process-cloud.service';
@@ -231,10 +243,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
+        // Use effect to react to locale signal changes - automatic cleanup!
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            this.dateAdapter.setLocale(locale);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
