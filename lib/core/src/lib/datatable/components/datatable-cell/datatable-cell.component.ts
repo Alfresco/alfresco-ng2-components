@@ -41,13 +41,10 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
                 [attr.aria-label]="value"
                 [title]="title()"
                 class="adf-datatable-cell-value"
+                >{{ displayValue }}</span
             >
-                {{ displayValue }}
-            </span>
         } @else {
-            <span [title]="title()" class="adf-datatable-cell-value">
-                {{ displayValue }}
-            </span>
+            <span [title]="title()" class="adf-datatable-cell-value">{{ displayValue }}</span>
         }
     `,
     encapsulation: ViewEncapsulation.None,
