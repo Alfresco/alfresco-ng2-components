@@ -35,12 +35,12 @@ describe('formFieldRuleHandler', () => {
     });
 
     it('should return provided rule if rule is provided and no parent is provided', () => {
-        const rule: FormFieldRule = {
+        const expectedRule: FormFieldRule = {
             ruleOn: 'mock-rule-on',
             entries: []
         };
 
-        expect(formFieldRuleHandler.getRule('mock-id', rule)).toEqual(rule);
+        expect(formFieldRuleHandler.getRule('mock-id', mockRule)).toEqual(expectedRule);
     });
 
     describe('rule and parent provided', () => {
