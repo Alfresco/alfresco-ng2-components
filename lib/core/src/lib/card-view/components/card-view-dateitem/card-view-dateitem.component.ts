@@ -89,14 +89,13 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         private translateService: TranslationService
     ) {
         super();
-    }
-
-    ngOnInit() {
-        // Use effect to react to locale signal changes
+        // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             this.property.locale = this.userPreferencesService.localeSignal();
         });
+    }
 
+    ngOnInit() {
         (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
 
         if (this.property.multivalued) {

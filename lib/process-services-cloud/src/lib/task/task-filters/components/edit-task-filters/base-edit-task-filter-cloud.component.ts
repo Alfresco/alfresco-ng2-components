@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DestroyRef, Directive, effect, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { DestroyRef, Directive, effect, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
@@ -32,6 +32,7 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
 import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
 import { isValid } from 'date-fns';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -54,7 +55,7 @@ const ORDER_PROPERTY = 'order';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges {
+export abstract class BaseEditTaskFilterCloudComponent<T> implements OnChanges {
     public static ACTIONS_DISABLED_BY_DEFAULT = [ACTION_SAVE, ACTION_DELETE];
 
     /** (required) Name of the app. */
@@ -144,8 +145,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected formBuilder = inject(UntypedFormBuilder);
     protected dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
-    ngOnInit() {
-        // Use effect to react to locale signal changes - automatic cleanup!
+    constructor() {
+        // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             const locale = this.userPreferencesService.localeSignal();
             this.dateAdapter.setLocale(locale);

@@ -100,7 +100,13 @@ export class SearchDateRangeComponent implements OnInit {
         private userPreferencesService: UserPreferencesService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
         @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats
-    ) {}
+    ) {
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+        });
+    }
 
     readonly endDateValidator = (formControl: UntypedFormControl): { [key: string]: boolean } | null => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
@@ -114,12 +120,6 @@ export class SearchDateRangeComponent implements OnInit {
     ngOnInit(): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ? parse(this.maxDate, this.dateFormat, new Date()) : new Date());
-
-        // Use effect to react to locale signal changes - automatic cleanup!
-        effect(() => {
-            const locale = this.userPreferencesService.localeSignal();
-            this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
-        });
         this.form.controls.dateRangeType.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));

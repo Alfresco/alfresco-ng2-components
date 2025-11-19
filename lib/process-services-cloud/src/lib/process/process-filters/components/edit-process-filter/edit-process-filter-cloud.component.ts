@@ -113,7 +113,7 @@ interface ProcessFilterFormProps {
     styleUrls: ['./edit-process-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
+export class EditProcessFilterCloudComponent implements OnChanges {
     /** The name of the application. */
     @Input()
     appName: string = '';
@@ -240,10 +240,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         private processFilterCloudService: ProcessFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService,
         private processCloudService: ProcessCloudService
-    ) {}
-
-    ngOnInit() {
-        // Use effect to react to locale signal changes - automatic cleanup!
+    ) {
+        // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             const locale = this.userPreferencesService.localeSignal();
             this.dateAdapter.setLocale(locale);

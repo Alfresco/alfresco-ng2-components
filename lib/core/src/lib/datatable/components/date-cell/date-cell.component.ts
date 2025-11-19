@@ -51,15 +51,18 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         locale: undefined
     };
 
-    ngOnInit(): void {
-        // Use effect to react to locale signal changes
+    constructor() {
+        super();
+        // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             this.userLocale = this.userPreferencesService.localeSignal() || 'en';
             this.setConfig();
             this.updateValue(); // Recalculate computedTitle with new locale
             this.cdr.markForCheck();
         });
+    }
 
+    ngOnInit(): void {
         super.ngOnInit();
     }
 
