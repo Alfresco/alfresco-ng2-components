@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation, signal, computed } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
@@ -31,7 +31,6 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
     imports: [CommonModule, ClipboardDirective, TruncatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        @let title = tooltip ? tooltip : computedTitle;
         @let value = value$ | async;
         @let displayValue = column?.maxTextLength ? (value | truncate: column?.maxTextLength) : value;
 
@@ -40,13 +39,13 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
                 adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
                 [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
                 [attr.aria-label]="value"
-                [title]="title"
+                [title]="title()"
                 class="adf-datatable-cell-value"
             >
                 {{ displayValue }}
             </span>
         } @else {
-            <span [title]="title" class="adf-datatable-cell-value">
+            <span [title]="title()" class="adf-datatable-cell-value">
                 {{ displayValue }}
             </span>
         }
@@ -82,7 +81,12 @@ export class DataTableCellComponent implements OnInit {
     protected destroyRef = inject(DestroyRef);
     protected dataTableService = inject(DataTableService, { optional: true });
     value$ = new BehaviorSubject<any>('');
-    computedTitle: string = '';
+
+    // Signal to track the raw computed title (without tooltip override)
+    protected rawComputedTitle = signal<string>('');
+
+    // Computed signal that automatically combines tooltip input with computed title
+    title = computed(() => this.tooltip || this.rawComputedTitle());
 
     ngOnInit() {
         this.updateValue();
@@ -93,7 +97,7 @@ export class DataTableCellComponent implements OnInit {
         if (this.column?.key && this.row && this.data) {
             const value = this.data.getValue(this.row, this.column, this.resolverFn);
             this.value$.next(value);
-            this.computedTitle = this.computeTitle(value);
+            this.rawComputedTitle.set(this.computeTitle(value));
         }
     }
 
@@ -116,10 +120,15 @@ export class DataTableCellComponent implements OnInit {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
     }
 
+    /**
+     * Computes the title/tooltip for the cell based on the value.
+     * Override this in derived classes to provide custom tooltip logic.
+     * Note: The tooltip input always takes precedence (handled by title signal).
+     *
+     * @param value - The cell value to compute the title for
+     * @returns The computed title string, or empty string if no title should be shown
+     */
     protected computeTitle(value: string): string {
-        if (this.tooltip) {
-            return this.tooltip;
-        }
         const rawValue = value;
         const max = this.column?.maxTextLength;
 

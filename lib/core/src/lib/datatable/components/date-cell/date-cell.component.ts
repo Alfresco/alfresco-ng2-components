@@ -69,9 +69,6 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     }
 
     protected override computeTitle(value: any): string {
-        if (this.tooltip) {
-            return this.tooltip;
-        }
         if (value) {
             return this.localizedDatePipe.transform(value, this.config.tooltipFormat, this.config.locale) || '';
         }

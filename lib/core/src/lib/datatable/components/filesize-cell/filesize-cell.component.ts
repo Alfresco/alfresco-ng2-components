@@ -25,7 +25,7 @@ import { AsyncPipe } from '@angular/common';
     imports: [FileSizePipe, AsyncPipe],
     template: `
         @let value = value$ | async;
-        <span [title]="tooltip ? tooltip : computedTitle" class="adf-datatable-cell-value">{{ value | adfFileSize }}</span>
+        <span [title]="title()" class="adf-datatable-cell-value">{{ value | adfFileSize }}</span>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-filesize-cell' },
@@ -39,9 +39,6 @@ export class FileSizeCellComponent extends DataTableCellComponent implements OnI
     }
 
     protected override computeTitle(value: any): string {
-        if (this.tooltip) {
-            return this.tooltip;
-        }
         if (value != null) {
             return this.fileSizePipe.transform(value);
         }

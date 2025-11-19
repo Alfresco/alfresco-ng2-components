@@ -1,7 +1,7 @@
 @let date = value$ | async;
 
 @if (date) {
-    <span [title]="tooltip ? tooltip : computedTitle" class="adf-datatable-cell-value">
+    <span [title]="title()" class="adf-datatable-cell-value">
         @if (config.format === 'timeAgo') {
             @if (config.locale) {
                 {{ date | adfTimeAgo: config.locale }}
