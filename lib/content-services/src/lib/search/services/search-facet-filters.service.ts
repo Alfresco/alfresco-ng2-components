@@ -76,6 +76,10 @@ export class SearchFacetFiltersService {
         });
     }
 
+    get hasActiveFilters(): boolean {
+        return this.responseFacets?.length > 0 || this.tabbedFacet !== null || this.selectedBuckets?.length > 0;
+    }
+
     onDataLoaded(data: any) {
         const context = data.list.context;
 
