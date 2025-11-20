@@ -22,12 +22,14 @@ import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 import { add, endOfDay } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatDateRangeInputHarness } from '@angular/material/datepicker/testing';
 import { NoopTranslateModule } from '@alfresco/adf-core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
@@ -37,7 +39,8 @@ describe('DateRangeFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, DateRangeFilterComponent]
+            imports: [NoopTranslateModule, DateRangeFilterComponent],
+            providers: [{ provide: MAT_DATE_LOCALE, useValue: enUS }]
         });
         fixture = TestBed.createComponent(DateRangeFilterComponent);
         component = fixture.componentInstance;

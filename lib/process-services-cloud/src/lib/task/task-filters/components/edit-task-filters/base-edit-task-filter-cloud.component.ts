@@ -149,7 +149,9 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnChanges {
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             const locale = this.userPreferencesService.localeSignal();
-            this.dateAdapter.setLocale(locale);
+            if (locale) {
+                this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+            }
         });
     }
 
