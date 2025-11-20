@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { FileSizePipe } from '../../../pipes';
 import { AsyncPipe } from '@angular/common';
@@ -31,8 +31,4 @@ import { AsyncPipe } from '@angular/common';
     host: { class: 'adf-filesize-cell' },
     providers: [FileSizePipe]
 })
-export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
-    ngOnInit(): void {
-        super.ngOnInit();
-    }
-}
+export class FileSizeCellComponent extends DataTableCellComponent {}

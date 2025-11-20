@@ -40,9 +40,9 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     config = signal<DateConfig>({});
 
-    private readonly appConfig: AppConfigService = inject(AppConfigService);
-    private readonly localizedDatePipe: LocalizedDatePipe = inject(LocalizedDatePipe);
-    private readonly timeAgoPipe: TimeAgoPipe = inject(TimeAgoPipe);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly localizedDatePipe = inject(LocalizedDatePipe);
+    private readonly timeAgoPipe = inject(TimeAgoPipe);
 
     private userLocale: string = 'en';
 
