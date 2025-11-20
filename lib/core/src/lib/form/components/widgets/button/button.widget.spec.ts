@@ -65,6 +65,24 @@ describe('ButtonWidgetComponent', () => {
         expect(await button.isDisabled()).toBe(true);
     });
 
+    it('should disable button when the field reference remains the same but the readOnly property changes', async () => {
+        const sameFieldRef = { ...mockField, readOnly: false };
+
+        fixture.componentRef.setInput('field', sameFieldRef);
+
+        const button = await getButton();
+        const disabledBeforeChange = await button.isDisabled();
+
+        sameFieldRef.readOnly = true;
+
+        fixture.componentRef.setInput('field', sameFieldRef);
+
+        const disabledAfterChange = await button.isDisabled();
+
+        expect(disabledBeforeChange).toBe(false);
+        expect(disabledAfterChange).toBe(true);
+    });
+
     it('should attach className to the widget host element', () => {
         fixture.detectChanges();
 

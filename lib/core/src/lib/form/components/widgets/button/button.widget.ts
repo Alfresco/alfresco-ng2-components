@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent } from '../widget.component';
 import { FormService } from '../../../services/form.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,7 +32,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         '[class]': 'hostClasses'
     },
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe, MatButtonModule, MatTooltipModule]
 })
 export class ButtonWidgetComponent extends WidgetComponent {
