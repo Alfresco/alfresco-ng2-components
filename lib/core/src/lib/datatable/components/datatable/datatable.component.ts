@@ -726,7 +726,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (this.isValidClickEvent(event) && column && column.sortable) {
             const current = this.data.getSorting();
             let newDirection = 'asc';
-            if (current && column.key === current.key) {
+            if (current && (column.sortingKey || column.key) === current.key) {
                 newDirection = current.direction?.toLowerCase() === 'asc' ? 'desc' : 'asc';
             }
             this.sorting = [column.key, newDirection, { numeric: true }];
