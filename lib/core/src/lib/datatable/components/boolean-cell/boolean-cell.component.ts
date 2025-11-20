@@ -17,18 +17,12 @@
 
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    imports: [CommonModule],
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-        <span [title]="tooltip">
-            {{ boolValue }}
-        </span>
-    `,
+    template: ` <span [title]="title()">{{ boolValue }}</span> `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })

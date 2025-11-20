@@ -15,30 +15,27 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    imports: [CommonModule, MatIconModule],
+    imports: [MatIconModule],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="icon">
-            <mat-icon [title]="tooltip" aria-hidden="true">{{ icon }}</mat-icon>
-        </ng-container>
+        @if (icon) {
+            <mat-icon [title]="title()" aria-hidden="true">{{ icon }}</mat-icon>
+        }
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
 export class IconCellComponent extends DataTableCellComponent implements OnInit {
-    icon: string = '';
+    protected readonly changeDetectorRef = inject(ChangeDetectorRef);
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {
-        super();
-    }
+    icon: string = '';
 
     ngOnInit(): void {
         super.ngOnInit();
