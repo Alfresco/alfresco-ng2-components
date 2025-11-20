@@ -146,10 +146,10 @@ export abstract class BaseQueryBuilderService {
         const currentConfig = this.loadConfiguration();
         if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
             this.selectedConfiguration = index;
-            this.configUpdated.next(currentConfig[index]);
             this.searchForms.next(this.getSearchFormDetails());
             this.resetSearchOptions();
             this.setUpSearchConfiguration(currentConfig[index]);
+            this.configUpdated.next(currentConfig[index]);
             this.update();
         }
     }
@@ -209,6 +209,7 @@ export abstract class BaseQueryBuilderService {
      * @param bucket Bucket to add
      */
     addUserFacetBucket(field: string, bucket: FacetFieldBucket) {
+        // console.log('Adding user facet bucket', field, bucket);
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
             const existing = buckets.find((facetBucket) => facetBucket.label === bucket.label);
@@ -236,6 +237,7 @@ export abstract class BaseQueryBuilderService {
      * @param bucket Bucket to remove
      */
     removeUserFacetBucket(field: string, bucket: FacetFieldBucket) {
+        // console.log('Removing user facet bucket', field, bucket);
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
             this.userFacetBuckets[field] = buckets.filter((facetBucket) => facetBucket.label !== bucket.label);
