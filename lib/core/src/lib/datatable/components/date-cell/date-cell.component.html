@@ -1,18 +1,19 @@
 @let date = value$ | async;
+@let dateConfig = config();
 
 @if (date) {
     <span [title]="title()" class="adf-datatable-cell-value">
-        @if (config.format === 'timeAgo') {
-            @if (config.locale) {
-                {{ date | adfTimeAgo: config.locale }}
+        @if (dateConfig.format === 'timeAgo') {
+            @if (dateConfig.locale) {
+                {{ date | adfTimeAgo: dateConfig.locale }}
             } @else {
                 {{ date | adfTimeAgo }}
             }
         } @else {
-            @if (config.locale) {
-                {{ date | adfLocalizedDate: config.format: config.locale }}
+            @if (dateConfig.locale) {
+                {{ date | adfLocalizedDate: dateConfig.format: dateConfig.locale }}
             } @else {
-                {{ date | adfLocalizedDate: config.format }}
+                {{ date | adfLocalizedDate: dateConfig.format }}
             }
         }
     </span>

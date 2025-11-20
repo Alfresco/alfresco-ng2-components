@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation, signal, computed, effect } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 
 @Component({
     selector: 'adf-datatable-cell',
@@ -77,6 +78,7 @@ export class DataTableCellComponent implements OnInit {
 
     protected destroyRef = inject(DestroyRef);
     protected dataTableService = inject(DataTableService, { optional: true });
+    protected readonly userPreferencesService = inject(UserPreferencesService);
     value$ = new BehaviorSubject<any>('');
 
     // Signal to track the raw computed title (without tooltip override)
@@ -84,6 +86,18 @@ export class DataTableCellComponent implements OnInit {
 
     // Computed signal that automatically combines tooltip input with computed title
     title = computed(() => this.tooltip || this.rawComputedTitle());
+
+    // Store the latest value for locale change re-computation
+    private latestValue: any = null;
+
+    constructor() {
+        // Listen to locale changes and re-compute the title with the latest value
+        effect(() => {
+            this.userPreferencesService.localeSignal();
+            // When locale changes, re-compute title using the stored latest value
+            this.recomputeTitle();
+        });
+    }
 
     ngOnInit() {
         this.updateValue();
@@ -94,8 +108,18 @@ export class DataTableCellComponent implements OnInit {
         if (this.column?.key && this.row && this.data) {
             const value = this.data.getValue(this.row, this.column, this.resolverFn);
             this.value$.next(value);
-            this.rawComputedTitle.set(this.computeTitle(value));
+            // Store the value for locale change re-computation and update the title
+            this.latestValue = value;
+            this.recomputeTitle();
         }
+    }
+
+    /**
+     * Re-computes the title based on the current latestValue.
+     * This is called both when the value changes (via updateValue) and when the locale changes (via effect).
+     */
+    private recomputeTitle(): void {
+        this.rawComputedTitle.set(this.computeTitle(this.latestValue));
     }
 
     private subscribeToRowUpdates() {

@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, ChangeDetectorRef, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, effect, signal } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 import { AsyncPipe } from '@angular/common';
-import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 
 @Component({
     imports: [LocalizedDatePipe, TimeAgoPipe, AsyncPipe],
@@ -36,12 +35,10 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     @Input()
     dateConfig: DateConfig;
 
-    config: DateConfig = {};
+    config = signal<DateConfig>({});
 
     private readonly appConfig: AppConfigService = inject(AppConfigService);
     private readonly localizedDatePipe: LocalizedDatePipe = inject(LocalizedDatePipe);
-    private readonly userPreferencesService: UserPreferencesService = inject(UserPreferencesService);
-    private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
     private userLocale: string = 'en';
 
@@ -57,8 +54,6 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         effect(() => {
             this.userLocale = this.userPreferencesService.localeSignal() || 'en';
             this.setConfig();
-            this.updateValue(); // Recalculate computedTitle with new locale
-            this.cdr.markForCheck();
         });
     }
 
@@ -68,7 +63,8 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     protected override computeTitle(value: any): string {
         if (value) {
-            return this.localizedDatePipe.transform(value, this.config.tooltipFormat, this.config.locale) || '';
+            const currentConfig = this.config();
+            return this.localizedDatePipe.transform(value, currentConfig.tooltipFormat, currentConfig.locale) || '';
         }
         return '';
     }
@@ -82,15 +78,19 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     }
 
     private setCustomConfig(): void {
-        this.config.format = this.dateConfig?.format || this.getDefaultFormat();
-        this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getDefaultTooltipFormat();
-        this.config.locale = this.normalizeLocale(this.dateConfig?.locale || this.getDefaultLocale());
+        this.config.set({
+            format: this.dateConfig?.format || this.getDefaultFormat(),
+            tooltipFormat: this.dateConfig?.tooltipFormat || this.getDefaultTooltipFormat(),
+            locale: this.normalizeLocale(this.dateConfig?.locale || this.getDefaultLocale())
+        });
     }
 
     private setDefaultConfig(): void {
-        this.config.format = this.getDefaultFormat();
-        this.config.tooltipFormat = this.getDefaultTooltipFormat();
-        this.config.locale = this.normalizeLocale(this.getDefaultLocale());
+        this.config.set({
+            format: this.getDefaultFormat(),
+            tooltipFormat: this.getDefaultTooltipFormat(),
+            locale: this.normalizeLocale(this.getDefaultLocale())
+        });
     }
 
     private normalizeLocale(locale: string): string {

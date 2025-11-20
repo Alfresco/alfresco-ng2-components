@@ -131,9 +131,9 @@ describe('DateCellComponent', () => {
         checkDisplayedDate(expectedDate);
         checkDisplayedTooltip(expectedTooltip);
 
-        expect(component.config.format).toEqual('mediumDate');
-        expect(component.config.tooltipFormat).toEqual('long');
-        expect(component.config.locale).toEqual('en-US');
+        expect(component.config().format).toEqual('mediumDate');
+        expect(component.config().tooltipFormat).toEqual('long');
+        expect(component.config().locale).toEqual('en-US');
     });
 
     it('should display date and tooltip with defaules values if NO dateConfig or appConfig is provided', () => {
