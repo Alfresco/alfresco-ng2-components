@@ -104,7 +104,7 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         this.config.set({
             format: this.dateConfig?.format || this.getDefaultFormat(),
             tooltipFormat: this.dateConfig?.tooltipFormat || this.getDefaultTooltipFormat(),
-            locale: this.normalizeLocale(this.dateConfig?.locale || this.getDefaultLocale())
+            locale: this.normalizeLocale(this.dateConfig?.locale || this.userLocale)
         });
     }
 
@@ -112,7 +112,7 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         this.config.set({
             format: this.getDefaultFormat(),
             tooltipFormat: this.getDefaultTooltipFormat(),
-            locale: this.normalizeLocale(this.getDefaultLocale())
+            locale: this.normalizeLocale(this.userLocale)
         });
     }
 
@@ -130,12 +130,6 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     private getDefaultFormat(): string {
         return this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format);
-    }
-
-    private getDefaultLocale(): string {
-        // Always use the user locale from UserPreferencesService
-        // This is kept in sync via subscription and reflects the user's current locale choice
-        return this.userLocale;
     }
 
     private getDefaultTooltipFormat(): string {
