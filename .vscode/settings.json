@@ -5,7 +5,6 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/.DS_Store": true,
-    "**/coverage": true,
     "**/.happypack": true
   },
   "markdownlint.config": {
