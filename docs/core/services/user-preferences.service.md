@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2025-11-20
 ---
 
-# [User Preferences Service](../../../lib/core/src/lib/common/services/user-preferences.service.ts "Defined in user-preferences.service.ts")
+# User Preferences Service
 
 Stores preferences for the app and for individual components.
 
@@ -32,10 +32,10 @@ Stores preferences for the app and for individual components.
     Check if an item is present in the storage
     -   _property:_ `string`  - Name of the property
     -   **Returns** `boolean` - True if the item is present, false otherwise
--   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **select**(property: `string`): `Observable<any>`<br/>
     Sets up a callback to notify when a property has changed.
     -   _property:_ `string`  - The property to watch
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Notification callback
+    -   **Returns** `Observable<any>` - Notification callback
 -   **set**(property: `string`, value: `any`)<br/>
     Sets a preference property.
     -   _property:_ `string`  - Name of the property
@@ -71,7 +71,7 @@ class AppComponent {
 }
 ```
 
-As soon as you assign the storage prefix, all settings that you get or set via the [`UserPreferencesService`](../../core/services/user-preferences.service.md) will be saved to a dedicated profile.
+As soon as you assign the storage prefix, all settings that you get or set via the `UserPreferencesService` will be saved to a dedicated profile.
 
 You can import the service into your controller and use its APIs as shown below:
 
@@ -96,7 +96,7 @@ The service also provides quick access to a set of the "known" properties used a
 | ---- | ---- | ----------- |
 | authType | `string` | Authorization type (can be "ECM", "BPM" or "ALL"). |
 | disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
-| paginationSize | `number` | [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) size. |
+| paginationSize | `number` | `Pagination` size. |
 | locale | `string` | Current locale setting. |
 
 ## User Preference onChange Stream
@@ -112,13 +112,13 @@ whole set of user properties. This is useful when a component needs to react to 
 ```
 
 You can also use the `select` method to get notification when a particular property is changed.
-A set of basic properties is added into the enumeration [`UserPreferenceValues`](lib/core/src/lib/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties: 
+A set of basic properties is added into the enumeration `UserPreferenceValues` which gives you the key value to access the standard user preference service properties: 
 
-- **PaginationSize**
-- **DisableCSRF**
-- **Locale**
-- **SupportedPageSizes**
-- **ExpandedSideNavStatus**
+- `PaginationSize`
+- `DisableCSRF`
+- `Locale`
+- `SupportedPageSizes`
+- `ExpandedSideNavStatus`
 
 ```ts
     userPreferences.disableCSRF = true;
