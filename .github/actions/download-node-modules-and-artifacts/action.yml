@@ -8,6 +8,8 @@ runs:
       with:
         path: dist
         key: dist-${{ github.run_id }}-${{ github.run_attempt }}
+        restore-keys: |
+          dist-${{ github.run_id }}-
         fail-on-cache-miss: true
 
     - name: Restore nxcache from cache
@@ -15,6 +17,8 @@ runs:
       with:
         path: nxcache
         key: nxcache-${{ github.run_id }}-${{ github.run_attempt }}
+        restore-keys: |
+          nxcache-${{ github.run_id }}-
         fail-on-cache-miss: true
 
     - name: Restore node_modules from cache
@@ -22,6 +26,8 @@ runs:
       with:
         path: node_modules
         key: node-modules-${{ github.run_id }}-${{ github.run_attempt }}
+        restore-keys: |
+          node-modules-${{ github.run_id }}-
         fail-on-cache-miss: true
 
     - name: show files

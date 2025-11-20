@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, ChangeDetectorRef, effect } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 import { AsyncPipe } from '@angular/common';
-import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 
 @Component({
     imports: [LocalizedDatePipe, TimeAgoPipe, AsyncPipe],
@@ -52,19 +51,18 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         locale: undefined
     };
 
-    ngOnInit(): void {
-        // Subscribe to locale changes
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => {
-                this.userLocale = locale || 'en';
-                this.setConfig();
-                this.updateValue(); // Recalculate computedTitle with new locale
-                this.cdr.markForCheck();
-            });
+    constructor() {
+        super();
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            this.userLocale = this.userPreferencesService.localeSignal() || 'en';
+            this.setConfig();
+            this.updateValue(); // Recalculate computedTitle with new locale
+            this.cdr.markForCheck();
+        });
+    }
 
-        this.setConfig();
+    ngOnInit(): void {
         super.ngOnInit();
     }
 

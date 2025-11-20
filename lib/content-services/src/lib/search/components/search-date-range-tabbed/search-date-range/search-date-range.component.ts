@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, effect, EventEmitter, inject, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { endOfDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
@@ -23,7 +23,7 @@ import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRange } from './search-date-range';
 import { FormBuilder, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, UserPreferencesService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -100,7 +100,13 @@ export class SearchDateRangeComponent implements OnInit {
         private userPreferencesService: UserPreferencesService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
         @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats
-    ) {}
+    ) {
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+        });
+    }
 
     readonly endDateValidator = (formControl: UntypedFormControl): { [key: string]: boolean } | null => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
@@ -114,10 +120,6 @@ export class SearchDateRangeComponent implements OnInit {
     ngOnInit(): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ? parse(this.maxDate, this.dateFormat, new Date()) : new Date());
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.form.controls.dateRangeType.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));

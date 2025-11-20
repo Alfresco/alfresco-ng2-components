@@ -17,10 +17,9 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
 import { differenceInDays, formatDistance } from 'date-fns';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DateFnsUtils } from '../common/utils/date-fns-utils';
 
 @Pipe({
@@ -32,25 +31,20 @@ export class TimeAgoPipe implements PipeTransform {
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
 
-    defaultLocale: string;
     defaultDateTimeFormat: string;
 
     constructor(
         public userPreferenceService: UserPreferencesService,
         public appConfig: AppConfigService
     ) {
-        this.userPreferenceService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed())
-            .subscribe((locale) => {
-                this.defaultLocale = locale || TimeAgoPipe.DEFAULT_LOCALE;
-            });
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 
     transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined) {
-            const actualLocale = locale || this.defaultLocale;
+            // Use signal directly - no subscription needed!
+            const defaultLocale = this.userPreferenceService.localeSignal() || TimeAgoPipe.DEFAULT_LOCALE;
+            const actualLocale = locale || defaultLocale;
             const diff = differenceInDays(new Date(), new Date(value));
             if (diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);

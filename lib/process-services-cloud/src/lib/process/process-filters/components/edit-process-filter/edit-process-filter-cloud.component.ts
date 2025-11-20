@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, effect, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +29,7 @@ import {
     ProcessFilterProperties,
     ProcessSortFilterProperty
 } from '../../models/process-filter-cloud.model';
-import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../../services/process-cloud.service';
@@ -101,7 +101,7 @@ interface ProcessFilterFormProps {
     styleUrls: ['./edit-process-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
+export class EditProcessFilterCloudComponent implements OnChanges {
     /** The name of the application. */
     @Input()
     appName: string = '';
@@ -228,13 +228,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         private processFilterCloudService: ProcessFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService,
         private processCloudService: ProcessCloudService
-    ) {}
-
-    ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
+    ) {
+        // Use effect to react to locale signal changes (must be in injection context)
+        effect(() => {
+            const locale = this.userPreferencesService.localeSignal();
+            if (locale) {
+                this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+            }
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

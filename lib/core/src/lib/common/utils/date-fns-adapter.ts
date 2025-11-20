@@ -17,10 +17,11 @@
 
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { DateFnsUtils } from './date-fns-utils';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { effect, Inject, Injectable, Optional } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
-import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
+import { UserPreferencesService } from '../services/user-preferences.service';
 import { isValid, Locale, parse } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 
 /**
  * Date-fns adapter with moment-to-date-fns conversion.
@@ -82,10 +83,24 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         @Optional() @Inject(MAT_DATE_FORMATS) private formats: MatDateFormats,
         preferences: UserPreferencesService
     ) {
-        super(matDateLocale);
+        // Ensure we have a valid locale for the base class
+        // If matDateLocale is not provided, use enUS as default
+        super(matDateLocale || enUS);
 
-        preferences.select(UserPreferenceValues.Locale).subscribe((locale: string) => {
-            this.setLocale(DateFnsUtils.getLocaleFromString(locale));
+        // Initialize locale synchronously from signal's initial value
+        // This ensures locale is set before any format() calls
+        const initialLocale = preferences.localeSignal();
+        if (initialLocale) {
+            this.setLocale(DateFnsUtils.getLocaleFromString(initialLocale));
+        }
+
+        // Use effect to reactively update locale when signal changes
+        // Note: This adapter is a singleton service, so no cleanup needed
+        effect(() => {
+            const locale = preferences.localeSignal();
+            if (locale) {
+                this.setLocale(DateFnsUtils.getLocaleFromString(locale));
+            }
         });
     }
 

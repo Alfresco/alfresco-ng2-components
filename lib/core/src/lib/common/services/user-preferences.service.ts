@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { inject, Injectable, RendererFactory2 } from '@angular/core';
+import { inject, Injectable, RendererFactory2, Signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
@@ -25,6 +25,7 @@ import { LanguageItem } from './language-item.interface';
 import { DOCUMENT } from '@angular/common';
 import { Directionality, Direction } from '@angular/cdk/bidi';
 import { DEFAULT_LANGUAGE_LIST } from '../models/default-languages.model';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 // eslint-disable-next-line no-shadow
 export enum UserPreferenceValues {
@@ -53,9 +54,77 @@ export class UserPreferencesService {
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(public translate: TranslateService, private appConfig: AppConfigService, private storage: StorageService) {
+    /**
+     * Observable that emits the current locale whenever it changes.
+     * This is a convenience property that simplifies subscribing to locale changes.
+     *
+     * @example Observable usage (requires manual unsubscription):
+     * ```typescript
+     * constructor(private userPreferencesService: UserPreferencesService) {
+     *   this.userPreferencesService.locale$
+     *     .pipe(takeUntilDestroyed())
+     *     .subscribe(locale => {
+     *       this.currentLocale = locale;
+     *     });
+     * }
+     * ```
+     *
+     * @example Signal usage (automatic cleanup, recommended):
+     * ```typescript
+     * export class MyComponent {
+     *   private userPreferencesService = inject(UserPreferencesService);
+     *   currentLocale = this.userPreferencesService.localeSignal; // Signal - no subscription needed!
+     * }
+     * ```
+     */
+    readonly locale$: Observable<string>;
+
+    /**
+     * Signal that provides the current locale value.
+     * Automatically handles cleanup - no need for takeUntilDestroyed or manual unsubscription.
+     * This is the recommended way to access locale in components.
+     */
+    readonly localeSignal: Signal<string>;
+
+    /**
+     * Observable that emits the current pagination size whenever it changes.
+     */
+    readonly paginationSize$: Observable<number>;
+
+    /**
+     * Signal that provides the current pagination size value.
+     */
+    readonly paginationSizeSignal: Signal<number>;
+
+    /**
+     * Observable that emits the supported page sizes whenever they change.
+     */
+    readonly supportedPageSizes$: Observable<number[]>;
+
+    /**
+     * Signal that provides the supported page sizes array.
+     */
+    readonly supportedPageSizesSignal: Signal<number[]>;
+
+    constructor(
+        public translate: TranslateService,
+        private appConfig: AppConfigService,
+        private storage: StorageService
+    ) {
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
+
+        // Initialize convenience observables
+        this.locale$ = this.select<string>(UserPreferenceValues.Locale);
+        this.paginationSize$ = this.select<number>(UserPreferenceValues.PaginationSize);
+        this.supportedPageSizes$ = this.select<string>(UserPreferenceValues.SupportedPageSizes).pipe(
+            map((value) => (value ? JSON.parse(value) : this.defaults.supportedPageSizes))
+        );
+
+        // Initialize convenience signals (automatically handle cleanup)
+        this.localeSignal = toSignal(this.locale$, { initialValue: this.defaults.locale });
+        this.paginationSizeSignal = toSignal(this.paginationSize$, { initialValue: this.defaults.paginationSize });
+        this.supportedPageSizesSignal = toSignal(this.supportedPageSizes$, { initialValue: this.defaults.supportedPageSizes });
 
         this.appConfig.onLoad.subscribe(() => {
             this.initUserPreferenceStatus();
