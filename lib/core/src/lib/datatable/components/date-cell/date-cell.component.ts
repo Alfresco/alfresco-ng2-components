@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject, effect, signal, computed } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
-import { AsyncPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    imports: [LocalizedDatePipe, TimeAgoPipe, AsyncPipe],
     selector: 'adf-date-cell',
-    templateUrl: './date-cell.component.html',
+    template: `
+        @if (formattedDate()) {
+            <span [title]="title()" class="adf-datatable-cell-value">{{ formattedDate() }}</span>
+        }
+    `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [LocalizedDatePipe]
+    providers: [LocalizedDatePipe, TimeAgoPipe]
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
@@ -39,6 +42,7 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     private readonly appConfig: AppConfigService = inject(AppConfigService);
     private readonly localizedDatePipe: LocalizedDatePipe = inject(LocalizedDatePipe);
+    private readonly timeAgoPipe: TimeAgoPipe = inject(TimeAgoPipe);
 
     private userLocale: string = 'en';
 
@@ -47,6 +51,25 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         tooltipFormat: 'medium',
         locale: undefined
     };
+
+    // Convert value$ observable to signal for reactive computation
+    private readonly dateValue = toSignal(this.value$);
+
+    // Computed signal that automatically formats the date based on value and config
+    protected readonly formattedDate = computed(() => {
+        const date = this.dateValue();
+        const currentConfig = this.config();
+
+        if (!date) {
+            return '';
+        }
+
+        if (currentConfig.format === 'timeAgo') {
+            return this.timeAgoPipe.transform(date, currentConfig.locale) || '';
+        }
+
+        return this.localizedDatePipe.transform(date, currentConfig.format, currentConfig.locale) || '';
+    });
 
     constructor() {
         super();
