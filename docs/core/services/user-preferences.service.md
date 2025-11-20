@@ -2,7 +2,7 @@
 Title: User Preferences Service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2025-11-20
 ---
 
 # [User Preferences Service](../../../lib/core/src/lib/common/services/user-preferences.service.ts "Defined in user-preferences.service.ts")
@@ -112,7 +112,13 @@ whole set of user properties. This is useful when a component needs to react to 
 ```
 
 You can also use the `select` method to get notification when a particular property is changed.
-A set of basic properties is added into the enumeration [`UserPreferenceValues`](lib/core/src/lib/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale**, **SupportedPageSizes** and **ExpandedSideNavStatus**.
+A set of basic properties is added into the enumeration [`UserPreferenceValues`](lib/core/src/lib/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties: 
+
+- **PaginationSize**
+- **DisableCSRF**
+- **Locale**
+- **SupportedPageSizes**
+- **ExpandedSideNavStatus**
 
 ```ts
     userPreferences.disableCSRF = true;
@@ -142,11 +148,13 @@ export class MyComponent {
 ```
 
 Available signals:
+
 - `localeSignal` - Current locale value
 - `paginationSizeSignal` - Current pagination size
 - `supportedPageSizesSignal` - Supported page sizes array
 
 **Benefits of signals:**
+
 - ✅ No manual subscription/unsubscription needed
 - ✅ Automatic cleanup when component is destroyed
 - ✅ Better performance with fine-grained reactivity
