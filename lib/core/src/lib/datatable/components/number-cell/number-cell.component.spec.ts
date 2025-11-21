@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NumberCellComponent } from './number-cell.component';
 import { DecimalConfig } from '../../data/data-column.model';
-import { BehaviorSubject } from 'rxjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
@@ -30,8 +29,8 @@ describe('NumberCellComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const renderAndCheckNumberValue = (decimalConfig: DecimalConfig, value: number, expectedResult: string) => {
-        component.value$ = new BehaviorSubject<number>(value);
         component.decimalConfig = decimalConfig;
+        component.value$.next(value);
 
         fixture.detectChanges();
         const displayedNumber = testingUtils.getByCSS('span');
@@ -79,8 +78,8 @@ describe('NumberCellComponent locale', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         registerLocaleData(localePL);
 
-        component.value$ = new BehaviorSubject<number>(123.45);
         component.decimalConfig = { locale: 'pl-PL' };
+        component.value$.next(123.45);
 
         fixture.detectChanges();
         const displayedNumber = testingUtils.getByCSS('span');

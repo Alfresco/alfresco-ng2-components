@@ -15,46 +15,45 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, computed } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
-import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-json-cell',
-    imports: [CommonModule, MatButtonModule, MatDialogModule],
+    imports: [MatButtonModule, MatDialogModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="value$ | async as value; else editEmpty">
-            <button mat-button color="primary" (click)="view()">json</button>
-        </ng-container>
-
-        <ng-template #editEmpty>
-            <button *ngIf="editable" mat-button color="primary" (click)="view()">json</button>
-        </ng-template>
+        @if (shouldShowButton()) {
+            <button mat-button (click)="view()">json</button>
+        }
     `,
     styleUrls: ['./json-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
-export class JsonCellComponent extends DataTableCellComponent implements OnInit {
+export class JsonCellComponent extends DataTableCellComponent {
     /** Editable JSON. */
     @Input()
     editable: boolean = false;
+
+    private readonly jsonValue = toSignal(this.value$);
+
+    readonly shouldShowButton = computed(() => {
+        const value = this.jsonValue();
+        return !!value || this.editable;
+    });
 
     constructor(private dialog: MatDialog) {
         super();
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-    }
-
     view() {
-        const rawValue: string | any = this.data.getValue(this.row, this.column, this.resolverFn);
-        const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : rawValue;
+        const rawValue = this.data.getValue(this.row, this.column, this.resolverFn);
+        const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : String(rawValue ?? '');
 
         const settings: EditJsonDialogSettings = {
             title: this.column.title,
@@ -69,12 +68,6 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
                 minHeight: '50%'
             })
             .afterClosed()
-            .subscribe((/*result: string*/) => {
-                if (typeof rawValue === 'object') {
-                    // todo: update cell value as object
-                } else {
-                    // todo: update cell value as string
-                }
-            });
+            .subscribe();
     }
 }
