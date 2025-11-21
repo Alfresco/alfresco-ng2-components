@@ -19,14 +19,13 @@ import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, 
 import { DataSorting, HeaderFilterTemplateDirective, PaginationModel } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../../search/services/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/models/filter-search.interface';
-import { CommonModule } from '@angular/common';
 import { SearchFilterContainerComponent } from '../../../search/components/search-filter-container/search-filter-container.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NodePaging } from '@alfresco/js-api';
+import type { NodePaging } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-filter-header',
-    imports: [CommonModule, HeaderFilterTemplateDirective, SearchFilterContainerComponent],
+    imports: [HeaderFilterTemplateDirective, SearchFilterContainerComponent],
     templateUrl: './filter-header.component.html'
 })
 export class FilterHeaderComponent implements OnInit, OnChanges {
