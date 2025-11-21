@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, OnInit, DEFAULT_CURRENCY_CODE, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, DEFAULT_CURRENCY_CODE, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CurrencyConfig } from '../../data/data-column.model';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
-    imports: [CommonModule],
+    imports: [AsyncPipe, CurrencyPipe],
     selector: 'adf-amount-cell',
     templateUrl: './amount-cell.component.html',
     host: { class: 'adf-datatable-content-cell' },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AmountCellComponent extends DataTableCellComponent implements OnInit {
+export class AmountCellComponent extends DataTableCellComponent {
     @Input()
     currencyConfig: CurrencyConfig;
 
@@ -39,8 +39,4 @@ export class AmountCellComponent extends DataTableCellComponent implements OnIni
         digitsInfo: undefined,
         locale: undefined
     };
-
-    ngOnInit() {
-        super.ngOnInit();
-    }
 }
