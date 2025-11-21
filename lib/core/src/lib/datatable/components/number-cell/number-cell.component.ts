@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DecimalConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     imports: [CommonModule],
@@ -28,7 +29,7 @@ import { CommonModule } from '@angular/common';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NumberCellComponent extends DataTableCellComponent implements OnInit {
+export class NumberCellComponent extends DataTableCellComponent {
     @Input()
     decimalConfig: DecimalConfig;
 
@@ -37,7 +38,5 @@ export class NumberCellComponent extends DataTableCellComponent implements OnIni
         locale: undefined
     };
 
-    ngOnInit() {
-        super.ngOnInit();
-    }
+    readonly numberValue = toSignal(this.value$);
 }
