@@ -59,11 +59,8 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
     isFilterServiceActive: boolean;
 
+    private readonly searchFilterQueryBuilder = inject(SearchHeaderQueryBuilderService);
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
-        this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
-    }
 
     ngOnInit() {
         this.searchFilterQueryBuilder.executed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((resultSetPaging) => {
