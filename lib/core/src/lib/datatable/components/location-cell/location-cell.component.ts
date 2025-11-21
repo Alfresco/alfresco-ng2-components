@@ -15,33 +15,29 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PathInfo } from '../../../models/path.model';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    imports: [AsyncPipe, RouterModule],
+    imports: [RouterModule],
     selector: 'adf-location-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container>
-            <a [title]="tooltip" [routerLink]="link">
-                {{ value$ | async }}
-            </a>
-        </ng-container>
+        <a [title]="tooltip" [routerLink]="link">
+            {{ locationValue() }}
+        </a>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-location-cell adf-datatable-content-cell' }
 })
-export class LocationCellComponent extends DataTableCellComponent implements OnInit {
+export class LocationCellComponent extends DataTableCellComponent {
     @Input()
-    link: any[];
+    link: (string | number)[];
 
-    ngOnInit() {
-        super.ngOnInit();
-    }
+    readonly locationValue = toSignal(this.value$);
 
     protected updateValue(): void {
         if (this.column?.key && this.column?.format && this.row && this.data) {

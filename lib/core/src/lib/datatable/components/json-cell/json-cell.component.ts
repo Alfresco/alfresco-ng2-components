@@ -19,13 +19,12 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, computed 
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
-import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-json-cell',
-    imports: [CommonModule, MatButtonModule, MatDialogModule],
+    imports: [MatButtonModule, MatDialogModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         @if (shouldShowButton()) {
