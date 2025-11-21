@@ -6,7 +6,7 @@
     &-radio-buttons-widget-cloud {
         .adf-label {
             display: flex;
-            align-items: center;
+            justify-content: flex-start;
             gap: 4px;
             font-size: var(--adf-radio-buttons-font-size, var(--adf-form-label-font-size, var(--theme-caption-font-size)));
             font-weight: var(--adf-radio-buttons-font-weight, var(--adf-form-label-font-weight, var(--theme-font-weight)));
