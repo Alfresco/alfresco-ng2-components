@@ -15,40 +15,32 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     imports: [MatIconModule],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        @if (icon) {
-            <mat-icon [title]="title()" aria-hidden="true">{{ icon }}</mat-icon>
+        @if (icon()) {
+            <mat-icon [title]="title()" aria-hidden="true">{{ icon() }}</mat-icon>
         }
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
-export class IconCellComponent extends DataTableCellComponent implements OnInit {
-    protected readonly changeDetectorRef = inject(ChangeDetectorRef);
+export class IconCellComponent extends DataTableCellComponent {
+    private readonly iconValue = toSignal(this.value$);
 
-    icon: string = '';
+    readonly icon = computed(() => {
+        const value = this.iconValue();
+        return this.validateIconValue(value) ? value : '';
+    });
 
-    ngOnInit(): void {
-        super.ngOnInit();
-        this.value$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
-            const newIcon = this.validateIconValue(value) ? value : '';
-            if (this.icon !== newIcon) {
-                this.icon = newIcon;
-                this.changeDetectorRef.detectChanges();
-            }
-        });
-    }
-
-    private validateIconValue(value: any): boolean {
+    private validateIconValue(value: unknown): boolean {
         return typeof value === 'string';
     }
 }
