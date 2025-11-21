@@ -540,7 +540,7 @@ export class FormModel implements ProcessFormModel {
      * Returns true if the field should skip validation (field or parent is hidden).
      *
      * Parent visibility is only checked if:
-     * - `enableParentVisibilityCheck` is true (feature flag enabled)
+     * - `enableParentVisibilityCheck` is true
      * - `field.checkParentVisibilityForValidation` is true (field opt-in enabled)
      *
      * @param field The form field to check
