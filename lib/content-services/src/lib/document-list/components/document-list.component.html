@@ -35,7 +35,11 @@
         <adf-filter-header
             [currentFolderId]="currentFolderId"
             [value]="filterValue"
-            (filterSelection)="onFilterSelectionChange($event)" />
+            [pagination]="pagination | async"
+            [sorting]="sortingSubject | async"
+            (filterSelection)="onFilterSelectionChange($event)"
+            (searchResultsReady)="onFilterSearchResultsReady($event)"
+            (filtersCleared)="onFiltersCleared()" />
     </div>
 
     <adf-no-content-template>
