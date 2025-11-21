@@ -20,14 +20,23 @@ import { JwtHelperService } from './jwt-helper.service';
 import { ApplicationAccessModel } from '../models/application-access.model';
 import { AppConfigService } from '../../app-config/app-config.service';
 
+export interface IUserAccessService {
+    fetchUserAccess(): void;
+    hasGlobalAccess(rolesToCheck: string[]): boolean;
+    hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean;
+}
+
 @Injectable({
     providedIn: 'root'
 })
-export class UserAccessService {
+export class UserAccessService implements IUserAccessService {
     private globalAccess: string[];
     private applicationAccess: ApplicationAccessModel[];
 
-    constructor(private jwtHelperService: JwtHelperService, private appConfigService: AppConfigService) {}
+    constructor(
+        private jwtHelperService: JwtHelperService,
+        private appConfigService: AppConfigService
+    ) {}
 
     fetchUserAccess() {
         if (this.hasRolesInRealmAccess()) {
