@@ -5,6 +5,7 @@
         >
         <mat-radio-group class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
             <mat-radio-button
+                [required]="field.required"
                 [title]="field.tooltip"
                 [id]="field.id + '-' + opt.id"
                 [name]="field.id"

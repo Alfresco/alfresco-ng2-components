@@ -1,4 +1,8 @@
 .adf {
+    &-asterisk {
+        color: var(--adf-error-color);
+    }
+
     &-radio-button-container {
         margin-bottom: 15px;
         display: flex;
