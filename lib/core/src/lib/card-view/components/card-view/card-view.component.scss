@@ -28,21 +28,9 @@
         .adf-property-field {
             width: 100%;
 
-            #{ms.$mat-form-field-underline} {
-                display: none;
-            }
-
             #{ms.$mat-input-element} {
                 text-overflow: ellipsis;
                 line-height: 20px;
-
-                &.adf-property-value-editable {
-                    padding: 6px 0 6px 12px;
-
-                    &:disabled {
-                        color: var(--adf-metadata-property-panel-label-color);
-                    }
-                }
             }
 
             .adf-card-view__key-value-pairs__row {
@@ -51,76 +39,12 @@
                     padding-left: 12px;
                 }
             }
-
-            #{ms.$mat-form-text-field-infix} {
-                border-top-width: 0;
-            }
-
-            #{ms.$mat-form-field-flex} {
-                padding-top: 0;
-            }
-
-            #{ms.$mat-form-field-wrapper} {
-                background-color: inherit;
-                padding-bottom: 0;
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            #{ms.$mat-form-field-label} {
-                padding: 0;
-                justify-content: center;
-                display: flex;
-                flex-direction: column;
-                height: 20px;
-
-                &.adf-property-field-label--empty {
-                    transform: translateY(-1.3437em) scale(1);
-                }
-            }
         }
 
         .adf-card-view-textitem {
             .adf-property-field {
                 padding-top: 0;
             }
-        }
-    }
-
-    .adf-property-value {
-        &.adf-property-value-editable {
-            background-color: var(--adf-metadata-buttons-background-color);
-            box-sizing: border-box;
-            border-radius: 6px;
-            height: 32px;
-            padding-left: 10px;
-
-            #{ms.$mat-input-element} {
-                color: var(--adf-metadata-action-button-clear-color);
-                padding: 5px 0 6px 12px;
-                margin: 5px 0 0;
-            }
-        }
-
-        &.adf-property-readonly-value {
-            color: var(--adf-metadata-property-panel-label-color);
-
-            #{ms.$mat-input-element} {
-                color: var(--adf-metadata-property-panel-label-color);
-            }
-        }
-
-        &-has-error {
-            border: 1px solid var(--theme-warn-color);
-        }
-
-        &-input {
-            background-color: var(--adf-metadata-buttons-background-color);
-            box-sizing: border-box;
-            border-radius: 6px;
-            padding: 6px 0;
-            margin: 0;
-            width: 100%;
         }
     }
 }

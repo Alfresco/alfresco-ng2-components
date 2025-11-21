@@ -94,11 +94,4 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-
-    #{ms.$mat-line-ripple} {
-        &::before,
-        &::after {
-            display: none;
-        }
-    }
 }
