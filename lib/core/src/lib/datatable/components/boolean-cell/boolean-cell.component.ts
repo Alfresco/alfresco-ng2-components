@@ -15,29 +15,26 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: ` <span [title]="title()">{{ boolValue }}</span> `,
+    template: ` <span [title]="title()">{{ boolValue() }}</span> `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
-export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
-    boolValue = '';
+export class BooleanCellComponent extends DataTableCellComponent {
+    private readonly booleanValue = toSignal(this.value$);
 
-    ngOnInit() {
-        super.ngOnInit();
+    readonly boolValue = computed(() => {
+        const value = this.booleanValue();
+        return this.transformBoolean(value);
+    });
 
-        this.value$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
-            this.boolValue = this.transformBoolean(value);
-        });
-    }
-
-    private transformBoolean(value: any): string {
+    private transformBoolean(value: unknown): string {
         if (value === true || value === 'true') {
             return 'true';
         }
