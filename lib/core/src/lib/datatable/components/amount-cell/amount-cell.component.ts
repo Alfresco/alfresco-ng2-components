@@ -18,10 +18,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, DEFAULT_CURRENCY_CODE, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CurrencyConfig } from '../../data/data-column.model';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    imports: [AsyncPipe, CurrencyPipe],
+    imports: [CurrencyPipe],
     selector: 'adf-amount-cell',
     templateUrl: './amount-cell.component.html',
     host: { class: 'adf-datatable-content-cell' },
@@ -39,4 +40,6 @@ export class AmountCellComponent extends DataTableCellComponent {
         digitsInfo: undefined,
         locale: undefined
     };
+
+    readonly amountValue = toSignal(this.value$);
 }

@@ -1,4 +1,4 @@
-@let amount = value$ | async;
+@let amount = amountValue();
 @if (amount) {
     <span [title]="amount">
         {{ amount | currency:

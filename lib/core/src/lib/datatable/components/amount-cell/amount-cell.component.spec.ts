@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AmountCellComponent } from './amount-cell.component';
 import { CurrencyConfig } from '../../data/data-column.model';
-import { BehaviorSubject } from 'rxjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
@@ -30,8 +29,8 @@ describe('AmountCellComponent', () => {
     let testingUtils: UnitTestingUtils;
 
     const renderAndCheckCurrencyValue = (currencyConfig: CurrencyConfig, value: number, expectedResult: string) => {
-        component.value$ = new BehaviorSubject<number>(value);
         component.currencyConfig = currencyConfig;
+        component.value$.next(value);
 
         fixture.detectChanges();
         const displayedAmount = testingUtils.getByCSS('span');
@@ -89,8 +88,8 @@ describe('AmountCellComponent locale', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         registerLocaleData(localePL);
 
-        component.value$ = new BehaviorSubject<number>(123.45);
         component.currencyConfig = { code: 'PLN', display: 'symbol', locale: 'pl-PL' };
+        component.value$.next(123.45);
 
         fixture.detectChanges();
         const displayedAmount = testingUtils.getByCSS('span');
