@@ -229,6 +229,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -273,6 +274,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const container = form.fields[0] as ContainerModel;
             container.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -426,6 +428,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -570,6 +573,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -753,6 +757,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -917,6 +922,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -1081,6 +1087,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -1235,6 +1242,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -1400,6 +1408,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');
@@ -1585,6 +1594,7 @@ describe('FormFieldValidator', () => {
                 ]
             };
             const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
             const group = form.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = form.getFieldById('field1');

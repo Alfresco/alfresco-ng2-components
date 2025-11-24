@@ -868,6 +868,7 @@ describe('FormModel', () => {
                 ]
             };
             const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
             const group = testForm.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = testForm.getFieldById('field1');
@@ -910,6 +911,7 @@ describe('FormModel', () => {
                 ]
             };
             const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
             const container = testForm.fields[0] as ContainerModel;
             container.field.isVisible = false;
             const field = testForm.getFieldById('field1');
@@ -942,6 +944,7 @@ describe('FormModel', () => {
                 ]
             };
             const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
             const group = testForm.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const sectionField = testForm.getFieldById('section1');
@@ -976,6 +979,7 @@ describe('FormModel', () => {
                 ]
             };
             const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
             const container = testForm.fields[0] as ContainerModel;
             container.field.isVisible = false;
             const innerSectionField = testForm.getFieldById('innerSection');
@@ -1069,6 +1073,7 @@ describe('FormModel', () => {
                 ]
             };
             const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
             const group = testForm.fields[0] as ContainerModel;
             group.field.isVisible = false;
             const field = testForm.getFieldById('field1');
