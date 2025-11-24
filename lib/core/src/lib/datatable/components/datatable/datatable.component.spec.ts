@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
@@ -144,6 +144,8 @@ describe('DataTable', () => {
 
         expect(doubleClickCount).toBe(1);
     };
+
+    const getColumnsHeadersElements = (): DebugElement[] => testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -389,24 +391,52 @@ describe('DataTable', () => {
         });
     });
 
-    it('should emit "sorting-changed" DOM event', (done) => {
-        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc', sortingKey: 'displayName' });
+    it('should emit "sorting-changed" DOM event with correct parameters if sortingKey is missing', () => {
+        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'desc' });
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [column]);
-        dataTable.data.setSorting(new DataSorting('name', 'desc'));
-
-        fixture.nativeElement.addEventListener('sorting-changed', (event: CustomEvent) => {
-            expect(event.detail.key).toBe('name');
-            expect(event.detail.sortingKey).toBe('displayName');
-            expect(event.detail.direction).toBe('asc');
-            done();
-        });
+        dataTable.data.setSorting(new DataSorting('name', 'asc'));
+        spyOn(fixture.nativeElement, 'dispatchEvent');
 
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
 
-        headerColumns[0].nativeElement.click();
+        getColumnsHeadersElements()[0].nativeElement.click();
         fixture.detectChanges();
+        expect(fixture.nativeElement.dispatchEvent).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                type: 'sorting-changed',
+                detail: {
+                    key: 'name',
+                    sortingKey: undefined,
+                    direction: 'desc'
+                },
+                bubbles: true
+            })
+        );
+    });
+
+    it('should emit "sorting-changed" DOM event with correct parameters if sortingKey exists', () => {
+        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'desc', sortingKey: 'displayName' });
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [column]);
+        dataTable.data.setSorting(new DataSorting('displayName', 'asc'));
+        spyOn(fixture.nativeElement, 'dispatchEvent');
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        getColumnsHeadersElements()[0].nativeElement.click();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.dispatchEvent).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                type: 'sorting-changed',
+                detail: {
+                    key: 'name',
+                    sortingKey: 'displayName',
+                    direction: 'desc'
+                },
+                bubbles: true
+            })
+        );
     });
 
     it('should change the rows on changing of the data', () => {
@@ -831,26 +861,41 @@ describe('DataTable', () => {
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
-        headerColumns[0].nativeElement.click();
+        getColumnsHeadersElements()[0].nativeElement.click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).not.toHaveBeenCalled();
     });
 
-    it('should set sorting upon column header clicked', () => {
+    it('should set sorting upon column header clicked when sortingKey is missing', () => {
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }], [new ObjectDataColumn({ key: 'column_1', sortable: true })]);
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
-        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc', { numeric: true }));
+        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc', { numeric: true }));
 
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
-        headerColumns[0].nativeElement.click();
+        getColumnsHeadersElements()[0].nativeElement.click();
         fixture.detectChanges();
 
-        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc', { numeric: true }));
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc', { numeric: true }));
+    });
+
+    it('should set sorting upon column header clicked when sortingKey exists', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }],
+            [new ObjectDataColumn({ key: 'column_1', sortable: true, sortingKey: 'columnSortingKey' })]
+        );
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+        const adapter = dataTable.data;
+        spyOn(adapter, 'setSorting').and.callThrough();
+        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('columnSortingKey', 'asc', { numeric: true }));
+
+        getColumnsHeadersElements()[0].nativeElement.click();
+        fixture.detectChanges();
+
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc', { numeric: true }));
     });
 
     it('should invert sorting upon column header clicked', () => {
@@ -862,7 +907,7 @@ describe('DataTable', () => {
         const sorting = new DataSorting('column_1', 'asc', { numeric: true });
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
+        const headerColumns = getColumnsHeadersElements();
         headerColumns[0].nativeElement.click();
         fixture.detectChanges();
 
@@ -885,8 +930,7 @@ describe('DataTable', () => {
         dataTable.ngAfterViewInit();
 
         const [col1, col2] = dataTable.getSortableColumns();
-        const headerColumns = testingUtils.getAllByCSS('.adf-datatable-cell-header-content');
-        headerColumns[1].nativeElement.click();
+        getColumnsHeadersElements()[1].nativeElement.click();
         fixture.detectChanges();
 
         expect(dataTable.isColumnSortActive(col1)).toBe(false);
