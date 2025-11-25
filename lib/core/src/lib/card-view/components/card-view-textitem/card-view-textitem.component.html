@@ -108,11 +108,9 @@
 
     <div
         *ngSwitchCase="'clickableTemplate'"
-        role="button"
         class="adf-textitem-clickable"
         [ngClass]="{ 'adf-property-read-only': !isEditable }"
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
-        tabindex="0"
         (keyup.enter)="clicked()"
         (click)="clicked()"
     >
