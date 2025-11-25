@@ -25,8 +25,20 @@
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": ["{workspaceRoot}/angular.json", "{workspaceRoot}/e2e/protractor.excludes.json", "{workspaceRoot}/e2e/protractor.conf.js"],
-    "production": ["default", "!{projectRoot}/**/*.spec.[jt]s", "!{projectRoot}/tsconfig.spec.json", "!{projectRoot}/karma.conf.js"]
+    "sharedGlobals": [
+      "{workspaceRoot}/angular.json",
+      "{workspaceRoot}/e2e/protractor.excludes.json",
+      "{workspaceRoot}/e2e/protractor.conf.js"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/**/*.spec.[jt]s",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/karma.conf.js",
+      "!{projectRoot}/tsconfig.storybook.json"
+    ]
   },
   "cacheDirectory": "nxcache",
   "defaultBase": "develop"
