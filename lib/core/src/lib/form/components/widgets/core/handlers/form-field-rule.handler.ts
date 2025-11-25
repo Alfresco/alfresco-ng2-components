@@ -16,19 +16,42 @@
  */
 
 import { FormFieldRule } from '../form-field-rule';
+import { FormFieldTypes } from '../form-field-types';
 import { RepeatableSectionModel, ROW_ID_PREFIX } from '../repeatable-section.model';
 
 const getRule = (id: string, rule?: FormFieldRule, parent?: RepeatableSectionModel): FormFieldRule =>
-    rule && parent
+    rule?.ruleOn && parent?.fields
         ? ({
               ...rule,
-              ruleOn: getRepeatableSectionChildRuleOn(id, rule.ruleOn ?? '')
+              ruleOn: getRuleOn(id, rule.ruleOn, parent.fields)
           } as FormFieldRule)
         : rule;
 
+const getRuleOn = (id: string, ruleOn: string, fields: any): string => {
+    for (const column of Object.values(fields)) {
+        for (const field of column as any) {
+            if (field.type === FormFieldTypes.SECTION) {
+                for (const sectionColumn of Object.values(field.fields)) {
+                    for (const sectionField of sectionColumn as any) {
+                        if (sectionField.id === ruleOn) {
+                            return getRepeatableSectionChildRuleOn(id, ruleOn);
+                        }
+                    }
+                }
+            }
+
+            if (field.id === ruleOn) {
+                return getRepeatableSectionChildRuleOn(id, ruleOn);
+            }
+        }
+    }
+
+    return ruleOn;
+};
+
 const getRepeatableSectionChildRuleOn = (id: string, ruleOn: string): string => ruleOn + ROW_ID_PREFIX + getRowId(id);
 
-const getRowId = (id: string) => {
+const getRowId = (id: string): string => {
     const split = id.split(ROW_ID_PREFIX);
 
     return split.length > 1 ? split[1] : '';
