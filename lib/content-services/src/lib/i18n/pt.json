@@ -19,7 +19,7 @@
         "COMMENT": "Deixe um comentário",
         "ADD": "Adicionar nova versão",
         "CANCEL": "Cancelar",
-        "VERSION_TYPE_LABEL": "Select version type"
+        "VERSION_TYPE_LABEL": "Selecionar tipo de versão"
       }
     },
     "CONFIRM_DELETE": {
@@ -661,8 +661,8 @@
       "ILLEGAL_CHARACTERS": "Utilizar apenas números e letras",
       "ONLY_SPACES": "O nome da biblioteca não pode conter apenas espaços",
       "LIBRARY_UPDATE_ERROR": "Ocorreu um erro ao atualizar as propriedades da biblioteca",
-      "NAME_REQUIRED": "Library name is required",
-      "ID_REQUIRED": "Library ID is required"
+      "NAME_REQUIRED": "O nome da biblioteca é obrigatório",
+      "ID_REQUIRED": "O ID da biblioteca é necessário"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Propriedades da biblioteca atualizadas"
