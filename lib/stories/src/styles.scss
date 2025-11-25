@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+@use './alfresco-colors' as alfresco-colors;
+@use 'material-icons/iconfont/material-icons.css' as *;
+
+html {
+    color-scheme: light;
+
+    @include mat.theme(
+        (
+            typography: Nunito Sans
+        )
+    );
+}
+
+@include alfresco-colors.override-palette;
