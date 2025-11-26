@@ -1,7 +1,11 @@
 import type { StorybookConfig } from '@storybook/angular';
 import rootMain from '../../../.storybook/main';
-import * as path from 'path';
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
     ...rootMain,
@@ -9,17 +13,12 @@ const config: StorybookConfig = {
         name: '@storybook/angular',
         options: {}
     },
-    stories: [
-        '../../core/**/*.stories.@(js|jsx|ts|tsx)',
-        '../../content-services/**/*.stories.@(js|jsx|ts|tsx)',
-        '../../process-services-cloud/**/*.stories.@(js|jsx|ts|tsx)'
-    ],
+    stories: ['../../core/**/*.stories.ts', '../../content-services/**/*.stories.ts', '../../process-services-cloud/**/*.stories.ts'],
     staticDirs: [
         { from: '../../core/src/lib/i18n', to: 'assets/adf-core/i18n' },
         { from: '../../core/src/lib/assets/images', to: 'assets/images' },
         { from: '../../content-services/src/lib/i18n', to: 'assets/adf-content-services/i18n' },
-        { from: '../../process-services-cloud/src/lib/i18n', to: 'assets/adf-process-services-cloud/i18n' },
-        path.resolve(__dirname, '../../config')
+        { from: '../../process-services-cloud/src/lib/i18n', to: 'assets/adf-process-services-cloud/i18n' }
     ],
     webpackFinal: async (config) => {
         if (!config.plugins) {
@@ -29,7 +28,7 @@ const config: StorybookConfig = {
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: path.resolve(__dirname, '../../config/app.config.json'),
+                        from: resolve(__dirname, '../../config/app.config.json'),
                         to: 'app.config.json'
                     }
                 ]
