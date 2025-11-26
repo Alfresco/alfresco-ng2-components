@@ -17,5 +17,5 @@
               "../../process-services-cloud/**/mocks/**/*",
               "../../process-services-cloud/**/mock/**/*"
             ],
-  "include": ["../src/**/*", "*.js", "../../core/**/*", "../../content-services/**/*", "../../process-services-cloud/**/*"]
+  "include": ["../src/**/*", "*.ts", "../../core/**/*", "../../content-services/**/*", "../../process-services-cloud/**/*"]
 }

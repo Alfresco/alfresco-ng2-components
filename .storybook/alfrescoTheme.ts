@@ -1,3 +1,4 @@
+/// <reference path="../typings.d.ts" />
 import { create } from 'storybook/theming';
 import alfrescoLogo from '../lib/core/src/lib/assets/images/alfresco-logo.svg';
 
