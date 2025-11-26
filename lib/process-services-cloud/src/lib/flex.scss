@@ -61,18 +61,18 @@ $overlapping-lt: (
 //   background-color: red;
 // }
 @mixin layout-bp($bp) {
-    @if map-has-key($breakpoints, $bp) {
+    @if map.has-key($breakpoints, $bp) {
         $min: map-get(map-get($breakpoints, $bp), begin);
         $max: map-get(map-get($breakpoints, $bp), end);
         @media (min-width: $min) and (max-width: $max) {
             @content;
         }
-    } @else if map-has-key($overlapping-gt, $bp) {
+    } @else if map.has-key($overlapping-gt, $bp) {
         $min: map-get($overlapping-gt, $bp);
         @media (min-width: $min) {
             @content;
         }
-    } @else if map-has-key($overlapping-lt, $bp) {
+    } @else if map.has-key($overlapping-lt, $bp) {
         $max: map-get($overlapping-lt, $bp);
         @media (max-width: $max) {
             @content;

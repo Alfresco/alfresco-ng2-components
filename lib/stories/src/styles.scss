@@ -6,13 +6,13 @@ html {
     color-scheme: light;
     $font-family: 'Nunito Sans', sans-serif;
 
+    font-family: $font-family;
+
     @include mat.theme(
         (
             typography: $font-family
         )
     );
-
-    font-family: $font-family;
 }
 
 @include alfresco-colors.override-palette;
