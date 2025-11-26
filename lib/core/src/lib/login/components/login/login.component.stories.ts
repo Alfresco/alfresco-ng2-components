@@ -21,7 +21,7 @@ import { AuthenticationService } from '../../../auth';
 import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 import { LoginComponent } from './login.component';
 import { importProvidersFrom } from '@angular/core';
-import { CoreStoryModule } from '../../../../..';
+import { provideStoryCore } from '../../../../..';
 
 export default {
     component: LoginComponent,
@@ -32,7 +32,7 @@ export default {
             providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule), importProvidersFrom(RouterModule.forRoot([], { useHash: true }))]
+            providers: [...provideStoryCore(), importProvidersFrom(RouterModule.forRoot([], { useHash: true }))]
         })
     ],
     parameters: {

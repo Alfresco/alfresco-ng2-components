@@ -16,13 +16,12 @@
  */
 
 import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
-import { CoreStoryModule } from '../../../testing/core.story.module';
 import { DataTableComponent } from './datatable.component';
 import { DATATABLE_DIRECTIVES } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../../testing';
 
 export default {
     component: DataTableComponent,
@@ -32,7 +31,7 @@ export default {
             imports: [...DATATABLE_DIRECTIVES, MatProgressSpinnerModule, RouterTestingModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

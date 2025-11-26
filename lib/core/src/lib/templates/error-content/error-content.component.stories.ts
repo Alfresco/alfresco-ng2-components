@@ -17,10 +17,9 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ErrorContentComponent } from './error-content.component';
-import { CoreStoryModule } from '../../testing/core.story.module';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../testing';
 
 export default {
     component: ErrorContentComponent,
@@ -31,7 +30,7 @@ export default {
             providers: [{ provide: ActivatedRoute, useValue: { params: of({}) } }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

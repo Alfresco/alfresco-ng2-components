@@ -18,11 +18,10 @@
 import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
 import { DATATABLE_DIRECTIVES } from '../datatable.module';
-import { CoreStoryModule } from '../../testing/core.story.module';
 import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../testing';
 
 export default {
     component: DataColumnComponent,
@@ -32,7 +31,7 @@ export default {
             imports: [...DATATABLE_DIRECTIVES, RouterTestingModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

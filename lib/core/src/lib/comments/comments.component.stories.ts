@@ -16,12 +16,11 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { commentsStoriesData } from './mocks/comments.stories.mock';
 import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../testing';
 
 export default {
     component: CommentsComponent,
@@ -35,7 +34,7 @@ export default {
             ]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

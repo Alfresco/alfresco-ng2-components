@@ -17,19 +17,18 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
-import { CoreStoryModule } from '../../testing/core.story.module';
 import { TEMPLATE_DIRECTIVES } from '../template.module';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../testing';
 
 export default {
     component: EmptyContentComponent,
     title: 'Core/Template/Empty Content',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...TEMPLATE_DIRECTIVES]
+            imports: [...TEMPLATE_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

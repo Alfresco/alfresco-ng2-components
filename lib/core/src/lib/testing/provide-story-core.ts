@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CoreModule } from '../core.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { Provider, EnvironmentProviders } from '@angular/core';
 import { provideTranslations } from '../translation/translation.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AuthModule } from '../auth/oidc/auth.module';
+import { provideCoreAuth } from '../auth/oidc/auth.module';
+import { provideI18N } from '../../..';
+import { provideAppConfig } from '../app-config/provide-app-config';
 
-@NgModule({
-    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
-    providers: [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
-})
-export class CoreStoryModule {}
+/**
+ * Provides the core providers for the storybook.
+ *
+ * @returns An array of providers for the core module.
+ */
+export function provideStoryCore(): (Provider | EnvironmentProviders)[] {
+    return [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations(), provideCoreAuth(), provideI18N(), provideAppConfig()];
+}

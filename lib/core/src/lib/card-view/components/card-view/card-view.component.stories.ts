@@ -17,20 +17,19 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewComponent } from './card-view.component';
-import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-view-content.mock';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from './../../../testing';
 
 export default {
     component: CardViewComponent,
     title: 'Core/Card View/Card View',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...CARD_VIEW_DIRECTIVES]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

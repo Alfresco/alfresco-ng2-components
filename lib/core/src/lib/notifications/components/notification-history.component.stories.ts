@@ -16,20 +16,19 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../../testing/core.story.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from '../notification-history.module';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../testing';
 
 export default {
     component: NotificationHistoryComponent,
     title: 'Core/Notification History/Notification History',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...NOTIFICATION_HISTORY_DIRECTIVES]
+            imports: [...NOTIFICATION_HISTORY_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

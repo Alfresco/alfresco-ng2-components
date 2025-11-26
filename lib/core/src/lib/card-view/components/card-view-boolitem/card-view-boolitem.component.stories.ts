@@ -17,9 +17,8 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
-import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewBoolItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from './../../../testing';
 
 export default {
     component: CardViewBoolItemComponent,
@@ -29,7 +28,7 @@ export default {
             imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

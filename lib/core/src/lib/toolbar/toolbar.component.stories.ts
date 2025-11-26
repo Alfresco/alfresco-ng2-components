@@ -16,20 +16,19 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { ToolbarComponent } from './toolbar.component';
 import { TOOLBAR_DIRECTIVES } from './toolbar.module';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../testing';
 
 export default {
     component: ToolbarComponent,
     title: 'Core/Toolbar/Toolbar',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...TOOLBAR_DIRECTIVES]
+            imports: [...TOOLBAR_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

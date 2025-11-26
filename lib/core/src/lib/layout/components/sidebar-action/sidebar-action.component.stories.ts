@@ -16,20 +16,19 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../../../testing/core.story.module';
 import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../../testing';
 
 export default {
     component: SidebarActionMenuComponent,
     title: 'Core/Layout/Sidebar Action Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...LAYOUT_DIRECTIVES]
+            imports: [...LAYOUT_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {
