@@ -147,6 +147,10 @@ export class FormModel implements ProcessFormModel {
         }
     }
 
+    onRepeatableSectionChanged() {
+        this.fieldsCache = this.getFormFields([], true);
+    }
+
     /**
      * Validates entire form and all form fields.
      */
@@ -343,8 +347,8 @@ export class FormModel implements ProcessFormModel {
         return this.fieldsCache.find((field) => field.id === fieldId);
     }
 
-    getFormFields(filterTypes?: string[]): FormFieldModel[] {
-        if (this.fieldsCache?.length) {
+    getFormFields(filterTypes?: string[], isDynamic: boolean = false): FormFieldModel[] {
+        if (this.fieldsCache?.length && !isDynamic) {
             return this.filterFieldsByType(this.fieldsCache, filterTypes);
         }
 
@@ -355,7 +359,9 @@ export class FormModel implements ProcessFormModel {
 
     private processFields(fields: (ContainerModel | FormFieldModel)[], formFieldModel: FormFieldModel[]): void {
         fields.forEach((field) => {
-            if (this.isContainerField(field)) {
+            if (this.isRepeatableSectionField(field)) {
+                this.handleRepeatableSectionField(field, formFieldModel);
+            } else if (this.isContainerField(field)) {
                 this.handleContainerField(field, formFieldModel);
             } else if (this.isSectionField(field)) {
                 this.handleSectionField(field, formFieldModel);
@@ -377,11 +383,24 @@ export class FormModel implements ProcessFormModel {
         return field.type === FormFieldTypes.SECTION;
     }
 
+    private isRepeatableSectionField(field: ContainerModel | FormFieldModel): field is ContainerModel {
+        return field.type === FormFieldTypes.REPEATABLE_SECTION;
+    }
+
     private handleSectionField(section: FormFieldModel, formFieldModel: FormFieldModel[]): void {
         formFieldModel.push(section);
         section.columns.forEach((column) => {
             this.processFields(column.fields, formFieldModel);
         });
+    }
+
+    private handleRepeatableSectionField(repeatableSection: ContainerModel, formFieldModel: FormFieldModel[]): void {
+        formFieldModel.push(repeatableSection.field);
+        for (const row of repeatableSection.field.rows) {
+            for (const column of row.columns) {
+                this.processFields(column.fields, formFieldModel);
+            }
+        }
     }
 
     private handleContainerField(container: ContainerModel, formFieldModel: FormFieldModel[]): void {

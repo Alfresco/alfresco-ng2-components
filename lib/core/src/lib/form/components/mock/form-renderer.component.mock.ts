@@ -2332,7 +2332,7 @@ export const mockRepeatableSectionForm01 = {
                     params: {
                         initialNumberOfRows: 2,
                         allowInitialRowsDelete: true,
-                        newRowsLimit: 3
+                        maxNumberOfRows: 5
                     },
                     numberOfColumns: 2,
                     fields: {
@@ -2403,7 +2403,7 @@ export const mockRepeatableSectionForm02 = {
                     params: {
                         initialNumberOfRows: 2,
                         allowInitialRowsDelete: false,
-                        newRowsLimit: 3
+                        maxNumberOfRows: 5
                     },
                     numberOfColumns: 2,
                     fields: {

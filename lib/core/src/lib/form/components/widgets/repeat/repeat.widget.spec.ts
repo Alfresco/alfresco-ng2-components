@@ -34,7 +34,7 @@ describe('RepeatWidgetComponent', () => {
      * @param allowInitialRowsDelete should allow deleting rows
      * @returns repeatable section json based on params
      */
-    function getFormFieldJson(initialNumberOfRows: number = 2, maxNumberOfRows?: number, allowInitialRowsDelete: boolean = true) {
+    function getFormFieldJson(initialNumberOfRows: number = 2, maxNumberOfRows: number | null = null, allowInitialRowsDelete: boolean = true) {
         return {
             id: 'RepeatableSection0tbw2y',
             name: 'Repeatable Section',

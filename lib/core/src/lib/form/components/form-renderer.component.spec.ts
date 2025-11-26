@@ -815,7 +815,7 @@ describe('Form Renderer Component', () => {
             params: {
                 initialNumberOfRows: 2,
                 allowInitialRowsDelete: true,
-                newRowsLimit: 1
+                maxNumberOfRows: 3
             },
             numberOfColumns: 2,
             fields: {

@@ -17,13 +17,8 @@
 
 import { formFieldRuleHandler } from './form-field-rule.handler';
 import { FormFieldRule } from '../form-field-rule';
-import {
-    mockParentRule,
-    mockParentWithFields,
-    mockParentWithoutFields,
-    mockParentWithSectionFields,
-    mockRule
-} from '../mocks/form-field-rule.handler.mock';
+import { mockParentRule, mockRule } from '../mocks/form-field-rule.handler.mock';
+import { mockParentWithoutFields, mockParentWithFields, mockParentWithSectionFields } from '../mocks/repeatable-section-model.mock';
 
 describe('formFieldRuleHandler', () => {
     it('should return null if provided rule is null', () => {
