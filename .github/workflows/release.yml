@@ -38,7 +38,6 @@ env:
   GH_BUILD_NUMBER: ${{ github.run_id }}
   LOG_LEVEL: "ERROR"
   NODE_OPTIONS: "--max-old-space-size=5120"
-  GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
 jobs:
   setup:
@@ -77,6 +76,7 @@ jobs:
     if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
+      id-token: write  # Required for OIDC
       contents: read
       packages: write
     steps:
