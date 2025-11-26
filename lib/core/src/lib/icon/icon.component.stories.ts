@@ -16,9 +16,8 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { IconComponent } from './icon.component';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../testing';
 
 export default {
     component: IconComponent,
@@ -28,7 +27,7 @@ export default {
             imports: [IconComponent]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

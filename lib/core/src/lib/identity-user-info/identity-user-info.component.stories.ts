@@ -16,9 +16,8 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../testing';
 
 const fakeIdentityUser = {
     familyName: 'Identity',
@@ -35,7 +34,7 @@ export default {
             imports: [IdentityUserInfoComponent]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

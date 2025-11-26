@@ -19,8 +19,7 @@ import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/ang
 import { InfoDrawerComponent } from './info-drawer.component';
 import { INFO_DRAWER_DIRECTIVES } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
-import { importProvidersFrom } from '@angular/core';
-import { CoreStoryModule } from '../../..';
+import { provideStoryCore } from '../../..';
 
 export default {
     component: InfoDrawerComponent,
@@ -30,7 +29,7 @@ export default {
             imports: [...INFO_DRAWER_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

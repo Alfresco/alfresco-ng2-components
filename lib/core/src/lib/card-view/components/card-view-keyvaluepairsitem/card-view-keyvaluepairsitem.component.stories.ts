@@ -17,19 +17,18 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
-import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CARD_VIEW_DIRECTIVES, CardViewKeyValuePairsItemModel } from '../../public-api';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from './../../../testing';
 
 export default {
     component: CardViewKeyValuePairsItemComponent,
     title: 'Core/Card View/Card View Key Value Pairs Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...CARD_VIEW_DIRECTIVES]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

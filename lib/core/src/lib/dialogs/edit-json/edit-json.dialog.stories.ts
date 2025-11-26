@@ -16,11 +16,10 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../../testing/core.story.module';
 import { EditJsonDialogStorybookComponent } from './edit-json.dialog.stories.component';
 import { MatButtonModule } from '@angular/material/button';
-import { importProvidersFrom } from '@angular/core';
 import { EditJsonDialogComponent } from './edit-json.dialog';
+import { provideStoryCore } from '../../testing';
 
 const jsonData = {
     maxValue: 50,
@@ -38,7 +37,7 @@ export default {
             imports: [EditJsonDialogComponent, MatButtonModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

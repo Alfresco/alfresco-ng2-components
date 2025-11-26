@@ -16,10 +16,9 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { PAGINATION_DIRECTIVES } from './pagination.module';
 import { PaginationComponent } from './pagination.component';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../testing';
 
 export default {
     component: PaginationComponent,
@@ -29,7 +28,7 @@ export default {
             imports: [...PAGINATION_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

@@ -22,8 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
 import { DemoBreadcrumbComponent } from './demo-breadcrumb.component';
-import { importProvidersFrom } from '@angular/core';
-import { CoreStoryModule } from '../../..';
+import { provideStoryCore } from '../../..';
 
 // https://stackoverflow.com/a/58210459/8820824
 type NonFunctionPropertyNames<T> = { [K in keyof T]: T[K] extends () => any ? never : K }[keyof T];
@@ -50,7 +49,7 @@ const meta: Meta = {
             imports: [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     args: {

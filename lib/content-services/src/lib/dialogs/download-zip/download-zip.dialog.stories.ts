@@ -24,9 +24,8 @@ import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { importProvidersFrom } from '@angular/core';
-import { CoreStoryModule } from '../../../../../core/src/public-api';
 import { AlfrescoApiService } from '../../services';
+import { provideStoryCore } from '../../../../../core/src/public-api';
 
 export default {
     component: DownloadZipDialogStorybookComponent,
@@ -54,7 +53,7 @@ export default {
             ]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

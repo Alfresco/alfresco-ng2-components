@@ -17,9 +17,8 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
-import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CARD_VIEW_DIRECTIVES, CardViewTextItemModel } from '../../public-api';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from './../../../testing';
 
 export default {
     component: CardViewTextItemComponent,
@@ -29,7 +28,7 @@ export default {
             imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

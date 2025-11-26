@@ -16,12 +16,11 @@
  */
 
 import { applicationConfig, componentWrapperDecorator, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { LANGUAGE_MENU_DIRECTIVES } from './language-menu.module';
 import { LanguageMenuComponent } from './language-menu.component';
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../testing';
 
 export default {
     component: LanguageMenuComponent,
@@ -32,7 +31,7 @@ export default {
             providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

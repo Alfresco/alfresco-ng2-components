@@ -16,23 +16,22 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../../../testing/core.story.module';
 import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../../testing';
 
 export default {
     component: SidenavLayoutComponent,
     title: 'Core/Layout/Sidenav Layout',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...LAYOUT_DIRECTIVES, RouterTestingModule, MatIconModule, MatListModule]
+            imports: [...LAYOUT_DIRECTIVES, RouterTestingModule, MatIconModule, MatListModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

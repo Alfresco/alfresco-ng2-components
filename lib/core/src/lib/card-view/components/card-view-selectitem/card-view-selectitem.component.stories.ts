@@ -17,10 +17,9 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
-import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewSelectItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { of } from 'rxjs';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from './../../../testing';
 
 export default {
     component: CardViewSelectItemComponent,
@@ -30,7 +29,7 @@ export default {
             imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {

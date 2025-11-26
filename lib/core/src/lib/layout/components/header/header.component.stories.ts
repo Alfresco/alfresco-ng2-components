@@ -16,21 +16,20 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { CoreStoryModule } from '../../../testing/core.story.module';
 import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { HeaderLayoutComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from '../../../testing';
 
 export default {
     component: HeaderLayoutComponent,
     title: 'Core/Layout/Header',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...LAYOUT_DIRECTIVES, RouterTestingModule]
+            imports: [...LAYOUT_DIRECTIVES, RouterTestingModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

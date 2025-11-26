@@ -17,9 +17,8 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewMapItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryCore } from './../../../testing';
 
 export default {
     component: CardViewMapItemComponent,
@@ -29,7 +28,7 @@ export default {
             imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            providers: [...provideStoryCore()]
         })
     ],
     argTypes: {
