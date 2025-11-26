@@ -23,6 +23,10 @@ on:
       - develop-patch*
       - master-patch*
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
@@ -39,7 +43,7 @@ env:
 jobs:
   setup:
     timeout-minutes: 20
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*' || github.event_name == 'workflow_dispatch'
     name: "Setup"
     runs-on: ubuntu-latest
     steps:
@@ -57,12 +61,20 @@ jobs:
           npm run bundle:cli
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
+  override_npm_tag:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Set NPM tag to branch
+        run: echo "TAG_NPM=branch" >> $GITHUB_ENV
+
   release-npm:
     needs: [setup]
     outputs:
       release_version: ${{ steps.set-version.outputs.release_version }}
     timeout-minutes: 30
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -103,7 +115,7 @@ jobs:
           scope: '@alfresco'
       - run: npm run publish -- --tag=$TAG_NPM || exit 1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         name: release libraries Npm registry
         with:
@@ -111,12 +123,11 @@ jobs:
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
       - run: npm run publish -- --tag=$TAG_NPM || exit 1
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
   create-git-tag:
     runs-on: ubuntu-latest
     needs: [setup, release-npm]
+    if: github.event_name != 'workflow_dispatch'
     name: Create github tag
     permissions:
       contents: write
@@ -152,7 +163,7 @@ jobs:
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -161,7 +172,7 @@ jobs:
 
   push-translation-keys-to-crowdin:
     name: Push translations keys to Crowdin
-    if: ${{ github.ref == 'refs/heads/develop' }}
+    if: ${{ github.ref == 'refs/heads/develop' && github.event_name != 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     needs: [setup]
     permissions:
