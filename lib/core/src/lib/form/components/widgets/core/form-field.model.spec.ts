@@ -1576,7 +1576,7 @@ describe('FormFieldModel', () => {
 
                 expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
 
-                field.addRow(field.fields, form);
+                field.removeRow(1);
 
                 expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
             });
