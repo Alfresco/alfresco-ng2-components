@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { applicationConfig, componentWrapperDecorator, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, componentWrapperDecorator, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { LANGUAGE_MENU_DIRECTIVES } from './language-menu.module';
 import { LanguagePickerComponent } from './language-picker.component';
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 import { provideStoryCore } from '../testing';
 
-export default {
+const meta: Meta<LanguagePickerComponent> = {
     component: LanguagePickerComponent,
     title: 'Core/Language Menu/Language Picker',
     decorators: [
@@ -44,19 +44,25 @@ export default {
             }
         }
     }
-} as Meta<LanguagePickerComponent>;
+};
 
-const languagePickerComponentTemplate: StoryFn<LanguagePickerComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<LanguagePickerComponent>;
 
-export const Primary = languagePickerComponentTemplate.bind({});
-Primary.parameters = { layout: 'centered' };
+export const Primary: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    parameters: { layout: 'centered' }
+};
 
-export const AsNestedMenu = languagePickerComponentTemplate.bind({});
-AsNestedMenu.decorators = [
-    componentWrapperDecorator(
-        (story) => `
+export const AsNestedMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    decorators: [
+        componentWrapperDecorator(
+            (story) => `
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -64,6 +70,7 @@ AsNestedMenu.decorators = [
         ${story}
       </mat-menu>
     `
-    )
-];
-AsNestedMenu.parameters = { layout: 'centered' };
+        )
+    ],
+    parameters: { layout: 'centered' }
+};

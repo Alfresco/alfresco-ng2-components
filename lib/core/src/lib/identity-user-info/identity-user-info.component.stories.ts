@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
 import { provideStoryCore } from '../testing';
 
@@ -26,7 +26,7 @@ const fakeIdentityUser = {
     username: 'johnyIdentity99'
 };
 
-export default {
+const meta: Meta<IdentityUserInfoComponent> = {
     component: IdentityUserInfoComponent,
     title: 'Core/Identity User Info/Identity User Info',
     decorators: [
@@ -112,11 +112,14 @@ export default {
         namePosition: 'right',
         bpmBackgroundImage: './assets/images/bpm-background.png'
     }
-} as Meta<IdentityUserInfoComponent>;
+};
 
-const template: StoryFn<IdentityUserInfoComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<IdentityUserInfoComponent>;
 
-export const LoginWithSSO = template.bind({});
-LoginWithSSO.parameters = { layout: 'centered' };
+export const LoginWithSSO: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    parameters: { layout: 'centered' }
+};

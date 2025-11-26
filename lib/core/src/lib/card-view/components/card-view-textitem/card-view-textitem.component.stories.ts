@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CARD_VIEW_DIRECTIVES, CardViewTextItemModel } from '../../public-api';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewTextItemComponent> = {
     component: CardViewTextItemComponent,
     title: 'Core/Card View/Card View Text Item',
     decorators: [
@@ -89,84 +89,103 @@ export default {
         multiValueSeparator: ', ',
         displayLabelForChips: false
     }
-} as Meta<CardViewTextItemComponent>;
-
-const template: StoryFn<CardViewTextItemComponent> = (args) => ({
-    props: args
-});
-
-export const ClickableCardViewTextItem = template.bind({});
-ClickableCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Clickable template',
-        value: 'click here',
-        key: 'click',
-        default: 'click here',
-        editable: true,
-        clickable: true,
-        icon: 'close'
-    })
 };
-ClickableCardViewTextItem.parameters = { layout: 'centered' };
 
-export const ChipsCardViewTextItem = template.bind({});
-ChipsCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Chips template',
-        value: [1, 2, 3, 4],
-        key: 'name',
-        default: 'default bar',
-        multiline: true,
-        multivalued: true,
-        icon: 'icon',
-        editable: true
+export default meta;
+type Story = StoryObj<CardViewTextItemComponent>;
+
+export const ClickableCardViewTextItem: Story = {
+    render: (args) => ({
+        props: args
     }),
-    displayLabelForChips: false
+    args: {
+        property: new CardViewTextItemModel({
+            label: 'CardView Text Item - Clickable template',
+            value: 'click here',
+            key: 'click',
+            default: 'click here',
+            editable: true,
+            clickable: true,
+            icon: 'close'
+        })
+    },
+    parameters: { layout: 'centered' }
 };
-ChipsCardViewTextItem.parameters = { layout: 'centered' };
 
-export const EmptyCardViewTextItem = template.bind({});
-EmptyCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Empty template',
-        value: undefined,
-        key: 'empty',
-        default: '',
-        icon: 'icon',
-        editable: false
+export const ChipsCardViewTextItem: Story = {
+    render: (args) => ({
+        props: args
     }),
-    editable: false,
-    displayEmpty: false
+    args: {
+        property: new CardViewTextItemModel({
+            label: 'CardView Text Item - Chips template',
+            value: [1, 2, 3, 4],
+            key: 'name',
+            default: 'default bar',
+            multiline: true,
+            multivalued: true,
+            icon: 'icon',
+            editable: true
+        }),
+        displayLabelForChips: false
+    },
+    parameters: { layout: 'centered' }
 };
-EmptyCardViewTextItem.parameters = { layout: 'centered' };
 
-export const DefaultCardViewTextItem = template.bind({});
-DefaultCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Default template',
-        value: 'input here',
-        key: 'default',
-        default: 'input here',
-        editable: true,
-        clickable: false,
-        icon: 'close',
-        multiline: false
-    })
-};
-DefaultCardViewTextItem.parameters = { layout: 'centered' };
-
-export const DisplayLabelForChipsCardTextItem = template.bind({});
-DisplayLabelForChipsCardTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Multi-Valued Chips template',
-        value: ['Chip 1', 'Chip 2', 'Chip 3'],
-        key: 'multivalued',
-        default: 'default value',
-        multiline: true,
-        multivalued: true,
-        icon: 'icon',
-        editable: true
+export const EmptyCardViewTextItem: Story = {
+    render: (args) => ({
+        props: args
     }),
-    displayLabelForChips: false
+    args: {
+        property: new CardViewTextItemModel({
+            label: 'CardView Text Item - Empty template',
+            value: undefined,
+            key: 'empty',
+            default: '',
+            icon: 'icon',
+            editable: false
+        }),
+        editable: false,
+        displayEmpty: false
+    },
+    parameters: { layout: 'centered' }
 };
-DisplayLabelForChipsCardTextItem.parameters = { layout: 'centered' };
+
+export const DefaultCardViewTextItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewTextItemModel({
+            label: 'CardView Text Item - Default template',
+            value: 'input here',
+            key: 'default',
+            default: 'input here',
+            editable: true,
+            clickable: false,
+            icon: 'close',
+            multiline: false
+        })
+    },
+    parameters: { layout: 'centered' }
+};
+
+export const DisplayLabelForChipsCardTextItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewTextItemModel({
+            label: 'CardView Text Item - Multi-Valued Chips template',
+            value: ['Chip 1', 'Chip 2', 'Chip 3'],
+            key: 'multivalued',
+            default: 'default value',
+            multiline: true,
+            multivalued: true,
+            icon: 'icon',
+            editable: true
+        }),
+        displayLabelForChips: false
+    },
+    parameters: { layout: 'centered' }
+};

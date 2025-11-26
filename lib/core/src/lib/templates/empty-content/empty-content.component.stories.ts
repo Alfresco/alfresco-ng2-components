@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
 import { TEMPLATE_DIRECTIVES } from '../template.module';
 import { provideStoryCore } from '../../testing';
 
-export default {
+type EmptyContentStoryArgs = EmptyContentComponent & {
+    anyContentProjection?: boolean;
+};
+
+const meta: Meta<EmptyContentStoryArgs> = {
     component: EmptyContentComponent,
     title: 'Core/Template/Empty Content',
     decorators: [
@@ -83,17 +87,20 @@ export default {
         subtitle: 'subtitle',
         anyContentProjection: false
     }
-} as Meta<EmptyContentComponent>;
+};
 
-const template: StoryFn<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
-    props: args,
-    template: `
+export default meta;
+type Story = StoryObj<EmptyContentStoryArgs>;
+
+export const EmptyContent: Story = {
+    render: (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
+        props: args,
+        template: `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
         <div *ngIf="${args.anyContentProjection}" style="color:red">
             projected content
         </div>
     </adf-empty-content>`
-});
-
-export const EmptyContent = template.bind({});
-EmptyContent.parameters = { layout: 'centered' };
+    }),
+    parameters: { layout: 'centered' }
+};

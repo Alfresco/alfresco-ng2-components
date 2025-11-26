@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { IdentityUserService } from '../services/identity-user.service';
 import { IdentityUserServiceMock, mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding } from '../mock/people-cloud.mock';
 import { importProvidersFrom } from '@angular/core';
 
-export default {
+const meta: Meta<PeopleCloudComponent> = {
     component: PeopleCloudComponent,
     title: 'Process Services Cloud/People Cloud/People Cloud',
     decorators: [
@@ -167,46 +167,73 @@ export default {
         excludedUsers: [],
         groupsRestriction: []
     }
-} as Meta<PeopleCloudComponent>;
-
-const template: StoryFn<PeopleCloudComponent> = (args) => ({
-    props: args
-});
-
-export const DefaultPeopleCloud = template.bind({});
-
-export const ValidPreselectedUsers = template.bind({});
-ValidPreselectedUsers.args = {
-    validate: true,
-    mode: 'multiple',
-    preSelectUsers: mockFoodUsers
 };
 
-export const MandatoryPreselectedUsers = template.bind({});
-MandatoryPreselectedUsers.args = {
-    validate: true,
-    mode: 'multiple',
-    preSelectUsers: [{ ...mockKielbasaSausage, readonly: true }, mockShepherdsPie]
+export default meta;
+type Story = StoryObj<PeopleCloudComponent>;
+
+export const DefaultPeopleCloud: Story = {
+    render: (args) => ({
+        props: args
+    })
 };
 
-export const InvalidPreselectedUsers = template.bind({});
-InvalidPreselectedUsers.args = {
-    validate: true,
-    mode: 'multiple',
-    preSelectUsers: [{ id: 'invalid-user', username: 'Invalid User', firstName: 'Invalid', lastName: 'User', email: 'invalid@xyz.com' }]
+export const ValidPreselectedUsers: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        validate: true,
+        mode: 'multiple',
+        preSelectUsers: mockFoodUsers
+    }
 };
 
-export const ExcludedUsers = template.bind({});
-ExcludedUsers.args = {
-    excludedUsers: [mockKielbasaSausage, mockYorkshirePudding]
+export const MandatoryPreselectedUsers: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        validate: true,
+        mode: 'multiple',
+        preSelectUsers: [{ ...mockKielbasaSausage, readonly: true }, mockShepherdsPie]
+    }
 };
 
-export const NoUsers = template.bind({});
-NoUsers.args = {
-    excludedUsers: mockFoodUsers
+export const InvalidPreselectedUsers: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        validate: true,
+        mode: 'multiple',
+        preSelectUsers: [{ id: 'invalid-user', username: 'Invalid User', firstName: 'Invalid', lastName: 'User', email: 'invalid@xyz.com' }]
+    }
 };
 
-export const InvalidOrEmptyAppName = template.bind({});
-InvalidOrEmptyAppName.args = {
-    appName: null
+export const ExcludedUsers: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        excludedUsers: [mockKielbasaSausage, mockYorkshirePudding]
+    }
+};
+
+export const NoUsers: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        excludedUsers: mockFoodUsers
+    }
+};
+
+export const InvalidOrEmptyAppName: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: null
+    }
 };

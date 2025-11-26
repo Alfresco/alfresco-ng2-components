@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { of } from 'rxjs';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewArrayItemComponent> = {
     component: CardViewArrayItemComponent,
     title: 'Core/Card View/Card View Array Item',
     decorators: [
@@ -40,24 +40,29 @@ export default {
             }
         }
     }
-} as Meta<CardViewArrayItemComponent>;
-
-export const CardViewArrayItem: StoryFn<CardViewArrayItemComponent> = (args) => ({
-    props: args
-});
-CardViewArrayItem.args = {
-    property: new CardViewArrayItemModel({
-        label: 'CardView Array of items',
-        value: of([
-            { icon: 'directions_bike', value: 'Zlatan' },
-            { icon: 'directions_bike', value: 'Lionel Messi' },
-            { value: 'Mohamed', directions_bike: 'save' },
-            { value: 'Ronaldo' }
-        ]),
-        key: 'array',
-        icon: 'edit',
-        default: 'Empty',
-        noOfItemsToDisplay: 2
-    })
 };
-CardViewArrayItem.parameters = { layout: 'centered' };
+
+export default meta;
+type Story = StoryObj<CardViewArrayItemComponent>;
+
+export const CardViewArrayItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewArrayItemModel({
+            label: 'CardView Array of items',
+            value: of([
+                { icon: 'directions_bike', value: 'Zlatan' },
+                { icon: 'directions_bike', value: 'Lionel Messi' },
+                { value: 'Mohamed', directions_bike: 'save' },
+                { value: 'Ronaldo' }
+            ]),
+            key: 'array',
+            icon: 'edit',
+            default: 'Empty',
+            noOfItemsToDisplay: 2
+        })
+    },
+    parameters: { layout: 'centered' }
+};

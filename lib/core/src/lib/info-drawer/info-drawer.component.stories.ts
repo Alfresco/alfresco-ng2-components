@@ -15,13 +15,28 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { INFO_DRAWER_DIRECTIVES } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 import { provideStoryCore } from '../../..';
 
-export default {
+type InfoDrawerStoryArgs = InfoDrawerComponent & {
+    showSecondTab?: boolean;
+    showThirdTab?: boolean;
+    label1?: string;
+    label2?: string;
+    label3?: string;
+    icon1?: string;
+    icon2?: string;
+    icon3?: string;
+    tab1Text?: string;
+    tab2Text?: string;
+    tab3Text?: string;
+    cardText?: string;
+};
+
+const meta: Meta<InfoDrawerStoryArgs> = {
     component: InfoDrawerComponent,
     title: 'Core/Info Drawer/Info Drawer',
     decorators: [
@@ -207,11 +222,15 @@ export default {
         showSecondTab: true,
         showThirdTab: true
     }
-} as Meta<InfoDrawerComponent>;
+};
 
-const tabLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
-    props: args,
-    template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
+export default meta;
+type Story = StoryObj<InfoDrawerStoryArgs>;
+
+export const TabLayoutWithTextLabels: Story = {
+    render: (args) => ({
+        props: args,
+        template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
                 <mat-icon>clear</mat-icon>
             </div>
@@ -229,11 +248,61 @@ const tabLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
             </adf-info-drawer-tab>
 
         </adf-info-drawer>`
-});
+    }),
+    args: {
+        title: 'Activities',
+        label1: 'Activity',
+        label2: 'Details',
+        label3: 'More Info',
+        tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
+        tab2Text: mockTabText,
+        tab3Text: mockTabText
+    },
+    parameters: {
+        controls: { exclude: ['cardText'] }
+    }
+};
 
-const singleLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
-    props: args,
-    template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
+export const TabLayoutWithIconLabels: Story = {
+    render: (args) => ({
+        props: args,
+        template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
+            <div info-drawer-buttons>
+                <mat-icon>clear</mat-icon>
+            </div>
+
+            <adf-info-drawer-tab [label]="label1" [icon]="[icon1]">
+                <div class="info-drawer-tab-text">{{ tab1Text }}</div>
+            </adf-info-drawer-tab>
+
+            <adf-info-drawer-tab [label]="label2" [icon]="[icon2]" *ngIf="showSecondTab">
+                <div class="info-drawer-tab-text">{{ tab2Text }}</div>
+            </adf-info-drawer-tab>
+
+            <adf-info-drawer-tab [label]="label3" [icon]="[icon3]" *ngIf="showThirdTab">
+                <div class="info-drawer-tab-text">{{ tab3Text }}</div>
+            </adf-info-drawer-tab>
+
+        </adf-info-drawer>`
+    }),
+    args: {
+        title: 'Activities',
+        icon1: 'people',
+        icon2: 'android',
+        icon3: 'comment',
+        tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
+        tab2Text: mockTabText,
+        tab3Text: mockTabText
+    },
+    parameters: {
+        controls: { exclude: ['cardText'] }
+    }
+};
+
+export const SingleLayout: Story = {
+    render: (args) => ({
+        props: args,
+        template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
             <div info-drawer-title>File info</div>
 
             <div info-drawer-buttons>
@@ -246,43 +315,12 @@ const singleLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
                 </mat-card>
             </div>
         </adf-info-drawer>`
-});
-
-export const TabLayoutWithTextLabels = tabLayoutTemplate.bind({});
-TabLayoutWithTextLabels.args = {
-    title: 'Activities',
-    label1: 'Activity',
-    label2: 'Details',
-    label3: 'More Info',
-    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
-    tab2Text: mockTabText,
-    tab3Text: mockTabText
-};
-
-TabLayoutWithTextLabels.parameters = {
-    controls: { exclude: ['cardText'] }
-};
-
-export const TabLayoutWithIconLabels = tabLayoutTemplate.bind({});
-TabLayoutWithIconLabels.args = {
-    title: 'Activities',
-    icon1: 'people',
-    icon2: 'android',
-    icon3: 'comment',
-    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
-    tab2Text: mockTabText,
-    tab3Text: mockTabText
-};
-
-TabLayoutWithIconLabels.parameters = {
-    controls: { exclude: ['cardText'] }
-};
-
-export const SingleLayout = singleLayoutTemplate.bind({});
-SingleLayout.args = {
-    title: 'Single Activities',
-    cardText: mockCardText,
-    showHeader: true,
-    showSecondTab: false,
-    showThirdTab: false
+    }),
+    args: {
+        title: 'Single Activities',
+        cardText: mockCardText,
+        showHeader: true,
+        showSecondTab: false,
+        showThirdTab: false
+    }
 };

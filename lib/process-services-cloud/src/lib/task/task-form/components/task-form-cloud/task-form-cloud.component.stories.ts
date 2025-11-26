@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { FormCloudService } from '../../../../form/public-api';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
@@ -24,7 +24,7 @@ import { FormCloudServiceMock } from '../../../../form/mocks/form-cloud.service.
 import { ProcessServicesCloudStoryModule } from '../../../../testing/process-services-cloud-story.module';
 import { importProvidersFrom } from '@angular/core';
 
-export default {
+const meta: Meta<TaskFormCloudComponent> = {
     component: TaskFormCloudComponent,
     title: 'Process Services Cloud/Task Cloud/Task Form/Task Form Cloud',
     decorators: [
@@ -151,26 +151,37 @@ export default {
             table: { category: 'Actions' }
         }
     }
-} as Meta<TaskFormCloudComponent>;
-
-const template: StoryFn<TaskFormCloudComponent> = (args) => ({
-    props: args
-});
-
-export const DefaultTaskFormCloud = template.bind({});
-DefaultTaskFormCloud.args = {
-    appName: 'app',
-    taskId: 'mock-task-with-form'
 };
 
-export const InvalidOrMissingApp = template.bind({});
-InvalidOrMissingApp.args = {
-    ...DefaultTaskFormCloud.args,
-    appName: undefined
+export default meta;
+type Story = StoryObj<TaskFormCloudComponent>;
+
+export const DefaultTaskFormCloud: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: 'app',
+        taskId: 'mock-task-with-form'
+    }
 };
 
-export const InvalidOrMissingTaskId = template.bind({});
-InvalidOrMissingTaskId.args = {
-    ...DefaultTaskFormCloud.args,
-    taskId: undefined
+export const InvalidOrMissingApp: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        ...DefaultTaskFormCloud.args,
+        appName: undefined
+    }
+};
+
+export const InvalidOrMissingTaskId: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        ...DefaultTaskFormCloud.args,
+        taskId: undefined
+    }
 };

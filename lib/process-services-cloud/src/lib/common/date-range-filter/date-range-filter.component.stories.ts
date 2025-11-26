@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { importProvidersFrom } from '@angular/core';
 
-export default {
+const meta: Meta<DateRangeFilterComponent> = {
     component: DateRangeFilterComponent,
     title: 'Process Services Cloud/Process Common/Date Range Filter',
     decorators: [
@@ -57,10 +57,13 @@ export default {
     args: {
         processFilterProperty: mockFilterProperty
     }
-} as Meta<DateRangeFilterComponent>;
+};
 
-const template: StoryFn<DateRangeFilterComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<DateRangeFilterComponent>;
 
-export const DateRangeFilter = template.bind({});
+export const DateRangeFilter: Story = {
+    render: (args) => ({
+        props: args
+    })
+};

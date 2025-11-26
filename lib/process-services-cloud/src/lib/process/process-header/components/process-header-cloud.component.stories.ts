@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessCloudServiceMock } from '../../mock/process-cloud.service.mock';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { importProvidersFrom } from '@angular/core';
 
-export default {
+const meta: Meta<ProcessHeaderCloudComponent> = {
     component: ProcessHeaderCloudComponent,
     title: 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
     decorators: [
@@ -51,32 +51,47 @@ export default {
             }
         }
     }
-} as Meta<ProcessHeaderCloudComponent>;
-
-const template: StoryFn<ProcessHeaderCloudComponent> = (args) => ({
-    props: args
-});
-
-export const DefaultProcessHeaderCloud = template.bind({});
-DefaultProcessHeaderCloud.args = {
-    appName: 'app',
-    processInstanceId: 'mock-process-id'
 };
 
-export const NoParentAndBusinessAndName = template.bind({});
-NoParentAndBusinessAndName.args = {
-    appName: 'app-placeholders',
-    processInstanceId: 'mock-process-id'
+export default meta;
+type Story = StoryObj<ProcessHeaderCloudComponent>;
+
+export const DefaultProcessHeaderCloud: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: 'app',
+        processInstanceId: 'mock-process-id'
+    }
 };
 
-export const InvalidOrMissingAppName = template.bind({});
-InvalidOrMissingAppName.args = {
-    appName: undefined,
-    processInstanceId: 'mock-process-id'
+export const NoParentAndBusinessAndName: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: 'app-placeholders',
+        processInstanceId: 'mock-process-id'
+    }
 };
 
-export const InvalidOrMissingProcessInstanceID = template.bind({});
-InvalidOrMissingProcessInstanceID.args = {
-    appName: 'app',
-    processInstanceId: undefined
+export const InvalidOrMissingAppName: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: undefined,
+        processInstanceId: 'mock-process-id'
+    }
+};
+
+export const InvalidOrMissingProcessInstanceID: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        appName: 'app',
+        processInstanceId: undefined
+    }
 };

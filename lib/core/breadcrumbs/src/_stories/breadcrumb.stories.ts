@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,24 +24,7 @@ import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrum
 import { DemoBreadcrumbComponent } from './demo-breadcrumb.component';
 import { provideStoryCore } from '../../..';
 
-// https://stackoverflow.com/a/58210459/8820824
-type NonFunctionPropertyNames<T> = { [K in keyof T]: T[K] extends () => any ? never : K }[keyof T];
-type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
-type StoryWithoutFunction<T> = NonFunctionProperties<StoryFn<T>>;
-
-/**
- * Copy storybook story
- *
- * @param story story
- * @param annotations annotations
- * @returns a copy of the story
- */
-function storybookCopyStory<T>(story: StoryFn<T>, annotations?: StoryWithoutFunction<T>): StoryFn<T> {
-    const cloned = story.bind({});
-    return Object.assign(cloned, annotations);
-}
-
-const meta: Meta = {
+const meta: Meta<DemoBreadcrumbComponent> = {
     title: 'Core/Breadcrumb',
     component: DemoBreadcrumbComponent,
     decorators: [
@@ -62,17 +45,28 @@ const meta: Meta = {
     }
 };
 export default meta;
+type Story = StoryObj<DemoBreadcrumbComponent>;
 
-export const Breadcrumb: StoryFn = (args) => ({
-    props: args
-});
-
-export const Compact = storybookCopyStory(Breadcrumb);
-Compact.args = {
-    compact: true
+export const Breadcrumb: Story = {
+    render: (args) => ({
+        props: args
+    })
 };
 
-export const WithMenu = storybookCopyStory(Breadcrumb);
-WithMenu.args = {
-    showBreadcrumbItemWithMenu: true
+export const Compact: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        compact: true
+    }
+};
+
+export const WithMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        showBreadcrumbItemWithMenu: true
+    }
 };

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
-import { DataTableComponent } from './datatable.component';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { DATATABLE_DIRECTIVES } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
 import { provideStoryCore } from '../../../testing';
 
-export default {
+const meta: Meta<DataTableComponent> = {
     component: DataTableComponent,
     title: 'Core/Datatable/Datatable',
     decorators: [
@@ -41,15 +41,6 @@ export default {
             table: {
                 category: 'Data',
                 type: { summary: 'DataTableAdapter' }
-            }
-        },
-        display: {
-            control: 'inline-radio',
-            options: ['list', 'gallery'],
-            description: 'The display mode of the table.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'list' }
             }
         },
         rows: {
@@ -261,7 +252,6 @@ export default {
         }
     },
     args: {
-        display: 'list',
         rows: [
             {
                 id: 1,
@@ -369,14 +359,17 @@ export default {
         actionsVisibleOnHover: false,
         contextMenu: false,
         rowStyleClass: '',
-        showHeader: 'data',
+        showHeader: ShowHeaderMode.Data,
         stickyHeader: false,
         loading: false,
         noPermission: false,
         rowMenuCacheEnabled: false,
         allowFiltering: false
     }
-} as Meta<DataTableComponent>;
+};
+
+export default meta;
+type Story = StoryObj<DataTableComponent>;
 
 const insertContentToTemplate = (content: string): string =>
     `<adf-datatable
@@ -406,43 +399,50 @@ const insertContentToTemplate = (content: string): string =>
     ${content}
   </adf-datatable>`;
 
-export const DefaultDatatable: StoryFn<DataTableComponent> = (args) => ({
-    props: args,
-    template: insertContentToTemplate('')
-});
+export const DefaultDatatable: Story = {
+    render: (args) => ({
+        props: args,
+        template: insertContentToTemplate('')
+    })
+};
 
-export const EmptyWithList: StoryFn<DataTableComponent> = (args) => ({
-    props: {
-        ...args,
-        rows: []
-    },
-    template: insertContentToTemplate(`
+export const EmptyWithList: Story = {
+    render: (args) => ({
+        props: {
+            ...args,
+            rows: []
+        },
+        template: insertContentToTemplate(`
     <adf-empty-list>
       <div adf-empty-list-header>Empty List Header</div>
       <div adf-empty-list-body>Empty List Body</div>
       <div adf-empty-list-footer>Empty List Footer</div>
     </adf-empty-list>
   `)
-});
+    })
+};
 
-export const EmptyWithTemplate: StoryFn<DataTableComponent> = (args) => ({
-    props: {
-        ...args,
-        rows: []
-    },
-    template: insertContentToTemplate(`
+export const EmptyWithTemplate: Story = {
+    render: (args) => ({
+        props: {
+            ...args,
+            rows: []
+        },
+        template: insertContentToTemplate(`
     <adf-no-content-template>
       <ng-template>Sorry, no content</ng-template>
     </adf-no-content-template>
   `)
-});
+    })
+};
 
-export const LoadingWithTemplate: StoryFn<DataTableComponent> = (args) => ({
-    props: {
-        ...args,
-        loading: true
-    },
-    template: insertContentToTemplate(`
+export const LoadingWithTemplate: Story = {
+    render: (args) => ({
+        props: {
+            ...args,
+            loading: true
+        },
+        template: insertContentToTemplate(`
     <adf-loading-content-template>
       <ng-template>
         <mat-progress-spinner [mode]='indeterminate'>
@@ -450,29 +450,33 @@ export const LoadingWithTemplate: StoryFn<DataTableComponent> = (args) => ({
       </ng-template>
     </adf-loading-content-template>
   `)
-});
+    })
+};
 
-export const NoPermissionWithTemplate: StoryFn<DataTableComponent> = (args) => ({
-    props: {
-        ...args,
-        noPermission: true
-    },
-    template: insertContentToTemplate(`
+export const NoPermissionWithTemplate: Story = {
+    render: (args) => ({
+        props: {
+            ...args,
+            noPermission: true
+        },
+        template: insertContentToTemplate(`
     <adf-no-permission-template>
       <ng-template>
         <div style=color:red;>You don't have permission to this content.</div>
       </ng-template>
     </adf-no-permission-template>
   `)
-});
+    })
+};
 
-export const MainMenuWithTemplate: StoryFn<DataTableComponent> = (args) => ({
-    props: {
-        ...args,
-        mainTableAction: true,
-        showMainDatatableActions: true
-    },
-    template: insertContentToTemplate(`
+export const MainMenuWithTemplate: Story = {
+    render: (args) => ({
+        props: {
+            ...args,
+            mainTableAction: true,
+            showMainDatatableActions: true
+        },
+        template: insertContentToTemplate(`
     <adf-main-menu-datatable-template>
       <ng-template let-mainMenuTrigger>
         <adf-datatable-column-selector [columns]=columns [mainMenuTrigger]=mainMenuTrigger>
@@ -480,12 +484,15 @@ export const MainMenuWithTemplate: StoryFn<DataTableComponent> = (args) => ({
       </ng-template>
     </adf-main-menu-datatable-template>
   `)
-});
+    })
+};
 
-export const StickyHeader: StoryFn<DataTableComponent> = (args) => ({
-    props: {
-        ...args,
-        stickyHeader: true
-    },
-    template: '<div style="overflow:scroll;display:block;height:230px;">' + insertContentToTemplate(``) + '</div>'
-});
+export const StickyHeader: Story = {
+    render: (args) => ({
+        props: {
+            ...args,
+            stickyHeader: true
+        },
+        template: '<div style="overflow:scroll;display:block;height:230px;">' + insertContentToTemplate(``) + '</div>'
+    })
+};

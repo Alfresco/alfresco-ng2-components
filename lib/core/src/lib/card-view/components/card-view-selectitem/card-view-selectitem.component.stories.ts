@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { CardViewSelectItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { of } from 'rxjs';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewSelectItemComponent> = {
     component: CardViewSelectItemComponent,
     title: 'Core/Card View/Card View Select Item',
     decorators: [
@@ -78,23 +78,26 @@ export default {
         displayNoneOption: true,
         displayEmpty: true
     }
-} as Meta<CardViewSelectItemComponent>;
-
-const template: StoryFn<CardViewSelectItemComponent> = (args) => ({
-    props: args
-});
-
-export const CardViewSelectItem = template.bind({});
-CardViewSelectItem.args = {
-    property: new CardViewSelectItemModel({
-        label: 'CardView Select Item',
-        value: 'one',
-        options$: of([
-            { key: 'one', label: 'One' },
-            { key: 'two', label: 'Two' }
-        ]),
-        key: 'select',
-        editable: true
-    })
 };
-CardViewSelectItem.parameters = { layout: 'centered' };
+
+export default meta;
+type Story = StoryObj<CardViewSelectItemComponent>;
+
+export const CardViewSelectItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewSelectItemModel({
+            label: 'CardView Select Item',
+            value: 'one',
+            options$: of([
+                { key: 'one', label: 'One' },
+                { key: 'two', label: 'Two' }
+            ]),
+            key: 'select',
+            editable: true
+        })
+    },
+    parameters: { layout: 'centered' }
+};

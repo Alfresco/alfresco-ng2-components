@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { AboutComponent } from './about.component';
 import { ABOUT_DIRECTIVES } from './about.module';
 import { AuthenticationService } from '../auth/services/authentication.service';
@@ -42,7 +42,13 @@ export class AppExtensionServiceMock {
     }
 }
 
-export default {
+type AboutStoryArgs = AboutComponent & {
+    dev?: boolean;
+    pkg?: any;
+    regexp?: string;
+};
+
+const meta: Meta<AboutStoryArgs> = {
     component: AboutComponent,
     title: 'Core/About/About',
     decorators: [
@@ -82,25 +88,28 @@ export default {
             }
         }
     }
-} as Meta<AboutComponent>;
+};
 
-const template: StoryFn<AboutComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<AboutStoryArgs>;
 
-export const About = template.bind({});
-About.args = {
-    pkg: {
-        name: 'My Storybook App',
-        commit: 'my-commit-value',
-        version: '1.0.0',
-        dependencies: {
-            '@alfresco/adf-content-services': '4.7.0',
-            '@alfresco/adf-core': '4.7.0',
-            '@alfresco/adf-extensions': '4.7.0',
-            '@alfresco/adf-process-services': '4.7.0',
-            '@alfresco/adf-process-services-cloud': '4.7.0',
-            '@alfresco/js-api': '4.7.0-3976'
+export const About: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        pkg: {
+            name: 'My Storybook App',
+            commit: 'my-commit-value',
+            version: '1.0.0',
+            dependencies: {
+                '@alfresco/adf-content-services': '4.7.0',
+                '@alfresco/adf-core': '4.7.0',
+                '@alfresco/adf-extensions': '4.7.0',
+                '@alfresco/adf-process-services': '4.7.0',
+                '@alfresco/adf-process-services-cloud': '4.7.0',
+                '@alfresco/js-api': '4.7.0-3976'
+            }
         }
     }
 };

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { EditJsonDialogStorybookComponent } from './edit-json.dialog.stories.component';
 import { MatButtonModule } from '@angular/material/button';
 import { EditJsonDialogComponent } from './edit-json.dialog';
@@ -29,7 +29,7 @@ const jsonData = {
     researcherId: 's_10002'
 };
 
-export default {
+const meta: Meta<EditJsonDialogStorybookComponent> = {
     component: EditJsonDialogStorybookComponent,
     title: 'Core/Dialog/Edit JSON Dialog',
     decorators: [
@@ -88,11 +88,14 @@ export default {
         editable: false,
         title: 'JSON Dialog Title'
     }
-} as Meta<EditJsonDialogStorybookComponent>;
+};
 
-const template: StoryFn<EditJsonDialogStorybookComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<EditJsonDialogStorybookComponent>;
 
-export const EditJSONDialog = template.bind({});
-EditJSONDialog.parameters = { layout: 'centered' };
+export const EditJSONDialog: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    parameters: { layout: 'centered' }
+};

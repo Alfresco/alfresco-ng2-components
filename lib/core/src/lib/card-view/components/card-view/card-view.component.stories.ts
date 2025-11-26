@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewComponent } from './card-view.component';
 import { CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-view-content.mock';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewComponent> = {
     component: CardViewComponent,
     title: 'Core/Card View/Card View',
     decorators: [
@@ -100,21 +100,28 @@ export default {
         multiValueSeparator: ', ',
         displayLabelForChips: false
     }
-} as Meta<CardViewComponent>;
-
-const template: StoryFn<CardViewComponent> = (args) => ({
-    props: args
-});
-
-export const DefaultCardView = template.bind({});
-DefaultCardView.args = {
-    properties: cardViewDataSource
 };
-DefaultCardView.parameters = { layout: 'centered' };
 
-export const EmptyCardView = template.bind({});
-EmptyCardView.args = {
-    properties: cardViewUndefinedValues,
-    editable: false
+export default meta;
+type Story = StoryObj<CardViewComponent>;
+
+export const DefaultCardView: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        properties: cardViewDataSource
+    },
+    parameters: { layout: 'centered' }
 };
-EmptyCardView.parameters = { layout: 'centered' };
+
+export const EmptyCardView: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        properties: cardViewUndefinedValues,
+        editable: false
+    },
+    parameters: { layout: 'centered' }
+};

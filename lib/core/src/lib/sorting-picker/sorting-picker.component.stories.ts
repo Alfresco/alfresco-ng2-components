@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { SortingPickerComponent } from './sorting-picker.component';
 import { provideStoryCore } from '../testing';
 
@@ -27,7 +27,7 @@ const initialSortingTypes: Array<{ key: string; label: string }> = [
 
 const initialOptionKeys = [...initialSortingTypes.map((type) => type.key.toString())];
 
-export default {
+const meta: Meta<SortingPickerComponent> = {
     component: SortingPickerComponent,
     title: 'Core/Sorting Picker/Sorting Picker',
     decorators: [
@@ -93,14 +93,17 @@ export default {
         ascending: true,
         options: []
     }
-} as Meta<SortingPickerComponent>;
-
-const template: StoryFn<SortingPickerComponent> = (args) => ({
-    props: args
-});
-
-export const SortingPicker = template.bind({});
-SortingPicker.args = {
-    options: initialSortingTypes
 };
-SortingPicker.parameters = { layout: 'centered' };
+
+export default meta;
+type Story = StoryObj<SortingPickerComponent>;
+
+export const SortingPicker: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        options: initialSortingTypes
+    },
+    parameters: { layout: 'centered' }
+};
