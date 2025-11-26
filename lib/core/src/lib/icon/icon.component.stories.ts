@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 import { IconComponent } from './icon.component';
 import { provideStoryCore } from '../testing';
 
-export default {
+const meta: Meta<IconComponent> = {
     component: IconComponent,
     title: 'Core/Icon/Icon',
     decorators: [
@@ -56,20 +56,27 @@ export default {
             }
         }
     }
-} as Meta<IconComponent>;
-
-const template: StoryFn<IconComponent> = (args) => ({
-    props: args
-});
-
-export const DefaultIcon = template.bind({});
-DefaultIcon.args = {
-    value: ''
 };
-DefaultIcon.parameters = { layout: 'centered' };
 
-export const CustomIcon = template.bind({});
-CustomIcon.args = {
-    value: 'cloud_download'
+export default meta;
+type Story = StoryObj<IconComponent>;
+
+export const DefaultIcon: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        value: ''
+    },
+    parameters: { layout: 'centered' }
 };
-CustomIcon.parameters = { layout: 'centered' };
+
+export const CustomIcon: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        value: 'cloud_download'
+    },
+    parameters: { layout: 'centered' }
+};

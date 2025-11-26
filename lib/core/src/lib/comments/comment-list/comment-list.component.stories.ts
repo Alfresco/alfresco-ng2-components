@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CommentListComponent } from './comment-list.component';
 import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
@@ -23,7 +23,7 @@ import { CommentsServiceStoriesMock } from '../mocks/comments.service.stories.mo
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 import { provideStoryCore } from '../../testing';
 
-export default {
+const meta: Meta<CommentListComponent> = {
     component: CommentListComponent,
     title: 'Core/Comments/Comment List',
     decorators: [
@@ -62,18 +62,25 @@ export default {
             }
         }
     }
-} as Meta<CommentListComponent>;
-
-const template: StoryFn<CommentListComponent> = (args) => ({
-    props: args
-});
-
-export const TaskBased = template.bind({});
-TaskBased.args = {
-    comments: commentsTaskData
 };
 
-export const NodeBased = template.bind({});
-NodeBased.args = {
-    comments: commentsNodeData
+export default meta;
+type Story = StoryObj<CommentListComponent>;
+
+export const TaskBased: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        comments: commentsTaskData
+    }
+};
+
+export const NodeBased: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        comments: commentsNodeData
+    }
 };

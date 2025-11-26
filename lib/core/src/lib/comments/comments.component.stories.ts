@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CommentsComponent } from './comments.component';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { commentsStoriesData } from './mocks/comments.stories.mock';
 import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
 import { provideStoryCore } from '../testing';
 
-export default {
+const meta: Meta<CommentsComponent> = {
     component: CommentsComponent,
     title: 'Core/Comments/Comment',
     decorators: [
@@ -75,33 +75,48 @@ export default {
                 type: { summary: 'EventEmitter <any>' }
             }
         }
+    },
+    args: {
+        comments: commentsStoriesData,
+        id: '-fake-'
     }
-} as Meta<CommentsComponent>;
-
-const template: StoryFn<CommentsComponent> = (args) => ({
-    props: args
-});
-
-export const SingleCommentWithAvatar = template.bind({});
-SingleCommentWithAvatar.args = {
-    comments: [commentsStoriesData[0]],
-    readOnly: true
 };
 
-export const SingleCommentWithoutAvatar = template.bind({});
-SingleCommentWithoutAvatar.args = {
-    comments: [commentsStoriesData[1]],
-    readOnly: true
+export default meta;
+type Story = StoryObj<CommentsComponent>;
+
+export const SingleCommentWithAvatar: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        comments: [commentsStoriesData[0]],
+        readOnly: true
+    }
 };
 
-export const NoComments = template.bind({});
-NoComments.args = {
-    comments: [],
-    readOnly: true
+export const SingleCommentWithoutAvatar: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        comments: [commentsStoriesData[1]],
+        readOnly: true
+    }
 };
 
-export const Comments = template.bind({});
-Comments.args = {
-    comments: commentsStoriesData,
-    id: '-fake-'
+export const NoComments: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        comments: [],
+        readOnly: true
+    }
+};
+
+export const Comments: Story = {
+    render: (args) => ({
+        props: args
+    })
 };

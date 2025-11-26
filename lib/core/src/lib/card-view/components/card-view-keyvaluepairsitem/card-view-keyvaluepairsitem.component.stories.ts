@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CARD_VIEW_DIRECTIVES, CardViewKeyValuePairsItemModel } from '../../public-api';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewKeyValuePairsItemComponent> = {
     component: CardViewKeyValuePairsItemComponent,
     title: 'Core/Card View/Card View Key Value Pairs Item',
     decorators: [
@@ -50,19 +50,24 @@ export default {
     args: {
         editable: true
     }
-} as Meta<CardViewKeyValuePairsItemComponent>;
+};
 
-export const CardViewKeyValuePairsItem: StoryFn<CardViewKeyValuePairsItemComponent> = (args) => ({
-    props: args
-});
-CardViewKeyValuePairsItem.args = {
-    property: new CardViewKeyValuePairsItemModel({
-        label: 'CardView Key-Value Pairs Item',
-        value: [
-            { name: 'hey', value: 'you' },
-            { name: 'hey', value: 'you' }
-        ],
-        key: 'key-value-pairs',
-        editable: true
-    })
+export default meta;
+type Story = StoryObj<CardViewKeyValuePairsItemComponent>;
+
+export const CardViewKeyValuePairsItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewKeyValuePairsItemModel({
+            label: 'CardView Key-Value Pairs Item',
+            value: [
+                { name: 'hey', value: 'you' },
+                { name: 'hey', value: 'you' }
+            ],
+            key: 'key-value-pairs',
+            editable: true
+        })
+    }
 };

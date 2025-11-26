@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { HeaderLayoutComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideStoryCore } from '../../../testing';
 
-export default {
+const meta: Meta<HeaderLayoutComponent> = {
     component: HeaderLayoutComponent,
     title: 'Core/Layout/Header',
     decorators: [
@@ -128,14 +128,17 @@ export default {
         position: 'start',
         redirectUrl: '/'
     }
-} as Meta<HeaderLayoutComponent>;
+};
 
-const template: StoryFn<HeaderLayoutComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<HeaderLayoutComponent>;
 
-export const header = template.bind({});
-header.args = {
-    title: 'Hello from Header!',
-    tooltip: 'Default Tooltip text'
+export const header: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        title: 'Hello from Header!',
+        tooltip: 'Default Tooltip text'
+    }
 };

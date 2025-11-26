@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewBoolItemComponent> = {
     component: CardViewBoolItemComponent,
     title: 'Core/Card View/Card View Bool Item',
     decorators: [
@@ -50,18 +50,23 @@ export default {
     args: {
         editable: true
     }
-} as Meta<CardViewBoolItemComponent>;
-
-export const CardViewBoolItem: StoryFn<CardViewBoolItemComponent> = (args) => ({
-    props: args
-});
-CardViewBoolItem.args = {
-    property: new CardViewBoolItemModel({
-        label: 'Agree to all terms and conditions',
-        value: true,
-        key: 'boolean',
-        default: false,
-        editable: true
-    })
 };
-CardViewBoolItem.parameters = { layout: 'centered' };
+
+export default meta;
+type Story = StoryObj<CardViewBoolItemComponent>;
+
+export const CardViewBoolItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewBoolItemModel({
+            label: 'Agree to all terms and conditions',
+            value: true,
+            key: 'boolean',
+            default: false,
+            editable: true
+        })
+    },
+    parameters: { layout: 'centered' }
+};

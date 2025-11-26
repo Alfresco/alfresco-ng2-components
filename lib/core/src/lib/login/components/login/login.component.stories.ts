@@ -16,14 +16,21 @@
  */
 
 import { RouterModule } from '@angular/router';
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { AuthenticationService } from '../../../auth';
 import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 import { LoginComponent } from './login.component';
 import { importProvidersFrom } from '@angular/core';
 import { provideStoryCore } from '../../../../..';
 
-export default {
+type LoginStoryArgs = LoginComponent & {
+    correct?: any;
+    corsError?: any;
+    csrfError?: any;
+    ecmAccessError?: any;
+};
+
+const meta: Meta<LoginStoryArgs> = {
     component: LoginComponent,
     title: 'Core/Login/Login',
     decorators: [
@@ -168,10 +175,13 @@ export default {
             }
         }
     }
-} as Meta<LoginComponent>;
+};
 
-const template: StoryFn<LoginComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<LoginStoryArgs>;
 
-export const Login = template.bind({});
+export const Login: Story = {
+    render: (args) => ({
+        props: args
+    })
+};

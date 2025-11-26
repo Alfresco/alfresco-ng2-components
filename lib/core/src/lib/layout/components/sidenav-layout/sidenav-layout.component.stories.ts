@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
@@ -23,7 +23,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideStoryCore } from '../../../testing';
 
-export default {
+type SidenavLayoutStoryArgs = SidenavLayoutComponent & {
+    title?: string;
+    color?: 'primary' | 'accent' | 'warn';
+    clicked?: any;
+};
+
+const meta: Meta<SidenavLayoutStoryArgs> = {
     component: SidenavLayoutComponent,
     title: 'Core/Layout/Sidenav Layout',
     decorators: [
@@ -133,11 +139,15 @@ export default {
         hideSidenav: false,
         position: 'start'
     }
-} as Meta<SidenavLayoutComponent>;
+};
 
-const template: StoryFn<SidenavLayoutComponent> = (args) => ({
-    props: args,
-    template: `
+export default meta;
+type Story = StoryObj<SidenavLayoutStoryArgs>;
+
+export const SidenavLayout: Story = {
+    render: (args) => ({
+        props: args,
+        template: `
     <adf-sidenav-layout
         [sidenavMin]="sidenavMin"
         [sidenavMax]="sidenavMax"
@@ -221,13 +231,12 @@ const template: StoryFn<SidenavLayoutComponent> = (args) => ({
             </adf-sidenav-layout-content>
         </div>
     </adf-sidenav-layout>`
-});
-
-export const SidenavLayout = template.bind({});
-SidenavLayout.args = {
-    sidenavMin: 85,
-    sidenavMax: 250,
-    stepOver: 600,
-    position: 'start',
-    title: 'Hello from Sidenav Layout!'
+    }),
+    args: {
+        sidenavMin: 85,
+        sidenavMax: 250,
+        stepOver: 600,
+        position: 'start',
+        title: 'Hello from Sidenav Layout!'
+    }
 };

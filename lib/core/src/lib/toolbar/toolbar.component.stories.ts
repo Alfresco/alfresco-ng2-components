@@ -15,12 +15,18 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { ToolbarComponent } from './toolbar.component';
 import { TOOLBAR_DIRECTIVES } from './toolbar.module';
 import { provideStoryCore } from '../testing';
 
-export default {
+type ToolbarStoryArgs = ToolbarComponent & {
+    toolbarTitle?: boolean;
+    toolbarDivider?: boolean;
+    anyContentProjection?: boolean;
+};
+
+const meta: Meta<ToolbarStoryArgs> = {
     component: ToolbarComponent,
     title: 'Core/Toolbar/Toolbar',
     decorators: [
@@ -95,13 +101,15 @@ export default {
         toolbarDivider: false,
         anyContentProjection: false
     }
-} as Meta<ToolbarComponent>;
+};
 
-const template: StoryFn<ToolbarComponent> = (
-    args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean }
-) => ({
-    props: args,
-    template: `
+export default meta;
+type Story = StoryObj<ToolbarStoryArgs>;
+
+export const Toolbar: Story = {
+    render: (args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean }) => ({
+        props: args,
+        template: `
     <adf-toolbar color="${args.color}" title="${args.title}">
         <ng-container *ngIf="${args.toolbarTitle}"><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
         <ng-container *ngIf="${args.anyContentProjection}">
@@ -109,6 +117,5 @@ const template: StoryFn<ToolbarComponent> = (
         </ng-container>
         <ng-container *ngIf="${args.toolbarDivider}">left<adf-toolbar-divider></adf-toolbar-divider>right</ng-container>
     </adf-toolbar>`
-});
-
-export const Toolbar = template.bind({});
+    })
+};

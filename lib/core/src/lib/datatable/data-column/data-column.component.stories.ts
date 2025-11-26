@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
 import { DATATABLE_DIRECTIVES } from '../datatable.module';
 import * as mockData from '../../mock/data-column.mock';
@@ -23,7 +23,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
 import { provideStoryCore } from '../../testing';
 
-export default {
+const meta: Meta<DataColumnComponent & { rows: any[] }> = {
     component: DataColumnComponent,
     title: 'Core/Data Column/Data Column',
     decorators: [
@@ -321,11 +321,14 @@ export default {
             locale: undefined
         }
     }
-} as Meta<DataColumnComponent>;
+};
+
+export default meta;
+type Story = StoryObj<DataColumnComponent & { rows: any[] }>;
 
 const formatCustomTooltip = (row: DataRow): string => (row ? 'This is ' + row.getValue('firstname') : null);
 
-const template: StoryFn<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
+const render = (args: DataColumnComponent & { rows: DataRow[] }) => ({
     props: args,
     template: `
         <adf-datatable [rows]="rows">
@@ -353,152 +356,176 @@ const template: StoryFn<DataColumnComponent> = (args: DataColumnComponent & { ro
 });
 
 // Text Column
-export const TextColumn: StoryFn = template.bind({});
-TextColumn.args = {
-    rows: mockData.textColumnRows,
-    key: 'firstname',
-    type: 'text',
-    title: 'Text Column'
+export const TextColumn: Story = {
+    render: render,
+    args: {
+        rows: mockData.textColumnRows,
+        key: 'firstname',
+        type: 'text',
+        title: 'Text Column'
+    }
 };
 
 // Text Column With Custom Tooltip
-export const TextColumnWithCustomTooltip: StoryFn = template.bind({});
-TextColumnWithCustomTooltip.argTypes = {
-    formatTooltip: { control: { disable: false } }
-};
-TextColumnWithCustomTooltip.args = {
-    rows: mockData.textColumnRows,
-    key: 'firstname',
-    type: 'text',
-    title: 'Custom Tooltip Column',
-    formatTooltip: formatCustomTooltip
+export const TextColumnWithCustomTooltip: Story = {
+    render: render,
+    argTypes: {
+        formatTooltip: { control: { disable: false } }
+    },
+    args: {
+        rows: mockData.textColumnRows,
+        key: 'firstname',
+        type: 'text',
+        title: 'Custom Tooltip Column',
+        formatTooltip: formatCustomTooltip
+    }
 };
 
 // Icon Column
-export const IconColumn: StoryFn = template.bind({});
-IconColumn.argTypes = {
-    copyContent: { control: { disable: true } }
-};
-IconColumn.args = {
-    rows: mockData.iconColumnRows,
-    key: 'icon',
-    type: 'icon',
-    title: 'Icon Column'
+export const IconColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.iconColumnRows,
+        key: 'icon',
+        type: 'icon',
+        title: 'Icon Column'
+    }
 };
 
 // Image Column
-export const ImageColumn: StoryFn = template.bind({});
-ImageColumn.argTypes = {
-    copyContent: { control: { disable: true } }
-};
-ImageColumn.args = {
-    rows: mockData.imageColumnRows,
-    key: 'image',
-    type: 'image',
-    title: 'Image Column'
+export const ImageColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.imageColumnRows,
+        key: 'image',
+        type: 'image',
+        title: 'Image Column'
+    }
 };
 
 // Date Column
-export const DateColumn: StoryFn = template.bind({});
-DateColumn.argTypes = {
-    copyContent: { control: { disable: true } },
-    dateConfig: { control: { disable: false } }
-};
-DateColumn.args = {
-    rows: mockData.dateColumnRows,
-    key: 'createdOn',
-    type: 'date',
-    title: 'Date Column'
+export const DateColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } },
+        dateConfig: { control: { disable: false } }
+    },
+    args: {
+        rows: mockData.dateColumnRows,
+        key: 'createdOn',
+        type: 'date',
+        title: 'Date Column'
+    }
 };
 
 // Date Column Time Ago
-export const DateColumnTimeAgo: StoryFn = template.bind({});
-DateColumnTimeAgo.argTypes = {
-    copyContent: { control: { disable: true } },
-    dateConfig: { control: { disable: false } }
-};
-DateColumnTimeAgo.args = {
-    rows: mockData.dateColumnTimeAgoRows,
-    key: 'modifiedOn',
-    type: 'date',
-    title: 'Date Column Time Ago',
-    dateConfig: { format: 'timeAgo' }
+export const DateColumnTimeAgo: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } },
+        dateConfig: { control: { disable: false } }
+    },
+    args: {
+        rows: mockData.dateColumnTimeAgoRows,
+        key: 'modifiedOn',
+        type: 'date',
+        title: 'Date Column Time Ago',
+        dateConfig: { format: 'timeAgo' }
+    }
 };
 
 // File Size Column
-export const FileSizeColumn: StoryFn = template.bind({});
-FileSizeColumn.argTypes = {
-    copyContent: { control: { disable: true } }
-};
-FileSizeColumn.args = {
-    rows: mockData.fileSizeColumnRows,
-    key: 'size',
-    type: 'fileSize',
-    title: 'File Size Column'
+export const FileSizeColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.fileSizeColumnRows,
+        key: 'size',
+        type: 'fileSize',
+        title: 'File Size Column'
+    }
 };
 
 // Location Column
-export const LocationColumn: StoryFn = template.bind({});
-LocationColumn.argTypes = {
-    copyContent: { control: { disable: true } },
-    format: { control: { disable: false } },
-    sortable: { control: { disable: true } }
-};
-LocationColumn.args = {
-    rows: mockData.locationColumnRows,
-    format: '/files',
-    key: 'path',
-    type: 'location',
-    title: 'Location Column'
+export const LocationColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } },
+        format: { control: { disable: false } },
+        sortable: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.locationColumnRows,
+        format: '/files',
+        key: 'path',
+        type: 'location',
+        title: 'Location Column'
+    }
 };
 
 // Boolean Column
-export const BooleanColumn: StoryFn = template.bind({});
-BooleanColumn.argTypes = {
-    copyContent: { control: { disable: true } }
-};
-BooleanColumn.args = {
-    rows: mockData.booleanColumnRows,
-    key: 'bool',
-    type: 'boolean',
-    title: 'Boolean Column'
+export const BooleanColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.booleanColumnRows,
+        key: 'bool',
+        type: 'boolean',
+        title: 'Boolean Column'
+    }
 };
 
 // Json Column
-export const JsonColumn: StoryFn = template.bind({});
-JsonColumn.argTypes = {
-    editable: { control: { disable: false } },
-    copyContent: { control: { disable: true } }
-};
-JsonColumn.args = {
-    rows: mockData.jsonColumnRows,
-    key: 'rowInfo',
-    type: 'json',
-    title: 'JSON Column'
+export const JsonColumn: Story = {
+    render: render,
+    argTypes: {
+        editable: { control: { disable: false } },
+        copyContent: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.jsonColumnRows,
+        key: 'rowInfo',
+        type: 'json',
+        title: 'JSON Column'
+    }
 };
 
 // Amount Column
-export const AmountColumn: StoryFn = template.bind({});
-AmountColumn.argTypes = {
-    copyContent: { control: { disable: true } },
-    currencyConfig: { control: { disable: false } }
-};
-AmountColumn.args = {
-    rows: mockData.amountColumnRows,
-    key: 'price',
-    type: 'amount',
-    title: 'Amount Column'
+export const AmountColumn: Story = {
+    render: render,
+    argTypes: {
+        copyContent: { control: { disable: true } },
+        currencyConfig: { control: { disable: false } }
+    },
+    args: {
+        rows: mockData.amountColumnRows,
+        key: 'price',
+        type: 'amount',
+        title: 'Amount Column'
+    }
 };
 
 // Number Column
-export const NumberColumn: StoryFn = template.bind({});
-NumberColumn.argTypes = {
-    decimalConfig: { control: { disable: false } },
-    copyContent: { control: { disable: true } }
-};
-NumberColumn.args = {
-    rows: mockData.amountColumnRows,
-    key: 'price',
-    type: 'number',
-    title: 'Number Column'
+export const NumberColumn: Story = {
+    render: render,
+    argTypes: {
+        decimalConfig: { control: { disable: false } },
+        copyContent: { control: { disable: true } }
+    },
+    args: {
+        rows: mockData.amountColumnRows,
+        key: 'price',
+        type: 'number',
+        title: 'Number Column'
+    }
 };

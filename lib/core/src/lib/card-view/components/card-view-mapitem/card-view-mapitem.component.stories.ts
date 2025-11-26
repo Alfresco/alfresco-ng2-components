@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 import { CardViewMapItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { provideStoryCore } from './../../../testing';
 
-export default {
+const meta: Meta<CardViewMapItemComponent> = {
     component: CardViewMapItemComponent,
     title: 'Core/Card View/Card View Map Item',
     decorators: [
@@ -50,30 +50,37 @@ export default {
     args: {
         displayEmpty: true
     }
-} as Meta<CardViewMapItemComponent>;
-
-const template: StoryFn<CardViewMapItemComponent> = (args) => ({
-    props: args
-});
-
-export const CardViewMapItem = template.bind({});
-CardViewMapItem.args = {
-    property: new CardViewMapItemModel({
-        label: 'My map',
-        value: new Map([['999', 'My Value']]),
-        key: 'map',
-        default: 'default map value'
-    })
 };
-CardViewMapItem.parameters = { layout: 'centered' };
 
-export const EmptyCardViewMapItem = template.bind({});
-EmptyCardViewMapItem.args = {
-    property: new CardViewMapItemModel({
-        label: 'My map',
-        value: [],
-        key: 'map',
-        default: 'default map value'
-    })
+export default meta;
+type Story = StoryObj<CardViewMapItemComponent>;
+
+export const CardViewMapItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewMapItemModel({
+            label: 'My map',
+            value: new Map([['999', 'My Value']]),
+            key: 'map',
+            default: 'default map value'
+        })
+    },
+    parameters: { layout: 'centered' }
 };
-EmptyCardViewMapItem.parameters = { layout: 'centered' };
+
+export const EmptyCardViewMapItem: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        property: new CardViewMapItemModel({
+            label: 'My map',
+            value: [],
+            key: 'map',
+            default: 'default map value'
+        })
+    },
+    parameters: { layout: 'centered' }
+};

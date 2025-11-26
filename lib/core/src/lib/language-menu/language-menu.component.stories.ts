@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { applicationConfig, componentWrapperDecorator, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, componentWrapperDecorator, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { LANGUAGE_MENU_DIRECTIVES } from './language-menu.module';
 import { LanguageMenuComponent } from './language-menu.component';
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 import { provideStoryCore } from '../testing';
 
-export default {
+const meta: Meta<LanguageMenuComponent> = {
     component: LanguageMenuComponent,
     title: 'Core/Language Menu/Language Menu',
     decorators: [
@@ -51,17 +51,18 @@ export default {
             }
         }
     }
-} as Meta<LanguageMenuComponent>;
+};
 
-const LanguageMenuComponentTemplate: StoryFn<LanguageMenuComponent> = (args) => ({
-    props: args
-});
-LanguageMenuComponentTemplate.parameters = { layout: 'centered' };
+export default meta;
+type Story = StoryObj<LanguageMenuComponent>;
 
-export const AsMainMenu = LanguageMenuComponentTemplate.bind({});
-AsMainMenu.decorators = [
-    componentWrapperDecorator(
-        (story) => `
+export const AsMainMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    decorators: [
+        componentWrapperDecorator(
+            (story) => `
       <button mat-icon-button [matMenuTriggerFor]="langMenu">
         <mat-icon>
           language
@@ -71,14 +72,18 @@ AsMainMenu.decorators = [
         ${story}
       </mat-menu>
     `
-    )
-];
-AsMainMenu.parameters = { layout: 'centered' };
+        )
+    ],
+    parameters: { layout: 'centered' }
+};
 
-export const AsNestedMenu = LanguageMenuComponentTemplate.bind({});
-AsNestedMenu.decorators = [
-    componentWrapperDecorator(
-        (story) => `
+export const AsNestedMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    decorators: [
+        componentWrapperDecorator(
+            (story) => `
       <button mat-icon-button [matMenuTriggerFor]="profileMenu">
         <mat-icon>
           more_vert
@@ -96,6 +101,7 @@ AsNestedMenu.decorators = [
         ${story}
       </mat-menu>
     `
-    )
-];
-AsNestedMenu.parameters = { layout: 'centered' };
+        )
+    ],
+    parameters: { layout: 'centered' }
+};

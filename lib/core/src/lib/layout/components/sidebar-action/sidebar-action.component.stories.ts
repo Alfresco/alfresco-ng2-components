@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { provideStoryCore } from '../../../testing';
 
-export default {
+const meta: Meta<SidebarActionMenuComponent> = {
     component: SidebarActionMenuComponent,
     title: 'Core/Layout/Sidebar Action Menu',
     decorators: [
@@ -68,13 +68,16 @@ export default {
         expanded: true,
         width: 272
     }
-} as Meta<SidebarActionMenuComponent>;
+};
 
-const template: StoryFn<SidebarActionMenuComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<SidebarActionMenuComponent>;
 
-export const sidebarActionMenu = template.bind({});
-sidebarActionMenu.args = {
-    title: 'Hello from Sidebar Action Menu!'
+export const sidebarActionMenu: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        title: 'Hello from Sidebar Action Menu!'
+    }
 };

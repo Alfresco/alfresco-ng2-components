@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { ErrorContentComponent } from './error-content.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { provideStoryCore } from '../../testing';
 
-export default {
+type ErrorContentStoryArgs = ErrorContentComponent & {
+    errorContentActions?: boolean;
+};
+
+const meta: Meta<ErrorContentStoryArgs> = {
     component: ErrorContentComponent,
     title: 'Core/Template/Error Content',
     decorators: [
@@ -67,17 +71,20 @@ export default {
         errorCode: 'UNKNOWN',
         errorContentActions: false
     }
-} as Meta<ErrorContentComponent>;
+};
 
-const template: StoryFn<ErrorContentComponent> = (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
-    props: args,
-    template: `
+export default meta;
+type Story = StoryObj<ErrorContentStoryArgs>;
+
+export const ErrorContent: Story = {
+    render: (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
+        props: args,
+        template: `
     <adf-error-content errorCode="${args.errorCode}">
         <div adf-error-content-actions *ngIf="${args.errorContentActions}">
         <button mat-raised-button type="button">MyAction</button>
         </div>
     </adf-error-content>`
-});
-
-export const ErrorContent = template.bind({});
-ErrorContent.parameters = { layout: 'centered' };
+    }),
+    parameters: { layout: 'centered' }
+};

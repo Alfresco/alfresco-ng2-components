@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from '../notification-history.module';
 import { provideStoryCore } from '../../testing';
 
-export default {
+const meta: Meta<NotificationHistoryComponent> = {
     component: NotificationHistoryComponent,
     title: 'Core/Notification History/Notification History',
     decorators: [
@@ -71,11 +71,15 @@ export default {
         menuPositionY: 'below',
         maxNotifications: 5
     }
-} as Meta<NotificationHistoryComponent>;
+};
 
-const template: StoryFn<NotificationHistoryComponent> = (args) => ({
-    props: args,
-    template: `
+export default meta;
+type Story = StoryObj<NotificationHistoryComponent>;
+
+export const NotificationHistory: Story = {
+    render: (args) => ({
+        props: args,
+        template: `
     <div style="display:flex;flex-direction:column;align-items:center;">
         <adf-notification-history
             [menuPositionX]=menuPositionX
@@ -85,7 +89,6 @@ const template: StoryFn<NotificationHistoryComponent> = (args) => ({
         <adf-add-notification-storybook>
         </adf-add-notification-storybook>
     </div>`
-});
-
-export const NotificationHistory = template.bind({});
-NotificationHistory.parameters = { layout: 'centered' };
+    }),
+    parameters: { layout: 'centered' }
+};

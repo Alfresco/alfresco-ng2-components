@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { GroupCloudComponent } from './group-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { IdentityGroupServiceMock, mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 import { importProvidersFrom } from '@angular/core';
 
-export default {
+const meta: Meta<GroupCloudComponent> = {
     component: GroupCloudComponent,
     title: 'Process Services Cloud/Group Cloud/Group Cloud',
     decorators: [
@@ -150,31 +150,46 @@ export default {
         required: false,
         roles: []
     }
-} as Meta<GroupCloudComponent>;
-
-const template: StoryFn<GroupCloudComponent> = (args) => ({
-    props: args
-});
-
-export const DefaultGroupCloud = template.bind({});
-
-export const ValidPreselectedGroups = template.bind({});
-ValidPreselectedGroups.args = {
-    validate: true,
-    mode: 'multiple',
-    preSelectGroups: mockFoodGroups
 };
 
-export const MandatoryPreselectedGroups = template.bind({});
-MandatoryPreselectedGroups.args = {
-    validate: true,
-    mode: 'multiple',
-    preSelectGroups: [mockVegetableAubergine, { ...mockMeatChicken, readonly: true }]
+export default meta;
+type Story = StoryObj<GroupCloudComponent>;
+
+export const DefaultGroupCloud: Story = {
+    render: (args) => ({
+        props: args
+    })
 };
 
-export const InvalidPreselectedGroups = template.bind({});
-InvalidPreselectedGroups.args = {
-    validate: true,
-    mode: 'multiple',
-    preSelectGroups: [{ id: 'invalid-group', name: 'Invalid Group' }]
+export const ValidPreselectedGroups: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        validate: true,
+        mode: 'multiple',
+        preSelectGroups: mockFoodGroups
+    }
+};
+
+export const MandatoryPreselectedGroups: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        validate: true,
+        mode: 'multiple',
+        preSelectGroups: [mockVegetableAubergine, { ...mockMeatChicken, readonly: true }]
+    }
+};
+
+export const InvalidPreselectedGroups: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    args: {
+        validate: true,
+        mode: 'multiple',
+        preSelectGroups: [{ id: 'invalid-group', name: 'Invalid Group' }]
+    }
 };

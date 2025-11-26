@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { DownloadZipDialogStorybookComponent } from './download-zip.dialog.stories.component';
 import { AlfrescoApiServiceMock, ContentApiMock, DownloadZipMockService, NodesApiMock } from './mock/download-zip-service.mock';
@@ -27,7 +27,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../../services';
 import { provideStoryCore } from '../../../../../core/src/public-api';
 
-export default {
+const meta: Meta<DownloadZipDialogStorybookComponent> = {
     component: DownloadZipDialogStorybookComponent,
     title: 'Core/Dialog/Download ZIP Dialog',
     decorators: [
@@ -75,9 +75,14 @@ export default {
     args: {
         showLoading: false
     }
-} as Meta<DownloadZipDialogStorybookComponent>;
+};
 
-export const DownloadZIPDialog: StoryFn<DownloadZipDialogStorybookComponent> = (args) => ({
-    props: args
-});
-DownloadZIPDialog.parameters = { layout: 'centered' };
+export default meta;
+type Story = StoryObj<DownloadZipDialogStorybookComponent>;
+
+export const DownloadZIPDialog: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    parameters: { layout: 'centered' }
+};

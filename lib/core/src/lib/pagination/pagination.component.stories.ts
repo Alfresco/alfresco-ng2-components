@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
+import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { PAGINATION_DIRECTIVES } from './pagination.module';
 import { PaginationComponent } from './pagination.component';
 import { provideStoryCore } from '../testing';
 
-export default {
+const meta: Meta<PaginationComponent> = {
     component: PaginationComponent,
     title: 'Core/Pagination/Pagination',
     decorators: [
@@ -88,11 +88,14 @@ export default {
         supportedPageSizes: [5, 10, 15, 20],
         pagination: { skipCount: 0, maxItems: 25, totalItems: 100, count: 100, hasMoreItems: false }
     }
-} as Meta<PaginationComponent>;
+};
 
-const template: StoryFn<PaginationComponent> = (args) => ({
-    props: args
-});
+export default meta;
+type Story = StoryObj<PaginationComponent>;
 
-export const Pagination = template.bind({});
-Pagination.parameters = { layout: 'centered' };
+export const Pagination: Story = {
+    render: (args) => ({
+        props: args
+    }),
+    parameters: { layout: 'centered' }
+};
