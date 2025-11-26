@@ -253,7 +253,6 @@ export abstract class BaseQueryBuilderService {
      * @param bucket Bucket to remove
      */
     removeUserFacetBucket(field: string, bucket: FacetFieldBucket) {
-        // console.log('Removing user facet bucket', field, bucket);
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
             this.userFacetBuckets[field] = buckets.filter((facetBucket) => facetBucket.label !== bucket.label);

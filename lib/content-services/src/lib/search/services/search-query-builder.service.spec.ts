@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
@@ -24,6 +26,7 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
 import { ActivatedRoute, Router } from '@angular/router';
+import { skip } from 'rxjs/operators';
 
 const buildConfig = (searchSettings = {}): AppConfigService => {
     let config: AppConfigService;
@@ -838,6 +841,69 @@ describe('SearchQueryBuilder', () => {
                 },
                 queryParamsHandling: 'merge'
             });
+        });
+    });
+
+    describe('userFacetBucketsUpdate', () => {
+        it('should emit updated list of UserFacetBuckets on adding the bucket', (done) => {
+            const service = TestBed.inject(SearchQueryBuilderService);
+
+            service.userFacetBucketsUpdate.pipe(skip(1)).subscribe((buckets) => {
+                expect(buckets).toEqual({ test: [{ checked: true, filterQuery: 'f1-q1', label: 'f1-q1', count: 1 }] });
+                done();
+            });
+
+            const currentBuckets = service.getUserFacetBuckets('test');
+            expect(currentBuckets).toEqual([]);
+            service.addUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'f1-q1', count: 1 });
+        });
+
+        it('should emit updated list of UserFacetBuckets on removing the bucket', (done) => {
+            const service = TestBed.inject(SearchQueryBuilderService);
+            service.addUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toStay', count: 1 });
+            service.addUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toLeave', count: 1 });
+
+            service.userFacetBucketsUpdate.pipe(skip(1)).subscribe((buckets) => {
+                expect(buckets).toEqual({ test: [{ checked: true, filterQuery: 'f1-q1', label: 'toStay', count: 1 }] });
+                done();
+            });
+
+            const currentBuckets = service.getUserFacetBuckets('test');
+            expect(currentBuckets).toEqual([
+                { checked: true, filterQuery: 'f1-q1', label: 'toStay', count: 1 },
+                { checked: true, filterQuery: 'f1-q1', label: 'toLeave', count: 1 }
+            ]);
+            service.removeUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toLeave', count: 1 });
+        });
+    });
+
+    describe('queryFragments proxy set up', () => {
+        it('should emit queryFragmentsUpdate when proxy property is set', (done) => {
+            const service = TestBed.inject(SearchQueryBuilderService);
+
+            service.queryFragmentsUpdate.pipe(skip(1)).subscribe((fragments) => {
+                expect(fragments).toEqual({ test: 'test_fragment' });
+                done();
+            });
+
+            const currentFragments = service.queryFragments;
+            expect(currentFragments).toEqual({});
+            service.queryFragments['test'] = 'test_fragment';
+        });
+
+        it('should emit queryFragmentsUpdate when setter replaces the proxy', (done) => {
+            const service = TestBed.inject(SearchQueryBuilderService);
+
+            service.queryFragments['test'] = 'test_fragment';
+            const currentFragments = service.queryFragments;
+
+            expect(currentFragments).toEqual({ test: 'test_fragment' });
+
+            service.queryFragmentsUpdate.pipe(skip(1)).subscribe((fragments) => {
+                expect(fragments).toEqual({});
+                done();
+            });
+            service.queryFragments = {};
         });
     });
 });
