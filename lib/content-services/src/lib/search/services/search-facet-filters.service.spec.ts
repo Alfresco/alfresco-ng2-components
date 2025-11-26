@@ -22,9 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { EMPTY, of } from 'rxjs';
 import { CategoryService } from '../../category/services/category.service';
-import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
-import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
-import { TabbedFacetField } from '../models/tabbed-facet-field.interface';
+import { FacetBucketSortBy, FacetBucketSortDirection } from '../models/facet-field.interface';
 
 describe('SearchFacetFiltersService', () => {
     let searchFacetFiltersService: SearchFacetFiltersService;
@@ -681,44 +679,6 @@ describe('SearchFacetFiltersService', () => {
             searchFacetFiltersService.onDataLoaded(data);
 
             expect(searchFacetFiltersService.responseFacets[0].buckets.items.map((b) => b.label)).toEqual(['baz', 'foo', 'xyzzy', 'qux', 'bar']);
-        });
-    });
-
-    describe('hasActiveFilters getter', () => {
-        it('should return false when there are no facets, no tabbed facet and no selected buckets', () => {
-            searchFacetFiltersService.responseFacets = [];
-            searchFacetFiltersService.tabbedFacet = null;
-            searchFacetFiltersService.selectedBuckets = [];
-
-            expect(searchFacetFiltersService.hasActiveFilters).toBeFalse();
-        });
-
-        it('should return true when responseFacets has items', () => {
-            const facet = { field: 'f1', label: 'f1' } as FacetField;
-            searchFacetFiltersService.responseFacets = [facet];
-            searchFacetFiltersService.tabbedFacet = null;
-            searchFacetFiltersService.selectedBuckets = [];
-
-            expect(searchFacetFiltersService.hasActiveFilters).toBeTrue();
-        });
-
-        it('should return true when tabbedFacet is present', () => {
-            searchFacetFiltersService.responseFacets = [];
-            const tab = { fields: ['creator'], label: 'label', facets: {} } as TabbedFacetField;
-            searchFacetFiltersService.tabbedFacet = tab;
-            searchFacetFiltersService.selectedBuckets = [];
-
-            expect(searchFacetFiltersService.hasActiveFilters).toBeTrue();
-        });
-
-        it('should return true when selectedBuckets has items', () => {
-            searchFacetFiltersService.responseFacets = [];
-            searchFacetFiltersService.tabbedFacet = null;
-            const facet = { field: 'f1', label: 'f1' } as FacetField;
-            const bucket = { label: 'b1', filterQuery: 'fq', count: 1 } as FacetFieldBucket;
-            searchFacetFiltersService.selectedBuckets = [{ field: facet, bucket }];
-
-            expect(searchFacetFiltersService.hasActiveFilters).toBeTrue();
         });
     });
 });
