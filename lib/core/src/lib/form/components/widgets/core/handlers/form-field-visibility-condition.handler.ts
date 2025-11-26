@@ -45,13 +45,7 @@ const getValue = (id: string, value: string, fields: any): string => {
     for (const column of Object.values(fields)) {
         for (const field of column as any) {
             if (field.type === FormFieldTypes.SECTION) {
-                for (const sectionColumn of Object.values(field.fields)) {
-                    for (const sectionField of sectionColumn as any) {
-                        if (sectionField.id === value) {
-                            return getRepeatableSectionChildValue(id, value);
-                        }
-                    }
-                }
+                return getValue(id, value, field.fields);
             }
 
             if (field.id === value) {
