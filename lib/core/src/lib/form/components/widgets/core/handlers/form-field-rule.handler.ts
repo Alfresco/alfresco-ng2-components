@@ -31,13 +31,7 @@ const getRuleOn = (id: string, ruleOn: string, fields: any): string => {
     for (const column of Object.values(fields)) {
         for (const field of column as any) {
             if (field.type === FormFieldTypes.SECTION) {
-                for (const sectionColumn of Object.values(field.fields)) {
-                    for (const sectionField of sectionColumn as any) {
-                        if (sectionField.id === ruleOn) {
-                            return getRepeatableSectionChildRuleOn(id, ruleOn);
-                        }
-                    }
-                }
+                return getRuleOn(id, ruleOn, field.fields);
             }
 
             if (field.id === ruleOn) {

@@ -33,6 +33,7 @@ import { isValid as isValidDate } from 'date-fns';
 import { ContainerRowModel } from './container-row.model';
 import { RepeatableSectionModel, ROW_ID_PREFIX } from './repeatable-section.model';
 import { formFieldRuleHandler } from './handlers/form-field-rule.handler';
+import { formFieldVisibilityConditionHandler } from './handlers/form-field-visibility-condition.handler';
 
 export type FieldOptionType = 'rest' | 'manual' | 'variable';
 export type FieldSelectionType = 'single' | 'multiple';
@@ -217,7 +218,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.params = json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
-            this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
+            this.visibilityCondition = formFieldVisibilityConditionHandler.getVisibilityCondition(this.id, json.visibilityCondition, parent);
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
@@ -354,7 +355,7 @@ export class FormFieldModel extends FormWidgetModel {
         this.columns = this.rows[0].columns;
     }
 
-    private getNumberOfRows(initialNrRows: number = 1, maxNrRows?: number, value?: any) {
+    private getNumberOfRows(initialNrRows: number = 1, maxNrRows: number | null = null, value?: any) {
         return value?.length ? (maxNrRows ? Math.min(value.length, maxNrRows) : value.length) : initialNrRows;
     }
 
@@ -469,6 +470,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.rows.push(this.createRow(fields, form, this.rows.length));
+        this.form.onRepeatableSectionChanged();
     }
 
     private shouldAddRow(): boolean {
@@ -482,6 +484,7 @@ export class FormFieldModel extends FormWidgetModel {
 
         this.rows.splice(index, 1);
         this.updateChildrenFieldsRowIndex();
+        this.form.onRepeatableSectionChanged();
 
         if (!this.form.values[this.id]) {
             return;

@@ -1492,6 +1492,16 @@ describe('FormFieldModel', () => {
                 field.addRow(field.fields, form);
                 expect(field.rows.length).toBe(5);
             });
+
+            it('should call onRepeatableSectionChanged', () => {
+                spyOn(field.form, 'onRepeatableSectionChanged').and.callThrough();
+
+                expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
+
+                field.addRow(field.fields, form);
+
+                expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
+            });
         });
 
         describe('remove row', () => {
@@ -1559,6 +1569,16 @@ describe('FormFieldModel', () => {
                 field.removeRow(1);
 
                 expect(field.form.onFormFieldChanged).not.toHaveBeenCalled();
+            });
+
+            it('should call onRepeatableSectionChanged', () => {
+                spyOn(field.form, 'onRepeatableSectionChanged').and.callThrough();
+
+                expect(field.form.onRepeatableSectionChanged).not.toHaveBeenCalled();
+
+                field.removeRow(1);
+
+                expect(field.form.onRepeatableSectionChanged).toHaveBeenCalled();
             });
         });
 

@@ -1836,3 +1836,129 @@ export const tabInvalidFormVisibility: any = {
         variables: []
     }
 };
+
+export const repeatableSectionFormVisibility: any = {
+    id: 'orm-875b6fe8-a84d-475b-a7e1-a3647955a0a6',
+    name: 'repeatable-section',
+    description: '',
+    version: 0,
+    tabs: [],
+    formDefinition: {
+        fields: [
+            {
+                id: 'RepeatableSection0009v6',
+                name: 'Repeatable Section',
+                type: 'repeatable-section',
+                tab: null,
+                params: {
+                    initialNumberOfRows: 1,
+                    allowInitialRowsDelete: true,
+                    maxNumberOfRows: null
+                },
+                numberOfColumns: 2,
+                fields: {
+                    '1': [
+                        {
+                            id: 'text1',
+                            name: 'Text',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ],
+                    '2': [
+                        {
+                            id: 'text2',
+                            name: 'Text',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: {
+                                leftType: 'field',
+                                leftValue: 'text4',
+                                operator: '!empty',
+                                rightValue: null,
+                                rightType: null,
+                                nextConditionOperator: '',
+                                nextCondition: null
+                            },
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                id: '5a3474a8-22e1-4408-8a43-2eb1fc8300ac',
+                name: 'Section',
+                tab: null,
+                type: 'section',
+                numberOfColumns: 2,
+                fields: {
+                    '1': [
+                        {
+                            id: 'text3',
+                            name: 'Text',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ],
+                    '2': [
+                        {
+                            id: 'text4',
+                            name: 'Text',
+                            type: 'text',
+                            readOnly: false,
+                            required: false,
+                            colspan: 1,
+                            rowspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        outcomes: [],
+        metadata: {},
+        variables: []
+    }
+};
