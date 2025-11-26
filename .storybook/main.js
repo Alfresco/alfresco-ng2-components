@@ -1,10 +1,15 @@
+const { dirname, join } = require('node:path');
+
 module.exports = {
     framework: {
-        name: '@storybook/angular',
+        name: getAbsolutePath('@storybook/angular'),
         options: {}
     },
     staticDirs: [],
     docs: {},
-    stories: [],
-    addons: ['@chromatic-com/storybook']
+    stories: []
 };
+
+function getAbsolutePath(value) {
+    return dirname(require.resolve(join(value, 'package.json')));
+}
