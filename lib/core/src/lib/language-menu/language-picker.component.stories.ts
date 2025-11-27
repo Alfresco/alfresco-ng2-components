@@ -21,13 +21,16 @@ import { LanguagePickerComponent } from './language-picker.component';
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 import { provideStoryCore } from '../testing';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const meta: Meta<LanguagePickerComponent> = {
     component: LanguagePickerComponent,
     title: 'Core/Language Menu/Language Picker',
     decorators: [
         moduleMetadata({
-            imports: [...LANGUAGE_MENU_DIRECTIVES],
+            imports: [...LANGUAGE_MENU_DIRECTIVES, MatMenuModule, MatButtonModule, MatIconModule],
             providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
         }),
         applicationConfig({
