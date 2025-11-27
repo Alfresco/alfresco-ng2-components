@@ -16,11 +16,10 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
+import { provideStoryProcessServicesCloud } from '../../../testing/provide-story-process-services-cloud';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessCloudServiceMock } from '../../mock/process-cloud.service.mock';
 import { ProcessCloudService } from '../../services/process-cloud.service';
-import { importProvidersFrom } from '@angular/core';
 
 const meta: Meta<ProcessHeaderCloudComponent> = {
     component: ProcessHeaderCloudComponent,
@@ -30,7 +29,7 @@ const meta: Meta<ProcessHeaderCloudComponent> = {
             imports: [ProcessHeaderCloudComponent]
         }),
         applicationConfig({
-            providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
+            providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }, ...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

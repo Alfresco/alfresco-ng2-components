@@ -15,35 +15,29 @@
  * limitations under the License.
  */
 
-import { Provider, EnvironmentProviders, APP_INITIALIZER } from '@angular/core';
-import { provideTranslations } from '../translation/translation.service';
+import { Provider, EnvironmentProviders } from '@angular/core';
+import { provideCoreAuth, provideAppConfig, provideI18N, provideTranslations } from '@alfresco/adf-core';
+import { provideCloudFormRenderer, provideCloudPreferences } from '../providers';
+import { TASK_LIST_CLOUD_TOKEN } from '../services/cloud-token.service';
+import { TaskListCloudService } from '../task/task-list/services/task-list-cloud.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideCoreAuthTesting } from './noop-auth.module';
-import { provideAppConfig } from '../app-config/provide-app-config';
-import { AppConfigService } from '../app-config/app-config.service';
-import { provideI18N } from '../../..';
 
 /**
- * Provides the core providers for the storybook.
+ * Provides the providers for the process services cloud story.
  *
- * @returns An array of providers for the core module.
+ * @returns An array of providers for the process services cloud story.
  */
-export function provideStoryCore(): (Provider | EnvironmentProviders)[] {
+export function provideStoryProcessServicesCloud(): (Provider | EnvironmentProviders)[] {
     return [
         provideI18N(),
         provideTranslations('adf-core', 'assets/adf-core'),
         provideTranslations('adf-process-services', 'assets/adf-process-services'),
         provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
-        provideAnimations(),
-        provideCoreAuthTesting(),
         provideAppConfig(),
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (appConfig: AppConfigService) => () => {
-                appConfig.config.locale = 'en';
-            },
-            deps: [AppConfigService],
-            multi: true
-        }
+        provideCoreAuth(),
+        provideCloudPreferences(),
+        provideCloudFormRenderer(),
+        provideAnimations(),
+        { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }
     ];
 }
