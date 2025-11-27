@@ -58,6 +58,7 @@ export class ProcessFilterCloudModel {
     initiators: string[] | null;
     appVersions: string[] | null;
     statuses: string[] | null;
+    excludeByProcessCategoryName: string | null;
 
     processVariableFilters?: ProcessVariableFilterModel[];
 
@@ -110,6 +111,7 @@ export class ProcessFilterCloudModel {
         this.completedFrom = obj._completedFrom || null;
         this.completedTo = obj._completedTo || null;
         this.completedDate = obj.completedDate || null;
+        this.excludeByProcessCategoryName = obj.excludeByProcessCategoryName || null;
         this._suspendedFrom = obj._suspendedFrom || null;
         this._suspendedTo = obj._suspendedTo || null;
 
