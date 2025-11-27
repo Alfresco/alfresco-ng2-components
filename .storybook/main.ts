@@ -8,7 +8,10 @@ const config: StorybookConfig = {
         options: {}
     },
     staticDirs: [],
-    stories: ['lib/**/*.stories.ts']
+    stories: ['lib/**/*.stories.ts'],
+    features: {
+        backgrounds: false
+    }
 };
 
 export default config;

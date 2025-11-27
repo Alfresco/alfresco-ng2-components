@@ -1,10 +1,12 @@
-import { type Preview, moduleMetadata } from '@storybook/angular';
+import { type Preview, type AngularRenderer, moduleMetadata } from '@storybook/angular';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { withThemeByClassName } from '@storybook/addon-themes';
 
 const preview: Preview = {
     parameters: {
         docs: { inlineStories: true },
-        controls: { expanded: true }
+        controls: { expanded: true },
+        layout: 'centered'
     },
     decorators: [
         moduleMetadata({
@@ -16,6 +18,13 @@ const preview: Preview = {
                     }
                 }
             ]
+        }),
+        withThemeByClassName<AngularRenderer>({
+            themes: {
+                light: 'adf-storybook-light-theme',
+                dark: 'adf-storybook-dark-theme'
+            },
+            defaultTheme: 'light'
         })
     ],
     tags: ['autodocs']
