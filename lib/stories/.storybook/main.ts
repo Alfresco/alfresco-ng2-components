@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 const config: StorybookConfig = {
     ...rootMain,
     framework: {
-        name: '@storybook/angular',
+        name: getAbsolutePath('@storybook/angular'),
         options: {}
     },
     stories: ['../../core/**/*.stories.ts', '../../content-services/**/*.stories.ts', '../../process-services-cloud/**/*.stories.ts'],
@@ -40,3 +40,7 @@ const config: StorybookConfig = {
 };
 
 export default config;
+
+function getAbsolutePath(value: string): any {
+    return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+}
