@@ -2363,4 +2363,102 @@ describe('Column Resizing', () => {
             expect(datatableCells.length).toBe(expectedNumberOfColumns);
         });
     });
+
+    describe('Data conversion methods', () => {
+        describe('convertToRowsData', () => {
+            it('should convert array of objects to ObjectDataRow array', () => {
+                const rowsData = [
+                    { name: 'Row 1', isSelected: true, isSelectable: true },
+                    { name: 'Row 2', isSelected: false, isSelectable: false }
+                ];
+
+                const result = dataTable.convertToRowsData(rowsData);
+
+                expect(result.length).toBe(2);
+                expect(result[0].getValue('name')).toBe('Row 1');
+                expect(result[0].isSelected).toBe(true);
+                expect(result[1].getValue('name')).toBe('Row 2');
+                expect(result[1].isSelected).toBe(false);
+            });
+
+            it('should return empty array when input is null', () => {
+                const result = dataTable.convertToRowsData(null);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is undefined', () => {
+                const result = dataTable.convertToRowsData(undefined);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is not an array', () => {
+                const result = dataTable.convertToRowsData({} as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a string', () => {
+                const result = dataTable.convertToRowsData('not an array' as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a number', () => {
+                const result = dataTable.convertToRowsData(123 as any);
+
+                expect(result).toEqual([]);
+            });
+        });
+
+        describe('convertToColumnsData', () => {
+            it('should convert array of objects to ObjectDataColumn array', () => {
+                const columnsData = [
+                    { key: 'name', title: 'Name', sortable: true },
+                    { key: 'age', title: 'Age', sortable: false }
+                ];
+
+                const result = dataTable.convertToColumnsData(columnsData);
+
+                expect(result.length).toBe(2);
+                expect(result[0].key).toBe('name');
+                expect(result[0].title).toBe('Name');
+                expect(result[0].sortable).toBe(true);
+                expect(result[1].key).toBe('age');
+                expect(result[1].title).toBe('Age');
+                expect(result[1].sortable).toBe(false);
+            });
+
+            it('should return empty array when input is null', () => {
+                const result = dataTable.convertToColumnsData(null);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is undefined', () => {
+                const result = dataTable.convertToColumnsData(undefined);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is not an array', () => {
+                const result = dataTable.convertToColumnsData({} as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a string', () => {
+                const result = dataTable.convertToColumnsData('not an array' as any);
+
+                expect(result).toEqual([]);
+            });
+
+            it('should return empty array when input is a number', () => {
+                const result = dataTable.convertToColumnsData(456 as any);
+
+                expect(result).toEqual([]);
+            });
+        });
+    });
 });
