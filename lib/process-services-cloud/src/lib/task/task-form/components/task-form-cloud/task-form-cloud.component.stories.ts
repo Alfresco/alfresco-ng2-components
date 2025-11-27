@@ -21,8 +21,7 @@ import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../../form/mocks/form-cloud.service.mock';
-import { ProcessServicesCloudStoryModule } from '../../../../testing/process-services-cloud-story.module';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryProcessServicesCloud } from '../../../../testing/provide-story-process-services-cloud';
 
 const meta: Meta<TaskFormCloudComponent> = {
     component: TaskFormCloudComponent,
@@ -36,7 +35,7 @@ const meta: Meta<TaskFormCloudComponent> = {
             ]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            providers: [...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

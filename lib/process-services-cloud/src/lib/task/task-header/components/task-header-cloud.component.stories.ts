@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
-import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
-import { importProvidersFrom } from '@angular/core';
+import { provideStoryProcessServicesCloud } from '../../../testing/provide-story-process-services-cloud';
 
 const meta: Meta<TaskHeaderCloudComponent> = {
     component: TaskHeaderCloudComponent,
@@ -28,10 +27,7 @@ const meta: Meta<TaskHeaderCloudComponent> = {
     decorators: [
         moduleMetadata({
             imports: [TaskHeaderCloudComponent],
-            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }]
-        }),
-        applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }, provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

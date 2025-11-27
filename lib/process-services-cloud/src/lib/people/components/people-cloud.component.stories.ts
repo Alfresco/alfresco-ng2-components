@@ -17,10 +17,9 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { PeopleCloudComponent } from './people-cloud.component';
-import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
+import { provideStoryProcessServicesCloud } from '../../testing/provide-story-process-services-cloud';
 import { IdentityUserService } from '../services/identity-user.service';
 import { IdentityUserServiceMock, mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding } from '../mock/people-cloud.mock';
-import { importProvidersFrom } from '@angular/core';
 
 const meta: Meta<PeopleCloudComponent> = {
     component: PeopleCloudComponent,
@@ -30,7 +29,7 @@ const meta: Meta<PeopleCloudComponent> = {
             imports: [PeopleCloudComponent]
         }),
         applicationConfig({
-            providers: [{ provide: IdentityUserService, useClass: IdentityUserServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
+            providers: [{ provide: IdentityUserService, useClass: IdentityUserServiceMock }, ...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

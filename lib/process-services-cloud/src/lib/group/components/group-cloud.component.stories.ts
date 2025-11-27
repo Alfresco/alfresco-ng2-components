@@ -17,10 +17,9 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { GroupCloudComponent } from './group-cloud.component';
-import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
+import { provideStoryProcessServicesCloud } from '../../testing/provide-story-process-services-cloud';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { IdentityGroupServiceMock, mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
-import { importProvidersFrom } from '@angular/core';
 
 const meta: Meta<GroupCloudComponent> = {
     component: GroupCloudComponent,
@@ -30,7 +29,7 @@ const meta: Meta<GroupCloudComponent> = {
             imports: [GroupCloudComponent]
         }),
         applicationConfig({
-            providers: [{ provide: IdentityGroupService, useClass: IdentityGroupServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
+            providers: [{ provide: IdentityGroupService, useClass: IdentityGroupServiceMock }, ...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

@@ -16,10 +16,9 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
+import { provideStoryProcessServicesCloud } from '../../testing/provide-story-process-services-cloud';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 import { DateRangeFilterComponent } from './date-range-filter.component';
-import { importProvidersFrom } from '@angular/core';
 
 const meta: Meta<DateRangeFilterComponent> = {
     component: DateRangeFilterComponent,
@@ -29,7 +28,7 @@ const meta: Meta<DateRangeFilterComponent> = {
             imports: [DateRangeFilterComponent]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            providers: [...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {
