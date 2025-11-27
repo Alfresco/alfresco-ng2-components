@@ -20,6 +20,7 @@ import { InfoDrawerComponent } from './info-drawer.component';
 import { INFO_DRAWER_DIRECTIVES } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 import { provideStoryCore } from '../../..';
+import { MatIconModule } from '@angular/material/icon';
 
 type InfoDrawerStoryArgs = InfoDrawerComponent & {
     showSecondTab?: boolean;
@@ -41,7 +42,7 @@ const meta: Meta<InfoDrawerStoryArgs> = {
     title: 'Core/Info Drawer/Info Drawer',
     decorators: [
         moduleMetadata({
-            imports: [...INFO_DRAWER_DIRECTIVES]
+            imports: [...INFO_DRAWER_DIRECTIVES, MatIconModule]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

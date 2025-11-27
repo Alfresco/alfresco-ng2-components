@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Provider, EnvironmentProviders } from '@angular/core';
+import { Provider, EnvironmentProviders, APP_INITIALIZER } from '@angular/core';
 import { provideTranslations } from '../translation/translation.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideCoreAuth } from '../auth/oidc/auth.module';
+import { provideCoreAuthTesting } from './noop-auth.module';
 import { provideI18N } from '../../..';
 import { provideAppConfig } from '../app-config/provide-app-config';
+import { AppConfigService } from '../app-config/app-config.service';
 
 /**
  * Provides the core providers for the storybook.
@@ -28,5 +29,19 @@ import { provideAppConfig } from '../app-config/provide-app-config';
  * @returns An array of providers for the core module.
  */
 export function provideStoryCore(): (Provider | EnvironmentProviders)[] {
-    return [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations(), provideCoreAuth(), provideI18N(), provideAppConfig()];
+    return [
+        provideTranslations('adf-core', 'assets/adf-core'),
+        provideAnimations(),
+        provideCoreAuthTesting(),
+        provideI18N(),
+        provideAppConfig(),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (appConfig: AppConfigService) => () => {
+                appConfig.config.locale = 'en';
+            },
+            deps: [AppConfigService],
+            multi: true
+        }
+    ];
 }
