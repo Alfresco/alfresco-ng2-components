@@ -119,7 +119,8 @@ describe('ProcessListCloudService', () => {
             const processRequest = {
                 appName: 'fakeName',
                 pagination: { skipCount: 0, maxItems: 20 },
-                parentId: ['fakeParentId']
+                parentId: ['fakeParentId'],
+                excludeByProcessCategoryName: 'fakeCategory'
             } as ProcessListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
@@ -132,13 +133,14 @@ describe('ProcessListCloudService', () => {
             const processRequest = {
                 appName: 'fakeName',
                 pagination: { skipCount: 0, maxItems: 20 },
-                parentId: ['fakeParentId']
+                parentId: ['fakeParentId'],
+                excludeByProcessCategoryName: 'fakeCategory'
             } as ProcessListRequestModel;
             requestSpy.and.callFake(returnCallBody);
 
             const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(requestBodyParams).toEqual({ parentId: ['fakeParentId'] });
+            expect(requestBodyParams).toEqual({ excludeByProcessCategoryName: 'fakeCategory', parentId: ['fakeParentId'] });
         });
 
         it('should concat the app name to the request url', async () => {
