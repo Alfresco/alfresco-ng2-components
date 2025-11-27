@@ -2,38 +2,44 @@ name: "set npm tag"
 description: "se NPM tag"
 
 inputs:
-  event_name:
-    description: "override github.event_name"
-    required: false
-    default: ${{ github.event_name }}
   branch_name:
     description: "override GITHUB_REF_NAME"
     required: false
     default: ${{ github.ref_name }}
+
+outputs:
+  npm-tag:
+    description: "NPM tag"
+    value: ${{ steps.set-npm-tag.outputs.npm-tag }}
 
 runs:
   using: "composite"
   steps:
 
     - name: set TAG_NPM
+      id: set-npm-tag
       shell: bash
       env:
         BRANCH_NAME: ${{ inputs.branch_name }}
       run: |
-        TAG_NPM="alpha"
-        VERSION_IN_PACKAGE_JSON=$(node -p "require('./package.json')".version)
-        echo "version in package.json=${VERSION_IN_PACKAGE_JSON}"
-        if [[ $BRANCH_NAME =~ ^master(-patch.*)?$ ]]; then
-            # Pre-release versions
-            if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
-            then
-                TAG_NPM=next
-            # Stable major versions
-            else
-                TAG_NPM=latest
-            fi
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            TAG_NPM="branch"
+        else
+          TAG_NPM="alpha"
+          VERSION_IN_PACKAGE_JSON=$(node -p "require('./package.json')".version)
+          echo "version in package.json=${VERSION_IN_PACKAGE_JSON}"
+          if [[ $BRANCH_NAME =~ ^master(-patch.*)?$ ]]; then
+              # Pre-release versions
+              if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]]; then
+                  TAG_NPM=next
+              # Stable major versions
+              else
+                  TAG_NPM=latest
+              fi
+          fi
+          if [[ $BRANCH_NAME =~ ^develop(-patch.*)?$ ]]; then
+              TAG_NPM=alpha
+          fi
         fi
-        if [[ $BRANCH_NAME =~ ^develop(-patch.*)?$ ]]; then
-            TAG_NPM=alpha
-        fi
-        echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
+        echo "npm-tag=$TAG_NPM" >> $GITHUB_OUTPUT
+        echo "Computed tag: $TAG_NPM"

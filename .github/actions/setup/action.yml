@@ -11,6 +11,10 @@ inputs:
     required: false
     type: boolean
     default: 'false'
+outputs:
+  npm-tag:
+    description: 'NPM tag'
+    value: ${{ steps.set-npm-tag.outputs.npm-tag }}
 runs:
   using: "composite"
   steps:
@@ -38,6 +42,7 @@ runs:
             node_modules-${{ runner.os }}-build-
             node_modules-${{ runner.os }}-
       - name: load "NPM TAG"
+        id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
       - name: before install script
         uses: ./.github/actions/before-install
