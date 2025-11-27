@@ -290,8 +290,6 @@ export class ProcessListCloudComponent
     @Input()
     processVariables: ProcessVariableFilterModel[];
 
-    @Input() excludeByProcessCategoryName: string = '';
-
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -609,8 +607,7 @@ export class ProcessListCloudComponent
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
             processVariableKeys: this.getVariableDefinitionsRequestModel(),
-            processVariableFilters: this.processVariables,
-            excludeByProcessCategoryName: this.excludeByProcessCategoryName
+            processVariableFilters: this.processVariables
         };
 
         return new ProcessListRequestModel(requestNode);
