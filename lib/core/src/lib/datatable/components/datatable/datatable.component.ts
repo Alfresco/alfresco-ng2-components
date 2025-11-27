@@ -461,10 +461,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     convertToRowsData(rows: any[]): ObjectDataRow[] {
+        if (!Array.isArray(rows)) {
+            return [];
+        }
         return rows.map((row) => new ObjectDataRow(row, row.isSelected, row?.isSelectable));
     }
 
     convertToColumnsData(columns: any[]): ObjectDataColumn[] {
+        if (!Array.isArray(columns)) {
+            return [];
+        }
         return columns.map((column) => new ObjectDataColumn(column));
     }
 
