@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';

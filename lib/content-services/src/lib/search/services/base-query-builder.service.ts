@@ -80,7 +80,7 @@ export abstract class BaseQueryBuilderService {
     userFacetBucketsUpdate = new BehaviorSubject<{ [key: string]: FacetFieldBucket[] }>({});
 
     categories: SearchCategory[] = [];
-    _queryFragments: { [id: string]: string } = {};
+    private _queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
     filterRawParams: { [key: string]: any } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
@@ -90,6 +90,14 @@ export abstract class BaseQueryBuilderService {
     private scope: RequestScope;
     private selectedConfiguration: number;
     private _userQuery = '';
+
+    private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
+        set: (target: { [key: string]: any }, property: string, value: any) => {
+            target[property as keyof typeof target] = value;
+            this.queryFragmentsUpdate.next(this._queryFragments);
+            return true;
+        }
+    };
 
     protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
 
@@ -633,14 +641,6 @@ export abstract class BaseQueryBuilderService {
             queryParamsHandling: 'merge'
         });
     }
-
-    private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
-        set: (target: { [key: string]: any }, property: string, value: any) => {
-            target[property as keyof typeof target] = value;
-            this.queryFragmentsUpdate.next(this._queryFragments);
-            return true;
-        }
-    };
 
     private createQueryFragmentsProxy(target: { [key: string]: any }): { [key: string]: any } {
         return new Proxy(target, this.queryFragmentsHandler);
