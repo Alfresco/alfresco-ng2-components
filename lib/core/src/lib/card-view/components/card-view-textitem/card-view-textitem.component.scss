@@ -55,11 +55,6 @@
         padding: 3px 0 0;
     }
 
-    .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
-        /** TODO - check if this can be removed, because it might affect others **/
-        // border-bottom: 1px solid var(--mat-sys-outline-variant);
-    }
-
     input.adf-property-value:disabled,
     textarea.adf-property-value:disabled {
         color: var(--mat-sys-on-surface);
