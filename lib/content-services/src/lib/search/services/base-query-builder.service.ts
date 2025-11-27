@@ -80,16 +80,17 @@ export abstract class BaseQueryBuilderService {
     userFacetBucketsUpdate = new BehaviorSubject<{ [key: string]: FacetFieldBucket[] }>({});
 
     categories: SearchCategory[] = [];
-    private _queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
     filterRawParams: { [key: string]: any } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
+
     private encodedQuery: string;
     private scope: RequestScope;
     private selectedConfiguration: number;
     private _userQuery = '';
+    private _queryFragments: { [id: string]: string } = {};
 
     private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
         set: (target: { [key: string]: any }, property: string, value: any) => {
