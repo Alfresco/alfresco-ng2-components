@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 import type { StorybookConfig } from '@storybook/angular';
 import rootMain from '../../../.storybook/main';
 
@@ -9,9 +11,13 @@ const config: StorybookConfig = {
         { from: '../src/lib/assets/images', to: 'assets/images' }
     ],
     framework: {
-        name: '@storybook/angular',
+        name: getAbsolutePath('@storybook/angular'),
         options: {}
     }
 };
 
 export default config;
+
+function getAbsolutePath(value: string): any {
+    return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+}
