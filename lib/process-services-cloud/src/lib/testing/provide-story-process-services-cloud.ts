@@ -21,6 +21,7 @@ import { provideCloudFormRenderer, provideCloudPreferences } from '../providers'
 import { TASK_LIST_CLOUD_TOKEN } from '../services/cloud-token.service';
 import { TaskListCloudService } from '../task/task-list/services/task-list-cloud.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 /**
  * Provides the providers for the process services cloud story.
@@ -38,6 +39,7 @@ export function provideStoryProcessServicesCloud(): (Provider | EnvironmentProvi
         provideCloudPreferences(),
         provideCloudFormRenderer(),
         provideAnimations(),
-        { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService }
+        { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
+        provideRouter([], withHashLocation())
     ];
 }
