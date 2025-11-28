@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { execSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -93,8 +93,45 @@ Options:
         console.log(`Running audit on ${packagePath}`);
 
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
-        const cmd = 'npm audit --json --prod';
-        const jsonAudit = JSON.parse(execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }));
+
+        // Run in the directory containing the package.json
+        const packageDir = path.dirname(packagePath);
+
+        // Use spawnSync with array arguments for safer command execution (prevents shell injection)
+        // Cross-platform: npm is available on PATH on all platforms (Windows, macOS, Linux)
+        const result = spawnSync('npm', ['audit', '--json', '--prod'], {
+            cwd: packageDir,
+            encoding: 'utf-8',
+            // shell: false is the default and more secure (no shell interpretation)
+            shell: false,
+            // Set maxBuffer to handle large audit outputs
+            maxBuffer: 10 * 1024 * 1024 // 10MB
+        });
+
+        let jsonAudit;
+
+        // npm audit returns non-zero exit code when vulnerabilities are found
+        // We still want to parse the JSON output in this case
+        if (result.error) {
+            console.error('Failed to run npm audit:', result.error.message);
+            reject(result.error);
+            return;
+        }
+
+        const auditOutput = result.stdout;
+        if (!auditOutput) {
+            console.error('npm audit produced no output');
+            reject(new Error('npm audit produced no output'));
+            return;
+        }
+
+        try {
+            jsonAudit = JSON.parse(auditOutput);
+        } catch (parseError) {
+            console.error('Failed to parse npm audit output');
+            reject(parseError);
+            return;
+        }
 
         ejs.renderFile(
             templatePath,
