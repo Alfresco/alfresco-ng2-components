@@ -22,7 +22,6 @@ env:
   LOG_LEVEL: "ERROR"
   NODE_OPTIONS: "--max-old-space-size=5120"
   NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
-  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
   BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
 jobs:

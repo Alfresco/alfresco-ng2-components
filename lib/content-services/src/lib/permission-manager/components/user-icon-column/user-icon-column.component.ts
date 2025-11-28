@@ -22,20 +22,29 @@ import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-user-icon-column',
-    imports: [CommonModule, MatIconModule, InitialUsernamePipe],
+    imports: [CommonModule, MatIconModule, InitialUsernamePipe, TranslatePipe],
     template: `
-        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'" *ngIf="!isSelected">
-            <ng-container *ngIf="displayText$ | async as user">
-                <mat-icon *ngIf="group" class="adf-group-icon">people_alt_outline</mat-icon>
-                <div *ngIf="!group" [outerHTML]="user | usernameInitials : 'adf-people-initial'"></div>
-            </ng-container>
-        </div>
-        <div class="adf-cell-value" *ngIf="isSelected">
-            <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected" />
-        </div>
+        @if (!isSelected) {
+            <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'">
+                @if (displayText$ | async; as user) {
+                    @if (group) {
+                        <mat-icon class="adf-group-icon">people_alt_outline</mat-icon>
+                        <span class="cdk-visually-hidden">{{ 'USER_ICON.GROUP_ICON_ALT' | translate }}</span>
+                    } @else {
+                        <div [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
+                    }
+                }
+            </div>
+        } @else {
+            <div class="adf-cell-value">
+                <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected" />
+                <span class="cdk-visually-hidden">{{ 'USER_ICON.GROUP_USER_SELECTED_ALT' | translate }}</span>
+            </div>
+        }
     `,
     styleUrls: ['./user-icon-column.component.scss'],
     encapsulation: ViewEncapsulation.None,
