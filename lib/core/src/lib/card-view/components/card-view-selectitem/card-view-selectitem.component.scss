@@ -3,11 +3,6 @@
 .adf-card-view-selectitem {
     .adf-property-value {
         width: 100%;
-
-        #{ms.$mat-form-field-infix} {
-            padding-left: 12px;
-            padding-right: 12px;
-        }
     }
 
     .adf-select-filter-input {
