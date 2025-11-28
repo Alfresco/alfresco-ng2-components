@@ -102,7 +102,6 @@ export class ProcessListRequestModel {
     completedTo?: string;
     suspendedFrom?: string;
     suspendedTo?: string;
-    excludeByProcessCategoryName?: string;
 
     processVariableFilters?: ProcessVariableFilterModel[];
     processVariableKeys?: string[];
@@ -133,7 +132,6 @@ export class ProcessListRequestModel {
         this.suspendedTo = obj.suspendedTo;
         this.processVariableKeys = obj.processVariableKeys;
         this.processVariableFilters = obj.processVariableFilters;
-        this.excludeByProcessCategoryName = obj.excludeByProcessCategoryName;
     }
 }
 
