@@ -19,11 +19,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { UserIconColumnComponent } from './user-icon-column.component';
 import { NodeEntry } from '@alfresco/js-api';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { DebugElement } from '@angular/core';
 
 describe('UserIconColumnComponent', () => {
     let fixture: ComponentFixture<UserIconColumnComponent>;
     let component: UserIconColumnComponent;
-    let element: HTMLElement;
+    let testingUtils: UnitTestingUtils;
     const person = {
         firstName: 'fake',
         lastName: 'user',
@@ -41,12 +43,12 @@ describe('UserIconColumnComponent', () => {
         });
         fixture = TestBed.createComponent(UserIconColumnComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
 
     describe('person initial', () => {
-        const getInitials = () => element.querySelector('[data-automation-id="user-initials-image"]')?.textContent;
+        const getInitials = (): string => testingUtils.getInnerTextByDataAutomationId('user-initials-image');
 
         it('should render person value from context', () => {
             component.context = {
@@ -58,7 +60,7 @@ describe('UserIconColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(getInitials()).toContain('fu');
+            expect(getInitials()).toContain('FU');
         });
 
         it('should render person value from node', () => {
@@ -80,7 +82,7 @@ describe('UserIconColumnComponent', () => {
     });
 
     describe('group initial', () => {
-        const getGroupIcon = () => element.querySelector('[id="group-icon"] .adf-group-icon');
+        const getGroupIcon = (): DebugElement => testingUtils.getByCSS('[id="group-icon"] .adf-group-icon');
 
         it('should render group value from context', () => {
             component.context = {
@@ -93,7 +95,8 @@ describe('UserIconColumnComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
             expect(getGroupIcon()).toBeDefined();
-            expect(getGroupIcon().textContent).toContain('people_alt_outline');
+            expect(getGroupIcon().nativeElement.textContent).toContain('people_alt_outline');
+            expect(testingUtils.getInnerTextByCSS('.cdk-visually-hidden')).toBe('USER_ICON.GROUP_ICON_ALT');
         });
 
         it('should render person value from node', () => {
@@ -108,7 +111,8 @@ describe('UserIconColumnComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
             expect(getGroupIcon()).toBeDefined();
-            expect(getGroupIcon().textContent).toContain('people_alt_outline');
+            expect(getGroupIcon().nativeElement.textContent).toContain('people_alt_outline');
+            expect(testingUtils.getInnerTextByCSS('.cdk-visually-hidden')).toBe('USER_ICON.GROUP_ICON_ALT');
         });
     });
 
@@ -116,7 +120,8 @@ describe('UserIconColumnComponent', () => {
         component.selected = true;
         component.ngOnInit();
         fixture.detectChanges();
-        expect(element.querySelector('.adf-people-select-icon[svgIcon="selected"]')).toBeDefined();
+        expect(testingUtils.getByCSS('.adf-people-select-icon[svgIcon="selected"]')).toBeDefined();
+        expect(testingUtils.getInnerTextByCSS('.cdk-visually-hidden')).toBe('USER_ICON.GROUP_USER_SELECTED_ALT');
         expect(component.isSelected).toBe(true);
     });
 });
