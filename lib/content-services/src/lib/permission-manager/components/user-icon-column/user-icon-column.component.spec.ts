@@ -37,6 +37,8 @@ describe('UserIconColumnComponent', () => {
         displayName: 'fake authority'
     };
 
+    const getVisuallyHiddenText = (): string => testingUtils.getInnerTextByCSS('.cdk-visually-hidden');
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
@@ -96,7 +98,7 @@ describe('UserIconColumnComponent', () => {
             fixture.detectChanges();
             expect(getGroupIcon()).toBeDefined();
             expect(getGroupIcon().nativeElement.textContent).toContain('people_alt_outline');
-            expect(testingUtils.getInnerTextByCSS('.cdk-visually-hidden')).toBe('USER_ICON.GROUP_ICON_ALT');
+            expect(getVisuallyHiddenText()).toBe('USER_ICON.GROUP_ICON_ALT');
         });
 
         it('should render person value from node', () => {
@@ -112,7 +114,7 @@ describe('UserIconColumnComponent', () => {
             fixture.detectChanges();
             expect(getGroupIcon()).toBeDefined();
             expect(getGroupIcon().nativeElement.textContent).toContain('people_alt_outline');
-            expect(testingUtils.getInnerTextByCSS('.cdk-visually-hidden')).toBe('USER_ICON.GROUP_ICON_ALT');
+            expect(getVisuallyHiddenText()).toBe('USER_ICON.GROUP_ICON_ALT');
         });
     });
 
@@ -121,7 +123,7 @@ describe('UserIconColumnComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
         expect(testingUtils.getByCSS('.adf-people-select-icon[svgIcon="selected"]')).toBeDefined();
-        expect(testingUtils.getInnerTextByCSS('.cdk-visually-hidden')).toBe('USER_ICON.GROUP_USER_SELECTED_ALT');
+        expect(getVisuallyHiddenText()).toBe('USER_ICON.GROUP_USER_SELECTED_ALT');
         expect(component.isSelected).toBe(true);
     });
 });

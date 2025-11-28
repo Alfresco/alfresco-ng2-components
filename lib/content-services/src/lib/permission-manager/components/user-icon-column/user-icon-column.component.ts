@@ -32,7 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
             <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'">
                 @if (displayText$ | async; as user) {
                     @if (group) {
-                        <mat-icon *ngIf="group" class="adf-group-icon">people_alt_outline</mat-icon>
+                        <mat-icon class="adf-group-icon">people_alt_outline</mat-icon>
                         <span class="cdk-visually-hidden">{{ 'USER_ICON.GROUP_ICON_ALT' | translate }}</span>
                     } @else {
                         <div [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
