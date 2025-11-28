@@ -15,15 +15,19 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { BffAuthService, BffUserResponse } from './bff-auth.service';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
-import { provideHttpClient, HttpHeaders } from '@angular/common/http';
+import { BffAuthService, BffUserResponse } from './bff-auth.service';
+import { BffUrlBuilder } from './bff-url-builder.service';
+import { DOCUMENT } from '@angular/common';
 
 describe('BffAuthService', () => {
     let service: BffAuthService;
     let httpMock: HttpTestingController;
+    let urlBuilder: jasmine.SpyObj<BffUrlBuilder>;
+    let mockDocument: any;
 
     const mockAuthenticatedUser: BffUserResponse = {
         isAuthenticated: true,
@@ -57,11 +61,40 @@ describe('BffAuthService', () => {
         }
     };
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [BffAuthService, provideHttpClient(), provideHttpClientTesting()]
-        });
+    // eslint-disable-next-line jsdoc/require-jsdoc
+    function flushConstructorRequests() {
+        httpMock.match(urlBuilder.getUserUrl()).forEach((req) => req.flush(mockAuthenticatedUser));
+    }
 
+    beforeEach(() => {
+        urlBuilder = jasmine.createSpyObj<BffUrlBuilder>('BffUrlBuilder', ['getUserUrl', 'getLoginUrl', 'getLogoutUrl']);
+        urlBuilder.getUserUrl.and.returnValue('http://hawkins-lab:1983/fakePath/bff/user');
+        urlBuilder.getLoginUrl.and.callFake((returnUrl?: string) => {
+            if (!returnUrl || returnUrl === '/') {
+                return 'http://hawkins-lab:1983/fakePath/bff/login';
+            }
+            return `http://hawkins-lab:1983/fakePath/bff/login?returnUrl=${encodeURIComponent(returnUrl)}`;
+        });
+        urlBuilder.getLogoutUrl.and.returnValue('http://hawkins-lab:1983/fakePath/bff/logout');
+
+        mockDocument = {
+            location: {
+                href: '',
+                reload: () => {}
+            }
+        };
+
+        TestBed.configureTestingModule({
+            providers: [
+                BffAuthService,
+                { provide: BffUrlBuilder, useValue: urlBuilder },
+                { provide: DOCUMENT, useValue: mockDocument },
+                provideHttpClient(),
+                provideHttpClientTesting()
+            ]
+        });
+        spyOn(mockDocument.location, 'reload');
+        service = TestBed.inject(BffAuthService);
         httpMock = TestBed.inject(HttpTestingController);
     });
 
@@ -70,55 +103,32 @@ describe('BffAuthService', () => {
     });
 
     describe('getUser', () => {
-        it('should return authenticated user when user is logged in', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should call urlBuilder.getUserUrl and return authenticated user', async () => {
+            flushConstructorRequests();
             const resultPromise = firstValueFrom(service.getUser());
-
-            const req = httpMock.expectOne((reqObj) => reqObj.url.includes('/bff/user'));
+            const req = httpMock.expectOne(urlBuilder.getUserUrl.calls.mostRecent().returnValue);
             expect(req.request.method).toBe('GET');
             req.flush(mockAuthenticatedUser);
-
             const result = await resultPromise;
-
+            expect(urlBuilder.getUserUrl).toHaveBeenCalled();
             expect(result).toEqual(mockAuthenticatedUser);
-            expect(result.isAuthenticated).toBe(true);
-            expect(result.user.email).toBe('test@example.com');
         });
 
         it('should return unauthenticated user when user is not logged in', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockUnauthenticatedUser));
-
+            httpMock.match(urlBuilder.getUserUrl()).forEach((req) => req.flush(mockUnauthenticatedUser));
             const resultPromise = firstValueFrom(service.getUser());
-
-            const req = httpMock.expectOne((reqObj) => reqObj.url.includes('/bff/user'));
+            const req = httpMock.expectOne(urlBuilder.getUserUrl.calls.mostRecent().returnValue);
             expect(req.request.method).toBe('GET');
             req.flush(mockUnauthenticatedUser);
-
             const result = await resultPromise;
-
             expect(result).toEqual(mockUnauthenticatedUser);
-            expect(result.isAuthenticated).toBe(false);
         });
 
         it('should handle error when getUser fails', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' }));
-
+            flushConstructorRequests();
             try {
                 const result = firstValueFrom(service.getUser());
-                const req = httpMock.expectOne((req) => req.url.includes('/bff/user'));
+                const req = httpMock.expectOne(urlBuilder.getUserUrl.calls.mostRecent().returnValue);
                 req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
                 await result;
                 fail('Should have thrown an error');
@@ -127,163 +137,94 @@ describe('BffAuthService', () => {
             }
         });
 
-        it('should use correct URL format with protocol and host', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should use custom URL from urlBuilder', async () => {
+            flushConstructorRequests();
             service.getUser().subscribe();
-
-            const req = httpMock.expectOne((req) => req.url.includes('/bff/user'));
-            expect(req.request.url).toMatch(/^https?:\/\/.+\/bff\/user$/);
-            req.flush(mockAuthenticatedUser);
+            const req = httpMock.expectOne(urlBuilder.getUserUrl.calls.mostRecent().returnValue);
+            expect(req.request.url).toBe('http://hawkins-lab:1983/fakePath/bff/user');
         });
     });
 
     describe('login', () => {
-        it('should redirect to /bff/login when no returnUrl is provided', () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should redirect to login url when no returnUrl is provided', () => {
+            flushConstructorRequests();
             service.login();
+            expect(urlBuilder.getLoginUrl).toHaveBeenCalledWith(undefined);
+            expect(mockDocument.location.href).toBe(urlBuilder.getLoginUrl.calls.mostRecent().returnValue);
         });
-
-        it('should redirect to /bff/login when returnUrl is root', () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should redirect to login url when returnUrl is root', () => {
+            flushConstructorRequests();
             service.login('/');
+            expect(urlBuilder.getLoginUrl).toHaveBeenCalledWith('/');
+            expect(mockDocument.location.href).toBe(urlBuilder.getLoginUrl.calls.mostRecent().returnValue);
         });
-
-        it('should redirect to /bff/login with returnUrl when currentUrl is provided', () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should redirect to login url with returnUrl when currentUrl is provided', () => {
+            flushConstructorRequests();
             service.login('/dashboard');
+            expect(urlBuilder.getLoginUrl).toHaveBeenCalledWith('/dashboard');
+            expect(mockDocument.location.href).toBe(urlBuilder.getLoginUrl.calls.mostRecent().returnValue);
         });
-
         it('should properly encode returnUrl parameter', () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+            flushConstructorRequests();
             service.login('/path?query=value&other=data');
+            expect(urlBuilder.getLoginUrl).toHaveBeenCalledWith('/path?query=value&other=data');
+            expect(mockDocument.location.href).toBe(urlBuilder.getLoginUrl.calls.mostRecent().returnValue);
         });
     });
 
     describe('logout', () => {
-        it('should call /bff/logout and redirect to default location on success', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should call urlBuilder.getLogoutUrl and redirect to default location on success', () => {
+            flushConstructorRequests();
             service.logout();
-
-            const req = httpMock.expectOne((req) => req.url.includes('/bff/logout'));
+            const req = httpMock.expectOne(urlBuilder.getLogoutUrl.calls.mostRecent().returnValue);
             expect(req.request.method).toBe('POST');
-            expect(req.request.body).toEqual({});
             req.flush({});
+            expect(mockDocument.location.href).toBe('/');
         });
-
-        it('should redirect to custom redirectTo location when provided', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should redirect to custom redirectTo location when provided', () => {
+            flushConstructorRequests();
             service.logout();
-
-            const req = httpMock.expectOne((req) => req.url.includes('/bff/logout'));
+            const req = httpMock.expectOne(urlBuilder.getLogoutUrl.calls.mostRecent().returnValue);
             req.flush({ redirectTo: '/custom-logout' });
+            expect(mockDocument.location.href).toBe('/custom-logout');
         });
-
-        it('should reload page on logout error', async () => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
+        it('should reload page on logout error', () => {
+            flushConstructorRequests();
             service.logout();
-
-            const req = httpMock.expectOne((req) => req.url.includes('/bff/logout'));
+            const req = httpMock.expectOne(urlBuilder.getLogoutUrl.calls.mostRecent().returnValue);
             req.flush('Server Error', { status: 500, statusText: 'Server Error' });
+            expect(mockDocument.location.reload).toHaveBeenCalled();
         });
     });
 
     describe('constructor', () => {
-        it('should set isAuthenticated to true when user is authenticated', (done) => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
-            service.onLogin.subscribe((isLoggedIn) => {
-                if (isLoggedIn) {
-                    expect(service.isAuthenticated).toBe(true);
-                    done();
-                }
+        it('should set isAuthenticated to true when user is authenticated', async () => {
+            flushConstructorRequests();
+            const isLoggedIn = await firstValueFrom(service.onLogin);
+            expect(isLoggedIn).toBe(true);
+            expect(service.isAuthenticated).toBe(true);
+        });
+        it('should not emit onLogin when user is not authenticated', fakeAsync(() => {
+            httpMock.match(urlBuilder.getUserUrl()).forEach((req) => req.flush(mockUnauthenticatedUser));
+            let emitted = false;
+            service.onLogin.subscribe((val) => {
+                if (val) emitted = true;
             });
-        });
-
-        it('should not emit onLogin when user is not authenticated', (done) => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockUnauthenticatedUser));
-
-            let loginEmitted = false;
-            service.onLogin.subscribe((isLoggedIn) => {
-                if (isLoggedIn) {
-                    loginEmitted = true;
-                }
-            });
-
-            setTimeout(() => {
-                expect(loginEmitted).toBe(false);
-                expect(service.isAuthenticated).toBe(false);
-                done();
-            }, 100);
-        });
-
-        it('should populate userInfo from getUser response', (done) => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
-            expect(bffUserRequestMatchers.length).toBe(2);
-            bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
-
-            setTimeout(() => {
-                expect(service.userInfo).toEqual(mockAuthenticatedUser);
-                expect(service.userInfo.user.email).toBe('test@example.com');
-                done();
-            }, 100);
-        });
+            tick(100);
+            expect(emitted).toBe(false);
+            expect(service.isAuthenticated).toBe(false);
+        }));
+        it('should populate userInfo from getUser response', fakeAsync(() => {
+            flushConstructorRequests();
+            tick(100);
+            expect(service.userInfo).toEqual(mockAuthenticatedUser);
+            expect(service.userInfo.user.email).toBe('test@example.com');
+        }));
     });
 
     describe('interface methods', () => {
         beforeEach(() => {
-            service = TestBed.inject(BffAuthService);
-
-            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/bff/user'));
+            const bffUserRequestMatchers = httpMock.match((req) => req.url.includes('/fakePath/bff/user'));
             expect(bffUserRequestMatchers.length).toBe(2);
             bffUserRequestMatchers.forEach((req) => req.flush(mockAuthenticatedUser));
         });

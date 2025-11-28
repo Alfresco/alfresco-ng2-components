@@ -16,10 +16,12 @@
  */
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { EventEmitter } from 'eventemitter3';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { AuthenticationServiceInterface } from '../../interfaces/authentication-service.interface';
-import { EventEmitter } from 'eventemitter3';
+import { BffUrlBuilder } from './bff-url-builder.service';
 
 export interface BffUserInfo {
     sub: string;
@@ -57,7 +59,11 @@ export class BffAuthService implements AuthenticationServiceInterface {
     once: EventEmitterInstance['once'];
     emit: EventEmitterInstance['emit'];
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private urlBuilder: BffUrlBuilder,
+        @Inject(DOCUMENT) private document: Document
+    ) {
         this.getUser()
             .pipe(filter((user) => user.isAuthenticated))
             .subscribe(() => {
@@ -65,7 +71,6 @@ export class BffAuthService implements AuthenticationServiceInterface {
                 this.onLogin.next(this.isAuthenticated);
             });
         this.getUser().subscribe((userResponse) => {
-            console.log('[BffAuthService] userResponse: ', userResponse);
             this.userInfo = userResponse;
         });
     }
@@ -102,36 +107,20 @@ export class BffAuthService implements AuthenticationServiceInterface {
     }
 
     getUser(): Observable<BffUserResponse> {
-        const protocol = window.location.protocol;
-        const host = window.location.host;
-        console.log('[BffAuthService] getUser from ', `${protocol}//${host}/bff/user`);
-        return this.http.get<BffUserResponse>(`${protocol}//${host}/bff/user`);
+        return this.http.get<BffUserResponse>(this.urlBuilder.getUserUrl());
     }
 
     login(currentUrl?: string): Promise<void> | void {
-        const protocol = window.location.protocol;
-        const host = window.location.host;
-        let url: string;
-        if (!currentUrl || currentUrl === '/') {
-            url = `${protocol}//${host}/bff/login`;
-        } else {
-            url = `${protocol}//${host}/bff/login?returnUrl=${encodeURIComponent(currentUrl ?? '')}`;
-        }
-
-        console.log('url: ', url);
-        window.location.href = url;
+        this.document.location.href = this.urlBuilder.getLoginUrl(currentUrl);
     }
 
     logout(): Promise<void> | void {
-        const protocol = window.location.protocol;
-        const host = window.location.host;
-        this.http.post<{ redirectTo?: string }>(`${protocol}//${host}/bff/logout`, {}).subscribe({
+        this.http.post<{ redirectTo?: string }>(this.urlBuilder.getLogoutUrl(), {}).subscribe({
             next: (res) => {
-                console.log('[BffAuthService] logout: ', res);
                 const target = res.redirectTo || '/';
-                window.location.href = target;
+                this.document.location.href = target;
             },
-            error: () => window.location.reload()
+            error: () => this.document.location.reload()
         });
     }
 }
