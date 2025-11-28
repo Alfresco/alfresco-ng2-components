@@ -21,7 +21,7 @@
 
 import { argv, exit } from 'node:process';
 import { parseArgs } from 'node:util';
-import * as shell from 'shelljs';
+import { execSync } from 'node:child_process';
 import * as path from 'path';
 import { logger } from './logger';
 import * as fs from 'fs';
@@ -66,7 +66,7 @@ interface DiffOptions {
  */
 function getRemote(workingDir: string): string {
     const command = 'git config --get remote.origin.url';
-    const remote = shell.exec(command, { cwd: workingDir, silent: true }).toString();
+    const remote = execSync(command, { cwd: workingDir, encoding: 'utf-8' });
 
     return remote.trim();
 }
@@ -107,7 +107,7 @@ function getCommits(options: DiffOptions): Array<Commit> {
 
     const command = args.join(' ');
 
-    let log = shell.exec(command, { cwd: options.dir, silent: true }).toString();
+    let log = execSync(command, { cwd: options.dir, encoding: 'utf-8' });
 
     // https://stackoverflow.com/a/13928240/14644447
     log = JSON.stringify(log.trim()).slice(1, -1).replace(/\^@\^/gm, '"');

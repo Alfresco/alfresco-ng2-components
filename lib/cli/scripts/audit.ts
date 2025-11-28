@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as shell from 'shelljs';
+import { execSync } from 'node:child_process';
 import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -94,7 +94,7 @@ Options:
 
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
         const cmd = 'npm audit --json --prod';
-        const jsonAudit = JSON.parse(shell.exec(cmd, { silent: true }));
+        const jsonAudit = JSON.parse(execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }));
 
         ejs.renderFile(
             templatePath,
