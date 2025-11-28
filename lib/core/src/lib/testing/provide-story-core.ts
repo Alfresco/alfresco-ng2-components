@@ -22,6 +22,7 @@ import { provideCoreAuthTesting } from './noop-auth.module';
 import { provideAppConfig } from '../app-config/provide-app-config';
 import { AppConfigService } from '../app-config/app-config.service';
 import { provideI18N } from '../../..';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 /**
  * Provides the core providers for the storybook.
@@ -44,6 +45,7 @@ export function provideStoryCore(): (Provider | EnvironmentProviders)[] {
             },
             deps: [AppConfigService],
             multi: true
-        }
+        },
+        provideRouter([], withHashLocation())
     ];
 }

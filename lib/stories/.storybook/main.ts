@@ -1,11 +1,7 @@
 import type { StorybookConfig } from '@storybook/angular';
 import rootMain from '../../../.storybook/main';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import { resolve, dirname } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
     ...rootMain,
@@ -19,24 +15,9 @@ const config: StorybookConfig = {
         { from: '../../core/src/lib/assets/images', to: 'assets/images' },
         { from: '../../content-services/src/lib/i18n', to: 'assets/adf-content-services/i18n' },
         { from: '../../process-services/src/lib/i18n', to: 'assets/adf-process-services/i18n' },
-        { from: '../../process-services-cloud/src/lib/i18n', to: 'assets/adf-process-services-cloud/i18n' }
+        { from: '../../process-services-cloud/src/lib/i18n', to: 'assets/adf-process-services-cloud/i18n' },
+        { from: '../../config/app.config.json', to: 'app.config.json' }
     ],
-    webpackFinal: async (config) => {
-        if (!config.plugins) {
-            config.plugins = [];
-        }
-        config.plugins.push(
-            new CopyWebpackPlugin({
-                patterns: [
-                    {
-                        from: resolve(__dirname, '../../config/app.config.json'),
-                        to: 'app.config.json'
-                    }
-                ]
-            })
-        );
-        return config;
-    },
     addons: ['@storybook/addon-themes']
 };
 
