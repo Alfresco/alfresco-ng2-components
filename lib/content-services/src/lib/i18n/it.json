@@ -612,6 +612,10 @@
       "NOT-ALLOWED": "Non è consentito modificare le autorizzazioni"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Nessun ID nodo specificato.",
     "ACCESSIBILITY": {
