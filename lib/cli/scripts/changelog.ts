@@ -21,7 +21,7 @@
 
 import { argv, exit } from 'node:process';
 import { parseArgs } from 'node:util';
-import * as shell from 'shelljs';
+import { spawnSync } from 'node:child_process';
 import * as path from 'path';
 import { logger } from './logger';
 import * as fs from 'fs';
@@ -65,10 +65,22 @@ interface DiffOptions {
  * @returns URL pointing to the git remote
  */
 function getRemote(workingDir: string): string {
-    const command = 'git config --get remote.origin.url';
-    const remote = shell.exec(command, { cwd: workingDir, silent: true }).toString();
+    // Use spawnSync with array arguments for safer command execution (prevents shell injection)
+    const result = spawnSync('git', ['config', '--get', 'remote.origin.url'], {
+        cwd: workingDir,
+        encoding: 'utf-8',
+        shell: false
+    });
 
-    return remote.trim();
+    if (result.error) {
+        throw new Error(`Failed to get git remote: ${result.error.message}`);
+    }
+
+    if (result.status !== 0) {
+        throw new Error(`git config command failed with exit code ${result.status}: ${result.stderr}`);
+    }
+
+    return result.stdout.trim();
 }
 
 /**
@@ -87,14 +99,14 @@ function getCommits(options: DiffOptions): Array<Commit> {
         authorFilter = `bot|Alfresco Build User`;
     }
 
+    // Build git command arguments array for safe execution (prevents shell injection)
     const args = [
-        `git`,
-        `log`,
+        'log',
         options.range,
-        `--no-merges`,
-        `--first-parent`,
+        '--no-merges',
+        '--first-parent',
         // this format is needed to allow parsing all characters in the commit message and safely convert to JSON
-        `--format="{ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }"`
+        '--format={ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }'
     ];
 
     if (options.max !== undefined) {
@@ -105,9 +117,23 @@ function getCommits(options: DiffOptions): Array<Commit> {
         args.push(`--skip=${options.skip}`);
     }
 
-    const command = args.join(' ');
+    // Use spawnSync with array arguments for safer command execution
+    const result = spawnSync('git', args, {
+        cwd: options.dir,
+        encoding: 'utf-8',
+        shell: false,
+        maxBuffer: 10 * 1024 * 1024 // 10MB to handle large git logs
+    });
 
-    let log = shell.exec(command, { cwd: options.dir, silent: true }).toString();
+    if (result.error) {
+        throw new Error(`Failed to get git commits: ${result.error.message}`);
+    }
+
+    if (result.status !== 0) {
+        throw new Error(`git log command failed with exit code ${result.status}: ${result.stderr}`);
+    }
+
+    let log = result.stdout;
 
     // https://stackoverflow.com/a/13928240/14644447
     log = JSON.stringify(log.trim()).slice(1, -1).replace(/\^@\^/gm, '"');
