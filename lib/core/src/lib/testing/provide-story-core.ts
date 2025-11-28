@@ -21,7 +21,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideCoreAuthTesting } from './noop-auth.module';
 import { provideAppConfig } from '../app-config/provide-app-config';
 import { AppConfigService } from '../app-config/app-config.service';
-import { provideI18N } from '../../..';
+import { provideI18N } from '../translation';
 import { provideRouter, withHashLocation } from '@angular/router';
 
 /**
