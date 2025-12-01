@@ -3,10 +3,6 @@
 @use '../../../styles/mat-selectors' as ms;
 
 .adf-sidenav-layout {
-    @include mixins.flex-column;
-
-    width: 100%;
-
     &-full-space {
         display: flex;
         flex-direction: column;
@@ -16,6 +12,10 @@
         min-height: 0;
         width: 100%;
     }
+
+    @include mixins.flex-column;
+
+    width: 100%;
 
     .adf-layout__content {
         flex: 1 1 auto;
