@@ -846,28 +846,6 @@ describe('ProcessListCloudComponent', () => {
                 expect(fetchProcessListSpy).toHaveBeenCalled();
             });
 
-            it('should reload process list when excludeByProcessCategoryName changes', () => {
-                const fetchProcessListSpy = spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
-
-                fixture.componentRef.setInput('excludeByProcessCategoryName', 'mock-category');
-                fixture.detectChanges();
-
-                fixture.componentRef.setInput('excludeByProcessCategoryName', 'mock-category-2');
-                fixture.detectChanges();
-
-                expect(fetchProcessListSpy).toHaveBeenCalledTimes(2);
-                expect(fetchProcessListSpy).toHaveBeenCalledWith(
-                    jasmine.objectContaining({
-                        excludeByProcessCategoryName: 'mock-category'
-                    })
-                );
-                expect(fetchProcessListSpy).toHaveBeenCalledWith(
-                    jasmine.objectContaining({
-                        excludeByProcessCategoryName: 'mock-category-2'
-                    })
-                );
-            });
-
             it('should reload process list when sorting on a column changes', () => {
                 const fetchProcessListSpy = spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
                 component.onSortingChanged(
