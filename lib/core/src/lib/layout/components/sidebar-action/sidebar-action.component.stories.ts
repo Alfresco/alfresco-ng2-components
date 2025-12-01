@@ -73,7 +73,7 @@ const meta: Meta<SidebarActionMenuComponent> = {
 export default meta;
 type Story = StoryObj<SidebarActionMenuComponent>;
 
-export const sidebarActionMenu: Story = {
+export const SidebarActionMenu: Story = {
     render: (args) => ({
         props: args
     }),

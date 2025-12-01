@@ -133,7 +133,7 @@ const meta: Meta<HeaderLayoutComponent> = {
 export default meta;
 type Story = StoryObj<HeaderLayoutComponent>;
 
-export const header: Story = {
+export const Header: Story = {
     render: (args) => ({
         props: args
     }),
