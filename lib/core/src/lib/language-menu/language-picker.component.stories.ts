@@ -55,8 +55,7 @@ type Story = StoryObj<LanguagePickerComponent>;
 export const Primary: Story = {
     render: (args) => ({
         props: args
-    }),
-    parameters: { layout: 'centered' }
+    })
 };
 
 export const AsNestedMenu: Story = {
@@ -74,6 +73,5 @@ export const AsNestedMenu: Story = {
       </mat-menu>
     `
         )
-    ],
-    parameters: { layout: 'centered' }
+    ]
 };

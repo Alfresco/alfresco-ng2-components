@@ -96,6 +96,5 @@ type Story = StoryObj<PaginationComponent>;
 export const Pagination: Story = {
     render: (args) => ({
         props: args
-    }),
-    parameters: { layout: 'centered' }
+    })
 };

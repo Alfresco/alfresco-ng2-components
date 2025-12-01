@@ -15,79 +15,21 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
-import { CARD_VIEW_DIRECTIVES, CardViewTextItemModel } from '../../public-api';
-import { provideStoryCore } from './../../../testing';
+import { CardViewTextItemModel } from '../../public-api';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewTextItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewTextItemComponent,
     title: 'Core/Card View/Card View Text Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
-        },
-        displayEmpty: {
-            control: 'boolean',
-            description: 'Defines if it should display CardView item when data is empty',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        copyToClipboardAction: {
-            control: 'boolean',
-            description: 'Copy to clipboard action - default template in editable mode',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            description: 'Split text for chips using defined separator',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        multiValueSeparator: {
-            control: 'text',
-            description: 'Separator used for text splitting',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: ', ' }
-            }
-        },
-        displayLabelForChips: {
-            control: 'boolean',
-            description: 'Display label for chips property',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
-        }
+        ...cardViewSharedMeta.argTypes
     },
     args: {
-        editable: false,
-        displayEmpty: true,
-        copyToClipboardAction: true,
-        useChipsForMultiValueProperty: true,
-        multiValueSeparator: ', ',
-        displayLabelForChips: false
+        ...cardViewSharedMeta.args,
+        editable: false
     }
 };
 
@@ -108,8 +50,7 @@ export const ClickableCardViewTextItem: Story = {
             clickable: true,
             icon: 'close'
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const ChipsCardViewTextItem: Story = {
@@ -128,8 +69,7 @@ export const ChipsCardViewTextItem: Story = {
             editable: true
         }),
         displayLabelForChips: false
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const EmptyCardViewTextItem: Story = {
@@ -147,8 +87,7 @@ export const EmptyCardViewTextItem: Story = {
         }),
         editable: false,
         displayEmpty: false
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const DefaultCardViewTextItem: Story = {
@@ -166,8 +105,7 @@ export const DefaultCardViewTextItem: Story = {
             icon: 'close',
             multiline: false
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const DisplayLabelForChipsCardTextItem: Story = {
@@ -186,6 +124,5 @@ export const DisplayLabelForChipsCardTextItem: Story = {
             editable: true
         }),
         displayLabelForChips: false
-    },
-    parameters: { layout: 'centered' }
+    }
 };

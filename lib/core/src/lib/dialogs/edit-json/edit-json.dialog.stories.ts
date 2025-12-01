@@ -96,6 +96,5 @@ type Story = StoryObj<EditJsonDialogStorybookComponent>;
 export const EditJSONDialog: Story = {
     render: (args) => ({
         props: args
-    }),
-    parameters: { layout: 'centered' }
+    })
 };

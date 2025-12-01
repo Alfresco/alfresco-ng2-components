@@ -15,24 +15,18 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
-import { CardViewArrayItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
+import { CardViewArrayItemModel } from '../../public-api';
 import { of } from 'rxjs';
-import { provideStoryCore } from './../../../testing';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewArrayItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewArrayItemComponent,
     title: 'Core/Card View/Card View Array Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
+        ...cardViewSharedMeta.argTypes,
         property: {
             description: 'Card View Item Model with data',
             table: {
@@ -63,6 +57,5 @@ export const CardViewArrayItem: Story = {
             default: 'Empty',
             noOfItemsToDisplay: 2
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };

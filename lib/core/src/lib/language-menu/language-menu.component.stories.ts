@@ -76,8 +76,7 @@ export const AsMainMenu: Story = {
       </mat-menu>
     `
         )
-    ],
-    parameters: { layout: 'centered' }
+    ]
 };
 
 export const AsNestedMenu: Story = {
@@ -105,6 +104,5 @@ export const AsNestedMenu: Story = {
       </mat-menu>
     `
         )
-    ],
-    parameters: { layout: 'centered' }
+    ]
 };

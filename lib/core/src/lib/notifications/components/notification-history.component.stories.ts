@@ -89,6 +89,5 @@ export const NotificationHistory: Story = {
         <adf-add-notification-storybook>
         </adf-add-notification-storybook>
     </div>`
-    }),
-    parameters: { layout: 'centered' }
+    })
 };

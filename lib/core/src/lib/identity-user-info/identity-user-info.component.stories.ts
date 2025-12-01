@@ -120,6 +120,5 @@ type Story = StoryObj<IdentityUserInfoComponent>;
 export const LoginWithSSO: Story = {
     render: (args) => ({
         props: args
-    }),
-    parameters: { layout: 'centered' }
+    })
 };

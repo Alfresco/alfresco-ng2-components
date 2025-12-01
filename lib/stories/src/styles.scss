@@ -5,6 +5,8 @@ html {
     color-scheme: light dark;
     $font-family: 'Nunito Sans', sans-serif;
 
+    font-family: $font-family;
+
     @include mat.theme(
         (
             color: mat.$yellow-palette,

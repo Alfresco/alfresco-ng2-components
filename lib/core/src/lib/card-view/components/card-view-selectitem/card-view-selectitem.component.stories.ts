@@ -15,48 +15,18 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
-import { CardViewSelectItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
+import { CardViewSelectItemModel } from '../../public-api';
 import { of } from 'rxjs';
-import { provideStoryCore } from './../../../testing';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewSelectItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewSelectItemComponent,
     title: 'Core/Card View/Card View Select Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
-        },
-        displayNoneOption: {
-            control: 'boolean',
-            description: 'Shows None option inside select element',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        displayEmpty: {
-            control: 'boolean',
-            description: 'Defines if it should display CardView item when data is empty',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
+        ...cardViewSharedMeta.argTypes,
         options$: {
             control: { disable: true },
             description: 'Data displayed in select element',
@@ -74,9 +44,8 @@ const meta: Meta<CardViewSelectItemComponent> = {
         }
     },
     args: {
-        editable: false,
-        displayNoneOption: true,
-        displayEmpty: true
+        ...cardViewSharedMeta.args,
+        editable: false
     }
 };
 
@@ -98,6 +67,5 @@ export const CardViewSelectItem: Story = {
             key: 'select',
             editable: true
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };

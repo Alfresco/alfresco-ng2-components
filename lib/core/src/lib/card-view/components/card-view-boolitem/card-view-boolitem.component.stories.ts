@@ -15,40 +15,23 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
-import { CardViewBoolItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
-import { provideStoryCore } from './../../../testing';
+import { CardViewBoolItemModel } from '../../public-api';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewBoolItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewBoolItemComponent,
     title: 'Core/Card View/Card View Bool Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
-        },
+        ...cardViewSharedMeta.argTypes,
         property: {
             description: 'Card View Item Model with data',
             table: {
                 type: { summary: 'CardViewBoolItemModel' }
             }
         }
-    },
-    args: {
-        editable: true
     }
 };
 
@@ -67,6 +50,5 @@ export const CardViewBoolItem: Story = {
             default: false,
             editable: true
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };

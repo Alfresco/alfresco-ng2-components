@@ -67,8 +67,7 @@ export const DefaultIcon: Story = {
     }),
     args: {
         value: ''
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const CustomIcon: Story = {
@@ -77,6 +76,5 @@ export const CustomIcon: Story = {
     }),
     args: {
         value: 'cloud_download'
-    },
-    parameters: { layout: 'centered' }
+    }
 };
