@@ -104,6 +104,5 @@ export const SortingPicker: Story = {
     }),
     args: {
         options: initialSortingTypes
-    },
-    parameters: { layout: 'centered' }
+    }
 };

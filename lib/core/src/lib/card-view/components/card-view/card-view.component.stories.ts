@@ -15,90 +15,24 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewComponent } from './card-view.component';
-import { CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-view-content.mock';
-import { provideStoryCore } from './../../../testing';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewComponent,
     title: 'Core/Card View/Card View',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
+        ...cardViewSharedMeta.argTypes,
         editable: {
-            control: 'boolean',
+            ...cardViewSharedMeta.argTypes.editable,
             table: {
-                type: { summary: 'boolean' },
+                ...cardViewSharedMeta.argTypes.editable.table,
                 defaultValue: { summary: 'true' }
-            }
-        },
-        displayEmpty: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        displayNoneOption: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        displayClearAction: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        copyToClipboardAction: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        multiValueSeparator: {
-            control: 'text',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: ', ' }
-            }
-        },
-        displayLabelForChips: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
             }
         }
-    },
-    args: {
-        editable: true,
-        displayEmpty: true,
-        displayNoneOption: true,
-        displayClearAction: true,
-        copyToClipboardAction: true,
-        useChipsForMultiValueProperty: true,
-        multiValueSeparator: ', ',
-        displayLabelForChips: false
     }
 };
 
@@ -111,8 +45,7 @@ export const DefaultCardView: Story = {
     }),
     args: {
         properties: cardViewDataSource
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const EmptyCardView: Story = {
@@ -122,6 +55,5 @@ export const EmptyCardView: Story = {
     args: {
         properties: cardViewUndefinedValues,
         editable: false
-    },
-    parameters: { layout: 'centered' }
+    }
 };

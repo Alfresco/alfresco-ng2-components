@@ -15,40 +15,23 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { CardViewMapItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
-import { provideStoryCore } from './../../../testing';
+import { CardViewMapItemModel } from '../../public-api';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewMapItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewMapItemComponent,
     title: 'Core/Card View/Card View Map Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
-        displayEmpty: {
-            control: 'boolean',
-            description: 'Defines if it should display CardView item when data is empty',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
+        ...cardViewSharedMeta.argTypes,
         property: {
             description: 'Card View Item Model with data',
             table: {
                 type: { summary: 'CardViewMapItemModel' }
             }
         }
-    },
-    args: {
-        displayEmpty: true
     }
 };
 
@@ -66,8 +49,7 @@ export const CardViewMapItem: Story = {
             key: 'map',
             default: 'default map value'
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const EmptyCardViewMapItem: Story = {
@@ -81,6 +63,5 @@ export const EmptyCardViewMapItem: Story = {
             key: 'map',
             default: 'default map value'
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };

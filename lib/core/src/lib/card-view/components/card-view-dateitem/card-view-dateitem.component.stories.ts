@@ -15,47 +15,17 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { CardViewDateItemModel, CardViewDatetimeItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
-import { provideStoryCore } from './../../../testing';
+import { CardViewDateItemModel, CardViewDatetimeItemModel } from '../../public-api';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewDateItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewDateItemComponent,
     title: 'Core/Card View/Card View Date Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
-        },
-        displayEmpty: {
-            control: 'boolean',
-            description: 'Defines if it should display CardView item when data is empty',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
-        displayClearAction: {
-            control: 'boolean',
-            description: 'Defines if it should display clear input action (only with SingleValued components)',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
-            }
-        },
+        ...cardViewSharedMeta.argTypes,
         property: {
             description: 'Card View Item Model with data',
             table: {
@@ -64,11 +34,6 @@ const meta: Meta<CardViewDateItemComponent> = {
                 }
             }
         }
-    },
-    args: {
-        editable: true,
-        displayEmpty: true,
-        displayClearAction: true
     }
 };
 
@@ -88,8 +53,7 @@ export const SingleValuedDateItemCardView: Story = {
             format: 'shortDate',
             editable: true
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const MultiValuedDateItemCardView: Story = {
@@ -106,8 +70,7 @@ export const MultiValuedDateItemCardView: Story = {
             editable: true,
             multivalued: true
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const SingleValuedDatetimeItemCardView: Story = {
@@ -123,8 +86,7 @@ export const SingleValuedDatetimeItemCardView: Story = {
             format: 'short',
             editable: true
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };
 
 export const MultiValuedDatetimeItemCardView: Story = {
@@ -141,6 +103,5 @@ export const MultiValuedDatetimeItemCardView: Story = {
             editable: true,
             multivalued: true
         })
-    },
-    parameters: { layout: 'centered' }
+    }
 };

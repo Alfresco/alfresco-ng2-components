@@ -101,6 +101,5 @@ export const EmptyContent: Story = {
             projected content
         </div>
     </adf-empty-content>`
-    }),
-    parameters: { layout: 'centered' }
+    })
 };

@@ -15,40 +15,23 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
-import { CARD_VIEW_DIRECTIVES, CardViewKeyValuePairsItemModel } from '../../public-api';
-import { provideStoryCore } from './../../../testing';
+import { CardViewKeyValuePairsItemModel } from '../../public-api';
+import { cardViewSharedMeta } from '../../stories/card-view-shared-meta';
 
 const meta: Meta<CardViewKeyValuePairsItemComponent> = {
+    ...cardViewSharedMeta,
     component: CardViewKeyValuePairsItemComponent,
     title: 'Core/Card View/Card View Key Value Pairs Item',
-    decorators: [
-        moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
-        })
-    ],
     argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
-        },
+        ...cardViewSharedMeta.argTypes,
         property: {
             description: 'Card View Item Model with data',
             table: {
                 type: { summary: 'CardViewKeyValuePairsItemModel' }
             }
         }
-    },
-    args: {
-        editable: true
     }
 };
 

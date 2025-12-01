@@ -19,26 +19,29 @@ import { DownloadBodyCreate, DownloadEntry, DownloadsApi, Node } from '@alfresco
 import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { zipNode, downloadEntry } from './download-zip-data.mock';
+import { DownloadZipService } from '../services/download-zip.service';
+import { ContentService, AlfrescoApiService } from '../../../../..';
+import { inject } from '@angular/core';
 
-export class AlfrescoApiServiceMock {
+export class AlfrescoApiServiceMock extends AlfrescoApiService {
     nodeUpdated = new Subject<Node>();
     alfrescoApiInitialized = new ReplaySubject<boolean>(1);
-    alfrescoApi = new AlfrescoApiMock();
+    alfrescoApi = inject(AlfrescoApiMock) as any;
 
-    load() {}
+    async load() {}
     getInstance = () => this.alfrescoApi;
 }
 
-class AlfrescoApiMock {
-    core = new CoreMock();
-    content = new ContentApiMock();
+class AlfrescoApiMock extends AlfrescoApiService {
+    core = inject(CoreMock);
+    content = inject(ContentApiMock);
 
     isOauthConfiguration = () => true;
     isLoggedIn = () => true;
     isEcmConfiguration = () => true;
 }
 
-export class ContentApiMock {
+export class ContentApiMock extends ContentService {
     getContentUrl = (): string => zipNode.entry.contentUrl;
 }
 
@@ -58,11 +61,11 @@ class DownloadsApiMock extends DownloadsApi {
     cancelDownload = () => Promise.resolve(true);
 }
 
-export class DownloadZipMockService {
-    private _downloadsApi: DownloadsApi;
+export class DownloadZipMockService extends DownloadZipService {
+    private _mockDownloadsApi: DownloadsApi;
     get downloadsApi(): DownloadsApi {
-        this._downloadsApi = this._downloadsApi ?? new DownloadsApiMock();
-        return this._downloadsApi;
+        this._mockDownloadsApi = this._mockDownloadsApi ?? new DownloadsApiMock();
+        return this._mockDownloadsApi;
     }
 
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
@@ -75,19 +78,5 @@ export class DownloadZipMockService {
 
     cancelDownload(downloadId: string) {
         this.downloadsApi.cancelDownload(downloadId);
-    }
-
-    download(url: string, fileName: string) {
-        if (url && fileName) {
-            const link = document.createElement('a');
-
-            link.style.display = 'none';
-            link.download = fileName;
-            link.href = url;
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
     }
 }

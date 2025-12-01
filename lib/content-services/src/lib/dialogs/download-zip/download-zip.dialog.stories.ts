@@ -83,6 +83,5 @@ type Story = StoryObj<DownloadZipDialogStorybookComponent>;
 export const DownloadZIPDialog: Story = {
     render: (args) => ({
         props: args
-    }),
-    parameters: { layout: 'centered' }
+    })
 };

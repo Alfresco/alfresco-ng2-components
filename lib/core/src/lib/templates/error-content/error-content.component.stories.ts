@@ -85,6 +85,5 @@ export const ErrorContent: Story = {
         <button mat-raised-button type="button">MyAction</button>
         </div>
     </adf-error-content>`
-    }),
-    parameters: { layout: 'centered' }
+    })
 };
