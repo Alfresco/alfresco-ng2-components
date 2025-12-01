@@ -3,14 +3,15 @@
 adf-content-node-selector {
     .adf-upload-dialog {
         box-shadow: none;
-        height: 100%;
-        width: 100%;
-        position: unset;
-        bottom: unset;
 
         &__content {
             max-height: 64%;
         }
+
+        height: 100%;
+        width: 100%;
+        position: unset;
+        bottom: unset;
     }
 
     .adf-upload-dialog-container {
