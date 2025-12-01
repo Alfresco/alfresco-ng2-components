@@ -612,6 +612,10 @@
       "NOT-ALLOWED": "Vous n'avez pas le droit de modifier les droits d'accès"
     }
   },
+  "USER_ICON": {
+    "GROUP_ICON_ALT": "Group icon",
+    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+  },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Aucun ID de nœud spécifié !",
     "ACCESSIBILITY": {
