@@ -16,7 +16,9 @@
     "publish": "nx run-many -t npm-publish",
     "clean": "rimraf dist node_modules dist/libs",
     "nx:run-target": "nx run",
-    "nx:run-many": "nx run-many"
+    "nx:run-many": "nx run-many",
+    "storybook": "nx run stories:storybook",
+    "build-storybook": "nx run stories:build-storybook"
   },
   "repository": {
     "type": "git",
