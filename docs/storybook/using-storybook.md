@@ -11,7 +11,7 @@ Storybook is used in this repository to develop and showcase components in isola
 To run the aggregated Storybook that includes stories from all libraries (Core, Content Services, Process Services Cloud, etc.), use the following command:
 
 ```bash
-nx run stories:storybook
+npm run storybook
 ```
 
 Once started, you can access the Storybook interface at:
@@ -22,7 +22,7 @@ Once started, you can access the Storybook interface at:
 To build the static Storybook application (e.g., for deployment), use the following command:
 
 ```bash
-nx run stories:build-storybook
+npm run build-storybook
 ```
 
 The build artifacts will be output to `dist/storybook/stories`.
