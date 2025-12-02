@@ -1,6 +1,6 @@
 # Alfresco Stories Library
 
-Contains a Storybook stories from **Core**, **Content Services** and **Process Services cloud** libraries to gather them in one place.
+Contains Storybook stories from **Core**, **Content Services** and **Process Services cloud** libraries to gather them in one place.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
