@@ -19,6 +19,7 @@ import { FormFieldEvent } from '../../../events/form-field.event';
 import { ValidateFormFieldEvent } from '../../../events/validate-form-field.event';
 import { ValidateFormEvent } from '../../../events/validate-form.event';
 import { ContainerModel } from './container.model';
+import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormValues } from './form-values';
@@ -95,6 +96,7 @@ export class FormModel implements ProcessFormModel {
     isValid = true;
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
+    enableParentVisibilityCheck: boolean = false;
 
     constructor(
         json?: any,
@@ -531,5 +533,127 @@ export class FormModel implements ProcessFormModel {
 
     private loadInjectedFieldValidators(injectedFieldValidators: FormFieldValidator[]): void {
         this.fieldValidators = injectedFieldValidators ? [...FORM_FIELD_VALIDATORS, ...injectedFieldValidators] : [...FORM_FIELD_VALIDATORS];
+    }
+
+    /**
+     * Checks if a field or any of its parent containers/groups/sections is hidden.
+     * Returns true if the field should skip validation (field or parent is hidden).
+     *
+     * Parent visibility is only checked if:
+     * - `enableParentVisibilityCheck` is true
+     * - `field.checkParentVisibilityForValidation` is true (field opt-in enabled)
+     *
+     * @param field The form field to check
+     * @returns true if field or parent is hidden, false otherwise
+     */
+    isFieldOrParentHidden(field: FormFieldModel): boolean {
+        if (!field) {
+            return false;
+        }
+
+        if (!field.isVisible) {
+            return true;
+        }
+
+        if (this.enableParentVisibilityCheck && field.checkParentVisibilityForValidation) {
+            return this.hasHiddenParent(field);
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the given field has a hidden parent container/group/section.
+     *
+     * @param targetField The form field to check
+     * @returns true if field has a hidden parent, false otherwise
+     */
+    private hasHiddenParent(targetField: FormFieldModel): boolean {
+        if (!targetField || !this.fields || this.fields.length === 0) {
+            return false;
+        }
+
+        for (const rootElement of this.fields) {
+            const parent = this.findParentInElement(rootElement, targetField);
+            if (parent && !parent.isVisible) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Recursively searches for a field within an element (container/group/section).
+     * Returns the parent element if field is found within it, null otherwise.
+     *
+     * @param element The container/group/section to search in
+     * @param targetField The form field to find
+     * @returns Parent element if field found, null otherwise
+     */
+    private findParentInElement(element: ContainerModel | FormFieldModel, targetField: FormFieldModel): ContainerModel | FormFieldModel | null {
+        if (!element || !targetField) {
+            return null;
+        }
+
+        const columns = this.getColumnsFromElement(element);
+        if (!columns || columns.length === 0) {
+            return null;
+        }
+
+        return this.searchFieldsInColumns(columns, element, targetField);
+    }
+
+    private getColumnsFromElement(element: ContainerModel | FormFieldModel): ContainerColumnModel[] | null {
+        if (element instanceof ContainerModel) {
+            return element.field?.columns || null;
+        } else if (element instanceof FormFieldModel && element.type === FormFieldTypes.SECTION) {
+            return element.columns || null;
+        }
+        return null;
+    }
+
+    private searchFieldsInColumns(
+        columns: ContainerColumnModel[],
+        parentElement: ContainerModel | FormFieldModel,
+        targetField: FormFieldModel
+    ): ContainerModel | FormFieldModel | null {
+        for (const column of columns) {
+            if (!column?.fields || column.fields.length === 0) {
+                continue;
+            }
+
+            const result = this.searchFieldsInColumn(column.fields, parentElement, targetField);
+            if (result) {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    private searchFieldsInColumn(
+        fields: FormFieldModel[],
+        parentElement: ContainerModel | FormFieldModel,
+        targetField: FormFieldModel
+    ): ContainerModel | FormFieldModel | null {
+        for (const field of fields) {
+            if (!field) {
+                continue;
+            }
+
+            if (field.id === targetField.id) {
+                return parentElement;
+            }
+
+            if (field.type === FormFieldTypes.SECTION) {
+                const nestedParent = this.findParentInElement(field, targetField);
+                if (nestedParent) {
+                    return !parentElement.isVisible ? parentElement : nestedParent;
+                }
+            }
+        }
+
+        return null;
     }
 }

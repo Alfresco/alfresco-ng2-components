@@ -807,4 +807,316 @@ describe('FormModel', () => {
             expect(allFields[3].id).toBe('text-in-section');
         });
     });
+
+    describe('FormModel - isFieldOrParentHidden', () => {
+        let form: FormModel;
+
+        beforeEach(() => {
+            form = new FormModel();
+        });
+
+        it('should return true for directly hidden field', () => {
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT
+            });
+            field.isVisible = false;
+            expect(form.isFieldOrParentHidden(field)).toBe(true);
+        });
+
+        it('should return false for visible field with no hidden parent', () => {
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT
+            });
+            field.isVisible = true;
+            expect(form.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should return false for field in hidden group when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            const group = testForm.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should return true for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
+            const group = testForm.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(true);
+        });
+
+        it('should return false for field in hidden section when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'section1',
+                        type: FormFieldTypes.SECTION,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            const container = testForm.fields[0] as ContainerModel;
+            container.field.isVisible = false;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should return true for field in hidden section - opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'section1',
+                        type: FormFieldTypes.SECTION,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
+            const container = testForm.fields[0] as ContainerModel;
+            container.field.isVisible = false;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(true);
+        });
+
+        it('should return true for nested structure - section in group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'section1',
+                                    type: FormFieldTypes.SECTION,
+                                    numberOfColumns: 1,
+                                    fields: {
+                                        1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
+            const group = testForm.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const sectionField = testForm.getFieldById('section1');
+            sectionField.isVisible = true;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(true);
+        });
+
+        it('should return true for nested structure - section in section when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'outerSection',
+                        type: FormFieldTypes.SECTION,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'innerSection',
+                                    type: FormFieldTypes.SECTION,
+                                    numberOfColumns: 1,
+                                    fields: {
+                                        1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
+            const container = testForm.fields[0] as ContainerModel;
+            container.field.isVisible = false;
+            const innerSectionField = testForm.getFieldById('innerSection');
+            innerSectionField.isVisible = true;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(true);
+        });
+
+        it('should return false for visible field with visible parents - ContainerModel', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'section1',
+                                    type: FormFieldTypes.SECTION,
+                                    numberOfColumns: 1,
+                                    fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true }] }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            const group = testForm.fields[0] as ContainerModel;
+            group.field.isVisible = true;
+            const sectionField = testForm.getFieldById('section1');
+            sectionField.isVisible = true;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should return false for field with no parent - root level', () => {
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT
+            });
+            field.isVisible = true;
+            form.fields = [field];
+            expect(form.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should return false for null field', () => {
+            expect(form.isFieldOrParentHidden(null as any)).toBe(false);
+        });
+
+        it('should return false for undefined field', () => {
+            expect(form.isFieldOrParentHidden(undefined as any)).toBe(false);
+        });
+
+        it('should return false for field with null form', () => {
+            const fieldWithoutForm = new FormFieldModel(null as any, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT
+            });
+            fieldWithoutForm.isVisible = true;
+            const testForm = new FormModel();
+            expect(testForm.isFieldOrParentHidden(fieldWithoutForm)).toBe(false);
+        });
+
+        it('should return false for form with empty fields array', () => {
+            form.fields = [];
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT
+            });
+            field.isVisible = true;
+            expect(form.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should use ID comparison to find parent field', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            testForm.enableParentVisibilityCheck = true;
+            const group = testForm.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            const fieldWithSameId = new FormFieldModel(testForm, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                checkParentVisibilityForValidation: true
+            });
+            fieldWithSameId.isVisible = true;
+            expect(testForm.isFieldOrParentHidden(fieldWithSameId)).toBe(true);
+        });
+
+        it('should return false when opt-in property defaults to false - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true }] }
+                    }
+                ]
+            };
+            const testForm = new FormModel(formJson);
+            const group = testForm.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = testForm.getFieldById('field1');
+            field.isVisible = true;
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(testForm.isFieldOrParentHidden(field)).toBe(false);
+        });
+
+        it('should return true for directly hidden field - opt-in is enabled', () => {
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                checkParentVisibilityForValidation: true
+            });
+            field.isVisible = false;
+            expect(form.isFieldOrParentHidden(field)).toBe(true);
+        });
+    });
 });

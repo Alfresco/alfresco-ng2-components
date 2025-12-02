@@ -43,6 +43,7 @@ Contains the value and metadata for a field of a [`Form`](../../../lib/process-s
 | displayText | string |  | Displayed text for Hyperlink widgets |
 | isVisible | boolean | true | Is the field shown on the form? |
 | visibilityCondition | [`WidgetVisibilityModel`](../../../lib/core/src/lib/form/models/widget-visibility.model.ts) | null | Defines a expression that determines whether the field is visible or not, based on its logical relation to values in other fields |
+| checkParentVisibilityForValidation | boolean | false | When enabled (and `FormModel.enableParentVisibilityCheck` is true), validation will be skipped if the field's parent container/group/section is hidden, even if the field itself is visible. |
 | enableFractions | boolean | false | Are numeric values allowed to contain a decimal point? |
 | currency | string | null | Currency symbol for Amount widgets |
 | dateDisplayFormat | string |  | Date/time display format template |

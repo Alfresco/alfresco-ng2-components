@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ContainerModel } from './container.model';
 import { ErrorMessageModel } from './error-message.model';
 import { FormFieldTypes } from './form-field-types';
 import {
@@ -201,6 +202,143 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBe(false);
         });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                required: true,
+                value: null
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = null;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = null;
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should skip validation for field in hidden section when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'section1',
+                        type: FormFieldTypes.SECTION,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const container = form.fields[0] as ContainerModel;
+            container.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = null;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden section when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'section1',
+                        type: FormFieldTypes.SECTION,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const container = form.fields[0] as ContainerModel;
+            container.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = null;
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, required: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = null;
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                required: true,
+                value: null
+            });
+            field.isVisible = true;
+            expect(validator.validate(field)).toBe(false);
+        });
     });
 
     describe('NumberFieldValidator', () => {
@@ -264,6 +402,99 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.NUMBER,
+                value: 'not-a-number'
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'not-a-number';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'not-a-number';
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'not-a-number';
+            field.validationSummary = new ErrorMessageModel();
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.NUMBER,
+                value: 'not-a-number'
+            });
+            field.isVisible = true;
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
     });
 
     describe('MinLengthFieldValidator', () => {
@@ -314,6 +545,101 @@ describe('FormFieldValidator', () => {
             field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
+        });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'ab',
+                minLength: 5
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, minLength: 5, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'ab';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, minLength: 5, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'ab';
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, minLength: 5 }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'ab';
+            field.validationSummary = new ErrorMessageModel();
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'ab',
+                minLength: 5
+            });
+            field.isVisible = true;
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
         });
     });
 
@@ -404,6 +730,101 @@ describe('FormFieldValidator', () => {
                 expect(isSupported).toBe(false);
             });
         });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: '12345',
+                maxLength: 3
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, maxLength: 3, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '12345';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, maxLength: 3, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '12345';
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, maxLength: 3 }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '12345';
+            field.validationSummary = new ErrorMessageModel();
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: '12345',
+                maxLength: 3
+            });
+            field.isVisible = true;
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
     });
 
     describe('MinValueFieldValidator', () => {
@@ -473,6 +894,101 @@ describe('FormFieldValidator', () => {
             field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
+        });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.NUMBER,
+                value: '5',
+                minValue: '10'
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, minValue: '10', checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '5';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, minValue: '10', checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '5';
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, minValue: '10' }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '5';
+            field.validationSummary = new ErrorMessageModel();
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.NUMBER,
+                value: '5',
+                minValue: '10'
+            });
+            field.isVisible = true;
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
         });
     });
 
@@ -544,6 +1060,101 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.NUMBER,
+                value: '15',
+                maxValue: '10'
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, maxValue: '10', checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '15';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, maxValue: '10', checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '15';
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.NUMBER, maxValue: '10' }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '15';
+            field.validationSummary = new ErrorMessageModel();
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.NUMBER,
+                value: '15',
+                maxValue: '10'
+            });
+            field.isVisible = true;
+            field.validationSummary = new ErrorMessageModel();
+            expect(validator.validate(field)).toBe(false);
+        });
     });
 
     describe('RegExFieldValidator', () => {
@@ -602,6 +1213,102 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBe(false);
         });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'invalid',
+                regexPattern: '^valid$'
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [{ id: 'field1', type: FormFieldTypes.TEXT, regexPattern: '^valid$', checkParentVisibilityForValidation: true }]
+                        }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'invalid';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [{ id: 'field1', type: FormFieldTypes.TEXT, regexPattern: '^valid$', checkParentVisibilityForValidation: false }]
+                        }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'invalid';
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.TEXT, regexPattern: '^valid$' }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'invalid';
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'invalid',
+                regexPattern: '^valid$'
+            });
+            field.isVisible = true;
+            expect(validator.validate(field)).toBe(false);
+        });
     });
 
     describe('FixedValueFieldValidator', () => {
@@ -657,6 +1364,139 @@ describe('FormFieldValidator', () => {
                 ]
             });
 
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TYPEAHEAD,
+                value: 'Invalid',
+                options: [
+                    { id: '1', name: 'Option 1' },
+                    { id: '2', name: 'Option 2' }
+                ]
+            });
+            field.isVisible = false;
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'field1',
+                                    type: FormFieldTypes.TYPEAHEAD,
+                                    checkParentVisibilityForValidation: true,
+                                    options: [
+                                        { id: '1', name: 'Option 1' },
+                                        { id: '2', name: 'Option 2' }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'Invalid';
+            expect(validator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'field1',
+                                    type: FormFieldTypes.TYPEAHEAD,
+                                    checkParentVisibilityForValidation: false,
+                                    options: [
+                                        { id: '1', name: 'Option 1' },
+                                        { id: '2', name: 'Option 2' }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'Invalid';
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false (backward compatible)', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'field1',
+                                    type: FormFieldTypes.TYPEAHEAD,
+                                    options: [
+                                        { id: '1', name: 'Option 1' },
+                                        { id: '2', name: 'Option 2' }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = 'Invalid';
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(validator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TYPEAHEAD,
+                value: 'Invalid',
+                options: [
+                    { id: '1', name: 'Option 1' },
+                    { id: '2', name: 'Option 2' }
+                ]
+            });
+            field.isVisible = true;
             expect(validator.validate(field)).toBe(false);
         });
     });
@@ -726,6 +1566,98 @@ describe('FormFieldValidator', () => {
             });
 
             expect(decimalValidator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for hidden field', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.DECIMAL,
+                value: '1.22',
+                precision: 1
+            });
+            field.isVisible = false;
+            expect(decimalValidator.validate(field)).toBe(true);
+        });
+
+        it('should skip validation for field in hidden group when opt-in is enabled', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.DECIMAL, precision: 1, checkParentVisibilityForValidation: true }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            form.enableParentVisibilityCheck = true;
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '1.22';
+            expect(decimalValidator.validate(field)).toBe(true);
+        });
+
+        it('should not skip validation for field in hidden group when opt-in is disabled - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.DECIMAL, precision: 1, checkParentVisibilityForValidation: false }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '1.22';
+            expect(decimalValidator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation when opt-in property defaults to false - backward compatible', () => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: { 1: [{ id: 'field1', type: FormFieldTypes.DECIMAL, precision: 1 }] }
+                    }
+                ]
+            };
+            const form = new FormModel(formJson);
+            const group = form.fields[0] as ContainerModel;
+            group.field.isVisible = false;
+            const field = form.getFieldById('field1');
+            field.isVisible = true;
+            field.value = '1.22';
+            expect(field.checkParentVisibilityForValidation).toBe(false);
+            expect(decimalValidator.validate(field)).toBe(false);
+        });
+
+        it('should not skip validation for visible field with invalid value', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.DECIMAL,
+                value: '1.22',
+                precision: 1
+            });
+            field.isVisible = true;
+            expect(decimalValidator.validate(field)).toBe(false);
         });
     });
 });

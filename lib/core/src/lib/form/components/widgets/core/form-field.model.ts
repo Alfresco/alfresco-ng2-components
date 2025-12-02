@@ -85,6 +85,7 @@ export class FormFieldModel extends FormWidgetModel {
     displayText: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
+    checkParentVisibilityForValidation: boolean = false;
     enableFractions: boolean = false;
     currency: string = null;
     dateDisplayFormat: string = this.defaultDateFormat;
@@ -219,6 +220,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = formFieldVisibilityConditionHandler.getVisibilityCondition(this.id, json.visibilityCondition, parent);
+            this.checkParentVisibilityForValidation = json.checkParentVisibilityForValidation ?? false;
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
