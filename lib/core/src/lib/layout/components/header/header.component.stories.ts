@@ -17,7 +17,6 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { HeaderLayoutComponent } from './header.component';
-import { provideRouter } from '@angular/router';
 import { provideStoryCore } from '../../../stories/core-story.providers';
 
 const meta: Meta<HeaderLayoutComponent> = {
@@ -28,7 +27,7 @@ const meta: Meta<HeaderLayoutComponent> = {
             imports: [HeaderLayoutComponent]
         }),
         applicationConfig({
-            providers: [...provideStoryCore(), provideRouter([])]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

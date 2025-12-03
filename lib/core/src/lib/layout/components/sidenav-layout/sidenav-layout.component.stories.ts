@@ -16,11 +16,9 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterTestingModule } from '@angular/router/testing';
 import { provideStoryCore } from '../../../stories/core-story.providers';
 
 type SidenavLayoutStoryArgs = SidenavLayoutComponent & {
@@ -34,7 +32,7 @@ const meta: Meta<SidenavLayoutStoryArgs> = {
     title: 'Core/Layout/Sidenav Layout',
     decorators: [
         moduleMetadata({
-            imports: [...LAYOUT_DIRECTIVES, RouterTestingModule, MatIconModule, MatListModule]
+            imports: [SidenavLayoutComponent, MatIconModule, MatListModule]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]
