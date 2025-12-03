@@ -80,8 +80,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(
-        private dateAdapter: DateAdapter<Date>,
-        private dateTimeAdapter: DatetimeAdapter<Date>
+        private readonly dateAdapter: DateAdapter<Date>,
+        private readonly dateTimeAdapter: DatetimeAdapter<Date>
     ) {}
 
     getFromValidationMessage(): string {
