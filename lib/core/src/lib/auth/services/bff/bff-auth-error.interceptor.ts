@@ -18,18 +18,26 @@
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { EMPTY, throwError } from 'rxjs';
+import { BffUrlBuilder } from './bff-url-builder.service';
+import { inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 /* eslint-disable no-console */
-export const bffAuthErrorInterceptor: HttpInterceptorFn = (req, next) =>
-    next(req).pipe(
+export const bffAuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
+    const bffUrlBuilder = inject(BffUrlBuilder);
+    const document = inject(DOCUMENT);
+
+    return next(req).pipe(
         catchError((err: HttpErrorResponse) => {
             console.log('%c[bffAuthErrorInterceptor] err: ', 'color: red;', err);
             if (err.status === 401 && req.url.includes('/bff/')) {
-                const returnUrl = window.location.pathname + window.location.search;
-                window.location.href = `/bff/login?returnUrl=${encodeURIComponent(returnUrl)}`;
+                const url = bffUrlBuilder.getLoginUrl();
+                console.log('%c[bffAuthErrorInterceptor] redirecting to login URL: ', 'color: yellow;', url);
+                document.location.href = url;
                 return EMPTY;
             }
 
             return throwError(() => err);
         })
     );
+};
