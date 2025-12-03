@@ -446,11 +446,11 @@
         "IN_LAST": "Value required",
         "START_DATE": {
           "REQUIRED": "Start Date required",
-          "INVALID_FORMAT": "Start Date invalid"
+          "INVALID_FORMAT": "Start Date invalid. The date must be in the format '{{ requiredFormat }}'"
         },
         "END_DATE": {
           "REQUIRED": "End Date required",
-          "INVALID_FORMAT": "End Date invalid"
+          "INVALID_FORMAT": "End Date invalid. The date must be in the format '{{ requiredFormat }}'"
         }
       },
       "ARIA_LABEL": {
