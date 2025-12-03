@@ -36,7 +36,11 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
+    constructor(
+        appConfig: AppConfigService,
+        alfrescoApiService: AlfrescoApiService,
+        private readonly nodeApiService: NodesApiService
+    ) {
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(filter((query) => !!query)).subscribe(() => {
@@ -108,7 +112,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
             }
         });
 
-        this.execute();
+        if (!this.isNoFilterActive()) {
+            this.execute(false);
+        }
     }
 
     private getSortingFieldFromColumnName(columnName: string) {
@@ -127,6 +133,12 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return foundCategory;
     }
 
+    getOperatorForFilterId(id: string): string | undefined {
+        const foundCategory = this.categories?.find((category) => category.id === id);
+
+        return foundCategory?.component?.settings?.operator;
+    }
+
     setCurrentRootFolderId(currentFolderId: string) {
         const alreadyAddedFilter = this.filterQueries.find((filterQueries) => filterQueries.query.includes(currentFolderId));
 
@@ -140,7 +152,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
             }
         ];
 
-        this.execute();
+        if (!this.isNoFilterActive()) {
+            this.execute(false);
+        }
     }
 
     isCustomSourceNode(currentNodeId: string): boolean {
