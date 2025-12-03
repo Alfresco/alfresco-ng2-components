@@ -19,7 +19,7 @@ import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
-import { provideStoryProcessServicesCloud } from '../../../testing/provide-story-process-services-cloud';
+import { provideStoryProcessServicesCloud } from '../../../stories/process-services-cloud-story.providers';
 
 const meta: Meta<TaskHeaderCloudComponent> = {
     component: TaskHeaderCloudComponent,

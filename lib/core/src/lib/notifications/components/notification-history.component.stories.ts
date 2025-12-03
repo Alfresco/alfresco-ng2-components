@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from '../notification-history.module';
-import { provideStoryCore } from '../../testing';
+import { provideStoryCore } from '../../stories/core-story.providers';
 
 const meta: Meta<NotificationHistoryComponent> = {
     component: NotificationHistoryComponent,

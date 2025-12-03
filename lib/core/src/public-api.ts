@@ -53,6 +53,7 @@ export * from './lib/models/index';
 export * from './lib/events/index';
 export * from './lib/mock/index';
 export * from './lib/testing';
+export * from './lib/stories/index';
 
 export * from './lib/auth';
 export * from './lib/common';

@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { PeopleCloudComponent } from './people-cloud.component';
-import { provideStoryProcessServicesCloud } from '../../testing/provide-story-process-services-cloud';
+import { provideStoryProcessServicesCloud } from '../../stories/process-services-cloud-story.providers';
 import { IdentityUserService } from '../services/identity-user.service';
 import { IdentityUserServiceMock, mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding } from '../mock/people-cloud.mock';
 

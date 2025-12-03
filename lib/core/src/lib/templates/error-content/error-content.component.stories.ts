@@ -19,7 +19,7 @@ import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/an
 import { ErrorContentComponent } from './error-content.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { provideStoryCore } from '../../testing';
+import { provideStoryCore } from '../../stories/core-story.providers';
 
 type ErrorContentStoryArgs = ErrorContentComponent & {
     errorContentActions?: boolean;

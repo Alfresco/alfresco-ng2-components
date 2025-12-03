@@ -16,16 +16,15 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { provideStoryCore } from '../../../testing';
+import { provideStoryCore } from '../../../stories/core-story.providers';
 
 const meta: Meta<SidebarActionMenuComponent> = {
     component: SidebarActionMenuComponent,
     title: 'Core/Layout/Sidebar Action Menu',
     decorators: [
         moduleMetadata({
-            imports: [...LAYOUT_DIRECTIVES]
+            imports: [SidebarActionMenuComponent]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

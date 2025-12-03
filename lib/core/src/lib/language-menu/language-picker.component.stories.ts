@@ -20,7 +20,7 @@ import { LANGUAGE_MENU_DIRECTIVES } from './language-menu.module';
 import { LanguagePickerComponent } from './language-picker.component';
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

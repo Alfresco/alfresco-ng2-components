@@ -21,7 +21,7 @@ import { DATATABLE_DIRECTIVES } from '../datatable.module';
 import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
-import { provideStoryCore } from '../../testing';
+import { provideStoryCore } from '../../stories/core-story.providers';
 
 const meta: Meta<DataColumnComponent & { rows: any[] }> = {
     component: DataColumnComponent,

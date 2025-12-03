@@ -17,7 +17,7 @@
 
 import { applicationConfig, moduleMetadata, Decorator, type ArgTypes } from '@storybook/angular';
 import { CARD_VIEW_DIRECTIVES } from '../public-api';
-import { provideStoryCore } from '../../testing';
+import { provideStoryCore } from '../../stories/core-story.providers';
 
 /**
  * Common decorators used across all Card View component stories.

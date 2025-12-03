@@ -21,7 +21,7 @@ import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../../form/mocks/form-cloud.service.mock';
-import { provideStoryProcessServicesCloud } from '../../../../testing/provide-story-process-services-cloud';
+import { provideStoryProcessServicesCloud } from '../../../../stories/process-services-cloud-story.providers';
 
 const meta: Meta<TaskFormCloudComponent> = {
     component: TaskFormCloudComponent,

@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
 import { TEMPLATE_DIRECTIVES } from '../template.module';
-import { provideStoryCore } from '../../testing';
+import { provideStoryCore } from '../../stories/core-story.providers';
 
 type EmptyContentStoryArgs = EmptyContentComponent & {
     anyContentProjection?: boolean;

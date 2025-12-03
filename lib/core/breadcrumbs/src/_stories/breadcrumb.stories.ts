@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
 import { DemoBreadcrumbComponent } from './demo-breadcrumb.component';
-import { provideStoryCore } from '../../..';
 
 const meta: Meta<DemoBreadcrumbComponent> = {
     title: 'Core/Breadcrumb',
@@ -30,9 +29,6 @@ const meta: Meta<DemoBreadcrumbComponent> = {
     decorators: [
         moduleMetadata({
             imports: [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule]
-        }),
-        applicationConfig({
-            providers: [...provideStoryCore()]
         })
     ],
     args: {

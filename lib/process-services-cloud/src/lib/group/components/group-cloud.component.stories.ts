@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { GroupCloudComponent } from './group-cloud.component';
-import { provideStoryProcessServicesCloud } from '../../testing/provide-story-process-services-cloud';
+import { provideStoryProcessServicesCloud } from '../../stories/process-services-cloud-story.providers';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { IdentityGroupServiceMock, mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 

@@ -15,7 +15,4 @@
  * limitations under the License.
  */
 
-export * from './noop-translate.module';
-export * from './noop-auth.module';
-export * from './unit-testing-utils';
-export * from './app-config-testing';
+export * from './core-story.providers';

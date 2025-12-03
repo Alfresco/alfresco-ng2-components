@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 
 const fakeIdentityUser = {
     familyName: 'Identity',

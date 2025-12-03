@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 import { IconComponent } from './icon.component';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 
 const meta: Meta<IconComponent> = {
     component: IconComponent,

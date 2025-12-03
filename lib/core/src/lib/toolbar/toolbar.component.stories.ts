@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { ToolbarComponent } from './toolbar.component';
 import { TOOLBAR_DIRECTIVES } from './toolbar.module';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 
 type ToolbarStoryArgs = ToolbarComponent & {
     toolbarTitle?: boolean;

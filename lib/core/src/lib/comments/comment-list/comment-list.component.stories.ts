@@ -21,7 +21,7 @@ import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mo
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { CommentsServiceStoriesMock } from '../mocks/comments.service.stories.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
-import { provideStoryCore } from '../../testing';
+import { provideStoryCore } from '../../stories/core-story.providers';
 
 const meta: Meta<CommentListComponent> = {
     component: CommentListComponent,

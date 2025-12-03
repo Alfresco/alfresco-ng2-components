@@ -19,7 +19,7 @@ import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/an
 import { InfoDrawerComponent } from './info-drawer.component';
 import { INFO_DRAWER_DIRECTIVES } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
-import { provideStoryCore } from '../../..';
+import { provideStoryCore } from '../stories/core-story.providers';
 import { MatIconModule } from '@angular/material/icon';
 
 type InfoDrawerStoryArgs = InfoDrawerComponent & {

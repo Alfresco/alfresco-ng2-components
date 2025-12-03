@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { SortingPickerComponent } from './sorting-picker.component';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 
 const initialSortingTypes: Array<{ key: string; label: string }> = [
     { key: 'sortByFirstName', label: 'First Name' },

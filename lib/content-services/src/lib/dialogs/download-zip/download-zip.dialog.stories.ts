@@ -23,16 +23,15 @@ import { DownloadZipService } from './services/download-zip.service';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AlfrescoApiService } from '../../services';
-import { provideStoryCore } from '../../../../../core/src/public-api';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { provideStoryCore } from '@alfresco/adf-core';
 
 const meta: Meta<DownloadZipDialogStorybookComponent> = {
     component: DownloadZipDialogStorybookComponent,
     title: 'Core/Dialog/Download ZIP Dialog',
     decorators: [
         moduleMetadata({
-            imports: [MatButtonModule, MatDialogModule, HttpClientTestingModule, DownloadZipDialogStorybookComponent],
+            imports: [MatButtonModule, MatDialogModule, DownloadZipDialogStorybookComponent],
             providers: [
                 {
                     provide: AlfrescoApiService,

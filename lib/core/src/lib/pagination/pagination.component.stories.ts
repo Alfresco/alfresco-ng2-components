@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { PAGINATION_DIRECTIVES } from './pagination.module';
 import { PaginationComponent } from './pagination.component';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 
 const meta: Meta<PaginationComponent> = {
     component: PaginationComponent,

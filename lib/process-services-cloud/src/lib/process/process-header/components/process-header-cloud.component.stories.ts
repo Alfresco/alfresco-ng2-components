@@ -16,7 +16,7 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { provideStoryProcessServicesCloud } from '../../../testing/provide-story-process-services-cloud';
+import { provideStoryProcessServicesCloud } from '../../../stories/process-services-cloud-story.providers';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessCloudServiceMock } from '../../mock/process-cloud.service.mock';
 import { ProcessCloudService } from '../../services/process-cloud.service';

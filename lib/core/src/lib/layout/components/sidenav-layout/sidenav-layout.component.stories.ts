@@ -21,7 +21,7 @@ import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideStoryCore } from '../../../testing';
+import { provideStoryCore } from '../../../stories/core-story.providers';
 
 type SidenavLayoutStoryArgs = SidenavLayoutComponent & {
     title?: string;

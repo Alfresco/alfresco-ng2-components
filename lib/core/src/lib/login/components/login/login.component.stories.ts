@@ -21,7 +21,7 @@ import { AuthenticationService } from '../../../auth';
 import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 import { LoginComponent } from './login.component';
 import { importProvidersFrom } from '@angular/core';
-import { provideStoryCore } from '../../../../..';
+import { provideStoryCore } from '../../../stories/core-story.providers';
 
 type LoginStoryArgs = LoginComponent & {
     correct?: any;

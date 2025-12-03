@@ -20,7 +20,7 @@ import { CommentsComponent } from './comments.component';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { commentsStoriesData } from './mocks/comments.stories.mock';
 import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
-import { provideStoryCore } from '../testing';
+import { provideStoryCore } from '../stories/core-story.providers';
 
 const meta: Meta<CommentsComponent> = {
     component: CommentsComponent,

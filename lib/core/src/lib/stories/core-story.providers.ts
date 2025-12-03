@@ -18,7 +18,7 @@
 import { Provider, EnvironmentProviders, APP_INITIALIZER } from '@angular/core';
 import { provideTranslations } from '../translation/translation.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideCoreAuthTesting } from './noop-auth.module';
+import { provideCoreAuthTesting } from '../testing/noop-auth.module';
 import { provideAppConfig } from '../app-config/provide-app-config';
 import { AppConfigService } from '../app-config/app-config.service';
 import { provideI18N } from '../translation';

@@ -21,7 +21,7 @@ import { DATATABLE_DIRECTIVES } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
-import { provideStoryCore } from '../../../testing';
+import { provideStoryCore } from '../../../stories/core-story.providers';
 
 const meta: Meta<DataTableComponent> = {
     component: DataTableComponent,

@@ -16,20 +16,19 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { HeaderLayoutComponent } from './header.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { provideStoryCore } from '../../../testing';
+import { provideRouter } from '@angular/router';
+import { provideStoryCore } from '../../../stories/core-story.providers';
 
 const meta: Meta<HeaderLayoutComponent> = {
     component: HeaderLayoutComponent,
     title: 'Core/Layout/Header',
     decorators: [
         moduleMetadata({
-            imports: [...LAYOUT_DIRECTIVES, RouterTestingModule]
+            imports: [HeaderLayoutComponent]
         }),
         applicationConfig({
-            providers: [...provideStoryCore()]
+            providers: [...provideStoryCore(), provideRouter([])]
         })
     ],
     parameters: {
