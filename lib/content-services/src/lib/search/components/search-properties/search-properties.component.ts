@@ -125,7 +125,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {

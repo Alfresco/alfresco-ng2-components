@@ -65,7 +65,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {

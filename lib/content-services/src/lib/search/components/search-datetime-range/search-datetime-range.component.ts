@@ -79,28 +79,31 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
+    constructor(
+        private dateAdapter: DateAdapter<Date>,
+        private dateTimeAdapter: DatetimeAdapter<Date>
+    ) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
             ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME'
             : this.from.hasError('matDatepickerMax')
-            ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME'
-            : this.from.hasError('required')
-            ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE'
-            : '';
+              ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME'
+              : this.from.hasError('required')
+                ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE'
+                : '';
     }
 
     getToValidationMessage(): string {
         return this.to.hasError('invalidOnChange') || this.hasParseError(this.to)
             ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME'
             : this.to.hasError('matDatepickerMin')
-            ? 'SEARCH.FILTER.VALIDATION.NO-DAYS'
-            : this.to.hasError('matDatepickerMax')
-            ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME'
-            : this.to.hasError('required')
-            ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE'
-            : '';
+              ? 'SEARCH.FILTER.VALIDATION.NO-DAYS'
+              : this.to.hasError('matDatepickerMax')
+                ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME'
+                : this.to.hasError('required')
+                  ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE'
+                  : '';
     }
 
     ngOnInit() {
@@ -139,7 +142,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
