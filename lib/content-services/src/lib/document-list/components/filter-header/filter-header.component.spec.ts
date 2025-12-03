@@ -97,7 +97,35 @@ describe('FilterHeaderComponent', () => {
         expect(setCurrentRootFolderIdSpy).toHaveBeenCalled();
     });
 
-    it('should set active filters when an initial value is set', async () => {
+    it('should set filters if initial value is provided', async () => {
+        spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+        spyOn(queryBuilder, 'setActiveFilter');
+
+        component.value = { name: 'pinocchio' };
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(queryBuilder.setActiveFilter).toHaveBeenCalledWith('name', 'pinocchio');
+    });
+
+    it('should NOT set filters if initial value is not provided', async () => {
+        spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+        spyOn(queryBuilder, 'setActiveFilter');
+
+        component.value = undefined;
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(queryBuilder.setActiveFilter).not.toHaveBeenCalled();
+    });
+
+    it('should set active filters correctly', async () => {
         spyOn(queryBuilder, 'setCurrentRootFolderId');
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
 
@@ -105,8 +133,7 @@ describe('FilterHeaderComponent', () => {
         await fixture.whenStable();
         expect(queryBuilder.getActiveFilters().length).toBe(0);
 
-        const initialFilterValue = { name: 'pinocchio' };
-        component.value = initialFilterValue;
+        component.value = { name: 'pinocchio' };
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
         component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
         fixture.detectChanges();
@@ -115,6 +142,25 @@ describe('FilterHeaderComponent', () => {
         expect(queryBuilder.getActiveFilters().length).toBe(1);
         expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
         expect(queryBuilder.getActiveFilters()[0].value).toBe('pinocchio');
+    });
+
+    it('should update queryParams if initial value is provided', async () => {
+        spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(Object.keys(queryBuilder.filterRawParams).length).toBe(0);
+
+        component.value = { name: 'pinocchio' };
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(Object.keys(queryBuilder.filterRawParams).length).toBe(1);
+        expect(queryBuilder.filterRawParams['name']).toBe('pinocchio');
+        expect(queryBuilder.queryFragments['name']).toBe('pinocchio');
     });
 
     it('should emit filterSelection when a filter is changed', (done) => {
