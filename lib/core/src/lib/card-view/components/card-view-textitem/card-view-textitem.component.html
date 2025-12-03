@@ -104,12 +104,14 @@
         </mat-form-field>
     </div>
 
-    <button
-        type="button"
+    <div
         *ngSwitchCase="'clickableTemplate'"
+        role="button"
         class="adf-textitem-clickable"
         [ngClass]="{ 'adf-property-read-only': !isEditable }"
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
+        tabindex="0"
+        (keyup.enter)="clicked()"
         (click)="clicked()"
     >
         <mat-form-field class="adf-property-field adf-card-textitem-field" [floatLabel]="'always'">
@@ -117,7 +119,6 @@
                 *ngIf="showProperty || isEditable"
                 [attr.data-automation-id]="'card-textitem-label-' + property.key"
                 class="adf-property-label"
-                (click)="$event.stopPropagation()"
                 [ngClass]="{ 'adf-property-value-editable': editable }"
             >
                 {{ property.label | translate }}
@@ -126,6 +127,7 @@
                 matInput
                 [type]="property.inputType"
                 class="adf-property-value"
+                title="{{ property.label | translate }}"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-textitem-clickable-value': isClickable,
@@ -134,11 +136,11 @@
                     'adf-property-value-has-icon-suffix': showClickableIcon
                 }"
                 [placeholder]="property.default"
+                [attr.aria-label]="property.label | translate"
                 [(ngModel)]="editedValue"
                 (blur)="update()"
                 (keydown.enter)="update()"
                 [readonly]="!isEditable"
-                tabindex="-1"
                 [attr.data-automation-id]="'card-textitem-value-' + property.key"
             />
             <button
@@ -152,7 +154,7 @@
                 <mat-icon class="adf-textitem-icon">{{ property?.icon }}</mat-icon>
             </button>
         </mat-form-field>
-    </button>
+    </div>
 
     <div *ngSwitchCase="'emptyTemplate'">
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
