@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
@@ -26,8 +26,10 @@ const meta: Meta<TaskHeaderCloudComponent> = {
     title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
     decorators: [
         moduleMetadata({
-            imports: [TaskHeaderCloudComponent],
-            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }, provideStoryProcessServicesCloud()]
+            imports: [TaskHeaderCloudComponent]
+        }),
+        applicationConfig({
+            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }, ...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

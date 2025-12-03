@@ -16,13 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CardViewArrayItem } from '@alfresco/adf-core';
-import { from, Observable, of, Subject, throwError } from 'rxjs';
-import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
+import { Observable, of, Subject } from 'rxjs';
 import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task-details-cloud.model';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
-import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
-import { TaskCloudService } from '@alfresco/adf-process-services-cloud';
+import { TaskCloudService } from '../services/task-cloud.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable()
@@ -54,38 +51,8 @@ export class TaskCloudServiceMock extends TaskCloudService {
         return of(['group1', 'group2']);
     }
 
-    getPriorityLabel(priority: number): string {
-        const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
-        return priorityItem.label;
-    }
-
-    get priorities(): TaskPriorityOption[] {
-        return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
-    }
-
-    isTaskEditable(taskDetails: TaskDetailsCloudModel) {
-        return taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
-    }
-
-    isAssigneePropertyClickable(
-        taskDetails: TaskDetailsCloudModel,
-        candidateUsers: CardViewArrayItem[],
-        candidateGroups: CardViewArrayItem[]
-    ): boolean {
-        let isClickable = false;
-        const states = [TASK_ASSIGNED_STATE];
-        if (candidateUsers?.length || candidateGroups?.length) {
-            isClickable = states.includes(taskDetails.status);
-        }
-        return isClickable;
-    }
-
     updateTask(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
-    }
-
-    canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
@@ -96,64 +63,8 @@ export class TaskCloudServiceMock extends TaskCloudService {
         return assignee === this.currentUserMock;
     }
 
-    completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if ((appName || appName === '') && taskId) {
-            window.alert('Complete task mock');
-
-            return from([]);
-        } else {
-            return throwError(() => new Error('AppName/TaskId not configured'));
-        }
-    }
-
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.currentUserMock;
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
-    }
-
-    claimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if ((appName || appName === '') && taskId) {
-            window.alert('Claim task mock');
-
-            return from([]);
-        } else {
-            return throwError(() => new Error('AppName/TaskId not configured'));
-        }
-    }
-
-    unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if ((appName || appName === '') && taskId) {
-            window.alert('Unclaim task mock');
-
-            return from([]);
-        } else {
-            return throwError(() => new Error('AppName/TaskId not configured'));
-        }
-    }
-
-    createNewTask(): Observable<TaskDetailsCloudModel> {
-        window.alert('Create new task mock');
-
-        return from([]);
-    }
-
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
-        if (appName || appName === '') {
-            window.alert('Get process definitions mock');
-
-            return from([]);
-        } else {
-            return throwError(() => new Error('AppName not configured'));
-        }
-    }
-
-    assign(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-            window.alert('Assign mock');
-
-            return from([]);
-        } else {
-            return throwError(() => new Error('AppName/TaskId not configured'));
-        }
     }
 }

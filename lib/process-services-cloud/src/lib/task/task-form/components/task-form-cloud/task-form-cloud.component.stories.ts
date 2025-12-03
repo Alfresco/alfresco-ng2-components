@@ -22,6 +22,7 @@ import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../../form/mocks/form-cloud.service.mock';
 import { provideStoryProcessServicesCloud } from '../../../../stories/process-services-cloud-story.providers';
+import { taskWithFormDetailsMock } from '../../../task-header/mocks/task-details-cloud.mock';
 
 const meta: Meta<TaskFormCloudComponent> = {
     component: TaskFormCloudComponent,
@@ -109,6 +110,20 @@ const meta: Meta<TaskFormCloudComponent> = {
                 defaultValue: { summary: 'false' }
             }
         },
+        taskDetails: {
+            control: 'object',
+            description: 'Task details.',
+            table: {
+                type: { summary: 'TaskDetailsCloudModel' }
+            }
+        },
+        displayModeConfigurations: {
+            control: 'object',
+            description: 'The available display configurations for the form.',
+            table: {
+                type: { summary: 'FormCloudDisplayModeConfiguration[]' }
+            }
+        },
         formSaved: {
             action: 'formSaved',
             description: 'Emitted when the form is saved.',
@@ -131,8 +146,24 @@ const meta: Meta<TaskFormCloudComponent> = {
         },
         taskUnclaimed: {
             action: 'taskUnclaimed',
-            description: 'mitted when the task is unclaimed.',
+            description: 'Emitted when the task is unclaimed.',
             table: { category: 'Actions' }
+        },
+        candidateUsers: {
+            control: 'object',
+            description: 'Candidate users.',
+            table: {
+                type: { summary: 'string[]' },
+                defaultValue: { summary: '[]' }
+            }
+        },
+        candidateGroups: {
+            control: 'object',
+            description: 'Candidate groups.',
+            table: {
+                type: { summary: 'string[]' },
+                defaultValue: { summary: '[]' }
+            }
         },
         cancelClick: {
             action: 'cancelClick',
@@ -161,7 +192,8 @@ export const DefaultTaskFormCloud: Story = {
     }),
     args: {
         appName: 'app',
-        taskId: 'mock-task-with-form'
+        taskId: 'mock-task-with-form',
+        taskDetails: { ...taskWithFormDetailsMock }
     }
 };
 
@@ -171,7 +203,8 @@ export const InvalidOrMissingApp: Story = {
     }),
     args: {
         ...DefaultTaskFormCloud.args,
-        appName: undefined
+        appName: undefined,
+        taskDetails: { ...taskWithFormDetailsMock }
     }
 };
 
@@ -181,6 +214,7 @@ export const InvalidOrMissingTaskId: Story = {
     }),
     args: {
         ...DefaultTaskFormCloud.args,
-        taskId: undefined
+        taskId: undefined,
+        taskDetails: { ...taskWithFormDetailsMock }
     }
 };

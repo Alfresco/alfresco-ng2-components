@@ -17,7 +17,7 @@
 
 import { FormFieldOption, FormModel, FormValues } from '@alfresco/adf-core';
 import { UploadApi } from '@alfresco/js-api';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { TaskDetailsCloudModel } from '../../task/public-api';
@@ -30,6 +30,9 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
     uploadApi: UploadApi;
 
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
+        if (appName === 'invalid-app') {
+            return throwError(() => new Error('App Name not configured'));
+        }
         return this.getTask(appName, taskId).pipe(
             switchMap((task) =>
                 this.getForm(appName, task.formKey, version).pipe(

@@ -213,19 +213,22 @@ export const SidenavLayout: Story = {
                         <a href="https://material.angular.io/components/list/overview#navigation-lists"
                         target="_blank">Angular Material Navigation list</a> where items can contain routes to ADF components which then they will be rendered here, in content section.
                         <br/><br/>
-                        Bob Ross Lorem ipsum.. I'm gonna start with a little Alizarin crimson and a touch of Prussian blue No pressure. Just relax and watch it happen. In life you need colors.
-                        This is your world, whatever makes you happy you can put in it. Go crazy. Have fun with it.
-                        Just relax and let it flow. That easy. We might as well make some Almighty mountains today as well, what the heck. Each highlight must have it's own private shadow.
-                        It's so important to do something every day that will make you happy.
-                        Use your imagination, let it go. The very fact that you're aware of suffering is enough reason to be overjoyed that you're alive and can experience it.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                         <br/><br/>
-                        Brown is such a nice color. Let your imagination be your guide. You need the dark in order to show the light.
-                        Don't be afraid to make these big decisions. Once you start, they sort of just make themselves.
-                        Don't kill all your dark areas - you need them to show the light. We artists are a different breed of people. We're a happy bunch.
-                        You can create the world you want to see and be a part of. You have that power. We'll have a super time. If these lines aren't straight, your water's going to run right out of your painting and get your floor wet.
-                        Nature is so fantastic, enjoy it. Let it make you happy. Didn't you know you had that much power?
-                        You can move mountains. You can do anything. If you do too much it's going to lose its effectiveness. Everything's not great in life, but we can still find beauty in it.
-                        And maybe, maybe, maybe... I like to beat the brush. And maybe a little bush lives there. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals.
+                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.
+                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
+                        similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+                        Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+                        omnis voluptas assumenda est, omnis dolor repellendus.
+                        Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+                        Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
                     </div>
                 </ng-template>
             </adf-sidenav-layout-content>
