@@ -6,7 +6,11 @@ import rootMain from '../../../.storybook/main';
 const config: StorybookConfig = {
     ...rootMain,
     stories: ['../**/*.stories.@(js|jsx|ts|tsx)'],
-    staticDirs: [{ from: '../src/lib/i18n', to: 'assets/adf-core/i18n' }],
+    staticDirs: [
+        { from: '../../core/src/lib/i18n', to: 'assets/adf-core/i18n' },
+        { from: '../../process-services/src/lib/i18n', to: 'assets/adf-process-services/i18n' },
+        { from: '../src/lib/i18n', to: 'assets/adf-process-services-cloud/i18n' }
+    ],
     framework: {
         name: getAbsolutePath('@storybook/angular'),
         options: {}

@@ -29,6 +29,10 @@ export class CommentsServiceStoriesMock implements Partial<CommentsService> {
     add(_id: string, message = 'test comment'): Observable<CommentModel> {
         return commentsResponseMock.addComment(message);
     }
+
+    getUserImage(_userId: string): string {
+        return '../assets/images/logo.png';
+    }
 }
 
 const commentUser = new User({

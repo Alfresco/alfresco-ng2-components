@@ -18,7 +18,6 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { CommentListComponent } from './comment-list.component';
 import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mock';
-import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { CommentsServiceStoriesMock } from '../mocks/comments.service.stories.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 import { provideStoryCore } from '../../stories/core-story.providers';
@@ -29,10 +28,7 @@ const meta: Meta<CommentListComponent> = {
     decorators: [
         moduleMetadata({
             imports: [CommentListComponent],
-            providers: [
-                { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
-                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
-            ]
+            providers: [{ provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

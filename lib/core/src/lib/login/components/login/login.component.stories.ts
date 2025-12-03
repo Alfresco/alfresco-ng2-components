@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-import { RouterModule } from '@angular/router';
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { AuthenticationService } from '../../../auth';
-import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 import { LoginComponent } from './login.component';
-import { importProvidersFrom } from '@angular/core';
 import { provideStoryCore } from '../../../stories/core-story.providers';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 type LoginStoryArgs = LoginComponent & {
     correct?: any;
@@ -35,11 +32,10 @@ const meta: Meta<LoginStoryArgs> = {
     title: 'Core/Login/Login',
     decorators: [
         moduleMetadata({
-            imports: [LoginComponent],
-            providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }]
+            imports: [LoginComponent, NoopAuthModule]
         }),
         applicationConfig({
-            providers: [...provideStoryCore(), importProvidersFrom(RouterModule.forRoot([], { useHash: true }))]
+            providers: [...provideStoryCore()]
         })
     ],
     parameters: {

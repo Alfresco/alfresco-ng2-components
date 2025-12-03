@@ -22,13 +22,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
 import { DemoBreadcrumbComponent } from './demo-breadcrumb.component';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 const meta: Meta<DemoBreadcrumbComponent> = {
     title: 'Core/Breadcrumb',
     component: DemoBreadcrumbComponent,
     decorators: [
         moduleMetadata({
-            imports: [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule]
+            imports: [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule, NoopTranslateModule]
         })
     ],
     args: {
