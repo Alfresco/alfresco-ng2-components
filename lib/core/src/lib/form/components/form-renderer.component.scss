@@ -31,31 +31,6 @@
     .adf-form-tab-group {
         width: 100%;
     }
-
-    #{ms.$mat-tab-body} {
-        margin-bottom: 8em;
-
-        @include flex.layout-bp(lt-md) {
-            margin-bottom: 0;
-        }
-    }
-
-    #{ms.$mat-tab-header} {
-        z-index: 2;
-        margin: 0;
-        background-color: white;
-        position: absolute;
-        width: 98%;
-        /* stylelint-disable-next-line declaration-no-important */
-        margin-left: 0 !important;
-        /* stylelint-disable-next-line declaration-no-important */
-        margin-right: 10px !important;
-        top: 0;
-    }
-
-    #{ms.$mat-tab-body-wrapper} {
-        padding-top: 5%;
-    }
 }
 
 .mat-mdc-card-content:first-child {
@@ -205,11 +180,6 @@
         & #{ms.$mat-card} {
             padding: 16px 24px;
             overflow: hidden;
-        }
-
-        & #{ms.$mat-tab-header} {
-            position: fixed;
-            z-index: 1000;
         }
 
         & #{ms.$mat-card-header-text} {
