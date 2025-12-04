@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Provider, EnvironmentProviders, APP_INITIALIZER } from '@angular/core';
-import { provideTranslations } from '../translation/translation.service';
+import { Provider, EnvironmentProviders, provideAppInitializer, inject } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideCoreAuthTesting } from '../testing/noop-auth.module';
 import { provideAppConfig } from '../app-config/provide-app-config';
@@ -31,21 +30,20 @@ import { provideRouter, withHashLocation } from '@angular/router';
  */
 export function provideStoryCore(): (Provider | EnvironmentProviders)[] {
     return [
-        provideI18N(),
-        provideTranslations('adf-core', 'assets/adf-core'),
-        provideTranslations('adf-process-services', 'assets/adf-process-services'),
-        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
+        provideAppConfig(),
+        provideI18N({
+            assets: [
+                ['adf-core', 'assets/adf-core'],
+                ['adf-process-services', 'assets/adf-process-services'],
+                ['adf-process-services-cloud', 'assets/adf-process-services-cloud']
+            ]
+        }),
         provideAnimations(),
         provideCoreAuthTesting(),
-        provideAppConfig(),
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (appConfig: AppConfigService) => () => {
-                appConfig.config.locale = 'en';
-            },
-            deps: [AppConfigService],
-            multi: true
-        },
+        provideAppInitializer(() => {
+            const appConfig = inject(AppConfigService);
+            appConfig.config.set('locale', 'en');
+        }),
         provideRouter([], withHashLocation())
     ];
 }

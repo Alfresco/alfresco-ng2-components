@@ -16,7 +16,7 @@
  */
 
 import { Provider, EnvironmentProviders } from '@angular/core';
-import { provideCoreAuth, provideAppConfig, provideI18N, provideTranslations } from '@alfresco/adf-core';
+import { provideCoreAuth, provideAppConfig, provideI18N } from '@alfresco/adf-core';
 import { provideCloudFormRenderer, provideCloudPreferences } from '../providers';
 import { TASK_LIST_CLOUD_TOKEN } from '../services/cloud-token.service';
 import { TaskListCloudService } from '../task/task-list/services/task-list-cloud.service';
@@ -30,11 +30,14 @@ import { provideRouter, withHashLocation } from '@angular/router';
  */
 export function provideStoryProcessServicesCloud(): (Provider | EnvironmentProviders)[] {
     return [
-        provideI18N(),
-        provideTranslations('adf-core', 'assets/adf-core'),
-        provideTranslations('adf-process-services', 'assets/adf-process-services'),
-        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
         provideAppConfig(),
+        provideI18N({
+            assets: [
+                ['adf-core', 'assets/adf-core'],
+                ['adf-process-services', 'assets/adf-process-services'],
+                ['adf-process-services-cloud', 'assets/adf-process-services-cloud']
+            ]
+        }),
         provideCoreAuth(),
         provideCloudPreferences(),
         provideCloudFormRenderer(),
