@@ -240,7 +240,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npm run build:storybook
+      - run: npm run build-storybook
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   PR-forbidden-labels:
