@@ -155,6 +155,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     where: string;
 
     /**
+     * Specifies additional filters to apply (joined with **AND**). Applied for recent files only.
+     */
+    @Input()
+    filters: string[];
+
+    /**
      * Define a set of CSS styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
      * page for further details and examples.
@@ -789,18 +795,20 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.updateCustomSourceData(this.currentFolderId);
         }
 
-        this.documentListService.loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy).subscribe(
-            (documentNode: DocumentLoaderNode) => {
-                if (documentNode.currentNode) {
-                    this.folderNode = documentNode.currentNode.entry;
-                    this.$folderNode.next(documentNode.currentNode.entry);
+        this.documentListService
+            .loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy, this.filters)
+            .subscribe(
+                (documentNode: DocumentLoaderNode) => {
+                    if (documentNode.currentNode) {
+                        this.folderNode = documentNode.currentNode.entry;
+                        this.$folderNode.next(documentNode.currentNode.entry);
+                    }
+                    this.onPageLoaded(documentNode.children);
+                },
+                (err) => {
+                    this.handleError(err);
                 }
-                this.onPageLoaded(documentNode.children);
-            },
-            (err) => {
-                this.handleError(err);
-            }
-        );
+            );
     }
 
     resetSelection() {

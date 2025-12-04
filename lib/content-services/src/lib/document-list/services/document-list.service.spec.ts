@@ -18,11 +18,17 @@
 import { DocumentListService } from './document-list.service';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { of } from 'rxjs';
+import { NodeEntry, NodePaging } from '@alfresco/js-api';
+import { CustomResourcesService } from './custom-resources.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 
 declare let jasmine: any;
 
 describe('DocumentListService', () => {
     let service: DocumentListService;
+    let customResourcesService: CustomResourcesService;
+    let nodesApiService: NodesApiService;
 
     const fakeFolder = {
         list: {
@@ -71,6 +77,8 @@ describe('DocumentListService', () => {
             imports: [ContentTestingModule]
         });
         service = TestBed.inject(DocumentListService);
+        customResourcesService = TestBed.inject(CustomResourcesService);
+        nodesApiService = TestBed.inject(NodesApiService);
         jasmine.Ajax.install();
     });
 
@@ -108,6 +116,36 @@ describe('DocumentListService', () => {
             responseText: fakeFolder
         });
     }));
+
+    it('should use rootFolderId provided in options', () => {
+        const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
+
+        service.getFolder('/fake-root/fake-name', { rootFolderId: 'testRoot' }, ['isLocked']);
+
+        expect(spyGetNodeInfo).toHaveBeenCalledWith('testRoot', {
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', 'isLocked'],
+            relativePath: '/fake-root/fake-name'
+        });
+    });
+
+    it('should use provided other values passed in options', () => {
+        const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
+
+        service.getFolder('/fake-root/fake-name', { rootFolderId: 'testRoot', maxItems: 10, skipCount: 5, where: 'where', orderBy: ['order'] }, [
+            'isLocked'
+        ]);
+
+        expect(spyGetNodeInfo).toHaveBeenCalledWith('testRoot', {
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', 'isLocked'],
+            relativePath: '/fake-root/fake-name',
+            maxItems: 10,
+            skipCount: 5,
+            where: 'where',
+            orderBy: ['order']
+        });
+    });
 
     it('should add the includeTypes in the request Node Children if required', () => {
         const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
@@ -155,6 +193,17 @@ describe('DocumentListService', () => {
         });
     });
 
+    it('should add default includeTypes in the request getFolderNode if none is provided', () => {
+        const spyGetNodeInfo = spyOn(service['nodes'], 'getNode').and.callThrough();
+
+        service.getFolderNode('test-id');
+
+        expect(spyGetNodeInfo).toHaveBeenCalledWith('test-id', {
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames']
+        });
+    });
+
     it('should delete the folder', fakeAsync(() => {
         service.deleteNode('fake-id').subscribe((res) => {
             expect(res).toBe('');
@@ -184,5 +233,96 @@ describe('DocumentListService', () => {
         expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
 
         jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+    });
+
+    it('should call isCustomSource from customResourcesService when isCustomSourceService is called', () => {
+        spyOn(customResourcesService, 'isCustomSource').and.returnValue(true);
+
+        const isCustom = service.isCustomSourceService('fake-source-id');
+        expect(isCustom).toBeTrue();
+        expect(customResourcesService.isCustomSource).toHaveBeenCalledWith('fake-source-id');
+    });
+
+    it('should call getNode from nodes service with proper params when getNode is called', () => {
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(null));
+
+        service.getNode('fake-node-id');
+
+        expect(nodesApiService.getNode).toHaveBeenCalledWith('fake-node-id', {
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
+        });
+    });
+
+    it('should removed duplicated include values for getNode', () => {
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(null));
+
+        service.getNode('fake-node-id', ['aspectNames', 'path', 'properties', 'custom1', 'custom2']);
+
+        expect(nodesApiService.getNode).toHaveBeenCalledWith('fake-node-id', {
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition', 'aspectNames', 'custom1', 'custom2']
+        });
+    });
+
+    describe('loadFolderByNodeId', () => {
+        const fakeFolderLocal: NodeEntry = {
+            entry: {
+                id: 'fake-id',
+                name: 'fake-name',
+                nodeType: 'cm:folder',
+                isFolder: true,
+                isFile: false,
+                modifiedAt: new Date(),
+                createdAt: new Date(),
+                createdByUser: { id: 'fake-user', displayName: 'Fake User' },
+                modifiedByUser: { id: 'fake-user', displayName: 'Fake User' },
+                parentId: 'fake-parent-id'
+            }
+        };
+
+        const fakeFolderPaging: NodePaging = {
+            list: {
+                pagination: { count: 1, hasMoreItems: false, totalItems: 1, skipCount: 0, maxItems: 20 },
+                entries: [fakeFolderLocal]
+            }
+        };
+        it('should call getFolder and getFolderNode when source is not custom', (done) => {
+            spyOn(service, 'getFolder').and.returnValue(of(fakeFolderPaging));
+            spyOn(service, 'getFolderNode').and.returnValue(of(fakeFolderLocal));
+            spyOn(customResourcesService, 'isCustomSource').and.returnValue(false);
+
+            service.loadFolderByNodeId('fake-id', { maxItems: 10, skipCount: 0 }, ['includeMe'], 'where', ['order']).subscribe((result) => {
+                expect(service.getFolder).toHaveBeenCalledWith(
+                    null,
+                    { maxItems: 10, skipCount: 0, orderBy: ['order'], rootFolderId: 'fake-id', where: 'where' },
+                    ['includeMe']
+                );
+                expect(service.getFolderNode).toHaveBeenCalledWith('fake-id', ['includeMe']);
+                expect(result.currentNode).toEqual(fakeFolderLocal);
+                expect(result.children).toEqual(fakeFolderPaging);
+                done();
+            });
+        });
+
+        it('should call customResourcesService.loadFolderByNodeId when source is custom', (done) => {
+            spyOn(customResourcesService, 'isCustomSource').and.returnValue(true);
+            spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(of(fakeFolderPaging));
+
+            service
+                .loadFolderByNodeId('fake-id', { maxItems: 10, skipCount: 0 }, ['includeMe'], 'where', ['order'], ['filter'])
+                .subscribe((result) => {
+                    expect(customResourcesService.loadFolderByNodeId).toHaveBeenCalledWith(
+                        'fake-id',
+                        { maxItems: 10, skipCount: 0 },
+                        ['includeMe'],
+                        'where',
+                        ['filter']
+                    );
+                    expect(result.currentNode).toBeNull();
+                    expect(result.children).toEqual(fakeFolderPaging);
+                    done();
+                });
+        });
     });
 });

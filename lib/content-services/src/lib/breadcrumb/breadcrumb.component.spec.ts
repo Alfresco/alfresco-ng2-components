@@ -116,7 +116,25 @@ describe('Breadcrumb', () => {
                 documentListComponent.DEFAULT_PAGINATION,
                 documentListComponent.includeFields,
                 documentListComponent.where,
-                documentListComponent.orderBy
+                documentListComponent.orderBy,
+                undefined
+            );
+        });
+
+        it('should update document list with filters param for recent files when filters are provided', () => {
+            const node = { id: '-id-', name: 'name' };
+            component.target = documentListComponent;
+            documentListComponent.filters = ['filter1', 'filter2'];
+
+            component.onRoutePathClick(node, null);
+
+            expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(
+                node.id,
+                documentListComponent.DEFAULT_PAGINATION,
+                documentListComponent.includeFields,
+                documentListComponent.where,
+                documentListComponent.orderBy,
+                documentListComponent.filters
             );
         });
 
