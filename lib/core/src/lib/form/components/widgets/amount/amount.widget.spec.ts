@@ -836,6 +836,89 @@ describe('AmountWidgetComponent - rendering', () => {
             });
         });
     });
+
+    describe('placeholder', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'amount-field',
+                name: 'Amount',
+                type: FormFieldTypes.AMOUNT
+            });
+            widget.currency = 'USD';
+            widget.currencyDisplay = 'symbol';
+            widget.locale = 'en-US';
+        });
+
+        it('should return empty string when showPlaceholder is false', () => {
+            widget.field.placeholder = 'Test';
+            (widget as any).showPlaceholder = false;
+            expect(widget.placeholder).toBe('');
+        });
+
+        it('should return the raw placeholder when enableDisplayBasedOnLocale is false', () => {
+            const placeholderText = 'Enter amount here';
+            widget.field.placeholder = placeholderText;
+            widget.enableDisplayBasedOnLocale = false;
+            expect(widget.placeholder).toBe(placeholderText);
+        });
+
+        it('should return the original placeholder when it is empty or only spaces', () => {
+            const placeholderText = '   ';
+            widget.field.placeholder = placeholderText;
+            widget.enableDisplayBasedOnLocale = true;
+            expect(widget.placeholder).toBe(placeholderText);
+        });
+
+        it('should return the original placeholder when it is non-numeric', () => {
+            const placeholderText = 'Amount due';
+            widget.field.placeholder = placeholderText;
+            widget.enableDisplayBasedOnLocale = true;
+            expect(widget.placeholder).toBe(placeholderText);
+        });
+
+        it('should format numeric placeholder when enableDisplayBasedOnLocale is true', () => {
+            widget.field.placeholder = '1234.56';
+            widget.enableDisplayBasedOnLocale = true;
+            expect(widget.placeholder).toBe('$1,234.56');
+        });
+
+        it('should format numeric placeholder with different currency', () => {
+            widget.field.placeholder = '5000';
+            widget.currency = 'EUR';
+            widget.locale = 'de-DE';
+            widget.enableDisplayBasedOnLocale = true;
+            const expectedValue = '5.000,00 €'.replace(' ', '\u00A0');
+            expect(widget.placeholder).toBe(expectedValue);
+        });
+    });
+
+    describe('checkIfEmptyStringOrOnlySpaces', () => {
+        it('should return true for null', () => {
+            expect(widget.checkIfEmptyStringOrOnlySpaces(null)).toBe(true);
+        });
+
+        it('should return true for undefined', () => {
+            expect(widget.checkIfEmptyStringOrOnlySpaces(undefined)).toBe(true);
+        });
+
+        it('should return true for empty string', () => {
+            expect(widget.checkIfEmptyStringOrOnlySpaces('')).toBe(true);
+        });
+
+        it('should return true for string with only spaces', () => {
+            expect(widget.checkIfEmptyStringOrOnlySpaces('   ')).toBe(true);
+        });
+
+        it('should return true for string with tabs and newlines', () => {
+            expect(widget.checkIfEmptyStringOrOnlySpaces('\t\n  ')).toBe(true);
+        });
+
+        it('should return false for string with non-whitespace characters', () => {
+            expect(widget.checkIfEmptyStringOrOnlySpaces('test')).toBe(false);
+            expect(widget.checkIfEmptyStringOrOnlySpaces(' test ')).toBe(false);
+            expect(widget.checkIfEmptyStringOrOnlySpaces('123')).toBe(false);
+        });
+    });
 });
 
 describe('AmountWidgetComponent settings', () => {

@@ -75,7 +75,15 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     valueAsNumber: number;
 
     get placeholder(): string {
-        return this.showPlaceholder ? this.field.placeholder : '';
+        if (!this.showPlaceholder) return '';
+        if (!this.enableDisplayBasedOnLocale) return this.field.placeholder;
+        if (this.checkIfEmptyStringOrOnlySpaces(this.field.placeholder)) return this.field.placeholder;
+
+        const stringConvertedToNumber = Number(this.field.placeholder);
+        if (isNaN(stringConvertedToNumber)) {
+            return this.field.placeholder;
+        }
+        return this.currencyPipe.transform(this.field.placeholder, this.currency, this.currencyDisplay, this.showDecimalDigits, this.locale);
     }
 
     constructor(
@@ -139,6 +147,11 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             const hasValue = this.valueAsNumber === 0 || this.valueAsNumber;
             this.amountWidgetValue = hasValue ? this.valueAsNumber.toString() : null;
         }
+    }
+
+    checkIfEmptyStringOrOnlySpaces(placeholder: string): boolean {
+        const regexpOnlySpaces = /^\s*$/;
+        return !placeholder || regexpOnlySpaces.test(placeholder);
     }
 
     onFieldChangedAmountWidget(): void {
