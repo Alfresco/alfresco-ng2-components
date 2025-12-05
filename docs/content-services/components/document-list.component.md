@@ -69,6 +69,7 @@ Displays the documents from a repository.
 | displayCheckboxesOnHover | `boolean` | false | Enables checkboxes in datatable rows being displayed on hover only. |
 | displayDragAndDropHint | `boolean` | true | Display drag and drop hint. |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
+| filters | `string[]` |  | Specifies additional filters to apply (joined with **AND**). Applied for recent files only |
 | filterValue | `any` |  | Initial value for filter. |
 | headerFilters | `boolean` | false | Toggles the header filters mode. |
 | imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](image-resolver.model.md) page for more information. |

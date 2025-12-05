@@ -21,7 +21,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { CustomResourcesService } from './custom-resources.service';
-import { NodesApiService } from '../../common/services/nodes-api.service';
+import { NodesApiService } from '../../common';
 
 declare let jasmine: any;
 
@@ -118,7 +118,7 @@ describe('DocumentListService', () => {
     }));
 
     it('should use rootFolderId provided in options', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
 
         service.getFolder('/fake-root/fake-name', { rootFolderId: 'testRoot' }, ['isLocked']);
 
@@ -130,7 +130,7 @@ describe('DocumentListService', () => {
     });
 
     it('should use provided other values passed in options', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
 
         service.getFolder('/fake-root/fake-name', { rootFolderId: 'testRoot', maxItems: 10, skipCount: 5, where: 'where', orderBy: ['order'] }, [
             'isLocked'
@@ -148,7 +148,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request Node Children if required', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
 
         service.getFolder('/fake-root/fake-name', {}, ['isLocked']);
 
@@ -160,7 +160,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request Node Children if is duplicated', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'listNodeChildren').and.callThrough();
 
         service.getFolder('/fake-root/fake-name', {}, ['allowableOperations']);
 
@@ -172,7 +172,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request getFolderNode if required', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'getNode').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.callThrough();
 
         service.getFolderNode('test-id', ['isLocked']);
 
@@ -183,7 +183,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request getFolderNode if is duplicated', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'getNode').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.callThrough();
 
         service.getFolderNode('test-id', ['allowableOperations']);
 
@@ -194,7 +194,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add default includeTypes in the request getFolderNode if none is provided', () => {
-        const spyGetNodeInfo = spyOn(service['nodes'], 'getNode').and.callThrough();
+        const spyGetNodeInfo = spyOn(service.nodes, 'getNode').and.callThrough();
 
         service.getFolderNode('test-id');
 

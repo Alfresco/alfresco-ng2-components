@@ -401,6 +401,8 @@ export class CustomResourcesService {
             return this.loadFavorites(pagination, includeFields, where);
         } else if (nodeId === '-recent-') {
             return this.getRecentFiles('-me-', pagination, filters);
+        } else {
+            return of(null);
         }
     }
 

@@ -797,18 +797,18 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
         this.documentListService
             .loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy, this.filters)
-            .subscribe(
-                (documentNode: DocumentLoaderNode) => {
+            .subscribe({
+                next: (documentNode: DocumentLoaderNode) => {
                     if (documentNode.currentNode) {
                         this.folderNode = documentNode.currentNode.entry;
                         this.$folderNode.next(documentNode.currentNode.entry);
                     }
                     this.onPageLoaded(documentNode.children);
                 },
-                (err) => {
+                error: (err) => {
                     this.handleError(err);
                 }
-            );
+            });
     }
 
     resetSelection() {

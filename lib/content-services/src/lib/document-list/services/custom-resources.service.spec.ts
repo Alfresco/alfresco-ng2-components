@@ -25,12 +25,16 @@ import {
     FavoritePagingList,
     NodeEntry,
     NodePaging,
+    Site,
     SiteEntry,
+    SiteMember,
     SitePaging,
     SiteRoleEntry,
     SiteRolePaging
 } from '@alfresco/js-api';
 import { of } from 'rxjs';
+
+type Extra<T, K> = T & K;
 
 describe('CustomResourcesService', () => {
     let customResourcesService: CustomResourcesService;
@@ -148,6 +152,13 @@ describe('CustomResourcesService', () => {
             maxItems: 100,
             skipCount: 0
         };
+
+        it('should return null observable when nodeId is not from custom source', (done) => {
+            customResourcesService.loadFolderByNodeId('unsupported', pagination).subscribe((result) => {
+                expect(result).toBeNull();
+                done();
+            });
+        });
 
         it('should call loadTrashcan when nodeId is -trashcan-', () => {
             spyOn(customResourcesService, 'loadTrashcan').and.stub();
@@ -422,7 +433,7 @@ describe('CustomResourcesService', () => {
                     where: 'where'
                 });
                 expect(result).toEqual(fakeSitePaging);
-                expect((result.list.entries[0].entry as any).name).toBe(fakeSite.entry.title);
+                expect((result.list.entries[0].entry as Extra<Site, { name: string }>).name).toBe(fakeSite.entry.title);
                 done();
             });
         });
@@ -485,8 +496,10 @@ describe('CustomResourcesService', () => {
                     skipCount: 0,
                     where: 'where'
                 });
-                expect((result.list.entries[0].entry as any).name).toBe(fakeSite.entry.title);
-                expect((result.list.entries[0].entry as any).allowableOperations).toEqual(['create']);
+                expect((result.list.entries[0].entry as Extra<SiteMember, { name: string }>).name).toBe(fakeSite.entry.title);
+                expect((result.list.entries[0].entry as Extra<SiteMember, { allowableOperations: string[] }>).allowableOperations).toEqual([
+                    'create'
+                ]);
                 done();
             });
         });
