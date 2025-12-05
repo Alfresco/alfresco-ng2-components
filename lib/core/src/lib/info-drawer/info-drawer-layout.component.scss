@@ -51,7 +51,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 letter-spacing: 0.15px;
                 text-align: left;
                 align-items: center;
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--adf-theme-foreground-text-color-064);
                 overflow: hidden;
 
                 & > div {
@@ -80,7 +80,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 .adf-manage-versions-no-permission {
                     margin: 0;
                     padding: $adf-info-drawer-icon-size-half;
-                    color: var(--adf-theme-foreground-text-color-054);
+                    color: var(--adf-theme-foreground-text-color-064);
                     text-align: center;
                     display: flex;
                     flex-direction: column;
