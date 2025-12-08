@@ -613,8 +613,8 @@
     }
   },
   "USER_ICON": {
-    "GROUP_ICON_ALT": "Group icon",
-    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+    "GROUP_ICON_ALT": "Icône du groupe",
+    "GROUP_USER_SELECTED_ALT": "Icône du groupe ou utilisateur sélectionné"
   },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Aucun ID de nœud spécifié !",

@@ -613,8 +613,8 @@
     }
   },
   "USER_ICON": {
-    "GROUP_ICON_ALT": "Group icon",
-    "GROUP_USER_SELECTED_ALT": "Selected group or user icon"
+    "GROUP_ICON_ALT": "Ícone do grupo",
+    "GROUP_USER_SELECTED_ALT": "Selecionar grupo ou ícone do utilizador"
   },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "Não foi fornecido nenhum nodeId!",
