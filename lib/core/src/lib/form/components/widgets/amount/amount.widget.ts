@@ -83,7 +83,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         if (isNaN(stringConvertedToNumber)) {
             return this.field.placeholder;
         }
-        return this.currencyPipe.transform(this.field.placeholder, this.currency, this.currencyDisplay, this.showDecimalDigits, this.locale);
+        return this.currencyPipe.transform(this.field.placeholder, this.currency, this.currencyDisplay, this.decimalProperty, this.locale);
     }
 
     constructor(
