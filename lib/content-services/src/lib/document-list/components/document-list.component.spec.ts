@@ -1732,6 +1732,23 @@ describe('DocumentList', () => {
         expect(getEmptyFolderDragDropSubtitle()).toBeUndefined();
     });
 
+    it('should call loadFolderByNodeId with filters when they are provided', () => {
+        spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => of(new DocumentLoaderNode(null, { list: { pagination: {} } })));
+        documentList.filters = ['filter1', 'filter2'];
+        documentList.currentFolderId = '-recent-';
+        documentList.loadFolder();
+
+        fixture.detectChanges();
+        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(
+            documentList.currentFolderId,
+            documentList.DEFAULT_PAGINATION,
+            documentList.includeFields,
+            documentList.where,
+            documentList.orderBy,
+            documentList.filters
+        );
+    });
+
     describe('Preselect nodes', () => {
         beforeEach(() => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);

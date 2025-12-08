@@ -113,7 +113,14 @@ describe('DropdownBreadcrumb', () => {
         await fixture.whenStable();
         clickOnTheFirstOption();
 
-        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined, null);
+        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(
+            '1',
+            documentList.DEFAULT_PAGINATION,
+            undefined,
+            undefined,
+            null,
+            undefined
+        );
     });
 
     it('should open the selectBox when clicking on the folder icon', (done) => {

@@ -47,12 +47,13 @@ Manages Document List information that is specific to a user.
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
     -   _where:_ `string`  - (Optional) A string to restrict the returned objects by using a predicate
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of favorite files
--   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: `string`): `any`<br/>
+-   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: `string`, filters?: `string[]`): `any`<br/>
     Gets a folder's contents.
     -   _nodeId:_ `string`  - ID of the target folder node
     -   _pagination:_ [`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts)  - Specifies how to paginate the results
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
     -   _where:_ `string`  - (Optional) Filters the Node list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.
+    -   _filters:_ `string[]` - Specifies additional filters to apply (joined with **AND**). Applied for '-recent-' only.
     -   **Returns** `any` - List of items contained in the folder
 -   **loadMemberSites**(pagination: [`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts), where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberPaging.md)`>`<br/>
     Gets sites that the current user is a member of.

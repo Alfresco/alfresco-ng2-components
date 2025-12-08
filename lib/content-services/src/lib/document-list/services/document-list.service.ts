@@ -190,6 +190,7 @@ export class DocumentListService implements DocumentListLoader {
      * @param includeFields List of data field names to include in the results
      * @param where  Optionally filter the list
      * @param orderBy order by node property
+     * @param filters Specifies additional filters to apply (joined with **AND**). Applied for recent files only.
      * @returns Details of the folder
      */
     loadFolderByNodeId(
@@ -197,11 +198,12 @@ export class DocumentListService implements DocumentListLoader {
         pagination: PaginationModel,
         includeFields: string[],
         where?: string,
-        orderBy?: string[]
+        orderBy?: string[],
+        filters?: string[]
     ): Observable<DocumentLoaderNode> {
         if (this.customResourcesService.isCustomSource(nodeId)) {
             return this.customResourcesService
-                .loadFolderByNodeId(nodeId, pagination, includeFields, where)
+                .loadFolderByNodeId(nodeId, pagination, includeFields, where, filters)
                 .pipe(map((result: any) => new DocumentLoaderNode(null, result)));
         } else {
             return this.retrieveDocumentNode(nodeId, pagination, includeFields, where, orderBy);

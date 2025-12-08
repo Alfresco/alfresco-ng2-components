@@ -20,6 +20,11 @@ import { Observable } from 'rxjs';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 
 export interface DocumentListLoader {
-
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable <DocumentLoaderNode>;
+    loadFolderByNodeId(
+        nodeId: string,
+        pagination: PaginationModel,
+        includeFields: string[],
+        where?: string,
+        filters?: string[]
+    ): Observable<DocumentLoaderNode>;
 }

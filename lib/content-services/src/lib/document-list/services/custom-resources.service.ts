@@ -385,9 +385,10 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @param where  Filters the Node list using the *where* condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.
+     * @param filters Specifies additional filters to apply (joined with **AND**). Applied for '-recent-' only.
      * @returns List of items contained in the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string): any {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string, filters?: string[]): any {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
         } else if (nodeId === '-sharedlinks-') {
@@ -399,7 +400,9 @@ export class CustomResourcesService {
         } else if (nodeId === '-favorites-') {
             return this.loadFavorites(pagination, includeFields, where);
         } else if (nodeId === '-recent-') {
-            return this.getRecentFiles('-me-', pagination);
+            return this.getRecentFiles('-me-', pagination, filters);
+        } else {
+            return of(null);
         }
     }
 
