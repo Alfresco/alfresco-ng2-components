@@ -79,7 +79,7 @@ export class ProcessContentService {
      */
     getContentPreview(contentId: number): Observable<Blob> {
         return new Observable((observer) => {
-            this.contentApi.getRawContent(contentId).then(
+            this.contentApi.getRawContent(contentId, 'preview').then(
                 (result) => {
                     observer.next(result);
                     observer.complete();
@@ -244,8 +244,8 @@ export class ProcessContentService {
             errMsg = error.message
                 ? error.message
                 : error.status
-                ? `${error.status} - ${error.statusText}`
-                : ProcessContentService.GENERIC_ERROR_MESSAGE;
+                  ? `${error.status} - ${error.statusText}`
+                  : ProcessContentService.GENERIC_ERROR_MESSAGE;
         }
         return throwError(errMsg);
     }
