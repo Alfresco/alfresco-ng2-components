@@ -114,7 +114,7 @@
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-rxjs": "^5.0.3",
-    "eslint-plugin-unicorn": "^49.0.0",
+    "eslint-plugin-unicorn": "^62.0.0",
     "graphql": "^16.9.0",
     "husky": "^9.1.7",
     "jasmine-ajax": "4.0.0",
