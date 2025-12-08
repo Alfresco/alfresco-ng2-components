@@ -1,6 +1,6 @@
-import { addons } from '@storybook/manager-api';
-import alfrescoTheme from '../../../.storybook/alfrescoTheme';
+import { addons } from 'storybook/manager-api';
+import { create } from 'storybook/theming';
 
 addons.setConfig({
-    theme: alfrescoTheme
+    theme: create({ base: 'dark' })
 });
