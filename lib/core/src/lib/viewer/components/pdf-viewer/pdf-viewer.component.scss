@@ -59,7 +59,7 @@
             justify-content: flex-end;
             align-items: flex-end;
             display: flex;
-            color: var(--adf-theme-foreground-text-color-054);
+            color: var(--adf-theme-foreground-text-color-064);
         }
     }
 
@@ -103,7 +103,9 @@
             background-color: var(--adf-theme-background-card-color);
             border-width: 0;
             border-radius: 2px;
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 20.4), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 2px 2px 0 rgba(0, 0, 0, 20.4),
+                0 0 2px 0 rgba(0, 0, 0, 0.12);
         }
 
         &-page-selector {
