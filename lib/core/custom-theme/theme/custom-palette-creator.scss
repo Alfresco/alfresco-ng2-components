@@ -64,8 +64,8 @@
     $dark-text-luminance: $dark-text-luminance + 0.5;
     $background-color-luminance: $background-color-luminance + 0.5;
 
-    $luminance-contrast-for-light-text: $light-text-luminance / $background-color-luminance;
-    $luminance-contrast-for-dark-text: $background-color-luminance / $dark-text-luminance;
+    $luminance-contrast-for-light-text: math.div($light-text-luminance, $background-color-luminance);
+    $luminance-contrast-for-dark-text: math.div($background-color-luminance, $dark-text-luminance);
     $text-colour: $light-text;
 
     @if $luminance-contrast-for-dark-text > $luminance-contrast-for-light-text {
