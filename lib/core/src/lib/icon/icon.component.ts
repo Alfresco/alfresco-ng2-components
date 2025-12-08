@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, AfterContentInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
@@ -28,7 +28,7 @@ import { NgIf } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-icon' }
 })
-export class IconComponent {
+export class IconComponent implements AfterContentInit {
     private _value = '';
     private _isCustom = false;
 
@@ -53,5 +53,14 @@ export class IconComponent {
 
     get isCustom(): boolean {
         return this._isCustom;
+    }
+
+    constructor(private elementRef: ElementRef) {}
+
+    ngAfterContentInit(): void {
+        const textContent = this.elementRef.nativeElement.textContent?.trim();
+        if (textContent && !this._value) {
+            this.value = textContent;
+        }
     }
 }
