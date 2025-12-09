@@ -73,19 +73,43 @@ export abstract class BaseQueryBuilderService {
     /*  Stream that emits the initial value for some or all search filters */
     populateFilters = new BehaviorSubject<{ [key: string]: any }>({});
 
+    /*  Stream that emits every time queryFragments change */
+    queryFragmentsUpdate = new BehaviorSubject<{ [key: string]: any }>({});
+
+    /*  Stream that emits every time userFacetBuckets change */
+    userFacetBucketsUpdate = new BehaviorSubject<{ [key: string]: FacetFieldBucket[] }>({});
+
     categories: SearchCategory[] = [];
-    queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
     filterRawParams: { [key: string]: any } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
+
     private encodedQuery: string;
     private scope: RequestScope;
     private selectedConfiguration: number;
     private _userQuery = '';
+    private _queryFragments: { [id: string]: string } = {};
+
+    private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
+        set: (target: { [key: string]: any }, property: string, value: any) => {
+            target[property as keyof typeof target] = value;
+            this.queryFragmentsUpdate.next(this._queryFragments);
+            return true;
+        }
+    };
 
     protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
+
+    get queryFragments(): { [key: string]: any } {
+        return this._queryFragments;
+    }
+
+    set queryFragments(value: { [key: string]: any }) {
+        this._queryFragments = this.createQueryFragmentsProxy(value);
+        this.queryFragmentsUpdate.next(this._queryFragments);
+    }
 
     get userQuery(): string {
         return this._userQuery;
@@ -108,6 +132,7 @@ export abstract class BaseQueryBuilderService {
         protected readonly alfrescoApiService: AlfrescoApiService
     ) {
         this.resetToDefaults();
+        this._queryFragments = this.createQueryFragmentsProxy({});
     }
 
     public abstract loadConfiguration(): SearchConfiguration | SearchConfiguration[];
@@ -146,10 +171,10 @@ export abstract class BaseQueryBuilderService {
         const currentConfig = this.loadConfiguration();
         if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
             this.selectedConfiguration = index;
-            this.configUpdated.next(currentConfig[index]);
             this.searchForms.next(this.getSearchFormDetails());
             this.resetSearchOptions();
             this.setUpSearchConfiguration(currentConfig[index]);
+            this.configUpdated.next(currentConfig[index]);
             this.update();
         }
     }
@@ -216,6 +241,7 @@ export abstract class BaseQueryBuilderService {
                 buckets.push(bucket);
             }
             this.userFacetBuckets[field] = buckets;
+            this.userFacetBucketsUpdate.next(this.userFacetBuckets);
         }
     }
 
@@ -239,6 +265,7 @@ export abstract class BaseQueryBuilderService {
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
             this.userFacetBuckets[field] = buckets.filter((facetBucket) => facetBucket.label !== bucket.label);
+            this.userFacetBucketsUpdate.next(this.userFacetBuckets);
         }
     }
 
@@ -614,5 +641,9 @@ export abstract class BaseQueryBuilderService {
             queryParams: { q: this.encodedQuery },
             queryParamsHandling: 'merge'
         });
+    }
+
+    private createQueryFragmentsProxy(target: { [key: string]: any }): { [key: string]: any } {
+        return new Proxy(target, this.queryFragmentsHandler);
     }
 }
