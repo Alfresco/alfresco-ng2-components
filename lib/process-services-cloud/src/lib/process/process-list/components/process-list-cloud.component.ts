@@ -292,7 +292,7 @@ export class ProcessListCloudComponent
 
     /** Include subprocesses in the process list. */
     @Input()
-    includeSubprocesses: boolean = true;
+    includeSubprocesses: boolean | null = null;
 
     /** Emitted when a row in the process list is clicked. */
     @Output()
