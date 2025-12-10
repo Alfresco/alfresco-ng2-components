@@ -27,6 +27,7 @@ import { SearchCategory } from '../models';
 describe('SearchHeaderQueryBuilderService', () => {
     let activatedRoute: ActivatedRoute;
     let router: Router;
+    let builderService: SearchHeaderQueryBuilderService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,6 +35,7 @@ describe('SearchHeaderQueryBuilderService', () => {
         });
         router = TestBed.inject(Router);
         activatedRoute = TestBed.inject(ActivatedRoute);
+        builderService = TestBed.inject(SearchHeaderQueryBuilderService);
     });
 
     const buildConfig = (searchSettings): AppConfigService => {
@@ -182,10 +184,11 @@ describe('SearchHeaderQueryBuilderService', () => {
         it('should use properly encoded query containing non-latin character when calls router.navigate', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
-            const service = TestBed.inject(SearchHeaderQueryBuilderService);
-            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
+            builderService.filterRawParams = {
+                userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))'
+            };
 
-            service.updateSearchQueryParams();
+            builderService.updateSearchQueryParams();
             expect(console.error).not.toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith([], {
                 relativeTo: activatedRoute,
@@ -202,11 +205,12 @@ describe('SearchHeaderQueryBuilderService', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
             const searchUrl = 'search';
-            const service = TestBed.inject(SearchHeaderQueryBuilderService);
-            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
-            service.encodeQuery();
+            builderService.filterRawParams = {
+                userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))'
+            };
+            builderService.encodeQuery();
 
-            await service.navigateToSearch('', searchUrl);
+            await builderService.navigateToSearch('', searchUrl);
             expect(console.error).not.toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith([searchUrl], {
                 queryParams: {
@@ -218,38 +222,34 @@ describe('SearchHeaderQueryBuilderService', () => {
     });
 
     it('should trigger execute() in setCurrentRootFolderId() once there are active filters', () => {
-        const service = TestBed.inject(SearchHeaderQueryBuilderService);
-        spyOn(service, 'execute').and.stub();
-        service.activeFilters = [{ key: 'key', value: 'value' }];
-        service.setCurrentRootFolderId('node-id');
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [{ key: 'key', value: 'value' }];
+        builderService.setCurrentRootFolderId('node-id');
 
-        expect(service.execute).toHaveBeenCalled();
+        expect(builderService.execute).toHaveBeenCalled();
     });
 
     it('should NOT trigger execute() in setCurrentRootFolderId() once there are NO active filters', () => {
-        const service = TestBed.inject(SearchHeaderQueryBuilderService);
-        spyOn(service, 'execute').and.stub();
-        service.activeFilters = [];
-        service.setCurrentRootFolderId('node-id');
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [];
+        builderService.setCurrentRootFolderId('node-id');
 
-        expect(service.execute).not.toHaveBeenCalled();
+        expect(builderService.execute).not.toHaveBeenCalled();
     });
 
     it('should trigger execute() in setSorting() once there are active filters', () => {
-        const service = TestBed.inject(SearchHeaderQueryBuilderService);
-        spyOn(service, 'execute').and.stub();
-        service.activeFilters = [{ key: 'key', value: 'value' }];
-        service.setSorting([]);
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [{ key: 'key', value: 'value' }];
+        builderService.setSorting([]);
 
-        expect(service.execute).toHaveBeenCalled();
+        expect(builderService.execute).toHaveBeenCalled();
     });
 
     it('should NOT trigger execute() in setSorting() once there are NO active filters', () => {
-        const service = TestBed.inject(SearchHeaderQueryBuilderService);
-        spyOn(service, 'execute').and.stub();
-        service.activeFilters = [];
-        service.setSorting([]);
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [];
+        builderService.setSorting([]);
 
-        expect(service.execute).not.toHaveBeenCalled();
+        expect(builderService.execute).not.toHaveBeenCalled();
     });
 });
