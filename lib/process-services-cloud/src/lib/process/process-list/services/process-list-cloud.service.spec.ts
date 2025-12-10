@@ -174,6 +174,46 @@ describe('ProcessListCloudService', () => {
 
             expect(error).toBe('Appname not configured');
         });
+
+        it('should include includeSubprocesses=true in body', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                includeSubprocesses: true
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallBody);
+
+            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+            expect(requestBodyParams).toEqual({ includeSubprocesses: true });
+        });
+
+        it('should include includeSubprocesses=false in body', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                includeSubprocesses: false
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallBody);
+
+            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+            expect(requestBodyParams).toEqual({ includeSubprocesses: false });
+        });
+
+        it('should omit includeSubprocesses when null', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                includeSubprocesses: null
+            } as unknown as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallBody);
+
+            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+            expect(requestBodyParams).toEqual({});
+            expect(requestBodyParams.includeSubprocesses).toBeUndefined();
+        });
     });
 
     describe('getAdminProcessRequest', () => {
