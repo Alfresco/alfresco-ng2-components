@@ -677,6 +677,33 @@ describe('ProcessListCloudComponent', () => {
             expect(component.processListRequestNode.appVersion.length).toEqual(0);
         });
 
+        it('should set includeSubprocesses to true in request node when input is true', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.includeSubprocesses = true;
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.includeSubprocesses).toBeTrue();
+        });
+
+        it('should set includeSubprocesses to false in request node when input is false', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.includeSubprocesses = false;
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.includeSubprocesses).toBeFalse();
+        });
+
+        it('should omit includeSubprocesses in request node when input is null', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.includeSubprocesses = null;
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.includeSubprocesses).toBeNull();
+        });
+
         it('should return the results if an application name is given', (done) => {
             spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
