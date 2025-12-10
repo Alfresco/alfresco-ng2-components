@@ -890,6 +890,45 @@ describe('AmountWidgetComponent - rendering', () => {
             const expectedValue = '5.000,00 €'.replace(' ', '\u00A0');
             expect(widget.placeholder).toBe(expectedValue);
         });
+
+        it('should format numeric placeholder with decimal digits', () => {
+            widget.field.placeholder = '1234.11';
+            widget.currency = 'USD';
+            widget.currencyDisplay = 'symbol';
+            widget.decimalProperty = widget.showDecimalDigits;
+
+            widget.enableDisplayBasedOnLocale = true;
+            widget.locale = 'de-DE';
+
+            const expected = '1.234,11 $'.replace(' ', '\u00A0');
+            expect(widget.placeholder).toBe(expected);
+        });
+
+        it('should format numeric placeholder without decimal digits', () => {
+            widget.field.placeholder = '1234.11';
+            widget.currency = 'USD';
+            widget.currencyDisplay = 'symbol';
+            widget.decimalProperty = widget.notShowDecimalDigits;
+
+            widget.enableDisplayBasedOnLocale = true;
+            widget.locale = 'de-DE';
+
+            const expected = '1.234 $'.replace(' ', '\u00A0');
+            expect(widget.placeholder).toBe(expected);
+        });
+
+        it('should format numeric placeholder without decimal digits and rounding', () => {
+            widget.field.placeholder = '1234.55';
+            widget.currency = 'USD';
+            widget.currencyDisplay = 'symbol';
+            widget.decimalProperty = widget.notShowDecimalDigits;
+
+            widget.enableDisplayBasedOnLocale = true;
+            widget.locale = 'de-DE';
+
+            const expected = '1.235 $'.replace(' ', '\u00A0');
+            expect(widget.placeholder).toBe(expected);
+        });
     });
 
     describe('checkIfEmptyStringOrOnlySpaces', () => {
