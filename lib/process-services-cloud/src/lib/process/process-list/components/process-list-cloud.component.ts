@@ -290,6 +290,10 @@ export class ProcessListCloudComponent
     @Input()
     processVariables: ProcessVariableFilterModel[];
 
+    /** Include subprocesses in the process list. */
+    @Input()
+    includeSubprocesses: boolean = true;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -606,6 +610,7 @@ export class ProcessListCloudComponent
             completedTo: this.completedTo,
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
+            includeSubprocesses: this.includeSubprocesses,
             processVariableKeys: this.getVariableDefinitionsRequestModel(),
             processVariableFilters: this.processVariables
         };
