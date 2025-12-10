@@ -17,7 +17,8 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
-import { DATATABLE_DIRECTIVES } from '../datatable.module';
+import { DataTableComponent } from '../components/datatable/datatable.component';
+import { DataColumnListComponent, DateColumnHeaderComponent } from '../data-column';
 import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
@@ -28,7 +29,7 @@ const meta: Meta<DataColumnComponent & { rows: any[] }> = {
     title: 'Core/Data Column/Data Column',
     decorators: [
         moduleMetadata({
-            imports: [...DATATABLE_DIRECTIVES, RouterTestingModule]
+            imports: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent, DataTableComponent, RouterTestingModule]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

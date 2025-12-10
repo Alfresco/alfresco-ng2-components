@@ -16,7 +16,6 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { PAGINATION_DIRECTIVES } from './pagination.module';
 import { PaginationComponent } from './pagination.component';
 import { provideStoryCore } from '../stories/core-story.providers';
 
@@ -25,7 +24,7 @@ const meta: Meta<PaginationComponent> = {
     title: 'Core/Pagination/Pagination',
     decorators: [
         moduleMetadata({
-            imports: [...PAGINATION_DIRECTIVES]
+            imports: [PaginationComponent]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

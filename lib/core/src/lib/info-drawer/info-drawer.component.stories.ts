@@ -16,8 +16,8 @@
  */
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { InfoDrawerComponent } from './info-drawer.component';
-import { INFO_DRAWER_DIRECTIVES } from './info-drawer.module';
+import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
+import { InfoDrawerButtonsDirective, InfoDrawerContentDirective, InfoDrawerTitleDirective } from './info-drawer-layout.component';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 import { provideStoryCore } from '../stories/core-story.providers';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,7 +42,14 @@ const meta: Meta<InfoDrawerStoryArgs> = {
     title: 'Core/Info Drawer/Info Drawer',
     decorators: [
         moduleMetadata({
-            imports: [...INFO_DRAWER_DIRECTIVES, MatIconModule]
+            imports: [
+                InfoDrawerTabComponent,
+                InfoDrawerComponent,
+                InfoDrawerTitleDirective,
+                InfoDrawerButtonsDirective,
+                InfoDrawerContentDirective,
+                MatIconModule
+            ]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

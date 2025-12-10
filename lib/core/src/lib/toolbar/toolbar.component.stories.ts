@@ -17,7 +17,8 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { ToolbarComponent } from './toolbar.component';
-import { TOOLBAR_DIRECTIVES } from './toolbar.module';
+import { ToolbarDividerComponent } from './toolbar-divider.component';
+import { ToolbarTitleComponent } from './toolbar-title.component';
 import { provideStoryCore } from '../stories/core-story.providers';
 
 type ToolbarStoryArgs = ToolbarComponent & {
@@ -31,7 +32,7 @@ const meta: Meta<ToolbarStoryArgs> = {
     title: 'Core/Toolbar/Toolbar',
     decorators: [
         moduleMetadata({
-            imports: [...TOOLBAR_DIRECTIVES]
+            imports: [ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

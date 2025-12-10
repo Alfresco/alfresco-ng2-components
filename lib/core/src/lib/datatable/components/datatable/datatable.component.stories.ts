@@ -17,7 +17,12 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { DataTableComponent, ShowHeaderMode } from './datatable.component';
-import { DATATABLE_DIRECTIVES } from '../../datatable.module';
+import { ColumnsSelectorComponent } from '../columns-selector/columns-selector.component';
+import { EmptyListBodyDirective, EmptyListComponent, EmptyListFooterDirective, EmptyListHeaderDirective } from '../empty-list/empty-list.component';
+import { LoadingContentTemplateDirective } from '../../directives/loading-template.directive';
+import { NoContentTemplateDirective } from '../../directives/no-content-template.directive';
+import { NoPermissionTemplateDirective } from '../../directives/no-permission-template.directive';
+import { MainMenuDataTableTemplateDirective } from '../../directives/main-data-table-action-template.directive';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
@@ -28,7 +33,20 @@ const meta: Meta<DataTableComponent> = {
     title: 'Core/Datatable/Datatable',
     decorators: [
         moduleMetadata({
-            imports: [...DATATABLE_DIRECTIVES, MatProgressSpinnerModule, RouterTestingModule]
+            imports: [
+                ColumnsSelectorComponent,
+                EmptyListComponent,
+                EmptyListHeaderDirective,
+                EmptyListBodyDirective,
+                EmptyListFooterDirective,
+                NoContentTemplateDirective,
+                NoPermissionTemplateDirective,
+                LoadingContentTemplateDirective,
+                MainMenuDataTableTemplateDirective,
+                DataTableComponent,
+                MatProgressSpinnerModule,
+                RouterTestingModule
+            ]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

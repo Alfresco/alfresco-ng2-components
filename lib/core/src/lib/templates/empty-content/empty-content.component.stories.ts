@@ -17,7 +17,6 @@
 
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
-import { TEMPLATE_DIRECTIVES } from '../template.module';
 import { provideStoryCore } from '../../stories/core-story.providers';
 
 type EmptyContentStoryArgs = EmptyContentComponent & {
@@ -29,7 +28,7 @@ const meta: Meta<EmptyContentStoryArgs> = {
     title: 'Core/Template/Empty Content',
     decorators: [
         moduleMetadata({
-            imports: [...TEMPLATE_DIRECTIVES]
+            imports: [EmptyContentComponent]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]
