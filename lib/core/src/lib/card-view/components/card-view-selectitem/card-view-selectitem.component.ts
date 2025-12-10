@@ -29,8 +29,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SelectFilterInputComponent } from './select-filter-input/select-filter-input.component';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
 
 @Component({
     selector: 'adf-card-view-selectitem',
@@ -42,7 +43,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         SelectFilterInputComponent,
         MatAutocompleteModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CardViewPropertyValidatorDirective,
+        FormsModule
     ],
     templateUrl: './card-view-selectitem.component.html',
     styleUrls: ['./card-view-selectitem.component.scss'],
@@ -50,7 +53,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-card-view-selectitem' }
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges {
-    private appConfig = inject(AppConfigService);
     static HIDE_FILTER_LIMIT = 5;
 
     @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
@@ -70,6 +72,13 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     editedValue: string | number;
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly appConfig = inject(AppConfigService);
+
+    private _error = '';
+
+    get error(): string {
+        return this._error;
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.value = this.property.value;
@@ -140,6 +149,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         const selectedOption = event.value !== undefined ? event.value : null;
         this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, selectedOption);
         this.property.value = selectedOption;
+    }
+
+    onValidation(errors: string[]): void {
+        this._error = errors.join('<br>');
     }
 
     get showProperty(): boolean {

@@ -16,15 +16,18 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { BaseCardView } from '../base-card-view';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
+import { FormsModule } from '@angular/forms';
+import { MatError } from '@angular/material/form-field';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    imports: [CommonModule, MatCheckboxModule, TranslatePipe],
+    imports: [CommonModule, MatCheckboxModule, TranslatePipe, CardViewPropertyValidatorDirective, FormsModule, MatError],
     templateUrl: './card-view-boolitem.component.html',
     styles: [
         `
@@ -38,8 +41,18 @@ export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemMode
     @Input()
     editable: boolean;
 
-    changed(change: MatCheckboxChange) {
-        this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked);
-        this.property.value = change.checked;
+    private _error: string;
+
+    get error(): string {
+        return this._error;
+    }
+
+    changed(checked: boolean) {
+        this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, checked);
+        this.property.value = checked;
+    }
+
+    onValidation(errors: string[]): void {
+        this._error = errors.join('<br>');
     }
 }

@@ -26,6 +26,9 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { DebugElement } from '@angular/core';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
+import { MatError } from '@angular/material/form-field';
+import { FormControl, NgModel } from '@angular/forms';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -58,6 +61,8 @@ describe('CardViewSelectItemComponent', () => {
         key: 'key',
         editable: true
     };
+
+    const getSelectElement = (): DebugElement => testingUtils.getByDataAutomationClass('select-box');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -96,10 +101,9 @@ describe('CardViewSelectItemComponent', () => {
 
             component.ngOnChanges({});
             fixture.detectChanges();
-            const selectBox = testingUtils.getByDataAutomationClass('select-box');
 
             expect(getReadOnlyElement()).not.toBeNull();
-            expect(selectBox).toBeNull();
+            expect(getSelectElement()).toBeNull();
         });
 
         it('should read only value have title', () => {
@@ -334,6 +338,39 @@ describe('CardViewSelectItemComponent', () => {
             expect(options.length).toBe(2);
             expect(await options[0].getText()).toContain('Option 1');
             expect(await options[1].getText()).toContain('Option 2');
+        });
+    });
+
+    describe('Validation', () => {
+        let cardViewPropertyValidator: CardViewPropertyValidatorDirective;
+        let control: FormControl<string | number>;
+
+        beforeEach(() => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            fixture.detectChanges();
+            const selectElementInjector = getSelectElement().injector;
+            cardViewPropertyValidator = selectElementInjector.get(CardViewPropertyValidatorDirective);
+            control = selectElementInjector.get(NgModel).control;
+        });
+
+        it('should have assigned correct property', () => {
+            expect(cardViewPropertyValidator.property).toBe(component.property);
+        });
+
+        it('should display correct error', () => {
+            cardViewPropertyValidator.validated.emit(['Error 1', 'Error 2']);
+            control.setErrors({
+                error1: 'Error 1',
+                error2: 'Error 2'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.textContent).toBe('Error 1Error 2');
         });
     });
 });
