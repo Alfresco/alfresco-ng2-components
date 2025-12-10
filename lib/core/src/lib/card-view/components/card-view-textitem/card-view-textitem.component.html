@@ -38,6 +38,8 @@
                 [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                 [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 (keydown)="undoText($event)"
+                (blur)="update()"
+                [aria-describedby]="'adf-card-textitem-error-' + property.key"
             />
             <textarea
                 matInput
@@ -142,6 +144,7 @@
                 (keydown.enter)="update()"
                 [readonly]="!isEditable"
                 [attr.data-automation-id]="'card-textitem-value-' + property.key"
+                [aria-describedby]="'adf-card-textitem-error-' + property.key"
             />
             <button
                 mat-icon-button
@@ -160,7 +163,13 @@
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
     </div>
 
-    <mat-error *ngIf="isEditable && hasErrors" class="adf-textitem-error" [attr.data-automation-id]="'card-textitem-error-' + property.key">
+    <mat-error
+        *ngIf="isEditable && hasErrors"
+        class="adf-textitem-error"
+        [attr.data-automation-id]="'card-textitem-error-' + property.key"
+        [id]="'adf-card-textitem-error-' + property.key"
+        role="alert"
+        aria-live="polite">
         <ul>
             <li *ngFor="let error of errors">{{ error.message | translate : error }}</li>
         </ul>

@@ -27,12 +27,15 @@
                             >{{ property.label | translate }}
                         </mat-label>
                         <mat-select
-                            [(value)]="value"
+                            [(ngModel)]="value"
                             [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty }"
                             panelClass="adf-select-filter"
                             (selectionChange)="onChange($event)"
                             data-automation-class="select-box"
                             [aria-label]="property.label | translate"
+                            adf-card-view-property-validator
+                            [property]="property"
+                            (validated)="onValidation($event)"
                         >
                             <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)" />
                             <mat-option *ngIf="displayNoneOption">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
@@ -40,6 +43,7 @@
                                 {{ option.label | translate }}
                             </mat-option>
                         </mat-select>
+                        <mat-error [innerHTML]="error" />
                     </mat-form-field>
                 </div>
             </div>

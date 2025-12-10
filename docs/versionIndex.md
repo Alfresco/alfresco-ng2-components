@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v8.3.0](#v830)
 -   [v7.0.0-alpha.3](#v700-alpha3)
 -   [v6.8.0](#v680)
 -   [v6.7.0](#v670)
@@ -47,6 +48,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v8.3.0
+
+<!--7.0.0-alpha.3 start-->
+
+-   [CardViewPropertyValidator Directive](core/directives/card-view-property-validator.directive.md)
+
+<!--7.0.0-alpha.3 end-->
 
 ## v7.0.0-alpha.3
 

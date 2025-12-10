@@ -191,6 +191,66 @@ describe('CardViewTextItemComponent', () => {
             expect(await getTextFieldValue(component.property.key)).toBe('FAKE-DEFAULT-KEY');
         });
 
+        it('should set errors on textInput when blur event is triggered and field is invalid', async () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Name label',
+                value: { id: 123, displayName: 'User Name' },
+                key: 'namekey',
+                editable: true
+            });
+            spyOn(component.property, 'isValid').and.returnValue(false);
+            component.editable = true;
+            spyOn(component.textInput, 'setErrors');
+            const textField = await getTextField(component.property.key);
+            await textField.blur();
+
+            expect(component.textInput.setErrors).toHaveBeenCalledWith({
+                customError: true
+            });
+        });
+
+        it('should call markAsTouched on textInput when blur event is triggered and field is invalid', async () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Name label',
+                value: { id: 123, displayName: 'User Name' },
+                key: 'namekey',
+                editable: true
+            });
+            spyOn(component.property, 'isValid').and.returnValue(false);
+            component.editable = true;
+            spyOn(component.textInput, 'markAsTouched');
+            const textField = await getTextField(component.property.key);
+            await textField.blur();
+
+            expect(component.textInput.markAsTouched).toHaveBeenCalled();
+        });
+
+        it('should render errors when blur event is triggered and field is invalid', async () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Name label',
+                value: { id: 123, displayName: 'User Name' },
+                key: 'namekey',
+                editable: true
+            });
+            spyOn(component.property, 'isValid').and.returnValue(false);
+            spyOn(component.property, 'getValidationErrors').and.returnValue([
+                {
+                    message: 'Error 1'
+                },
+                {
+                    message: 'Error 2'
+                }
+            ] as CardViewItemValidator[]);
+            component.editable = true;
+            const textField = await getTextField(component.property.key);
+            await textField.blur();
+
+            expect(getErrorElements(component.property.key, true).map((element) => element.nativeElement.textContent)).toEqual([
+                'Error 1',
+                'Error 2'
+            ]);
+        });
+
         it('should render value when editable:true', async () => {
             component.editable = true;
             component.property.editable = true;

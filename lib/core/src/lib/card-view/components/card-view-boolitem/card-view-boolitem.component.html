@@ -2,12 +2,18 @@
     <div class="adf-property-value">
         <mat-checkbox [attr.data-automation-id]="'card-boolean-' + property.key"
                       [attr.title]="'CORE.METADATA.ACTIONS.TOGGLE' | translate"
+                      [ngModel]="property.displayValue"
                       [checked]="property.displayValue"
                       [disabled]="!isEditable"
                       color="primary"
-                      (change)="changed($event)">
+                      (ngModelChange)="changed($event)"
+                      adf-card-view-property-validator
+                      [property]="property"
+                      (validated)="onValidation($event)"
+                      #checkbox="ngModel" >
             <div [attr.data-automation-id]="'card-boolean-label-' + property.key"
                  class="adf-property-label">{{ property.label | translate }}</div>
+            <mat-error *ngIf="checkbox.touched" [innerHTML]="error" />
         </mat-checkbox>
     </div>
 </ng-container>
