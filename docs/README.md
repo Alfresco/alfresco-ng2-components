@@ -140,7 +140,7 @@ A collection of Angular components for generic use.
 | [Logout directive](core/directives/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/src/lib/directives/logout.directive.ts) |
 | [Node Download directive](core/directives/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/content-services/src/lib/directives/node-download.directive.ts) |
 | [Upload Directive](core/directives/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/src/lib/directives/upload.directive.ts) |
-
+| [CardViewPropertyValidator Directive](core/directives/card-view-property-validator.directive.md) | Checks validators defined on property.| [Source](../lib/core/src/lib/card-view/directives/card-view-property-validator.directive.ts) |
 ### Dialogs
 
 | Name | Description | Source link |

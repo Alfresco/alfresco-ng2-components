@@ -22,7 +22,7 @@ import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 import { FormControl, NgModel } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 import { Injector } from '@angular/core';

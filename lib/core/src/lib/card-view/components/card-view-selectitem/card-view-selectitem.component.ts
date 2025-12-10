@@ -31,7 +31,7 @@ import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/ma
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 
 @Component({
     selector: 'adf-card-view-selectitem',

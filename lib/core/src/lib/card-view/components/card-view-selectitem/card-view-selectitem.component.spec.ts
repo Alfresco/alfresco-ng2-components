@@ -26,7 +26,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { DebugElement } from '@angular/core';
-import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 import { MatError } from '@angular/material/form-field';
 import { FormControl, NgModel } from '@angular/forms';
 

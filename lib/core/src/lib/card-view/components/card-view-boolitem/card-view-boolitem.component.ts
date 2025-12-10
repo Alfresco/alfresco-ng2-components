@@ -21,7 +21,7 @@ import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { BaseCardView } from '../base-card-view';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator';
+import { CardViewPropertyValidatorDirective } from '../../directives/card-view-property-validator.directive';
 import { FormsModule } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 
