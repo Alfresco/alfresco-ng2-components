@@ -2,7 +2,7 @@
 Title: Icon Component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2019-02-08
+Last reviewed: 2025-12-11
 ---
 
 # [Icon Component](../../../lib/core/src/lib/icon/icon.component.ts "Defined in icon.component.ts")
@@ -29,7 +29,9 @@ Provides a universal way of rendering registered and named icons.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Theme color palette for the component. |
+| fontSet | `string` | | Icon font set. |
 | value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
+| isSvg | `boolean` | false | Is icon of type svg. |
 
 ## Details
 
@@ -77,6 +79,31 @@ using the `adf:` namespace.
 ```html
 <adf-icon value="adf:image/gif"></adf-icon>
 ```
+
+### Icon alias mapping
+
+You can optionaly provide a mapping object. Value property will be overriden if it finds a match within this object.
+
+Example:
+
+```ts
+function getProviders() {
+    return [
+        {
+            provide: ICON_ALIAS_MAP_TOKEN,
+            useValue: {
+                'icon-mock': 'alias-mock'
+            }
+        }
+    ]
+}
+```
+
+```html
+<adf-icon value="icon-mock"></adf-icon>
+```
+
+The component would replace `icon-mock` with `alias-mock`.
 
 ## See also
 
