@@ -66,7 +66,10 @@ export class SearchWidgetChipComponent implements AfterViewInit {
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private readonly cd: ChangeDetectorRef, private readonly focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor(
+        private readonly cd: ChangeDetectorRef,
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
+    ) {}
 
     ngAfterViewInit(): void {
         this.widgetContainerComponent
@@ -78,9 +81,12 @@ export class SearchWidgetChipComponent implements AfterViewInit {
     }
 
     onMenuOpen() {
-        if (this.menuContainer && !this.focusTrap) {
-            this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
-        }
+        setTimeout(() => {
+            if (this.menuContainer && !this.focusTrap) {
+                this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
+                this.focusTrap.focusInitialElement();
+            }
+        });
         this.chipIcon = 'keyboard_arrow_up';
     }
 
