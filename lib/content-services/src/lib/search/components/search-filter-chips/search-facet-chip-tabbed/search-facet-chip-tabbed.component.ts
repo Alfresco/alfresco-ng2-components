@@ -65,8 +65,8 @@ export class SearchFacetChipTabbedComponent {
     isPopulated = false;
 
     constructor(
-        private focusTrapFactory: ConfigurableFocusTrapFactory,
-        private changeDetectorRef: ChangeDetectorRef
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
+        private readonly changeDetectorRef: ChangeDetectorRef
     ) {}
 
     onMenuOpen() {
