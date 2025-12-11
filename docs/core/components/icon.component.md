@@ -82,9 +82,29 @@ using the `adf:` namespace.
 
 ### Icon alias mapping
 
-You can optionaly provide a mapping object. Value property will be overriden if it finds a match within this object.
+The Icon Alias Mapping feature allows you to provide custom icon value mappings at runtime using the `ICON_ALIAS_MAP_TOKEN` injection token. When an icon value matches a key in the alias map, the component automatically replaces it with the mapped value. This is useful for creating consistent icon conventions across your application without modifying component code.
 
-Example:
+You can register a single alias map, or use `multi: true` to register multiple alias maps that will be merged together.
+
+**Example with a single alias map:**
+
+```ts
+import { ICON_ALIAS_MAP_TOKEN } from '@alfresco/adf-core';
+
+function getProviders() {
+    return [
+        {
+            provide: ICON_ALIAS_MAP_TOKEN,
+            useValue: {
+                'icon-mock': 'alias-mock',
+                'old-icon': 'new-icon'
+            }
+        }
+    ]
+}
+```
+
+**Example with multiple alias maps using `multi: true`:**
 
 ```ts
 function getProviders() {
@@ -93,17 +113,27 @@ function getProviders() {
             provide: ICON_ALIAS_MAP_TOKEN,
             useValue: {
                 'icon-mock': 'alias-mock'
-            }
+            },
+            multi: true
+        },
+        {
+            provide: ICON_ALIAS_MAP_TOKEN,
+            useValue: {
+                'old-icon': 'new-icon'
+            },
+            multi: true
         }
     ]
 }
 ```
 
+**Usage in your template:**
+
 ```html
 <adf-icon value="icon-mock"></adf-icon>
 ```
 
-The component would replace `icon-mock` with `alias-mock`.
+The component will replace `icon-mock` with `alias-mock`. If the icon value doesn't match any key in the alias map, the original value is used.
 
 ## See also
 
