@@ -64,17 +64,23 @@ export class SearchFacetChipTabbedComponent {
     chipIcon = 'keyboard_arrow_down';
     isPopulated = false;
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
+        private readonly changeDetectorRef: ChangeDetectorRef
+    ) {}
 
     onMenuOpen() {
-        if (this.menuContainer && !this.focusTrap) {
-            this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
-        }
+        setTimeout(() => {
+            if (this.menuContainer && !this.focusTrap) {
+                this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
+                this.focusTrap.focusInitialElement();
+            }
+        });
         this.chipIcon = 'keyboard_arrow_up';
     }
 
     onClosed() {
-        this.focusTrap.destroy();
+        this.focusTrap?.destroy();
         this.focusTrap = null;
         this.chipIcon = 'keyboard_arrow_down';
     }

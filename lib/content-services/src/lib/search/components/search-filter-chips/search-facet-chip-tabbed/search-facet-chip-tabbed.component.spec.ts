@@ -26,15 +26,20 @@ import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
+import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 
 describe('SearchFacetChipTabbedComponent', () => {
     let loader: HarnessLoader;
     let component: SearchFacetChipTabbedComponent;
     let fixture: ComponentFixture<SearchFacetChipTabbedComponent>;
 
+    const focusTrapFactory = jasmine.createSpyObj('ConfigurableFocusTrapFactory', ['create']);
+    const focusTrap = jasmine.createSpyObj('ConfigurableFocusTrap', ['focusInitialElement', 'destroy']);
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule],
+            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(SearchFacetChipTabbedComponent);
@@ -53,6 +58,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         };
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
+        focusTrapFactory.create.and.returnValue(focusTrap);
     });
 
     /**
@@ -74,6 +80,14 @@ describe('SearchFacetChipTabbedComponent', () => {
         const debugElem = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         debugElem.triggerEventHandler(eventName, event);
         fixture.detectChanges();
+    }
+
+    /**
+     * Get chip harness and click it
+     */
+    async function clickChip(): Promise<void> {
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
     }
 
     it('should display correct label for tabbed facet', () => {
@@ -105,16 +119,14 @@ describe('SearchFacetChipTabbedComponent', () => {
     });
 
     it('should display correct title when facet is opened', async () => {
-        const chip = await loader.getHarness(MatChipHarness);
-        await (await chip.host()).click();
+        await clickChip();
 
         const title = fixture.debugElement.query(By.css('.adf-search-filter-title')).nativeElement.innerText.split('\n')[0];
         expect(title).toBe(component.tabbedFacet.label);
     });
 
     it('should display adf-search-facet-tabbed-content component', async () => {
-        const chip = await loader.getHarness(MatChipHarness);
-        await (await chip.host()).click();
+        await clickChip();
 
         const activeTabLabel = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         expect(activeTabLabel).toBeTruthy();
@@ -156,8 +168,7 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     it('should update display value when new displayValue$ emitted', async () => {
         const displayValue = 'field_LABEL: test, test2';
-        const chip = await loader.getHarness(MatChipHarness);
-        await (await chip.host()).click();
+        await clickChip();
 
         emitChildEvent('displayValue$', displayValue);
         fixture.detectChanges();
@@ -168,8 +179,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onApply').and.callThrough();
 
-        const chip = await loader.getHarness(MatChipHarness);
-        await (await chip.host()).click();
+        await clickChip();
 
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
         applyButton.triggerEventHandler('click', {});
@@ -181,12 +191,26 @@ describe('SearchFacetChipTabbedComponent', () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onRemove').and.callThrough();
 
-        const chip = await loader.getHarness(MatChipHarness);
-        await (await chip.host()).click();
+        await clickChip();
 
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
         applyButton.triggerEventHandler('click', {});
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();
         expect(component.onRemove).toHaveBeenCalled();
+    });
+
+    it('should create focus trap and focus initial element when menu opens', async () => {
+        await clickChip();
+
+        expect(focusTrapFactory.create).toHaveBeenCalledWith(component.menuContainer.nativeElement);
+        expect(focusTrap.focusInitialElement).toHaveBeenCalled();
+    });
+
+    it('should destroy focus trap on menu closed', () => {
+        component.focusTrap = focusTrap;
+        component.onClosed();
+
+        expect(focusTrap.destroy).toHaveBeenCalled();
+        expect(component.focusTrap).toBeNull();
     });
 });
