@@ -1279,7 +1279,7 @@ describe('DocumentList', () => {
     it('should load folder by ID on init if isDataProvidedExternally is false', async () => {
         spyOn(documentList, 'loadFolder').and.stub();
 
-        documentList.filterValue = {};
+        documentList.isDataProvidedExternally = false;
 
         fixture.detectChanges();
 
@@ -1287,7 +1287,7 @@ describe('DocumentList', () => {
 
         await fixture.whenStable();
 
-        expect(documentList.loadFolder).not.toHaveBeenCalled();
+        expect(documentList.loadFolder).toHaveBeenCalled();
     });
 
     it('should NOT load folder by ID on init if isDataProvidedExternally is true', async () => {
@@ -1301,7 +1301,7 @@ describe('DocumentList', () => {
 
         await fixture.whenStable();
 
-        expect(documentList.loadFolder).toHaveBeenCalled();
+        expect(documentList.loadFolder).not.toHaveBeenCalled();
     });
 
     it('should emit error when getFolderNode fails', (done) => {
