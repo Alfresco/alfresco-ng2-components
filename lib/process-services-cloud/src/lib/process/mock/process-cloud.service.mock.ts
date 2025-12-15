@@ -23,7 +23,7 @@ import { ApplicationVersionModel } from '../../models/application-version.model'
 import { processInstancePlaceholdersCloudMock, processInstanceDetailsCloudMock } from './process-instance-details-cloud.mock';
 import { fakeProcessDefinitions } from '../start-process/mock/start-process.component.mock';
 import { mockAppVersions } from '../process-filters/mock/process-filters-cloud.mock';
-import { ProcessCloudService } from '@alfresco/adf-process-services-cloud';
+import { ProcessCloudService } from '../services/process-cloud.service';
 
 @Injectable()
 export class ProcessCloudServiceMock extends ProcessCloudService {
@@ -37,7 +37,7 @@ export class ProcessCloudServiceMock extends ProcessCloudService {
         if (appName && processInstanceId) {
             return of(processInstanceDetailsCloudMock);
         } else {
-            return throwError('AppName/ProcessInstanceId not configured');
+            return throwError(() => 'AppName/ProcessInstanceId not configured');
         }
     }
 
@@ -45,7 +45,7 @@ export class ProcessCloudServiceMock extends ProcessCloudService {
         if (appName || appName === '') {
             return of(fakeProcessDefinitions);
         } else {
-            return throwError('AppName not configured');
+            return throwError(() => 'AppName not configured');
         }
     }
 
@@ -53,7 +53,7 @@ export class ProcessCloudServiceMock extends ProcessCloudService {
         if (appName) {
             return of(mockAppVersions);
         } else {
-            return throwError('AppName not configured');
+            return throwError(() => 'AppName not configured');
         }
     }
 
@@ -61,7 +61,7 @@ export class ProcessCloudServiceMock extends ProcessCloudService {
         if (appName && processInstanceId) {
             return of();
         } else {
-            return throwError('App name and process id not configured');
+            return throwError(() => 'App name and process id not configured');
         }
     }
 }
