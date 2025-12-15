@@ -22,7 +22,7 @@ export const mockCarsData: any = [
     {
         car_id: 1,
         car_name: 'Fiat 126p (Process)',
-        car_price: 599.0,
+        car_price: 599,
         fuel_consumption: 5.25789,
         is_available: 'false',
         production_start: '1972-04-23',

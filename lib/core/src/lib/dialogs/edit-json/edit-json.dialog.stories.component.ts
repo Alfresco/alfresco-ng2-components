@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, inject, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from './edit-json.dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +46,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         };
     }
 
-    constructor(private dialog: MatDialog) {}
+    private readonly dialog = inject(MatDialog);
 
     ngOnInit() {
         this.settings = {

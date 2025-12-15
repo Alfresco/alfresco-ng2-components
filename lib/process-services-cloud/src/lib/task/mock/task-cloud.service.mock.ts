@@ -56,7 +56,7 @@ export class TaskCloudServiceMock extends TaskCloudService {
     }
 
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TASK_CREATED_STATE;
+        return taskDetails?.status === TASK_CREATED_STATE;
     }
 
     protected isAssignedToMe(assignee: string): boolean {
@@ -65,6 +65,6 @@ export class TaskCloudServiceMock extends TaskCloudService {
 
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.currentUserMock;
-        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
+        return taskDetails?.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
     }
 }

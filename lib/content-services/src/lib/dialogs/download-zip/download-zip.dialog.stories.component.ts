@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, inject, Input, OnInit, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { zipNode, downloadEntry } from './mock/download-zip-data.mock';
@@ -32,21 +32,21 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
     showLoading: boolean;
 
-    constructor(private dialog: MatDialog) {}
+    private readonly dialog = inject(MatDialog);
 
     ngOnInit(): void {
-        this.setEntryStatus(this.showLoading);
+        this.setEntryStatus();
     }
 
     ngOnChanges(): void {
-        this.setEntryStatus(this.showLoading);
+        this.setEntryStatus();
     }
 
-    setEntryStatus(isLoading: boolean) {
-        if (!isLoading) {
-            downloadEntry.entry.status = FileDownloadStatus.DONE;
-        } else {
+    setEntryStatus() {
+        if (this.showLoading) {
             downloadEntry.entry.status = FileDownloadStatus.IN_PROGRESS;
+        } else {
+            downloadEntry.entry.status = FileDownloadStatus.DONE;
         }
     }
 
