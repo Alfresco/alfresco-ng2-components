@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { IconComponent } from './icon.component';
+import { InjectionToken } from '@angular/core';
+import { IconAliasMap } from './icon-alias-map.type';
 
-/**
- * @deprecated this Module is deprecated and should no longer be used.
- * Consider importing components directly instead.
- */
-@NgModule({
-    imports: [IconComponent],
-    exports: [IconComponent]
-})
-export class IconModule {}
+export const ICON_ALIAS_MAP_TOKEN = new InjectionToken<IconAliasMap>('icon_alias_map');

@@ -15,22 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
+import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
+
+export const DEFAULT_ICON_VALUE = 'settings';
 
 @Component({
     selector: 'adf-icon',
-    imports: [MatIconModule, NgIf],
+    imports: [MatIconModule],
     templateUrl: './icon.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-icon' }
 })
 export class IconComponent {
-    private _value = '';
-    private _isCustom = false;
+    private readonly ALIAS_MAP = inject(ICON_ALIAS_MAP_TOKEN, { optional: true });
+
+    private _value = DEFAULT_ICON_VALUE;
+    private _isSvg = false;
 
     /** Theme color palette for the component. */
     @Input()
@@ -47,11 +51,25 @@ export class IconComponent {
     /** Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. */
     @Input()
     set value(value: string) {
-        this._value = value || 'settings';
-        this._isCustom = this._value.includes(':');
+        this._value = this.hasMappedAlias(value) ? this.ALIAS_MAP[value] : value;
+        this._isSvg = this.hasMappedAlias(value) || this.isCustom(value);
     }
 
-    get isCustom(): boolean {
-        return this._isCustom;
+    get isSvg() {
+        return this._isSvg;
+    }
+
+    /** Is icon of svg type */
+    @Input()
+    set isSvg(isSvg: boolean) {
+        this._isSvg = isSvg;
+    }
+
+    private hasMappedAlias(value: string): boolean {
+        return !!this.ALIAS_MAP?.[value];
+    }
+
+    private isCustom(value: string): boolean {
+        return value.includes(':');
     }
 }

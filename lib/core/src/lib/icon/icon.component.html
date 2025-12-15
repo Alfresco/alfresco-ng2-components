@@ -1,7 +1,5 @@
-<ng-container *ngIf="isCustom; else: defaultIcon">
+@if (isSvg) {
   <mat-icon [color]="color" [svgIcon]="value" aria-hidden="true" />
-</ng-container>
-
-<ng-template #defaultIcon>
+} @else {
   <mat-icon [fontSet]="fontSet" [color]="color" aria-hidden="true">{{ value }}</mat-icon>
-</ng-template>
+}
