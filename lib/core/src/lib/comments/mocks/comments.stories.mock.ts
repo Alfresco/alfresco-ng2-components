@@ -28,7 +28,7 @@ const fakeCompany: any = {
     email: ''
 };
 
-export const getDateXMinutesAgo = (minutes: number) => new Date(new Date().getTime() - minutes * 60000);
+export const getDateXMinutesAgo = (minutes: number) => new Date(Date.now() - minutes * 60000);
 
 const johnDoe: any = {
     id: '1',

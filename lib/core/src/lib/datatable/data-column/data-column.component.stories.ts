@@ -20,7 +20,6 @@ import { DataColumnComponent } from './data-column.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { DataColumnListComponent, DateColumnHeaderComponent } from '../data-column';
 import * as mockData from '../../mock/data-column.mock';
-import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
 import { provideStoryCore } from '../../stories/core-story.providers';
 
@@ -29,7 +28,7 @@ const meta: Meta<DataColumnComponent & { rows: any[] }> = {
     title: 'Core/Data Column/Data Column',
     decorators: [
         moduleMetadata({
-            imports: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent, DataTableComponent, RouterTestingModule]
+            imports: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent, DataTableComponent]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]

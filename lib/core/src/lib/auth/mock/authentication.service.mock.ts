@@ -29,26 +29,26 @@ export class AuthenticationMock extends AuthenticationService {
         }
 
         if (username === 'fake-username-CORS-error' && password === 'fake-password') {
-            return throwError({
+            return throwError(() => ({
                 error: {
                     crossDomain: true,
                     message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
                 }
-            });
+            }));
         }
 
         if (username === 'fake-username-CSRF-error' && password === 'fake-password') {
-            return throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 });
+            return throwError(() => ({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
         }
 
         if (username === 'fake-username-ECM-access-error' && password === 'fake-password') {
-            return throwError({
+            return throwError(() => ({
                 message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
                 status: 403
-            });
+            }));
         }
 
-        return throwError('Fake server error');
+        return throwError(() => 'Fake server error');
     }
 
     logout(): Observable<any> {

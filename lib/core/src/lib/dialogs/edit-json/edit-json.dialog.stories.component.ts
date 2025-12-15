@@ -23,7 +23,6 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-edit-json-dialog-storybook',
     template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`,
-    standalone: true,
     imports: [MatButtonModule]
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
@@ -49,19 +48,11 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
     private readonly dialog = inject(MatDialog);
 
     ngOnInit() {
-        this.settings = {
-            title: this.title,
-            editable: this.editable,
-            value: this.value
-        };
+        this.assignSettings();
     }
 
     ngOnChanges() {
-        this.settings = {
-            title: this.title,
-            editable: this.editable,
-            value: this.value
-        };
+        this.assignSettings();
     }
 
     openDialog() {
@@ -76,5 +67,13 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
                     this._settings.value = JSON.stringify(JSON.parse(value), null, '  ');
                 }
             });
+    }
+
+    private assignSettings() {
+        this.settings = {
+            title: this.title,
+            editable: this.editable,
+            value: this.value
+        };
     }
 }

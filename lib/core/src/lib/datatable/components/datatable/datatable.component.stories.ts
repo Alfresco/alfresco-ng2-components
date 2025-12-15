@@ -23,7 +23,6 @@ import { LoadingContentTemplateDirective } from '../../directives/loading-templa
 import { NoContentTemplateDirective } from '../../directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from '../../directives/no-permission-template.directive';
 import { MainMenuDataTableTemplateDirective } from '../../directives/main-data-table-action-template.directive';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
 import { provideStoryCore } from '../../../stories/core-story.providers';
@@ -44,8 +43,7 @@ const meta: Meta<DataTableComponent> = {
                 LoadingContentTemplateDirective,
                 MainMenuDataTableTemplateDirective,
                 DataTableComponent,
-                MatProgressSpinnerModule,
-                RouterTestingModule
+                MatProgressSpinnerModule
             ]
         }),
         applicationConfig({
