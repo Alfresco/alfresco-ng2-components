@@ -84,9 +84,7 @@ using the `adf:` namespace.
 
 The Icon Alias Mapping feature allows you to provide custom icon value mappings at runtime using the `ICON_ALIAS_MAP_TOKEN` injection token. When an icon value matches a key in the alias map, the component automatically replaces it with the mapped value. This is useful for creating consistent icon conventions across your application without modifying component code.
 
-You can register a single alias map, or use `multi: true` to register multiple alias maps that will be merged together.
-
-**Example with a single alias map:**
+**Example alias map:**
 
 ```ts
 import { ICON_ALIAS_MAP_TOKEN } from '@alfresco/adf-core';
@@ -99,29 +97,6 @@ function getProviders() {
                 'icon-mock': 'alias-mock',
                 'old-icon': 'new-icon'
             }
-        }
-    ]
-}
-```
-
-**Example with multiple alias maps using `multi: true`:**
-
-```ts
-function getProviders() {
-    return [
-        {
-            provide: ICON_ALIAS_MAP_TOKEN,
-            useValue: {
-                'icon-mock': 'alias-mock'
-            },
-            multi: true
-        },
-        {
-            provide: ICON_ALIAS_MAP_TOKEN,
-            useValue: {
-                'old-icon': 'new-icon'
-            },
-            multi: true
         }
     ]
 }
