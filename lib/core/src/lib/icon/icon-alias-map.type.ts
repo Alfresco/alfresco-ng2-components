@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export * from './icon.component';
-export * from './icon-alias-map.type';
-export * from './icon-alias-map.token';
+export type IconAliasMap = Record<string, string>;

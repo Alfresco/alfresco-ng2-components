@@ -2,7 +2,7 @@
 Title: Icon Component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2019-02-08
+Last reviewed: 2025-12-11
 ---
 
 # [Icon Component](../../../lib/core/src/lib/icon/icon.component.ts "Defined in icon.component.ts")
@@ -29,7 +29,9 @@ Provides a universal way of rendering registered and named icons.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Theme color palette for the component. |
+| fontSet | `string` | | Icon font set. |
 | value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
+| isSvg | `boolean` | false | Is icon of type svg. |
 
 ## Details
 
@@ -77,6 +79,36 @@ using the `adf:` namespace.
 ```html
 <adf-icon value="adf:image/gif"></adf-icon>
 ```
+
+### Icon alias mapping
+
+The Icon Alias Mapping feature allows you to provide custom icon value mappings at runtime using the `ICON_ALIAS_MAP_TOKEN` injection token. When an icon value matches a key in the alias map, the component automatically replaces it with the mapped value. This is useful for creating consistent icon conventions across your application without modifying component code.
+
+**Example alias map:**
+
+```ts
+import { ICON_ALIAS_MAP_TOKEN } from '@alfresco/adf-core';
+
+function getProviders() {
+    return [
+        {
+            provide: ICON_ALIAS_MAP_TOKEN,
+            useValue: {
+                'icon-mock': 'alias-mock',
+                'old-icon': 'new-icon'
+            }
+        }
+    ]
+}
+```
+
+**Usage in your template:**
+
+```html
+<adf-icon value="icon-mock"></adf-icon>
+```
+
+The component will replace `icon-mock` with `alias-mock`. If the icon value doesn't match any key in the alias map, the original value is used.
 
 ## See also
 
