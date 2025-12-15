@@ -67,6 +67,11 @@ export class FormModel implements ProcessFormModel {
     static readonly SAVE_OUTCOME: string = '$save';
     static readonly COMPLETE_OUTCOME: string = '$complete';
     static readonly START_PROCESS_OUTCOME: string = '$startProcess';
+    private readonly GLOBAL_EXPRESSION_REGEX = /\$\{(\s|\S)+?\}/gm;
+    private readonly FORM_PREFIX = 'form.';
+    private readonly FIELD_PREFIX = 'field.';
+    private readonly VARIABLE_PREFIX = 'variable.';
+    private readonly PROCESS_VARIABLES_PREFIX = 'process.variable.';
 
     readonly id: string | number;
     readonly name: string;
@@ -251,6 +256,7 @@ export class FormModel implements ProcessFormModel {
                 field.value = field.parseValue(field.json);
             }
         }
+        field.value = this.resolveExpressionString(field.value);
     }
 
     private canOverrideFieldValueWithProcessValue(field: FormFieldModel, variableId: string, formValues: FormValues): boolean {
@@ -522,6 +528,8 @@ export class FormModel implements ProcessFormModel {
         if (field) {
             field.value = value;
         }
+        const resolvedValue = typeof value === 'string' ? this.resolveExpressionString(value) : value;
+        field.value = resolvedValue;
     }
 
     changeVariableValue(variableId: string, value: any): void {
@@ -655,5 +663,62 @@ export class FormModel implements ProcessFormModel {
         }
 
         return null;
+    }
+
+    private resolveExpression(expression: any): any {
+        if (expression === undefined || expression === null) {
+            return expression;
+        }
+
+        // ensure we operate on a trimmed string
+        let formValue = String(expression).trim();
+
+        // unwrap ${...} if present so prefixes can be properly detected
+        if (formValue.startsWith('${') && formValue.endsWith('}')) {
+            formValue = formValue.slice(2, -1).trim();
+        }
+
+        if (formValue.startsWith(this.FIELD_PREFIX)) {
+            const field = formValue.slice(this.FIELD_PREFIX.length);
+            return this.getFieldById(field)?.value;
+        } else if (formValue.startsWith(this.VARIABLE_PREFIX)) {
+            const variable = formValue.slice(this.VARIABLE_PREFIX.length);
+            return this.getProcessVariableValue(variable);
+        } else if (formValue.startsWith(this.FORM_PREFIX)) {
+            const formVariable = formValue.slice(this.FORM_PREFIX.length);
+            return this.getDefaultFormVariableValue(formVariable);
+        } else if (formValue.startsWith(this.PROCESS_VARIABLES_PREFIX)) {
+            const processVariable = formValue.slice(this.PROCESS_VARIABLES_PREFIX.length);
+            return this.getProcessVariableValue(processVariable);
+        } else {
+            return formValue;
+        }
+    }
+
+    private resolveExpressionString(expression: string): any {
+        let result = expression || '';
+
+        const matches = result.match(this.GLOBAL_EXPRESSION_REGEX);
+
+        if (matches) {
+            for (const match of matches) {
+                let expressionResult = this.resolveExpression(match);
+                // avoid embedding the literal "null" or "undefined" into strings
+                if (expressionResult === null || expressionResult === undefined) {
+                    expressionResult = '';
+                } else if (typeof expressionResult !== 'string') {
+                    expressionResult = JSON.stringify(expressionResult);
+                }
+                result = result.replace(match, expressionResult);
+            }
+        }
+
+        try {
+            result = JSON.parse(result);
+        } catch {
+            return null;
+        }
+
+        return result;
     }
 }
