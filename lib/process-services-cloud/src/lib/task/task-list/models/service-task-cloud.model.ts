@@ -54,6 +54,14 @@ export interface StackTraceElement {
     lineNumber: number;
 }
 
+export interface IntegrationContextsPaginationModel {
+    skipCount: number;
+    maxItems: number;
+    count: number;
+    hasMoreItems: boolean;
+    totalItems: number;
+}
+
 export interface IntegrationContext {
     id: string;
     serviceName: string;

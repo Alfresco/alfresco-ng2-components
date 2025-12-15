@@ -20,7 +20,8 @@ import {
     ServiceTaskQueryCloudRequestModel,
     ServiceTaskIntegrationContextCloudModel,
     IntegrationContext,
-    IntegrationContextsRequestModel
+    IntegrationContextsRequestModel,
+    IntegrationContextsPaginationModel
 } from '../models/service-task-cloud.model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
@@ -77,7 +78,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         appName: string,
         serviceTaskId: string,
         requestModel: IntegrationContextsRequestModel
-    ): Observable<{ list: { entries: IntegrationContext[]; pagination: any } }> {
+    ): Observable<{ list: { entries: IntegrationContext[]; pagination: IntegrationContextsPaginationModel } }> {
         const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-contexts`;
         const queryParams = this.buildQueryParams(requestModel);
         const sortingParams = this.buildSortingParam(requestModel.sorting);
