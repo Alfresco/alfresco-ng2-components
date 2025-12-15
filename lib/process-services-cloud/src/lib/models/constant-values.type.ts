@@ -17,5 +17,5 @@
 
 export interface ConstantValues {
     unauthorizedStart: string;
-    triggerableByService: string;
+    triggerableByService?: string;
 }
