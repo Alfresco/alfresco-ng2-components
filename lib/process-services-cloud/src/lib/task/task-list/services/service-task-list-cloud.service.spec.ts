@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
-import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
+import { ServiceTaskQueryCloudRequestModel, IntegrationContextsRequestModel } from '../models/service-task-cloud.model';
 import { firstValueFrom, of } from 'rxjs';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { NoopTranslateModule } from '@alfresco/adf-core';
@@ -30,6 +30,8 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     const returnCallQueryParameters = (_queryUrl, options) => Promise.resolve(options.queryParams);
 
     const returnCallUrl = (queryUrl) => Promise.resolve(queryUrl);
+
+    const returnMockResponse = (response) => (_queryUrl, _options) => Promise.resolve(response);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -150,6 +152,82 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
                 expect(error).toEqual(expectedErrorMessage);
                 done();
             });
+        });
+    });
+
+    describe('getServiceTaskIntegrationContexts method', () => {
+        beforeEach(() => {
+            spyOn(service, 'getBasePath').and.returnValue('http://localhost/fakeName');
+        });
+
+        it('should append pagination parameters to the call', async () => {
+            const requestModel: IntegrationContextsRequestModel = {
+                appName: 'fakeName',
+                maxItems: 5,
+                skipCount: 10
+            };
+            const mockResponse = {
+                list: {
+                    entries: [{ entry: { id: '1' } }],
+                    pagination: {
+                        skipCount: 10,
+                        maxItems: 5,
+                        totalItems: 1
+                    }
+                }
+            };
+            requestSpy.and.callFake(returnMockResponse(mockResponse));
+            const result = await firstValueFrom(service.getServiceTaskIntegrationContexts('fakeName', 'serviceTaskId', requestModel));
+            expect(requestSpy).toHaveBeenCalled();
+            const callArgs = requestSpy.calls.mostRecent().args;
+            expect(callArgs[1].queryParams.maxItems).toBe(5);
+            expect(callArgs[1].queryParams.skipCount).toBe(10);
+            expect(result.list.entries).toBeDefined();
+        });
+
+        it('should append sorting parameter to the call', async () => {
+            const requestModel: IntegrationContextsRequestModel = {
+                appName: 'fakeName',
+                maxItems: 5,
+                skipCount: 0,
+                sorting: [{ orderBy: 'requestDate', direction: 'DESC' }]
+            };
+            requestSpy.and.callFake(returnCallQueryParameters);
+            const result: any = await firstValueFrom(service.getServiceTaskIntegrationContexts('fakeName', 'serviceTaskId', requestModel));
+            expect(result).toBeDefined();
+            expect(result.sort).toBe('requestDate,DESC');
+            expect(result.maxItems).toBe(5);
+            expect(result.skipCount).toBe(0);
+        });
+
+        it('should concat the app name and service task id to the request url', async () => {
+            const requestModel: IntegrationContextsRequestModel = {
+                appName: 'fakeName',
+                maxItems: 5,
+                skipCount: 0
+            };
+            requestSpy.and.callFake(returnCallUrl);
+            const requestUrl = await firstValueFrom(service.getServiceTaskIntegrationContexts('fakeName', 'serviceTaskId123', requestModel));
+            expect(requestUrl).toBeDefined();
+            expect(requestUrl).toContain('/fakeName/query/admin/v1/service-tasks/serviceTaskId123/integration-contexts');
+        });
+
+        it('should handle multiple sorting parameters', async () => {
+            const requestModel: IntegrationContextsRequestModel = {
+                appName: 'fakeName',
+                maxItems: 5,
+                skipCount: 0,
+                sorting: [
+                    { orderBy: 'requestDate', direction: 'DESC' },
+                    { orderBy: 'status', direction: 'ASC' }
+                ]
+            };
+            requestSpy.and.callFake(returnCallQueryParameters);
+            const result: any = await firstValueFrom(service.getServiceTaskIntegrationContexts('fakeName', 'serviceTaskId', requestModel));
+            expect(result).toBeDefined();
+            expect(result.sort).toBe('requestDate,DESC&status,ASC');
+            expect(result.maxItems).toBe(5);
+            expect(result.skipCount).toBe(0);
         });
     });
 });

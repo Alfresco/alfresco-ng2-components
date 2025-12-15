@@ -47,3 +47,44 @@ export interface ServiceTaskIntegrationContextCloudModel extends ServiceTaskQuer
     errorCode?: string;
     errorMessage?: string;
 }
+
+export interface StackTraceElement {
+    className: string;
+    fileName: string;
+    lineNumber: number;
+}
+
+export interface IntegrationContext {
+    id: string;
+    serviceName: string;
+    serviceFullName: string;
+    serviceVersion: string;
+    appName: string;
+    inBoundVariables: Record<string, any>;
+    outBoundVariables: Record<string, any>;
+    rootProcessInstanceId: string;
+    processInstanceId: string;
+    executionId: string;
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    processDefinitionVersion: number;
+    clientId: string;
+    clientName: string;
+    clientType: string;
+    connectorType: string;
+    requestDate: string;
+    resultDate?: string;
+    stackTraceElements: StackTraceElement[];
+    status: string;
+    errorDate?: string;
+    errorClassName?: string;
+    errorCode?: string;
+    errorMessage?: string;
+}
+
+export interface IntegrationContextsRequestModel {
+    appName: string;
+    maxItems: number;
+    skipCount: number;
+    sorting?: TaskListCloudSortingModel[];
+}
