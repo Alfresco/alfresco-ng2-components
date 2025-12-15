@@ -103,6 +103,7 @@ export class ProcessListRequestModel {
     suspendedFrom?: string;
     suspendedTo?: string;
     includeSubprocesses?: boolean;
+    includeUnlinkedProcesses?: boolean;
 
     processVariableFilters?: ProcessVariableFilterModel[];
     processVariableKeys?: string[];
@@ -132,6 +133,7 @@ export class ProcessListRequestModel {
         this.suspendedFrom = obj.suspendedFrom;
         this.suspendedTo = obj.suspendedTo;
         this.includeSubprocesses = obj.includeSubprocesses;
+        this.includeUnlinkedProcesses = obj.includeUnlinkedProcesses;
 
         this.processVariableKeys = obj.processVariableKeys;
         this.processVariableFilters = obj.processVariableFilters;
