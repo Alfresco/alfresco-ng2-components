@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError, Subject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
@@ -48,15 +48,16 @@ const TASK_EVENT_SUBSCRIPTION_QUERY = `
     providedIn: 'root'
 })
 export class TaskFilterCloudService extends BaseCloudService {
+    public preferenceService = inject<PreferenceCloudServiceInterface>(TASK_FILTERS_SERVICE_TOKEN);
+
+    protected identityUserService = inject(IdentityUserService);
+
     private filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
     filters$ = this.filtersSubject.asObservable();
     private filterKeyToBeRefreshedSource = new Subject<string>();
     filterKeyToBeRefreshed$ = this.filterKeyToBeRefreshedSource.asObservable();
 
     constructor(
-        private identityUserService: IdentityUserService,
-        @Inject(TASK_FILTERS_SERVICE_TOKEN)
-        public preferenceService: PreferenceCloudServiceInterface,
         private notificationCloudService: NotificationCloudService,
         adfHttpClient: AdfHttpClient
     ) {
@@ -307,7 +308,7 @@ export class TaskFilterCloudService extends BaseCloudService {
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
-    private prepareKey(appName: string): string {
+    protected prepareKey(appName: string): string {
         return `task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 
