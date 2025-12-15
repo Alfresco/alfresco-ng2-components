@@ -30,7 +30,6 @@ import { provideRouter, withHashLocation } from '@angular/router';
  */
 export function provideStoryProcessServicesCloud(): (Provider | EnvironmentProviders)[] {
     return [
-        provideAppConfig(),
         provideI18N({
             assets: [
                 ['adf-core', 'assets/adf-core'],
@@ -38,6 +37,7 @@ export function provideStoryProcessServicesCloud(): (Provider | EnvironmentProvi
                 ['adf-process-services-cloud', 'assets/adf-process-services-cloud']
             ]
         }),
+        provideAppConfig(),
         provideCoreAuth(),
         provideCloudPreferences(),
         provideCloudFormRenderer(),

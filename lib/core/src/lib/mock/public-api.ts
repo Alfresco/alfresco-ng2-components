@@ -21,5 +21,3 @@ export * from './translation.service.mock';
 
 export * from './form/form.service.mock';
 export * from './form/widget-visibility.service.mock';
-
-export * from './data-column.mock';

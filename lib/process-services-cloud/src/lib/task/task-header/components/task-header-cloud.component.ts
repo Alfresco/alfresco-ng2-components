@@ -130,8 +130,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
             .subscribe(
                 ([taskDetails, candidateUsers, candidateGroups]) => {
                     this.taskDetails = taskDetails;
-                    this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user } as CardViewArrayItem));
-                    this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group } as CardViewArrayItem));
+                    this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user }) as CardViewArrayItem);
+                    this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group }) as CardViewArrayItem);
                     this.processInstanceId = taskDetails.processInstanceId;
                     if (this.taskDetails.parentTaskId) {
                         this.loadParentName(`${this.taskDetails.parentTaskId}`);

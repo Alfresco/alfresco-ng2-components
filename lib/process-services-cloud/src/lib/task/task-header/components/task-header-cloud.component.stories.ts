@@ -25,11 +25,11 @@ const meta: Meta<TaskHeaderCloudComponent> = {
     component: TaskHeaderCloudComponent,
     title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
     decorators: [
+        applicationConfig({
+            providers: [...provideStoryProcessServicesCloud(), { provide: TaskCloudService, useClass: TaskCloudServiceMock }]
+        }),
         moduleMetadata({
             imports: [TaskHeaderCloudComponent]
-        }),
-        applicationConfig({
-            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }, ...provideStoryProcessServicesCloud()]
         })
     ],
     argTypes: {

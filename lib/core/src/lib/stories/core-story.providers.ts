@@ -42,7 +42,7 @@ export function provideStoryCore(): (Provider | EnvironmentProviders)[] {
         provideCoreAuthTesting(),
         provideAppInitializer(() => {
             const appConfig = inject(AppConfigService);
-            appConfig.config.set('locale', 'en');
+            appConfig.config = { ...appConfig.config, locale: 'en' };
         }),
         provideRouter([], withHashLocation())
     ];
