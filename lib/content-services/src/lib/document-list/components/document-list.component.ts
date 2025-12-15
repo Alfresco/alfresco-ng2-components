@@ -77,7 +77,6 @@ import { PermissionStyleModel } from '../models/permissions-style.model';
 import { presetsDefaultModel } from '../models/preset.model';
 import { DocumentListService } from '../services/document-list.service';
 import { LockService } from '../services/lock.service';
-import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CommonModule } from '@angular/common';
@@ -108,13 +107,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     ],
     templateUrl: './document-list.component.html',
     styleUrls: ['./document-list.component.scss'],
-    providers: [
-        {
-            provide: ADF_DOCUMENT_PARENT_COMPONENT,
-            useExisting: DocumentListComponent
-        },
-        DataTableService
-    ],
+    providers: [DataTableService],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
@@ -1046,6 +1039,16 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     onFilterSelectionChange(activeFilters: FilterSearch[]) {
         this.filterSelection.emit(activeFilters);
+    }
+
+    onFilterSearchResultsReady(nodePaging: NodePaging) {
+        this.node = nodePaging;
+        this.reload();
+    }
+
+    onFiltersCleared() {
+        this.node = null;
+        this.reload();
     }
 
     resetNewFolderPagination() {

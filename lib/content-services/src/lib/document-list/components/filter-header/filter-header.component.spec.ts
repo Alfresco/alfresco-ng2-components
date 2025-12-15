@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataTableComponent, DataSorting } from '@alfresco/adf-core';
+import { DataTableComponent, DataSorting, PaginationModel } from '@alfresco/adf-core';
 import { SearchService } from '../../../search/services/search.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';
-import { DocumentListComponent } from './../document-list.component';
 import { FilterHeaderComponent } from './filter-header.component';
-import { Pagination } from '@alfresco/js-api';
-import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 
 describe('FilterHeaderComponent', () => {
     let fixture: ComponentFixture<FilterHeaderComponent>;
@@ -36,28 +33,16 @@ describe('FilterHeaderComponent', () => {
         dataLoaded: new Subject()
     };
 
-    const paginationMock = { maxItems: 10, skipCount: 0 };
-
-    const documentListMock = {
-        node: 'my-node',
-        sorting: ['name', 'asc'],
-        pagination: new BehaviorSubject<Pagination>(paginationMock),
-        sortingSubject: new BehaviorSubject<DataSorting[]>([]),
-        reload: () => jasmine.createSpy('reload')
-    };
+    const paginationMock: PaginationModel = { maxItems: 10, skipCount: 0, totalItems: 0, hasMoreItems: false };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule, FilterHeaderComponent],
-            providers: [
-                { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
-                { provide: SearchService, useValue: searchMock },
-                { provide: DocumentListComponent, useValue: documentListMock },
-                DataTableComponent
-            ]
+            providers: [{ provide: SearchService, useValue: searchMock }, DataTableComponent]
         });
         fixture = TestBed.createComponent(FilterHeaderComponent);
         component = fixture.componentInstance;
+        component.currentFolderId = 'test-folder-id';
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
     });
 
@@ -68,23 +53,26 @@ describe('FilterHeaderComponent', () => {
     it('should subscribe to changes in document list pagination', async () => {
         const setupCurrentPaginationSpy = spyOn(queryBuilder, 'setupCurrentPagination');
 
-        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.pagination = paginationMock;
+        const paginationChange = new SimpleChange(undefined, paginationMock, true);
+        component.ngOnChanges({ pagination: paginationChange });
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(setupCurrentPaginationSpy).toHaveBeenCalled();
+        expect(setupCurrentPaginationSpy).toHaveBeenCalledWith(paginationMock.maxItems, paginationMock.skipCount);
     });
 
     it('should subscribe to changes in document list sorting', async () => {
         const setSortingSpy = spyOn(queryBuilder, 'setSorting');
+        const sortingMock: DataSorting[] = [new DataSorting('name', 'asc')];
 
-        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.sorting = sortingMock;
+        const sortingChange = new SimpleChange(undefined, sortingMock, true);
+        component.ngOnChanges({ sorting: sortingChange });
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(setSortingSpy).toHaveBeenCalled();
+        expect(setSortingSpy).toHaveBeenCalledWith(sortingMock);
     });
 
     it('should reset filters after changing the folder node', async () => {
@@ -142,5 +130,30 @@ describe('FilterHeaderComponent', () => {
         component.onFilterSelectionChange();
         fixture.detectChanges();
         fixture.whenStable();
+    });
+
+    it('should emit filtersCleared when no filters are active', (done) => {
+        spyOn(queryBuilder, 'getActiveFilters').and.returnValue([]);
+        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(true);
+
+        component.filtersCleared.subscribe(() => {
+            done();
+        });
+
+        component.onFilterSelectionChange();
+        fixture.detectChanges();
+    });
+
+    it('should emit searchResultsReady when search query builder executes', (done) => {
+        fixture.detectChanges(); // Initialize component (triggers ngOnInit)
+
+        const mockNodePaging: any = { list: { entries: [] } };
+
+        component.searchResultsReady.subscribe((nodePaging) => {
+            expect(nodePaging).toBe(mockNodePaging);
+            done();
+        });
+
+        queryBuilder.executed.next(mockNodePaging);
     });
 });
