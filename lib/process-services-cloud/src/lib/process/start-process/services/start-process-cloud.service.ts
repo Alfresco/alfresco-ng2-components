@@ -26,7 +26,6 @@ import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.mode
 
 export interface QueryParams {
     include: string;
-    exclude?: string;
 }
 
 @Injectable({
