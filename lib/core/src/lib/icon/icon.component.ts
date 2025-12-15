@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, inject, ElementRef, AfterContentInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
@@ -30,8 +30,9 @@ export const DEFAULT_ICON_VALUE = 'settings';
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-icon' }
 })
-export class IconComponent {
+export class IconComponent implements AfterContentInit {
     private readonly ALIAS_MAP = inject(ICON_ALIAS_MAP_TOKEN, { optional: true });
+    private readonly elementRef = inject(ElementRef);
 
     private _value = DEFAULT_ICON_VALUE;
     private _isSvg = false;
@@ -65,11 +66,26 @@ export class IconComponent {
         this._isSvg = isSvg;
     }
 
+    ngAfterContentInit(): void {
+        const textNode = this.getTextNode();
+
+        if (textNode) {
+            this.value = textNode.textContent.trim();
+            textNode.remove();
+        }
+    }
+
     private hasMappedAlias(value: string): boolean {
         return !!this.ALIAS_MAP?.[value];
     }
 
     private isCustom(value: string): boolean {
         return value.includes(':');
+    }
+
+    private getTextNode(): Text | undefined {
+        return Array.from(this.elementRef.nativeElement.childNodes).find(
+            (node: Node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim()
+        ) as Text | undefined;
     }
 }

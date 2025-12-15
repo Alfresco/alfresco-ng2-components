@@ -84,6 +84,20 @@ using the `adf:` namespace.
 
 The Icon Alias Mapping feature allows you to provide custom icon value mappings at runtime using the `ICON_ALIAS_MAP_TOKEN` injection token. When an icon value matches a key in the alias map, the component automatically replaces it with the mapped value. This is useful for creating consistent icon conventions across your application without modifying component code.
 
+**How icon name replacement works:**
+
+When you provide an alias map, the component checks if the icon value matches any key in the map. If a match is found, the icon name is replaced with the corresponding mapped value. This happens automatically and transparently:
+
+- Original icon name: `icon-mock`
+- Alias map entry: `'icon-mock': 'alias-mock'`
+- Result: Icon renders as `alias-mock` instead of `icon-mock`
+
+This allows you to:
+- **Rename icons** without changing component code
+- **Support legacy icon names** by mapping them to new ones
+- **Centralize icon naming conventions** in your application
+- **Create icon aliases** for shorter or more descriptive names
+
 **Example alias map:**
 
 ```ts
@@ -102,13 +116,36 @@ function getProviders() {
 }
 ```
 
-**Usage in your template:**
+### Template usage
+
+The Icon Component supports two ways to provide the icon value:
+
+**1. Using the `value` input property:**
 
 ```html
-<adf-icon value="icon-mock"></adf-icon>
+<adf-icon value="home"></adf-icon>
+<adf-icon value="alert"></adf-icon>
+<adf-icon value="adf:custom-icon"></adf-icon>
 ```
 
-The component will replace `icon-mock` with `alias-mock`. If the icon value doesn't match any key in the alias map, the original value is used.
+**2. Using content projection (slot):**
+
+Similar to Angular Material's `mat-icon`, you can provide the icon value as text content:
+
+```html
+<adf-icon>home</adf-icon>
+<adf-icon>alert</adf-icon>
+<adf-icon>adf:custom-icon</adf-icon>
+```
+
+**Priority:** If both are provided, the slot content takes priority over the `value` input property:
+
+```html
+<!-- Uses "home" from slot, ignores value input -->
+<adf-icon value="alert">home</adf-icon>
+```
+
+This approach provides flexibility and familiarity for developers accustomed to Angular Material's icon component API.
 
 ## See also
 
