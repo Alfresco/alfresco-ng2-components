@@ -48,6 +48,7 @@ export class ProcessFilterCloudModel {
     startedDateType: DateCloudFilterType | null;
     suspendedDateType: DateCloudFilterType | null;
     includeSubprocesses: boolean | null;
+    includeUnlinkedProcesses: boolean | null;
     completedDate: Date | null;
     environmentId: string | null;
     showCounter: boolean;
@@ -114,6 +115,7 @@ export class ProcessFilterCloudModel {
         this._suspendedFrom = obj._suspendedFrom || null;
         this._suspendedTo = obj._suspendedTo || null;
         this.includeSubprocesses = obj.includeSubprocesses || null;
+        this.includeUnlinkedProcesses = obj.includeUnlinkedProcesses || null;
 
         this.initArrayProperties(obj);
     }

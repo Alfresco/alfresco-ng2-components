@@ -677,31 +677,62 @@ describe('ProcessListCloudComponent', () => {
             expect(component.processListRequestNode.appVersion.length).toEqual(0);
         });
 
-        it('should set includeSubprocesses to true in request node when input is true', () => {
-            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
-            component.includeSubprocesses = true;
-            component.ngAfterContentInit();
-            component.reload();
+        describe('includeSubprocesses', () => {
+            it('should set includeSubprocesses to true in request node when input is true', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeSubprocesses = true;
+                component.ngAfterContentInit();
+                component.reload();
 
-            expect(component.processListRequestNode.includeSubprocesses).toBeTrue();
+                expect(component.processListRequestNode.includeSubprocesses).toBeTrue();
+            });
+
+            it('should set includeSubprocesses to false in request node when input is false', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeSubprocesses = false;
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.includeSubprocesses).toBeFalse();
+            });
+
+            it('should omit includeSubprocesses in request node when input is null', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeSubprocesses = null;
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.includeSubprocesses).toBeNull();
+            });
         });
 
-        it('should set includeSubprocesses to false in request node when input is false', () => {
-            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
-            component.includeSubprocesses = false;
-            component.ngAfterContentInit();
-            component.reload();
+        describe('includeUnlinkedProcesses', () => {
+            it('should set includeUnlinkedProcesses to true in request node when input is true', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeUnlinkedProcesses = true;
+                component.ngAfterContentInit();
+                component.reload();
 
-            expect(component.processListRequestNode.includeSubprocesses).toBeFalse();
-        });
+                expect(component.processListRequestNode.includeUnlinkedProcesses).toBeTrue();
+            });
 
-        it('should omit includeSubprocesses in request node when input is null', () => {
-            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
-            component.includeSubprocesses = null;
-            component.ngAfterContentInit();
-            component.reload();
+            it('should set includeUnlinkedProcesses to false in request node when input is false', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeUnlinkedProcesses = false;
+                component.ngAfterContentInit();
+                component.reload();
 
-            expect(component.processListRequestNode.includeSubprocesses).toBeNull();
+                expect(component.processListRequestNode.includeUnlinkedProcesses).toBeFalse();
+            });
+
+            it('should omit includeUnlinkedProcesses in request node when input is null', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeUnlinkedProcesses = null;
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.includeUnlinkedProcesses).toBeNull();
+            });
         });
 
         it('should return the results if an application name is given', (done) => {

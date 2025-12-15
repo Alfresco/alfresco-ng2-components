@@ -175,44 +175,88 @@ describe('ProcessListCloudService', () => {
             expect(error).toBe('Appname not configured');
         });
 
-        it('should include includeSubprocesses=true in body', async () => {
-            const processRequest = {
-                appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 },
-                includeSubprocesses: true
-            } as ProcessListRequestModel;
-            requestSpy.and.callFake(returnCallBody);
+        describe('includeSubprocesses', () => {
+            it('should include includeSubprocesses=true in body', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeSubprocesses: true
+                } as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
 
-            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(requestBodyParams).toEqual({ includeSubprocesses: true });
+                expect(requestBodyParams).toEqual({ includeSubprocesses: true });
+            });
+
+            it('should include includeSubprocesses=false in body', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeSubprocesses: false
+                } as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
+
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+                expect(requestBodyParams).toEqual({ includeSubprocesses: false });
+            });
+
+            it('should omit includeSubprocesses when null', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeSubprocesses: null
+                } as unknown as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
+
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+                expect(requestBodyParams).toEqual({});
+                expect(requestBodyParams.includeSubprocesses).toBeUndefined();
+            });
         });
 
-        it('should include includeSubprocesses=false in body', async () => {
-            const processRequest = {
-                appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 },
-                includeSubprocesses: false
-            } as ProcessListRequestModel;
-            requestSpy.and.callFake(returnCallBody);
+        describe('includeUnlinkedProcesses', () => {
+            it('should include includeUnlinkedProcesses=true in body', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeUnlinkedProcesses: true
+                } as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
 
-            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(requestBodyParams).toEqual({ includeSubprocesses: false });
-        });
+                expect(requestBodyParams).toEqual({ includeUnlinkedProcesses: true });
+            });
 
-        it('should omit includeSubprocesses when null', async () => {
-            const processRequest = {
-                appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 },
-                includeSubprocesses: null
-            } as unknown as ProcessListRequestModel;
-            requestSpy.and.callFake(returnCallBody);
+            it('should include includeUnlinkedProcesses=false in body', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeUnlinkedProcesses: false
+                } as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
 
-            const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
 
-            expect(requestBodyParams).toEqual({});
-            expect(requestBodyParams.includeSubprocesses).toBeUndefined();
+                expect(requestBodyParams).toEqual({ includeUnlinkedProcesses: false });
+            });
+
+            it('should omit includeUnlinkedProcesses when null', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeUnlinkedProcesses: null
+                } as unknown as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
+
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+                expect(requestBodyParams).toEqual({});
+                expect(requestBodyParams.includeUnlinkedProcesses).toBeUndefined();
+            });
         });
     });
 

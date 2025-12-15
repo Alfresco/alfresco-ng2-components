@@ -294,6 +294,10 @@ export class ProcessListCloudComponent
     @Input()
     includeSubprocesses: boolean | null = null;
 
+    /** Include unlinked processes in the process list. */
+    @Input()
+    includeUnlinkedProcesses: boolean | null = null;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -611,6 +615,7 @@ export class ProcessListCloudComponent
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
             includeSubprocesses: this.includeSubprocesses,
+            includeUnlinkedProcesses: this.includeUnlinkedProcesses,
             processVariableKeys: this.getVariableDefinitionsRequestModel(),
             processVariableFilters: this.processVariables
         };
