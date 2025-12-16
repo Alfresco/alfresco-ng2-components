@@ -22,10 +22,12 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SearchCategory } from '../models';
 
 describe('SearchHeaderQueryBuilderService', () => {
     let activatedRoute: ActivatedRoute;
     let router: Router;
+    let builderService: SearchHeaderQueryBuilderService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -33,6 +35,7 @@ describe('SearchHeaderQueryBuilderService', () => {
         });
         router = TestBed.inject(Router);
         activatedRoute = TestBed.inject(ActivatedRoute);
+        builderService = TestBed.inject(SearchHeaderQueryBuilderService);
     });
 
     const buildConfig = (searchSettings): AppConfigService => {
@@ -43,10 +46,13 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     it('should load the configuration from app config', () => {
         TestBed.runInInjectionContext(() => {
-            const config: SearchConfiguration = {
-                categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
+            const config = {
+                categories: [
+                    { id: 'cat1', enabled: true },
+                    { id: 'cat2', enabled: true }
+                ],
                 filterQueries: [{ query: 'query1' }, { query: 'query2' }]
-            };
+            } as SearchConfiguration;
 
             const alfrescoApiService = TestBed.inject(AlfrescoApiService);
             const builder = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
@@ -66,13 +72,13 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     it('should return the category assigned to a column key', () => {
         TestBed.runInInjectionContext(() => {
-            const config: SearchConfiguration = {
+            const config = {
                 categories: [
-                    { id: 'cat1', columnKey: 'fake-key-1', enabled: true } as any,
-                    { id: 'cat2', columnKey: 'fake-key-2', enabled: true } as any
+                    { id: 'cat1', columnKey: 'fake-key-1', enabled: true },
+                    { id: 'cat2', columnKey: 'fake-key-2', enabled: true }
                 ],
                 filterQueries: [{ query: 'query1' }, { query: 'query2' }]
-            };
+            } as SearchConfiguration;
 
             const alfrescoApiService = TestBed.inject(AlfrescoApiService);
             const service = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
@@ -81,6 +87,25 @@ describe('SearchHeaderQueryBuilderService', () => {
             expect(category).not.toBeNull();
             expect(category).not.toBeUndefined();
             expect(category.columnKey).toBe('fake-key-1');
+        });
+    });
+
+    it('should return operator for a category by id', () => {
+        TestBed.runInInjectionContext(() => {
+            const config: SearchConfiguration = {
+                categories: [
+                    { id: 'cat1', columnKey: 'fake-key-1', enabled: true, component: { settings: { operator: 'operator' } } },
+                    { id: 'cat2', columnKey: 'fake-key-2', enabled: true }
+                ] as SearchCategory[]
+            };
+
+            const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+            const service = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
+
+            const operator = service.getOperatorForFilterId('cat1');
+            expect(operator).toBe('operator');
+            const operator1 = service.getOperatorForFilterId('cat2');
+            expect(operator1).toBeUndefined();
         });
     });
 
@@ -94,10 +119,13 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     it('should add the extra filter for the parent node', () => {
         TestBed.runInInjectionContext(() => {
-            const config: SearchConfiguration = {
-                categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
+            const config = {
+                categories: [
+                    { id: 'cat1', enabled: true },
+                    { id: 'cat2', enabled: true }
+                ],
                 filterQueries: [{ query: 'query1' }, { query: 'query2' }]
-            };
+            } as SearchConfiguration;
 
             const expectedResult = [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }];
 
@@ -114,10 +142,13 @@ describe('SearchHeaderQueryBuilderService', () => {
         TestBed.runInInjectionContext(() => {
             const expectedResult = [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }];
 
-            const config: SearchConfiguration = {
-                categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
+            const config = {
+                categories: [
+                    { id: 'cat1', enabled: true },
+                    { id: 'cat2', enabled: true }
+                ],
                 filterQueries: expectedResult
-            };
+            } as SearchConfiguration;
 
             const alfrescoApiService = TestBed.inject(AlfrescoApiService);
             const searchHeaderService = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
@@ -132,10 +163,10 @@ describe('SearchHeaderQueryBuilderService', () => {
         TestBed.runInInjectionContext(() => {
             const activeFilter = 'FakeColumn';
 
-            const config: SearchConfiguration = {
-                categories: [{ id: 'cat1', enabled: true } as any],
+            const config = {
+                categories: [{ id: 'cat1', enabled: true }],
                 filterQueries: [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id' }]
-            };
+            } as SearchConfiguration;
 
             const alfrescoApiService = TestBed.inject(AlfrescoApiService);
             const searchHeaderService = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
@@ -153,10 +184,11 @@ describe('SearchHeaderQueryBuilderService', () => {
         it('should use properly encoded query containing non-latin character when calls router.navigate', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
-            const service = TestBed.inject(SearchHeaderQueryBuilderService);
-            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
+            builderService.filterRawParams = {
+                userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))'
+            };
 
-            service.updateSearchQueryParams();
+            builderService.updateSearchQueryParams();
             expect(console.error).not.toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith([], {
                 relativeTo: activatedRoute,
@@ -173,11 +205,12 @@ describe('SearchHeaderQueryBuilderService', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
             const searchUrl = 'search';
-            const service = TestBed.inject(SearchHeaderQueryBuilderService);
-            service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
-            service.encodeQuery();
+            builderService.filterRawParams = {
+                userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))'
+            };
+            builderService.encodeQuery();
 
-            await service.navigateToSearch('', searchUrl);
+            await builderService.navigateToSearch('', searchUrl);
             expect(console.error).not.toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith([searchUrl], {
                 queryParams: {
@@ -186,5 +219,37 @@ describe('SearchHeaderQueryBuilderService', () => {
                 queryParamsHandling: 'merge'
             });
         });
+    });
+
+    it('should trigger execute() in setCurrentRootFolderId() once there are active filters', () => {
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [{ key: 'key', value: 'value' }];
+        builderService.setCurrentRootFolderId('node-id');
+
+        expect(builderService.execute).toHaveBeenCalled();
+    });
+
+    it('should NOT trigger execute() in setCurrentRootFolderId() once there are NO active filters', () => {
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [];
+        builderService.setCurrentRootFolderId('node-id');
+
+        expect(builderService.execute).not.toHaveBeenCalled();
+    });
+
+    it('should trigger execute() in setSorting() once there are active filters', () => {
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [{ key: 'key', value: 'value' }];
+        builderService.setSorting([]);
+
+        expect(builderService.execute).toHaveBeenCalled();
+    });
+
+    it('should NOT trigger execute() in setSorting() once there are NO active filters', () => {
+        spyOn(builderService, 'execute').and.stub();
+        builderService.activeFilters = [];
+        builderService.setSorting([]);
+
+        expect(builderService.execute).not.toHaveBeenCalled();
     });
 });

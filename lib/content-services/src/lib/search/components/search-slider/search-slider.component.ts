@@ -80,7 +80,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
             .asObservable()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
+                if (filtersQueries?.[this.id]) {
                     this.value = filtersQueries[this.id];
                     this.updateQuery(this.value, false);
                 } else {

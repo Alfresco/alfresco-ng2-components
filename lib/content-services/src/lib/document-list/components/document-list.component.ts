@@ -373,6 +373,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     displayDragAndDropHint = true;
 
+    /**
+     * Indicates if the data is provided externally.
+     * If true the component won't fetch data itself
+     */
+    @Input()
+    isDataProvidedExternally = false;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();
@@ -598,7 +605,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
 
         if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            this.loadFolder();
+            !this.isDataProvidedExternally && this.loadFolder();
         }
 
         if (this.data) {
@@ -1024,6 +1031,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
         this.pagination.next(nodePaging.list.pagination);
+        this.setLoadingState(false);
     }
 
     updatePagination(requestPaginationModel: RequestPaginationModel) {

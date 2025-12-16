@@ -86,7 +86,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             .asObservable()
             .pipe(first())
             .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
+                if (filtersQueries?.[this.id]) {
                     this.value = filtersQueries[this.id];
                     this.submitValues(false);
                 } else {

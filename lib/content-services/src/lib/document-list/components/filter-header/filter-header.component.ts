@@ -57,10 +57,10 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     @Output()
     filtersCleared: EventEmitter<void> = new EventEmitter();
 
-    isFilterServiceActive: boolean;
-
     private readonly searchFilterQueryBuilder = inject(SearchHeaderQueryBuilderService);
     private readonly destroyRef = inject(DestroyRef);
+
+    readonly isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
 
     ngOnInit() {
         this.searchFilterQueryBuilder.executed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((resultSetPaging) => {
@@ -109,11 +109,17 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     }
 
     private initSearchHeader(currentFolderId: string) {
-        this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
         if (this.value) {
-            Object.keys(this.value).forEach((columnKey) => {
-                this.searchFilterQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
+            Object.keys(this.value).forEach((key) => {
+                this.searchFilterQueryBuilder.setActiveFilter(key, this.value[key]);
+
+                const operator = this.searchFilterQueryBuilder.getOperatorForFilterId(key) || 'OR';
+                this.searchFilterQueryBuilder.filterRawParams[key] = this.value[key];
+                this.searchFilterQueryBuilder.queryFragments[key] = Array.isArray(this.value[key])
+                    ? this.value[key].join(` ${operator} `)
+                    : this.value[key];
             });
         }
+        this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
     }
 }
