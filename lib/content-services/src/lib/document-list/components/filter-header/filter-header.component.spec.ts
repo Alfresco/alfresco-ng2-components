@@ -202,4 +202,14 @@ describe('FilterHeaderComponent', () => {
 
         queryBuilder.executed.next(mockNodePaging);
     });
+
+    it('should set isFilterServiceActive on initialization', () => {
+        spyOn(queryBuilder, 'isFilterServiceActive').and.returnValue(true);
+
+        fixture = TestBed.createComponent(FilterHeaderComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+
+        expect(component.isFilterServiceActive).toBeTrue();
+    });
 });
