@@ -21,6 +21,7 @@ import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-cor
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 import { StartProcessCloudComponent } from './start-process-cloud.component';
 import {
     fakeProcessDefinitions,
@@ -627,6 +628,51 @@ describe('StartProcessCloudComponent', () => {
             const processForm = fixture.nativeElement.querySelector('adf-cloud-form');
             expect(component.hasForm).toBeTruthy();
             expect(processForm).not.toBeNull();
+        });
+
+        it('should pass enableParentVisibilityCheck to adf-cloud-form', async () => {
+            getProcessDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[2]]));
+            formDefinitionSpy.and.returnValue(of(fakeStartForm));
+            component.enableParentVisibilityCheck = true;
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await selectOptionByName('processwithform');
+
+            component.processDefinitionName = fakeProcessDefinitions[2].name;
+            component.setProcessDefinitionOnForm(fakeProcessDefinitions[2].name);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.enableParentVisibilityCheck).toBe(true);
+        });
+
+        it('should pass enableParentVisibilityCheck as false by default to adf-cloud-form', async () => {
+            getProcessDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[2]]));
+            formDefinitionSpy.and.returnValue(of(fakeStartForm));
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await selectOptionByName('processwithform');
+
+            component.processDefinitionName = fakeProcessDefinitions[2].name;
+            component.setProcessDefinitionOnForm(fakeProcessDefinitions[2].name);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const cloudFormElement = fixture.debugElement.query(By.css('adf-cloud-form'));
+            expect(cloudFormElement).toBeDefined();
+            const cloudFormComponent = cloudFormElement.componentInstance as FormCloudComponent;
+            expect(cloudFormComponent).toBeDefined();
+            expect(cloudFormComponent.enableParentVisibilityCheck).toBe(false);
         });
 
         it('should not select automatically any processDefinition if the app contain multiple process and does not have any processDefinition as input', async () => {

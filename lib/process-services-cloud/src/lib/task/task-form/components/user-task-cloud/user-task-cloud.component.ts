@@ -67,6 +67,13 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
+    /**
+     * Toggle to enable parent visibility check for validation.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     */
+    @Input()
+    enableParentVisibilityCheck: boolean = false;
+
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;

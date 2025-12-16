@@ -736,6 +736,25 @@ describe('UserTaskCloudComponent', () => {
 
                 expect(taskFormComponent.customCompleteButtonText).toBe(customText);
             });
+
+            it('should pass enableParentVisibilityCheck to task form when task type is Form', () => {
+                fixture.componentRef.setInput('enableParentVisibilityCheck', true);
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.enableParentVisibilityCheck).toBe(true);
+            });
+
+            it('should pass enableParentVisibilityCheck as false by default to task form', () => {
+                fixture.detectChanges();
+
+                const taskFormElement = fixture.debugElement.query(By.css('adf-cloud-task-form'));
+                const taskFormComponent = taskFormElement?.componentInstance as TaskFormCloudComponent;
+
+                expect(taskFormComponent.enableParentVisibilityCheck).toBe(false);
+            });
         });
     });
 
