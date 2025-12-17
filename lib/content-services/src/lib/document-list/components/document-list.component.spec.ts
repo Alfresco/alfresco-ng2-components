@@ -98,7 +98,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [DocumentListComponent],
+            imports: [NoopAuthModule, DocumentListComponent],
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
         eventMock = {

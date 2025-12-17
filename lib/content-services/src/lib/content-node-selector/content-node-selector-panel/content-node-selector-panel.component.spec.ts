@@ -18,7 +18,7 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
-import { DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
+import { DataRow, ThumbnailService, DataColumn, NoopAuthModule } from '@alfresco/adf-core';
 import { ContentService, UploadService, NodesApiService, SitesService, FileModel, FileUploadStatus, FileUploadCompleteEvent } from '../../common';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../../breadcrumb';
@@ -29,6 +29,8 @@ import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../../docum
 import { SearchQueryBuilderService } from '../../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../../mock/content-model.mock';
+import { provideRouter } from '@angular/router';
+import { provideApiTesting } from '../../testing/providers';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -69,6 +71,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
     describe('General component features', () => {
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [NoopAuthModule, ContentNodeSelectorPanelComponent],
+                providers: [provideRouter([]), provideApiTesting()]
+            });
             fixture = TestBed.createComponent(ContentNodeSelectorPanelComponent);
             component = fixture.componentInstance;
             component.debounceSearch = 0;
