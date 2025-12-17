@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodesApiService } from '../common/services/nodes-api.service';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './services/aspect-list.service';
 import { EMPTY, of } from 'rxjs';
@@ -29,6 +28,7 @@ import { MatTableHarness } from '@angular/material/table/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { CustomAspectPaging } from './interfaces/custom-aspect-paging.interface';
+import { provideApiTesting } from '../testing/providers';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -125,8 +125,8 @@ describe('AspectListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AspectListComponent],
-            providers: [AspectListService]
+            imports: [AspectListComponent],
+            providers: [provideApiTesting()]
         });
 
         fixture = TestBed.createComponent(AspectListComponent);

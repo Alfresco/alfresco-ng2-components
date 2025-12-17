@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('DropdownBreadcrumb', () => {
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
-    let documentListService: DocumentListService = jasmine.createSpyObj({ loadFolderByNodeId: of(''), isCustomSourceService: false });
+    let documentListService: DocumentListService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [{ provide: DocumentListService, useValue: documentListService }]
+            imports: [NoopAuthModule],
+            providers: [
+                { provide: DocumentListService, useValue: jasmine.createSpyObj({ loadFolderByNodeId: of(''), isCustomSourceService: false }) }
+            ]
         });
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
@@ -24,7 +23,6 @@ import { ContentService, UploadService, NodesApiService, SitesService, FileModel
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DocumentListService } from '../../document-list/services/document-list.service';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../../document-list';
@@ -68,13 +66,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
         const service = fixture.debugElement.injector.get(SearchQueryBuilderService);
         service.executed.next(searchResults);
     };
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        });
-    });
 
     describe('General component features', () => {
         beforeEach(() => {

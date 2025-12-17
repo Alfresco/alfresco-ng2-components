@@ -19,7 +19,6 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListService } from './services/aspect-list.service';
 import { delay } from 'rxjs/operators';
@@ -27,6 +26,7 @@ import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { By } from '@angular/platform-browser';
 import { AspectListComponent } from './aspect-list.component';
+import { provideApiTesting } from '../testing/providers';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -104,7 +104,7 @@ describe('AspectListDialogComponent', () => {
         keyCode: 27
     } as KeyboardEventInit);
 
-    beforeEach(async () => {
+    beforeEach(() => {
         data = {
             title: 'Title',
             description: 'Description that can be longer or shorter',
@@ -112,9 +112,10 @@ describe('AspectListDialogComponent', () => {
             select: new Subject<string[]>(),
             excludedAspects: []
         };
-        await TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule],
+        TestBed.configureTestingModule({
+            imports: [MatDialogModule],
             providers: [
+                provideApiTesting(),
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
                     provide: MatDialogRef,
@@ -125,7 +126,7 @@ describe('AspectListDialogComponent', () => {
                     }
                 }
             ]
-        }).compileComponents();
+        });
         fixture = TestBed.createComponent(AspectListDialogComponent);
     });
 

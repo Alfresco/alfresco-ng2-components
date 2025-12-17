@@ -18,10 +18,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-
 import { FolderDialogComponent } from './folder.dialog';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 
 describe('FolderDialogComponent', () => {
@@ -41,7 +39,7 @@ describe('FolderDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         dialogRef.close.calls.reset();
