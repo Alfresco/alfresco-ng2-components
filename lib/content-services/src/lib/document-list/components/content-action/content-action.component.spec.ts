@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, EventEmitter } from '@angular/core';
+import { SimpleChange, EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FileNode } from '../../../mock';
 import { ContentActionModel } from './../../models/content-action.model';
@@ -25,8 +25,8 @@ import { NodeActionsService } from './../../services/node-actions.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ContentService } from '../../../common/services/content.service';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ContentAction', () => {
     let documentList: DocumentListComponent;
@@ -39,8 +39,7 @@ describe('ContentAction', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopAuthModule]
         });
         contentService = TestBed.inject(ContentService);
         nodeActionsService = new NodeActionsService(null, null, null);

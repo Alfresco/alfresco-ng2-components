@@ -21,7 +21,8 @@ import { Component, DebugElement } from '@angular/core';
 import { NodeLockDirective } from './node-lock.directive';
 import type { Node } from '@alfresco/js-api';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { provideRouter } from '@angular/router';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 @Component({
     template: '<div [adf-node-lock]="node"></div>',
@@ -40,7 +41,8 @@ describe('NodeLock Directive', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TestComponent]
+            imports: [NoopAuthModule, TestComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

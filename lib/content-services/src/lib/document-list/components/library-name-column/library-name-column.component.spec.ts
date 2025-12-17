@@ -16,9 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LibraryNameColumnComponent } from './library-name-column.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('LibraryNameColumnComponent', () => {
     let fixture: ComponentFixture<LibraryNameColumnComponent>;
@@ -27,8 +25,7 @@ describe('LibraryNameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryNameColumnComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            imports: [LibraryNameColumnComponent]
         });
         node = {
             id: 'nodeId',
