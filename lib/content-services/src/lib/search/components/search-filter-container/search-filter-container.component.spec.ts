@@ -19,7 +19,6 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService } from '../../services/search.service';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { SearchCategory } from '../../models/search-category.interface';
@@ -29,6 +28,7 @@ import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { provideRouter } from '@angular/router';
 
 const mockCategory: SearchCategory = {
     id: 'queryName',
@@ -58,8 +58,8 @@ describe('SearchFilterContainerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: SearchService, useValue: searchMock }]
+            imports: [SearchFilterContainerComponent],
+            providers: [provideRouter([]), { provide: SearchService, useValue: searchMock }]
         });
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;

@@ -19,11 +19,11 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockUploadSuccessPromise } from '../../../mock/upload.service.mock';
 import { UploadService } from '../../../common/services/upload.service';
 import { FileModel } from '../../../common/models/file.model';
 import { FileUploadErrorEvent } from '../../../common/events/file.event';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-upload-button-test',
@@ -41,7 +41,7 @@ describe('UploadBase', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, UploadTestComponent]
+            imports: [NoopAuthModule, UploadTestComponent]
         });
         fixture = TestBed.createComponent(UploadTestComponent);
         uploadService = TestBed.inject(UploadService);
@@ -57,7 +57,7 @@ describe('UploadBase', () => {
             spyOn(uploadService, 'addToQueue').and.stub();
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
-            component.beginUpload.subscribe((uploadFilesEvent: UploadFilesEvent) => {
+            component.beginUpload.subscribe((uploadFilesEvent) => {
                 expect(uploadFilesEvent.files[0].file).toEqual(file);
             });
 

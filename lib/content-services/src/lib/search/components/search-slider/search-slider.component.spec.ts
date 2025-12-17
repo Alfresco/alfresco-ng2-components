@@ -16,7 +16,6 @@
  */
 
 import { SearchSliderComponent } from './search-slider.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReplaySubject } from 'rxjs';
 
@@ -26,7 +25,7 @@ describe('SearchSliderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchSliderComponent]
         });
         fixture = TestBed.createComponent(SearchSliderComponent);
         component = fixture.componentInstance;

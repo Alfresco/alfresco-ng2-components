@@ -32,7 +32,8 @@ import {
     ViewerOpenWithComponent,
     ViewerMoreActionsComponent,
     ViewerToolbarActionsComponent,
-    NoopAuthModule
+    NoopAuthModule,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -47,8 +48,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoViewerComponent } from './alfresco-viewer.component';
 import { RenditionService } from '../../common/services/rendition.service';
 import { NodeActionsService } from '../../document-list/services/node-actions.service';
-import { ContentTestingModule } from '../../testing/content.testing.module';
-import { ContentService } from '../../common/services/content.service';
+import { provideApiTesting } from '../../testing/providers';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -181,9 +181,10 @@ describe('AlfrescoViewerComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                ContentTestingModule,
                 NoopAuthModule,
+                NoopTranslateModule,
                 MatDialogModule,
+                AlfrescoViewerComponent,
                 ...VIEWER_DIRECTIVES,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
@@ -192,7 +193,7 @@ describe('AlfrescoViewerComponent', () => {
                 ViewerWithCustomToolbarActionsComponent
             ],
             providers: [
-                ContentService,
+                provideApiTesting(),
                 {
                     provide: RenditionService,
                     useValue: {

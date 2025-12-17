@@ -18,7 +18,6 @@
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { firstValueFrom, throwError } from 'rxjs';
 import { Pagination, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 
@@ -40,9 +39,6 @@ describe('TagService', () => {
     };
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
         service = TestBed.inject(TagService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
 

@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent, VersionListDataSource } from './version-list.component';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { Node, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentVersionService } from './content-version.service';
 import { take } from 'rxjs/operators';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
+import { NoopAuthModule } from '@alfresco/adf-core';
+import { provideApiTesting } from '../testing/providers';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -48,8 +48,8 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopAuthModule, VersionListComponent],
+            providers: [provideApiTesting()]
         });
         fixture = TestBed.createComponent(VersionListComponent);
         dialog = TestBed.inject(MatDialog);

@@ -17,11 +17,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { mockUploadSuccessPromise, mockUploadErrorPromise } from '../../mock/upload.service.mock';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { FileUploadErrorEvent } from '../../common/events/file.event';
+import { NoopAuthModule } from '@alfresco/adf-core';
+import { provideApiTesting } from '../../testing/providers';
 
 const getFakeShareDataRow = (allowableOperations = ['delete', 'update', 'create']) => ({
     obj: {
@@ -105,7 +106,8 @@ describe('UploadDragAreaComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule, UploadDragAreaComponent],
+            providers: [provideApiTesting()]
         });
         fixture = TestBed.createComponent(UploadDragAreaComponent);
         uploadService = TestBed.inject(UploadService);

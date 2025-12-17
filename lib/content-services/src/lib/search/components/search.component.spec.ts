@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService } from '../services/search.service';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, throwError } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('SearchComponent', () => {
     let fixture: ComponentFixture<SimpleSearchTestComponent>;
@@ -29,7 +28,7 @@ describe('SearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SimpleSearchTestComponent]
+            imports: [SimpleSearchTestComponent]
         });
         fixture = TestBed.createComponent(SimpleSearchTestComponent);
         component = fixture.componentInstance;

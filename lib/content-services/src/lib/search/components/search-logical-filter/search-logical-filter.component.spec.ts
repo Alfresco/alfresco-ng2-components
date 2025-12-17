@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { LogicalSearchCondition, LogicalSearchFields, SearchLogicalFilterComponent } from './search-logical-filter.component';
 import { ReplaySubject } from 'rxjs';
 
@@ -27,7 +26,7 @@ describe('SearchLogicalFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchLogicalFilterComponent]
+            imports: [SearchLogicalFilterComponent]
         });
 
         fixture = TestBed.createComponent(SearchLogicalFilterComponent);

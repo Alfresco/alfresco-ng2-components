@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from '../services/tag.service';
 import { Observable, of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Tag, TagEntry, TagPaging } from '@alfresco/js-api';
 import { DynamicChipListComponent } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
@@ -30,7 +29,7 @@ describe('TagNodeList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TagNodeListComponent]
+            imports: [TagNodeListComponent]
         });
         fixture = TestBed.createComponent(TagNodeListComponent);
         component = fixture.componentInstance;

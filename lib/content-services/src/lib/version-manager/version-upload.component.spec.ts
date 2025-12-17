@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VersionUploadComponent } from './version-upload.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
 import { UploadService } from '../common/services/upload.service';
 import { ContentService } from '../common/services/content.service';
 import { Subject } from 'rxjs';
-import { FileUploadErrorEvent, FileUploadEvent, UploadVersionButtonComponent } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
+import { UploadVersionButtonComponent } from '../upload';
+import { FileUploadErrorEvent, FileUploadEvent } from '../common';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('VersionUploadComponent', () => {
     let component: VersionUploadComponent;
@@ -51,9 +51,7 @@ describe('VersionUploadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [UploadService],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopAuthModule, VersionUploadComponent]
         });
         fixture = TestBed.createComponent(VersionUploadComponent);
         component = fixture.componentInstance;
