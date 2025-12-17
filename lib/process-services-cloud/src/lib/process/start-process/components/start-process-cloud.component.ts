@@ -142,6 +142,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
+    /**
+     * Toggle to enable parent visibility check for validation.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     */
+    @Input()
+    enableParentVisibilityCheck: boolean = false;
+
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();

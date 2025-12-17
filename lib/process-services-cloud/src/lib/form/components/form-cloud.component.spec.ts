@@ -461,6 +461,138 @@ describe('FormCloudComponent', () => {
         expect(formComponent.getFormById).not.toHaveBeenCalled();
     });
 
+    describe('enableParentVisibilityCheck', () => {
+        let formModel: FormModel;
+        let field1: FormFieldModel;
+        let field2: FormFieldModel;
+
+        beforeEach(() => {
+            const formJson = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                { id: 'field1', type: FormFieldTypes.TEXT, required: true },
+                                { id: 'field2', type: FormFieldTypes.TEXT, required: true }
+                            ]
+                        }
+                    }
+                ]
+            };
+            formModel = new FormModel(formJson);
+            formComponent.form = formModel;
+            field1 = formModel.getFieldById('field1');
+            field2 = formModel.getFieldById('field2');
+        });
+
+        it('should set flags on form and fields when enableParentVisibilityCheck changes from false to true', () => {
+            formComponent.enableParentVisibilityCheck = false;
+            expect(formModel.enableParentVisibilityCheck).toBe(false);
+            expect(field1.checkParentVisibilityForValidation).toBe(false);
+            expect(field2.checkParentVisibilityForValidation).toBe(false);
+
+            const change = new SimpleChange(false, true, false);
+            formComponent.enableParentVisibilityCheck = true;
+            spyOn(formModel, 'validateForm').and.stub();
+
+            formComponent.ngOnChanges({ enableParentVisibilityCheck: change });
+
+            expect(formModel.enableParentVisibilityCheck).toBe(true);
+            expect(field1.checkParentVisibilityForValidation).toBe(true);
+            expect(field2.checkParentVisibilityForValidation).toBe(true);
+            expect(formModel.validateForm).toHaveBeenCalled();
+        });
+
+        it('should not set flags when enableParentVisibilityCheck changes but form is null', () => {
+            formComponent.form = null;
+            formComponent.enableParentVisibilityCheck = false;
+
+            const change = new SimpleChange(false, true, false);
+            formComponent.ngOnChanges({ enableParentVisibilityCheck: change });
+
+            expect(formComponent.form).toBeNull();
+        });
+
+        it('should reset flags when enableParentVisibilityCheck changes from true to false', () => {
+            formModel.enableParentVisibilityCheck = true;
+            field1.checkParentVisibilityForValidation = true;
+            field2.checkParentVisibilityForValidation = true;
+            formComponent.enableParentVisibilityCheck = false;
+
+            const change = new SimpleChange(true, false, false);
+            spyOn(formModel, 'validateForm').and.stub();
+
+            formComponent.ngOnChanges({ enableParentVisibilityCheck: change });
+
+            expect(formModel.enableParentVisibilityCheck).toBe(false);
+            expect(field1.checkParentVisibilityForValidation).toBe(false);
+            expect(field2.checkParentVisibilityForValidation).toBe(false);
+            expect(formModel.validateForm).toHaveBeenCalled();
+        });
+
+        it('should set flags on all fields including nested fields', () => {
+            const formJsonWithNestedFields = {
+                id: 'test-form',
+                name: 'Test Form',
+                fields: [
+                    {
+                        id: 'group1',
+                        type: FormFieldTypes.GROUP,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [{ id: 'field1', type: FormFieldTypes.TEXT }]
+                        }
+                    },
+                    {
+                        id: 'section1',
+                        type: FormFieldTypes.SECTION,
+                        numberOfColumns: 1,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'group2',
+                                    type: FormFieldTypes.GROUP,
+                                    numberOfColumns: 1,
+                                    fields: {
+                                        1: [{ id: 'field2', type: FormFieldTypes.TEXT }]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    { id: 'field3', type: FormFieldTypes.TEXT }
+                ]
+            };
+            const nestedFormModel = new FormModel(formJsonWithNestedFields);
+            formComponent.form = nestedFormModel;
+            formComponent.enableParentVisibilityCheck = true;
+
+            const change = new SimpleChange(false, true, false);
+            formComponent.ngOnChanges({ enableParentVisibilityCheck: change });
+
+            const allFields = nestedFormModel.getFormFields();
+            allFields.forEach((field) => {
+                expect(field.checkParentVisibilityForValidation).toBe(true);
+            });
+            expect(nestedFormModel.enableParentVisibilityCheck).toBe(true);
+        });
+
+        it('should re-validate form after setting flags', () => {
+            formComponent.enableParentVisibilityCheck = true;
+            spyOn(formModel, 'validateForm').and.stub();
+
+            const change = new SimpleChange(false, true, false);
+            formComponent.ngOnChanges({ enableParentVisibilityCheck: change });
+
+            expect(formModel.validateForm).toHaveBeenCalled();
+        });
+    });
+
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';

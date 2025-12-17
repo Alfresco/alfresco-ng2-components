@@ -96,6 +96,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
 | displayModeConfigurations | [`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`[]` |  | The available display configurations for the form |
+| enableParentVisibilityCheck | `boolean` | false | Toggle to enable parent visibility check for validation. When enabled, fields inside hidden groups/sections will skip validation. |
 
 ### Events
 
