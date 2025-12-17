@@ -18,12 +18,11 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService, SearchTextInputComponent, UserPreferencesService } from '@alfresco/adf-core';
+import { AuthenticationService, NoopAuthModule, SearchTextInputComponent, UserPreferencesService } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
 import { SearchService } from '../services/search.service';
 import { of } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { EmptySearchResultComponent } from './empty-search-result.component';
 
 @Component({
@@ -62,7 +61,7 @@ describe('SearchControlComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SimpleSearchTestCustomEmptyComponent]
+            imports: [NoopAuthModule, SimpleSearchTestCustomEmptyComponent]
         });
         fixture = TestBed.createComponent(SearchControlComponent);
         debugElement = fixture.debugElement;

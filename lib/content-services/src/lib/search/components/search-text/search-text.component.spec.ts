@@ -16,7 +16,6 @@
  */
 
 import { SearchTextComponent } from './search-text.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -31,7 +30,7 @@ describe('SearchTextComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchTextComponent]
         });
         fixture = TestBed.createComponent(SearchTextComponent);
         component = fixture.componentInstance;

@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatChipRemove } from '@angular/material/chips';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -36,7 +35,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchChipAutocompleteInputComponent]
+            imports: [SearchChipAutocompleteInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);

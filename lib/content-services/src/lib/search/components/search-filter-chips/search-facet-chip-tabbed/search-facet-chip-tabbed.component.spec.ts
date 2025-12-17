@@ -16,17 +16,16 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed.component';
 import { FacetField } from '../../../models/facet-field.interface';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFacetChipTabbedComponent', () => {
     let loader: HarnessLoader;
@@ -38,9 +37,7 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [provideRouter([]), { provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
         });
         fixture = TestBed.createComponent(SearchFacetChipTabbedComponent);
         component = fixture.componentInstance;
