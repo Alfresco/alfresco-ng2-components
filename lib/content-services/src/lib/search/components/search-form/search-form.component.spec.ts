@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFormComponent } from './search-form.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
 import { By } from '@angular/platform-browser';
@@ -25,6 +24,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFormComponent', () => {
     let loader: HarnessLoader;
@@ -39,7 +39,8 @@ describe('SearchFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFormComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(SearchFormComponent);
         component = fixture.componentInstance;

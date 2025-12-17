@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFacetChipComponent } from './search-facet-chip.component';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -26,6 +25,7 @@ import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFacetChipComponent', () => {
     let loader: HarnessLoader;
@@ -35,7 +35,8 @@ describe('SearchFacetChipComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFacetChipComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(SearchFacetChipComponent);
         component = fixture.componentInstance;

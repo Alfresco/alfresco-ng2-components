@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFilterChipsComponent } from './search-filter-chips.component';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFieldComponent } from '../search-facet-field/search-facet-field.component';
 import { SearchFilterList } from '../../models/search-filter-list.model';
@@ -30,6 +29,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFilterChipsComponent', () => {
     let fixture: ComponentFixture<SearchFilterChipsComponent>;
@@ -40,7 +40,8 @@ describe('SearchFilterChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFilterChipsComponent],
+            providers: [provideRouter([])]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         appConfigService = TestBed.inject(AppConfigService);

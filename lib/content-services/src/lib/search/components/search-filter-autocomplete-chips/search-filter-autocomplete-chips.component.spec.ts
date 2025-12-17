@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
 import { EMPTY, of, ReplaySubject } from 'rxjs';
 import { AutocompleteField } from '../../models/autocomplete-option.interface';
@@ -34,7 +33,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchFilterAutocompleteChipsComponent],
+            imports: [SearchFilterAutocompleteChipsComponent],
             providers: [
                 {
                     provide: TagService,
