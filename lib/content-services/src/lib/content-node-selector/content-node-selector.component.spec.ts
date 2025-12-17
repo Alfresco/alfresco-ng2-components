@@ -16,7 +16,7 @@
  */
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
@@ -25,7 +25,6 @@ import { FileModel } from '../common/models/file.model';
 import { FileUploadEvent } from '../common/events/file.event';
 import { UploadService } from '../common/services/upload.service';
 import { of } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
@@ -36,6 +35,7 @@ import { ContentService } from '../common/services/content.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -59,7 +59,7 @@ describe('ContentNodeSelectorComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, ContentNodeSelectorComponent],
+            imports: [NoopAuthModule, ContentNodeSelectorComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
@@ -72,8 +72,7 @@ describe('ContentNodeSelectorComponent', () => {
                         afterOpened: () => of(null)
                     }
                 }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            ]
         });
 
         const documentListService = TestBed.inject(DocumentListService);

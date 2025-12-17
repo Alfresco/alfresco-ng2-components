@@ -18,7 +18,6 @@
 import { TypeEntry } from '@alfresco/js-api';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -87,7 +86,7 @@ describe('Content Type Dialog Component', () => {
     let data: ContentTypeDialogComponentData;
     let loader: HarnessLoader;
 
-    beforeEach(async () => {
+    beforeEach(() => {
         data = {
             title: 'Title',
             description: 'Description that can be longer or shorter',
@@ -97,7 +96,7 @@ describe('Content Type Dialog Component', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule],
+            imports: [MatDialogModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
@@ -109,7 +108,7 @@ describe('Content Type Dialog Component', () => {
                     }
                 }
             ]
-        }).compileComponents();
+        });
     });
 
     beforeEach(() => {

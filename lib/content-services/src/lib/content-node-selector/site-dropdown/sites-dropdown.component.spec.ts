@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService, NoopAuthModule } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     getFakeSitePaging,
@@ -26,7 +26,6 @@ import {
     getFakeSitePagingLastPage,
     getFakeSitePagingWithMembers
 } from '../../mock';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SitesService } from '../../common/services/sites.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -62,7 +61,7 @@ describe('DropdownSitesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
     });
 

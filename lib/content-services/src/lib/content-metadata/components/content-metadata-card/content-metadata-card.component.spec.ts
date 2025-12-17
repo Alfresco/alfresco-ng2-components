@@ -30,7 +30,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CategoryService } from '../../../category';
 import { TagService } from '../../../tag';
 import { PropertyDescriptorsService } from '../../public-api';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;
@@ -47,7 +47,7 @@ describe('ContentMetadataCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, MatSnackBarModule, ContentMetadataCardComponent]
+            imports: [NoopAuthModule, MatDialogModule, MatSnackBarModule, ContentMetadataCardComponent]
         });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);

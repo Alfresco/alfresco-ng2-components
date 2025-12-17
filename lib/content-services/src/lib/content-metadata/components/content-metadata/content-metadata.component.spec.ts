@@ -24,7 +24,8 @@ import {
     CardViewComponent,
     NotificationService,
     UpdateNotification,
-    UnitTestingUtils
+    UnitTestingUtils,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -35,7 +36,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EMPTY, firstValueFrom, of, throwError } from 'rxjs';
 import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
 import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { TagService } from '../../../tag/services/tag.service';
@@ -184,7 +184,7 @@ describe('ContentMetadataComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, MatSnackBarModule, ContentMetadataComponent],
+            imports: [NoopAuthModule, MatDialogModule, MatSnackBarModule, ContentMetadataComponent],
             providers: [
                 {
                     provide: TagService,
