@@ -18,11 +18,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { mockFile, mockNode } from '../mock';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { NewVersionUploaderDataAction } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from '../version-manager/version-list.component';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('NewVersionUploaderDialog', () => {
     let component: NewVersionUploaderDialogComponent;
@@ -44,7 +44,7 @@ describe('NewVersionUploaderDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NewVersionUploaderDialogComponent],
+            imports: [NoopAuthModule, NewVersionUploaderDialogComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
                 {

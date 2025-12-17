@@ -22,7 +22,6 @@ import { MatError } from '@angular/material/form-field';
 import { MatList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
 import { of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 import { CategoriesManagementComponent } from './categories-management.component';
@@ -47,7 +46,7 @@ describe('CategoriesManagementComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, CategoriesManagementComponent],
+            imports: [CategoriesManagementComponent],
             providers: [
                 {
                     provide: CategoryService,

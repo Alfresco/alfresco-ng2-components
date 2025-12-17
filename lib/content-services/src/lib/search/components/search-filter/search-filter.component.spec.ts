@@ -23,7 +23,6 @@ import { Subject } from 'rxjs';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import {
     disabledCategories,
     expandableCategories,
@@ -45,6 +44,7 @@ import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFilterComponent', () => {
     let loader: HarnessLoader;
@@ -59,8 +59,8 @@ describe('SearchFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: SearchService, useValue: searchMock }]
+            imports: [SearchFilterComponent],
+            providers: [provideRouter([]), { provide: SearchService, useValue: searchMock }]
         });
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
         queryBuilder = TestBed.inject(SearchQueryBuilderService);

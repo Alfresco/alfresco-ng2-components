@@ -17,8 +17,6 @@
 
 import { LibraryRoleColumnComponent } from './library-role-column.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('LibraryRoleColumnComponent', () => {
     let fixture: ComponentFixture<LibraryRoleColumnComponent>;
@@ -26,8 +24,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryRoleColumnComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            imports: [LibraryRoleColumnComponent]
         });
         fixture = TestBed.createComponent(LibraryRoleColumnComponent);
         component = fixture.componentInstance;

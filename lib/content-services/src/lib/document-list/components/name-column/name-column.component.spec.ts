@@ -17,7 +17,6 @@
 
 import { NameColumnComponent } from './name-column.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { skip } from 'rxjs/operators';
 
 describe('NameColumnComponent', () => {
@@ -27,7 +26,7 @@ describe('NameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NameColumnComponent]
+            imports: [NameColumnComponent]
         });
 
         fixture = TestBed.createComponent(NameColumnComponent);

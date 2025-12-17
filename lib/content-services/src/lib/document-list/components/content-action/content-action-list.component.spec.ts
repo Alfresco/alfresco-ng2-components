@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ContentColumnList', () => {
     let documentList: DocumentListComponent;
@@ -28,8 +27,7 @@ describe('ContentColumnList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopAuthModule]
         });
         documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
         actionList = new ContentActionListComponent(documentList);

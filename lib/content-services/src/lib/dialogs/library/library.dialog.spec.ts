@@ -17,9 +17,7 @@
 
 import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush, ComponentFixture, flushMicrotasks } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { FindQuery, SiteEntry, SitePaging } from '@alfresco/js-api';
@@ -28,6 +26,7 @@ import { NotificationService, UnitTestingUtils } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { provideApiTesting } from '../../testing/providers';
 
 describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;
@@ -58,14 +57,13 @@ describe('LibraryDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryDialogComponent],
-            providers: [{ provide: MatDialogRef, useValue: dialogRef }],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [LibraryDialogComponent],
+            providers: [provideApiTesting(), { provide: MatDialogRef, useValue: dialogRef }]
         });
         fixture = TestBed.createComponent(LibraryDialogComponent);
         component = fixture.componentInstance;
         sitesService = TestBed.inject(SitesService);
-        findSitesSpy = spyOn(component['queriesApi'], 'findSites');
+        findSitesSpy = spyOn(component.queriesApi, 'findSites');
         notificationService = TestBed.inject(NotificationService);
         loader = TestbedHarnessEnvironment.loader(fixture);
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement, loader);

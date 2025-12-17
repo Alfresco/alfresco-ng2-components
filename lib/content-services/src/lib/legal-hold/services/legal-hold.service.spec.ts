@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { BulkAssignHoldResponseEntry, Hold, HoldBulkStatusEntry, HoldEntry, HoldPaging, RequestQuery, SEARCH_LANGUAGE } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
@@ -53,9 +52,6 @@ describe('LegalHoldsService', () => {
     };
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
         service = TestBed.inject(LegalHoldService);
 
         legalHolds = {

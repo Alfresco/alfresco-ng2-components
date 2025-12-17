@@ -21,8 +21,8 @@ import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PermissionModel } from '../models/permissions.model';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('DocumentActionsService', () => {
     let service: DocumentActionsService;
@@ -30,7 +30,7 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         documentListService = TestBed.inject(DocumentListService);
         service = TestBed.inject(DocumentActionsService);
