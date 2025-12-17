@@ -179,17 +179,7 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAuthModule,
-                NoopTranslateModule,
-                MatDialogModule,
-                AlfrescoViewerComponent,
-                ViewerWithCustomToolbarComponent,
-                ViewerWithCustomSidebarComponent,
-                ViewerWithCustomOpenWithComponent,
-                ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent
-            ],
+            imports: [NoopAuthModule, NoopTranslateModule, MatDialogModule, AlfrescoViewerComponent],
             providers: [
                 provideApiTesting(),
                 {
