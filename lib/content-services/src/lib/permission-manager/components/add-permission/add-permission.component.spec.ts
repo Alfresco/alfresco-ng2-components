@@ -23,7 +23,7 @@ import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('AddPermissionComponent', () => {
     let fixture: ComponentFixture<AddPermissionComponent>;
@@ -32,7 +32,7 @@ describe('AddPermissionComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AddPermissionComponent]
+            imports: [NoopAuthModule, AddPermissionComponent]
         });
         nodePermissionService = TestBed.inject(NodePermissionService);
         const response: any = { node: { id: 'fake-node', allowableOperations: ['updatePermissions'] }, roles: [{ label: 'Test', role: 'test' }] };

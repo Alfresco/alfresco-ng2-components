@@ -21,7 +21,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
@@ -63,7 +62,7 @@ describe('AddPermissionDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AddPermissionDialogComponent],
+            imports: [AddPermissionDialogComponent],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }

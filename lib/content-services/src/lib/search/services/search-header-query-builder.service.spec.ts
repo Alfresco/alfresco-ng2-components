@@ -19,9 +19,8 @@ import { SearchConfiguration } from '../models/search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from './search-header-query-builder.service';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { SearchCategory } from '../models';
 
 describe('SearchHeaderQueryBuilderService', () => {
@@ -31,7 +30,7 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            providers: [provideRouter([])]
         });
         router = TestBed.inject(Router);
         activatedRoute = TestBed.inject(ActivatedRoute);

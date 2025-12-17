@@ -22,8 +22,8 @@ import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
 import { FolderEditDirective } from './folder-edit.directive';
 import type { Node } from '@alfresco/js-api';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentService } from '../common/services/content.service';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>',
@@ -31,7 +31,7 @@ import { ContentService } from '../common/services/content.service';
     imports: [FolderEditDirective]
 })
 class TestComponent {
-    folder = {};
+    folder: any = {};
     public successParameter: Node = null;
 
     success(node: Node) {
@@ -53,7 +53,7 @@ describe('FolderEditDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TestComponent]
+            imports: [NoopAuthModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));

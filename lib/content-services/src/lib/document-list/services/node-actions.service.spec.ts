@@ -22,8 +22,8 @@ import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { of, throwError } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { delay } from 'rxjs/operators';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 const fakeNode: Node = {
     id: 'fake'
@@ -39,7 +39,7 @@ describe('NodeActionsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [NoopAuthModule],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         service = TestBed.inject(NodeActionsService);

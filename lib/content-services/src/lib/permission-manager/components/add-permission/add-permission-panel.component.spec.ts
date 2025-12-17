@@ -20,13 +20,13 @@ import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-permission.component.mock';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchService } from '../../../search/services/search.service';
 import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectionListHarness } from '@angular/material/list/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('AddPermissionPanelComponent', () => {
     let fixture: ComponentFixture<AddPermissionPanelComponent>;
@@ -37,7 +37,7 @@ describe('AddPermissionPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AddPermissionPanelComponent]
+            imports: [MatIconTestingModule, AddPermissionPanelComponent]
         });
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
