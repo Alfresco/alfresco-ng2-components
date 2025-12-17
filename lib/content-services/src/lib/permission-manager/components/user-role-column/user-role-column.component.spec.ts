@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserRoleColumnComponent } from './user-role-column.component';
 import { RoleModel } from '../../models/role.model';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('UserRoleColumnComponent', () => {
     let component: UserRoleColumnComponent;
@@ -27,7 +26,7 @@ describe('UserRoleColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, UserRoleColumnComponent]
+            imports: [UserRoleColumnComponent]
         });
 
         fixture = TestBed.createComponent(UserRoleColumnComponent);
