@@ -47,7 +47,7 @@
                 mat-icon-button
                 (click)="remove(i)"
                 class="adf-property-col-delete">
-                <mat-icon>close</mat-icon>
+                <mat-icon adf-icon="close" />
             </button>
         </div>
     </div>
@@ -57,7 +57,7 @@
                 class="adf-card-view__key-value-pairs__add-btn"
                 [attr.data-automation-id]="'card-key-value-pairs-button-' + property.key">
                 {{ 'CORE.CARDVIEW.KEYVALUEPAIRS.ADD' | translate }}
-                <mat-icon>add</mat-icon>
+                <mat-icon adf-icon="add" />
         </button>
     </div>
 </div>

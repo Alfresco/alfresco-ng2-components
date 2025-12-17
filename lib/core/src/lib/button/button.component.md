@@ -28,7 +28,7 @@ The button supports the following variants:
 <adf-button variant="stroked">Stroked</adf-button>
 <adf-button variant="flat">Flat</adf-button>
 <adf-button variant="icon" icon="home">Icon</adf-button>
-<adf-button variant="icon"><mat-icon>more_vert</mat-icon></adf-button>
+<adf-button variant="icon"><mat-icon adf-icon="more_vert" /></adf-button>
 <adf-button variant="fab" icon="plus_one">Fab</adf-button>
 <adf-button variant="mini-fab" icon="menu">Mini Fab</adf-button>
 ```

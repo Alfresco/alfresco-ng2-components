@@ -25,10 +25,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconDirective } from '../../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-select-filter-input',
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe],
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, TranslatePipe, IconDirective],
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],
     host: { class: 'adf-select-filter-input' },

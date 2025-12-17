@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
+import { IconDirective } from '../directives/icon.directive';
 
 @Component({
     selector: 'adf-context-menu',
@@ -36,7 +37,7 @@ import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslatePipe],
+    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslatePipe, IconDirective],
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {

@@ -25,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorMessageModel } from '../core';
 import { WidgetComponent } from '../widget.component';
+import { IconDirective } from '../../../../directives/icon.directive';
 
 @Component({
     selector: 'error-widget',
@@ -53,7 +54,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, MatIconModule, TranslatePipe],
+    imports: [NgIf, MatIconModule, TranslatePipe, IconDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {

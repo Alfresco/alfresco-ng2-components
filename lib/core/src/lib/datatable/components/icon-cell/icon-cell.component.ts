@@ -19,14 +19,15 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed } from 
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
-    imports: [MatIconModule],
+    imports: [MatIconModule, IconDirective],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         @if (icon()) {
-            <mat-icon [title]="title()" aria-hidden="true">{{ icon() }}</mat-icon>
+            <mat-icon [title]="title()" aria-hidden="true" [adf-icon]="icon()" />
         }
     `,
     encapsulation: ViewEncapsulation.None,

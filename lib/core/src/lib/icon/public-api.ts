@@ -16,6 +16,3 @@
  */
 
 export * from './icon.component';
-export * from './icon-alias-map.type';
-export * from './icon-alias-map.token';
-export * from './icon.directive';

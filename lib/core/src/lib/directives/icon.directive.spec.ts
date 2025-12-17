@@ -17,15 +17,14 @@
 
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { IconDirective } from './icon.directive';
+import { IconDirective, ICON_ALIAS_MAP_TOKEN } from './icon.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { IconType, MatIconHarness, MatIconTestingModule } from '@angular/material/icon/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
 
 @Component({
-    template: `<mat-icon adf-icon [name]="name" />`,
+    template: `<mat-icon [adf-icon]="name" />`,
     standalone: true,
     imports: [MatIconModule, IconDirective]
 })

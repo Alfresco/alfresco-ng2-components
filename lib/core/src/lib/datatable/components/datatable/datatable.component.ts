@@ -71,7 +71,7 @@ import { ResizableDirective } from '../../directives/resizable/resizable.directi
 import { IconComponent } from '../../../icon';
 import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
 import { MatButtonModule } from '@angular/material/button';
-import { UploadDirective } from '../../../directives';
+import { IconDirective, UploadDirective } from '../../../directives';
 import { ContextMenuDirective } from '../../../context-menu';
 import { IconCellComponent } from '../icon-cell/icon-cell.component';
 import { DateCellComponent } from '../date-cell/date-cell.component';
@@ -120,7 +120,8 @@ export enum ShowHeaderMode {
         BooleanCellComponent,
         JsonCellComponent,
         AmountCellComponent,
-        NumberCellComponent
+        NumberCellComponent,
+        IconDirective
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],

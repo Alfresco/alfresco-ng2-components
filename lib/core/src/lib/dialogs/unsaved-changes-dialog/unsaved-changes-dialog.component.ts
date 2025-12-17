@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { UserPreferencesService } from '../../common';
 import { AppConfigValues } from '../../app-config';
+import { IconDirective } from '../../directives/icon.directive';
 
 /**
  * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.
@@ -41,12 +42,15 @@ import { AppConfigValues } from '../../app-config';
     templateUrl: './unsaved-changes-dialog.component.html',
     styleUrls: ['./unsaved-changes-dialog.component.scss'],
     host: { class: 'adf-unsaved-changes-dialog' },
-    imports: [MatDialogModule, TranslatePipe, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
+    imports: [MatDialogModule, TranslatePipe, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule, IconDirective]
 })
 export class UnsavedChangesDialogComponent implements OnInit {
     dialogData: UnsavedChangesDialogData;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private userPreferencesService: UserPreferencesService) {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData,
+        private userPreferencesService: UserPreferencesService
+    ) {}
 
     ngOnInit() {
         this.dialogData = {

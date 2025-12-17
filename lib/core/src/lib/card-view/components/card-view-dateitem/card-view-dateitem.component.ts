@@ -42,6 +42,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
     providers: [
@@ -61,7 +62,8 @@ import { MatInputModule } from '@angular/material/input';
         MatFormFieldModule,
         MatDatepickerModule,
         MatSnackBarModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        IconDirective
     ],
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],

@@ -20,13 +20,14 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { IconDirective } from '../directives/icon.directive';
 
 export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab' | undefined;
 export type ButtonColor = ThemePalette;
 
 @Component({
     selector: 'adf-button',
-    imports: [CommonModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatButtonModule, MatIconModule, IconDirective],
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
     encapsulation: ViewEncapsulation.None

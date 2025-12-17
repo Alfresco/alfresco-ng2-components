@@ -25,10 +25,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-card-view-arrayitem',
-    imports: [CommonModule, MatChipsModule, TranslatePipe, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule],
+    imports: [CommonModule, MatChipsModule, TranslatePipe, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule, IconDirective],
     templateUrl: './card-view-arrayitem.component.html',
     styleUrls: ['./card-view-arrayitem.component.scss'],
     encapsulation: ViewEncapsulation.None

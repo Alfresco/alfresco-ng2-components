@@ -32,6 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconDirective } from '../../../directives/icon.directive';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -54,7 +55,8 @@ const templateTypes = {
         MatIconModule,
         FormsModule,
         MatButtonModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        IconDirective
     ],
     templateUrl: './card-view-textitem.component.html',
     styleUrls: ['./card-view-textitem.component.scss'],

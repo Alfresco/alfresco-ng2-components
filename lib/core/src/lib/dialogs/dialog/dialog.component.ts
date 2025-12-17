@@ -25,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconDirective } from '../../directives/icon.directive';
 
 export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
@@ -32,7 +33,7 @@ export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component d
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
-    imports: [CommonModule, TranslatePipe, MatIconModule, MatDialogModule, MatButtonModule],
+    imports: [CommonModule, TranslatePipe, MatIconModule, MatDialogModule, MatButtonModule, IconDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent {

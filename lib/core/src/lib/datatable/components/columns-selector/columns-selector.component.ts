@@ -29,6 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-datatable-column-selector',
@@ -42,7 +43,8 @@ import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angula
         MatCheckboxModule,
         ColumnsSearchFilterPipe,
         MatSelectionList,
-        MatListOption
+        MatListOption,
+        IconDirective
     ],
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],

@@ -15,19 +15,22 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, inject, Input, OnChanges } from '@angular/core';
-import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
+import { Directive, ElementRef, inject, InjectionToken, Input, OnChanges } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
+export type IconAliasMap = Record<string, string>;
+export const ICON_ALIAS_MAP_TOKEN = new InjectionToken<IconAliasMap>('icon_alias_map');
+
 @Directive({
-    selector: 'mat-icon[adf-icon]'
+    selector: 'mat-icon[adf-icon]',
+    standalone: true
 })
 export class IconDirective implements OnChanges {
     private readonly matIcon = inject(MatIcon);
     private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
     private readonly aliasMap = inject(ICON_ALIAS_MAP_TOKEN, { optional: true });
 
-    @Input() name: string;
+    @Input('adf-icon') name: string;
 
     ngOnChanges() {
         const iconAlias = this.aliasMap?.[this.name];
@@ -40,7 +43,7 @@ export class IconDirective implements OnChanges {
     }
 
     private appendLigatureText() {
-        this.resetSvg();
+        this.resetSvgIcon();
 
         const element = this.elementRef.nativeElement;
         const textNode = this.findTextNode(element);
@@ -56,7 +59,7 @@ export class IconDirective implements OnChanges {
         return Array.from(element.childNodes).find((node: ChildNode) => node.nodeType === Node.TEXT_NODE);
     }
 
-    private resetSvg() {
+    private resetSvgIcon() {
         this.matIcon.svgIcon = null;
     }
 }

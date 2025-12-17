@@ -22,13 +22,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { IconDirective } from '../../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-header-widget',
     templateUrl: './header.widget.html',
     styleUrls: ['./header.widget.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet]
+    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet, IconDirective]
 })
 export class HeaderWidgetComponent {
     @Input() element: ContainerModel;

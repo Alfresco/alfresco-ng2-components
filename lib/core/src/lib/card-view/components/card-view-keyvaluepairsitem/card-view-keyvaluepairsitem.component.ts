@@ -26,10 +26,11 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-card-view-key-value-pairs-item',
-    imports: [CommonModule, TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, IconDirective],
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
     encapsulation: ViewEncapsulation.None,

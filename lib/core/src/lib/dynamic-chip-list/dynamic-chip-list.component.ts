@@ -39,6 +39,7 @@ import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Chip } from './chip';
+import { IconDirective } from '../directives/icon.directive';
 
 /**
  * This component shows dynamic list of chips which render depending on free space.
@@ -47,7 +48,7 @@ import { Chip } from './chip';
     selector: 'adf-dynamic-chip-list',
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
-    imports: [MatChipsModule, TranslatePipe, NgForOf, MatIconModule, NgIf, MatButtonModule],
+    imports: [MatChipsModule, TranslatePipe, NgForOf, MatIconModule, NgIf, MatButtonModule, IconDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {

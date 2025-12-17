@@ -30,7 +30,7 @@
                     class="mdl-button--icon"
                     (click)="onExpanderClicked(element)"
                 >
-                    <mat-icon> {{ element?.isExpanded ? 'expand_more' : 'expand_less' }} </mat-icon>
+                    <mat-icon [adf-icon]="element?.isExpanded ? 'expand_more' : 'expand_less'" />
                 </button>
             }
         </ng-template>
