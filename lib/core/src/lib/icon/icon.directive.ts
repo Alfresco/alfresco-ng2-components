@@ -24,7 +24,7 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class IconDirective implements OnChanges {
     private readonly matIcon = inject(MatIcon);
-    private readonly elementRef = inject(ElementRef);
+    private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
     private readonly aliasMap = inject(ICON_ALIAS_MAP_TOKEN, { optional: true });
 
     @Input() name: string;
@@ -40,6 +40,23 @@ export class IconDirective implements OnChanges {
     }
 
     private appendLigatureText() {
-        this.elementRef.nativeElement.appendChild(document.createTextNode(this.name));
+        this.resetSvg();
+
+        const element = this.elementRef.nativeElement;
+        const textNode = this.findTextNode(element);
+
+        if (textNode) {
+            textNode.nodeValue = this.name;
+        } else {
+            this.elementRef.nativeElement.appendChild(document.createTextNode(this.name));
+        }
+    }
+
+    private findTextNode(element: HTMLElement): ChildNode | undefined {
+        return Array.from(element.childNodes).find((node: ChildNode) => node.nodeType === Node.TEXT_NODE);
+    }
+
+    private resetSvg() {
+        this.matIcon.svgIcon = null;
     }
 }
