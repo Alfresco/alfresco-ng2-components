@@ -54,4 +54,3 @@ export * from './lib/search-ai/index';
 
 export * from './lib/content.module';
 export * from './lib/material.module';
-export * from './lib/testing/content.testing.module';

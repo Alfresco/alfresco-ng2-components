@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { ContentTestingModule, SearchFilterTabbedComponent, SearchFilterTabDirective } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Component } from '@angular/core';
+import { SearchFilterTabbedComponent } from './search-filter-tabbed.component';
+import { SearchFilterTabDirective } from './search-filter-tab.directive';
 
 @Component({
     selector: 'adf-search-filter-tabbed-test',
@@ -39,7 +40,7 @@ describe('SearchFilterTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [SearchFilterTabbedTestComponent, ContentTestingModule]
+            imports: [SearchFilterTabbedTestComponent]
         });
         searchFilterTabbedTestFixture = TestBed.createComponent(SearchFilterTabbedTestComponent);
     });
