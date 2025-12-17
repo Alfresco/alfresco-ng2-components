@@ -255,8 +255,8 @@ export class FormModel implements ProcessFormModel {
                 field.json.value = formValues[variableId] || formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
+            field.value = this.resolveExpressionString(field.value);
         }
-        field.value = this.resolveExpressionString(field.value);
     }
 
     private canOverrideFieldValueWithProcessValue(field: FormFieldModel, variableId: string, formValues: FormValues): boolean {
