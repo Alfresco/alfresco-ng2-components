@@ -203,18 +203,17 @@ describe('SearchCheckListComponent', () => {
         expect(checkedElements.length).toBe(0);
     });
 
-    it('should update query with startValue on init, if provided', () => {
+    it('should check the checkbox with startValue on init, if provided', () => {
         component.id = 'checkList';
         component.options = new SearchFilterList<SearchListOption>([
             { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
             { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
-        component.startValue = `TYPE:'cm:folder'`;
-        component.context.queryFragments[component.id] = 'query';
+        component.startValue = [`TYPE:'cm:folder'`];
         fixture.detectChanges();
-
-        expect(component.context.queryFragments[component.id]).toBe(`TYPE:'cm:folder'`);
-        expect(component.context.update).toHaveBeenCalled();
+        expect(component.options.items[0].checked).toBeTrue();
+        expect(component.options.items[1].checked).toBeFalse();
+        expect(component.isActive).toBeTrue();
     });
 
     it('should set query context as blank and not call query update, if no start value was provided', () => {

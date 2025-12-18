@@ -76,7 +76,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map((filtersQueries) => filtersQueries[this.id]),
+                map((filtersQueries) => filtersQueries?.[this.id]),
                 takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
@@ -99,6 +99,8 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     reset(updateContext = true) {
         this.value = '';
+        this.context.filterRawParams[this.id] = undefined;
+        this.context.queryFragments[this.id] = '';
         this.updateQuery(null, updateContext);
     }
 
@@ -111,7 +113,10 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     }
 
     private updateQuery(value: string, updateContext = true) {
-        this.context.filterRawParams[this.id] = value;
+        if (value !== null) {
+            this.context.filterRawParams[this.id] = value;
+        }
+
         this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';

@@ -93,7 +93,8 @@ export class DataTableCellComponent implements OnInit {
     constructor() {
         // Listen to locale changes and re-compute the title with the latest value
         effect(() => {
-            this.userPreferencesService.localeSignal();
+            // Read the signal value to track changes
+            this.userPreferencesService.localeSignal?.();
             // When locale changes, re-compute title using the stored latest value
             this.recomputeTitle();
         });

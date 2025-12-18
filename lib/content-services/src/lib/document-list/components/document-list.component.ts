@@ -77,7 +77,6 @@ import { PermissionStyleModel } from '../models/permissions-style.model';
 import { presetsDefaultModel } from '../models/preset.model';
 import { DocumentListService } from '../services/document-list.service';
 import { LockService } from '../services/lock.service';
-import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CommonModule } from '@angular/common';
@@ -108,13 +107,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     ],
     templateUrl: './document-list.component.html',
     styleUrls: ['./document-list.component.scss'],
-    providers: [
-        {
-            provide: ADF_DOCUMENT_PARENT_COMPONENT,
-            useExisting: DocumentListComponent
-        },
-        DataTableService
-    ],
+    providers: [DataTableService],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
@@ -380,6 +373,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     displayDragAndDropHint = true;
 
+    /**
+     * Indicates if the data is provided externally.
+     * If true the component won't fetch data itself
+     */
+    @Input()
+    isDataProvidedExternally = false;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();
@@ -605,7 +605,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
 
         if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            this.loadFolder();
+            !this.isDataProvidedExternally && this.loadFolder();
         }
 
         if (this.data) {
@@ -1031,6 +1031,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
         this.pagination.next(nodePaging.list.pagination);
+        this.setLoadingState(false);
     }
 
     updatePagination(requestPaginationModel: RequestPaginationModel) {
@@ -1046,6 +1047,16 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     onFilterSelectionChange(activeFilters: FilterSearch[]) {
         this.filterSelection.emit(activeFilters);
+    }
+
+    onFilterSearchResultsReady(nodePaging: NodePaging) {
+        this.node = nodePaging;
+        this.reload();
+    }
+
+    onFiltersCleared() {
+        this.node = null;
+        this.reload();
     }
 
     resetNewFolderPagination() {

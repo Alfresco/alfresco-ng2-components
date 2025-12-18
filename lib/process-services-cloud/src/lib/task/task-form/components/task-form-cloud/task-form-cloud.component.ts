@@ -107,6 +107,13 @@ export class TaskFormCloudComponent {
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
+    /**
+     * Toggle to enable parent visibility check for validation.
+     * When enabled, fields inside hidden groups/sections will skip validation.
+     */
+    @Input()
+    enableParentVisibilityCheck: boolean = false;
+
     /** Task details. */
     @Input()
     taskDetails: TaskDetailsCloudModel;
