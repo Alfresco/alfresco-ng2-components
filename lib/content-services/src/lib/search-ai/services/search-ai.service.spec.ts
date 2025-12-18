@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, Node, QuestionModel, QuestionRequest } from '@alfresco/js-api';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchAiService } from './search-ai.service';
 import { SearchAiInputState } from '../models/search-ai-input-state';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +26,7 @@ describe('SearchAiService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: []
         });
         service = TestBed.inject(SearchAiService);
     });

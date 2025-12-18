@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchPropertiesComponent } from './search-properties.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { MatOption } from '@angular/material/core';
 import { FileSizeUnit } from './file-size-unit.enum';
@@ -61,8 +60,8 @@ describe('SearchPropertiesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchPropertiesComponent]
-        }).compileComponents();
+            imports: [SearchPropertiesComponent]
+        });
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
         component = fixture.componentInstance;

@@ -20,12 +20,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
 import { UploadService } from '../../common/services/upload.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../../common/events/file.event';
-import { UnitTestingUtils } from '@alfresco/adf-core';
+import { NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 
 describe('UploadButtonComponent', () => {
     const file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
@@ -48,7 +47,7 @@ describe('UploadButtonComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule, UploadButtonComponent]
         });
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.inject(UploadService);

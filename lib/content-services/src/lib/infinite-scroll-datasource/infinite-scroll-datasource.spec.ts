@@ -21,7 +21,6 @@ import { Component, OnInit } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { from, Observable } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { InfiniteScrollDatasource } from './infinite-scroll-datasource';
 
 class TestData {
@@ -101,7 +100,7 @@ describe('InfiniteScrollDatasource', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, ScrollingModule, TestComponent]
+            imports: [ScrollingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

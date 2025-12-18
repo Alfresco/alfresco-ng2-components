@@ -17,7 +17,6 @@
 
 import { DEFAULT_DATETIME_FORMAT, SearchDatetimeRangeComponent } from './search-datetime-range.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { DateFnsUtils } from '@alfresco/adf-core';
 import { endOfMinute, isValid, startOfMinute } from 'date-fns';
@@ -33,7 +32,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchDatetimeRangeComponent]
+            imports: [SearchDatetimeRangeComponent]
         });
         fixture = TestBed.createComponent(SearchDatetimeRangeComponent);
         component = fixture.componentInstance;

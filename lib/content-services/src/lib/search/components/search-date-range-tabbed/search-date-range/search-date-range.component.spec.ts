@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchDateRangeComponent } from './search-date-range.component';
 import { addDays, endOfToday, format, parse, startOfYesterday, subDays } from 'date-fns';
 import { Validators } from '@angular/forms';
@@ -38,7 +37,7 @@ describe('SearchDateRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchDateRangeComponent]
+            imports: [SearchDateRangeComponent]
         });
 
         fixture = TestBed.createComponent(SearchDateRangeComponent);

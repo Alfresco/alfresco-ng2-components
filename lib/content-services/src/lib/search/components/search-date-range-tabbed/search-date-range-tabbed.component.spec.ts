@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
@@ -64,7 +63,7 @@ describe('SearchDateRangeTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
+            imports: [SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
             providers: [
                 { provide: SearchFilterTabbedComponent, useClass: MockSearchFilterTabbedComponent },
                 { provide: SearchDateRangeComponent, useClass: MockSearchDateRangeComponent }

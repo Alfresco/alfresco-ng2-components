@@ -16,16 +16,16 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { FacetField } from '../../../models/facet-field.interface';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
-import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFacetTabbedContentComponent', () => {
     let component: SearchFacetTabbedContentComponent;
@@ -37,8 +37,7 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(SearchFacetTabbedContentComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);

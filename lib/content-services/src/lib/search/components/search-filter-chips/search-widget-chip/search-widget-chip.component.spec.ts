@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchWidgetChipComponent } from './search-widget-chip.component';
 import { simpleCategories } from '../../../../mock';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
@@ -27,6 +26,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { provideRouter } from '@angular/router';
 
 describe('SearchWidgetChipComponent', () => {
     let loader: HarnessLoader;
@@ -39,8 +39,8 @@ describe('SearchWidgetChipComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatMenuModule, ContentTestingModule],
-            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
+            imports: [MatMenuModule, SearchWidgetChipComponent],
+            providers: [provideRouter([]), { provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchWidgetChipComponent);

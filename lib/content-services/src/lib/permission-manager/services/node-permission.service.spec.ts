@@ -29,7 +29,6 @@ import {
     fakeNodeWithoutSite
 } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
 describe('NodePermissionService', () => {
@@ -55,9 +54,6 @@ describe('NodePermissionService', () => {
     ];
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
         service = TestBed.inject(NodePermissionService);
         searchApiService = TestBed.inject(SearchService);
         nodeService = TestBed.inject(NodesApiService);

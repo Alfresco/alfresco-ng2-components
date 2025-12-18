@@ -18,9 +18,9 @@
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { addMinutes } from 'date-fns';
 import { Node, NodeEntry } from '@alfresco/js-api';
+import { MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 
 describe('NodeLockDialogComponent', () => {
     let fixture: ComponentFixture<NodeLockDialogComponent>;
@@ -67,7 +67,7 @@ describe('NodeLockDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NodeLockDialogComponent],
+            imports: [NodeLockDialogComponent, MatNativeDatetimeModule],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         fixture = TestBed.createComponent(NodeLockDialogComponent);

@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TreeViewComponent } from './tree-view.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TreeViewService } from '../services/tree-view.service';
 import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
@@ -74,7 +73,7 @@ describe('TreeViewComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TreeViewComponent]
+            imports: [TreeViewComponent]
         });
     });
 

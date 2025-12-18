@@ -18,11 +18,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SearchFacetFiltersService } from './search-facet-filters.service';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { EMPTY, of } from 'rxjs';
 import { CategoryService } from '../../category/services/category.service';
 import { FacetBucketSortBy, FacetBucketSortDirection } from '../models/facet-field.interface';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFacetFiltersService', () => {
     let searchFacetFiltersService: SearchFacetFiltersService;
@@ -31,8 +31,8 @@ describe('SearchFacetFiltersService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
             providers: [
+                provideRouter([]),
                 {
                     provide: CategoryService,
                     useValue: {

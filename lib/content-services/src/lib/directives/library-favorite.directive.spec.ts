@@ -19,9 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NotificationService } from '@alfresco/adf-core';
-import { ContentTestingModule } from '../testing/content.testing.module';
 
 @Component({
     imports: [LibraryFavoriteDirective],
@@ -43,7 +41,7 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TestComponent, LibraryFavoriteDirective, ContentTestingModule]
+            imports: [TestComponent, LibraryFavoriteDirective]
         });
         notificationService = TestBed.inject(NotificationService);
         fixture = TestBed.createComponent(TestComponent);

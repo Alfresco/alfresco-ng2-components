@@ -18,7 +18,6 @@
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { TreeViewService } from './tree-view.service';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { Node, NodePaging } from '@alfresco/js-api';
@@ -52,9 +51,6 @@ describe('TreeViewService', () => {
     });
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
         service = TestBed.inject(TreeViewService);
         nodeService = TestBed.inject(NodesApiService);
     });

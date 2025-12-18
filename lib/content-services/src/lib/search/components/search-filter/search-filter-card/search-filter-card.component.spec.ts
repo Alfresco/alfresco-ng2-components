@@ -16,8 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchFilterCardComponent } from './search-filter-card.component';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFilterCardComponent', () => {
     let component: SearchFilterCardComponent;
@@ -40,7 +40,8 @@ describe('SearchFilterCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFilterCardComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(SearchFilterCardComponent);
         component = fixture.componentInstance;

@@ -20,17 +20,18 @@ import { NodeCommentsComponent } from './node-comments.component';
 import { CommentsComponent } from '../../../../core/src/lib/comments/comments.component';
 import { CommentModel } from '../../../../core/src/lib/models';
 import { UnitTestingUtils } from '../../../../core/src/lib/testing/unit-testing-utils';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { provideApiTesting } from '../testing/providers';
 
 describe('NodeCommentsComponent', () => {
     let fixture: ComponentFixture<NodeCommentsComponent>;
     let component: NodeCommentsComponent;
     let testingUtils: UnitTestingUtils;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [NodeCommentsComponent, ContentTestingModule]
-        }).compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NodeCommentsComponent],
+            providers: [provideApiTesting()]
+        });
 
         fixture = TestBed.createComponent(NodeCommentsComponent);
         component = fixture.componentInstance;

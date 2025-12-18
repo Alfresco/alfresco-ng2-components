@@ -18,17 +18,18 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { NotificationService } from '@alfresco/adf-core';
+import { NoopAuthModule, NotificationService } from '@alfresco/adf-core';
 import { NodesApiService, RenditionService } from '../common';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { format, endOfDay } from 'date-fns';
 import { By } from '@angular/platform-browser';
 import { NodeEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
+import { provideApiTesting } from '../testing/providers';
 
 describe('ShareDialogComponent', () => {
     let loader: HarnessLoader;
@@ -55,8 +56,9 @@ describe('ShareDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, ShareDialogComponent],
+            imports: [NoopAuthModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatDialogModule, ShareDialogComponent],
             providers: [
+                provideApiTesting(),
                 { provide: NotificationService, useValue: notificationServiceMock },
                 {
                     provide: MatDialogRef,

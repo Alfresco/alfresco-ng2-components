@@ -17,7 +17,6 @@
 
 import { SearchCheckListComponent, SearchListOption } from './search-check-list.component';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
@@ -35,7 +34,7 @@ describe('SearchCheckListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchCheckListComponent]
         });
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;

@@ -18,7 +18,6 @@
 import { SearchSortingPickerComponent } from './search-sorting-picker.component';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchConfiguration } from '../../models';
 import { BaseQueryBuilderService } from '../../services/base-query-builder.service';
 
@@ -47,7 +46,7 @@ describe('SearchSortingPickerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [],
             providers: [
                 {
                     provide: SearchQueryBuilderService,

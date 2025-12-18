@@ -23,6 +23,7 @@ import {
     DataColumnComponent,
     DataColumnListComponent,
     DataTableComponent,
+    NoopAuthModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
     ThumbnailService,
@@ -31,7 +32,7 @@ import {
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -50,7 +51,6 @@ import {
     mockNodePagingWithPreselectedNodes,
     mockPreselectedNodes
 } from '../../mock';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { ImageResolver } from '../data/image-resolver.model';
 import { RowFilter } from '../data/row-filter.model';
@@ -62,7 +62,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { DocumentListComponent } from './document-list.component';
 import { CustomResourcesService, DocumentListService } from '../public-api';
-import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
 
 const mockDialog = {
@@ -99,8 +98,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, DocumentListComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [NoopAuthModule, DocumentListComponent],
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
         eventMock = {
@@ -2002,7 +2000,7 @@ describe('DocumentList', () => {
 });
 
 @Component({
-    imports: [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
+    imports: [DocumentListComponent, CustomLoadingContentTemplateDirective],
     template: `
         <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>
@@ -2029,7 +2027,7 @@ describe('DocumentListComponent rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, CustomTemplateComponent]
+            imports: [NoopAuthModule, CustomTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;

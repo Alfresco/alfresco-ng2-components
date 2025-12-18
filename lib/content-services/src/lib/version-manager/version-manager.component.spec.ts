@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, Version, VersionEntry, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { NodesApiService } from '../common/services/nodes-api.service';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
@@ -39,8 +38,7 @@ describe('VersionManagerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [NoopAuthModule, VersionManagerComponent]
         });
         fixture = TestBed.createComponent(VersionManagerComponent);
         component = fixture.componentInstance;

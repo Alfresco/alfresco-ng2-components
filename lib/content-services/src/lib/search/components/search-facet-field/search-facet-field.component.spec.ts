@@ -19,10 +19,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFacetFieldComponent } from './search-facet-field.component';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { FacetField } from '../../models/facet-field.interface';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { SearchFilterList } from '../../models/search-filter-list.model';
+import { provideRouter } from '@angular/router';
 
 describe('SearchFacetFieldComponent', () => {
     let component: SearchFacetFieldComponent;
@@ -30,15 +30,14 @@ describe('SearchFacetFieldComponent', () => {
     let searchFacetFiltersService: SearchFacetFiltersService;
     let queryBuilder: SearchQueryBuilderService;
 
-    beforeEach(async () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [SearchFacetFieldComponent],
+            providers: [provideRouter([])]
         });
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(SearchFacetFieldComponent);
         component = fixture.componentInstance;
         spyOn(searchFacetFiltersService, 'updateSelectedBuckets').and.stub();

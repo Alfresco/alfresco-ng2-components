@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Node } from '@alfresco/js-api';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
@@ -37,8 +36,7 @@ describe('Breadcrumb', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [NoopAuthModule],
             providers: [{ provide: DocumentListService, useValue: documentListService }]
         });
         fixture = TestBed.createComponent(BreadcrumbComponent);

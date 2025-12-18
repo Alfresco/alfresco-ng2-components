@@ -16,11 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { UserIconColumnComponent } from './user-icon-column.component';
 import { NodeEntry } from '@alfresco/js-api';
 import { UnitTestingUtils } from '@alfresco/adf-core';
 import { DebugElement } from '@angular/core';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('UserIconColumnComponent', () => {
     let fixture: ComponentFixture<UserIconColumnComponent>;
@@ -41,7 +41,7 @@ describe('UserIconColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [MatIconTestingModule, UserIconColumnComponent]
         });
         fixture = TestBed.createComponent(UserIconColumnComponent);
         component = fixture.componentInstance;

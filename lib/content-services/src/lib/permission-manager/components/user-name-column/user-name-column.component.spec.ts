@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { UserNameColumnComponent } from './user-name-column.component';
 import { NodeEntry } from '@alfresco/js-api';
 
@@ -37,7 +36,7 @@ describe('UserNameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [UserNameColumnComponent]
         });
         fixture = TestBed.createComponent(UserNameColumnComponent);
         component = fixture.componentInstance;

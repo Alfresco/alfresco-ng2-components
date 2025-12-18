@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { ContentIncludeQuery, GroupEntry } from '@alfresco/js-api';
 import { GroupService } from './group.service';
 
@@ -27,9 +26,6 @@ describe('GroupService', () => {
     let opts: ContentIncludeQuery;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
         service = TestBed.inject(GroupService);
         group = {
             entry: {

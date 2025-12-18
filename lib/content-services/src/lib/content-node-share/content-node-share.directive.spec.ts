@@ -19,9 +19,9 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ContentTestingModule } from '../testing/content.testing.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { NodeSharedDirective } from '@alfresco/adf-content-services';
+import { NodeSharedDirective } from './content-node-share.directive';
+import { NoopAuthModule } from '@alfresco/adf-core';
+import { MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 
 @Component({
     selector: 'adf-node-share-test-component',
@@ -46,13 +46,13 @@ class NodeShareTestComponent {
 describe('NodeSharedDirective', () => {
     let fixture: ComponentFixture<NodeShareTestComponent>;
     let component: NodeShareTestComponent;
-    let document: any;
+    let document: Document;
     let shareButtonElement;
     let selection;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ContentTestingModule, NodeShareTestComponent]
+            imports: [NoopAuthModule, NodeShareTestComponent, MatNativeDatetimeModule]
         });
         fixture = TestBed.createComponent(NodeShareTestComponent);
         document = TestBed.inject(DOCUMENT);

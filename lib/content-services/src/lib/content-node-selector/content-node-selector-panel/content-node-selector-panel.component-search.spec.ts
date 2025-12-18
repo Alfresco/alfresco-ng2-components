@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 import { of } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DocumentListService } from '../../document-list/services/document-list.service';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
 import { CustomResourcesService } from '../../document-list/services/custom-resources.service';
@@ -31,6 +30,8 @@ import { mockSearchRequest } from '../../mock/search-query.mock';
 import { SitesService } from '../../common/services/sites.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UnitTestingUtils } from '../../../../../core/src/lib/testing/unit-testing-utils';
+import { provideRouter } from '@angular/router';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -77,15 +78,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
         service.executed.next(searchResults);
     };
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        });
-    });
-
     describe('General component features', () => {
         beforeEach(async () => {
+            TestBed.configureTestingModule({
+                imports: [NoopAuthModule],
+                providers: [provideRouter([])]
+            });
             fixture = TestBed.createComponent(ContentNodeSelectorPanelComponent);
             component = fixture.componentInstance;
             component.debounceSearch = 0;

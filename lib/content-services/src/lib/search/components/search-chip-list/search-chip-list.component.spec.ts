@@ -19,11 +19,11 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipRemoveHarness } from '@angular/material/chips/testing';
 import { SearchChipListComponent } from './search-chip-list.component';
+import { provideRouter } from '@angular/router';
 
 @Component({
     selector: 'adf-test-component',
@@ -46,7 +46,8 @@ describe('SearchChipListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TestComponent]
+            imports: [TestComponent],
+            providers: [provideRouter([])]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

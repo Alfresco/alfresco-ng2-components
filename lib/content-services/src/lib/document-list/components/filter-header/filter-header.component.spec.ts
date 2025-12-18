@@ -19,10 +19,10 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTableComponent, DataSorting, PaginationModel } from '@alfresco/adf-core';
 import { SearchService } from '../../../search/services/search.service';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';
 import { FilterHeaderComponent } from './filter-header.component';
+import { provideRouter } from '@angular/router';
 
 describe('FilterHeaderComponent', () => {
     let fixture: ComponentFixture<FilterHeaderComponent>;
@@ -37,8 +37,8 @@ describe('FilterHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, FilterHeaderComponent],
-            providers: [{ provide: SearchService, useValue: searchMock }, DataTableComponent]
+            imports: [FilterHeaderComponent],
+            providers: [provideRouter([]), { provide: SearchService, useValue: searchMock }, DataTableComponent]
         });
         fixture = TestBed.createComponent(FilterHeaderComponent);
         component = fixture.componentInstance;

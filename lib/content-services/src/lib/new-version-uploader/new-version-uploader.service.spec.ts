@@ -20,7 +20,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BehaviorSubject, firstValueFrom, of, Subject } from 'rxjs';
 import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import {
     NewVersionUploaderData,
     NewVersionUploaderDataAction,
@@ -56,7 +55,7 @@ describe('NewVersionUploaderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TestDialogComponent],
+            imports: [TestDialogComponent],
             teardown: { destroyAfterEach: false }
         });
 

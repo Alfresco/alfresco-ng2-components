@@ -17,11 +17,11 @@
 
 import { DocumentListService } from './document-list.service';
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { CustomResourcesService } from './custom-resources.service';
 import { NodesApiService } from '../../common';
+import { provideApiTesting } from '../../testing/providers';
 
 declare let jasmine: any;
 
@@ -74,7 +74,7 @@ describe('DocumentListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            providers: [provideApiTesting()]
         });
         service = TestBed.inject(DocumentListService);
         customResourcesService = TestBed.inject(CustomResourcesService);

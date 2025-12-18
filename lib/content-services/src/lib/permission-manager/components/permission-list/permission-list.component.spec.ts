@@ -31,7 +31,6 @@ import {
     fakeSiteNodeResponse,
     fakeSiteRoles
 } from '../../../mock/permission-list.component.mock';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -41,8 +40,11 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { By } from '@angular/platform-browser';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ContentService } from '../../../common/services/content.service';
-import { AllowableOperationsEnum, NodePermissionsModel, PermissionContainerComponent } from '@alfresco/adf-content-services';
 import { DebugElement } from '@angular/core';
+import { AllowableOperationsEnum } from '../../../common';
+import { NodePermissionsModel } from '../../models/member.model';
+import { PermissionContainerComponent } from '../permission-container/permission-container.component';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('PermissionListComponent', () => {
     let loader: HarnessLoader;
@@ -60,7 +62,7 @@ describe('PermissionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         fixture = TestBed.createComponent(PermissionListComponent);
         component = fixture.componentInstance;

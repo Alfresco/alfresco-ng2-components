@@ -19,9 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject, throwError } from 'rxjs';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';
 import { Node } from '@alfresco/js-api';
+import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('NodePermissionDialogService', () => {
     let service: NodePermissionDialogService;
@@ -32,7 +32,7 @@ describe('NodePermissionDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [NoopAuthModule]
         });
         service = TestBed.inject(NodePermissionDialogService);
         materialDialog = TestBed.inject(MatDialog);

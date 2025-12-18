@@ -21,9 +21,8 @@ import { AppConfigService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { FacetField } from '../models/facet-field.interface';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { skip } from 'rxjs/operators';
 
 const buildConfig = (searchSettings = {}): AppConfigService => {
@@ -40,8 +39,7 @@ describe('SearchQueryBuilder (runtime config)', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: ADF_SEARCH_CONFIGURATION, useValue: runtimeConfig }]
+            providers: [provideRouter([]), { provide: ADF_SEARCH_CONFIGURATION, useValue: runtimeConfig }]
         });
     });
 
@@ -79,7 +77,7 @@ describe('SearchQueryBuilder', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            providers: [provideRouter([])]
         });
         router = TestBed.inject(Router);
         activatedRoute = TestBed.inject(ActivatedRoute);

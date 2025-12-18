@@ -19,7 +19,6 @@ import { ReplaySubject } from 'rxjs';
 import { SearchNumberRangeComponent } from './search-number-range.component';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchNumberRangeComponent', () => {
     let component: SearchNumberRangeComponent;
@@ -27,7 +26,7 @@ describe('SearchNumberRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchNumberRangeComponent]
+            imports: [SearchNumberRangeComponent]
         });
         fixture = TestBed.createComponent(SearchNumberRangeComponent);
         component = fixture.componentInstance;
