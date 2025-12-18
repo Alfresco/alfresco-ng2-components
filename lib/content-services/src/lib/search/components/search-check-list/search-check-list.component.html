@@ -1,4 +1,4 @@
-<div class="checklist"
+<fieldset class="adf-search-checklist"
      role="group">
     <mat-checkbox
         *ngFor="let option of options"
@@ -12,7 +12,7 @@
         </div>
 
     </mat-checkbox>
-</div>
+</fieldset>
 
 <div class="adf-facet-buttons" *ngIf="options.fitsPage && !settings?.hideDefaultAction">
     <button mat-button color="primary" (click)="clear()">
