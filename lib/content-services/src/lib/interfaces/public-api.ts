@@ -19,4 +19,3 @@ export * from './library-entity.interface';
 export * from './restore-message-model.interface';
 export * from './library-membership-error-event.interface';
 export * from './library-membership-toggle-event.interface';
-export * from './base-card-view-content-update.interface';

@@ -8,7 +8,6 @@ Last reviewed: 2022-11-25
 # [Card View Content Update Service](../../../lib/content-services/src/lib/common/services/card-view-content-update.service.ts "Defined in card-view-content-update.service.ts")
 
 Manages Card View properties in the content services environment. 
-Implements [`BaseCardViewContentUpdate`](../../../lib/content-services/src/lib/interfaces/base-card-view-content-update.interface.ts).
 
 ## Class members
 
