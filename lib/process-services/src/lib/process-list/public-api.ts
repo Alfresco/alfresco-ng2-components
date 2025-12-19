@@ -15,29 +15,25 @@
  * limitations under the License.
  */
 
-// component
 import { ProcessInstanceListComponent } from './components/process-list/process-list.component';
 import { ProcessFiltersComponent } from './components/process-filters/process-filters.component';
 import { ProcessInstanceDetailsComponent } from './components/process-instance-details/process-instance-details.component';
 import { ProcessInstanceHeaderComponent } from './components/process-instance-header/process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './components/process-instance-tasks/process-instance-tasks.component';
 import { StartProcessInstanceComponent } from './components/start-process/start-process.component';
-import { ProcessAuditDirective } from './components/process-audit/process-audit.directive';
 
 export * from './components/process-filters/process-filters.component';
 export * from './components/process-instance-details/process-instance-details.component';
-export * from './components/process-audit/process-audit.directive';
 export * from './components/process-instance-header/process-instance-header.component';
 export * from './components/process-instance-tasks/process-instance-tasks.component';
 export * from './components/process-list/process-list.component';
 export * from './components/start-process/start-process.component';
 
-// services
 export * from './services/process.service';
 export * from './services/process-filter.service';
 
+/* @deprecated use individual exports */
 export const PROCESS_LIST_DIRECTIVES = [
-    ProcessAuditDirective,
     ProcessInstanceListComponent,
     ProcessFiltersComponent,
     ProcessInstanceDetailsComponent,
