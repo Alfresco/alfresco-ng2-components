@@ -57,6 +57,9 @@ export class SearchWidgetChipComponent implements AfterViewInit {
     @ViewChild('menuContainer', { static: false })
     menuContainer: ElementRef;
 
+    @ViewChild('menuTrigger', { read: ElementRef, static: false })
+    menuTriggerEl: ElementRef;
+
     @ViewChild('menuTrigger', { static: false })
     menuTrigger: MatMenuTrigger;
 
@@ -78,6 +81,10 @@ export class SearchWidgetChipComponent implements AfterViewInit {
             .subscribe(() => {
                 this.cd.detectChanges();
             });
+
+        if (this.menuTriggerEl) {
+            this.menuTriggerEl.nativeElement.setAttribute('aria-haspopup', 'dialog');
+        }
     }
 
     onMenuOpen() {

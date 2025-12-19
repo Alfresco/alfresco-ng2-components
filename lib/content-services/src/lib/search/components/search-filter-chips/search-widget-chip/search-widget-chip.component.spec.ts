@@ -105,4 +105,8 @@ describe('SearchWidgetChipComponent', () => {
         expect(focusTrap.destroy).toHaveBeenCalled();
         expect(component.focusTrap).toBeNull();
     });
+
+    it('should set aria-haspopup to "dialog" for matMenu trigger on initialization', () => {
+        expect(component.menuTriggerEl.nativeElement.getAttribute('aria-haspopup')).toBe('dialog');
+    });
 });
