@@ -47,7 +47,7 @@
     "@angular/platform-browser": "19.2.17",
     "@angular/platform-browser-dynamic": "19.2.17",
     "@angular/router": "19.2.17",
-    "@apollo/client": "3.13.1",
+    "@apollo/client": "4.0.11",
     "@cspell/eslint-plugin": "8.16.1",
     "@mat-datetimepicker/core": "15.0.2",
     "@ngx-translate/core": "^16.0.4",
