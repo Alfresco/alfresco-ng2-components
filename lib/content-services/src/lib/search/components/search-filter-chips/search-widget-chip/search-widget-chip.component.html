@@ -38,7 +38,7 @@
     <div
         [attr.aria-label]="category.name | translate"
         [attr.aria-labelledby]="category.name | translate"
-        role="dialog"
+        [attr.role]="'dialog'"
         aria-modal="false"
         #menuContainer
         [attr.data-automation-id]="'search-field-' + category.name"
