@@ -871,6 +871,17 @@ describe('SearchQueryBuilder', () => {
             ]);
             service.removeUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toLeave', count: 1 });
         });
+
+        it('should emit updated list of UserFacetBuckets on resetting the bucket', (done) => {
+            const service = TestBed.inject(SearchQueryBuilderService);
+
+            service.userFacetBucketsUpdate.pipe(skip(1)).subscribe((buckets) => {
+                expect(buckets).toEqual({});
+                done();
+            });
+
+            service.resetUserFacetBucket();
+        });
     });
 
     describe('queryFragments proxy set up', () => {
