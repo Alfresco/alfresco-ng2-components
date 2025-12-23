@@ -50,12 +50,8 @@
             margin-top: 6px;
         }
 
-        #{ms.$mat-form-field-infix} {
-            padding-top: 0;
-
-            .adf-property-value {
-                margin-left: 0;
-            }
+        .adf-property-value {
+            margin-left: 0;
         }
     }
 
@@ -73,10 +69,6 @@
                 cursor: pointer;
             }
         }
-    }
-
-    .adf-textitem-default-value {
-        color: var(--adf-theme-foreground-text-color-064);
     }
 
     .adf-property-value-not-editable {

@@ -44,11 +44,10 @@ export abstract class BaseCardView<T extends CardViewItem> {
     }
 
     get isReadonlyProperty(): boolean {
-        return this.editable && !this.property.editable;
+        return !this.property.editable;
     }
 
     get hasIcon(): boolean {
         return !!this.property.icon;
     }
-
 }

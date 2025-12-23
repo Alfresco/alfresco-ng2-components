@@ -216,11 +216,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private toggleAnimation() {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-left': 13 } }
+                ? { value: 'active', params: { 'margin-left': 0 } }
                 : { value: 'inactive', params: { transform: 'translateX(100%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive'
-                ? { value: 'active', params: { 'margin-right': 13 } }
+                ? { value: 'active', params: { 'margin-right': 0 } }
                 : { value: 'inactive', params: { transform: 'translateX(-100%)' } };
         }
     }

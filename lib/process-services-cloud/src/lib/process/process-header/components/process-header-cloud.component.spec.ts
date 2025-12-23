@@ -110,7 +110,7 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-startDate"] .adf-property-value'));
+        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-date-value-startDate"]'));
         expect(valueEl.nativeElement.innerText.trim()).toBe('Mar 9, 2019');
     });
 
@@ -120,7 +120,7 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-lastModified"] .adf-property-value'));
+        const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-date-value-lastModified"]'));
         expect(valueEl.nativeElement.innerText.trim()).toBe('Mar 9, 2019');
     });
 
@@ -212,8 +212,8 @@ describe('ProcessHeaderCloudComponent', () => {
         it('should format the dates based on app config format configuration', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
-            const startedDateElement = fixture.debugElement.query(By.css('[data-automation-id="header-startDate"] .adf-property-value'));
-            const lastModifiedElement = fixture.debugElement.query(By.css('[data-automation-id="header-lastModified"] .adf-property-value'));
+            const startedDateElement = fixture.debugElement.query(By.css('[data-automation-id="card-date-value-startDate"]'));
+            const lastModifiedElement = fixture.debugElement.query(By.css('[data-automation-id="card-date-value-lastModified"]'));
 
             expect(component.dateFormat).toEqual('full');
             expect(startedDateElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 12:00:00 AM GMT+00:00');

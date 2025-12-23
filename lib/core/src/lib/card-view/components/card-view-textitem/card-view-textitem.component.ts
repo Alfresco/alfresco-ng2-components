@@ -38,7 +38,6 @@ const templateTypes = {
     clickableTemplate: 'clickableTemplate',
     multilineTemplate: 'multilineTemplate',
     chipsTemplate: 'chipsTemplate',
-    emptyTemplate: 'emptyTemplate',
     defaultTemplate: 'defaultTemplate'
 };
 
@@ -73,9 +72,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
-
-    @Input()
-    displayLabelForChips = false;
 
     editedValue: string | string[];
     errors: CardViewItemValidator[];
@@ -128,7 +124,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 this.templateType = templateTypes.defaultTemplate;
             }
         } else {
-            this.templateType = templateTypes.emptyTemplate;
+            this.templateType = templateTypes.defaultTemplate;
         }
     }
 
@@ -251,10 +247,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     get isChipViewEnabled(): boolean {
         return this.property.multivalued && this.useChipsForMultiValueProperty;
-    }
-
-    get showLabelForChips(): boolean {
-        return this.displayLabelForChips;
     }
 
     private prepareIntLongValue(value: string): string {

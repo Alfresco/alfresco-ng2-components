@@ -82,8 +82,6 @@ describe('CardViewSelectItemComponent', () => {
     });
 
     describe('Rendering', () => {
-        const getReadOnlyElement = (): DebugElement => testingUtils.getByDataAutomationClass('read-only-value');
-
         it('should render custom label when editable is set to false', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
@@ -93,7 +91,7 @@ describe('CardViewSelectItemComponent', () => {
             expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Select box label');
         });
 
-        it('should render readOnly value is editable property is FALSE', () => {
+        it('should render disable select when editable property is FALSE', async () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
                 editable: false
@@ -101,19 +99,9 @@ describe('CardViewSelectItemComponent', () => {
 
             component.ngOnChanges({});
             fixture.detectChanges();
+            const selectBox = await testingUtils.getMatSelectByDataAutomationId('select-box');
 
-            expect(getReadOnlyElement()).not.toBeNull();
-            expect(getSelectElement()).toBeNull();
-        });
-
-        it('should read only value have title', () => {
-            component.property = new CardViewSelectItemModel({
-                ...mockDefaultProps,
-                editable: false
-            });
-
-            fixture.detectChanges();
-            expect(getReadOnlyElement().nativeElement.title).toBe('Two');
+            expect(await selectBox.isDisabled()).toBe(true);
         });
 
         it('should be possible edit selectBox item', async () => {

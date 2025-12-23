@@ -355,7 +355,7 @@ describe('CardViewTextItemComponent', () => {
             expect(await testingUtils.checkIfMatChipGridExists()).toBe(false);
         });
 
-        it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
+        it('should display the label for multi-valued chips', async () => {
             const cardViewTextItemObject = {
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],
@@ -367,7 +367,6 @@ describe('CardViewTextItemComponent', () => {
 
             component.editable = true;
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
-            component.displayLabelForChips = true;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
@@ -376,37 +375,14 @@ describe('CardViewTextItemComponent', () => {
             expect(testingUtils.getInnerTextByCSS('.adf-property-label')).toBe('Text label');
         });
 
-        it('should NOT display the label for multi-valued chips if displayLabelForChips is false', async () => {
-            const cardViewTextItemObject = {
-                label: 'Text label',
-                value: ['item1', 'item2', 'item3'],
-                key: 'textkey',
-                default: ['FAKE-DEFAULT-KEY'],
-                editable: true,
-                multivalued: true
-            };
-
-            component.editable = true;
-            component.property = new CardViewTextItemModel(cardViewTextItemObject);
-            component.displayLabelForChips = false;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(testingUtils.getByCSS('.adf-property-label')).toBeNull();
-        });
-
-        it('should return true when editable is true, and property.editable is false', () => {
-            component.editable = true;
+        it('should return true when property.editable is false', () => {
             component.property.editable = false;
             fixture.detectChanges();
             expect(component.isReadonlyProperty).toBe(true);
         });
 
-        it('should return false when editable is false, and property.editable is false', () => {
-            component.editable = false;
-            component.property.editable = false;
+        it('should return false when and property.editable is true', () => {
+            component.property.editable = true;
             fixture.detectChanges();
             expect(component.isReadonlyProperty).toBe(false);
         });
@@ -595,7 +571,7 @@ describe('CardViewTextItemComponent', () => {
             );
         });
 
-        it('should input be readonly if item it NOT editable', async () => {
+        it('should input be disabled if item it NOT editable', async () => {
             component.editable = false;
             component.property.clickable = true;
             component.ngOnChanges({});
@@ -605,7 +581,7 @@ describe('CardViewTextItemComponent', () => {
             const inputHarness = await testingUtils.getMatInputByDataAutomationId(`card-textitem-value-${component.property.key}`);
 
             expect(component.isEditable).toBe(false);
-            expect(await inputHarness.isReadonly()).toBe(true);
+            expect(await inputHarness.isDisabled()).toBe(true);
         });
     });
 

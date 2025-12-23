@@ -26,7 +26,6 @@ import { PROCESS_LIST_DIRECTIVES } from './process-list';
 import { TASK_LIST_DIRECTIVES } from './task-list';
 import { FORM_DIRECTIVES } from './form';
 import { TASK_COMMENTS_DIRECTIVES } from './task-comments';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 /**
  * @deprecated use provider api instead, for example:
@@ -50,10 +49,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
         ...PEOPLE_DIRECTIVES,
         ...FORM_DIRECTIVES
     ],
-    providers: [
-        provideTranslations('adf-process-services', 'assets/adf-process-services'),
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
-    ],
+    providers: [provideTranslations('adf-process-services', 'assets/adf-process-services')],
     exports: [
         ...PROCESS_COMMENTS_DIRECTIVES,
         ...PROCESS_LIST_DIRECTIVES,

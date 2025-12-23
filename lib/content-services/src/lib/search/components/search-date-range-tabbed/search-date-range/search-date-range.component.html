@@ -13,7 +13,7 @@
               {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
           </span>
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field" subscriptSizing="dynamic" floatLabel="always">
+      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
         <mat-label id="adf-search-date-range-quantity-label">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.QUANTITY' | translate }}</mat-label>
         <input matInput [attr.aria-label]="'SEARCH.DATE_RANGE_ADVANCED.ARIA_LABEL.NUMBER_INPUT' | translate"
                aria-labelledby="adf-search-date-range-quantity-label"
@@ -22,7 +22,7 @@
                (keydown)="preventIncorrectNumberCharacters($event)">
         <mat-error *ngIf="form.controls.inLastValue.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.IN_LAST' | translate }}</mat-error>
       </mat-form-field>
-      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-form-field-select" subscriptSizing="dynamic">
+      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-form-field-select">
         <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate }}</mat-label>
         <mat-select formControlName="inLastValueType" data-automation-id="date-range-in-last-dropdown">
           <mat-option data-automation-id="date-range-in-last-option-days" [value]="InLastDateType.DAYS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.DAYS' | translate }}</mat-option>
@@ -39,7 +39,7 @@
             {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
         </span>
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field" subscriptSizing="dynamic" floatLabel="always">
+      <mat-form-field class="adf-search-date-range-form-field">
         <mat-label
             aria-hidden="true"
             id="adf-search-date-range-between-range-label">

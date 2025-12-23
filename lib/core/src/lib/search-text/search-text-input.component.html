@@ -3,7 +3,7 @@
         [@transitionMessages]="subscriptAnimationState"
         (@transitionMessages.done)="applySearchFocus($event)">
         <button mat-icon-button
-                *ngIf="expandable"
+                *ngIf="expandable && !isSearchBarActive()"
                 id="adf-search-button"
                 class="adf-search-button"
                 [ngClass]="{'adf-search-button-inactive': subscriptAnimationState.value === 'inactive'}"
@@ -13,7 +13,7 @@
             <mat-icon [attr.aria-label]="'CORE.SEARCH.BUTTON.ARIA-LABEL' | translate" adf-icon="search" />
         </button>
         <mat-form-field class="adf-input-form-field-divider" [hintLabel]="hintLabel">
-            <mat-label *ngIf='label'>{{label}}</mat-label>
+            <mat-label>{{label}}</mat-label>
             <input matInput
                    #searchInput
                    [attr.aria-label]="'CORE.SEARCH.INPUT.ARIA-LABEL' | translate"

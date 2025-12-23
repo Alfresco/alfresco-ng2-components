@@ -5,21 +5,13 @@
         padding: 0;
         overflow: unset;
 
-        #{ms.$mat-form-field-infix} {
-            padding-bottom: 3.5px;
-        }
-
-        #{ms.$mat-form-field-hide-placeholder} {
-            #{ms.$mat-floating-label} {
-                padding-top: 20px;
-            }
-        }
-
         #{ms.$mat-form-field-hint-wrapper} {
             padding-left: 0;
-            margin-left: -2px;
             color: var(--adf-theme-foreground-secondary-text-color);
-            font-size: 10.5px;
+        }
+
+        .adf-folder-dialog-form-field {
+            margin-bottom: 15px;
         }
     }
 

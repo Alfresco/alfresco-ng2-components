@@ -36,62 +36,21 @@ h2.adf-search-results-label {
     }
 
     &-document-list-container {
-        margin-top: 16px;
         width: 100%;
     }
 
     &-content {
-        #{ms.$mat-input-element} {
-            &:focus::placeholder {
-                color: var(--theme-primary-color);
-            }
-        }
-
-        #{ms.$mat-form-field-wrapper} {
-            #{ms.$mat-form-field-flex} {
-                align-items: center;
-
-                #{ms.$mat-form-field-infix} {
-                    padding-bottom: 0;
-                }
-            }
-        }
-
-        .adf-sites-dropdown-form-field {
-            label {
-                &#{ms.$mat-form-field-label} {
-                    top: 32px;
-                }
-            }
-        }
-
-        #{ms.$mat-form-field-subscript-wrapper} {
-            height: 16px;
-        }
-
-        padding-top: 0;
+        padding-top: 10px;
 
         &-input {
             width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
 
             .adf-content-node-selector-content-input-icon:is(mat-icon) {
                 color: var(--adf-theme-foreground-icon-color-054);
-                padding: 0 0 8px;
-                width: 1em;
-                height: 1em;
-                font-size: 20px;
             }
 
             .adf-content-node-selector-search-clear-button {
-                padding: 0;
-                width: 20px;
-                height: 28px;
-
-                &:focus {
-                    outline-offset: -1.5px;
-                }
-
                 .adf-content-node-selector-content-input-icon:is(mat-icon) {
                     cursor: pointer;
 
@@ -100,10 +59,6 @@ h2.adf-search-results-label {
                     }
                 }
             }
-
-            #{ms.$mat-form-field-subscript-wrapper} {
-                display: none;
-            }
         }
 
         .adf-site-dropdown-container {
@@ -111,6 +66,7 @@ h2.adf-search-results-label {
 
             .adf-sites-dropdown-form-field {
                 width: 100%;
+                margin-bottom: 15px;
             }
         }
     }

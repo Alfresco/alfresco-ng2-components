@@ -305,18 +305,6 @@ describe('ShareDialogComponent', () => {
         );
     });
 
-    it('should not display floating label for public link field', () => {
-        component.data = {
-            node,
-            baseShareUrl: 'some-url/'
-        };
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-public-link-field"]')).componentInstance.floatLabel).toBe(
-            'always'
-        );
-    });
-
     describe('datetimepicker type', () => {
         beforeEach(() => {
             spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());

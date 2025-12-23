@@ -28,6 +28,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '../../../icon/icon.module';
 
 @Component({
@@ -42,7 +44,9 @@ import { IconModule } from '../../../icon/icon.module';
         MatCheckboxModule,
         ColumnsSearchFilterPipe,
         MatSelectionList,
-        MatListOption
+        MatListOption,
+        MatFormFieldModule,
+        MatInputModule
     ],
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],

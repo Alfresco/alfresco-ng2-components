@@ -13,21 +13,10 @@ adf-tags-creator {
     .adf-tag-name-field[hidden] {
         display: flex;
         flex-direction: column;
-        margin-right: 12px;
     }
 
-    .adf-tag-search-field {
-        background: var(--adf-metadata-buttons-background-color);
-        border-radius: 12px;
-        padding: 5px 6px;
-        border: none;
-        outline: none;
-        font: inherit;
-        color: currentcolor;
-        margin: 0;
-        vertical-align: bottom;
-        text-align: inherit;
-        box-sizing: content-box;
+    .adf-tag-name-field {
+        margin-top: 10px;
     }
 
     .adf-create-tag-label {

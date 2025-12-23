@@ -184,7 +184,7 @@ describe('TaskHeaderComponent', () => {
         await fixture.whenStable();
 
         const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
-        expect(datePicker).toBeNull();
+        expect(datePicker.classes['cdk-visually-hidden']).toBeTrue();
     });
 
     it('should set editable to true if the task has not completed yet', async () => {

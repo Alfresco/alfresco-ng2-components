@@ -93,21 +93,19 @@ describe('ColumnsSelectorComponent', () => {
 
     afterEach(() => fixture.destroy());
 
-    it('should clear search after closing menu', fakeAsync(() => {
+    it('should clear search after closing menu', fakeAsync(async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        let searchInput = testingUtils.getByCSS('.adf-columns-selector-search-input').nativeElement;
-        testingUtils.fillInputByCSS('.adf-columns-selector-search-input', 'TEST');
+        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', 'TEST');
 
         tick(300);
-        expect(searchInput.value).toBe('TEST');
+        expect(await testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input')).toBe('TEST');
 
         menuClosedTrigger.next();
         tick(300);
-        searchInput = testingUtils.getByCSS('.adf-columns-selector-search-input').nativeElement;
 
-        expect(searchInput.value).toBe('');
+        expect(await testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input')).toBe('');
     }));
 
     it('should list only columns with title', async () => {
@@ -130,7 +128,7 @@ describe('ColumnsSelectorComponent', () => {
         fixture.detectChanges();
         menuOpenedTrigger.next();
 
-        testingUtils.fillInputByCSS('.adf-columns-selector-search-input', inputColumns[0].title);
+        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', inputColumns[0].title);
 
         tick(400);
         fixture.detectChanges();

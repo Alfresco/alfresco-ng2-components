@@ -246,7 +246,7 @@
                         </div>
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <div *ngIf="!showGroup(group) && group.editable && editedPanelTitle !== group.title" class="adf-metadata-no-item-added">
+                <div *ngIf="!showGroup(group) && !displayEmpty && group.editable && editedPanelTitle !== group.title" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate : { groupTitle: group.title | translate } }}
                 </div>
                 <adf-card-view
@@ -256,8 +256,7 @@
                     [displayEmpty]="displayEmpty"
                     [copyToClipboardAction]="copyToClipboardAction"
                     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
-                    [multiValueSeparator]="multiValueSeparator"
-                    [displayLabelForChips]="true" />
+                    [multiValueSeparator]="multiValueSeparator" />
             </mat-expansion-panel>
         </div>
     </ng-container>

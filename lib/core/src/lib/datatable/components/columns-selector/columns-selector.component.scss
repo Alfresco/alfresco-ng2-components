@@ -83,33 +83,9 @@ adf-datatable-column-selector {
             margin: 16px 0;
         }
 
-        &-search-input-container {
-            @include adf-columns-selector-side-padding;
-
-            position: relative;
+        &-search-input-form {
             display: flex;
-            align-items: center;
-            margin-bottom: 9px;
-        }
-
-        &-search-input {
-            padding: 10px 10px 10px 29px;
-            width: 100%;
-            outline: 0;
-            border-radius: 6px;
-            border: 1px solid var(--theme-background-color);
-            background: var(--theme-background-color);
-
-            &:focus {
-                outline: none;
-            }
-        }
-
-        &-search-input-icon {
-            position: absolute;
-            left: 17px;
-            top: 10px;
-            font-size: var(--theme-adf-icon-1-font-size);
+            padding: 10px 12px 0;
         }
     }
 }
