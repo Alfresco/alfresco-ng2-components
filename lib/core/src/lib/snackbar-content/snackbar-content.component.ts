@@ -21,10 +21,11 @@ import { SnackBarData } from './snack-bar-data';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { IconDirective } from '../directives/icon.directive';
 
 @Component({
     selector: 'adf-snackbar-content',
-    imports: [MatIconModule, TranslatePipe, MatButtonModule],
+    imports: [MatIconModule, TranslatePipe, MatButtonModule, IconDirective],
     templateUrl: './snackbar-content.component.html',
     styleUrls: ['./snackbar-content.component.scss'],
     host: {
@@ -32,7 +33,10 @@ import { MatButtonModule } from '@angular/material/button';
     }
 })
 export class SnackbarContentComponent {
-    constructor(public snackBarRef: MatSnackBarRef<SnackbarContentComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData) {
+    constructor(
+        public snackBarRef: MatSnackBarRef<SnackbarContentComponent>,
+        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
+    ) {
         if (!data) {
             this.data = { message: '' };
         }

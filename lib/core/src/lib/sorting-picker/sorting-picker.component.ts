@@ -22,10 +22,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { IconDirective } from '../directives/icon.directive';
 
 @Component({
     selector: 'adf-sorting-picker',
-    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, MatButtonModule, MatIconModule, IconDirective],
     templateUrl: './sorting-picker.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sorting-picker' }

@@ -43,6 +43,7 @@ import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FocusKeyManager } from '@angular/cdk/a11y';
+import { IconDirective } from '../../directives/icon.directive';
 
 @Component({
     selector: 'adf-notification-history',
@@ -59,7 +60,8 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
         NgForOf,
         TimeAgoPipe,
         InitialUsernamePipe,
-        MatSnackBarModule
+        MatSnackBarModule,
+        IconDirective
     ],
     encapsulation: ViewEncapsulation.None
 })

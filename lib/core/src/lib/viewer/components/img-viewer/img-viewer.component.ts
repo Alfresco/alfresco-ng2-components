@@ -37,13 +37,14 @@ import Cropper from 'cropperjs';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
 import { ToolbarComponent } from '../../../toolbar';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-img-viewer',
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },
-    imports: [ToolbarComponent, TranslatePipe, MatIconModule, MatButtonModule, NgIf],
+    imports: [ToolbarComponent, TranslatePipe, MatIconModule, MatButtonModule, NgIf, IconDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {

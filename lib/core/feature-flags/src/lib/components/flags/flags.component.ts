@@ -38,6 +38,7 @@ import { FlagsOverrideComponent } from '../feature-override-indicator.component'
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconDirective } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-feature-flags-overrides',
@@ -52,7 +53,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatButtonModule,
         MatInputModule,
         MatDialogModule,
-        TranslatePipe
+        TranslatePipe,
+        IconDirective
     ],
     templateUrl: './flags.component.html',
     styleUrls: ['./flags.component.scss'],

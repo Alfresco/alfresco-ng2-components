@@ -24,10 +24,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconDirective } from '../../../directives/icon.directive';
 
 @Component({
     selector: 'adf-layout-header',
-    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslatePipe],
+    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslatePipe, IconDirective],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,

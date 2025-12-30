@@ -39,6 +39,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconDirective } from '../directives/icon.directive';
 
 export type PaginationAction = 'NEXT_PAGE' | 'PREV_PAGE' | 'CHANGE_PAGE_SIZE' | 'CHANGE_PAGE_NUMBER';
 
@@ -57,7 +58,7 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule, MatMenuModule]
+    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule, MatMenuModule, IconDirective]
 })
 export class PaginationComponent implements OnInit, PaginationComponentInterface {
     private _pagination: PaginationModel;

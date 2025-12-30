@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconDirective } from '../../../directives/icon.directive';
 
 declare const pdfjsLib: any;
 
@@ -31,13 +32,26 @@ declare const pdfjsLib: any;
     selector: 'adf-pdf-viewer-password-dialog',
     templateUrl: './pdf-viewer-password-dialog.html',
     styleUrls: ['./pdf-viewer-password-dialog.scss'],
-    imports: [MatDialogModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, NgIf, MatButtonModule],
+    imports: [
+        MatDialogModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        TranslatePipe,
+        NgIf,
+        MatButtonModule,
+        IconDirective
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
     passwordFormControl: UntypedFormControl;
 
-    constructor(private dialogRef: MatDialogRef<PdfPasswordDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+    constructor(
+        private dialogRef: MatDialogRef<PdfPasswordDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {}
 
     ngOnInit() {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);

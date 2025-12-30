@@ -18,7 +18,7 @@
                                 data-automation-id="adf-toolbar-left-sidebar"
                                 [color]="showLeftSidebar ? 'accent' : null"
                                 (click)="toggleLeftSidebar()">
-                            <mat-icon>info_outline</mat-icon>
+                            <mat-icon adf-icon="info_outline" />
                         </button>
                     </ng-container>
 
@@ -29,7 +29,7 @@
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                             (click)="onClose()">
-                        <mat-icon>close</mat-icon>
+                        <mat-icon adf-icon="close" />
                     </button>
                 </adf-toolbar-title>
 
@@ -40,7 +40,7 @@
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.PREV_FILE' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.PREV_FILE' | translate }}"
                             (click)="onNavigateBeforeClick($event)">
-                        <mat-icon>navigate_before</mat-icon>
+                        <mat-icon adf-icon="navigate_before" />
                     </button>
                     <img class="adf-viewer__mimeicon"
                          [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
@@ -66,7 +66,7 @@
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.NEXT_FILE' | translate }}"
                             (click)="onNavigateNextClick($event)">
-                        <mat-icon>navigate_next</mat-icon>
+                        <mat-icon adf-icon="navigate_next" />
                     </button>
                 </div>
 
@@ -79,7 +79,7 @@
                             [matMenuTriggerFor]="mnuOpenWith"
                             data-automation-id="adf-toolbar-open-with">
                         <span>{{ 'ADF_VIEWER.ACTIONS.OPEN_WITH' | translate }}</span>
-                        <mat-icon>arrow_drop_down</mat-icon>
+                        <mat-icon adf-icon="arrow_drop_down" />
                     </button>
                     <mat-menu #mnuOpenWith="matMenu"
                               [overlapTrigger]="false">
@@ -100,7 +100,7 @@
                         title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
                         data-automation-id="adf-toolbar-fullscreen"
                         (click)="enterFullScreen()">
-                    <mat-icon>fullscreen</mat-icon>
+                    <mat-icon adf-icon="fullscreen" />
                 </button>
 
                 <ng-container *ngIf="allowRightSidebar && !hideInfoButton">
@@ -113,7 +113,7 @@
                             data-automation-id="adf-toolbar-sidebar"
                             [color]="showRightSidebar ? 'accent' : null"
                             (click)="toggleRightSidebar()">
-                        <mat-icon>info_outline</mat-icon>
+                        <mat-icon adf-icon="info_outline" />
                     </button>
 
                 </ng-container>
@@ -125,7 +125,7 @@
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
                             data-automation-id="adf-toolbar-more-actions">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon adf-icon="more_vert" />
                     </button>
                     <mat-menu #mnuMoreActions="matMenu"
                               [overlapTrigger]="false">
@@ -143,7 +143,7 @@
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                             (click)="onClose()">
-                        <mat-icon>close</mat-icon>
+                        <mat-icon adf-icon="close" />
                     </button>
                 </ng-container>
 

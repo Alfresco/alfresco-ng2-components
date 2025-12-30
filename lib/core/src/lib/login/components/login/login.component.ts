@@ -37,6 +37,7 @@ import { LoginErrorEvent } from '../../models/login-error.event';
 import { LoginSubmitEvent } from '../../models/login-submit.event';
 import { LoginSuccessEvent } from '../../models/login-success.event';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconDirective } from '../../../directives/icon.directive';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -70,7 +71,8 @@ interface LoginFormValues {
         MatInputModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        IconDirective
     ],
     host: { class: 'adf-login' }
 })

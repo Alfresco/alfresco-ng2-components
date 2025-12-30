@@ -18,7 +18,7 @@
             mat-icon-button
             [attr.aria-label]="'CORE.PAGINATION.ARIA.ITEMS_PER_PAGE' | translate"
             [matMenuTriggerFor]="pageSizeMenu">
-            <mat-icon>arrow_drop_down</mat-icon>
+            <mat-icon adf-icon="arrow_drop_down" />
         </button>
 
         <mat-menu #pageSizeMenu="matMenu" class="adf-pagination__page-selector">
@@ -42,7 +42,7 @@
             [attr.aria-label]="'CORE.PAGINATION.ARIA.CURRENT_PAGE' | translate"
             [matMenuTriggerFor]="pagesMenu"
             *ngIf="lastPage > 1">
-            <mat-icon>arrow_drop_down</mat-icon>
+            <mat-icon adf-icon="arrow_drop_down" />
         </button>
 
         <div *ngIf="pagination.totalItems">
@@ -68,7 +68,7 @@
             [attr.aria-label]="'CORE.PAGINATION.ARIA.PREVIOUS_PAGE' | translate"
             [disabled]="isFirstPage"
             (click)="goPrevious()">
-            <mat-icon>keyboard_arrow_left</mat-icon>
+            <mat-icon adf-icon="keyboard_arrow_left" />
         </button>
 
         <button
@@ -77,7 +77,7 @@
             [attr.aria-label]="'CORE.PAGINATION.ARIA.NEXT_PAGE' | translate"
             [disabled]="isLastPage"
             (click)="goNext()">
-            <mat-icon>keyboard_arrow_right</mat-icon>
+            <mat-icon adf-icon="keyboard_arrow_right" />
         </button>
     </div>
 </ng-container>

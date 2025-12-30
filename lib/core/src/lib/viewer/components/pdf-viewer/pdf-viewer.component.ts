@@ -49,6 +49,7 @@ import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumb
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
+import { IconDirective } from '../../../directives/icon.directive';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -71,7 +72,8 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
         MatProgressBarModule,
         NgStyle,
         ToolbarComponent,
-        ToolbarDividerComponent
+        ToolbarDividerComponent,
+        IconDirective
     ],
     encapsulation: ViewEncapsulation.None
 })

@@ -37,13 +37,14 @@ import { map, startWith } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbFocusDirective } from '../../directives/breadcrumb-focus.directive';
 import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.component';
+import { IconDirective } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatIconModule, TranslatePipe, MatButtonModule, BreadcrumbFocusDirective]
+    imports: [CommonModule, MatIconModule, TranslatePipe, MatButtonModule, BreadcrumbFocusDirective, IconDirective]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
