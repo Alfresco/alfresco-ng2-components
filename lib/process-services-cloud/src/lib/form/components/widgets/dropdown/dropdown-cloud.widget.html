@@ -24,6 +24,8 @@
                 [multiple]="field.hasMultipleValues"
                 [disabled]="field.readOnly"
                 [required]="field.required"
+                #select
+                (keydown.escape)="select.close()"
             >
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
 
