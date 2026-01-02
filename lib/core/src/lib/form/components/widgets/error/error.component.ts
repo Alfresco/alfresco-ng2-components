@@ -25,7 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorMessageModel } from '../core';
 import { WidgetComponent } from '../widget.component';
-import { IconDirective } from '../../../../directives/icon.directive';
+import { IconDirective } from '../../../../icon/icon.directive';
 
 @Component({
     selector: 'error-widget',

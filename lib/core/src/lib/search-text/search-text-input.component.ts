@@ -43,7 +43,7 @@ import { searchAnimation } from './animations';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconDirective } from '../directives/icon.directive';
+import { IconDirective } from '../icon/icon.directive';
 
 @Component({
     selector: 'adf-search-text-input',

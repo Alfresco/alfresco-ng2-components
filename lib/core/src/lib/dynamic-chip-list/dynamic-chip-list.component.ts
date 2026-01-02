@@ -39,7 +39,7 @@ import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Chip } from './chip';
-import { IconDirective } from '../directives/icon.directive';
+import { IconDirective } from '../icon/icon.directive';
 
 /**
  * This component shows dynamic list of chips which render depending on free space.

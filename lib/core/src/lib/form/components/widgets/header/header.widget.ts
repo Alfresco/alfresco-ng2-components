@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { IconDirective } from '../../../../directives/icon.directive';
+import { IconDirective } from '../../../../icon/icon.directive';
 
 @Component({
     selector: 'adf-header-widget',

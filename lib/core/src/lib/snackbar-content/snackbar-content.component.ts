@@ -21,7 +21,7 @@ import { SnackBarData } from './snack-bar-data';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { IconDirective } from '../directives/icon.directive';
+import { IconDirective } from '../icon/icon.directive';
 
 @Component({
     selector: 'adf-snackbar-content',

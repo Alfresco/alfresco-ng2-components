@@ -37,7 +37,7 @@ import { LoginErrorEvent } from '../../models/login-error.event';
 import { LoginSubmitEvent } from '../../models/login-submit.event';
 import { LoginSuccessEvent } from '../../models/login-success.event';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconDirective } from '../../../directives/icon.directive';
+import { IconDirective } from '../../../icon/icon.directive';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {

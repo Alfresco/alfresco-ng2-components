@@ -37,7 +37,7 @@ import {
 } from './info-drawer-layout.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { IconDirective } from '../directives/icon.directive';
+import { IconDirective } from '../icon/icon.directive';
 
 @Component({
     selector: 'adf-info-drawer-tab',

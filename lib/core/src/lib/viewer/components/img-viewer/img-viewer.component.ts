@@ -37,7 +37,7 @@ import Cropper from 'cropperjs';
 import { AppConfigService } from '../../../app-config';
 import { UrlService } from '../../../common';
 import { ToolbarComponent } from '../../../toolbar';
-import { IconDirective } from '../../../directives/icon.directive';
+import { IconDirective } from '../../../icon/icon.directive';
 
 @Component({
     selector: 'adf-img-viewer',

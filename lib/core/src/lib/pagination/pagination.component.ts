@@ -39,7 +39,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconDirective } from '../directives/icon.directive';
+import { IconDirective } from '../icon/icon.directive';
 
 export type PaginationAction = 'NEXT_PAGE' | 'PREV_PAGE' | 'CHANGE_PAGE_SIZE' | 'CHANGE_PAGE_NUMBER';
 

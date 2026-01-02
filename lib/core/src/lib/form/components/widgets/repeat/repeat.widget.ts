@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ContainerModel } from '../core/container.model';
-import { IconDirective } from '../../../../directives/icon.directive';
+import { IconDirective } from '../../../../icon/icon.directive';
 
 @Component({
     selector: 'adf-repeat-widget',

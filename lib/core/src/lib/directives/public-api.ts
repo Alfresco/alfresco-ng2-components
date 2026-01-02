@@ -22,6 +22,5 @@ export * from './highlight.directive';
 export * from './infinite-select-scroll.directive';
 export * from './logout.directive';
 export * from './upload.directive';
-export * from './icon.directive';
 
 export * from './directive.module';

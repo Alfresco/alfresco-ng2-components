@@ -60,7 +60,7 @@ import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
@@ -71,7 +71,7 @@ import { ResizableDirective } from '../../directives/resizable/resizable.directi
 import { IconComponent } from '../../../icon';
 import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
 import { MatButtonModule } from '@angular/material/button';
-import { IconDirective, UploadDirective } from '../../../directives';
+import { UploadDirective } from '../../../directives';
 import { ContextMenuDirective } from '../../../context-menu';
 import { IconCellComponent } from '../icon-cell/icon-cell.component';
 import { DateCellComponent } from '../date-cell/date-cell.component';
@@ -83,6 +83,7 @@ import { JsonCellComponent } from '../json-cell/json-cell.component';
 import { AmountCellComponent } from '../amount-cell/amount-cell.component';
 import { NumberCellComponent } from '../number-cell/number-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../icon/icon.module';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -107,7 +108,7 @@ export enum ShowHeaderMode {
         ResizeHandleDirective,
         MatButtonModule,
         MatMenuModule,
-        MatIconModule,
+        IconModule,
         UploadDirective,
         ContextMenuDirective,
         FileTypePipe,
@@ -120,8 +121,7 @@ export enum ShowHeaderMode {
         BooleanCellComponent,
         JsonCellComponent,
         AmountCellComponent,
-        NumberCellComponent,
-        IconDirective
+        NumberCellComponent
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],

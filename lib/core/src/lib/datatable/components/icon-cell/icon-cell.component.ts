@@ -16,13 +16,12 @@
  */
 
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { IconDirective } from '../../../directives/icon.directive';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
-    imports: [MatIconModule, IconDirective],
+    imports: [IconModule],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

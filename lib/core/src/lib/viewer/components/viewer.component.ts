@@ -58,7 +58,7 @@ import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-act
 import { IconComponent } from '../../icon';
 import { ThumbnailService } from '../../common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconDirective } from '../../directives/icon.directive';
+import { IconDirective } from '../../icon/icon.directive';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,

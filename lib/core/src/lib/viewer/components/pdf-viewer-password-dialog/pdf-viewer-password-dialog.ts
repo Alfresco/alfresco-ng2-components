@@ -24,7 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IconDirective } from '../../../directives/icon.directive';
+import { IconDirective } from '../../../icon/icon.directive';
 
 declare const pdfjsLib: any;
 

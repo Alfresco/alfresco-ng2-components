@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, inject, InjectionToken, Input, OnChanges } from '@angular/core';
+import { Directive, ElementRef, inject, Input, OnChanges } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-
-export type IconAliasMap = Record<string, string>;
-export const ICON_ALIAS_MAP_TOKEN = new InjectionToken<IconAliasMap>('icon_alias_map');
+import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
 
 @Directive({
     selector: 'mat-icon[adf-icon]',
-    standalone: true
+    standalone: false
 })
 export class IconDirective implements OnChanges {
     private readonly matIcon = inject(MatIcon);

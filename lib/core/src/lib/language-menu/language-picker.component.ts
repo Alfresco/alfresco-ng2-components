@@ -22,7 +22,7 @@ import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageMenuComponent } from './language-menu.component';
 import { MatIconModule } from '@angular/material/icon';
-import { IconDirective } from '../directives/icon.directive';
+import { IconDirective } from '../icon/icon.directive';
 
 @Component({
     selector: 'adf-picker-button',

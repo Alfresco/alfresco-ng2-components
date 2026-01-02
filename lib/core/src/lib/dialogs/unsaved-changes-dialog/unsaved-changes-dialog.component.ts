@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { UserPreferencesService } from '../../common';
 import { AppConfigValues } from '../../app-config';
-import { IconDirective } from '../../directives/icon.directive';
+import { IconDirective } from '../../icon/icon.directive';
 
 /**
  * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.

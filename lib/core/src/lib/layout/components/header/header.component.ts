@@ -24,7 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IconDirective } from '../../../directives/icon.directive';
+import { IconDirective } from '../../../icon/icon.directive';
 
 @Component({
     selector: 'adf-layout-header',

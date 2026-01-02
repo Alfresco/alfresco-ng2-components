@@ -25,12 +25,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { IconDirective } from '../../../directives/icon.directive';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-card-view-key-value-pairs-item',
-    imports: [CommonModule, TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, IconDirective],
+    imports: [CommonModule, TranslatePipe, MatTableModule, MatInputModule, FormsModule, MatButtonModule, IconModule],
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
     encapsulation: ViewEncapsulation.None,

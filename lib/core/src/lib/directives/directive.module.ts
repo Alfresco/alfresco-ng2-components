@@ -22,7 +22,6 @@ import { LogoutDirective } from './logout.directive';
 import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { UploadDirective } from './upload.directive';
-import { IconDirective } from './icon.directive';
 
 export const CORE_DIRECTIVES = [
     HighlightDirective,
@@ -30,8 +29,7 @@ export const CORE_DIRECTIVES = [
     UploadDirective,
     TooltipCardDirective,
     TooltipCardComponent,
-    InfiniteSelectScrollDirective,
-    IconDirective
+    InfiniteSelectScrollDirective
 ];
 
 /** @deprecated use `...CORE_DIRECTIVES` or import standalone directives directly  */
