@@ -15,19 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
-import { IconModule } from '../../../icon/icon.module';
+import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { IconDirective } from './icon.directive';
 
-@Component({
-    selector: 'adf-viewer-unknown-format',
-    templateUrl: './unknown-format.component.html',
-    styleUrls: ['./unknown-format.component.scss'],
-    imports: [IconModule, TranslatePipe],
-    encapsulation: ViewEncapsulation.None
+@NgModule({
+    declarations: [IconDirective],
+    imports: [MatIconModule],
+    exports: [MatIconModule, IconDirective]
 })
-export class UnknownFormatComponent {
-    /** Custom error message to be displayed . */
-    @Input()
-    customError: string;
-}
+export class IconModule {}

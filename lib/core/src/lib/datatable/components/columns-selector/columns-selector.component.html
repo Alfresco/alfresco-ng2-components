@@ -16,17 +16,14 @@
             [attr.aria-label]="'CLOSE' | translate"
             (click)="closeMenu()"
         >
-            <mat-icon>close</mat-icon>
+            <mat-icon adf-icon="close" />
         </button>
     </div>
 
     <mat-divider class="adf-columns-selector-divider" />
 
     <div class="adf-columns-selector-search-input-container">
-        <mat-icon
-            class="adf-columns-selector-search-input-icon">
-            search
-        </mat-icon>
+        <mat-icon class="adf-columns-selector-search-input-icon" adf-icon="search" />
 
         <input
             [formControl]="searchInputControl"

@@ -80,7 +80,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
+            <mat-icon *ngIf="icon" class="adf-button__icon" [adf-icon]="icon" />
             <ng-container [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
@@ -98,7 +98,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
+            <mat-icon *ngIf="icon" class="adf-button__icon" [adf-icon]="icon" />
             <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
@@ -116,7 +116,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
+            <mat-icon *ngIf="icon" class="adf-button__icon" [adf-icon]="icon" />
             <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>

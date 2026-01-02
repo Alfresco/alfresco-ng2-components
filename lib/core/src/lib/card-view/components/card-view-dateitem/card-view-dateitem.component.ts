@@ -35,13 +35,13 @@ import { isValid } from 'date-fns';
 import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     providers: [
@@ -54,7 +54,7 @@ import { MatInputModule } from '@angular/material/input';
     imports: [
         CommonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatDatetimepickerModule,
         MatChipsModule,
         MatInputModule,

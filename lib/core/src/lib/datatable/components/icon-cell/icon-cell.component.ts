@@ -16,17 +16,17 @@
  */
 
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
-    imports: [MatIconModule],
+    imports: [IconModule],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         @if (icon()) {
-            <mat-icon [title]="title()" aria-hidden="true">{{ icon() }}</mat-icon>
+            <mat-icon [title]="title()" aria-hidden="true" [adf-icon]="icon()" />
         }
     `,
     encapsulation: ViewEncapsulation.None,

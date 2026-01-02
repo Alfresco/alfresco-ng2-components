@@ -18,17 +18,17 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
+import { IconModule } from '../../../../icon/icon.module';
 
 @Component({
     selector: 'unknown-widget',
     template: `
         <mat-list class="adf-unknown-widget">
             <mat-list-item>
-                <mat-icon class="mat-24">error_outline</mat-icon>
+                <mat-icon class="mat-24" adf-icon="error_outline" />
                 <span class="adf-unknown-text">Unknown type: {{ field.type }}</span>
             </mat-list-item>
         </mat-list>
@@ -45,7 +45,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatListModule, MatIconModule],
+    imports: [MatListModule, IconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {

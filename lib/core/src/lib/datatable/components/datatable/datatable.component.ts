@@ -60,7 +60,7 @@ import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
@@ -83,6 +83,7 @@ import { JsonCellComponent } from '../json-cell/json-cell.component';
 import { AmountCellComponent } from '../amount-cell/amount-cell.component';
 import { NumberCellComponent } from '../number-cell/number-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../icon/icon.module';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -107,7 +108,7 @@ export enum ShowHeaderMode {
         ResizeHandleDirective,
         MatButtonModule,
         MatMenuModule,
-        MatIconModule,
+        IconModule,
         UploadDirective,
         ContextMenuDirective,
         FileTypePipe,

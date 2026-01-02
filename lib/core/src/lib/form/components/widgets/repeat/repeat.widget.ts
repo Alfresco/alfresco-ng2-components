@@ -17,17 +17,17 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FieldStylePipe } from '../../../pipes/field-style.pipe';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ContainerModel } from '../core/container.model';
+import { IconModule } from '../../../../icon/icon.module';
 
 @Component({
     selector: 'adf-repeat-widget',
     templateUrl: './repeat.widget.html',
     styleUrls: ['./repeat.widget.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslatePipe]
+    imports: [FieldStylePipe, IconModule, MatButtonModule, TranslatePipe]
 })
 export class RepeatWidgetComponent {
     @Input() element: ContainerModel;

@@ -21,14 +21,14 @@ import { CommonModule } from '@angular/common';
 import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageMenuComponent } from './language-menu.component';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../icon/icon.module';
 
 @Component({
     selector: 'adf-picker-button',
-    imports: [CommonModule, MatMenuModule, TranslatePipe, LanguageMenuComponent, MatIconModule],
+    imports: [CommonModule, MatMenuModule, TranslatePipe, LanguageMenuComponent, IconModule],
     template: `
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
-            <mat-icon>language</mat-icon>
+            <mat-icon adf-icon="language" />
             {{ 'ADF.LANGUAGE' | translate }}
         </button>
         <mat-menu #langMenu="matMenu">

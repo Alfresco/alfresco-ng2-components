@@ -28,10 +28,10 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../../../icon/icon.module';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -51,7 +51,7 @@ const templateTypes = {
         MatInputModule,
         ReactiveFormsModule,
         MatChipsModule,
-        MatIconModule,
+        IconModule,
         FormsModule,
         MatButtonModule,
         MatSnackBarModule

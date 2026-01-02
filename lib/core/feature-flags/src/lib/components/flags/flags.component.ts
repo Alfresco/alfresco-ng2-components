@@ -30,7 +30,6 @@ import { debounceTime, map, take, tap } from 'rxjs/operators';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -38,6 +37,7 @@ import { FlagsOverrideComponent } from '../feature-override-indicator.component'
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-feature-flags-overrides',
@@ -48,7 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatTableModule,
         MatSlideToggleModule,
         MatToolbarModule,
-        MatIconModule,
+        IconModule,
         MatButtonModule,
         MatInputModule,
         MatDialogModule,

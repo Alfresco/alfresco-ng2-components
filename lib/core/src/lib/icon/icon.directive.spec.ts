@@ -15,36 +15,25 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { IconDirective } from './icon.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { IconType, MatIconHarness, MatIconTestingModule } from '@angular/material/icon/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
-
-@Component({
-    template: `<mat-icon adf-icon [name]="name" />`,
-    standalone: true,
-    imports: [MatIconModule, IconDirective]
-})
-class TestComponent {
-    name: string;
-}
+import { IconComponent } from './icon.component.mock';
 
 describe('IconDirective', () => {
-    let fixture: ComponentFixture<TestComponent>;
-    let component: TestComponent;
+    let fixture: ComponentFixture<IconComponent>;
+    let component: IconComponent;
     let loader: HarnessLoader;
 
     describe('alias map NOT provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [TestComponent, MatIconTestingModule]
+                imports: [IconComponent, MatIconTestingModule]
             });
 
-            fixture = TestBed.createComponent(TestComponent);
+            fixture = TestBed.createComponent(IconComponent);
             component = fixture.componentInstance;
             loader = TestbedHarnessEnvironment.loader(fixture);
         });
@@ -62,7 +51,7 @@ describe('IconDirective', () => {
     describe('alias map provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [TestComponent, MatIconTestingModule],
+                imports: [IconComponent, MatIconTestingModule],
                 providers: [
                     {
                         provide: ICON_ALIAS_MAP_TOKEN,
@@ -73,7 +62,7 @@ describe('IconDirective', () => {
                 ]
             });
 
-            fixture = TestBed.createComponent(TestComponent);
+            fixture = TestBed.createComponent(IconComponent);
             component = fixture.componentInstance;
             loader = TestbedHarnessEnvironment.loader(fixture);
         });

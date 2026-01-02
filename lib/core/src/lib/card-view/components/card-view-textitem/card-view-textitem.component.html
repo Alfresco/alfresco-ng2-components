@@ -78,7 +78,7 @@
         <mat-chip-grid #chipElement class="adf-textitem-chip-list">
             <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
-                <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
+                <mat-icon *ngIf="isEditable" matChipRemove adf-icon="cancel" />
             </mat-chip-row>
         </mat-chip-grid>
 
@@ -154,7 +154,7 @@
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key"
             >
-                <mat-icon class="adf-textitem-icon">{{ property?.icon }}</mat-icon>
+                <mat-icon class="adf-textitem-icon" [adf-icon]="property?.icon" />
             </button>
         </mat-form-field>
     </div>

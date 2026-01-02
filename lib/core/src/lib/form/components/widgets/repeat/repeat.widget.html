@@ -20,7 +20,7 @@
                 [disabled]="element.field.readOnly"
                 (click)="addRow()"
             >
-                <mat-icon>add</mat-icon> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}
+                <mat-icon adf-icon="add" /> {{ 'FORM.FIELD.REPEATABLE_SECTION.ADD_ROW' | translate }}
             </button>
         } @else {
             <span class="adf-container-widget-row-action adf-container-widget-row-limit">{{ 'FORM.FIELD.REPEATABLE_SECTION.ROW_LIMIT_REACHED' | translate: { limit: element.field.params.maxNumberOfRows } }}</span>

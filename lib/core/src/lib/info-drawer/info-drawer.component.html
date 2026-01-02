@@ -18,7 +18,7 @@
                 class="adf-info-drawer-tab">
 
                 <ng-template mat-tab-label>
-                    <mat-icon *ngIf="contentBlock.icon">{{ contentBlock.icon }}</mat-icon>
+                    <mat-icon *ngIf="contentBlock.icon" [adf-icon]="contentBlock.icon" />
                     <span *ngIf="contentBlock.label">{{ contentBlock.label | translate }}</span>
                 </ng-template>
 

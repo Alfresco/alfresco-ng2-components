@@ -21,13 +21,13 @@ import { AppConfigService } from '../../../app-config/app-config.service';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-layout-header',
-    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslatePipe],
+    imports: [CommonModule, MatToolbarModule, MatButtonModule, IconModule, RouterModule, TranslatePipe],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,

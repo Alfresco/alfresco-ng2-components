@@ -60,9 +60,8 @@
                 (click)="onDateClear()"
                 [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
                 [attr.data-automation-id]="'datepicker-date-clear-' + property.key"
-            >
-                clear
-            </mat-icon>
+                adf-icon="clear"
+            />
             <mat-datetimepicker-toggle
                 matIconSuffix
                 [attr.tabindex]="-1"
@@ -92,7 +91,7 @@
                 (removed)="removeValueFromList(idx)"
             >
                 {{ propertyValue }}
-                <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
+                <mat-icon *ngIf="isEditable" matChipRemove adf-icon="cancel" />
             </mat-chip-option>
         </mat-chip-listbox>
 

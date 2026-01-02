@@ -7,7 +7,7 @@
                     [disabled]="link.model?.disabled"
                     [title]="link.model?.tooltip | translate"
                     (click)="onMenuItemClick($event, link)">
-                <mat-icon *ngIf="link.model?.icon">{{ link.model.icon }}</mat-icon>
+                <mat-icon *ngIf="link.model?.icon" [adf-icon]="link.model.icon" />
                 <span>{{ link.title || link.model?.title | translate }}</span>
             </button>
         </ng-container>

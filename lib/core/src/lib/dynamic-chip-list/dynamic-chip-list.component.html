@@ -18,13 +18,14 @@
             [attr.aria-label]="chip.name"
             (removed)="removedChip.emit(chip.id)">
             <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
-            <mat-icon *ngIf="showDelete"
-                      id="adf-dynamic-chip-list-delete-{{ chip.name }}"
-                      class="adf-dynamic-chip-list-delete-icon"
-                      [disabled]="disableDelete"
-                      matChipRemove>
-                close
-            </mat-icon>
+            <mat-icon 
+                *ngIf="showDelete"
+                id="adf-dynamic-chip-list-delete-{{ chip.name }}"
+                class="adf-dynamic-chip-list-delete-icon"
+                [disabled]="disableDelete"
+                adf-icon="close"
+                matChipRemove
+            />
         </mat-chip>
     </mat-chip-set>
     <button

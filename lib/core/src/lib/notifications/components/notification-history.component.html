@@ -1,17 +1,14 @@
-<button mat-button
-        [matMenuTriggerFor]="menu"
-        aria-hidden="false"
-        [attr.aria-label]="('NOTIFICATIONS.' + (notifications.length ? 'UNREAD_MESSAGES' : 'NO_MESSAGE') | translate) + ' ' + ('NOTIFICATIONS.OPEN_HISTORY' | translate)"
-        title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
-        class="adf-notification-history-menu_button"
-        id="adf-notification-history-open-button"
-        (menuOpened)="onMenuOpened()">
-    <mat-icon matBadge="&#8288;"
-              [matBadgeHidden]="!notifications.length"
-              class="adf-notification-history-menu_button-icon"
-              matBadgeColor="accent"
-              matBadgeSize="small">notifications
-    </mat-icon>
+<button 
+    mat-button
+    [matMenuTriggerFor]="menu"
+    aria-hidden="false"
+    [attr.aria-label]="('NOTIFICATIONS.' + (notifications.length ? 'UNREAD_MESSAGES' : 'NO_MESSAGE') | translate) + ' ' + ('NOTIFICATIONS.OPEN_HISTORY' | translate)"
+    title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
+    class="adf-notification-history-menu_button"
+    id="adf-notification-history-open-button"
+    (menuOpened)="onMenuOpened()"
+>
+    <mat-icon matBadge="&#8288;" [matBadgeHidden]="!notifications.length" class="adf-notification-history-menu_button-icon" matBadgeColor="accent" matBadgeSize="small" adf-icon="notifications" />
 </button>
 
 <mat-menu #menu="matMenu"
@@ -29,7 +26,7 @@
                 (click)="markAsRead()"
                 #markAsReadButton
                 (keydown)="manageFocus($event)">
-            <mat-icon class="adf-notification-history-mark-as-read-icon">done_all</mat-icon>
+            <mat-icon class="adf-notification-history-mark-as-read-icon" adf-icon="done_all" />
         </button>
     </div>
 
@@ -46,9 +43,7 @@
                     <div *ngIf="notification.initiator; else no_avatar"
                          [outerHTML]="notification.initiator | usernameInitials : 'adf-notification-initiator-pic'"></div>
                     <ng-template #no_avatar>
-                        <mat-icon class="adf-notification-history-menu-initiator">
-                            {{ notification.icon }}
-                        </mat-icon>
+                        <mat-icon class="adf-notification-history-menu-initiator" [adf-icon]="notification.icon" />
                     </ng-template>
                     <div class="adf-notification-history-menu-item-content-message">
                         <p class="adf-notification-history-menu-text adf-notification-history-menu-message"

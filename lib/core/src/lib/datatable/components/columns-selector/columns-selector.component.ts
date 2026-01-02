@@ -23,12 +23,12 @@ import { DataColumn } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ColumnsSearchFilterPipe } from './columns-search-filter.pipe';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-datatable-column-selector',
@@ -36,7 +36,7 @@ import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angula
         CommonModule,
         TranslatePipe,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         MatDividerModule,
         ReactiveFormsModule,
         MatCheckboxModule,

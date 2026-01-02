@@ -33,7 +33,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -43,6 +42,7 @@ import { searchAnimation } from './animations';
 import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
 import { SearchTriggerDirective } from './search-trigger.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '../icon/icon.module';
 
 @Component({
     selector: 'adf-search-text-input',
@@ -50,7 +50,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatButtonModule, MatIconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
+    imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgIf, NgClass],
     host: {
         class: 'adf-search-text-input'
     }

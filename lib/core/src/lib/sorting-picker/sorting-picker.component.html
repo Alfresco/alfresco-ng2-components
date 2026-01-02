@@ -8,6 +8,6 @@
 </mat-form-field>
 
 <button *ngIf="selected" class="adf-sorting-picker-button" mat-icon-button (click)="toggleSortDirection()" aria-label="'CORE.SEARCH.TOGGLE_ASC_DESC_ORDER' | translate">
-    <mat-icon *ngIf="ascending">arrow_upward</mat-icon>
-    <mat-icon *ngIf="!ascending">arrow_downward</mat-icon>
+    <mat-icon *ngIf="ascending" adf-icon="arrow_upward" />
+    <mat-icon *ngIf="!ascending" adf-icon="arrow_downward" />
 </button>

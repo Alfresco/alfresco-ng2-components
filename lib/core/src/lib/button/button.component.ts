@@ -19,14 +19,14 @@ import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../icon/icon.module';
 
 export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab' | undefined;
 export type ButtonColor = ThemePalette;
 
 @Component({
     selector: 'adf-button',
-    imports: [CommonModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatButtonModule, IconModule],
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
     encapsulation: ViewEncapsulation.None
