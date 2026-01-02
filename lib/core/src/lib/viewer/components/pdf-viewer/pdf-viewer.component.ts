@@ -36,7 +36,6 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslatePipe } from '@ngx-translate/core';
 import { from, Subject, switchMap } from 'rxjs';
@@ -49,7 +48,7 @@ import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumb
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
-import { IconDirective } from '../../../icon/icon.directive';
+import { IconModule } from '../../../icon/icon.module';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -64,7 +63,7 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
     host: { class: 'adf-pdf-viewer' },
     imports: [
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         TranslatePipe,
         PdfThumbListComponent,
         NgIf,
@@ -72,8 +71,7 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
         MatProgressBarModule,
         NgStyle,
         ToolbarComponent,
-        ToolbarDividerComponent,
-        IconDirective
+        ToolbarDividerComponent
     ],
     encapsulation: ViewEncapsulation.None
 })

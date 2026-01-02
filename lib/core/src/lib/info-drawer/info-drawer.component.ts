@@ -36,8 +36,7 @@ import {
     InfoDrawerTitleDirective
 } from './info-drawer-layout.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { IconDirective } from '../icon/icon.directive';
+import { IconModule } from '../icon/icon.module';
 
 @Component({
     selector: 'adf-info-drawer-tab',
@@ -64,12 +63,11 @@ export class InfoDrawerTabComponent {
         InfoDrawerLayoutComponent,
         TranslatePipe,
         MatTabsModule,
-        MatIconModule,
+        IconModule,
         InfoDrawerButtonsDirective,
         InfoDrawerTitleDirective,
         InfoDrawerContentDirective,
-        InfoDrawerTabComponent,
-        IconDirective
+        InfoDrawerTabComponent
     ],
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],

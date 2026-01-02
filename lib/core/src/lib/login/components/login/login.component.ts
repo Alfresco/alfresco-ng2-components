@@ -22,7 +22,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -37,7 +36,7 @@ import { LoginErrorEvent } from '../../models/login-error.event';
 import { LoginSubmitEvent } from '../../models/login-submit.event';
 import { LoginSuccessEvent } from '../../models/login-success.event';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IconDirective } from '../../../icon/icon.directive';
+import { IconModule } from '../../../icon/icon.module';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -66,13 +65,12 @@ interface LoginFormValues {
         MatCardModule,
         ReactiveFormsModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule,
-        IconDirective
+        MatCheckboxModule
     ],
     host: { class: 'adf-login' }
 })

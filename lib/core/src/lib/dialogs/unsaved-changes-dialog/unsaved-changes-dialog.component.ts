@@ -22,11 +22,10 @@ import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { UserPreferencesService } from '../../common';
 import { AppConfigValues } from '../../app-config';
-import { IconDirective } from '../../icon/icon.directive';
+import { IconModule } from '../../icon/icon.module';
 
 /**
  * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.
@@ -42,7 +41,7 @@ import { IconDirective } from '../../icon/icon.directive';
     templateUrl: './unsaved-changes-dialog.component.html',
     styleUrls: ['./unsaved-changes-dialog.component.scss'],
     host: { class: 'adf-unsaved-changes-dialog' },
-    imports: [MatDialogModule, TranslatePipe, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule, IconDirective]
+    imports: [MatDialogModule, TranslatePipe, MatButtonModule, IconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
 })
 export class UnsavedChangesDialogComponent implements OnInit {
     dialogData: UnsavedChangesDialogData;

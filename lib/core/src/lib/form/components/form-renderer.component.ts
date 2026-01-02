@@ -19,7 +19,6 @@ import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/comm
 import { ChangeDetectorRef, Component, Inject, inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
@@ -33,7 +32,7 @@ import { DecimalRenderMiddlewareService } from './middlewares/decimal-middleware
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../lib/dialogs/confirm-dialog/confirm.dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IconDirective } from '../../icon/icon.directive';
+import { IconModule } from '../../icon/icon.module';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -58,7 +57,7 @@ import { IconDirective } from '../../icon/icon.directive';
         NgTemplateOutlet,
         TranslatePipe,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         NgStyle,
         FormFieldComponent,
         FormsModule,
@@ -66,8 +65,7 @@ import { IconDirective } from '../../icon/icon.directive';
         HeaderWidgetComponent,
         FormSectionComponent,
         RepeatWidgetComponent,
-        MatTooltipModule,
-        IconDirective
+        MatTooltipModule
     ],
     encapsulation: ViewEncapsulation.None
 })

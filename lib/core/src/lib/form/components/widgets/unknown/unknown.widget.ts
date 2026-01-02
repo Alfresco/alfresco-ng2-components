@@ -18,11 +18,10 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
-import { IconDirective } from '../../../../icon/icon.directive';
+import { IconModule } from '../../../../icon/icon.module';
 
 @Component({
     selector: 'unknown-widget',
@@ -46,7 +45,7 @@ import { IconDirective } from '../../../../icon/icon.directive';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatListModule, MatIconModule, IconDirective],
+    imports: [MatListModule, IconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {

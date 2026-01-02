@@ -35,7 +35,6 @@ import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
 import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
@@ -43,7 +42,7 @@ import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { IconDirective } from '../../icon/icon.directive';
+import { IconModule } from '../../icon/icon.module';
 
 @Component({
     selector: 'adf-notification-history',
@@ -53,15 +52,14 @@ import { IconDirective } from '../../icon/icon.directive';
         MatButtonModule,
         MatMenuModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatBadgeModule,
         MatListModule,
         NgIf,
         NgForOf,
         TimeAgoPipe,
         InitialUsernamePipe,
-        MatSnackBarModule,
-        IconDirective
+        MatSnackBarModule
     ],
     encapsulation: ViewEncapsulation.None
 })
