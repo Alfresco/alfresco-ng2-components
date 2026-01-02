@@ -187,6 +187,25 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
         });
 
+        it('should close dropdown when Escape key is pressed', async () => {
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+
+            const filterInput = fixture.debugElement.query(By.css('.adf-select'));
+            filterInput.nativeElement.focus();
+            filterInput.nativeElement.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Escape',
+                    code: 'Escape',
+                    bubbles: true
+                })
+            );
+
+            fixture.detectChanges();
+
+            expect(await dropdown.isOpen()).toBeFalse();
+        });
+
         describe('should load data from restUrl when form is NOT readonly', () => {
             beforeEach(() => {
                 spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([]));
