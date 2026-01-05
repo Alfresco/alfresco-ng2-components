@@ -29,7 +29,7 @@ import {
     ProcessFilterProperties,
     ProcessSortFilterProperty
 } from '../../models/process-filter-cloud.model';
-import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
+import { DateFnsUtils, IconComponent, IconModule, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../../services/process-cloud.service';
@@ -47,7 +47,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
 import { DateRangeFilterComponent } from '../../../../common/date-range-filter/date-range-filter.component';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
@@ -93,7 +92,7 @@ interface ProcessFilterFormProps {
         ReactiveFormsModule,
         MatInputModule,
         MatDatepickerModule,
-        MatIconModule,
+        IconModule,
         DateRangeFilterComponent,
         PeopleCloudComponent
     ],

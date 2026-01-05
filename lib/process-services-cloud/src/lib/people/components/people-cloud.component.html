@@ -20,13 +20,7 @@
                 [matTooltip]="showFullNameOnHover ? (user | fullName : true) : user.email"
             >
                 {{ user | fullName }}
-                <mat-icon
-                    matChipRemove
-                    *ngIf="!(user.readonly || readOnly)"
-                    [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username"
-                >
-                    cancel
-                </mat-icon>
+                <mat-icon matChipRemove *ngIf="!(user.readonly || readOnly)" [attr.data-automation-id]="'adf-people-cloud-chip-remove-icon-' + user.username" adf-icon="cancel" />
             </mat-chip-row>
             <input
                 matInput
@@ -77,21 +71,21 @@
 
     <div class="adf-error-container adf-error-messages-container" *ngIf="showErrors">
         <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: validateUsersMessage } }}</div>
         </mat-error>
         <mat-error *ngIf="searchUserCtrl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate : { pattern: getValidationPattern() } }}</div>
         </mat-error>
         <mat-error *ngIf="searchUserCtrl.hasError('maxlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">
                 {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate : { requiredLength: getValidationMaxLength() } }}
             </div>
         </mat-error>
         <mat-error *ngIf="searchUserCtrl.hasError('minlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
-            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">
                 {{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate : { requiredLength: getValidationMinLength() } }}
             </div>
@@ -101,7 +95,7 @@
             [@transitionMessages]="subscriptAnimationState"
             class="adf-error"
         >
-            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }}</div>
         </mat-error>
         <mat-error
@@ -110,7 +104,7 @@
             data-automation-id="invalid-users-typing-error"
             class="adf-error"
         >
-            <mat-icon class="adf-error-icon">error_outline</mat-icon>
+            <mat-icon class="adf-error-icon" adf-icon="error_outline" />
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</div>
         </mat-error>
     </div>

@@ -34,7 +34,7 @@
                         (click)="removeFile(file);"
                         (keyup.enter)="removeFile(file);"
                     >
-                        <mat-icon class="mat-24">highlight_off</mat-icon>
+                        <mat-icon class="mat-24" adf-icon="highlight_off" />
                     </button>
                 </mat-list-item>
             </mat-list>
@@ -42,7 +42,7 @@
 
         <div *ngIf="(!hasFile || multipleOption) && !field.readOnly">
             <button mat-raised-button color="primary" (click)="uploadFiles.click()" [title]="field.tooltip">
-                {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
+                {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon adf-icon="file_upload" />
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.form.nodeId" (change)="onFileChanged($event)" />
             </button>
         </div>

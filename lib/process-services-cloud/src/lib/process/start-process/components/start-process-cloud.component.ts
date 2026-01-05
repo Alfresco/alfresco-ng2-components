@@ -34,6 +34,7 @@ import {
     ContentLinkModel,
     FormModel,
     FormOutcomeEvent,
+    IconModule,
     InplaceFormInputComponent,
     LocalizedDatePipe,
     TranslationService,
@@ -57,7 +58,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
@@ -81,7 +81,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
         MatCardModule,
         MatButtonModule,
         InplaceFormInputComponent,
-        MatIconModule,
+        IconModule,
         MatInputModule,
         MatOptionModule,
         MatAutocompleteModule,
