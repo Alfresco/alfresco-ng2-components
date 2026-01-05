@@ -27,12 +27,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-text',
-    imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
+    imports: [CommonModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatButtonModule, FormsModule, IconModule],
     templateUrl: './search-text.component.html',
     styleUrls: ['./search-text.component.scss'],
     encapsulation: ViewEncapsulation.None,

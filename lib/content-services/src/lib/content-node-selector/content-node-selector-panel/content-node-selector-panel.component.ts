@@ -22,6 +22,7 @@ import {
     DataColumnListComponent,
     DataSorting,
     HighlightDirective,
+    IconModule,
     InfinitePaginationComponent,
     PaginatedComponent,
     ShowHeaderMode,
@@ -47,7 +48,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives/auto-focus.directive';
 import { NodeCounterDirective } from '../../directives/node-counter.directive';
-import { MatIconModule } from '@angular/material/icon';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { MatButtonModule } from '@angular/material/button';
 import { NameLocationCellComponent } from '../name-location-cell/name-location-cell.component';
@@ -69,7 +69,7 @@ export const defaultValidation = () => true;
         MatInputModule,
         ReactiveFormsModule,
         AutoFocusDirective,
-        MatIconModule,
+        IconModule,
         DropdownSitesComponent,
         MatButtonModule,
         ToolbarTitleComponent,

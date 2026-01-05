@@ -2,7 +2,7 @@
     <div class="adf-facet-result-filter">
         <div class="adf-facet-search-container">
             <button mat-icon-button class="adf-facet-search-icon" tabindex="-1">
-                <mat-icon class="adf-search-field-icon">search</mat-icon>
+                <mat-icon class="adf-search-field-icon" adf-icon="search" />
             </button>
             <mat-form-field class="adf-facet-search-field" subscriptSizing="dynamic">
                 <input
@@ -18,7 +18,7 @@
                     [attr.title]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate"
                     (click)="field.buckets.filterText = ''"
                 >
-                    <mat-icon role="button" [attr.aria-label]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate">clear</mat-icon>
+                    <mat-icon role="button" [attr.aria-label]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate" adf-icon="clear" />
                 </button>
             </mat-form-field>
         </div>
@@ -55,7 +55,7 @@
             title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
             (click)="resetSelectedBuckets(field)"
         >
-            <mat-icon>clear</mat-icon>
+            <mat-icon adf-icon="clear" />
         </button>
         <button
             mat-icon-button
@@ -63,7 +63,7 @@
             (click)="field.buckets.showLessItems()"
             title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
         >
-            <mat-icon>keyboard_arrow_up</mat-icon>
+            <mat-icon adf-icon="keyboard_arrow_up" />
         </button>
         <button
             mat-icon-button
@@ -71,7 +71,7 @@
             (click)="field.buckets.showMoreItems()"
             title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
         >
-            <mat-icon>keyboard_arrow_down</mat-icon>
+            <mat-icon adf-icon="keyboard_arrow_down" />
         </button>
     </div>
 </div>

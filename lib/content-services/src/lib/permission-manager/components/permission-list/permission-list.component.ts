@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ObjectDataRow } from '@alfresco/adf-core';
+import { IconModule, ObjectDataRow } from '@alfresco/adf-core';
 import { PermissionElement } from '@alfresco/js-api';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { PermissionDisplayModel } from '../../models/permission.model';
@@ -23,7 +23,6 @@ import { PermissionListService } from './permission-list.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         CommonModule,
         MatCardModule,
         MatProgressSpinnerModule,
-        MatIconModule,
+        IconModule,
         MatSlideToggleModule,
         TranslatePipe,
         MatButtonModule,
@@ -72,7 +71,10 @@ export class PermissionListComponent implements OnInit {
         return this._updatePermissionsAllowed;
     }
 
-    constructor(public readonly permissionList: PermissionListService, private readonly contentService: ContentService) {
+    constructor(
+        public readonly permissionList: PermissionListService,
+        private readonly contentService: ContentService
+    ) {
         this.error = this.permissionList.errored;
         this.update = this.permissionList.updated;
     }

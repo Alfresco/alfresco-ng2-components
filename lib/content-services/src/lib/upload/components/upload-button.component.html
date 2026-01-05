@@ -16,7 +16,7 @@
                 (change)="onFilesAdded($event)"
                 (click)="onClickUploadButton()"/>
             <label tabindex="0" (keydown.enter)="onClickUploadButton()" for="upload-single-file" class="adf-upload-button-label">
-                <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
+                <mat-icon class="adf-upload-button-icon" adf-icon="file_upload" />
                 <span id="upload-single-file-label" *ngIf="!staticTitle">
                     {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
                 <span id="upload-single-file-label-static" *ngIf="staticTitle">
@@ -37,7 +37,7 @@
                 [title]="tooltip"
                 (change)="onFilesAdded($event)"/>
             <label for="upload-multiple-files" class="adf-upload-button-label">
-                <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
+                <mat-icon class="adf-upload-button-icon" adf-icon="file_upload" />
                 <span id="upload-multiple-file-label" *ngIf="!staticTitle">
                     {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
                 <span id="upload-multiple-file-label-static" *ngIf="staticTitle">
@@ -60,7 +60,7 @@
             [title]="tooltip"
             (change)="onDirectoryAdded($event)"/>
         <label for="uploadFolder" data-automation-id="uploadFolder" class="adf-upload-button-label">
-            <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
+            <mat-icon class="adf-upload-button-icon" adf-icon="file_upload" />
             <span id="uploadFolder-label" *ngIf="!staticTitle">
                 {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate }}</span>
             <span id="uploadFolder-label-static" *ngIf="staticTitle">

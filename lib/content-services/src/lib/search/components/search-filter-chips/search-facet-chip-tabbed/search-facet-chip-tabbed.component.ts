@@ -23,10 +23,10 @@ import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-facet-chip-tabbed',
@@ -35,7 +35,7 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
         MatChipsModule,
         MatMenuModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         SearchFacetTabbedContentComponent,
         MatButtonModule,
         SearchFilterMenuCardComponent

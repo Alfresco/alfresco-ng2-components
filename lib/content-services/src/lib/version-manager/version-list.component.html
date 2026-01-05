@@ -4,7 +4,7 @@
     <cdk-virtual-scroll-viewport #viewport itemSize="88" class="adf-version-list-viewport" [minBufferPx]="440" [maxBufferPx]="528">
         <mat-list-item class="adf-version-list-item"
                        *cdkVirtualFor="let version of versionsDataSource; let idx = index; let latestVersion = first">
-            <mat-icon class="adf-version-list-icon" matListItemIcon>insert_drive_file</mat-icon>
+            <mat-icon class="adf-version-list-icon" adf-icon="insert_drive_file" matListItemIcon />
             <div class="adf-version-list-content">
                 <div class="adf-version-list-item-details">
                     <p class="adf-version-list-item-line adf-version-list-item-name"
@@ -62,7 +62,7 @@
                             [matMenuTriggerFor]="versionMenu"
                             [id]="'adf-version-list-action-menu-button-' + version.entry.id"
                             title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon adf-icon="more_vert" />
                     </button>
                 </ng-container>
             </div>

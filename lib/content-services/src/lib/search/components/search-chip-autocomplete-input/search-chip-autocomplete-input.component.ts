@@ -39,12 +39,12 @@ import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
-    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslatePipe, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
+    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslatePipe, IconModule, ReactiveFormsModule, MatAutocompleteModule],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -39,10 +39,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { AutoFocusDirective } from '../../directives';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 interface CategoryNameControlErrors {
     duplicatedExistingCategory?: boolean;
@@ -62,7 +62,7 @@ interface CategoryNameControlErrors {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         MatListModule,
         MatProgressSpinnerModule
     ],

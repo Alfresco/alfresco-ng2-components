@@ -31,7 +31,7 @@ import {
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { TreeService } from '../services/tree.service';
-import { ContextMenuDirective, IconComponent, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, IconComponent, IconModule, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { TreeResponse } from '../models/tree-response.interface';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
@@ -43,7 +43,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-tree',
@@ -57,7 +56,7 @@ import { MatIconModule } from '@angular/material/icon';
         ContextMenuDirective,
         MatCheckboxModule,
         MatMenuModule,
-        MatIconModule
+        IconModule
     ],
     templateUrl: './tree.component.html',
     styleUrls: ['./tree.component.scss'],
@@ -116,7 +115,10 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
-    constructor(public treeService: TreeService<T>, private userPreferenceService: UserPreferencesService) {}
+    constructor(
+        public treeService: TreeService<T>,
+        private userPreferenceService: UserPreferencesService
+    ) {}
 
     set contextMenuSource(contextMenuSource: T) {
         this._contextMenuSource = contextMenuSource;

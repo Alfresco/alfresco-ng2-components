@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FileUtils } from '@alfresco/adf-core';
+import { FileUtils, IconModule } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { ContentService } from '../../common/services/content.service';
@@ -27,11 +27,10 @@ import { UploadBase } from './base-upload/upload-base';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-upload-button',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, MatIconModule],
+    imports: [CommonModule, MatButtonModule, TranslatePipe, IconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     encapsulation: ViewEncapsulation.None

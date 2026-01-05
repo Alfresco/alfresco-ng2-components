@@ -16,10 +16,7 @@
             [disabled]="isConfirmation"
             [attr.aria-expanded]="!isDialogMinimized"
             (click)="toggleMinimized()">
-            <mat-icon
-                class="adf-upload-dialog__header-button-icon">
-                    {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-            </mat-icon>
+            <mat-icon class="adf-upload-dialog__header-button-icon" [adf-icon]="isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" />
         </button>
 
         <span

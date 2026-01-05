@@ -26,12 +26,12 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-content-metadata-card',
-    imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslatePipe],
+    imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,

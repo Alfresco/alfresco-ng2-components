@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { TranslationService } from '@alfresco/adf-core';
+import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagPaging } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -36,7 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-tag-node-actions-list',
-    imports: [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatButtonModule],
+    imports: [CommonModule, MatListModule, IconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatButtonModule],
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -66,7 +65,10 @@ export class TagActionsComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private tagService: TagService, private translateService: TranslationService) {}
+    constructor(
+        private tagService: TagService,
+        private translateService: TranslationService
+    ) {}
 
     ngOnInit() {
         this.tagService.refresh.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.refreshTag());

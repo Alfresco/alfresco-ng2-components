@@ -11,10 +11,10 @@
         [attr.aria-haspopup]="hasPreviousNodes() ? 'true' : null"
         [attr.aria-expanded]="dropdown?.panelOpen || false"
         data-automation-id="dropdown-breadcrumb-trigger">
-        <mat-icon class="adf-dropdown-breadcrumb-icon" [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
+        <mat-icon class="adf-dropdown-breadcrumb-icon" [class.adf-isRoot]="!hasPreviousNodes()" adf-icon="folder" />
     </button>
 
-    <mat-icon class="adf-dropdown-breadcrumb-icon adf-dropdown-breadcrumb-item-chevron">chevron_right</mat-icon>
+    <mat-icon class="adf-dropdown-breadcrumb-icon adf-dropdown-breadcrumb-item-chevron" adf-icon="chevron_right" />
 
     <div class="adf-dropdown-breadcrumb-path">
         <mat-select

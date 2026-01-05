@@ -28,9 +28,9 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 import { MatIconButton } from '@angular/material/button';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-add-permission-panel',
@@ -40,7 +40,7 @@ import { MatIconButton } from '@angular/material/button';
         MatInputModule,
         TranslatePipe,
         ReactiveFormsModule,
-        MatIconModule,
+        IconModule,
         MatListModule,
         UserIconColumnComponent,
         SearchComponent,

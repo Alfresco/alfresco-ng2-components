@@ -33,6 +33,7 @@ import {
 } from '@angular/core';
 import {
     CloseButtonPosition,
+    IconModule,
     Track,
     VIEWER_DIRECTIVES,
     ViewerComponent,
@@ -56,13 +57,12 @@ import { NodeActionsService } from '../../document-list';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { NodeDownloadDirective } from '../../directives';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-alfresco-viewer',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },
