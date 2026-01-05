@@ -35,7 +35,7 @@
                 title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                 (click)="switchToDisplayMode()"
             >
-                <mat-icon>close</mat-icon>
+                <mat-icon adf-icon="close" />
             </button>
         </adf-toolbar>
 
@@ -64,12 +64,12 @@
                                     (click)="switchToDisplayMode('fullScreen')"
                                     [attr.data-automation-id]="'adf-cloud-form-fullscreen-button'"
                                 >
-                                    <mat-icon>fullscreen</mat-icon>
+                                    <mat-icon adf-icon="fullscreen" />
                                 </button>
                             </div>
                             <div *ngIf="showRefreshButton" class="adf-cloud-form-reload-button" [title]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
                                 <button mat-icon-button (click)="onRefreshClicked()" [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
-                                    <mat-icon>refresh</mat-icon>
+                                    <mat-icon adf-icon="refresh" />
                                 </button>
                             </div>
                             <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName"

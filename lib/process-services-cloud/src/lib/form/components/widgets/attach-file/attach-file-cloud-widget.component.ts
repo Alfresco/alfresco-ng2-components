@@ -25,7 +25,8 @@ import {
     AppConfigService,
     UploadWidgetContentLinkModel,
     DestinationFolderPath,
-    ErrorWidgetComponent
+    ErrorWidgetComponent,
+    IconModule
 } from '@alfresco/adf-core';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -41,7 +42,6 @@ import {
 } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { FilePropertiesTableCloudComponent } from './file-properties-table/file-properties-table-cloud.component';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -53,7 +53,7 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
-    imports: [CommonModule, ErrorWidgetComponent, TranslatePipe, MatIconModule, FilePropertiesTableCloudComponent, MatButtonModule],
+    imports: [CommonModule, ErrorWidgetComponent, TranslatePipe, IconModule, FilePropertiesTableCloudComponent, MatButtonModule],
     templateUrl: './attach-file-cloud-widget.component.html',
     styleUrls: ['./attach-file-cloud-widget.component.scss'],
     encapsulation: ViewEncapsulation.None

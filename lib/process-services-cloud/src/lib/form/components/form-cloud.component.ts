@@ -47,6 +47,7 @@ import {
     FormRendererComponent,
     FormService,
     FormValues,
+    IconModule,
     ToolbarComponent,
     ToolbarDividerComponent,
     UploadWidgetContentLinkModel,
@@ -65,7 +66,6 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { A11yModule } from '@angular/cdk/a11y';
 
 export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldValidator[]>('FORM_CLOUD_FIELD_VALIDATORS_TOKEN');
@@ -79,7 +79,7 @@ export const FORM_CLOUD_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldVal
         MatButtonModule,
         MatCardModule,
         FormRendererComponent,
-        MatIconModule,
+        IconModule,
         ToolbarDividerComponent,
         ToolbarComponent,
         A11yModule
