@@ -22,13 +22,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkBodyCreate } from '@alfresco/js-api';
-import { ClipboardDirective, ConfirmDialogComponent } from '@alfresco/adf-core';
+import { ClipboardDirective, ConfirmDialogComponent, IconModule } from '@alfresco/adf-core';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
 import { add, endOfDay, format, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -44,7 +43,7 @@ interface SharedDialogFormProps {
     imports: [
         CommonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatDialogModule,
         ReactiveFormsModule,
         MatSlideToggleModule,

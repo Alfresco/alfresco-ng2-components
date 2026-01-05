@@ -23,7 +23,7 @@
             [attr.aria-label]="'COMMON.CLEAR' | translate"
             [attr.title]="'COMMON.CLEAR' | translate"
         >
-            <mat-icon class="adf-content-node-selector-content-input-icon">clear</mat-icon>
+            <mat-icon class="adf-content-node-selector-content-input-icon" adf-icon="clear" />
         </button>
 
         <mat-icon
@@ -31,8 +31,8 @@
             matSuffix
             class="adf-content-node-selector-content-input-icon"
             data-automation-id="content-node-selector-search-icon"
-            >search
-        </mat-icon>
+            adf-icon="search"
+        />
     </mat-form-field>
     <adf-sites-dropdown
         *ngIf="showDropdownSiteList"
@@ -47,7 +47,7 @@
         data-automation-id="adf-toggle-search-panel-button"
         mat-icon-button
         (click)="toggleSearchPanel()">
-        <mat-icon>filter_list</mat-icon>
+        <mat-icon adf-icon="filter_list" />
         {{ 'SEARCH.SEARCH_HEADER.TITLE' | translate }}
     </button>
     <div class="adf-content-node-selector-search-panel-container">

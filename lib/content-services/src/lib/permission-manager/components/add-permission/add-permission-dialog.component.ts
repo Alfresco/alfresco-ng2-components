@@ -23,8 +23,7 @@ import { MemberModel } from '../../models/member.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent } from '@alfresco/adf-core';
-import { MatIconModule } from '@angular/material/icon';
+import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent, IconModule } from '@alfresco/adf-core';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 import { UserNameColumnComponent } from '../user-name-column/user-name-column.component';
@@ -41,7 +40,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
         DataColumnListComponent,
         DataColumnComponent,
         DateColumnHeaderComponent,
-        MatIconModule,
+        IconModule,
         AddPermissionPanelComponent,
         UserIconColumnComponent,
         UserNameColumnComponent,
@@ -58,7 +57,10 @@ export class AddPermissionDialogComponent {
     private existingMembers: PermissionElement[] = [];
     currentSelection: NodeEntry[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData, private dialogRef: MatDialogRef<AddPermissionDialogComponent>) {
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData,
+        private dialogRef: MatDialogRef<AddPermissionDialogComponent>
+    ) {
         this.existingMembers = this.data.node.permissions.locallySet || [];
     }
 

@@ -21,13 +21,12 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { TranslationService } from '@alfresco/adf-core';
+import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface SearchListOption {
@@ -38,7 +37,7 @@ export interface SearchListOption {
 
 @Component({
     selector: 'adf-search-check-list',
-    imports: [CommonModule, MatCheckboxModule, TranslatePipe, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatCheckboxModule, TranslatePipe, MatButtonModule, IconModule],
     templateUrl: './search-check-list.component.html',
     styleUrls: ['./search-check-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

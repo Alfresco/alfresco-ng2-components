@@ -62,7 +62,7 @@
                         (keydown.enter)="removePermission($event, entry.row.obj)"
                         [attr.data-automation-id]="'adf-delete-permission-button-' + entry.row.obj.authorityId"
                         [attr.aria-label]="'PERMISSION_MANAGER.ACTION.DELETE' | translate">
-                    <mat-icon>delete_outline</mat-icon>
+                    <mat-icon adf-icon="delete_outline" />
                 </button>
             </ng-template>
         </data-column>

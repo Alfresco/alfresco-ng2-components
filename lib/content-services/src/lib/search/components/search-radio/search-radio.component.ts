@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '@alfresco/adf-core';
 
 export interface SearchRadioOption {
     name: string;
@@ -37,7 +37,7 @@ export interface SearchRadioOption {
 
 @Component({
     selector: 'adf-search-radio',
-    imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatRadioModule, FormsModule, TranslatePipe, MatButtonModule, IconModule],
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,

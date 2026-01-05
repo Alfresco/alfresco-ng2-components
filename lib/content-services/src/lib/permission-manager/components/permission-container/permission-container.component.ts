@@ -26,11 +26,11 @@ import {
     DataTableComponent,
     DateColumnHeaderComponent,
     EmptyContentComponent,
+    IconModule,
     NoContentTemplateDirective
 } from '@alfresco/adf-core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 import { UserNameColumnComponent } from '../user-name-column/user-name-column.component';
 import { NodePathColumnComponent } from '../node-path-column/node-path-column.component';
@@ -46,7 +46,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
         TranslatePipe,
         DateColumnHeaderComponent,
         MatButtonModule,
-        MatIconModule,
+        IconModule,
         NoContentTemplateDirective,
         EmptyContentComponent,
         UserIconColumnComponent,

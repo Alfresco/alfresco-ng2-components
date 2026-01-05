@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { IconModule, UserPreferencesService } from '@alfresco/adf-core';
 import {
     ChangeDetectorRef,
     Component,
@@ -41,14 +41,13 @@ import { FileUploadCompleteEvent, FileUploadDeleteEvent } from '../../common/eve
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 import { A11yModule } from '@angular/cdk/a11y';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, MatIconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
+    imports: [CommonModule, MatButtonModule, TranslatePipe, IconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

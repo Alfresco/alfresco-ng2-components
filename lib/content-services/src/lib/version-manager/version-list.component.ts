@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ConfirmDialogComponent } from '@alfresco/adf-core';
+import { ConfirmDialogComponent, IconModule } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ContentApi, ContentPagingQuery, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
@@ -29,7 +29,6 @@ import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } 
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +36,10 @@ import { VersionCompatibilityDirective } from '../version-compatibility';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
-    constructor(private versionsApi: VersionsApi, private node: Node) {
+    constructor(
+        private versionsApi: VersionsApi,
+        private node: Node
+    ) {
         super();
     }
 
@@ -58,7 +60,7 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
         CdkVirtualScrollViewport,
         CdkFixedSizeVirtualScroll,
         CdkVirtualForOf,
-        MatIconModule,
+        IconModule,
         MatMenuModule,
         TranslatePipe,
         MatButtonModule,

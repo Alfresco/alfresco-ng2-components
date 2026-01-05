@@ -23,10 +23,10 @@ import { SearchWidgetContainerComponent } from '../../search-widget-container/se
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { first } from 'rxjs/operators';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-widget-chip',
@@ -35,7 +35,7 @@ import { first } from 'rxjs/operators';
         MatChipsModule,
         MatMenuModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         SearchFilterMenuCardComponent,
         SearchWidgetContainerComponent,
         MatButtonModule

@@ -17,7 +17,7 @@
 
 import { Component, DestroyRef, inject, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { EmptyListComponent, NotificationService, ToolbarComponent, ToolbarTitleComponent, TranslationService } from '@alfresco/adf-core';
+import { EmptyListComponent, IconModule, NotificationService, ToolbarComponent, ToolbarTitleComponent, TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentService } from '../common/services/content.service';
@@ -31,7 +31,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DropdownBreadcrumbComponent } from '../breadcrumb/dropdown-breadcrumb.component';
 import { NodeCounterDirective } from '../directives/node-counter.directive';
-import { MatIconModule } from '@angular/material/icon';
 import { UploadDragAreaComponent } from '../upload/components/upload-drag-area.component';
 import { FileUploadingDialogComponent } from '../upload/components/file-uploading-dialog.component';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
@@ -50,7 +49,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         ToolbarComponent,
         DropdownBreadcrumbComponent,
         NodeCounterDirective,
-        MatIconModule,
+        IconModule,
         UploadDragAreaComponent,
         FileUploadingDialogComponent,
         EmptyListComponent,

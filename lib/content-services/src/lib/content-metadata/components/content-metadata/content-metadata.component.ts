@@ -25,6 +25,7 @@ import {
     CardViewItem,
     Chip,
     DynamicChipListComponent,
+    IconModule,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -44,7 +45,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
@@ -69,7 +69,7 @@ enum DefaultPanels {
         ContentMetadataHeaderComponent,
         MatButtonModule,
         TranslatePipe,
-        MatIconModule,
+        IconModule,
         MatChipsModule,
         CategoriesManagementComponent,
         DynamicExtensionComponent,

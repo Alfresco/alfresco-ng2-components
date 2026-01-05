@@ -22,7 +22,7 @@
                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: ('CORE.METADATA.BASIC.HEADER' | translate) }"
                     data-automation-id="meta-data-general-info-edit"
                     class="adf-edit-icon-buttons">
-                    <mat-icon>mode_edit</mat-icon>
+                    <mat-icon adf-icon="mode_edit" />
                 </button>
                 <div *ngIf="isPanelEditing(DefaultPanels.PROPERTIES)" class="adf-metadata-action-buttons">
                     <button
@@ -31,7 +31,7 @@
                         (click)="cancelGroupEditing(DefaultPanels.PROPERTIES, $event)"
                         data-automation-id="reset-metadata"
                         class="adf-metadata-action-buttons-clear">
-                        <mat-icon>clear</mat-icon>
+                        <mat-icon adf-icon="clear" />
                     </button>
                     <button
                         mat-icon-button
@@ -40,7 +40,7 @@
                         color="primary"
                         data-automation-id="save-general-info-metadata"
                         [disabled]="!hasMetadataChanged || invalidProperties.size > 0">
-                        <mat-icon>check</mat-icon>
+                        <mat-icon adf-icon="check" />
                     </button>
                 </div>
             </adf-content-metadata-header>
@@ -77,7 +77,7 @@
                         [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: ('METADATA.BASIC.TAGS' | translate) }"
                         data-automation-id="showing-tag-input-button"
                         class="adf-edit-icon-buttons">
-                        <mat-icon>mode_edit</mat-icon>
+                        <mat-icon adf-icon="mode_edit" />
                     </button>
                     <div *ngIf="isPanelEditing(DefaultPanels.TAGS)" class="adf-metadata-action-buttons">
                         <button
@@ -86,7 +86,7 @@
                             (click)="cancelGroupEditing(DefaultPanels.TAGS, $event)"
                             data-automation-id="reset-tags-metadata"
                             class="adf-metadata-action-buttons-clear">
-                            <mat-icon>clear</mat-icon>
+                            <mat-icon adf-icon="clear" />
                         </button>
                         <button
                             mat-icon-button
@@ -95,7 +95,7 @@
                             color="primary"
                             data-automation-id="save-tags-metadata"
                             [disabled]="!hasMetadataChanged">
-                            <mat-icon>check</mat-icon>
+                            <mat-icon adf-icon="check" />
                         </button>
                     </div>
                 </adf-content-metadata-header>
@@ -141,7 +141,7 @@
                         [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate: { sectionName: ('CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate) }"
                         data-automation-id="meta-data-categories-edit"
                         class="adf-categories-button adf-edit-icon-buttons">
-                        <mat-icon>mode_edit</mat-icon>
+                        <mat-icon adf-icon="mode_edit" />
                     </button>
                     <div *ngIf="isPanelEditing(DefaultPanels.CATEGORIES)" class="adf-metadata-action-buttons">
                         <button
@@ -150,7 +150,7 @@
                             (click)="cancelGroupEditing(DefaultPanels.CATEGORIES, $event)"
                             data-automation-id="reset-metadata"
                             class="adf-metadata-action-buttons-clear">
-                            <mat-icon>clear</mat-icon>
+                            <mat-icon adf-icon="clear" />
                         </button>
                         <button
                             mat-icon-button
@@ -159,7 +159,7 @@
                             color="primary"
                             data-automation-id="save-categories-metadata"
                             [disabled]="!hasMetadataChanged">
-                            <mat-icon>check</mat-icon>
+                            <mat-icon adf-icon="check" />
                         </button>
                     </div>
                 </adf-content-metadata-header>
@@ -223,7 +223,7 @@
                             data-automation-id="meta-data-card-toggle-edit"
                             class="adf-edit-icon-buttons"
                             (click)="toggleGroupEditing(group.title, $event)">
-                            <mat-icon>mode_edit</mat-icon>
+                            <mat-icon adf-icon="mode_edit" />
                         </button>
                         <div class="adf-metadata-action-buttons" *ngIf="group.editable && isPanelEditing(group.title)">
                             <button
@@ -232,7 +232,7 @@
                                 (click)="cancelGroupEditing(group.title, $event)"
                                 data-automation-id="reset-metadata"
                                 class="adf-metadata-action-buttons-clear">
-                                <mat-icon>clear</mat-icon>
+                                <mat-icon adf-icon="clear" />
                             </button>
                             <button
                                 mat-icon-button
@@ -241,7 +241,7 @@
                                 color="primary"
                                 data-automation-id="save-metadata"
                                 [disabled]="!hasMetadataChanged || invalidProperties.size > 0">
-                                <mat-icon>check</mat-icon>
+                                <mat-icon adf-icon="check" />
                             </button>
                         </div>
                     </adf-content-metadata-header>

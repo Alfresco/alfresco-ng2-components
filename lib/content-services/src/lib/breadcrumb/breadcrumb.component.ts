@@ -20,13 +20,13 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-breadcrumb',
-    imports: [CommonModule, MatIconModule, TranslatePipe, MatSelectModule],
+    imports: [CommonModule, IconModule, TranslatePipe, MatSelectModule],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,

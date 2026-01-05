@@ -63,7 +63,7 @@
                 data-automation-id="adf-toolbar-download"
                 [adfNodeDownload]="nodeEntry"
                 [version]="versionEntry">
-            <mat-icon>file_download</mat-icon>
+            <mat-icon adf-icon="file_download" />
         </button>
 
         <button id="adf-alfresco-viewer-print"
@@ -73,7 +73,7 @@
                 title="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
                 data-automation-id="adf-toolbar-print"
                 (click)="onPrintContent($event)">
-            <mat-icon>print</mat-icon>
+            <mat-icon adf-icon="print" />
         </button>
     </adf-viewer-toolbar-custom-actions>
 </adf-viewer>

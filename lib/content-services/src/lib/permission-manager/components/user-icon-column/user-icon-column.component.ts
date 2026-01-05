@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-import { InitialUsernamePipe, User } from '@alfresco/adf-core';
+import { IconModule, InitialUsernamePipe, User } from '@alfresco/adf-core';
 import { Group, NodeEntry } from '@alfresco/js-api';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-user-icon-column',
-    imports: [CommonModule, MatIconModule, InitialUsernamePipe, TranslatePipe],
+    imports: [CommonModule, IconModule, InitialUsernamePipe, TranslatePipe],
     template: `
         @if (!isSelected) {
             <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'">
                 @if (displayText$ | async; as user) {
                     @if (group) {
-                        <mat-icon class="adf-group-icon">people_alt_outline</mat-icon>
+                        <mat-icon class="adf-group-icon" adf-icon="people_alt_outline" />
                         <span class="cdk-visually-hidden">{{ 'USER_ICON.GROUP_ICON_ALT' | translate }}</span>
                     } @else {
                         <div [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>

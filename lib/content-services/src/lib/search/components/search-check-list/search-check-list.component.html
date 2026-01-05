@@ -24,18 +24,18 @@
     <button mat-icon-button
         title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
         (click)="clear()">
-        <mat-icon>clear</mat-icon>
+        <mat-icon adf-icon="clear" />
     </button>
     <button mat-icon-button
         *ngIf="options.canShowLessItems"
         title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
         (click)="options.showLessItems()">
-        <mat-icon>keyboard_arrow_up</mat-icon>
+        <mat-icon adf-icon="keyboard_arrow_up" />
     </button>
     <button mat-icon-button
         *ngIf="options.canShowMoreItems"
         title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
         (click)="options.showMoreItems()">
-        <mat-icon>keyboard_arrow_down</mat-icon>
+        <mat-icon adf-icon="keyboard_arrow_down" />
     </button>
 </div>

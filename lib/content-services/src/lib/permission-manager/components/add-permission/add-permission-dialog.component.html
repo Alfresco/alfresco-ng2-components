@@ -10,7 +10,7 @@
         <button mat-button (click)="enableSearch()" class="adf-search-user-button">
             {{ "PERMISSION_MANAGER.ADD-PERMISSION.SEARCH" | translate }}
             <span class="adf-toolbar--spacer"></span>
-            <mat-icon iconPositionEnd>search</mat-icon>
+            <mat-icon iconPositionEnd adf-icon="search" />
         </button>
 
         <div class="adf-new-permission-table">
@@ -66,7 +66,7 @@
                                     [attr.aria-label]="'PERMISSION_MANAGER.ADD-PERMISSION.REMOVE_USER_GROUP' | translate"
                                     [attr.title]="'PERMISSION_MANAGER.ADD-PERMISSION.REMOVE_USER_GROUP' | translate"
                                     data-automation-id="adf-delete-permission-button">
-                                <mat-icon>highlight_off</mat-icon>
+                                <mat-icon adf-icon="highlight_off" />
                             </button>
                         </ng-template>
                     </data-column>

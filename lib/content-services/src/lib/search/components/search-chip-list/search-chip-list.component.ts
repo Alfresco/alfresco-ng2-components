@@ -21,11 +21,11 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-chip-list',
-    imports: [CommonModule, MatChipsModule, TranslatePipe, MatIconModule],
+    imports: [CommonModule, MatChipsModule, TranslatePipe, IconModule],
     templateUrl: './search-chip-list.component.html',
     styleUrls: ['./search-chip-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

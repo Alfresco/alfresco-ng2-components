@@ -24,12 +24,12 @@ import { NodeEntry } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-tree-view-list',
-    imports: [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslatePipe],
+    imports: [CommonModule, MatTreeModule, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './tree-view.component.html',
     styleUrls: ['./tree-view.component.scss']
 })

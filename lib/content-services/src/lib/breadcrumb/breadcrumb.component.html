@@ -13,12 +13,8 @@
         [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.DROPDOWN' | translate"
     >
         <div class="adf-breadcrumb-dropdown-trigger-icon">
-            <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
-            <mat-icon
-                [class.adf-isRoot]="!hasPreviousNodes()"
-                class="adf-breadcrumb-dropdown-trigger-arrow"
-                >arrow_drop_down</mat-icon
-            >
+            <mat-icon [class.adf-isRoot]="!hasPreviousNodes()" adf-icon="folder" />
+            <mat-icon [class.adf-isRoot]="!hasPreviousNodes()" class="adf-breadcrumb-dropdown-trigger-arrow" adf-icon="arrow_drop_down" />
         </div>
     </button>
 
@@ -60,9 +56,7 @@
             {{ (selectedRowItemsCount < 1 ? item.name : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
         </div>
 
-        <mat-icon class="adf-breadcrumb-item-chevron" *ngIf="!last">
-            chevron_right
-        </mat-icon>
+        <mat-icon class="adf-breadcrumb-item-chevron" *ngIf="!last" adf-icon="chevron_right" />
     </div>
 </nav>
 
