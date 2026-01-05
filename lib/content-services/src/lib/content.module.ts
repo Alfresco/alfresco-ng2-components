@@ -32,7 +32,6 @@ import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/perm
 import { ASPECT_LIST_DIRECTIVES } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
-import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { CategoriesManagementComponent } from './category';
@@ -55,7 +54,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         MaterialModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
-        ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
         ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
@@ -82,7 +80,6 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         MaterialModule,
-        ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,

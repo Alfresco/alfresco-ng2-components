@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { CommonModule } from '@angular/common';
-import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 
 @Component({
     selector: 'adf-trashcan-name-column',
-    imports: [CommonModule, NodeNameTooltipPipe],
+    imports: [CommonModule],
     template: `
         <ng-container *ngIf="!isLibrary">
-            <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
+            <span class="adf-datatable-cell-value" [title]="nodeTooltip()">{{ displayText }}</span>
         </ng-container>
         <ng-container *ngIf="isLibrary">
-            <span class="adf-datatable-cell-value" title="{{ displayTooltip }}">{{ displayText }}</span>
+            <span class="adf-datatable-cell-value" [title]="displayTooltip">{{ displayText }}</span>
         </ng-container>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,12 +37,15 @@ import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 })
 export class TrashcanNameColumnComponent implements OnInit {
     @Input({ required: true })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any;
 
     isLibrary = false;
     displayText: string;
     displayTooltip: string;
     node: NodeEntry;
+
+    readonly nodeTooltip = computed(() => this.getNodeNameTooltip(this.node));
 
     ngOnInit() {
         this.node = this.context.row.node;
@@ -63,6 +65,49 @@ export class TrashcanNameColumnComponent implements OnInit {
         }
     }
 
+    private getNodeNameTooltip(node: NodeEntry): string | null {
+        if (!node?.entry) {
+            return null;
+        }
+
+        const {
+            entry: { properties, name }
+        } = node;
+
+        const title = properties?.['cm:title'];
+        const description = properties?.['cm:description'];
+
+        // Build lines array based on available properties
+        const lines: string[] = [];
+
+        // Determine first line: title if available and different from name, otherwise name
+        if (title && description) {
+            lines.push(title, description);
+        } else if (title) {
+            lines.push(name, title);
+        } else if (description) {
+            lines.push(name, description);
+        } else {
+            lines.push(name);
+        }
+
+        // Remove case-insensitive duplicates while preserving order
+        return this.removeDuplicates(lines).join('\n');
+    }
+
+    private removeDuplicates(lines: string[]): string[] {
+        const seen = new Set<string>();
+        return lines.filter((line) => {
+            const lowerLine = line.toLowerCase();
+            if (seen.has(lowerLine)) {
+                return false;
+            }
+            seen.add(lowerLine);
+            return true;
+        });
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
         const entries = rows.map((r: ShareDataRow) => r.node.entry);
         const { id } = library;
@@ -71,6 +116,7 @@ export class TrashcanNameColumnComponent implements OnInit {
         let isDuplicate = false;
 
         if (entries) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             isDuplicate = entries.some((entry: any) => entry.id !== id && entry.properties['cm:title'] === title);
         }
 

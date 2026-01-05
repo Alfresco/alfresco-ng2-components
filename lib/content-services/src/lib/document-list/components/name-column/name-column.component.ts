@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, ElementRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-name-column',
-    imports: [AsyncPipe, TranslatePipe, NodeNameTooltipPipe],
+    imports: [AsyncPipe, TranslatePipe],
     template: `
         <span
             role="link"
@@ -39,7 +38,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
                           }
             "
             class="adf-datatable-cell-value"
-            title="{{ node | adfNodeNameTooltip }}"
+            [title]="tooltip()"
             (click)="onClick()"
             tabindex="0"
             (keyup.enter)="onClick()"
@@ -53,6 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class NameColumnComponent implements OnInit {
     @Input({ required: true })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any;
 
     @Input()
@@ -61,9 +61,42 @@ export class NameColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
+    readonly tooltip = computed(() => {
+        if (!this.node?.entry) {
+            return null;
+        }
+
+        const {
+            entry: { properties, name }
+        } = this.node;
+
+        const title = properties?.['cm:title'];
+        const description = properties?.['cm:description'];
+
+        // Build lines array based on available properties
+        const lines: string[] = [];
+
+        // Determine first line: title if available and different from name, otherwise name
+        if (title && description) {
+            lines.push(title, description);
+        } else if (title) {
+            lines.push(name, title);
+        } else if (description) {
+            lines.push(name, description);
+        } else {
+            lines.push(name);
+        }
+
+        // Remove case-insensitive duplicates while preserving order
+        return this.removeDuplicates(lines).join('\n');
+    });
+
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
+    constructor(
+        private element: ElementRef,
+        private nodesApiService: NodesApiService
+    ) {}
 
     ngOnInit() {
         this.updateValue();
@@ -85,9 +118,21 @@ export class NameColumnComponent implements OnInit {
         this.node = this.context.row.node;
 
         if (this.node?.entry) {
-            const displayText = this.context.row.getValue(this.key);
-            this.displayText$.next(displayText || this.node.entry.id);
+            const displayValue = this.context.row.getValue(this.key);
+            this.displayText$.next(displayValue || this.node.entry.id);
         }
+    }
+
+    private removeDuplicates(lines: string[]): string[] {
+        const seen = new Set<string>();
+        return lines.filter((line) => {
+            const lowerLine = line.toLowerCase();
+            if (seen.has(lowerLine)) {
+                return false;
+            }
+            seen.add(lowerLine);
+            return true;
+        });
     }
 
     onClick() {
