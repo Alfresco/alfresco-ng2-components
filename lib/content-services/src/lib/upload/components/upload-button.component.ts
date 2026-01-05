@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { EXTENDIBLE_COMPONENT, FileUtils } from '@alfresco/adf-core';
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { FileUtils } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { ContentService } from '../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
@@ -24,7 +24,6 @@ import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import { UploadBase } from './base-upload/upload-base';
-import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-operation-subject.interface';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -35,10 +34,9 @@ import { MatIconModule } from '@angular/material/icon';
     imports: [CommonModule, MatButtonModule, TranslatePipe, MatIconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
-    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent) }],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodeAllowableOperationSubject {
+export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges {
     private contentService = inject(ContentService);
     private nodesApiService = inject(NodesApiService);
 

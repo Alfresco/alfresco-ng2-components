@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
-import { Component, forwardRef, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
@@ -31,7 +30,6 @@ import { MatIconModule } from '@angular/material/icon';
     imports: [CommonModule, MatButtonModule, TranslatePipe, MatIconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
-    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadVersionButtonComponent) }],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-upload-version-button' }
 })

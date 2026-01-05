@@ -321,7 +321,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Auto Focus directive](content-services/directives/auto-focus.directive.md) | Automatically focuses HTML element after content is initialized. | [Source](../lib/content-services/src/lib/directives/auto-focus.directive.ts) |
-| [Check Allowable Operation directive](content-services/directives/check-allowable-operation.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../lib/content-services/src/lib/directives/check-allowable-operation.directive.ts) |
 | [Node Public File Share Directive](content-services/directives/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/src/lib/content-node-share/content-node-share.directive.ts) |
 | [File Draggable directive](content-services/directives/file-draggable.directive.md) | Provides drag-and-drop features for an element such as a div. | [Source](../lib/content-services/src/lib/upload/directives/file-draggable.directive.ts) |
 | [Inherit Permission directive](content-services/directives/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/inherited-button.directive.ts) |
@@ -344,7 +343,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Base Card View Content Update interface](content-services/interfaces/base-card-view-content-update.interface.md) | Specifies required properties and methods for Card View Content Update service. Extends from BaseCardViewUpdate. | [Source](../lib/content-services/src/lib/interfaces/base-card-view-content-update.interface.ts) |  |
 | [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/models/search-widget.interface.ts) |
 | [Content Metadata Custom Panel interface](content-services/interfaces/content-metadata-custom-panel.interface.md) | Specifies required properties for metadata custom panel. | [Source](../lib/content-services/src/lib/content-metadata/interfaces/content-metadata-custom-panel.interface.ts) |
 

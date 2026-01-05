@@ -19,7 +19,6 @@ export * from './content-directive.module';
 export * from './node-lock.directive';
 export * from './node-counter.directive';
 export * from './auto-focus.directive';
-export * from './check-allowable-operation.directive';
 export * from './library-favorite.directive';
 export * from './library-membership.directive';
 export * from './node-delete.directive';
