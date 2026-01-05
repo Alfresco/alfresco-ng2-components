@@ -22,29 +22,7 @@ import { NodeEntry } from '@alfresco/js-api';
     name: 'adfNodeNameTooltip'
 })
 export class NodeNameTooltipPipe implements PipeTransform {
-    transform(node: NodeEntry): string {
-        if (node) {
-            return this.getNodeTooltip(node);
-        }
-        return null;
-    }
-
-    private containsLine(lines: string[], line: string): boolean {
-        return lines.some((item: string) => item.toLowerCase() === line.toLowerCase());
-    }
-
-    private removeDuplicateLines(lines: string[]): string[] {
-        const reducer = (acc: string[], line: string): string[] => {
-            if (!this.containsLine(acc, line)) {
-                acc.push(line);
-            }
-            return acc;
-        };
-
-        return lines.reduce(reducer, []);
-    }
-
-    private getNodeTooltip(node: NodeEntry): string {
+    transform(node: NodeEntry): string | null {
         if (!node?.entry) {
             return null;
         }
@@ -52,25 +30,37 @@ export class NodeNameTooltipPipe implements PipeTransform {
         const {
             entry: { properties, name }
         } = node;
-        const lines = [name];
 
-        if (properties) {
-            const { 'cm:title': title, 'cm:description': description } = properties;
+        const title = properties?.['cm:title'];
+        const description = properties?.['cm:description'];
 
-            if (title && description) {
-                lines[0] = title;
-                lines[1] = description;
-            }
+        // Build lines array based on available properties
+        const lines: string[] = [];
 
-            if (title) {
-                lines[1] = title;
-            }
-
-            if (description) {
-                lines[1] = description;
-            }
+        // Determine first line: title if available and different from name, otherwise name
+        if (title && description) {
+            lines.push(title, description);
+        } else if (title) {
+            lines.push(name, title);
+        } else if (description) {
+            lines.push(name, description);
+        } else {
+            lines.push(name);
         }
 
-        return this.removeDuplicateLines(lines).join(`\n`);
+        // Remove case-insensitive duplicates while preserving order
+        return this.removeDuplicates(lines).join('\n');
+    }
+
+    private removeDuplicates(lines: string[]): string[] {
+        const seen = new Set<string>();
+        return lines.filter((line) => {
+            const lowerLine = line.toLowerCase();
+            if (seen.has(lowerLine)) {
+                return false;
+            }
+            seen.add(lowerLine);
+            return true;
+        });
     }
 }
