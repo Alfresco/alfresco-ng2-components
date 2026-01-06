@@ -15,16 +15,19 @@
  * limitations under the License.
  */
 
-export * from './decimal-number.pipe';
-export * from './file-size.pipe';
-export * from './file-type.pipe';
-export * from './format-space.pipe';
-export * from './full-name.pipe';
-export * from './localized-date.pipe';
-export * from './multi-value.pipe';
-export * from './text-highlight.pipe';
-export * from './time-ago.pipe';
-export * from './user-initial.pipe';
-export * from './pipe.module';
-export * from './date-time.pipe';
-export * from './truncate.pipe';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+    name: 'multiValue'
+})
+export class MultiValuePipe implements PipeTransform {
+    static DEFAULT_SEPARATOR = ', ';
+
+    transform(values: any | any[], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
+        if (values && values instanceof Array) {
+            return values.join(valueSeparator);
+        }
+
+        return values;
+    }
+}
