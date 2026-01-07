@@ -22,7 +22,7 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-trashcan-name-column',
-    template: ` <span class="adf-datatable-cell-value" [title]="isLibrary ? displayTooltip : nodeTooltip()">{{ displayText }}</span> `,
+    template: ` <span class="adf-datatable-cell-value" [title]="isLibrary ? libraryTooltip() : nodeTooltip()">{{ displayText }}</span> `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
@@ -34,10 +34,10 @@ export class TrashcanNameColumnComponent implements OnInit {
 
     isLibrary = false;
     displayText: string;
-    displayTooltip: string;
     node: NodeEntry;
 
     readonly nodeTooltip = computed(() => NodeTooltipUtils.getNodeTooltip(this.node));
+    readonly libraryTooltip = computed(() => NodeTooltipUtils.getLibraryTooltip(this.node));
 
     ngOnInit() {
         this.node = this.context.row.node;
@@ -47,29 +47,11 @@ export class TrashcanNameColumnComponent implements OnInit {
             this.isLibrary = this.node.entry.nodeType === 'st:site';
 
             if (this.isLibrary) {
-                const { properties } = this.node.entry;
-
-                this.displayText = this.makeLibraryTitle(this.node.entry, rows);
-                this.displayTooltip = properties['cm:description'] || properties['cm:title'];
+                const allEntries = rows.map((row) => row.node.entry);
+                this.displayText = NodeTooltipUtils.getLibraryTitle(this.node.entry, allEntries);
             } else {
                 this.displayText = this.node.entry.name || this.node.entry.id;
             }
         }
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
-        const entries = rows.map((r: ShareDataRow) => r.node.entry);
-        const { id } = library;
-        const title = library.properties['cm:title'];
-
-        let isDuplicate = false;
-
-        if (entries) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            isDuplicate = entries.some((entry: any) => entry.id !== id && entry.properties['cm:title'] === title);
-        }
-
-        return isDuplicate ? `${library.properties['cm:title']} (${library.name})` : `${library.properties['cm:title']}`;
     }
 }

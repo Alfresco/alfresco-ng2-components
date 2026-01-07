@@ -18,7 +18,7 @@
 import { NodeEntry } from '@alfresco/js-api';
 
 /**
- * Utility class for generating node tooltips based on node properties
+ * Utility class for generating node and library tooltips based on node properties
  */
 export class NodeTooltipUtils {
     /**
@@ -61,6 +61,67 @@ export class NodeTooltipUtils {
 
         // Remove case-insensitive duplicates while preserving order
         return this.removeDuplicates(lines).join('\n');
+    }
+
+    /**
+     * Generates a tooltip string for a library (site) node.
+     * Returns description if available, otherwise title, otherwise empty string.
+     *
+     * @param node - The node entry to generate tooltip for
+     * @returns The tooltip string, or empty string if no description or title is available
+     */
+    static getLibraryTooltip(node: NodeEntry): string {
+        if (!node?.entry) {
+            return '';
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { properties, description, title } = node.entry as any;
+
+        // Check both direct properties and cm: properties for compatibility
+        const desc = description || properties?.['cm:description'];
+        const ttl = title || properties?.['cm:title'];
+
+        return desc || ttl || '';
+    }
+
+    /**
+     * Generates a display title for a library (site) node.
+     * If there are duplicate titles in the list, appends the library ID/name in parentheses.
+     *
+     * @param library - The library entry object
+     * @param allEntries - Array of all entries to check for duplicates
+     * @returns The display title, with ID/name appended if duplicate exists
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static getLibraryTitle(library: any, allEntries: any[]): string {
+        if (!library) {
+            return '';
+        }
+
+        // Support both direct properties and cm: properties
+        const libraryId = library.id;
+        const libraryName = library.name;
+        const libraryTitle = library.title || library.properties?.['cm:title'];
+
+        if (!libraryTitle) {
+            return libraryName || libraryId || '';
+        }
+
+        // Check if there are duplicate titles in the list
+        let isDuplicate = false;
+
+        if (allEntries && allEntries.length > 0) {
+            isDuplicate = allEntries.some((entry) => {
+                const entryId = entry.id;
+                const entryTitle = entry.title || entry.properties?.['cm:title'];
+                return entryId !== libraryId && entryTitle === libraryTitle;
+            });
+        }
+
+        // If duplicate, append the ID or name in parentheses
+        const suffix = libraryName || libraryId;
+        return isDuplicate && suffix ? `${libraryTitle} (${suffix})` : libraryTitle;
     }
 
     /**
