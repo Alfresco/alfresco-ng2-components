@@ -18,20 +18,11 @@
 import { ChangeDetectionStrategy, Component, computed, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
-import { CommonModule } from '@angular/common';
 import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-trashcan-name-column',
-    imports: [CommonModule],
-    template: `
-        <ng-container *ngIf="!isLibrary">
-            <span class="adf-datatable-cell-value" [title]="nodeTooltip()">{{ displayText }}</span>
-        </ng-container>
-        <ng-container *ngIf="isLibrary">
-            <span class="adf-datatable-cell-value" [title]="displayTooltip">{{ displayText }}</span>
-        </ng-container>
-    `,
+    template: ` <span class="adf-datatable-cell-value" [title]="isLibrary ? displayTooltip : nodeTooltip()">{{ displayText }}</span> `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
