@@ -18,7 +18,15 @@ const config: StorybookConfig = {
         { from: '../../process-services-cloud/src/lib/i18n', to: 'assets/adf-process-services-cloud/i18n' },
         { from: '../../config/app.config.json', to: 'app.config.json' }
     ],
-    addons: ['@storybook/addon-themes']
+    addons: ['@storybook/addon-themes'],
+    webpackFinal: async (config) => {
+        if (config.performance) {
+            config.performance.hints = false;
+        } else {
+            config.performance = { hints: false };
+        }
+        return config;
+    }
 };
 
 export default config;

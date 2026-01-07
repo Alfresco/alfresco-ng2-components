@@ -11,12 +11,31 @@
     "../../core/**/mocks/**/*.ts",
     "../../core/**/mock/**/*",
     "../../core/feature-flags/**/*.ts",
+    "../../core/breadcrumbs/public-api.ts",
+    "../../core/breadcrumbs/src/index.ts",
+    "../../core/index.ts",
+    "../../core/schematics/**/*",
+    "../../core/shell/**/*",
+    "../../core/test.ts",
+    "../../core/src/lib/testing/**/*",
+    "../../core/src/lib/models/basic-auth.ts",
+    "../../core/src/lib/models/oauth2.ts",
+    "../../core/src/lib/services/startup-service-factory.ts",
+    "../../core/src/lib/card-view/directives/card-view-property-validator.spec.directive.ts",
     "../../content-services/**/*.spec.ts",
     "../../content-services/**/mock/**/*",
     "../../content-services/**/mocks/**/*",
+    "../../content-services/src/lib/testing/**/*",
+    "../../content-services/src/lib/content-type/public-api.ts",
+    "../../content-services/src/lib/folder-directive/folder-edit.directive.ts",
+    "../../content-services/src/lib/content-metadata/components/content-metadata/mock-data.ts",
+    "../../content-services/src/test.ts",
     "../../process-services-cloud/**/*.spec.ts",
     "../../process-services-cloud/**/mocks/**/*",
-    "../../process-services-cloud/**/mock/**/*"
+    "../../process-services-cloud/**/mock/**/*",
+    "../../process-services-cloud/src/lib/testing/**/*",
+    "../../process-services-cloud/src/test.ts",
+    "../../../.storybook/main.ts"
   ],
-  "include": ["../src/**/*", "*.ts", "../../core/**/*", "../../content-services/**/*", "../../process-services-cloud/**/*"]
+  "include": ["../src/**/*", "preview.ts", "../../core/**/*", "../../content-services/**/*", "../../process-services-cloud/**/*"]
 }

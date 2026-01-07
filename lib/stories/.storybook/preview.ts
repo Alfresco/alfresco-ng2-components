@@ -24,7 +24,8 @@ const preview: Preview = {
                 light: 'adf-storybook-light-theme',
                 dark: 'adf-storybook-dark-theme'
             },
-            defaultTheme: 'light'
+            defaultTheme: 'light',
+            parentSelector: 'html'
         })
     ],
     tags: ['autodocs']

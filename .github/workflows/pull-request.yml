@@ -4,17 +4,17 @@ on:
   workflow_call:
     inputs:
       dry-run-flag:
-        description: 'enable dry-run on artifact push'
+        description: "enable dry-run on artifact push"
         required: false
         type: boolean
         default: true
       devel:
-        description: 'devel'
+        description: "devel"
         required: false
         type: boolean
         default: false
       cron-run:
-        description: 'disables jobs which should not run when cron runs e2es'
+        description: "disables jobs which should not run when cron runs e2es"
         required: false
         type: boolean
         default: false
@@ -277,7 +277,16 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
+    needs:
+      [
+        check-if-pr-is-approved,
+        pre-checks,
+        setup,
+        unit-tests,
+        lint,
+        build-libs,
+        build-storybook,
+      ]
     steps:
       - name: Check job execution status
         if: >-
