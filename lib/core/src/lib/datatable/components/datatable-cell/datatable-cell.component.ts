@@ -21,7 +21,7 @@ import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { BehaviorSubject } from 'rxjs';
 import { DataTableService } from '../../services/datatable.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
@@ -29,7 +29,7 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 
 @Component({
     selector: 'adf-datatable-cell',
-    imports: [CommonModule, ClipboardDirective, TruncatePipe],
+    imports: [ClipboardDirective, TruncatePipe, AsyncPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         @let value = value$ | async;

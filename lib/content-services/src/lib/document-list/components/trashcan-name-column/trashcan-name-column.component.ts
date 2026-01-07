@@ -19,6 +19,7 @@ import { ChangeDetectionStrategy, Component, computed, Input, OnInit, ViewEncaps
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { CommonModule } from '@angular/common';
+import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-trashcan-name-column',
@@ -45,7 +46,7 @@ export class TrashcanNameColumnComponent implements OnInit {
     displayTooltip: string;
     node: NodeEntry;
 
-    readonly nodeTooltip = computed(() => this.getNodeNameTooltip(this.node));
+    readonly nodeTooltip = computed(() => NodeTooltipUtils.getNodeTooltip(this.node));
 
     ngOnInit() {
         this.node = this.context.row.node;
@@ -63,48 +64,6 @@ export class TrashcanNameColumnComponent implements OnInit {
                 this.displayText = this.node.entry.name || this.node.entry.id;
             }
         }
-    }
-
-    private getNodeNameTooltip(node: NodeEntry): string | null {
-        if (!node?.entry) {
-            return null;
-        }
-
-        const {
-            entry: { properties, name }
-        } = node;
-
-        const title = properties?.['cm:title'];
-        const description = properties?.['cm:description'];
-
-        // Build lines array based on available properties
-        const lines: string[] = [];
-
-        // Determine first line: title if available and different from name, otherwise name
-        if (title && description) {
-            lines.push(title, description);
-        } else if (title) {
-            lines.push(name, title);
-        } else if (description) {
-            lines.push(name, description);
-        } else {
-            lines.push(name);
-        }
-
-        // Remove case-insensitive duplicates while preserving order
-        return this.removeDuplicates(lines).join('\n');
-    }
-
-    private removeDuplicates(lines: string[]): string[] {
-        const seen = new Set<string>();
-        return lines.filter((line) => {
-            const lowerLine = line.toLowerCase();
-            if (seen.has(lowerLine)) {
-                return false;
-            }
-            seen.add(lowerLine);
-            return true;
-        });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

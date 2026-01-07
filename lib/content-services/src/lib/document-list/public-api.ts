@@ -49,4 +49,7 @@ export * from './models/node-action.enum';
 
 export * from './interfaces/document-list-loader.interface';
 
+// utils
+export * from './utils/node-tooltip.utils';
+
 export * from './document-list.module';

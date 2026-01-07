@@ -23,6 +23,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
 import { AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-name-column',
@@ -61,35 +62,7 @@ export class NameColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    readonly tooltip = computed(() => {
-        if (!this.node?.entry) {
-            return null;
-        }
-
-        const {
-            entry: { properties, name }
-        } = this.node;
-
-        const title = properties?.['cm:title'];
-        const description = properties?.['cm:description'];
-
-        // Build lines array based on available properties
-        const lines: string[] = [];
-
-        // Determine first line: title if available and different from name, otherwise name
-        if (title && description) {
-            lines.push(title, description);
-        } else if (title) {
-            lines.push(name, title);
-        } else if (description) {
-            lines.push(name, description);
-        } else {
-            lines.push(name);
-        }
-
-        // Remove case-insensitive duplicates while preserving order
-        return this.removeDuplicates(lines).join('\n');
-    });
+    readonly tooltip = computed(() => NodeTooltipUtils.getNodeTooltip(this.node));
 
     private readonly destroyRef = inject(DestroyRef);
 
@@ -121,18 +94,6 @@ export class NameColumnComponent implements OnInit {
             const displayValue = this.context.row.getValue(this.key);
             this.displayText$.next(displayValue || this.node.entry.id);
         }
-    }
-
-    private removeDuplicates(lines: string[]): string[] {
-        const seen = new Set<string>();
-        return lines.filter((line) => {
-            const lowerLine = line.toLowerCase();
-            if (seen.has(lowerLine)) {
-                return false;
-            }
-            seen.add(lowerLine);
-            return true;
-        });
     }
 
     onClick() {
