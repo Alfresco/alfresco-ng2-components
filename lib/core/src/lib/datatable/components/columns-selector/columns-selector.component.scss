@@ -34,21 +34,6 @@ adf-datatable-column-selector {
             margin-left: -16px;
         }
 
-        .adf-columns-selector-list-item {
-            margin-top: 10px;
-
-            #{ms.$mat-list-item} {
-                display: flex;
-                flex-direction: row-reverse;
-                padding-left: 0;
-                height: 24px;
-
-                #{ms.$mat-list-item-end} {
-                    margin-right: -5px;
-                }
-            }
-        }
-
         &-list-content {
             white-space: nowrap;
             overflow: hidden;
@@ -76,6 +61,15 @@ adf-datatable-column-selector {
 
         &-column-checkbox {
             padding: 0 20px;
+            display: flex;
+            flex-direction: row-reverse;
+            padding-left: 0;
+            align-items: center;
+            height: auto;
+
+            #{ms.$mat-list-item-end} {
+                margin-right: -5px;
+            }
         }
 
         &-footer {
