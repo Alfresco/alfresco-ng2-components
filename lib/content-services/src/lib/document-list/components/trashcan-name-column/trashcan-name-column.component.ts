@@ -22,7 +22,7 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-trashcan-name-column',
-    template: ` <span class="adf-datatable-cell-value" [title]="isLibrary ? libraryTooltip() : nodeTooltip()">{{ displayText }}</span> `,
+    template: `<span class="adf-datatable-cell-value" [title]="tooltip()">{{ displayText }}</span>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
@@ -36,8 +36,7 @@ export class TrashcanNameColumnComponent implements OnInit {
     displayText: string;
     node: NodeEntry;
 
-    readonly nodeTooltip = computed(() => NodeTooltipUtils.getNodeTooltip(this.node));
-    readonly libraryTooltip = computed(() => NodeTooltipUtils.getLibraryTooltip(this.node));
+    readonly tooltip = computed(() => (this.isLibrary ? NodeTooltipUtils.getLibraryTooltip(this.node) : NodeTooltipUtils.getNodeTooltip(this.node)));
 
     ngOnInit() {
         this.node = this.context.row.node;
