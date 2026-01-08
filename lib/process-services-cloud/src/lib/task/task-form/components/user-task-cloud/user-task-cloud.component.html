@@ -77,7 +77,7 @@
                         <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                         <button
                             *ngIf="canCompleteTask()"
-                            mat-button
+                            mat-flat-button
                             adf-cloud-complete-task
                             [appName]="appName"
                             [taskId]="taskId"
