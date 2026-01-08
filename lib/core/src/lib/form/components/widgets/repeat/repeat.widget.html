@@ -14,7 +14,7 @@
         @let shouldDisplayAddRowButton = !element.field.params.maxNumberOfRows || (element.field.params.maxNumberOfRows > element.field.rows.length);
         @if (shouldDisplayAddRowButton) {
             <button 
-                mat-button
+                mat-flat-button
                 color="primary"
                 class="adf-container-widget-row-action"
                 [disabled]="element.field.readOnly"

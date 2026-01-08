@@ -151,7 +151,7 @@
         @if (showStartProcessButton$ | async) {
             <button
                 color="primary"
-                mat-raised-button
+                mat-flat-button
                 [disabled]="disableStartButton || !isProcessFormValid"
                 (click)="startProcess()"
                 data-automation-id="btn-start"
