@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
 
 export interface DataTableAdapter {
     rowsChanged?: Subject<Array<DataRow>>;
+    allowFocusOnRows?: boolean;
 
     selectedRow: DataRow;
     getRows(): Array<DataRow>;
@@ -33,4 +34,5 @@ export interface DataTableAdapter {
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;
     sort(key?: string, direction?: string): void;
+    setAllowFocusOnTableRows?(allow: boolean): void;
 }
