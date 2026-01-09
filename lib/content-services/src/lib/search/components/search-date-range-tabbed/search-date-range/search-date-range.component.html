@@ -5,9 +5,14 @@
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.ANYTIME' | translate }}
       </mat-radio-button>
     </span>
-    <span class="adf-search-date-range-container-row">
+    <span
+        class="adf-search-date-range-container-row"
+        role="group"
+        aria-labelledby="adf-search-date-range-in-last-radio-button">
       <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-in-last">
-        {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
+          <span id="adf-search-date-range-in-last-radio-button">
+              {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
+          </span>
       </mat-radio-button>
       <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field" subscriptSizing="dynamic" floatLabel="always">
         <mat-label id="adf-search-date-range-quantity-label">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.QUANTITY' | translate }}</mat-label>
@@ -27,9 +32,14 @@
         </mat-select>
       </mat-form-field>
     </span>
-    <span class="adf-search-date-range-container-row adf-search-date-range-container-row-date">
+    <span
+        class="adf-search-date-range-container-row adf-search-date-range-container-row-date"
+        role="group"
+        aria-labelledby="adf-search-date-range-between-radio-button">
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-between">
-        {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
+        <span id="adf-search-date-range-between-radio-button">
+            {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
+        </span>
       </mat-radio-button>
       <mat-form-field class="adf-search-date-range-form-field" subscriptSizing="dynamic" floatLabel="always">
         <mat-label>{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.DATE_RANGE' | translate }}</mat-label>
