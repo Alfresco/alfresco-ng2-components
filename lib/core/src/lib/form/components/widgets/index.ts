@@ -36,6 +36,7 @@ import { ButtonWidgetComponent } from './button/button.widget';
 // core
 export * from './widget.component';
 export * from './reactive-widget.interface';
+export * from './base-display-text/base-display-text.widget';
 export * from './core';
 
 // primitives

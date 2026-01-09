@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, inject, InjectionToken, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent } from '@alfresco/adf-core';
+import { BaseDisplayTextWidgetComponent } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
 
@@ -43,13 +43,52 @@ export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>(
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
+export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetComponent implements OnInit {
     parsedHTML: string | Error;
 
     private readonly richTextParserService = inject(RICH_TEXT_PARSER_TOKEN);
     private readonly sanitizer = inject(DomSanitizer);
 
     ngOnInit(): void {
+        this.parseAndSanitize();
+
+        // Re-parse when field changes (after expressions are evaluated)
+        this.fieldChanged.subscribe(() => {
+            this.parseAndSanitize();
+        });
+    }
+
+    protected storeOriginalValue(): void {
+        if (this.field) {
+            this.originalFieldValue = JSON.stringify(this.field.value);
+        }
+    }
+
+    protected evaluateExpressions(): void {
+        if (!this.field) {
+            return;
+        }
+
+        const value = JSON.parse(JSON.stringify(this.field.value));
+        for (const block of value.blocks) {
+            block.data.text = this.resolveExpressions(block.data.text);
+        }
+        this.field.value = value;
+    }
+
+    protected reevaluateExpressions(): void {
+        if (!this.field || !this.originalFieldValue) {
+            return;
+        }
+
+        const value = JSON.parse(this.originalFieldValue);
+        for (const block of value.blocks) {
+            block.data.text = this.resolveExpressions(block.data.text);
+        }
+        this.field.value = value;
+    }
+
+    private parseAndSanitize(): void {
         this.parsedHTML = this.richTextParserService.parse(this.field.value);
 
         if (this.parsedHTML instanceof Error) {
