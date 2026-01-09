@@ -207,5 +207,7 @@ module.exports = {
                 'comma-dangle': ['error', 'never']
             }
         }
-    ]
+    ],
+
+    extends: ['plugin:storybook/recommended']
 };

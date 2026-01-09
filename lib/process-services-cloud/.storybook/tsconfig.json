@@ -1,0 +1,9 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "bundler"
+  },
+  "exclude": ["../**/*.spec.ts", "../**/test.ts", "../**/*.module.ts" ],
+  "include": ["../src/**/*", "*.ts"]
+}

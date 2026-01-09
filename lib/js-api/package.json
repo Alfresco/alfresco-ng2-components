@@ -20,6 +20,7 @@
     "tslib": "^2.6.1"
   },
   "typings": "./typings/index.d.ts",
+  "types": "./typings/index.d.ts",
   "module": "./esm5/index.js",
   "es2015": "./esm2015/index.js"
 }

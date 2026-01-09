@@ -6,7 +6,7 @@
       "files": ["*.ts"],
       "extends": ["plugin:@nx/angular"],
       "parserOptions": {
-        "project": ["lib/process-services-cloud/tsconfig.lib.json", "lib/process-services-cloud/tsconfig.spec.json"],
+        "project": ["lib/process-services-cloud/tsconfig.lib.json", "lib/process-services-cloud/tsconfig.spec.json", "lib/process-services-cloud/.storybook/tsconfig.json"],
         "createDefaultProgram": true
       },
       "rules": {

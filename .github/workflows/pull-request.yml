@@ -4,17 +4,17 @@ on:
   workflow_call:
     inputs:
       dry-run-flag:
-        description: 'enable dry-run on artifact push'
+        description: "enable dry-run on artifact push"
         required: false
         type: boolean
         default: true
       devel:
-        description: 'devel'
+        description: "devel"
         required: false
         type: boolean
         default: false
       cron-run:
-        description: 'disables jobs which should not run when cron runs e2es'
+        description: "disables jobs which should not run when cron runs e2es"
         required: false
         type: boolean
         default: false
@@ -230,6 +230,21 @@ jobs:
       - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npm run build:affected -- $NX_CALCULATION_FLAGS --prod
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
+  build-storybook:
+    timeout-minutes: 30
+    name: "Build storybook"
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-node-modules-and-artifacts
+      - run: npm run build-storybook
+      - uses: ./.github/actions/upload-node-modules-and-artifacts
+
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
     runs-on: ubuntu-latest
@@ -264,7 +279,16 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
+    needs:
+      [
+        check-if-pr-is-approved,
+        pre-checks,
+        setup,
+        unit-tests,
+        lint,
+        build-libs,
+        build-storybook,
+      ]
     steps:
       - name: Check job execution status
         if: >-
