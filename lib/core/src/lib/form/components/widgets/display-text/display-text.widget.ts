@@ -19,7 +19,6 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
@@ -40,8 +39,4 @@ import { WidgetComponent } from '../widget.component';
     imports: [TranslatePipe],
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayTextWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
-        super(formService);
-    }
-}
+export class DisplayTextWidgetComponent extends WidgetComponent {}

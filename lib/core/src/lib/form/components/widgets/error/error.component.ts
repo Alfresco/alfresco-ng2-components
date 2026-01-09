@@ -21,7 +21,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { ErrorMessageModel } from '../core';
 import { WidgetComponent } from '../widget.component';
 import { IconModule } from '../../../../icon/icon.module';
@@ -64,12 +63,7 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
     required: string;
 
     translateParameters: any = null;
-
     subscriptAnimationState: string = '';
-
-    constructor(public formService: FormService) {
-        super(formService);
-    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['required']) {

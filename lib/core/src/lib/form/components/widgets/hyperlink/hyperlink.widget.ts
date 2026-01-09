@@ -19,7 +19,6 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from '../core';
 import { WidgetComponent } from '../widget.component';
 
@@ -47,10 +46,6 @@ export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit 
 
     linkUrl: string = '#';
     linkText: string = null;
-
-    constructor(public formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         if (this.field) {

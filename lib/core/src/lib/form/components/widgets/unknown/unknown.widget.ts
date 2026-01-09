@@ -19,7 +19,6 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
-import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { IconModule } from '../../../../icon/icon.module';
 
@@ -48,8 +47,4 @@ import { IconModule } from '../../../../icon/icon.module';
     imports: [MatListModule, IconModule],
     encapsulation: ViewEncapsulation.None
 })
-export class UnknownWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
-        super(formService);
-    }
-}
+export class UnknownWidgetComponent extends WidgetComponent {}

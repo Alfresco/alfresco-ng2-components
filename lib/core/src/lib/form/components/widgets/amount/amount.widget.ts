@@ -23,7 +23,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { filter, isObservable, Observable } from 'rxjs';
@@ -87,12 +86,11 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     constructor(
-        public formService: FormService,
         @Optional() @Inject(ADF_AMOUNT_SETTINGS) settings: Observable<AmountWidgetSettings> | AmountWidgetSettings,
         private currencyPipe: CurrencyPipe,
         private translationService: TranslationService
     ) {
-        super(formService);
+        super();
         if (isObservable(settings)) {
             settings.pipe(takeUntilDestroyed()).subscribe((data: AmountWidgetSettings) => {
                 this.updateSettingsBasedProperties(data);
