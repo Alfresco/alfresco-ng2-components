@@ -19,7 +19,6 @@
 
 import { Component, EventEmitter, inject, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
-    FormService,
     FormValues,
     ContentLinkModel,
     AppConfigService,
@@ -79,10 +78,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return this._nodesApi;
     }
     displayedColumns = ['icon', 'fileName', 'title', 'action'];
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         super.ngOnInit();

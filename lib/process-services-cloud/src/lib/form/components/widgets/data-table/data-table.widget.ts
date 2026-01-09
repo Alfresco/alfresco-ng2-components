@@ -17,10 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     WidgetComponent,
-    FormService,
     FormBaseModule,
     DataRow,
     DataColumn,
@@ -64,10 +63,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private variableName: string;
     private defaultResponseProperty = 'data';
     private pathParserHelper = new DataTablePathParserHelper();
-
-    constructor(public formService: FormService, private formCloudService: FormCloudService) {
-        super(formService);
-    }
+    private formCloudService = inject(FormCloudService);
 
     ngOnInit(): void {
         this.init();

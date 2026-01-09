@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, FormBaseModule } from '@alfresco/adf-core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { WidgetComponent, FormBaseModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -49,9 +49,7 @@ export class DisplayExternalPropertyWidgetComponent extends WidgetComponent impl
     previewState = false;
     propertyControl: FormControl;
 
-    constructor(public readonly formService: FormService, private readonly formCloudService: FormCloudService) {
-        super(formService);
-    }
+    private readonly formCloudService = inject(FormCloudService);
 
     ngOnInit(): void {
         this.initFormControl();

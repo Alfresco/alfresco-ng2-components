@@ -21,7 +21,7 @@ import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild,
 import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { WidgetComponent, FormService, ThumbnailService, NotificationService, ErrorWidgetComponent, IconModule } from '@alfresco/adf-core';
+import { WidgetComponent, ThumbnailService, NotificationService, ErrorWidgetComponent, IconModule } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { VersionManagerUploadData } from '@alfresco/adf-content-services';
@@ -64,10 +64,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         if (this.field?.value?.length > 0) {

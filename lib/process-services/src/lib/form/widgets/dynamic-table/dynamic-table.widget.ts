@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { WidgetVisibilityService, WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { WidgetVisibilityService, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
 import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
@@ -55,14 +55,9 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(
-        public formService: FormService,
-        public elementRef: ElementRef,
-        private visibilityService: WidgetVisibilityService,
-        private cd: ChangeDetectorRef
-    ) {
-        super(formService);
-    }
+    public elementRef = inject(ElementRef);
+    private visibilityService = inject(WidgetVisibilityService);
+    private cd = inject(ChangeDetectorRef);
 
     ngOnInit() {
         if (this.field) {

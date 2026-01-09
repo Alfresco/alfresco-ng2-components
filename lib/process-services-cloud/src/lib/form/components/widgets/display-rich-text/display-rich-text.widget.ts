@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, inject, InjectionToken, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { WidgetComponent } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
 
@@ -48,10 +48,6 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
 
     private readonly richTextParserService = inject(RICH_TEXT_PARSER_TOKEN);
     private readonly sanitizer = inject(DomSanitizer);
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit(): void {
         this.parsedHTML = this.richTextParserService.parse(this.field.value);

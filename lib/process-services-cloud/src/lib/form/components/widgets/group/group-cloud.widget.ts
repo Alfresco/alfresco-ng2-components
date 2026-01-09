@@ -16,7 +16,7 @@
  */
 
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
@@ -55,10 +55,6 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     validate = false;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         if (this.field) {

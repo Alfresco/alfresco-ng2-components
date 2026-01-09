@@ -18,14 +18,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, zip } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { UploadWidgetComponent } from '../upload/upload.widget';
-import { ProcessContentService } from '../../services/process-content.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -53,9 +52,6 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(
-        public formService: FormService,
-        public thumbnails: ThumbnailService,
-        public processContentService: ProcessContentService,
         private activitiContentService: ActivitiContentService,
         private contentService: ContentService,
         private contentDialog: ContentNodeDialogService,
@@ -65,7 +61,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         private activatedRoute: ActivatedRoute,
         private attachDialogService: AttachFileWidgetDialogService
     ) {
-        super(formService, thumbnails, processContentService);
+        super();
     }
 
     ngOnInit() {

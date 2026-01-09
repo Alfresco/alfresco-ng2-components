@@ -18,18 +18,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { FormService, FormFieldOption, FormFieldTypes, FormFieldModel, FormModel } from '@alfresco/adf-core';
+import { FormFieldOption, FormFieldTypes, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { TranslateService } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 
 describe('TypeaheadWidgetComponent', () => {
-    let formService: FormService;
     let widget: TypeaheadWidgetComponent;
     let translationService: TranslateService;
     let taskFormService: TaskFormService;
-    let processDefinitionService: ProcessDefinitionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,12 +35,10 @@ describe('TypeaheadWidgetComponent', () => {
         });
         translationService = TestBed.inject(TranslateService);
         taskFormService = TestBed.inject(TaskFormService);
-        processDefinitionService = TestBed.inject(ProcessDefinitionService);
         spyOn(translationService, 'instant').and.callFake((key) => key);
         spyOn(translationService, 'get').and.callFake((key) => of(key));
 
-        formService = new FormService();
-        widget = new TypeaheadWidgetComponent(formService, taskFormService, processDefinitionService);
+        widget = TestBed.createComponent(TypeaheadWidgetComponent).componentInstance;
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
         widget.field.restUrl = 'whateverURL';
     });

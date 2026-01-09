@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { ErrorWidgetComponent, FormService, InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ErrorWidgetComponent, InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
+import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -91,13 +91,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             return list;
         })
     );
-
-    constructor(
-        public formService: FormService,
-        public peopleProcessService: PeopleProcessService
-    ) {
-        super(formService);
-    }
+    public peopleProcessService = inject(PeopleProcessService);
 
     ngOnInit() {
         if (this.field) {
