@@ -36,6 +36,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { ShareDataTableAdapter } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1784,6 +1785,73 @@ describe('Accessibility', () => {
 
         const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
         expect(cell?.nativeElement.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should remove col focus when [focus] is set to false', () => {
+        dataTable.showHeader = ShowHeaderMode.Never;
+        const dataRows = [{ name: 'name1' }];
+
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]);
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const col = testingUtils.getByCSS('.adf-datatable-cell');
+        expect(col?.nativeElement.getAttribute('tabindex')).toBe(null);
+    });
+
+    it('should allow col focus when [focus] is set to true', () => {
+        dataTable.showHeader = ShowHeaderMode.Never;
+        const dataRows = [{ name: 'name1' }];
+
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]);
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const col = testingUtils.getByCSS('.adf-datatable-cell');
+        expect(col?.nativeElement.getAttribute('tabindex')).toBe('0');
+    });
+
+    describe('ShareDatatable adapter allowFocusOnRows', () => {
+        const thumbnailServiceMock = {
+            getThumbnailUrl: () => 'thumbnail-url',
+            mimeTypeIcons: {},
+            getDefaultMimeTypeIcon: () => 'default-mime-type-icon',
+            getMimeTypeIcon: () => 'mime-type-icon'
+        };
+
+        const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
+
+        it('should set tabindex to null (disabled === true) on datatable-body rows when allowFocusOnRows is set to false in ShareDatatable adapter', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailServiceMock, null, null);
+            adapter.setRows(fakeDataRows);
+            adapter.setAllowFocusOnTableRows(false);
+            dataTable.data = adapter;
+            fixture.detectChanges();
+            const rowElements = testingUtils.getAllByCSS('.adf-datatable-body adf-datatable-row');
+            expect(rowElements.length).toBeGreaterThan(0);
+            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === null)).toBeTrue();
+        });
+
+        it('should set tabindex to 0 (disabled === false) on datatable-body rows when allowFocusOnRows is set to true in ShareDatatable adapter (default case)', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailServiceMock, null, null);
+            adapter.setRows(fakeDataRows);
+            adapter.setAllowFocusOnTableRows(true);
+            dataTable.data = adapter;
+            fixture.detectChanges();
+            const rowElements = testingUtils.getAllByCSS('.adf-datatable-body adf-datatable-row');
+            expect(rowElements.length).toBeGreaterThan(0);
+            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === '0')).toBeTrue();
+        });
     });
 
     it('should create focus trap on main menu open', () => {

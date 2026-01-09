@@ -271,7 +271,7 @@
                     [attr.aria-selected]="row.isSelected"
                     [attr.aria-label]="col.title ? (col.title | translate) : null"
                     (click)="onRowClick(row, $event)"
-                    [attr.tabindex]="col.focus ? 0 : -1"
+                    [attr.tabindex]="col.focus ? 0 : null"
                     (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                     [adf-context-menu]="getContextMenuActions(row, col)"
                     [adf-context-menu-enabled]="contextMenu"
