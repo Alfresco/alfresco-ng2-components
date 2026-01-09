@@ -69,7 +69,9 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@4657bc5c89f722332e897d8f360b75f08e81b8b9 # v12.1.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@4657bc5c89f722332e897d8f360b75f08e81b8b9 # v12.1.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@46cbd2f9d6eedcad93c99eff018399e94f1f1db1 # v12.3.1
+        with:
+          header-only: true
 
       - name: ci:force flag parser
         shell: bash
