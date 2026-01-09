@@ -5,9 +5,8 @@
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.ANYTIME' | translate }}
       </mat-radio-button>
     </span>
-    <span
+    <fieldset
         class="adf-search-date-range-container-row"
-        role="group"
         aria-labelledby="adf-search-date-range-in-last-radio-button">
       <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-in-last">
           <span id="adf-search-date-range-in-last-radio-button">
@@ -31,10 +30,9 @@
           <mat-option data-automation-id="date-range-in-last-option-months" [value]="InLastDateType.MONTHS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.MONTHS' | translate }}</mat-option>
         </mat-select>
       </mat-form-field>
-    </span>
-    <span
+    </fieldset>
+    <fieldset
         class="adf-search-date-range-container-row adf-search-date-range-container-row-date"
-        role="group"
         aria-labelledby="adf-search-date-range-between-radio-button">
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-between">
         <span id="adf-search-date-range-between-radio-button">
@@ -57,6 +55,6 @@
         <mat-error *ngIf="betweenEndDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.INVALID_FORMAT' | translate : { requiredFormat: dateFormat } }}</mat-error>
         <mat-error *ngIf="betweenEndDateFormControl.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.REQUIRED' | translate }}</mat-error>
       </mat-form-field>
-    </span>
+    </fieldset>
   </mat-radio-group>
 </div>
