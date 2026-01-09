@@ -1,24 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "ES2019",
-        "module": "commonjs",
-        "sourceMap": false,
-        "outDir": "dist",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "noUnusedLocals": true,
-        "skipLibCheck": true,
-        "baseUrl": "src",
-        "types": [
-            "node", "@typescript-eslint/utils"
-        ]
-    },
-    "include": [
-        "**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "tests"
-    ]
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "sourceMap": false,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "types": ["node", "@typescript-eslint/utils"]
+  },
+  "include": ["**/*"],
+  "exclude": ["node_modules", "tests"]
 }
