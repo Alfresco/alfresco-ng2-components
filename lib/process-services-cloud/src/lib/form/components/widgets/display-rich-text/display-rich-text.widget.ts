@@ -50,6 +50,15 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
     private readonly sanitizer = inject(DomSanitizer);
 
     ngOnInit(): void {
+        this.parseAndSanitize();
+
+        // Re-parse when field changes (after expressions are evaluated)
+        this.fieldChanged.subscribe(() => {
+            this.parseAndSanitize();
+        });
+    }
+
+    private parseAndSanitize(): void {
         this.parsedHTML = this.richTextParserService.parse(this.field.value);
 
         if (this.parsedHTML instanceof Error) {

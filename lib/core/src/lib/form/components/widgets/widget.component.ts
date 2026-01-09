@@ -20,7 +20,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
+import { FormExpressionService } from '../../services/form-expression.service';
 import { FormFieldModel } from './core';
+import { forkJoin } from 'rxjs';
 
 /**
  * Base widget component.
@@ -61,6 +63,7 @@ export class WidgetComponent implements AfterViewInit {
     touched: boolean = false;
 
     protected formService = inject(FormService);
+    private readonly formExpressionService = inject(FormExpressionService);
 
     hasField(): boolean {
         return !!this.field;
@@ -92,6 +95,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.evaluateExpressions();
         this.fieldChanged.emit(this.field);
     }
 
@@ -111,5 +115,30 @@ export class WidgetComponent implements AfterViewInit {
 
     markAsTouched() {
         this.touched = true;
+    }
+
+    private evaluateExpressions() {
+        if (!this.field) {
+            return;
+        }
+
+        if (this.field.type === 'readonly-text') {
+            this.formExpressionService.resolveExpressions(this.field.form, this.field.value).subscribe((resolvedValue) => {
+                this.field.value = resolvedValue;
+                this.fieldChanged.emit(this.field);
+            });
+        } else if (this.field.type === 'display-rich-text') {
+            const value = JSON.parse(JSON.stringify(this.field.value));
+            const blockObservables = value.blocks.map((block: { data: { text: string } }) =>
+                this.formExpressionService.resolveExpressions(this.field.form, block.data.text)
+            );
+            forkJoin(blockObservables).subscribe((resolvedTexts: string[]) => {
+                resolvedTexts.forEach((resolvedText, index) => {
+                    value.blocks[index].data.text = resolvedText;
+                });
+                this.field.value = value;
+                this.fieldChanged.emit(this.field);
+            });
+        }
     }
 }
