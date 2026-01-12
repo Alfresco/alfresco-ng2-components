@@ -74,6 +74,7 @@ describe('SearchQueryBuilder (runtime config)', () => {
 describe('SearchQueryBuilder', () => {
     let router: Router;
     let activatedRoute: ActivatedRoute;
+    let service: SearchQueryBuilderService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -81,6 +82,7 @@ describe('SearchQueryBuilder', () => {
         });
         router = TestBed.inject(Router);
         activatedRoute = TestBed.inject(ActivatedRoute);
+        service = TestBed.inject(SearchQueryBuilderService);
     });
 
     const createQueryBuilder = (config?: any) => {
@@ -805,7 +807,6 @@ describe('SearchQueryBuilder', () => {
         it('should use properly encoded query containing non-latin character when calls router.navigate', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
-            const service = TestBed.inject(SearchQueryBuilderService);
             service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
 
             service.updateSearchQueryParams();
@@ -825,7 +826,6 @@ describe('SearchQueryBuilder', () => {
             spyOn(router, 'navigate');
             spyOn(console, 'error');
             const searchUrl = 'search';
-            const service = TestBed.inject(SearchQueryBuilderService);
             service.filterRawParams = { userQuery: '((cm:name:"wąż*" OR cm:title:"wąż*" OR cm:description:"wąż*" OR TEXT:"wąż*" OR TAG:"wąż*"))' };
             service.encodeQuery();
 
@@ -842,8 +842,6 @@ describe('SearchQueryBuilder', () => {
 
     describe('userFacetBucketsUpdate', () => {
         it('should emit updated list of UserFacetBuckets on adding the bucket', (done) => {
-            const service = TestBed.inject(SearchQueryBuilderService);
-
             service.userFacetBucketsUpdate.pipe(skip(1)).subscribe((buckets) => {
                 expect(buckets).toEqual({ test: [{ checked: true, filterQuery: 'f1-q1', label: 'f1-q1', count: 1 }] });
                 done();
@@ -855,7 +853,6 @@ describe('SearchQueryBuilder', () => {
         });
 
         it('should emit updated list of UserFacetBuckets on removing the bucket', (done) => {
-            const service = TestBed.inject(SearchQueryBuilderService);
             service.addUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toStay', count: 1 });
             service.addUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toLeave', count: 1 });
 
@@ -871,12 +868,19 @@ describe('SearchQueryBuilder', () => {
             ]);
             service.removeUserFacetBucket('test', { checked: true, filterQuery: 'f1-q1', label: 'toLeave', count: 1 });
         });
+
+        it('should emit updated list of UserFacetBuckets on resetting the bucket', (done) => {
+            service.userFacetBucketsUpdate.pipe(skip(1)).subscribe((buckets) => {
+                expect(buckets).toEqual({});
+                done();
+            });
+
+            service.resetUserFacetBucket();
+        });
     });
 
     describe('queryFragments proxy set up', () => {
         it('should emit queryFragmentsUpdate when proxy property is set', (done) => {
-            const service = TestBed.inject(SearchQueryBuilderService);
-
             service.queryFragmentsUpdate.pipe(skip(1)).subscribe((fragments) => {
                 expect(fragments).toEqual({ test: 'test_fragment' });
                 done();
@@ -888,8 +892,6 @@ describe('SearchQueryBuilder', () => {
         });
 
         it('should emit queryFragmentsUpdate when setter replaces the proxy', (done) => {
-            const service = TestBed.inject(SearchQueryBuilderService);
-
             service.queryFragments['test'] = 'test_fragment';
             const currentFragments = service.queryFragments;
 

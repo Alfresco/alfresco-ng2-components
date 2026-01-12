@@ -617,6 +617,32 @@ describe('SearchFacetFiltersService', () => {
         expect(searchFacetFiltersService.tabbedFacet.facets['modifier'].buckets.items[1].label).toEqual('c2');
     });
 
+    it('should reset filters and call resetToDefaults', () => {
+        const resetToDefaultsSpy = spyOn(queryBuilder, 'resetToDefaults');
+        const updateSpy = spyOn(queryBuilder, 'update');
+
+        const responseFacets = [{ field: 'field1', label: null }];
+        const selectedBuckets = [{ field: { field: 'field1', label: null }, bucket: { label: 'bucket1', count: 1, filterQuery: 'q1' } }];
+        const tabbedFacet = { fields: ['creator', 'modifier'], label: 'SEARCH.FILTER.PEOPLE', facets: {} };
+
+        searchFacetFiltersService.responseFacets = responseFacets;
+        searchFacetFiltersService.selectedBuckets = selectedBuckets;
+        searchFacetFiltersService.tabbedFacet = tabbedFacet;
+
+        expect(searchFacetFiltersService.responseFacets).toBe(responseFacets);
+        expect(searchFacetFiltersService.selectedBuckets).toBe(selectedBuckets);
+        expect(searchFacetFiltersService.tabbedFacet).toBe(tabbedFacet);
+
+        searchFacetFiltersService.reset();
+
+        expect(resetToDefaultsSpy).toHaveBeenCalled();
+        expect(updateSpy).toHaveBeenCalled();
+
+        expect(searchFacetFiltersService.responseFacets).toEqual([]);
+        expect(searchFacetFiltersService.selectedBuckets).toEqual([]);
+        expect(searchFacetFiltersService.tabbedFacet).toBeNull();
+    });
+
     describe('Bucket sorting', () => {
         let data;
 

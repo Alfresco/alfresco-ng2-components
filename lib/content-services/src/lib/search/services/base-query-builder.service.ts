@@ -185,7 +185,7 @@ export abstract class BaseQueryBuilderService {
         this.filterQueries = [];
         this.sorting = [];
         this.sortingOptions = [];
-        this.userFacetBuckets = {};
+        this.resetUserFacetBucket();
         this.scope = null;
         this.filterRawParams = {};
         this._userQuery = '';
@@ -267,6 +267,14 @@ export abstract class BaseQueryBuilderService {
             this.userFacetBuckets[field] = buckets.filter((facetBucket) => facetBucket.label !== bucket.label);
             this.userFacetBucketsUpdate.next(this.userFacetBuckets);
         }
+    }
+
+    /**
+     * Resets an existing bucket list.
+     */
+    resetUserFacetBucket() {
+        this.userFacetBuckets = {};
+        this.userFacetBucketsUpdate.next(this.userFacetBuckets);
     }
 
     /**
