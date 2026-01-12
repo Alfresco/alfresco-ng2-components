@@ -30,10 +30,10 @@
 
 
     <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
-        <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="number-range-btn-clear">
+        <button mat-button type="button" (click)="clear()" data-automation-id="number-range-btn-clear">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
-        <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="number-range-btn-apply">
+        <button mat-button type="submit" [disabled]="!form.valid" data-automation-id="number-range-btn-apply">
             {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
         </button>
     </div>

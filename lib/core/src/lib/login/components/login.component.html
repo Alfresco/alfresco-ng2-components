@@ -51,8 +51,7 @@
                                 [ngClass]="{'adf-is-invalid': isErrorStyle(form.controls.username)}">
                                 <mat-form-field
                                     class="adf-full-width adf-login-form-field"
-                                    floatPlaceholder="never"
-                                    color="primary">
+                                    floatPlaceholder="never">
                                     <input
                                         matInput
                                         type="text"
@@ -81,8 +80,7 @@
                             <div class="adf-login__field">
                                 <mat-form-field
                                     class="adf-full-width adf-login-form-field"
-                                    floatPlaceholder="never"
-                                    color="primary">
+                                    floatPlaceholder="never">
                                         <input
                                             matInput
                                             placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
@@ -160,7 +158,6 @@
                             <div *ngIf="showRememberMe" class="adf-login__remember-me">
                                 <mat-checkbox
                                     id="adf-login-remember"
-                                    color="primary"
                                     class="adf-login-remember-me"
                                     [checked]="rememberMe"
                                     (change)="rememberMe = !rememberMe">
@@ -177,7 +174,7 @@
                                 id="login-button-sso"
                                 [attr.aria-label]="'LOGIN.BUTTON.SSO' | translate"
                                 class="adf-login-button"
-                                mat-raised-button color="primary"
+                                mat-raised-button
                                 data-automation-id="login-button-sso">
                                     <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.SSO' | translate }}</span>
                             </button>

@@ -43,7 +43,7 @@
     </div>
 
     <div class="adf-facet-buttons" *ngIf="field.buckets.fitsPage && !field.settings?.hideDefaultAction">
-        <button *ngIf="canResetSelectedBuckets(field)" mat-button color="primary" (click)="resetSelectedBuckets(field)">
+        <button *ngIf="canResetSelectedBuckets(field)" mat-button (click)="resetSelectedBuckets(field)">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
         </button>
     </div>

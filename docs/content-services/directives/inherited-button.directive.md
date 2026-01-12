@@ -13,7 +13,6 @@ Update the current node by adding/removing the inherited permissions.
 
 ```html
     <button mat-raised-button
-            color="primary"
             adf-inherit-permission [nodeId]="nodeId"
             (updated)="onUpdatedPermissions($node)">PERMISSION</button>
 ```

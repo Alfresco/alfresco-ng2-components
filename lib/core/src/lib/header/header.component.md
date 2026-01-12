@@ -12,7 +12,6 @@ Displaying a minimal header with a logo and navbar:
 <adf-header
     variant="minimal"
     headerHeight="64px"
-    color="primary"
     [logoSrc]="src"
     [logoAlt]="alt"
     [logoHeight]="logoHeight"
