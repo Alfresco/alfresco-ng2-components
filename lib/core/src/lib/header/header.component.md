@@ -34,7 +34,7 @@ Toolbar actions can be added to the header by placing them inside an element wit
 >
     <div adf-toolbar-actions>
         <adf-toolbar-divider></adf-toolbar-divider>
-        <adf-button variant="icon" icon="search" (click)="onSearchClick()"></adf-button>
+        <mat-button variant="icon" icon="search" (click)="onSearchClick()"></mat-button>
         <adf-avatar [src]="src"></adf-avatar>
     </div>
 </adf-header>
@@ -47,13 +47,13 @@ Displaying an extended header with toolbar actions:
 ```html
 <adf-header variant="extended" [logoSrc]="src" [title]="title" [navbarItems]="items">
     <div adf-toolbar-actions>
-        <adf-button variant="flat">Secondary</adf-button>
-        <adf-button variant="flat" color="accent">Primary</adf-button>
+        <mat-button variant="flat">Secondary</mat-button>
+        <mat-button variant="flat" color="accent">Primary</mat-button>
 
         <adf-toolbar-divider></adf-toolbar-divider>
 
-        <adf-button variant="icon" icon="search"></adf-button>
-        <adf-button variant="icon" [matMenuTriggerFor]="menu" icon="apps"></adf-button>
+        <mat-button variant="icon" icon="search"></mat-button>
+        <mat-button variant="icon" [matMenuTriggerFor]="menu" icon="apps"></mat-button>
         <mat-menu #menu="matMenu">
             ...
         </mat-menu>

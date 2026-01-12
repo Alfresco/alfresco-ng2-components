@@ -1,1 +1,0 @@
-../../../lib/core/src/lib/button/button.component.md
