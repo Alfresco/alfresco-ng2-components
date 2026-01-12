@@ -67,7 +67,7 @@ describe('CardViewDateItemComponent', () => {
     const getPropertyValue = (): string => testingUtils.getInputByCSS('.adf-invisible-date-input').value;
     const getDefaultValue = (): string =>
         testingUtils.getInnerTextByDataAutomationId('card-' + component.property.type + '-value-' + component.property.key);
-    const getDateTime = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
+    const getDateTime = (): string => testingUtils.getInnerTextByDataAutomationId('datepicker-label-toggle-' + component.property.key);
 
     it('should render the label and value', () => {
         fixture.detectChanges();
@@ -215,7 +215,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        testingUtils.doubleClickByCSS('.adf-datepicker-span-button');
+        testingUtils.doubleClickByDataAutomationId('datepicker-label-toggle-' + component.property.key);
 
         fixture.detectChanges();
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');

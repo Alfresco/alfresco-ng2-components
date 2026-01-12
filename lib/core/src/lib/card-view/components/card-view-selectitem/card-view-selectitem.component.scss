@@ -59,11 +59,4 @@
     .adf-property-readonly-value {
         color: var(--adf-metadata-property-panel-label-color);
     }
-
-    .adf-property-label {
-        &-non-editable {
-            cursor: default;
-            font-size: 10px;
-        }
-    }
 }

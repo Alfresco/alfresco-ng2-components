@@ -10,7 +10,7 @@
                     matInput
                     id="comment-input"
                     class="adf-text-text-area"
-                    [attr.aria-label]="'COMMENTS.ADD' | translate"
+                    [attr.aria-label]='("COMMENTS.ADD" | translate) + "*"'
                     [formControl]="commentControl"
                     (keydown.escape)="clearMessage($event)"
                 >

@@ -46,14 +46,12 @@ h2.adf-search-results-label {
             width: 100%;
             margin-bottom: 15px;
 
-            .adf-content-node-selector-content-input-icon:is(mat-icon) {
+            .adf-content-node-selector-content-input-icon {
                 color: var(--adf-theme-foreground-icon-color-054);
             }
 
             .adf-content-node-selector-search-clear-button {
-                .adf-content-node-selector-content-input-icon:is(mat-icon) {
-                    cursor: pointer;
-
+                .adf-content-node-selector-content-input-icon {
                     &:hover {
                         color: var(--adf-theme-foreground-base-color);
                     }

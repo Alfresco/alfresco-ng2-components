@@ -51,7 +51,7 @@ describe('CardViewComponent', () => {
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
     const getPropertyValue = (): string => testingUtils.getByCSS('.adf-property-value').nativeElement.value;
-    const getPropertyValueText = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
+    const getPropertyValueText = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
     const getPropertyValueByDataAutomationId = (dataAutomationId: string): string =>
         testingUtils.getByDataAutomationId(dataAutomationId).nativeElement.value;
 
@@ -94,7 +94,7 @@ describe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(getPropertyLabel()).toBe('My date label');
-        expect(getPropertyValueText()).toBe('My date label\n6/14/17, 12:00 AM\nclear');
+        expect(getPropertyValueText()).toBe('6/14/17, 12:00 AM');
     });
 
     it('should render the default value if the value is empty, not editable and displayEmpty is true', async () => {

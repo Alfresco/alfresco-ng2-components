@@ -34,6 +34,9 @@ describe('ColumnsSelectorComponent', () => {
 
     const menuOpenedTrigger = new Subject<void>();
     const menuClosedTrigger = new Subject<void>();
+    const getSelectorInputValue = (): Promise<string> => testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input');
+    const fillSelectorInput = (value: string): Promise<void> =>
+        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', value);
 
     let mainMenuTrigger: { menuOpened: Observable<void>; menuClosed: Observable<void> };
 
@@ -97,15 +100,15 @@ describe('ColumnsSelectorComponent', () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', 'TEST');
+        await fillSelectorInput('TEST');
 
         tick(300);
-        expect(await testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input')).toBe('TEST');
+        expect(await getSelectorInputValue()).toBe('TEST');
 
         menuClosedTrigger.next();
         tick(300);
 
-        expect(await testingUtils.getMatInputValueByDataAutomationId('adf-columns-selector-search-input')).toBe('');
+        expect(await getSelectorInputValue()).toBe('');
     }));
 
     it('should list only columns with title', async () => {
@@ -128,7 +131,7 @@ describe('ColumnsSelectorComponent', () => {
         fixture.detectChanges();
         menuOpenedTrigger.next();
 
-        testingUtils.fillMatInputByDataAutomationId('adf-columns-selector-search-input', inputColumns[0].title);
+        await fillSelectorInput(inputColumns[0].title);
 
         tick(400);
         fixture.detectChanges();

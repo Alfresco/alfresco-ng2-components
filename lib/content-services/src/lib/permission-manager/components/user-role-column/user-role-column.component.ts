@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { RoleModel } from '../../models/role.model';
-import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,27 +28,31 @@ export interface RoleModelOption {
 
 @Component({
     selector: 'adf-user-role-column',
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslatePipe],
+    imports: [MatFormFieldModule, MatSelectModule, TranslatePipe],
     template: `
-        <mat-form-field class="adf-role-selector-field" *ngIf="!readonly">
-            <mat-select
-                class="adf-role-selector"
-                (click)="$event.stopPropagation()"
-                [placeholder]="placeholder | translate"
-                [value]="value"
-                (selectionChange)="onRoleChanged($event.value)"
-                (keyup.arrowdown)="$event.stopPropagation()"
-                (keyup.arrowup)="$event.stopPropagation()"
-            >
-                <mat-option *ngFor="let option of options" [value]="option.role">
-                    {{ option.label | translate }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <span class="adf-datatable-cell-value adf-readonly-role" [title]="i18nValue | translate" *ngIf="readonly">
-            {{ i18nValue | translate }}
-        </span>
+        @if (!readonly) {
+            <mat-form-field class="adf-role-selector-field">
+                <mat-select
+                    class="adf-role-selector"
+                    (click)="$event.stopPropagation()"
+                    [placeholder]="placeholder | translate"
+                    [value]="value"
+                    (selectionChange)="onRoleChanged($event.value)"
+                    (keyup.arrowdown)="$event.stopPropagation()"
+                    (keyup.arrowup)="$event.stopPropagation()"
+                >
+                    @for (option of options; track $index) {
+                        <mat-option [value]="option.role">
+                            {{ option.label | translate }}
+                        </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        } @else {
+            <span class="adf-datatable-cell-value adf-readonly-role" [title]="i18nValue | translate">
+                {{ i18nValue | translate }}
+            </span>
+        }
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },

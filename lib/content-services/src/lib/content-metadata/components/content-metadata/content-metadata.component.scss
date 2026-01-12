@@ -34,8 +34,15 @@ $panel-properties-height: 56px !default;
             }
         }
 
-        #{ms.$mat-expansion-panel-body} {
-            padding-top: 16px;
+        .adf-metadata-properties-expansion-panel,
+        .adf-metadata-categories-header {
+            display: block;
+            margin-top: 16px;
+        }
+
+        .adf-metadata-properties-tags,
+        .adf-metadata-no-item-added {
+            margin-top: 16px;
         }
 
         .adf-edit-icon-buttons {

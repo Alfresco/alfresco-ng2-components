@@ -250,6 +250,7 @@
                     {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate : { groupTitle: group.title | translate } }}
                 </div>
                 <adf-card-view
+                    class="adf-metadata-properties-expansion-panel"
                     (keydown)="keyDown($event)"
                     [properties]="group.properties"
                     [editable]="!readOnly && group.editable && isPanelEditing(group.title)"
