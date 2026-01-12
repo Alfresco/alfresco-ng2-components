@@ -1753,104 +1753,71 @@ describe('Accessibility', () => {
         });
     });
 
-    it('should remove cell focus when [focus] is set to false', () => {
-        dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [{ name: 'name1' }];
+    describe('DataTable row focus management', () => {
+        const testFocus = (focus: boolean, selector: string, expectedTabindex: string | null) => {
+            dataTable.showHeader = ShowHeaderMode.Never;
+            const dataRows = [{ name: 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]);
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus })]);
 
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
+
+            const element = testingUtils.getByCSS(selector);
+            expect(element?.nativeElement.getAttribute('tabindex')).toEqual(expectedTabindex);
+        };
+
+        const cellaValSelector = '.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value';
+        const cellWrapperSelector = '.adf-datatable-cell';
+
+        it('should remove cell focus when [focus] is set to false', () => {
+            testFocus(false, cellaValSelector, null);
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
-
-        const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
-        expect(cell?.nativeElement.getAttribute('tabindex')).toBe(null);
-    });
-
-    it('should allow element focus when [focus] is set to true', () => {
-        dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [{ name: 'name1' }];
-
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]);
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+        it('should allow element focus when [focus] is set to true', () => {
+            testFocus(true, cellaValSelector, '0');
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
-
-        const cell = testingUtils.getByCSS('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
-        expect(cell?.nativeElement.getAttribute('tabindex')).toBe('0');
-    });
-
-    it('should remove col focus when [focus] is set to false', () => {
-        dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [{ name: 'name1' }];
-
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]);
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+        it('should remove col focus when [focus] is set to false', () => {
+            testFocus(false, cellWrapperSelector, null);
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
-
-        const col = testingUtils.getByCSS('.adf-datatable-cell');
-        expect(col?.nativeElement.getAttribute('tabindex')).toBe(null);
-    });
-
-    it('should allow col focus when [focus] is set to true', () => {
-        dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [{ name: 'name1' }];
-
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]);
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+        it('should allow col focus when [focus] is set to true', () => {
+            testFocus(true, cellWrapperSelector, '0');
         });
-
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
-
-        const col = testingUtils.getByCSS('.adf-datatable-cell');
-        expect(col?.nativeElement.getAttribute('tabindex')).toBe('0');
     });
 
     describe('ShareDatatable adapter allowFocusOnRows', () => {
-        const thumbnailServiceMock = {
-            getThumbnailUrl: () => 'thumbnail-url',
-            mimeTypeIcons: {},
-            getDefaultMimeTypeIcon: () => 'default-mime-type-icon',
-            getMimeTypeIcon: () => 'mime-type-icon'
-        };
+        const testAllowFocusOnRows = (allowFocus: boolean, expectedTabindex: string | null) => {
+            const thumbnailServiceMock = {
+                getThumbnailUrl: () => 'thumbnail-url',
+                mimeTypeIcons: {},
+                getDefaultMimeTypeIcon: () => 'default-mime-type-icon',
+                getMimeTypeIcon: () => 'mime-type-icon'
+            };
 
-        const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
+            const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
 
-        it('should set tabindex to null (disabled === true) on datatable-body rows when allowFocusOnRows is set to false in ShareDatatable adapter', () => {
             const adapter = new ShareDataTableAdapter(thumbnailServiceMock, null, null);
             adapter.setRows(fakeDataRows);
-            adapter.setAllowFocusOnTableRows(false);
+            adapter.setAllowFocusOnTableRows(allowFocus);
             dataTable.data = adapter;
             fixture.detectChanges();
             const rowElements = testingUtils.getAllByCSS('.adf-datatable-body adf-datatable-row');
             expect(rowElements.length).toBeGreaterThan(0);
-            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === null)).toBeTrue();
+            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === expectedTabindex)).toBeTrue();
+        };
+
+        it('should set tabindex to null (disabled === true) on datatable-body rows when allowFocusOnRows is set to false in ShareDatatable adapter', () => {
+            testAllowFocusOnRows(false, null);
         });
 
         it('should set tabindex to 0 (disabled === false) on datatable-body rows when allowFocusOnRows is set to true in ShareDatatable adapter (default case)', () => {
-            const adapter = new ShareDataTableAdapter(thumbnailServiceMock, null, null);
-            adapter.setRows(fakeDataRows);
-            adapter.setAllowFocusOnTableRows(true);
-            dataTable.data = adapter;
-            fixture.detectChanges();
-            const rowElements = testingUtils.getAllByCSS('.adf-datatable-body adf-datatable-row');
-            expect(rowElements.length).toBeGreaterThan(0);
-            expect(rowElements.every((row) => row.nativeElement.getAttribute('tabindex') === '0')).toBeTrue();
+            testAllowFocusOnRows(true, '0');
         });
     });
 
