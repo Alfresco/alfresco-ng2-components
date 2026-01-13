@@ -44,6 +44,15 @@ describe('Test Img viewer component ', () => {
         return event;
     };
 
+    const getExpectedCropBoxData = (cropper: Cropper, left: number, width: number, top: number, height: number): Cropper.CropBoxData => {
+        const cropBoxData = cropper.getCropBoxData();
+        cropBoxData.left += left;
+        cropBoxData.top += top;
+        cropBoxData.width += width;
+        cropBoxData.height += height;
+        return cropBoxData;
+    };
+
     describe('Zoom customization', () => {
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
@@ -443,68 +452,58 @@ describe('Test Img viewer component ', () => {
         });
 
         it('should increase crop box area when arrow keys with shift are pressed', () => {
+            component.cropImage();
             spyOn(component.cropper, 'setCropBoxData');
-            let expectedCropBoxData = component.cropper.getCropBoxData();
+            let expectedCropBoxData = getExpectedCropBoxData(component.cropper, -3, 3, 0, 0);
             dispatchKeyboardEvent('ArrowLeft', true);
             fixture.detectChanges();
 
-            expectedCropBoxData.left = expectedCropBoxData.left - 3;
-            expectedCropBoxData.width = expectedCropBoxData.width + 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
 
-            expectedCropBoxData = component.cropper.getCropBoxData();
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 3, 0, 0);
             dispatchKeyboardEvent('ArrowRight', true);
             fixture.detectChanges();
 
-            expectedCropBoxData.width = expectedCropBoxData.width + 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
 
-            expectedCropBoxData = component.cropper.getCropBoxData();
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, -3, 3);
             dispatchKeyboardEvent('ArrowUp', true);
             fixture.detectChanges();
 
-            expectedCropBoxData.top = expectedCropBoxData.top - 3;
-            expectedCropBoxData.height = expectedCropBoxData.height + 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
 
-            expectedCropBoxData = component.cropper.getCropBoxData();
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, 0, 3);
             dispatchKeyboardEvent('ArrowDown', true);
             fixture.detectChanges();
 
-            expectedCropBoxData.height = expectedCropBoxData.height + 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
         });
 
         it('should decrease crop box area when arrow keys with alt are pressed', () => {
+            component.cropImage();
             spyOn(component.cropper, 'setCropBoxData');
-            let expectedCropBoxData = component.cropper.getCropBoxData();
+            let expectedCropBoxData = getExpectedCropBoxData(component.cropper, 3, -3, 0, 0);
             dispatchKeyboardEvent('ArrowLeft', false, true);
             fixture.detectChanges();
 
-            expectedCropBoxData.left = expectedCropBoxData.left + 3;
-            expectedCropBoxData.width = expectedCropBoxData.width - 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
 
-            expectedCropBoxData = component.cropper.getCropBoxData();
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, -3, 0, 0);
             dispatchKeyboardEvent('ArrowRight', false, true);
             fixture.detectChanges();
 
-            expectedCropBoxData.width = expectedCropBoxData.width - 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
 
-            expectedCropBoxData = component.cropper.getCropBoxData();
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, 3, -3);
             dispatchKeyboardEvent('ArrowUp', false, true);
             fixture.detectChanges();
 
-            expectedCropBoxData.top = expectedCropBoxData.top + 3;
-            expectedCropBoxData.height = expectedCropBoxData.height - 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
 
-            expectedCropBoxData = component.cropper.getCropBoxData();
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, 0, -3);
             dispatchKeyboardEvent('ArrowDown', false, true);
             fixture.detectChanges();
 
-            expectedCropBoxData.height = expectedCropBoxData.height - 3;
             expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
         });
 

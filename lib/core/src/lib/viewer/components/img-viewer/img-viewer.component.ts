@@ -89,67 +89,19 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     onKeyDown(event: KeyboardEvent) {
         switch (event.key) {
             case 'ArrowLeft': {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.left = cropBoxData.left - 3;
-                    cropBoxData.width = cropBoxData.width + 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else if (event.altKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.left = cropBoxData.left + 3;
-                    cropBoxData.width = cropBoxData.width - 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else {
-                    this.cropper.move(-3, 0);
-                }
+                this.handleArrowLeftKey(event);
                 break;
             }
             case 'ArrowUp': {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.top = cropBoxData.top - 3;
-                    cropBoxData.height = cropBoxData.height + 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else if (event.altKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.top = cropBoxData.top + 3;
-                    cropBoxData.height = cropBoxData.height - 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else {
-                    this.cropper.move(0, -3);
-                }
+                this.handleArrowUpKey(event);
                 break;
             }
             case 'ArrowRight': {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.width = cropBoxData.width + 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else if (event.altKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.width = cropBoxData.width - 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else {
-                    this.cropper.move(3, 0);
-                }
+                this.handleArrowRightKey(event);
                 break;
             }
             case 'ArrowDown': {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.height = cropBoxData.height + 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else if (event.altKey) {
-                    const cropBoxData = this.cropper.getCropBoxData();
-                    cropBoxData.height = cropBoxData.height - 3;
-                    this.cropper.setCropBoxData(cropBoxData);
-                } else {
-                    this.cropper.move(0, 3);
-                }
+                this.handleArrowDownKey(event);
                 break;
             }
             case 'i': {
@@ -298,5 +250,58 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     onImageError() {
         this.error.emit();
+    }
+
+    private handleArrowLeftKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(-3, 3, 0, 0);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(3, -3, 0, 0);
+        } else {
+            this.cropper.move(-3, 0);
+        }
+    }
+
+    private handleArrowUpKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(0, 0, -3, 3);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(0, 0, 3, -3);
+        } else {
+            this.cropper.move(0, -3);
+        }
+    }
+
+    private handleArrowRightKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(0, 3, 0, 0);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(0, -3, 0, 0);
+        } else {
+            this.cropper.move(3, 0);
+        }
+    }
+
+    private handleArrowDownKey(event: KeyboardEvent) {
+        event.preventDefault();
+        if (event.shiftKey) {
+            this.changeCropBoxArea(0, 0, 0, 3);
+        } else if (event.altKey) {
+            this.changeCropBoxArea(0, 0, 0, -3);
+        } else {
+            this.cropper.move(0, 3);
+        }
+    }
+
+    private changeCropBoxArea(left: number, width: number, top: number, height: number) {
+        const cropBoxData = this.cropper.getCropBoxData();
+        cropBoxData.left += left;
+        cropBoxData.width += width;
+        cropBoxData.top += top;
+        cropBoxData.height += height;
+        this.cropper.setCropBoxData(cropBoxData);
     }
 }
