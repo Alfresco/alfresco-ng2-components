@@ -33,6 +33,26 @@ describe('Test Img viewer component ', () => {
         return new Blob([data], { type: 'image/png' });
     };
 
+    const dispatchKeyboardEvent = (key: string, shiftKey = false, altKey = false): KeyboardEvent => {
+        const event = new KeyboardEvent('keyup', {
+            key,
+            shiftKey,
+            altKey
+        });
+        spyOn(event, 'preventDefault');
+        document.dispatchEvent(event);
+        return event;
+    };
+
+    const getExpectedCropBoxData = (cropper: Cropper, left: number, width: number, top: number, height: number): Cropper.CropBoxData => {
+        const cropBoxData = cropper.getCropBoxData();
+        cropBoxData.left += left;
+        cropBoxData.top += top;
+        cropBoxData.width += width;
+        cropBoxData.height += height;
+        return cropBoxData;
+    };
+
     describe('Zoom customization', () => {
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
@@ -373,6 +393,136 @@ describe('Test Img viewer component ', () => {
             // Check both buttons are not visible when not allowed
             expect(testingUtils.getByCSS('#viewer-rotate-button')).toBeNull('Rotate button should not be visible when disallowed');
             expect(testingUtils.getByCSS('#viewer-crop-button')).toBeNull('Crop button should not be visible when disallowed');
+        });
+    });
+
+    describe('keyboard interactions', () => {
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ImgViewerComponent);
+            testingUtils = new UnitTestingUtils(fixture.debugElement);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+        });
+
+        it('should rotate the image when r key is pressed', () => {
+            spyOn(component, 'rotateImage');
+            dispatchKeyboardEvent('r');
+            fixture.detectChanges();
+
+            expect(component.rotateImage).toHaveBeenCalled();
+        });
+
+        it('should zoom the image out when o key is pressed', () => {
+            spyOn(component, 'zoomOut');
+            dispatchKeyboardEvent('o');
+            fixture.detectChanges();
+
+            expect(component.zoomOut).toHaveBeenCalled();
+        });
+
+        it('should zoom the image in when i key is pressed', () => {
+            spyOn(component, 'zoomIn');
+            dispatchKeyboardEvent('i');
+            fixture.detectChanges();
+
+            expect(component.zoomIn).toHaveBeenCalled();
+        });
+
+        it('should move the cropper when arrow keys are pressed', () => {
+            spyOn(component.cropper, 'move');
+            dispatchKeyboardEvent('ArrowLeft');
+            fixture.detectChanges();
+
+            expect(component.cropper.move).toHaveBeenCalledWith(-3, 0);
+
+            dispatchKeyboardEvent('ArrowRight');
+            fixture.detectChanges();
+
+            expect(component.cropper.move).toHaveBeenCalledWith(3, 0);
+
+            dispatchKeyboardEvent('ArrowUp');
+            fixture.detectChanges();
+
+            expect(component.cropper.move).toHaveBeenCalledWith(0, -3);
+
+            dispatchKeyboardEvent('ArrowDown');
+            fixture.detectChanges();
+
+            expect(component.cropper.move).toHaveBeenCalledWith(0, 3);
+        });
+
+        it('should increase crop box area when arrow keys with shift are pressed', () => {
+            component.cropImage();
+            spyOn(component.cropper, 'setCropBoxData');
+            let expectedCropBoxData = getExpectedCropBoxData(component.cropper, -3, 3, 0, 0);
+            dispatchKeyboardEvent('ArrowLeft', true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 3, 0, 0);
+            dispatchKeyboardEvent('ArrowRight', true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, -3, 3);
+            dispatchKeyboardEvent('ArrowUp', true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, 0, 3);
+            dispatchKeyboardEvent('ArrowDown', true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+        });
+
+        it('should decrease crop box area when arrow keys with alt are pressed', () => {
+            component.cropImage();
+            spyOn(component.cropper, 'setCropBoxData');
+            let expectedCropBoxData = getExpectedCropBoxData(component.cropper, 3, -3, 0, 0);
+            dispatchKeyboardEvent('ArrowLeft', false, true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, -3, 0, 0);
+            dispatchKeyboardEvent('ArrowRight', false, true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, 3, -3);
+            dispatchKeyboardEvent('ArrowUp', false, true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+
+            expectedCropBoxData = getExpectedCropBoxData(component.cropper, 0, 0, 0, -3);
+            dispatchKeyboardEvent('ArrowDown', false, true);
+            fixture.detectChanges();
+
+            expect(component.cropper.setCropBoxData).toHaveBeenCalledWith(expectedCropBoxData);
+        });
+
+        it('should prevent default for all arrow keys events', () => {
+            const leftEvent = dispatchKeyboardEvent('ArrowLeft');
+            fixture.detectChanges();
+            expect(leftEvent.preventDefault).toHaveBeenCalled();
+
+            const rightEvent = dispatchKeyboardEvent('ArrowRight');
+            fixture.detectChanges();
+            expect(rightEvent.preventDefault).toHaveBeenCalled();
+
+            const upEvent = dispatchKeyboardEvent('ArrowUp');
+            fixture.detectChanges();
+            expect(upEvent.preventDefault).toHaveBeenCalled();
+
+            const downEvent = dispatchKeyboardEvent('ArrowDown');
+            fixture.detectChanges();
+            expect(downEvent.preventDefault).toHaveBeenCalled();
         });
     });
 });

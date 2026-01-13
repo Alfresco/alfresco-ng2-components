@@ -33,6 +33,7 @@ import {
     Output,
     SimpleChanges,
     TemplateRef,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -299,6 +300,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Output()
     submitFile = new EventEmitter<Blob>();
 
+    @ViewChild(ViewerRenderComponent)
+    viewerRenderer: ViewerRenderComponent;
+
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible = false;
@@ -437,14 +441,16 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             return;
         }
 
-        if (event.key === 'ArrowLeft' && this.canNavigateBefore) {
-            event.preventDefault();
-            this.onNavigateBeforeClick(event);
-        }
+        if (!this.viewerRenderer?.imgViewer?.isEditing) {
+            if (event.key === 'ArrowLeft' && this.canNavigateBefore) {
+                event.preventDefault();
+                this.onNavigateBeforeClick(event);
+            }
 
-        if (event.key === 'ArrowRight' && this.canNavigateNext) {
-            event.preventDefault();
-            this.onNavigateNextClick(event);
+            if (event.key === 'ArrowRight' && this.canNavigateNext) {
+                event.preventDefault();
+                this.onNavigateNextClick(event);
+            }
         }
 
         if (event.code === 'KeyF' && event.ctrlKey) {

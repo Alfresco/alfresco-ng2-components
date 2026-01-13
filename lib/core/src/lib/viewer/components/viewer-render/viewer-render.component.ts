@@ -17,7 +17,7 @@
 
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgForOf, NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -128,6 +128,9 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     /** Emitted when the img is saving. */
     @Output()
     isSaving = new EventEmitter<boolean>();
+
+    @ViewChild(ImgViewerComponent)
+    imgViewer: ImgViewerComponent;
 
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     extensionsSupportedByTemplates: string[] = [];
