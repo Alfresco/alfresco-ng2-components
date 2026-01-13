@@ -36,7 +36,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { ShareDataTableAdapter } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1792,17 +1791,21 @@ describe('Accessibility', () => {
     });
 
     describe('ShareDatatable adapter allowFocusOnRows', () => {
-        const testAllowFocusOnRows = (allowFocus: boolean, expectedTabindex: string | null) => {
-            const thumbnailServiceMock = {
-                getThumbnailUrl: () => 'thumbnail-url',
-                mimeTypeIcons: {},
-                getDefaultMimeTypeIcon: () => 'default-mime-type-icon',
-                getMimeTypeIcon: () => 'mime-type-icon'
-            };
+        class ShareAdapterMock extends ObjectDataTableAdapter {
+            public allowFocusOnRows = true;
 
+            constructor(data: any[], schema: DataColumn[]) {
+                super(data, schema);
+            }
+
+            setAllowFocusOnTableRows(allow: boolean) {
+                this.allowFocusOnRows = allow;
+            }
+        }
+        const testAllowFocusOnRows = (allowFocus: boolean, expectedTabindex: string | null) => {
             const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
 
-            const adapter = new ShareDataTableAdapter(thumbnailServiceMock, null, null);
+            const adapter = new ShareAdapterMock([], []);
             adapter.setRows(fakeDataRows);
             adapter.setAllowFocusOnTableRows(allowFocus);
             dataTable.data = adapter;
