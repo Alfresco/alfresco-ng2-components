@@ -605,7 +605,6 @@ backend services have been tested with each released version of ADF.
 -   [Logout directive](core/directives/logout.directive.md)
 -   [Node delete directive](content-services/directives/node-delete.directive.md)
 -   [Node favorite directive](content-services/directives/node-favorite.directive.md)
--   [Node name tooltip pipe](core/pipes/node-name-tooltip.pipe.md)
 -   [Node permission service](content-services/services/node-permission.service.md)
 -   [Node restore directive](content-services/directives/node-restore.directive.md)
 -   [Nodes api service](core/services/nodes-api.service.md)

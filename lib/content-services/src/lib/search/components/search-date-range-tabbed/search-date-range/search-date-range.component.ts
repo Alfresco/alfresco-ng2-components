@@ -79,6 +79,8 @@ export class SearchDateRangeComponent implements OnInit {
     @Output()
     valid = new EventEmitter<boolean>();
 
+    private readonly formBuilder = inject(FormBuilder);
+
     form = this.formBuilder.group<SearchDateRange>({
         dateRangeType: DateRangeType.ANY,
         inLastValueType: InLastDateType.DAYS,
@@ -96,7 +98,6 @@ export class SearchDateRangeComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(
-        private formBuilder: FormBuilder,
         private userPreferencesService: UserPreferencesService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
         @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats

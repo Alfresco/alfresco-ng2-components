@@ -125,7 +125,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     DEFAULT_SORTING: DataSorting[] = [new DataSorting('name', 'asc'), new DataSorting('isFolder', 'desc')];
 
     @ContentChild(DataColumnListComponent)
-    columnList: DataColumnListComponent;
+    declare columnList: DataColumnListComponent;
 
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;

@@ -59,6 +59,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     autocompleteOptions: AutocompleteOption[] = [];
     preselectedOptions: AutocompleteOption[] = [];
 
+    private readonly formBuilder = inject(FormBuilder);
+
     private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
         fileSize: undefined,
@@ -106,10 +108,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private readonly formBuilder: FormBuilder,
-        private readonly translateService: TranslateService
-    ) {}
+    constructor(private readonly translateService: TranslateService) {}
 
     ngOnInit() {
         if (this.settings) {

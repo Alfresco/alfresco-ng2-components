@@ -28,7 +28,7 @@ export interface CardViewArrayItem {
 
 export class CardViewArrayItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'array';
-    value: Observable<CardViewArrayItem[]>;
+    declare value: Observable<CardViewArrayItem[]>;
     noOfItemsToDisplay: number;
 
     constructor(cardViewArrayItemProperties: CardViewArrayItemProperties) {

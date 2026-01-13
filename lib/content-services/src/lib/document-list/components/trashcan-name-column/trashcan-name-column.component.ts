@@ -15,35 +15,28 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
-import { CommonModule } from '@angular/common';
-import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
+import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
 
 @Component({
     selector: 'adf-trashcan-name-column',
-    imports: [CommonModule, NodeNameTooltipPipe],
-    template: `
-        <ng-container *ngIf="!isLibrary">
-            <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
-        </ng-container>
-        <ng-container *ngIf="isLibrary">
-            <span class="adf-datatable-cell-value" title="{{ displayTooltip }}">{{ displayText }}</span>
-        </ng-container>
-    `,
+    template: `<span class="adf-datatable-cell-value" [title]="tooltip()">{{ displayText }}</span>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
 })
 export class TrashcanNameColumnComponent implements OnInit {
     @Input({ required: true })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any;
 
     isLibrary = false;
     displayText: string;
-    displayTooltip: string;
     node: NodeEntry;
+
+    readonly tooltip = computed(() => (this.isLibrary ? NodeTooltipUtils.getLibraryTooltip(this.node) : NodeTooltipUtils.getNodeTooltip(this.node)));
 
     ngOnInit() {
         this.node = this.context.row.node;
@@ -53,27 +46,11 @@ export class TrashcanNameColumnComponent implements OnInit {
             this.isLibrary = this.node.entry.nodeType === 'st:site';
 
             if (this.isLibrary) {
-                const { properties } = this.node.entry;
-
-                this.displayText = this.makeLibraryTitle(this.node.entry, rows);
-                this.displayTooltip = properties['cm:description'] || properties['cm:title'];
+                const allEntries = rows.map((row) => row.node.entry);
+                this.displayText = NodeTooltipUtils.getLibraryTitle(this.node.entry, allEntries);
             } else {
                 this.displayText = this.node.entry.name || this.node.entry.id;
             }
         }
-    }
-
-    makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
-        const entries = rows.map((r: ShareDataRow) => r.node.entry);
-        const { id } = library;
-        const title = library.properties['cm:title'];
-
-        let isDuplicate = false;
-
-        if (entries) {
-            isDuplicate = entries.some((entry: any) => entry.id !== id && entry.properties['cm:title'] === title);
-        }
-
-        return isDuplicate ? `${library.properties['cm:title']} (${library.name})` : `${library.properties['cm:title']}`;
     }
 }

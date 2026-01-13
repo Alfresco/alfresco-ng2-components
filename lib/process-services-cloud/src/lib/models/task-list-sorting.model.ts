@@ -28,14 +28,14 @@ export class TaskListCloudSortingModel {
 }
 
 export class TaskListRequestSortingModel extends TaskListCloudSortingModel {
-    orderBy: string;
-    direction: string;
+    declare orderBy: string;
+    declare direction: string;
 
     isFieldProcessVariable: boolean;
     processVariableData?: {
         processDefinitionKey: string;
         type: string;
-    }
+    };
 
     constructor(obj: TaskListRequestSortingModel) {
         super(obj);
