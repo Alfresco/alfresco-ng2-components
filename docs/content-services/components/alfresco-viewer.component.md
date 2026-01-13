@@ -110,8 +110,10 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | Name   | Description                           |
 |--------|---------------------------------------|
 | Esc    | Close the viewer (overlay mode only). |
-| Left   | Invoke 'Navigate before' action.      |
-| Right  | Invoke 'Navigate next' action.        |
+| Left | Invoke 'Navigate before' action. Disabled in image edit mode. |
+| Right | Invoke 'Navigate next' action. Disabled in image edit mode. |
+| Shift + Arrow Key | Increase image crop area. Active only in image edit mode. |
+| Alt + Arrow Key | Decrease image crop area. Active only in image edit mode. |
 | Ctrl+F | Activate full-screen mode.            |
 
 ## Details

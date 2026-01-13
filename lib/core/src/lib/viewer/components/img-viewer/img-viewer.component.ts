@@ -85,27 +85,71 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild('image', { static: false })
     imageElement: ElementRef;
 
-    @HostListener('document:keydown', ['$event'])
+    @HostListener('document:keyup', ['$event'])
     onKeyDown(event: KeyboardEvent) {
         switch (event.key) {
             case 'ArrowLeft': {
                 event.preventDefault();
-                this.cropper.move(-3, 0);
+                if (event.shiftKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.left = cropBoxData.left - 3;
+                    cropBoxData.width = cropBoxData.width + 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else if (event.altKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.left = cropBoxData.left + 3;
+                    cropBoxData.width = cropBoxData.width - 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else {
+                    this.cropper.move(-3, 0);
+                }
                 break;
             }
             case 'ArrowUp': {
                 event.preventDefault();
-                this.cropper.move(0, -3);
+                if (event.shiftKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.top = cropBoxData.top - 3;
+                    cropBoxData.height = cropBoxData.height + 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else if (event.altKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.top = cropBoxData.top + 3;
+                    cropBoxData.height = cropBoxData.height - 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else {
+                    this.cropper.move(0, -3);
+                }
                 break;
             }
             case 'ArrowRight': {
                 event.preventDefault();
-                this.cropper.move(3, 0);
+                if (event.shiftKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.width = cropBoxData.width + 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else if (event.altKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.width = cropBoxData.width - 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else {
+                    this.cropper.move(3, 0);
+                }
                 break;
             }
             case 'ArrowDown': {
                 event.preventDefault();
-                this.cropper.move(0, 3);
+                if (event.shiftKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.height = cropBoxData.height + 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else if (event.altKey) {
+                    const cropBoxData = this.cropper.getCropBoxData();
+                    cropBoxData.height = cropBoxData.height - 3;
+                    this.cropper.setCropBoxData(cropBoxData);
+                } else {
+                    this.cropper.move(0, 3);
+                }
                 break;
             }
             case 'i': {

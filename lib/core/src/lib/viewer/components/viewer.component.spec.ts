@@ -53,6 +53,20 @@ describe('ViewerComponent', () => {
     const getFileName = (): string => testingUtils.getByCSS('#adf-viewer-display-name').nativeElement.textContent;
     const getTitle = (): string => testingUtils.getByCSS('.adf-viewer__title-value')?.nativeElement?.textContent;
     const getDividers = (): DebugElement[] => testingUtils.getAllByCSS('.adf-toolbar-divider');
+    const mockImgViewerEditMode = (isEditing: boolean) => {
+        const imgViewerMock = jasmine.createSpyObj('ImgViewerComponent', [], {
+            isEditing
+        });
+        component.viewerRenderer.imgViewer = imgViewerMock;
+    };
+    const dispatchKeyboardEvent = (key: string): KeyboardEvent => {
+        const event = new KeyboardEvent('keyup', {
+            key
+        });
+        spyOn(event, 'preventDefault');
+        document.dispatchEvent(event);
+        return event;
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -749,5 +763,80 @@ describe('ViewerComponent', () => {
 
             expect(component.downloadFile.emit).toHaveBeenCalled();
         }));
+    });
+
+    describe('keyboard events', () => {
+        it('should do nothing when default was already prevented', () => {
+            spyOn(component, 'onNavigateBeforeClick').and.callThrough();
+            spyOn(component, 'onNavigateNextClick').and.callThrough();
+            spyOn(component, 'enterFullScreen').and.callThrough();
+
+            const event = new KeyboardEvent('keyup', {
+                key: 'a'
+            });
+
+            event.preventDefault();
+            document.dispatchEvent(event);
+            fixture.detectChanges();
+
+            expect(component.onNavigateBeforeClick).not.toHaveBeenCalled();
+            expect(component.onNavigateNextClick).not.toHaveBeenCalled();
+            expect(component.enterFullScreen).not.toHaveBeenCalled();
+        });
+
+        it('should enter full screen mode when ctrl + F is pressed', () => {
+            spyOn(component, 'enterFullScreen').and.callThrough();
+
+            const event = new KeyboardEvent('keyup', {
+                code: 'KeyF',
+                ctrlKey: true
+            });
+            spyOn(event, 'preventDefault');
+            document.dispatchEvent(event);
+            fixture.detectChanges();
+
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(component.enterFullScreen).toHaveBeenCalled();
+        });
+
+        it('should navigate before when left arrow is pressed', () => {
+            component.canNavigateBefore = true;
+            spyOn(component, 'onNavigateBeforeClick').and.callThrough();
+
+            fixture.detectChanges();
+            mockImgViewerEditMode(true);
+            const event = dispatchKeyboardEvent('ArrowLeft');
+            fixture.detectChanges();
+
+            expect(event.preventDefault).not.toHaveBeenCalled();
+            expect(component.onNavigateBeforeClick).not.toHaveBeenCalled();
+
+            mockImgViewerEditMode(false);
+            const event2 = dispatchKeyboardEvent('ArrowLeft');
+            fixture.detectChanges();
+
+            expect(event2.preventDefault).toHaveBeenCalled();
+            expect(component.onNavigateBeforeClick).toHaveBeenCalledWith(event2);
+        });
+
+        it('should navigate next when right arrow is pressed', () => {
+            component.canNavigateNext = true;
+            spyOn(component, 'onNavigateNextClick').and.callThrough();
+
+            fixture.detectChanges();
+            mockImgViewerEditMode(true);
+            const event = dispatchKeyboardEvent('ArrowRight');
+            fixture.detectChanges();
+
+            expect(event.preventDefault).not.toHaveBeenCalled();
+            expect(component.onNavigateNextClick).not.toHaveBeenCalled();
+
+            mockImgViewerEditMode(false);
+            const event2 = dispatchKeyboardEvent('ArrowRight');
+            fixture.detectChanges();
+
+            expect(event2.preventDefault).toHaveBeenCalled();
+            expect(component.onNavigateNextClick).toHaveBeenCalledWith(event2);
+        });
     });
 });
