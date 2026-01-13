@@ -57,10 +57,6 @@
         padding-top: 3px;
     }
 
-    .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
-        border-bottom: 1px solid var(--mat-sys-outline-variant);
-    }
-
     .adf-property-value-has-icon-suffix {
         padding-right: 34px;
         overflow: hidden;
