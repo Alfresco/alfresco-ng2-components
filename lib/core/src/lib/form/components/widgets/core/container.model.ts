@@ -23,7 +23,7 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 
 export class ContainerModel extends FormWidgetModel {
-    field: FormFieldModel;
+    declare field: FormFieldModel;
 
     readonly columns: ContainerColumnModel[] = [];
     isExpanded: boolean = true;

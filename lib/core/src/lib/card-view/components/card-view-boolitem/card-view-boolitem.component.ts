@@ -39,7 +39,7 @@ import { MatError } from '@angular/material/form-field';
 })
 export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemModel> {
     @Input()
-    editable: boolean;
+    declare editable: boolean;
 
     private _error: string;
 

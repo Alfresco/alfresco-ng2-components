@@ -52,12 +52,12 @@ export class FormFieldModel extends FormWidgetModel {
     private readonly defaultEmptyOptionName = 'Choose one...';
 
     // model members
-    fieldType: string;
-    id: string;
-    name: string;
-    type: string;
+    declare fieldType: string;
+    declare id: string;
+    declare name: string;
+    declare type: string;
     overrideId: boolean;
-    tab: string;
+    declare tab: string;
     rowspan: number = 1;
     colspan: number = 1;
     placeholder: string = null;
@@ -98,7 +98,7 @@ export class FormFieldModel extends FormWidgetModel {
     variableConfig: VariableConfig;
     schemaDefinition: DataColumn[];
     externalProperty?: string;
-    style?: string;
+    declare style?: string;
     parent?: RepeatableSectionModel;
 
     // container model members

@@ -33,10 +33,10 @@ import { IconModule } from '@alfresco/adf-core';
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
     @ViewChild('dropdown')
-    dropdown: MatSelect;
+    declare dropdown: MatSelect;
 
     currentNode: PathElement;
-    previousNodes: PathElement[];
+    declare previousNodes: PathElement[];
 
     /**
      * Calculate the current and previous nodes from the route array

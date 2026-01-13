@@ -18,7 +18,7 @@
 export class ProcessListCloudSortingModel {
     orderBy: string;
     direction: string;
-     constructor(obj: any) {
+    constructor(obj: any) {
         if (obj) {
             this.orderBy = obj.orderBy;
             this.direction = obj.direction;
@@ -26,14 +26,14 @@ export class ProcessListCloudSortingModel {
     }
 }
 export class ProcessListRequestSortingModel extends ProcessListCloudSortingModel {
-    orderBy: string;
-    direction: string;
+    declare orderBy: string;
+    declare direction: string;
 
     isFieldProcessVariable: boolean;
     processVariableData?: {
         processDefinitionKey: string;
         type: string;
-    }
+    };
 
     constructor(obj: ProcessListRequestSortingModel) {
         super(obj);
