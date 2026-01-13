@@ -13,8 +13,10 @@ adf-search-date-range {
         &-row {
             display: flex;
             flex-direction: row;
-            padding-bottom: 21px;
+            padding: 0 0 21px;
             align-items: center;
+            border: 0;
+            margin: 0;
 
             &-date {
                 margin-top: 8px;
