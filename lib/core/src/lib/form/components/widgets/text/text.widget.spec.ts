@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
@@ -470,6 +471,36 @@ describe('TextWidgetComponent', () => {
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
+        });
+    });
+
+    describe('when fieldStatusTemplate is provided', () => {
+        @Component({
+            standalone: true,
+            template: `
+                <ng-template #fieldStatusTemplate let-widget>
+                    <div class="custom-status-message">custom status message for {{ widget.field.name }}</div>
+                </ng-template>
+            `
+        })
+        class FieldStatusTemplateTestComponent {
+            @ViewChild('fieldStatusTemplate', { static: true }) fieldStatusTemplate: TextWidgetComponent['fieldStatusTemplate'];
+        }
+
+        beforeEach(() => {
+            const templateFixture = TestBed.createComponent(FieldStatusTemplateTestComponent);
+            fixture.componentInstance.fieldStatusTemplate = templateFixture.componentInstance.fieldStatusTemplate;
+        });
+
+        it('should display custom status template', () => {
+            widget.field = new FormFieldModel(form, {
+                id: 'text-id',
+                name: 'text-name',
+                type: FormFieldTypes.TEXT
+            });
+            fixture.detectChanges();
+            const customStatusMessage = testingUtils.getByCSS('.custom-status-message').nativeElement;
+            expect(customStatusMessage?.textContent).toBe(`custom status message for ${widget.field.name}`);
         });
     });
 });
