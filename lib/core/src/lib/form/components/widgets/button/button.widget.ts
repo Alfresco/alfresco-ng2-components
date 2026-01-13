@@ -19,7 +19,6 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent } from '../widget.component';
-import { FormService } from '../../../services/form.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -36,10 +35,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class ButtonWidgetComponent extends WidgetComponent {
     readonly tooltipShowDelay: number = 500;
-
-    constructor(public formService: FormService) {
-        super(formService);
-    }
 
     get hostClasses(): string {
         return `adf-button-widget ${this.field?.className || ''}`;

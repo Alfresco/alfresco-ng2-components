@@ -14,9 +14,9 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "stripInternal": false,
-    "target": "es2015",
+    "target": "es2022",
     "outDir": "./.out",
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022", "dom"],
     "typeRoots": ["node_modules/@types"],
     "types": []
   },

@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
-import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -42,9 +41,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService, private dialog: MatDialog) {
-        super(formService);
-    }
+    private dialog = inject(MatDialog);
 
     view() {
         const rawValue = this.field.value;

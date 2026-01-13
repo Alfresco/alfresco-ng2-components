@@ -18,7 +18,6 @@
 import { ComponentFixture, fakeAsync, getTestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import {
-    FormService,
     ContainerModel,
     FormFieldTypes,
     FormFieldOption,
@@ -36,7 +35,6 @@ import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/r
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 describe('RadioButtonsWidgetComponent', () => {
-    let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
     let taskFormService: TaskFormService;
     let processDefinitionService: ProcessDefinitionService;
@@ -52,8 +50,7 @@ describe('RadioButtonsWidgetComponent', () => {
         taskFormService = getTestBed().inject(TaskFormService);
         processDefinitionService = getTestBed().inject(ProcessDefinitionService);
 
-        formService = new FormService();
-        widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService);
+        widget = getTestBed().createComponent(RadioButtonsWidgetComponent).componentInstance;
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>', optionType: 'rest' });
     });
 

@@ -22,7 +22,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
@@ -51,10 +50,4 @@ import { WidgetComponent } from '../widget.component';
     imports: [NgClass, MatCheckboxModule, FormsModule, TranslatePipe, ErrorWidgetComponent, NgIf],
     encapsulation: ViewEncapsulation.None
 })
-export class CheckboxWidgetComponent extends WidgetComponent {
-    checkboxValue: boolean;
-
-    constructor(public formService: FormService) {
-        super(formService);
-    }
-}
+export class CheckboxWidgetComponent extends WidgetComponent {}

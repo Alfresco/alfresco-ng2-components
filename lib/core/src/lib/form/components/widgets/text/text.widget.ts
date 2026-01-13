@@ -23,7 +23,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { InputMaskDirective } from './text-mask.component';
@@ -50,10 +49,6 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
     mask: string;
     placeholder: string;
     isMaskReversed: boolean;
-
-    constructor(public formService: FormService) {
-        super(formService);
-    }
 
     ngOnInit() {
         if (this.field.params) {

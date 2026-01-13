@@ -18,7 +18,7 @@
   ],
   "compilerOptions": {
     "baseUrl": "src",
-    "target": "es2020"
+    "target": "es2022"
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

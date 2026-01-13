@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent, FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
+import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ErrorWidgetComponent, GroupModel, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -84,9 +84,8 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
     @ViewChild('inputValue', { static: true })
     input: ElementRef;
 
-    constructor(public peopleProcessService: PeopleProcessService, public formService: FormService, public elementRef: ElementRef) {
-        super(formService);
-    }
+    public peopleProcessService = inject(PeopleProcessService);
+    public elementRef = inject(ElementRef);
 
     ngOnInit() {
         if (this.field) {
