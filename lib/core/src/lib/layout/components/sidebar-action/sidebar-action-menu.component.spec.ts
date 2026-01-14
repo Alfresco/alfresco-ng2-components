@@ -19,9 +19,9 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { IconModule } from '../../../icon/icon.module';
 
 describe('SidebarActionMenuComponent', () => {
     let component: SidebarActionMenuComponent;
@@ -52,21 +52,21 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
-    imports: [CommonModule, SidebarActionMenuComponent, MatIconModule, MatMenuModule],
+    imports: [CommonModule, SidebarActionMenuComponent, IconModule, MatMenuModule],
     // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
-            <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+            <mat-icon adf-sidebar-menu-title-icon adf-icon="arrow_drop_down" />
             <div adf-sidebar-menu-expand-icon>
-                <mat-icon>queue</mat-icon>
+                <mat-icon adf-icon="queue" />
             </div>
             <div adf-sidebar-menu-options>
                 <button mat-menu-item>
-                    <mat-icon>assignment</mat-icon>
+                    <mat-icon adf-icon="assignment" />
                     <span>Option1</span>
                 </button>
                 <button mat-menu-item>
-                    <mat-icon>assignment</mat-icon>
+                    <mat-icon adf-icon="assignment" />
                     <span>Option2</span>
                 </button>
             </div>

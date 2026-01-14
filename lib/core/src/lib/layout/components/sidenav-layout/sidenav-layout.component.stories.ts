@@ -18,8 +18,8 @@
 import { applicationConfig, Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { provideStoryCore } from '../../../stories/core-story.providers';
+import { IconModule } from '../../../icon/icon.module';
 
 type SidenavLayoutStoryArgs = SidenavLayoutComponent & {
     title?: string;
@@ -32,7 +32,7 @@ const meta: Meta<SidenavLayoutStoryArgs> = {
     title: 'Core/Layout/Sidenav Layout',
     decorators: [
         moduleMetadata({
-            imports: [SidenavLayoutComponent, MatIconModule, MatListModule]
+            imports: [SidenavLayoutComponent, IconModule, MatListModule]
         }),
         applicationConfig({
             providers: [...provideStoryCore()]
@@ -165,37 +165,37 @@ export const SidenavLayout: Story = {
                 <ng-template>
                     <mat-nav-list class="app-sidenav-linklist">
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListItemIcon>home</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="home" />
                             <span matLine>Home</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListItemIcon>device_hub</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="device_hub" />
                             <span matLine>Content Processes</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListItemIcon>folder_open</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="folder_open" />
                             <span matLine>Files</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListItemIcon>rowing</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="rowing" />
                             <span matLine>Quick Search</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListItemIcon>cloud</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="cloud" />
                             <span matLine>Cloud</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListItemIcon>settings</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="settings" />
                             <span matLine>Settings</span>
                         </mat-list-item>
 
                         <mat-list-item adf-logout class="app-sidenav-link" data-automation-id="Logout">
-                            <mat-icon matListItemIcon>exit_to_app</mat-icon>
+                            <mat-icon matListItemIcon adf-icon="exit_to_app" />
                             <span matLine>Logout</span>
                         </mat-list-item>
                     </mat-nav-list>

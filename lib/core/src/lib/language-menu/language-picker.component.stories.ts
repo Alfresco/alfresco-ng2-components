@@ -22,14 +22,14 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 import { provideStoryCore } from '../stories/core-story.providers';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../icon/icon.module';
 
 const meta: Meta<LanguagePickerComponent> = {
     component: LanguagePickerComponent,
     title: 'Core/Language Menu/Language Picker',
     decorators: [
         moduleMetadata({
-            imports: [LanguagePickerComponent, MatMenuModule, MatButtonModule, MatIconModule],
+            imports: [LanguagePickerComponent, MatMenuModule, MatButtonModule, IconModule],
             providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
         }),
         applicationConfig({
@@ -65,7 +65,7 @@ export const AsNestedMenu: Story = {
         componentWrapperDecorator(
             (story) => `
       <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
+        <mat-icon adf-icon="more_vert" />
       </button>
       <mat-menu #menu="matMenu">
         ${story}
