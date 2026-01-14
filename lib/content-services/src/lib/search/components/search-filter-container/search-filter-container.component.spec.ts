@@ -19,16 +19,17 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService } from '../../services/search.service';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
-import { By } from '@angular/platform-browser';
+import { By, DomSanitizer } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { SearchCategory } from '../../models/search-category.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { MatBadgeHarness } from '@angular/material/badge/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { provideRouter } from '@angular/router';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { MatIconRegistry } from '@angular/material/icon';
 
 const mockCategory: SearchCategory = {
     id: 'queryName',
@@ -51,6 +52,9 @@ describe('SearchFilterContainerComponent', () => {
     let fixture: ComponentFixture<SearchFilterContainerComponent>;
     let component: SearchFilterContainerComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
+    let unitTestingUtils: UnitTestingUtils;
+    let matIconRegistry: MatIconRegistry;
+    let sanitizer: DomSanitizer;
 
     const searchMock: any = {
         dataLoaded: new Subject()
@@ -68,6 +72,9 @@ describe('SearchFilterContainerComponent', () => {
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement, loader);
+        matIconRegistry = TestBed.inject(MatIconRegistry);
+        sanitizer = TestBed.inject(DomSanitizer);
     });
 
     afterEach(() => {
@@ -79,7 +86,7 @@ describe('SearchFilterContainerComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
         expect(queryBuilder.isFilterServiceActive()).toBe(true);
-        const element = fixture.nativeElement.querySelector('.adf-filter');
+        const element = unitTestingUtils.getByCSS('.adf-filter');
         expect(element).not.toBeNull();
         expect(element).not.toBeUndefined();
     });
@@ -142,26 +149,30 @@ describe('SearchFilterContainerComponent', () => {
         expect(eventRaised).toBe(true);
     });
 
-    it('should hide the red dot after the filter is cleared', async () => {
-        const badge = await loader.getHarness(MatBadgeHarness);
-        expect(await badge.isHidden()).toBe(true);
-
-        const menu = await loader.getHarness(MatMenuHarness);
-        await menu.open();
-
-        component.widgetContainer.componentRef.instance.value = 'searchText';
-        const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
+    it('should display correct icon based on active state of the filter', () => {
+        component.isActive = () => false;
         fixture.detectChanges();
-        await fixture.whenStable();
-        expect(await badge.isHidden()).toBe(false);
 
-        await menu.open();
+        const inactiveIcon = unitTestingUtils.getByCSS('.adf-filter-icon').nativeElement;
+        expect(inactiveIcon.getAttribute('ng-reflect-value')).toBe('adf:custom_filter');
 
-        const clearButton = await menu.getHarness(MatButtonHarness.with({ selector: '#clear-filter-button' }));
-        await clearButton.click();
+        component.isActive = () => true;
+        fixture.detectChanges();
 
-        expect(await badge.isHidden()).toBe(true);
+        const activeIcon = unitTestingUtils.getByCSS('.adf-filter-icon').nativeElement;
+        expect(activeIcon.getAttribute('ng-reflect-value')).toBe('adf:custom_filter_filled');
+    });
+
+    it('should register custom icons when component is initialized', () => {
+        spyOn(sanitizer, 'bypassSecurityTrustResourceUrl').and.callThrough();
+        spyOn(matIconRegistry, 'addSvgIconInNamespace').and.callThrough();
+
+        component.ngOnInit();
+
+        expect(sanitizer.bypassSecurityTrustResourceUrl).toHaveBeenCalledWith('./assets/images/custom_filter.svg');
+        expect(sanitizer.bypassSecurityTrustResourceUrl).toHaveBeenCalledWith('./assets/images/custom_filter_filled.svg');
+        expect(matIconRegistry.addSvgIconInNamespace).toHaveBeenCalledWith('adf', 'custom_filter', jasmine.any(Object));
+        expect(matIconRegistry.addSvgIconInNamespace).toHaveBeenCalledWith('adf', 'custom_filter_filled', jasmine.any(Object));
     });
 
     describe('Accessibility', () => {

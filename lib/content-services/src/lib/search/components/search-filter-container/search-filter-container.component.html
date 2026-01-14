@@ -12,12 +12,9 @@
         [title]="getTooltipTranslation(col?.title)"
     >
         <adf-icon
-            value="filter_list"
+            [value]="isActive() ? 'adf:custom_filter_filled' : 'adf:custom_filter'"
             [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
             class="adf-filter-icon"
-            matBadge="filter"
-            matBadgeColor="warn"
-            [matBadgeHidden]="!isActive()"
         />
     </button>
 
