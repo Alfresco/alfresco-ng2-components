@@ -14,7 +14,6 @@
             [style.border-radius]="roundUpChips ? '20px' : '10px'"
             [style.font-weight]="'bold'"
             role="listitem"
-            tabIndex="0"
             [attr.aria-label]="chip.name"
             (removed)="removedChip.emit(chip.id)">
             <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
