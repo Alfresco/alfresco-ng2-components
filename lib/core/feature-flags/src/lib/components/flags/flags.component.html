@@ -21,8 +21,8 @@
       </th>
       <td mat-cell class="adf-icon-col" *matCellDef="let element">
         <button mat-icon-button *ngIf="element.fictive; else flagFromApi" class="adf-fictive-flag-button" (click)="onDelete(element.flag)">
-          <mat-icon class="material-icons-outlined adf-custom-flag-icon" fontIcon="memory" />
-          <mat-icon class="material-icons-outlined adf-trash-icon" fontIcon="delete" />
+          <mat-icon class="material-icons-outlined adf-custom-flag-icon" adf-icon="memory" />
+          <mat-icon class="material-icons-outlined adf-trash-icon" adf-icon="trash" />
         </button>
       </td>
     </ng-container>
@@ -40,7 +40,7 @@
       <th mat-header-cell class="adf-val-col header-cell" *matHeaderCellDef>
         <div class="adf-input-field-buttons-container">
           <button *ngIf="showPlusButton$ | async" mat-icon-button title="{{'CORE.FEATURE-FLAGS.ADD_NEW' | translate}}" color="accent" (click)="onAddButtonClick()">
-            <mat-icon class="material-icons-outlined" fontIcon="add_circle" />
+            <mat-icon class="material-icons-outlined" adf-icon="circle_add" />
           </button>
           <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearInput()" class="adf-clear-button">
             <mat-icon adf-icon="cancel" />

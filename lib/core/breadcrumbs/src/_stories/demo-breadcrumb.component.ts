@@ -18,10 +18,10 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { NgIf } from '@angular/common';
+import { IconModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-demo-breadcrumb',
@@ -51,7 +51,7 @@ import { NgIf } from '@angular/common';
                 <div>
                     Current Page
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-                        <mat-icon>menu_open</mat-icon>
+                        <mat-icon adf-icon="menu_open" />
                     </button>
 
                     <mat-menu #menu="matMenu">
@@ -63,7 +63,7 @@ import { NgIf } from '@angular/common';
         </adf-breadcrumb>
     `,
     standalone: true,
-    imports: [MatButtonModule, MatMenuModule, MatIconModule, BreadcrumbItemComponent, BreadcrumbComponent, NgIf]
+    imports: [MatButtonModule, MatMenuModule, IconModule, BreadcrumbItemComponent, BreadcrumbComponent, NgIf]
 })
 export class DemoBreadcrumbComponent {
     compact = false;

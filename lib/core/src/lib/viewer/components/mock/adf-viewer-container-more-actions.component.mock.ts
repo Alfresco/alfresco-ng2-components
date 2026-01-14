@@ -16,27 +16,27 @@
  */
 
 import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ViewerComponent } from '../viewer.component';
 import { ViewerMoreActionsComponent } from '../viewer-more-actions.component';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
-    imports: [ViewerComponent, MatIconModule, MatMenuModule, ViewerMoreActionsComponent],
+    imports: [ViewerComponent, IconModule, MatMenuModule, ViewerMoreActionsComponent],
     template: `
         <adf-viewer>
             <adf-viewer-more-actions>
                 <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
+                    <mat-icon adf-icon="dialpad" />
                     <span>Action One</span>
                 </button>
                 <button mat-menu-item [disabled]="true">
-                    <mat-icon>voicemail</mat-icon>
+                    <mat-icon adf-icon="voicemail" />
                     <span>Action Two</span>
                 </button>
                 <button mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
+                    <mat-icon adf-icon="notifications_off" />
                     <span>Action Three</span>
                 </button>
             </adf-viewer-more-actions>

@@ -22,14 +22,14 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 import { provideStoryCore } from '../stories/core-story.providers';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../icon/icon.module';
 
 const meta: Meta<LanguageMenuComponent> = {
     component: LanguageMenuComponent,
     title: 'Core/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [LanguageMenuComponent, MatMenuModule, MatButtonModule, MatIconModule],
+            imports: [LanguageMenuComponent, MatMenuModule, MatButtonModule, IconModule],
             providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
         }),
         applicationConfig({
@@ -66,9 +66,7 @@ export const AsMainMenu: Story = {
         componentWrapperDecorator(
             (story) => `
       <button mat-icon-button [matMenuTriggerFor]="langMenu">
-        <mat-icon>
-          language
-        </mat-icon>
+        <mat-icon adf-icon="language" />
       </button>
       <mat-menu #langMenu="matMenu">
         ${story}
@@ -86,15 +84,11 @@ export const AsNestedMenu: Story = {
         componentWrapperDecorator(
             (story) => `
       <button mat-icon-button [matMenuTriggerFor]="profileMenu">
-        <mat-icon>
-          more_vert
-        </mat-icon>
+        <mat-icon adf-icon="more_vert" />
       </button>
       <mat-menu #profileMenu="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
-          <mat-icon>
-            language
-          </mat-icon>
+          <mat-icon adf-icon="language" />
           Language
         </button>
       </mat-menu>
