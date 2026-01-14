@@ -95,7 +95,7 @@ Let's say we have an upload button as follows:
 
 ```html
   <div>
-    <button mat-button color="accent" mat-mini-fab (click)="fileInput.click()">
+    <button mat-button mat-mini-fab (click)="fileInput.click()">
       <mat-icon>attachment</mat-icon>
     </button>
     <input hidden type="file" #fileInput (change)="onUploadFile($event)"/>

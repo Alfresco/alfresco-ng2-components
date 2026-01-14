@@ -60,7 +60,6 @@
                     <ng-template [ngTemplateOutlet]="taskFormButtons" />
                     <button mat-button
                         *ngIf="!isCompletedTask()" id="adf-no-form-complete-button"
-                        color="primary"
                         class="adf-task-form-actions-button"
                         [disabled]="canCompleteNoFormTask()"
                         (click)="onCompleteTask()">
