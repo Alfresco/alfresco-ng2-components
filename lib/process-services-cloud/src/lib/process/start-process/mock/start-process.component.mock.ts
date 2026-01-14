@@ -17,7 +17,7 @@
 
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
-import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
+import { ProcessPayloadCloud, ProcessPayloadCloudData } from '../models/process-payload-cloud.model';
 
 export const fakeProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
@@ -122,8 +122,24 @@ export const fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
 export const fakeProcessPayload = new ProcessPayloadCloud({
     processDefinitionKey: 'NewProcess:1',
     name: 'NewProcess 1',
-    payloadType: 'string'
+    payloadType: 'string',
+    linkedProcessInstanceId: '1234',
+    linkedProcessInstanceType: 'type1'
 });
+
+export const getFakeProcessPayload = (overrides: ProcessPayloadCloudData = {}): ProcessPayloadCloud => {
+    const defaultData: ProcessPayloadCloudData = {
+        processDefinitionKey: 'NewProcess:1',
+        name: 'NewProcess 1',
+        payloadType: 'string',
+        linkedProcessInstanceId: '1234',
+        linkedProcessInstanceType: 'type1'
+    };
+    return new ProcessPayloadCloud({
+        ...defaultData,
+        ...overrides
+    });
+};
 
 export const fakeStartForm = {
     formRepresentation: {
