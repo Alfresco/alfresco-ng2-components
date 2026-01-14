@@ -206,7 +206,9 @@
                 [ngClass]="getRowStyle(row)"
                 [class.adf-datatable-row__dragging]="isDraggingRow"
                 [attr.data-automation-id]="'datatable-row-' + idx"
-                (contextmenu)="markRowAsContextMenuSource(row)">
+                (contextmenu)="markRowAsContextMenuSource(row)"
+                [disabled]="!(data.allowFocusOnRows ?? true)"
+            >
                 <!-- Drag button -->
                 <div *ngIf="enableDragRows"
                         role="gridcell"
@@ -269,7 +271,7 @@
                     [attr.aria-selected]="row.isSelected"
                     [attr.aria-label]="col.title ? (col.title | translate) : null"
                     (click)="onRowClick(row, $event)"
-                    tabindex="0"
+                    [attr.tabindex]="col.focus ? 0 : null"
                     (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                     [adf-context-menu]="getContextMenuActions(row, col)"
                     [adf-context-menu-enabled]="contextMenu"
