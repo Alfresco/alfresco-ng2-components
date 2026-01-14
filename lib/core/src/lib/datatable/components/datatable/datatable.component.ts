@@ -42,7 +42,7 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory, FocusKeyManager, LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, Observer, Subscription } from 'rxjs';
@@ -64,7 +64,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
@@ -327,6 +327,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isDraggingHeaderColumn = false;
     hoveredHeaderColumnIndex = -1;
     resizingColumnIndex = -1;
+    keyboardResizingColumnIndex = -1;
     isDraggingRow = false;
     focusTrap: ConfigurableFocusTrap;
 
@@ -352,7 +353,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         differs: IterableDiffers,
         private readonly matIconRegistry: MatIconRegistry,
         private readonly sanitizer: DomSanitizer,
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
+        private readonly liveAnnouncer: LiveAnnouncer,
+        private readonly translateService: TranslateService
     ) {
         if (differs) {
             this.differ = differs.find([]).create(null);
@@ -1064,6 +1067,57 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     onDragEnd(): void {
         this.isDraggingRow = false;
+    }
+
+    onResizeHandleFocus(columnIndex: number): void {
+        this.keyboardResizingColumnIndex = columnIndex;
+    }
+
+    onResizeHandleBlur(): void {
+        this.keyboardResizingColumnIndex = -1;
+    }
+
+    onResizeHandleKeydown(event: KeyboardEvent, col: DataColumn, columnIndex: number): void {
+        const step = event.shiftKey ? 50 : 10;
+        let handled = false;
+        let newWidth = col.width || DataTableComponent.MINIMUM_COLUMN_SIZE;
+
+        switch (event.key) {
+            case 'ArrowRight':
+            case 'ArrowUp':
+                newWidth = Math.min(newWidth + step, 500);
+                handled = true;
+                break;
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                newWidth = Math.max(newWidth - step, DataTableComponent.MINIMUM_COLUMN_SIZE);
+                handled = true;
+                break;
+            case 'Home':
+                newWidth = DataTableComponent.MINIMUM_COLUMN_SIZE;
+                handled = true;
+                break;
+            case 'End':
+                newWidth = 500;
+                handled = true;
+                break;
+        }
+
+        if (handled) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const allColumns = this.getVisibleColumns();
+            allColumns[columnIndex].width = newWidth;
+            this.data.setColumns(allColumns);
+            this.columnsWidthChanged.emit(this.data.getColumns());
+
+            const columnTitle = this.translateService.instant(col.title);
+            const announcement = this.translateService.instant(
+                'ADF-DATATABLE.ACCESSIBILITY.COLUMN_WIDTH_CHANGED',
+                { column: columnTitle, width: newWidth }
+            );
+            this.liveAnnouncer.announce(announcement, 'polite');        }
     }
 
     private updateColumnsWidths(): void {

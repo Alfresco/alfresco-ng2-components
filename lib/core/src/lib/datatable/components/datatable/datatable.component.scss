@@ -27,13 +27,21 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
     &__resize-handle {
         padding: 0 2px;
+        position: relative;
 
         &-visible {
             visibility: visible;
+            opacity: 1;
         }
 
         &-hidden {
-            visibility: hidden;
+            opacity: 0;
+
+            &:focus,
+            &:focus-visible,
+            &:focus-within {
+                opacity: 1;
+            }
         }
 
         &--divider {
@@ -43,6 +51,17 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         &:hover {
             cursor: col-resize;
+        }
+
+        &:focus,
+        &:focus-visible {
+            opacity: 1;
+            outline: 2px solid var(--theme-accent-color-a200);
+            outline-offset: -1px;
+
+            .adf-datatable__resize-handle--divider {
+                border-color: var(--theme-accent-color-a200);
+            }
         }
     }
 
