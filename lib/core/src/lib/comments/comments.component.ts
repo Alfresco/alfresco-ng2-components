@@ -16,7 +16,17 @@
  */
 
 import { CommentModel } from '../models/comment.model';
-import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component, ElementRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { CommonModule } from '@angular/common';
@@ -44,6 +54,8 @@ import { CommentListComponent } from './comment-list';
     encapsulation: ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {
+    @ViewChild('commentInput') commentInput: ElementRef<HTMLTextAreaElement>;
+
     /** The numeric ID of the task. */
     @Input()
     id: string;
@@ -117,6 +129,7 @@ export class CommentsComponent implements OnChanges {
                 this.addToComments(res);
                 this.commentControl.reset();
                 this.commentAdded.emit(res);
+                this.commentInput?.nativeElement?.focus();
             },
             error: (err) => {
                 this.error.emit(err);
