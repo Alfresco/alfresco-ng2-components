@@ -28,7 +28,7 @@ describe('StartProcessCloudService', () => {
     let service: StartProcessCloudService;
     let adfHttpClient: AdfHttpClient;
     let adfClientHttpRequestSpy: jasmine.Spy;
-    const bpmHost = 'http://adf-bpm-host.com';
+    const bpmHost = 'https://adf-bpm-host.com';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
