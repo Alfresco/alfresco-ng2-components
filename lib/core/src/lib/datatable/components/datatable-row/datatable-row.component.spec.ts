@@ -90,19 +90,21 @@ describe('DataTableRowComponent', () => {
         expect(fixture.debugElement.nativeElement.getAttribute('aria-label')).toBe('some-name');
     });
 
-    it('should set tabindex as focusable  when row is not disabled', () => {
+    it('should set tabindex as non focusable by default (disabled propery is not passed)', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBeNull();
+    });
+
+    it('should not set tabindex when row is disabled', () => {
+        component.disabled = false;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBe('0');
     });
 
-    it('should not set tabindex when row is disabled', () => {
-        component.disabled = true;
-        fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBe(null);
-    });
-
     it('should focus element', () => {
         expect(document.activeElement.classList.contains('adf-datatable-row')).toBe(false);
+        component.disabled = false;
+        fixture.detectChanges();
 
         component.focus();
         expect(document.activeElement.classList.contains('adf-datatable-row')).toBe(true);

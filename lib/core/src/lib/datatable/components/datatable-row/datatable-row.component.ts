@@ -25,14 +25,13 @@ import { DataRow } from '../../data/data-row.model';
     encapsulation: ViewEncapsulation.None,
     host: {
         class: 'adf-datatable-row',
-        tabindex: '0',
         role: 'row'
     }
 })
 export class DataTableRowComponent implements FocusableOption {
     @Input() row: DataRow;
 
-    @Input() disabled = false;
+    @Input() disabled = true;
 
     @Output()
     select: EventEmitter<any> = new EventEmitter<any>();
