@@ -119,14 +119,6 @@ export const fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
     })
 ];
 
-export const fakeProcessPayload = new ProcessPayloadCloud({
-    processDefinitionKey: 'NewProcess:1',
-    name: 'NewProcess 1',
-    payloadType: 'string',
-    linkedProcessInstanceId: '1234',
-    linkedProcessInstanceType: 'type1'
-});
-
 export const getFakeProcessPayload = (overrides: ProcessPayloadCloudData = {}): ProcessPayloadCloud => {
     const defaultData: ProcessPayloadCloudData = {
         processDefinitionKey: 'NewProcess:1',

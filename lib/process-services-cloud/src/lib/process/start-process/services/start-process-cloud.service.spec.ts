@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from './start-process-cloud.service';
-import { fakeProcessInstance, fakeProcessPayload, fakeProcessWithFormInstance, getFakeProcessPayload } from '../mock/start-process.component.mock';
+import { fakeProcessInstance, fakeProcessWithFormInstance, getFakeProcessPayload } from '../mock/start-process.component.mock';
 import { provideAppConfigTesting } from '@alfresco/adf-core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -96,7 +96,7 @@ describe('StartProcessCloudService', () => {
 
         adfClientHttpRequestSpy.and.returnValue(Promise.reject(errorResponse));
 
-        await firstValueFrom(service.startProcess('appName1', fakeProcessPayload)).catch((error) => {
+        await firstValueFrom(service.startProcess('appName1', getFakeProcessPayload())).catch((error) => {
             expect(error.status).toEqual(404);
             expect(error.statusText).toEqual('Not Found');
             expect(error.error).toEqual('Mock Error');
