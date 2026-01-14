@@ -863,7 +863,7 @@ describe('StartProcessCloudComponent', () => {
             component.formCloud = null;
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
                 name: component.processInstanceName.value,
-                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
+                processDefinitionKey: component.processPayloadCloud.processDefinitionKey,
                 variables: Object.assign(component.variables, component.formCloud)
             });
 
@@ -889,7 +889,7 @@ describe('StartProcessCloudComponent', () => {
             component.formCloud = undefined;
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
                 name: component.processInstanceName.value,
-                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
+                processDefinitionKey: component.processPayloadCloud.processDefinitionKey,
                 variables: {}
             });
 
@@ -912,7 +912,7 @@ describe('StartProcessCloudComponent', () => {
 
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
                 name: component.processInstanceName.value,
-                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
+                processDefinitionKey: component.processPayloadCloud.processDefinitionKey,
                 variables: Object.assign(component.variables, component.formCloud.values)
             });
 

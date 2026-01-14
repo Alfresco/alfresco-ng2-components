@@ -18,58 +18,89 @@
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of, throwError } from 'rxjs';
 import { StartProcessCloudService } from './start-process-cloud.service';
-import { fakeProcessPayload } from '../mock/start-process.component.mock';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
+import { fakeProcessInstance, fakeProcessWithFormInstance, getFakeProcessPayload } from '../mock/start-process.component.mock';
+import { provideAppConfigTesting } from '@alfresco/adf-core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ProcessDefinitionCloud } from '@alfresco/adf-process-services-cloud';
 
 describe('StartProcessCloudService', () => {
     let service: StartProcessCloudService;
     let adfHttpClient: AdfHttpClient;
+    let adfClientHttpRequestSpy: jasmine.Spy;
+    const bpmHost = 'https://adf-bpm-host.com';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule]
+            providers: [
+                provideAppConfigTesting({
+                    bpmHost
+                })
+            ]
         });
         service = TestBed.inject(StartProcessCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
+        adfClientHttpRequestSpy = spyOn(adfHttpClient, 'request');
     });
 
     it('should be able to create a new process', async () => {
-        spyOn(service, 'startProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
-        const result = await firstValueFrom(service.startProcess('appName1', fakeProcessPayload));
+        const appName = 'appName1';
+        const payload = getFakeProcessPayload();
+        const expectedPayload = getFakeProcessPayload({ payloadType: 'StartProcessPayload' });
 
-        expect(result).toBeDefined();
-        expect(result.id).toEqual('fake-id');
-        expect(result.name).toEqual('fake-name');
+        adfClientHttpRequestSpy.and.returnValue(Promise.resolve({ entry: fakeProcessInstance }));
+
+        const result = await firstValueFrom(service.startProcess(appName, payload));
+
+        expect(result).toEqual(fakeProcessInstance);
+
+        expect(adfClientHttpRequestSpy).toHaveBeenCalledWith(`${bpmHost}/${appName}/rb/v1/process-instances`, {
+            path: `${bpmHost}/${appName}/rb/v1/process-instances`,
+            httpMethod: 'POST',
+            contentTypes: ['application/json'],
+            accepts: ['application/json'],
+            bodyParam: expectedPayload,
+            queryParams: undefined
+        });
     });
 
     it('should be able to create a new process with form', async () => {
-        spyOn(service, 'startProcessWithForm').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
-        const result = await firstValueFrom(service.startProcessWithForm('appName1', 'mockFormId', 1, fakeProcessPayload));
+        const appName = 'appName1';
+        const formId = 'mockFormId';
+        const payload = getFakeProcessPayload();
+        const expectedPayload = getFakeProcessPayload({ payloadType: 'StartProcessPayload' });
 
-        expect(result).toBeDefined();
-        expect(result.id).toEqual('fake-id');
-        expect(result.name).toEqual('fake-name');
+        adfClientHttpRequestSpy.and.returnValue(Promise.resolve(fakeProcessWithFormInstance));
+
+        const result = await firstValueFrom(service.startProcessWithForm(appName, formId, 1, payload));
+
+        expect(result.id).toEqual(fakeProcessWithFormInstance.id);
+        expect(result.name).toEqual(fakeProcessWithFormInstance.name);
+
+        expect(adfClientHttpRequestSpy).toHaveBeenCalledWith(`${bpmHost}/${appName}/form/v1/forms/${formId}/submit/versions/1`, {
+            path: `${bpmHost}/${appName}/form/v1/forms/${formId}/submit/versions/1`,
+            httpMethod: 'POST',
+            contentTypes: ['application/json'],
+            accepts: ['application/json'],
+            bodyParam: expectedPayload,
+            queryParams: undefined
+        });
     });
 
-    it('Should not be able to create a process if error occurred', async () => {
+    it('should not be able to create a process if error occurred', async () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
             status: 404,
             statusText: 'Not Found'
         });
 
-        spyOn(service, 'startProcess').and.returnValue(throwError(errorResponse));
-        const result = await firstValueFrom(service.startProcess('appName1', fakeProcessPayload)).catch((error) => {
+        adfClientHttpRequestSpy.and.returnValue(Promise.reject(errorResponse));
+
+        await firstValueFrom(service.startProcess('appName1', getFakeProcessPayload())).catch((error) => {
             expect(error.status).toEqual(404);
             expect(error.statusText).toEqual('Not Found');
             expect(error.error).toEqual('Mock Error');
         });
-
-        if (result) {
-            fail('expected an error, not applications');
-        }
     });
 
     it('should be able to get all the process definitions', async () => {
@@ -102,8 +133,7 @@ describe('StartProcessCloudService', () => {
     it('should transform the response into task variables', async () => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
-        const requestSpy = spyOn(adfHttpClient, 'request');
-        requestSpy.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
+        adfClientHttpRequestSpy.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
 
         const result = await firstValueFrom(service.getStartEventFormStaticValuesMapping(appName, processDefinitionId));
         expect(result.length).toEqual(3);
@@ -116,15 +146,16 @@ describe('StartProcessCloudService', () => {
         expect(result[2].name).toEqual('static3');
         expect(result[2].id).toEqual('static3');
         expect(result[2].value).toEqual(true);
-        expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`);
-        expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+        expect(adfClientHttpRequestSpy.calls.mostRecent().args[0]).toContain(
+            `${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`
+        );
+        expect(adfClientHttpRequestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
     });
 
     it('should transform the response into task variables when retrieving the constant values for the start event', async () => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
-        const requestSpy = spyOn(adfHttpClient, 'request');
-        requestSpy.and.returnValue(Promise.resolve({ constant1: 'value', constant2: '0', constant3: 'true' }));
+        adfClientHttpRequestSpy.and.returnValue(Promise.resolve({ constant1: 'value', constant2: '0', constant3: 'true' }));
 
         const result = await firstValueFrom(service.getStartEventConstants(appName, processDefinitionId));
 
@@ -141,7 +172,9 @@ describe('StartProcessCloudService', () => {
         expect(result[2].id).toEqual('constant3');
         expect(result[2].value).toEqual('true');
         expect(result[2].type).toEqual('string');
-        expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/constant-values`);
-        expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+        expect(adfClientHttpRequestSpy.calls.mostRecent().args[0]).toContain(
+            `${appName}/rb/v1/process-definitions/${processDefinitionId}/constant-values`
+        );
+        expect(adfClientHttpRequestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
     });
 });
