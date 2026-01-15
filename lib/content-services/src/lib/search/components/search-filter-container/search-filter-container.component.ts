@@ -61,9 +61,9 @@ export class SearchFilterContainerComponent implements OnInit {
     initialValue: any;
 
     constructor(
-        private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
-        private translationService: TranslationService,
-        private focusTrapFactory: ConfigurableFocusTrapFactory,
+        private readonly searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
+        private readonly translationService: TranslationService,
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
         private readonly matIconRegistry: MatIconRegistry,
         private readonly sanitizer: DomSanitizer
     ) {}
