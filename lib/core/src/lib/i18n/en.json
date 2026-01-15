@@ -425,7 +425,7 @@
       "MISCELLANEOUS": "Miscellaneous"
     },
     "COLUMNS_SELECTOR": {
-      "COLUMNS": "Columns",
+      "COLUMNS": "Choose visible columns",
       "SEARCH": "Search",
       "APPLY": "Apply",
       "COLUMNS_VISIBILITY": "Select columns to display"
