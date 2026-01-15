@@ -1080,7 +1080,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     onResizeHandleKeydown(event: KeyboardEvent, col: DataColumn, columnIndex: number): void {
         const step = event.shiftKey ? 50 : 10;
         let handled = false;
-        let newWidth = col.width || DataTableComponent.MINIMUM_COLUMN_SIZE;
+        let newWidth = col.width;
+        if (!newWidth) {
+            return;
+        }
 
         switch (event.key) {
             case 'ArrowRight':
@@ -1117,7 +1120,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 'ADF-DATATABLE.ACCESSIBILITY.COLUMN_WIDTH_CHANGED',
                 { column: columnTitle, width: newWidth }
             );
-            this.liveAnnouncer.announce(announcement, 'polite');        }
+            this.liveAnnouncer.announce(announcement, 'polite').catch(console.error);
+        }
     }
 
     private updateColumnsWidths(): void {
