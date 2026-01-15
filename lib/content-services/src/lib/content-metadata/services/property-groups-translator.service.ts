@@ -30,12 +30,12 @@ import {
     CardViewTextItemModel,
     DecimalNumberPipe,
     LogService,
-    MultiValuePipe,
     UserPreferencesService
 } from '@alfresco/adf-core';
 import { CardViewGroup, OrganisedPropertyGroup, Property } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
 import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
+import { MultiValuePipe } from './pipes/multi-value.pipe';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';

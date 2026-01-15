@@ -24,7 +24,6 @@ import { InitialUsernamePipe } from './user-initial.pipe';
 import { FullNamePipe } from './full-name.pipe';
 import { FormatSpacePipe } from './format-space.pipe';
 import { FileTypePipe } from './file-type.pipe';
-import { MultiValuePipe } from './multi-value.pipe';
 import { LocalizedDatePipe } from './localized-date.pipe';
 import { DecimalNumberPipe } from './decimal-number.pipe';
 import { DateTimePipe } from './date-time.pipe';
@@ -38,7 +37,6 @@ export const CORE_PIPES = [
     FullNamePipe,
     FormatSpacePipe,
     FileTypePipe,
-    MultiValuePipe,
     DecimalNumberPipe,
     DateTimePipe,
     InitialUsernamePipe,
