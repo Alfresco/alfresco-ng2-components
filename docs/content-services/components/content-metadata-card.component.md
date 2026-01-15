@@ -378,7 +378,7 @@ displayed. The aspects to be displayed are calculated as an intersection of the 
 
 ## Multi value card properties
 
-Multi value properties are displayed one after another separated by a comma. This card makes use of the [Multi Value Pipe](../../core/pipes/multi-value.pipe.ts).
+Multi value properties are displayed one after another separated by a comma.
 
 To customize the separator used by this card you can set it in your `app.config.json` inside your content-metadata configuration:
 
