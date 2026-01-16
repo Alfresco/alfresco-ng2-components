@@ -344,6 +344,29 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
+        if (event.shiftKey && this.enableDragRows) {
+            switch (event.key) {
+                case 'ArrowUp': {
+                    if (this.keyManager.activeItemIndex > 1) {
+                        this.dragDropped.emit({
+                            previousIndex: this.keyManager.activeItemIndex - 1,
+                            currentIndex: this.keyManager.activeItemIndex - 2
+                        });
+                        this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 2);
+                    }
+                    break;
+                }
+                case 'ArrowDown': {
+                    if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
+                        this.dragDropped.emit({ previousIndex: this.keyManager.activeItemIndex - 1, currentIndex: this.keyManager.activeItemIndex });
+                        this.keyManager.setActiveItem(this.keyManager.activeItemIndex);
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
         this.keyManager.onKeydown(event);
     }
 
