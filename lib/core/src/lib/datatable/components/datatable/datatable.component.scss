@@ -323,23 +323,32 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
     }
 
-    .adf-datatable-row .adf-datatable-actions-menu {
-        margin-left: auto;
-        justify-content: end;
-        padding-right: 15px;
-
-        &:focus-visible,
-        &:focus-within {
-            .adf-datatable-hide-actions-without-hover {
+    .adf-datatable-row {
+        &:focus-within,
+        &:hover {
+            .adf-datatable-actions-menu .adf-datatable-hide-actions-without-hover {
                 visibility: visible;
             }
         }
 
-        &-provided {
-            /* stylelint-disable declaration-no-important */
-            max-width: 100px !important;
-            justify-content: center;
-            padding-right: 0;
+        .adf-datatable-actions-menu {
+            margin-left: auto;
+            justify-content: end;
+            padding-right: 15px;
+
+            &:focus-visible,
+            &:focus-within {
+                .adf-datatable-hide-actions-without-hover {
+                    visibility: visible;
+                }
+            }
+
+            &-provided {
+                /* stylelint-disable declaration-no-important */
+                max-width: 100px !important;
+                justify-content: center;
+                padding-right: 0;
+            }
         }
     }
 
