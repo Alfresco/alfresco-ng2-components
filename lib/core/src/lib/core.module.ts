@@ -34,7 +34,6 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { TEMPLATE_DIRECTIVES } from './templates/template.module';
 import { CLIPBOARD_DIRECTIVES } from './clipboard/clipboard.module';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-history.module';
-import { BlankPageComponent } from './blank-page/blank-page.component';
 import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
@@ -86,7 +85,6 @@ import { provideAppConfig } from './app-config/provide-app-config';
         SortingPickerComponent,
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
-        BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
         MaterialModule
@@ -117,7 +115,6 @@ import { provideAppConfig } from './app-config/provide-app-config';
         IconComponent,
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
-        BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
         MaterialModule

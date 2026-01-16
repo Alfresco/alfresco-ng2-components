@@ -42,7 +42,6 @@ export * from './lib/clipboard/index';
 export * from './lib/dialogs/index';
 export * from './lib/icon/index';
 export * from './lib/notifications/index';
-export * from './lib/blank-page/index';
 export * from './lib/search-text/index';
 export * from './lib/snackbar-content/index';
 export * from './lib/translation/index';
