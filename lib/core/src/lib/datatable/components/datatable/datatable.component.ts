@@ -366,8 +366,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 default:
                     break;
             }
+        } else {
+            this.keyManager.onKeydown(event);
         }
-        this.keyManager.onKeydown(event);
     }
 
     constructor(

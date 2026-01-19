@@ -1853,6 +1853,62 @@ describe('Accessibility', () => {
         expect(focusTrap.destroy).toHaveBeenCalled();
         expect(dataTable.focusTrap).toBeNull();
     });
+
+    it('should support drag&drop with shift + arrow keys', () => {
+        dataTable.showHeader = ShowHeaderMode.Never;
+        dataTable.enableDragRows = true;
+        const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
+
+        const keyDownEvent = new KeyboardEvent('keyup', {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            keyCode: 40
+        } as KeyboardEventInit);
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const rowElement = testingUtils.getAllByCSS('.adf-datatable-body .adf-datatable-row')[0];
+        testingUtils.setDebugElement(rowElement);
+        testingUtils.clickByCSS('.adf-datatable-cell');
+
+        fixture.debugElement.nativeElement.dispatchEvent(keyDownEvent);
+        fixture.detectChanges();
+
+        spyOn(dataTable.dragDropped, 'emit').and.callThrough();
+        const shiftDownEvent = new KeyboardEvent('keyup', {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            shiftKey: true,
+            keyCode: 40
+        } as KeyboardEventInit);
+        fixture.debugElement.nativeElement.dispatchEvent(shiftDownEvent);
+        fixture.detectChanges();
+
+        expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({ previousIndex: -1, currentIndex: 0 });
+
+        testingUtils.clickByCSS('.adf-datatable-cell');
+        fixture.debugElement.nativeElement.dispatchEvent(keyDownEvent);
+        fixture.debugElement.nativeElement.dispatchEvent(keyDownEvent);
+        fixture.detectChanges();
+
+        const shiftUpEvent = new KeyboardEvent('keyup', {
+            code: 'ArrowUp',
+            key: 'ArrowUp',
+            shiftKey: true,
+            keyCode: 38
+        } as KeyboardEventInit);
+
+        fixture.debugElement.nativeElement.dispatchEvent(shiftUpEvent);
+        fixture.detectChanges();
+
+        expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({ previousIndex: 1, currentIndex: 0 });
+    });
 });
 
 describe('Drag&Drop column header', () => {
