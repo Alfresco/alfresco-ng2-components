@@ -16,7 +16,7 @@
  */
 
 import { ResizableDirective } from './resizable.directive';
-import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
     selector: '[adf-resize-handle]'
@@ -31,6 +31,31 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private unlistenMouseMove?: () => void;
     private unlistenMouseUp?: () => void;
     constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
+
+    @HostListener('keydown', ['$event'])
+    onKeydown(event: KeyboardEvent): void {
+        let delta: number | null = null;
+
+        switch (event.key) {
+            case 'ArrowRight':
+            case 'ArrowUp':
+                const rightStep = event.shiftKey ? 60 : 20;
+                delta = rightStep;
+                break;
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                const leftStep = event.shiftKey ? 40 : 0;
+                delta = -leftStep;
+                break;
+        }
+
+        if (delta !== null) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.resizableContainer.resizeByKeyboard(delta);
+        }
+    }
 
     ngOnInit(): void {
         this.zone.runOutsideAngular(() => {
@@ -66,6 +91,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
     private onMouseup(event: MouseEvent): void {
         this.unlistenMouseMove?.();
+        this.unlistenMouseMove = undefined;
         this.unlistenMouseUp();
         this.resizableContainer.mouseup.next(event);
     }
