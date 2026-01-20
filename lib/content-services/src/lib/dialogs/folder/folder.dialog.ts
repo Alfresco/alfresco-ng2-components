@@ -20,7 +20,7 @@ import { Component, DestroyRef, EventEmitter, inject, Inject, OnInit, Optional, 
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
 import { CommonModule } from '@angular/common';
@@ -94,6 +94,7 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private readonly destroyRef = inject(DestroyRef);
+    private notificationService = inject(NotificationService)
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -116,7 +117,6 @@ export class FolderDialogComponent implements OnInit {
         let name = '';
         let title = '';
         let description = '';
-
         if (folder) {
             const { properties } = folder;
 
@@ -143,6 +143,10 @@ export class FolderDialogComponent implements OnInit {
 
         (this.editing ? this.edit() : this.create()).subscribe(
             (folder: Node) => {
+                const messageKey = this.editing ? 'CORE.FOLDER_DIALOG.FOLDER_UPDATED_SUCCESS' : 'CORE.FOLDER_DIALOG.FOLDER_CREATED_SUCCESS';
+                const message = this.translation.instant(messageKey, { name: folder.name });
+
+                this.notificationService.showInfo(message);
                 this.success.emit(folder);
                 this.dialog.close(folder);
             },

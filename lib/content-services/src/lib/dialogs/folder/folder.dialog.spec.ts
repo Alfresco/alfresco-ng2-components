@@ -21,11 +21,13 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FolderDialogComponent } from './folder.dialog';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { NotificationService } from '@alfresco/adf-core';
 
 describe('FolderDialogComponent', () => {
     let fixture: ComponentFixture<FolderDialogComponent>;
     let component: FolderDialogComponent;
     let nodesApi: NodesApiService;
+    let notificationService: NotificationService;
 
     let submitButton: HTMLButtonElement;
     const dialogRef = {
@@ -47,9 +49,11 @@ describe('FolderDialogComponent', () => {
         component = fixture.componentInstance;
         nodesApi = TestBed.inject(NodesApiService);
         createFolderNode$ = new BehaviorSubject(null);
+        notificationService = TestBed.inject(NotificationService);
 
         createFolderSpy = spyOn(nodesApi, 'createFolder').and.returnValue(createFolderNode$);
         updateNodeSpy = spyOn(nodesApi, 'updateNode').and.returnValue(updateNode$);
+        spyOn(notificationService, 'showInfo');
         submitButton = fixture.nativeElement.querySelector('#adf-folder-create-button');
     });
 
@@ -126,6 +130,16 @@ describe('FolderDialogComponent', () => {
             expect(submitButton.disabled).toBeTrue();
             expect(component.form.valid).toBeFalse();
             expect(updateNodeSpy).not.toHaveBeenCalled();
+        });
+
+        it('should show edit success notification with folder name when folder is updated', () => {
+            const updatedFolder: any = { name: 'updated-folder' };
+            updateNode$.next(updatedFolder);
+
+            component.form.controls['name'].setValue('updated-folder');
+            component.submit();
+
+            expect(notificationService.showInfo).toHaveBeenCalledWith('CORE.FOLDER_DIALOG.FOLDER_UPDATED_SUCCESS');
         });
 
         describe('when submit is successfully', () => {
@@ -269,6 +283,16 @@ describe('FolderDialogComponent', () => {
 
             expect(component.handleError).toHaveBeenCalled();
             expect(dialogRef.close).not.toHaveBeenCalled();
+        });
+
+        it('should show success notification with folder name when folder is created', () => {
+            const createdFolder: any = { name: 'new-folder' };
+            createFolderNode$.next(createdFolder);
+
+            component.form.controls['name'].setValue('new-folder');
+            component.submit();
+
+            expect(notificationService.showInfo).toHaveBeenCalledWith('CORE.FOLDER_DIALOG.FOLDER_CREATED_SUCCESS');
         });
 
         describe('Error events', () => {
