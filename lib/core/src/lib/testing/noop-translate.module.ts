@@ -16,7 +16,8 @@
  */
 
 import { EventEmitter, Injectable, NgModule } from '@angular/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
@@ -49,8 +50,9 @@ export class NoopTranslationService {
 }
 
 @NgModule({
-    imports: [HttpClientTestingModule],
     providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: TranslationService, useClass: NoopTranslationService },
         provideTranslateService({
             loader: {
