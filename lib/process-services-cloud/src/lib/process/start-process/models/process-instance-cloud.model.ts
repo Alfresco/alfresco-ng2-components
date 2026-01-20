@@ -16,6 +16,11 @@
  */
 
 import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
+
+export interface RelatedProcessInstance {
+    id: string;
+    processDefinitionName: string;
+}
 export interface ProcessInstanceCloud {
     appName?: string;
     appVersion?: string;
@@ -26,6 +31,10 @@ export interface ProcessInstanceCloud {
     lastModified?: Date;
     name?: string;
     parentId?: string;
+    linkedProcessInstanceId?: string;
+    linkedProcessInstanceType?: string;
+    linkedProcesses?: RelatedProcessInstance[];
+    subprocesses?: RelatedProcessInstance[];
     processDefinitionId?: string;
     processDefinitionKey?: string;
     processDefinitionName?: string;
