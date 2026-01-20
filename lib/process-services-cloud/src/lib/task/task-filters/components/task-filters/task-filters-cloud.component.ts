@@ -19,7 +19,7 @@ import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, Simp
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
-import { AppConfigService, IconComponent, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
 import { debounceTime, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from '../base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../../models/task-details-cloud.model';
@@ -34,7 +34,7 @@ import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-task-filters',
-    imports: [CommonModule, MatProgressSpinnerModule, TranslatePipe, IconComponent, MatListModule],
+    imports: [CommonModule, MatProgressSpinnerModule, TranslatePipe, IconModule, MatListModule],
     templateUrl: './task-filters-cloud.component.html',
     styleUrls: ['./task-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

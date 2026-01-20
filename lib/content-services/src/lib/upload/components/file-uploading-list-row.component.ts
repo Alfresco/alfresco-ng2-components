@@ -19,7 +19,7 @@ import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
-import { FileSizePipe, IconComponent, IconModule } from '@alfresco/adf-core';
+import { FileSizePipe, IconModule } from '@alfresco/adf-core';
 import { MatChipsModule } from '@angular/material/chips';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ToggleIconDirective } from '../directives/toggle-icon.directive';
@@ -32,7 +32,6 @@ import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
         CommonModule,
         IconModule,
         MatListModule,
-        IconComponent,
         MatChipsModule,
         TranslatePipe,
         ToggleIconDirective,

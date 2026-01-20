@@ -22,6 +22,8 @@ import { ICON_ALIAS_MAP_TOKEN } from './icon-alias-map.token';
 
 export const DEFAULT_ICON_VALUE = 'settings';
 
+/** @deprecated Use material icon with aria-hidden="true" attribute instead. */
+
 @Component({
     selector: 'adf-icon',
     imports: [MatIconModule],

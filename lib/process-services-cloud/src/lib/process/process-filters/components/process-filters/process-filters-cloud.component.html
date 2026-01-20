@@ -10,10 +10,7 @@
     >
         <div class="adf-process-filters__entry">
             <div>
-                <adf-icon
-                    data-automation-id="adf-filter-icon"
-                    *ngIf="showIcons"
-                    [value]="filter.icon" />
+                <mat-icon data-automation-id="adf-filter-icon" *ngIf="showIcons" [adf-icon]="filter.icon" aria-hidden="true" />
                 <span
                     data-automation-id="adf-filter-label"
                     class="adf-filter-action-button__label">

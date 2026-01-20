@@ -125,11 +125,13 @@
                     cdkDragHandle
                     [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }"
                 >
-                    <adf-icon
+                    <mat-icon
                         *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
-                        value="adf:drag_indicator"
+                        svgIcon="adf:drag_indicator"
                         class="adf-datatable-cell-header-drag-icon-visible"
-                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key" />
+                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key"
+                        aria-hidden="true"
+                    />
                 </span>
             </div>
             <div

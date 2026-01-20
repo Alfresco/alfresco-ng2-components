@@ -1,8 +1,8 @@
 ---
 Title: Icon Component
 Added: v3.0.0
-Status: Active
-Last reviewed: 2025-12-11
+Status: Deprecated
+Last reviewed: 2026-01-20
 ---
 
 # [Icon Component](../../../lib/core/src/lib/icon/icon.component.ts "Defined in icon.component.ts")
