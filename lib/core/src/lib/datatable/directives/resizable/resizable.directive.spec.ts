@@ -161,7 +161,6 @@ describe('ResizableDirective', () => {
 
     it('should emit keyboardResizing event when resizeByKeyboard', () => {
         spyOn(directive.keyboardResizing, 'emit');
-        directive.keyboardResizing.subscribe();
         const step = 20;
         directive.resizeByKeyboard(step);
 

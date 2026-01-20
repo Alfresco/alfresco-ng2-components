@@ -20,7 +20,7 @@ import { ResizeHandleDirective } from './resize-handle.directive';
 import { ResizableDirective } from './resizable.directive';
 import { Subject } from 'rxjs';
 
-fdescribe('ResizeHandleDirective', () => {
+describe('ResizeHandleDirective', () => {
     let directive: ResizeHandleDirective;
     let renderer: jasmine.SpyObj<Renderer2>;
     let element: ElementRef;
