@@ -16,7 +16,11 @@
                                 [disabled]="isDisabledAction(filterAction)"
                                 (click)="executeFilterActions($event, filterAction)"
                             >
-                                <mat-icon [adf-icon]="filterAction.icon" aria-hidden="true" />
+                                @if (filterAction.icon.includes(':')) {
+                                    <mat-icon [svgIcon]="filterAction.icon" aria-hidden="true" />
+                                } @else {
+                                    <mat-icon [adf-icon]="filterAction.icon" aria-hidden="true" />
+                                }   
                             </button>
                         </ng-container>
                     </div>
