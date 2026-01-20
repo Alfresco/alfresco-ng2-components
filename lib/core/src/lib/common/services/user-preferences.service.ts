@@ -168,7 +168,7 @@ export class UserPreferencesService {
     }
 
     private initUserLanguage() {
-        const storedLocale = this.locale;
+        const storedLocale = this.get(UserPreferenceValues.Locale);
         const configLocale = this.appConfig.get<string>(UserPreferenceValues.Locale);
 
         if (storedLocale) {
@@ -327,7 +327,7 @@ export class UserPreferencesService {
      * @returns locale name
      */
     get locale(): string {
-        return this.get(UserPreferenceValues.Locale);
+        return this.get(UserPreferenceValues.Locale) || this.getDefaultLocale();
     }
 
     set locale(value: string) {

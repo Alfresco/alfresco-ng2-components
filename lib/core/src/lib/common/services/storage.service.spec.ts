@@ -115,6 +115,8 @@ describe('StorageService', () => {
     });
 
     describe('with memory storage', () => {
+        const originalLocalStorage = window.localStorage;
+
         beforeEach(async () => {
             Object.defineProperty(window, 'localStorage', {
                 value: undefined,
@@ -128,6 +130,13 @@ describe('StorageService', () => {
             storage = TestBed.inject(StorageService);
             await appConfig.load();
             storage.clear();
+        });
+
+        afterEach(() => {
+            Object.defineProperty(window, 'localStorage', {
+                value: originalLocalStorage,
+                configurable: true
+            });
         });
 
         it('should be able to get a property from storage', () => {
