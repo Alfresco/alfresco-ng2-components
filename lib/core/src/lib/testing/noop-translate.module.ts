@@ -23,7 +23,7 @@ import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class NoopTranslationService implements TranslationService {
+export class NoopTranslationService {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;

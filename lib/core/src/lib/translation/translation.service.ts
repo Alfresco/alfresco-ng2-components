@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
+import { StorageService } from '../common/services/storage.service';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
@@ -57,7 +58,8 @@ export class TranslationService {
     constructor(
         public translate: TranslateService,
         userPreferencesService: UserPreferencesService,
-        @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]
+        @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[],
+        storageService: StorageService
     ) {
         this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
@@ -71,13 +73,27 @@ export class TranslationService {
             }
         }
 
+        // Try to read locale from storage synchronously to apply it before components render
+        const storedLocale = this.getStoredLocaleSync(storageService);
+
+        if (storedLocale) {
+            // Apply stored locale immediately during construction
+            this.userLang = storedLocale;
+            this.loadTranslation(storedLocale, this.defaultLang);
+        }
+
         // Use effect to reactively update translations when locale signal changes
         // Note: This is a singleton service, so no cleanup needed
         effect(() => {
             const locale = userPreferencesService.localeSignal();
-            if (locale) {
+
+            // Always switch language if it's different from current
+            // This handles both initial load and subsequent user changes
+            if (locale && locale !== this.userLang) {
                 this.userLang = locale;
-                this.use(this.userLang);
+                // Use loadTranslation which properly triggers onTranslationChanged
+                // This ensures components are notified of the language change
+                this.loadTranslation(locale, this.defaultLang);
             }
         });
     }
@@ -128,7 +144,7 @@ export class TranslationService {
     onTranslationChanged(lang: string): void {
         this.translate.onTranslationChange.next({
             lang,
-            translations: this.customLoader.getFullTranslationJSON(lang)
+            translations: this.customLoader.getFullTranslationJSON?.(lang) ?? {}
         });
     }
 
@@ -179,5 +195,24 @@ export class TranslationService {
      */
     instant(key: string | Array<string>, interpolateParams?: any): string | any {
         return key ? this.translate.instant(key, interpolateParams) : '';
+    }
+
+    /**
+     * Synchronously reads the stored locale from localStorage during service construction.
+     *
+     * @param storageService The storage service instance
+     * @returns The stored locale or null if not found
+     */
+    protected getStoredLocaleSync(storageService: StorageService): string | null {
+        try {
+            // Read the storage prefix (USER_PROFILE or default to GUEST)
+            const prefix = storageService.getItem('USER_PROFILE') || 'GUEST';
+            const localeKey = `${prefix}__locale`;
+            return storageService.getItem(localeKey);
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn('[TranslationService] Failed to read stored locale:', error);
+            return null;
+        }
     }
 }
