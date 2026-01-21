@@ -4,6 +4,11 @@ on:
     - cron: "0 7-17 * * 1-5"
   workflow_dispatch:
   workflow_call:
+    secrets:
+      BOT_GITHUB_TOKEN:
+        required: true
+      CROWDIN_TRANSLATIONS_TOKEN:
+        required: true
 jobs:
   pull-from-crowdin:
     runs-on: ubuntu-latest
