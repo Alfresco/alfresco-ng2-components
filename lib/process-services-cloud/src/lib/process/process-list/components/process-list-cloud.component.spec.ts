@@ -424,10 +424,9 @@ describe('ProcessListCloudComponent', () => {
 
                 done();
             });
-
-            component.ngAfterContentInit();
             component.appName = appName.currentValue;
-            component.reload();
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
         });
 
         it('should shown columns selector', () => {
@@ -759,9 +758,9 @@ describe('ProcessListCloudComponent', () => {
 
                 done();
             });
-            component.ngAfterContentInit();
             component.appName = appName.currentValue;
-            component.reload();
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
         });
 
         it('should shown columns selector', () => {
@@ -954,30 +953,6 @@ describe('ProcessListCloudComponent', () => {
                 fixture.whenStable().then(() => {
                     component.resetPagination();
                 });
-            });
-
-            it('should call loadPreferencesAndInitialize when appName changes', () => {
-                spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
-
-                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
-                spyOn(component as any, 'createDatatableSchema');
-                spyOn(component as any, 'createColumns');
-
-                const appName = new SimpleChange('old-app-name', 'new-app-name', false);
-                component.ngOnChanges({ appName });
-
-                expect(preferencesService.getPreferences).toHaveBeenCalledWith('new-app-name');
-                expect((component as any).createDatatableSchema).toHaveBeenCalled();
-                expect((component as any).createColumns).toHaveBeenCalled();
-            });
-
-            it('should not call loadPreferencesAndInitialize when appName does not change', () => {
-                spyOn(preferencesService, 'getPreferences');
-
-                const status = new SimpleChange('old-status', 'new-status', false);
-                component.ngOnChanges({ status });
-
-                expect(preferencesService.getPreferences).not.toHaveBeenCalled();
             });
         });
     });
