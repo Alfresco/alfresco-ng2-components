@@ -42,6 +42,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
     @Output() resizeEnd = new EventEmitter<ResizeEvent>();
 
     /**
+     * Emitted when keyboard resize is triggered.
+     */
+    @Output() keyboardResizing = new EventEmitter<ResizeEvent>();
+
+    /**
      * This is to cover sum of the left and right padding between resize handler and its parent.
      */
     @Input() coverPadding = 0;
@@ -172,6 +177,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.unsubscribeMouseDown?.();
         this.unsubscribeMouseMove?.();
         this.unsubscribeMouseUp?.();
+    }
+
+    resizeByKeyboard(delta: number): void {
+        const currentRect = this.getElementRect(this.element);
+        const rectangle = this.getNewBoundingRectangle(currentRect, delta);
+        this.zone.run(() => {
+            this.keyboardResizing.emit({ rectangle });
+        });
     }
 
     private getNewBoundingRectangle({ top, bottom, left, right }: BoundingRectangle, clientX: number): BoundingRectangle {

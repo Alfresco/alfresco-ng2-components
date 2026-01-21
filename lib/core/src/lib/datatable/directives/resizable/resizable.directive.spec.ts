@@ -158,4 +158,12 @@ describe('ResizableDirective', () => {
 
         expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 130, width: 130 } });
     });
+
+    it('should emit keyboardResizing event when resizeByKeyboard', () => {
+        spyOn(directive.keyboardResizing, 'emit');
+        const step = 20;
+        directive.resizeByKeyboard(step);
+
+        expect(directive.keyboardResizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: step, width: step } });
+    });
 });

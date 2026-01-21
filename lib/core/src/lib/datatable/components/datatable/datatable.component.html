@@ -76,6 +76,7 @@
                 #resizableElement="adf-resizable"
                 [coverPadding]="10"
                 (resizing)="onResizing($event, columnIndex)"
+                (keyboardResizing)="onResizing($event, columnIndex)"
                 (resizeStart)="resizingColumnIndex = columnIndex"
                 (resizeEnd)="onResizingEnd()"
                 [attr.data-automation-id]="'auto_header_content_id_' + col.key"
@@ -134,18 +135,22 @@
                     />
                 </span>
             </div>
-            <div
-                *ngIf="isResizingEnabled && col.resizable && !lastColumn"
-                [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
-                adf-resize-handle
-                tabindex="0"
-                role="button"
-                (click)="$event.stopPropagation()"
-                (keyup.enter)="$event.stopPropagation()"
-                class="adf-datatable__resize-handle"
-                [resizableContainer]="resizableElement">
-                <div class="adf-datatable__resize-handle--divider"></div>
-            </div>
+                <div
+                    *ngIf="isResizingEnabled && col.resizable && !lastColumn"
+                    [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
+                    adf-resize-handle
+                    tabindex="0"
+                    role="slider"
+                    [attr.aria-valuenow]="col.width ?? 100"
+                    [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.RESIZE_COLUMN' | translate: { column: col.title | translate }"
+                    [attr.aria-valuemin]="100"
+                    [attr.aria-valuemax]="500"
+                    (click)="$event.stopPropagation()"
+                    (keydown)="$event.stopPropagation()"
+                    class="adf-datatable__resize-handle"
+                    [resizableContainer]="resizableElement">
+                    <div class="adf-datatable__resize-handle--divider"></div>
+                </div>
             <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
         </div>
             </ng-container>
