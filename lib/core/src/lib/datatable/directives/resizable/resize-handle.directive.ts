@@ -39,15 +39,17 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
         if (event.shiftKey) {
             delta += shiftDelta;
         }
+        const rightStepBaseValue = 20;
         switch (event.key) {
             case 'ArrowRight':
             case 'ArrowUp':
-                const rightStepBaseValue = 20;
                 delta += rightStepBaseValue;
                 break;
             case 'ArrowLeft':
             case 'ArrowDown':
                 delta = -delta;
+                break;
+            default:
                 break;
         }
 
