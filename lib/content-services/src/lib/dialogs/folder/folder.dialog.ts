@@ -94,7 +94,7 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private readonly destroyRef = inject(DestroyRef);
-    private notificationService = inject(NotificationService)
+    private readonly notificationService = inject(NotificationService)
 
     constructor(
         private formBuilder: UntypedFormBuilder,
