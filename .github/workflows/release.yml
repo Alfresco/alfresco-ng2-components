@@ -184,6 +184,14 @@ jobs:
         env:
           CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
 
+  pull-translation-keys-from-crowdin:
+    needs: push-translation-keys-to-crowdin
+    name: Run Crowdin pull pipeline for up-to-date sync
+    uses: ./.github/workflows/pull-from-crowdin.yml
+    secrets:
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+      CROWDIN_TRANSLATIONS_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
+
   finalize:
     if: always()
     runs-on: ubuntu-latest
