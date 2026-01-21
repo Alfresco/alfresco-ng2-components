@@ -424,9 +424,10 @@ describe('ProcessListCloudComponent', () => {
 
                 done();
             });
+
+            component.ngAfterContentInit();
             component.appName = appName.currentValue;
-            component.ngOnChanges({ appName });
-            fixture.detectChanges();
+            component.reload();
         });
 
         it('should shown columns selector', () => {
@@ -758,9 +759,9 @@ describe('ProcessListCloudComponent', () => {
 
                 done();
             });
+            component.ngAfterContentInit();
             component.appName = appName.currentValue;
-            component.ngOnChanges({ appName });
-            fixture.detectChanges();
+            component.reload();
         });
 
         it('should shown columns selector', () => {
