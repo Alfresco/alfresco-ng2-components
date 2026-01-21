@@ -68,7 +68,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
-import { IconComponent } from '../../../icon';
 import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadDirective } from '../../../directives';
@@ -104,7 +103,6 @@ export enum ShowHeaderMode {
         DropZoneDirective,
         ResizableDirective,
         CdkDragHandle,
-        IconComponent,
         ResizeHandleDirective,
         MatButtonModule,
         MatMenuModule,

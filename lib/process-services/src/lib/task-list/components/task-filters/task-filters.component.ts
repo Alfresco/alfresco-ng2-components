@@ -26,13 +26,13 @@ import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { IconComponent } from '@alfresco/adf-core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { forkJoin, Observable } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-task-filters',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, IconComponent],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

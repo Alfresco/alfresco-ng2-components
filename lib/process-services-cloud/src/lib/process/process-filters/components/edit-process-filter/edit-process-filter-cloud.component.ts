@@ -29,7 +29,7 @@ import {
     ProcessFilterProperties,
     ProcessSortFilterProperty
 } from '../../models/process-filter-cloud.model';
-import { DateFnsUtils, IconComponent, IconModule, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
+import { DateFnsUtils, IconModule, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from '../process-filter-dialog/process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../../services/process-cloud.service';
@@ -80,7 +80,6 @@ interface ProcessFilterFormProps {
 @Component({
     selector: 'adf-cloud-edit-process-filter',
     imports: [
-        IconComponent,
         MatProgressSpinnerModule,
         TranslatePipe,
         MatButtonModule,

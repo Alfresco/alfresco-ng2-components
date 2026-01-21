@@ -25,6 +25,9 @@ import { fakeGlobalServiceFilters } from '../../mock/task-filters-cloud.mock';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { ServiceTaskFiltersCloudComponent } from './service-task-filters-cloud.component';
 import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('ServiceTaskFiltersCloudComponent', () => {
     let serviceTaskFilterCloudService: ServiceTaskFilterCloudService;
@@ -32,6 +35,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     let component: ServiceTaskFiltersCloudComponent;
     let fixture: ComponentFixture<ServiceTaskFiltersCloudComponent>;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,6 +43,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
 
         serviceTaskFilterCloudService = TestBed.inject(ServiceTaskFilterCloudService);
@@ -64,11 +69,11 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
         expect(component.filters.length).toBe(3);
 
-        const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-        expect(filters.length).toBe(3);
-        expect(filters[0].innerText).toContain('adjust');
-        expect(filters[1].innerText).toContain('done');
-        expect(filters[2].innerText).toContain('inbox');
+        const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+        expect(filterIcons.length).toBe(3);
+        expect(await filterIcons[0].getName()).toContain('adjust');
+        expect(await filterIcons[1].getName()).toContain('done');
+        expect(await filterIcons[2].getName()).toContain('inbox');
     });
 
     it('should not attach icons for each filter if hasIcon is false', async () => {
@@ -79,8 +84,8 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(0);
+        const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+        expect(filterIcons.length).toBe(0);
     });
 
     it('should display the filters', async () => {

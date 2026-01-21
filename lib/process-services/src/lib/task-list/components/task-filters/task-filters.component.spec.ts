@@ -23,9 +23,11 @@ import { of, throwError } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
-import { By } from '@angular/platform-browser';
 import { NavigationStart, provideRouter, Router } from '@angular/router';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 const fakeTaskFilters = [
     new UserTaskFilterRepresentation({
@@ -55,6 +57,7 @@ describe('TaskFiltersComponent', () => {
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
     let router: Router;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -65,6 +68,7 @@ describe('TaskFiltersComponent', () => {
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskFiltersComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
 
         taskListService = TestBed.inject(TaskListService);
@@ -341,11 +345,11 @@ describe('TaskFiltersComponent', () => {
         await fixture.whenStable();
 
         expect(component.filters.length).toBe(3);
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(3);
-        expect(filters[0].nativeElement.innerText).toContain('format_align_left');
-        expect(filters[1].nativeElement.innerText).toContain('check_circle');
-        expect(filters[2].nativeElement.innerText).toContain('inbox');
+        const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+        expect(filterIcons.length).toBe(3);
+        expect(await filterIcons[0].getName()).toContain('format_align_left');
+        expect(await filterIcons[1].getName()).toContain('check_circle');
+        expect(await filterIcons[2].getName()).toContain('inbox');
     });
 
     it('should not attach icons for each filter if showIcon is false', async () => {
@@ -356,8 +360,8 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(0);
+        const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+        expect(filterIcons.length).toBe(0);
     });
 
     it('should reset selection when filterParam is a filter that does not exist', async () => {

@@ -28,8 +28,9 @@ import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { provideRouter } from '@angular/router';
-import { IconComponent, UnitTestingUtils } from '@alfresco/adf-core';
+import { UnitTestingUtils } from '@alfresco/adf-core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 const mockCategory: SearchCategory = {
     id: 'queryName',
@@ -149,18 +150,20 @@ describe('SearchFilterContainerComponent', () => {
         expect(eventRaised).toBe(true);
     });
 
-    it('should display correct icon based on active state of the filter', () => {
+    it('should display correct icon based on active state of the filter', async () => {
         component.isActive = () => false;
         fixture.detectChanges();
 
-        const inactiveIcon: IconComponent = unitTestingUtils.getByCSS('.adf-filter-icon').componentInstance;
-        expect(inactiveIcon.value).toBe('adf:custom_filter');
+        const icon = await loader.getHarnessOrNull(MatIconHarness.with({ selector: '.adf-filter-icon' }));
+
+        expect(await icon.getNamespace()).toBe('adf');
+        expect(await icon.getName()).toBe('custom_filter');
 
         component.isActive = () => true;
         fixture.detectChanges();
 
-        const activeIcon: IconComponent = unitTestingUtils.getByCSS('.adf-filter-icon').componentInstance;
-        expect(activeIcon.value).toBe('adf:custom_filter_filled');
+        expect(await icon.getNamespace()).toBe('adf');
+        expect(await icon.getName()).toBe('custom_filter_filled');
     });
 
     it('should register custom icons when component is initialized', () => {

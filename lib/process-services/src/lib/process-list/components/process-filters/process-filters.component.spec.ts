@@ -21,10 +21,12 @@ import { AppsProcessService } from '../../../services/apps-process.service';
 import { ProcessFilterService } from '../../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { NavigationStart, Router } from '@angular/router';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
     {
@@ -55,6 +57,7 @@ describe('ProcessFiltersComponent', () => {
     let router: Router;
     let getProcessFiltersSpy: jasmine.Spy;
     let getDeployedApplicationsByNameSpy: jasmine.Spy;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -73,6 +76,7 @@ describe('ProcessFiltersComponent', () => {
         router = TestBed.inject(Router);
 
         fixture = TestBed.createComponent(ProcessFiltersComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         filterList = fixture.componentInstance;
     });
 
@@ -278,11 +282,11 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(filterList.filters.length).toBe(3);
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(3);
-        expect(filters[0].nativeElement.innerText).toContain('dashboard');
-        expect(filters[1].nativeElement.innerText).toContain('shuffle');
-        expect(filters[2].nativeElement.innerText).toContain('check_circle');
+        const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+        expect(filterIcons.length).toBe(3);
+        expect(await filterIcons[0].getName()).toContain('dashboard');
+        expect(await filterIcons[1].getName()).toContain('shuffle');
+        expect(await filterIcons[2].getName()).toContain('check_circle');
     });
 
     it('should not attach icons for each filter if hasIcon is false', async () => {
@@ -291,8 +295,8 @@ describe('ProcessFiltersComponent', () => {
         filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
         await fixture.whenStable();
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(0);
+        const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+        expect(filterIcons.length).toBe(0);
     });
 
     it('should set isProcessActive to true when activeRoute includes "processes"', () => {

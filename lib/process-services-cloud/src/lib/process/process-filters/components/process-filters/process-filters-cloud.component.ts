@@ -19,7 +19,7 @@ import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, 
 import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
-import { AppConfigService, IconComponent, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, IconModule, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../../task/task-filters/models/filter-cloud.model';
 import { debounceTime, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process-list/services/process-list-cloud.service';
@@ -32,7 +32,7 @@ import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'adf-cloud-process-filters',
-    imports: [TranslatePipe, IconComponent, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
+    imports: [TranslatePipe, IconModule, NgIf, MatProgressSpinnerModule, NgForOf, MatListModule, AsyncPipe],
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['./process-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

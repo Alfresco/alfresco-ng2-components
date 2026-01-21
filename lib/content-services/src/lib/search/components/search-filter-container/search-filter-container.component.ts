@@ -17,7 +17,7 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { DataColumn, IconComponent, TranslationService } from '@alfresco/adf-core';
+import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { SearchCategory } from '../../models/search-category.interface';
@@ -28,11 +28,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-filter-container',
-    imports: [CommonModule, MatButtonModule, MatMenuModule, IconComponent, SearchWidgetContainerComponent, TranslatePipe, MatDialogModule],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        SearchWidgetContainerComponent,
+        TranslatePipe,
+        MatDialogModule
+    ],
     templateUrl: './search-filter-container.component.html',
     styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None
