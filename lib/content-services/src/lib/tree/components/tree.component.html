@@ -47,17 +47,21 @@
                 matTreeNodePadding
                 [adf-context-menu]="contextMenuOptions"
                 [adf-context-menu-enabled]="!!contextMenuOptions"
-                (contextmenu)="contextMenuSource = node">
+                (contextmenu)="contextMenuSource = node"
+            >
                 <div class="adf-tree-expand-collapse-container">
-                    <button *ngIf="node.hasChildren"
-                            class="adf-tree-expand-collapse-button"
-                            (click)="expandCollapseNode(node)"
-                            mat-icon-button>
+                    <button 
+                        *ngIf="node.hasChildren"
+                        class="adf-tree-expand-collapse-button"
+                        (click)="expandCollapseNode(node)"
+                        mat-icon-button
+                    >
                         <mat-progress-spinner
                             color="primary"
                             mode="indeterminate"
                             [diameter]="24"
-                            *ngIf="node.isLoading; else expandCollapseIcon" />
+                            *ngIf="node.isLoading; else expandCollapseIcon"
+                        />
                         <ng-template #expandCollapseIcon>
                             <mat-icon [adf-icon]="expandCollapseIconValue(node)" aria-hidden="true" />
                         </ng-template>
