@@ -139,8 +139,8 @@
                     adf-resize-handle
                     tabindex="0"
                     role="slider"
+                    aria-valuenow="{{col.width ?? 100}}"
                     [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.RESIZE_COLUMN' | translate: { column: col.title | translate }"
-                    [attr.aria-valuenow]="col.width || 100"
                     [attr.aria-valuemin]="100"
                     [attr.aria-valuemax]="500"
                     (click)="$event.stopPropagation()"

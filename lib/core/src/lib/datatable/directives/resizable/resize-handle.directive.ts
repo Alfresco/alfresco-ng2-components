@@ -35,17 +35,19 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     @HostListener('keydown', ['$event'])
     onKeydown(event: KeyboardEvent): void {
         let delta: number | null = null;
-
+        const shiftDelta = 40;
+        if (event.shiftKey) {
+            delta += shiftDelta;
+        }
         switch (event.key) {
             case 'ArrowRight':
             case 'ArrowUp':
-                const rightStep = event.shiftKey ? 60 : 20;
-                delta = rightStep;
+                const rightStepBaseValue = 20;
+                delta += rightStepBaseValue;
                 break;
             case 'ArrowLeft':
             case 'ArrowDown':
-                const leftStep = event.shiftKey ? 40 : 0;
-                delta = -leftStep;
+                delta = -delta;
                 break;
         }
 
