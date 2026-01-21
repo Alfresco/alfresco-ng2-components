@@ -397,12 +397,8 @@ export class ProcessListCloudComponent
     }
 
     ngAfterContentInit() {
-        this.loadPreferencesAndInitialize(this.appName);
-    }
-
-    private loadPreferencesAndInitialize(appName: string): void {
         this.cloudPreferenceService
-            .getPreferences(appName)
+            .getPreferences(this.appName)
             .pipe(
                 take(1),
                 map((preferences) => {
@@ -445,17 +441,11 @@ export class ProcessListCloudComponent
                 }
 
                 this.createDatatableSchema();
-                this.createColumns();
             });
     }
-
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
             this.formatSorting(changes['sorting'].currentValue);
-        }
-
-        if (changes['appName']) {
-            this.loadPreferencesAndInitialize(changes['appName'].currentValue);
         }
 
         if (this.isAnyPropertyChanged(changes)) {
