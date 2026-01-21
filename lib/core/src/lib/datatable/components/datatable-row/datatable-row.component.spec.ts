@@ -82,14 +82,6 @@ describe('DataTableRowComponent', () => {
         expect(fixture.debugElement.nativeElement.getAttribute('aria-selected')).toBe('false');
     });
 
-    it('should set aria label', () => {
-        spyOn(row, 'getValue').and.returnValue('some-name');
-        component.row = row;
-        fixture.detectChanges();
-
-        expect(fixture.debugElement.nativeElement.getAttribute('aria-label')).toBe('some-name');
-    });
-
     it('should set tabindex as non focusable by default (disabled propery is not passed)', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.getAttribute('tabindex')).toBeNull();
@@ -119,5 +111,73 @@ describe('DataTableRowComponent', () => {
 
         fixture.debugElement.nativeElement.dispatchEvent(event);
         expect(component.select.emit).toHaveBeenCalledWith(event);
+    });
+
+    describe('ariaLabel getter', () => {
+        it('should return null when row is null', () => {
+            component.row = null;
+            expect(component.ariaLabel).toBeNull();
+        });
+
+        it('should return name when row has name value', () => {
+            spyOn(row, 'getValue').and.returnValue('document-name');
+            component.row = row;
+
+            expect(component.ariaLabel).toBe('document-name');
+        });
+
+        it('should return title when row has no name but has title', () => {
+            spyOn(row, 'getValue').and.callFake((key: string) => {
+                if (key === 'name') {
+                    return null;
+                }
+                if (key === 'title') {
+                    return 'document-title';
+                }
+                return null;
+            });
+            component.row = row;
+
+            expect(component.ariaLabel).toBe('document-title');
+        });
+
+        it('should return empty string when row has neither name nor title', () => {
+            spyOn(row, 'getValue').and.returnValue(null);
+            component.row = row;
+
+            expect(component.ariaLabel).toBe('');
+        });
+
+        it('should append "selected" when row is selected and has name', () => {
+            row.isSelected = true;
+            spyOn(row, 'getValue').and.returnValue('document-name');
+            component.row = row;
+
+            expect(component.ariaLabel).toBe('document-name selected');
+        });
+
+        it('should append "selected" when row is selected and has title', () => {
+            row.isSelected = true;
+            spyOn(row, 'getValue').and.callFake((key: string) => {
+                if (key === 'name') {
+                    return null;
+                }
+                if (key === 'title') {
+                    return 'document-title';
+                }
+                return null;
+            });
+            component.row = row;
+
+            expect(component.ariaLabel).toBe('document-title selected');
+        });
+
+        it('should return empty string when row is selected but has no name or title', () => {
+            row.isSelected = true;
+            spyOn(row, 'getValue').and.returnValue(null);
+            component.row = row;
+
+            expect(component.ariaLabel).toBe('');
+        });
     });
 });
