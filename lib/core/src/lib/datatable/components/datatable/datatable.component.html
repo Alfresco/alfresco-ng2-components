@@ -144,6 +144,7 @@
                     [attr.aria-valuemin]="100"
                     [attr.aria-valuemax]="500"
                     (click)="$event.stopPropagation()"
+                    (keydown)="$event.stopPropagation()"
                     class="adf-datatable__resize-handle"
                     [resizableContainer]="resizableElement">
                     <div class="adf-datatable__resize-handle--divider"></div>
