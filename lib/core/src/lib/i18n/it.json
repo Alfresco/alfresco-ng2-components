@@ -406,7 +406,9 @@
       "ICON_DISABLED": "Disabilitato",
       "ROW_OPTION_BUTTON": "Azioni",
       "DRAG": "Pulsante di trascinamento",
-      "EMPTY_HEADER": "Intestazione vuota"
+      "EMPTY_HEADER": "Intestazione vuota",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",

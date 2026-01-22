@@ -406,7 +406,9 @@
       "ICON_DISABLED": "Wyłączone",
       "ROW_OPTION_BUTTON": "Czynności",
       "DRAG": "Przeciągnij przycisk",
-      "EMPTY_HEADER": "Pusty nagłówek"
+      "EMPTY_HEADER": "Pusty nagłówek",
+      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
