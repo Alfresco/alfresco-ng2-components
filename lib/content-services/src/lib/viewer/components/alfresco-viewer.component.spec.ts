@@ -69,7 +69,7 @@ class ViewerWithCustomToolbarComponent {}
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
             <button mat-icon-button id="custom-button">
-                <mat-icon>alarm</mat-icon>
+                <mat-icon [adf-icon]="'alarm'" />
             </button>
         </adf-viewer-toolbar-actions>
     </adf-alfresco-viewer>`
@@ -104,15 +104,15 @@ class DummyDialogComponent {}
         <adf-alfresco-viewer>
             <adf-viewer-open-with>
                 <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
+                    <mat-icon [adf-icon]="'dialpad'" />
                     <span>Option 1</span>
                 </button>
                 <button mat-menu-item [disabled]="true">
-                    <mat-icon>voicemail</mat-icon>
+                    <mat-icon [adf-icon]="'voicemail'" />
                     <span>Option 2</span>
                 </button>
                 <button mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
+                    <mat-icon [adf-icon]="'notifications_off'" />
                     <span>Option 3</span>
                 </button>
             </adf-viewer-open-with>
@@ -128,15 +128,15 @@ class ViewerWithCustomOpenWithComponent {}
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>
             <button mat-menu-item>
-                <mat-icon>dialpad</mat-icon>
+                <mat-icon [adf-icon]="'dialpad'" />
                 <span>Action One</span>
             </button>
             <button mat-menu-item [disabled]="true">
-                <mat-icon>voicemail</mat-icon>
+                <mat-icon [adf-icon]="'voicemail'" />
                 <span>Action Two</span>
             </button>
             <button mat-menu-item>
-                <mat-icon>notifications_off</mat-icon>
+                <mat-icon [adf-icon]="'notifications_off'" />
                 <span>Action Three</span>
             </button>
         </adf-viewer-more-actions>
