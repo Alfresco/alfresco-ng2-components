@@ -21,6 +21,7 @@ jobs:
       - name: Pull translations from Crowdin
         uses: crowdin/github-action@60debf382ee245b21794321190ad0501db89d8c1 # v2.13.0
         with:
+          skip_ref_checkout: true
           upload_sources: false
           download_translations: true
           create_pull_request: true
