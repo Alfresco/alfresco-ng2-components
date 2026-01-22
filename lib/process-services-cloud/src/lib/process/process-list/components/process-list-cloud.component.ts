@@ -290,6 +290,12 @@ export class ProcessListCloudComponent
     @Input()
     processVariables: ProcessVariableFilterModel[];
 
+    /**
+     * Enables reloading of preferences and process list when appName changes.
+     */
+    @Input()
+    enableAppChange: boolean = false;
+
     /** Include subprocesses in the process list. */
     @Input()
     includeSubprocesses: boolean | null = null;
@@ -398,9 +404,10 @@ export class ProcessListCloudComponent
 
     ngAfterContentInit() {
         this.loadPreferencesAndInitialize(this.appName);
+        this.loadPreferencesAndInitialize(this.appName, true);
     }
 
-    private loadPreferencesAndInitialize(appName: string): void {
+    private loadPreferencesAndInitialize(appName: string, forceCreateColumns: boolean = false): void {
         this.cloudPreferenceService
             .getPreferences(appName)
             .pipe(
@@ -445,7 +452,6 @@ export class ProcessListCloudComponent
                 }
 
                 this.createDatatableSchema();
-                this.createColumns();
             });
     }
 
@@ -454,8 +460,9 @@ export class ProcessListCloudComponent
             this.formatSorting(changes['sorting'].currentValue);
         }
 
-        if (changes['appName']) {
-            this.loadPreferencesAndInitialize(changes['appName'].currentValue);
+        if (changes['appName'] && this.enableAppChange) {
+            //     this.loadPreferencesAndInitialize(changes['appName'].currentValue);
+            this.loadPreferencesAndInitialize(changes['appName'].currentValue, this.enableAppChange);
         }
 
         if (this.isAnyPropertyChanged(changes)) {
