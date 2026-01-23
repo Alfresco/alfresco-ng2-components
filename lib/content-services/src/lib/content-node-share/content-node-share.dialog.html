@@ -11,7 +11,7 @@
             <mat-icon mat-dialog-close class="adf-share-link__close adf-share-link__icon" adf-icon="close" />
         </div>
         <mat-dialog-content class="adf-share-link--dialog-content">
-            <hr class="adf-share-link__separation-line" />
+            <hr class="adf-share-link__separation-line" aria-hidden="true" />
             <form [formGroup]="form" class="adf-share-link__form">
                 <div class="adf-share-link--row adf-share-link--row-sharable">
                     <mat-icon class="adf-share-link__icon" adf-icon="timer" />
@@ -106,7 +106,7 @@
                     </p>
                 </div>
             </form>
-            <hr class="adf-share-link__separation-line" />
+            <hr class="adf-share-link__separation-line" aria-hidden="true" />
         </mat-dialog-content>
         <div class="adf-share-link__actions" mat-dialog-actions>
             <button data-automation-id="adf-share-dialog-close" mat-button color="primary" mat-dialog-close>
