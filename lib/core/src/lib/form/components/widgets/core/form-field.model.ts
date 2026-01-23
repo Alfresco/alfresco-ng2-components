@@ -681,7 +681,15 @@ export class FormFieldModel extends FormWidgetModel {
                 let dateValue;
 
                 try {
-                    dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
+                    let dateWithProperFormat: string | Date;
+
+                    if (typeof this.value === 'string') {
+                        dateWithProperFormat = DateFnsUtils.formatDate(this.value, this.dateDisplayFormat);
+                    } else {
+                        dateWithProperFormat = this.value;
+                    }
+
+                    dateValue = DateFnsUtils.parseDate(dateWithProperFormat, this.dateDisplayFormat);
                 } catch {
                     dateValue = new Date('error');
                 }
@@ -758,6 +766,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private updateRepeatableSectionValue(value: string) {
+        //
         if (this.type === FormFieldTypes.SECTION) {
             return;
         }
