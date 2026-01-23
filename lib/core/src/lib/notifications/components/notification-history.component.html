@@ -23,6 +23,7 @@
                 data-automation-id="adf-notification-history-mark-as-read"
                 class="adf-notification-history-mark-as-read"
                 title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
+                [attr.aria-label]="'NOTIFICATIONS.MARK_AS_READ' | translate"
                 (click)="markAsRead()"
                 #markAsReadButton
                 (keydown)="manageFocus($event)">
