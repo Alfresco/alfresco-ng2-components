@@ -20,6 +20,7 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthGuardService } from './auth-guard.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
+import { BffAuthGuard } from '../services/bff/bff-auth.guard';
 
 const ticketChangeRedirect = (event: StorageEvent, authGuardBaseService: AuthGuardService, url: string): void => {
     if (event.newValue) {
@@ -45,7 +46,7 @@ const ticketChangeHandler = (event: StorageEvent, authGuardBaseService: AuthGuar
     }
 };
 
-export const AuthGuard: CanActivateFn = async (_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
+export const LegacyAuthGuard: CanActivateFn = async (_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
     const router = inject(Router);
     const jwtHelperService = inject(JwtHelperService);
     const authGuardBaseService = inject(AuthGuardService);
@@ -59,3 +60,4 @@ export const AuthGuard: CanActivateFn = async (_: ActivatedRouteSnapshot, state:
 
     return authGuardBaseService.redirectToUrl(state.url);
 };
+export const AuthGuard: CanActivateFn = BffAuthGuard;

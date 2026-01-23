@@ -31,6 +31,9 @@ export * from './services/jwt-helper.service';
 export * from './services/oauth2.service';
 export * from './services/user-access.service';
 
+export * from './services/bff/bff-auth.service';
+export * from './services/bff/bff-auth.guard';
+
 export * from './basic-auth/basic-alfresco-auth.service';
 export * from './basic-auth/process-auth';
 export * from './basic-auth/content-auth';

@@ -16,18 +16,22 @@
  */
 
 import { inject, ModuleWithProviders, NgModule, InjectionToken, provideAppInitializer, EnvironmentProviders, Provider } from '@angular/core';
-import { AUTH_CONFIG, OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
+import { AUTH_CONFIG, OAuthService, OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { StorageService } from '../../common/services/storage.service';
 import { provideRouter } from '@angular/router';
 import { AUTH_ROUTES } from './auth.routes';
 import { Authentication, AuthenticationInterceptor } from '@alfresco/adf-core/auth';
+import { BffAuthService } from '../services/bff/bff-auth.service';
+import { UserAccessService } from '../services/user-access.service';
+import { BffUserAccessService } from '../services/bff/bff-user-access.service';
+import { bffAuthErrorInterceptor } from '../services/bff/bff-auth-error.interceptor';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
@@ -70,6 +74,31 @@ export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): 
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
         { provide: AUTH_MODULE_CONFIG, useValue: config },
         { provide: Authentication, useClass: AuthenticationService }
+    ];
+}
+
+/**
+ * Provides the necessary Angular providers for BFF (Backend For Frontend) authentication.
+ *
+ * This function returns an array of providers required to set up authentication using the BffAuthService.
+ * It includes HTTP client, router configuration with BFF-specific routes, and maps authentication services
+ * to the BffAuthService implementation.
+ *
+ * @returns An array of Angular providers for BFF authentication.
+ */
+export function provideBffAuth(): (Provider | EnvironmentProviders)[] {
+    return [
+        provideHttpClient(
+            withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' }),
+            withInterceptors([bffAuthErrorInterceptor])
+        ),
+        BffAuthService,
+        { provide: UserAccessService, useClass: BffUserAccessService },
+        { provide: OAuthStorage, useFactory: () => ({ getItem: () => null, setItem: () => null, removeItem: () => null }) },
+        { provide: OAuthService, useFactory: () => ({}) },
+        { provide: AUTH_MODULE_CONFIG, useFactory: () => ({ useHash: false, preventClearHashAfterLogin: true }) },
+        { provide: AuthService, useExisting: BffAuthService },
+        { provide: AuthenticationService, useExisting: BffAuthService }
     ];
 }
 
