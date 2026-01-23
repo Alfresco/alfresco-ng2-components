@@ -36,6 +36,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     private _uploadApi: UploadApi;
     private fieldValidators: FormFieldValidator[];
     private formService = inject(FormService);
+
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;

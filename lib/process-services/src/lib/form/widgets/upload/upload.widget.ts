@@ -98,7 +98,15 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         return this.processContentService.createTemporaryRawRelatedContent(file).pipe(
             map((response: any) => {
                 response.contentBlob = file;
-                return response;
+                return {
+                    _type: 'upload',
+                    id: response.id,
+                    fileName: response.name || file.name,
+                    mimeType: response.mimeType || file.type,
+                    fileSize: file.size,
+                    parentId: '',
+                    contentBlob: file
+                };
             })
         );
     }
