@@ -34,7 +34,6 @@ export * from './search-panel';
 export * from './search-properties';
 export * from './search-radio';
 export * from './search-slider';
-export * from './search-sorting-picker';
 export * from './search-text';
 export * from './search-widget-container';
 

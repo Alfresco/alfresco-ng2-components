@@ -41,7 +41,6 @@ import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.mo
 import { HttpClient } from '@angular/common/http';
 import { AppConfigPipe } from './app-config';
 import { IconComponent } from './icon';
-import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
@@ -82,7 +81,6 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...DATATABLE_DIRECTIVES,
         ...TEMPLATE_DIRECTIVES,
         IconComponent,
-        SortingPickerComponent,
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         UnsavedChangesDialogComponent,
@@ -111,7 +109,6 @@ import { provideAppConfig } from './app-config/provide-app-config';
         ...INFO_DRAWER_DIRECTIVES,
         ...DATATABLE_DIRECTIVES,
         ...TEMPLATE_DIRECTIVES,
-        SortingPickerComponent,
         IconComponent,
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
