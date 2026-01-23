@@ -143,19 +143,17 @@ describe('FolderDialogComponent', () => {
         });
 
         describe('when submit is successfully', () => {
-            const folder: any = { data: 'folder-data' };
-
-            beforeAll(() => {
-                updateNode$.next(folder);
-            });
+            const folder: any = { data: 'folder-data', name: 'folder-data' };
 
             it('should call dialog to close with form data', () => {
+                updateNode$.next(folder);
                 component.submit();
 
                 expect(dialogRef.close).toHaveBeenCalledWith(folder);
             });
 
             it('should emit success output event with folder', async () => {
+                updateNode$.next(folder);
                 let expectedNode = null;
 
                 component.success.subscribe((node) => {
