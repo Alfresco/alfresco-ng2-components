@@ -420,7 +420,7 @@ describe('FormFieldModel', () => {
         expect(formDateTimeFormatted).toEqual(currentDateTimeFormatted);
     });
 
-    it('should handle properly date that is in ISO format', () => {
+    it('should handle properly date string that is in ISO format', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
