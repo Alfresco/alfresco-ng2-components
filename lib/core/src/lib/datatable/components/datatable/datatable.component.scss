@@ -27,13 +27,21 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
     &__resize-handle {
         padding: 0 2px;
+        position: relative;
 
         &-visible {
             visibility: visible;
+            opacity: 1;
         }
 
         &-hidden {
-            visibility: hidden;
+            opacity: 0;
+
+            &:focus,
+            &:focus-visible,
+            &:focus-within {
+                opacity: 1;
+            }
         }
 
         &--divider {
@@ -43,6 +51,17 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         &:hover {
             cursor: col-resize;
+        }
+
+        &:focus,
+        &:focus-visible {
+            opacity: 1;
+            outline: 2px solid var(--theme-accent-color-a200);
+            outline-offset: -1px;
+
+            .adf-datatable__resize-handle--divider {
+                border-color: var(--theme-accent-color-a200);
+            }
         }
     }
 
@@ -185,6 +204,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             }
         }
 
+        &:focus-within {
+            .adf-datatable-hover-only {
+                visibility: visible;
+            }
+        }
+
         .adf-datatable-hover-only {
             visibility: hidden;
 
@@ -236,12 +261,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         &--fileSize {
             min-width: $data-table-cell-min-width-file-size;
-        }
-
-        button {
-            #{ms.$mat-icon} {
-                margin-top: -10px;
-            }
         }
     }
 
@@ -323,23 +342,32 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
     }
 
-    .adf-datatable-row .adf-datatable-actions-menu {
-        margin-left: auto;
-        justify-content: end;
-        padding-right: 15px;
-
-        &:focus-visible,
-        &:focus-within {
-            .adf-datatable-hide-actions-without-hover {
+    .adf-datatable-row {
+        &:focus-within,
+        &:hover {
+            .adf-datatable-actions-menu .adf-datatable-hide-actions-without-hover {
                 visibility: visible;
             }
         }
 
-        &-provided {
-            /* stylelint-disable declaration-no-important */
-            max-width: 100px !important;
-            justify-content: center;
-            padding-right: 0;
+        .adf-datatable-actions-menu {
+            margin-left: auto;
+            justify-content: end;
+            padding-right: 15px;
+
+            &:focus-visible,
+            &:focus-within {
+                .adf-datatable-hide-actions-without-hover {
+                    visibility: visible;
+                }
+            }
+
+            &-provided {
+                /* stylelint-disable declaration-no-important */
+                max-width: 100px !important;
+                justify-content: center;
+                padding-right: 0;
+            }
         }
     }
 

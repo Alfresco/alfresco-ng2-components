@@ -366,5 +366,24 @@ describe('CommentsComponent', () => {
             fixture.detectChanges();
             expect(getAddCommentButton().disabled).toBeFalse();
         });
+
+        it('should return focus to comment input after successfully adding a comment', async () => {
+            const comment = 'Test Comment';
+            component.commentControl.setValue(comment);
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment(comment));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const commentInput = testingUtils.getByCSS('#comment-input').nativeElement;
+            spyOn(commentInput, 'focus');
+
+            component.addComment();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(commentInput.focus).toHaveBeenCalled();
+        });
     });
 });

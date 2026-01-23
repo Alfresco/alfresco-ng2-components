@@ -33,7 +33,6 @@ to build and execute the query.
 -   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search filter chips component](./search-filter-chips.component.md)
 -   [Search Chip List Component](search-chip-list.component.md)
--   [Search Sorting Picker Component](search-sorting-picker.component.md)
 -   [Search Widget Interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](search-check-list.component.md)
 -   [Search date range tabbed component](search-date-range-tabbed.component.md)

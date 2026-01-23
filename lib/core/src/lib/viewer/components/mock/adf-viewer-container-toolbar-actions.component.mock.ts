@@ -17,18 +17,18 @@
 
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { ViewerComponent } from '../viewer.component';
 import { ViewerToolbarActionsComponent } from '../viewer-toolbar-actions.component';
+import { IconModule } from '../../../icon/icon.module';
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
-    imports: [ViewerComponent, MatIconModule, MatButtonModule, ViewerToolbarActionsComponent],
+    imports: [ViewerComponent, IconModule, MatButtonModule, ViewerToolbarActionsComponent],
     template: `
         <adf-viewer>
             <adf-viewer-toolbar-actions>
                 <button mat-icon-button id="custom-button">
-                    <mat-icon>alarm</mat-icon>
+                    <mat-icon adf-icon="alarm" />
                 </button>
             </adf-viewer-toolbar-actions>
         </adf-viewer>

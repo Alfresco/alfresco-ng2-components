@@ -406,7 +406,9 @@
       "ICON_DISABLED": "Deaktiviert",
       "ROW_OPTION_BUTTON": "Aktionen",
       "DRAG": "Drag Button",
-      "EMPTY_HEADER": "Leerer Header"
+      "EMPTY_HEADER": "Leerer Header",
+      "RESIZE_COLUMN": "Ändern Sie die Größe der {{ column }} Spalte. Verwenden Sie Pfeiltasten, um die Breite anzupassen, Umschalt für größere Schritte.",
+      "COLUMN_WIDTH_CHANGED": "{{ column }} Spaltenbreite: {{ width }} Pixel"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",

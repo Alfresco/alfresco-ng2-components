@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-import { IconComponent, IconModule } from '@alfresco/adf-core';
+import { IconModule } from '@alfresco/adf-core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,7 +44,6 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
         TranslatePipe,
         MatExpansionModule,
         MatButtonModule,
-        IconComponent,
         MatProgressSpinnerModule,
         ReactiveFormsModule,
         MatFormFieldModule,

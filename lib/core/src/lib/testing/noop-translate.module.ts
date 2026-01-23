@@ -16,14 +16,15 @@
  */
 
 import { EventEmitter, Injectable, NgModule } from '@angular/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class NoopTranslationService implements TranslationService {
+export class NoopTranslationService {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
@@ -49,8 +50,9 @@ export class NoopTranslationService implements TranslationService {
 }
 
 @NgModule({
-    imports: [HttpClientTestingModule],
     providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: TranslationService, useClass: NoopTranslationService },
         provideTranslateService({
             loader: {

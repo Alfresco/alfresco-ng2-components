@@ -17,11 +17,11 @@
 
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IconComponent } from '../../icon';
+import { IconModule } from '../../icon';
 
 @Component({
     selector: 'adf-empty-content',
-    imports: [TranslatePipe, IconComponent],
+    imports: [TranslatePipe, IconModule],
     templateUrl: './empty-content.component.html',
     styleUrls: ['./empty-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

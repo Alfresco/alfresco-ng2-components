@@ -100,7 +100,7 @@ jobs:
         run: |
           npm run build:libs
           npm run build:schematics
-      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
@@ -109,7 +109,7 @@ jobs:
       - run: npm run publish -- --tag=${{ steps.setup.outputs.npm-tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         name: release libraries Npm registry
         with:
           node-version-file: '.nvmrc'
@@ -183,6 +183,14 @@ jobs:
           upload_sources_args: --delete-obsolete
         env:
           CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
+
+  pull-translation-keys-from-crowdin:
+    needs: push-translation-keys-to-crowdin
+    name: Run Crowdin pull pipeline for up-to-date sync
+    uses: ./.github/workflows/pull-from-crowdin.yml
+    secrets:
+      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+      CROWDIN_TRANSLATIONS_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
 
   finalize:
     if: always()

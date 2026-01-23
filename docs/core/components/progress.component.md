@@ -1,1 +1,0 @@
-../../../lib/core/src/lib/progress/progress.component.md

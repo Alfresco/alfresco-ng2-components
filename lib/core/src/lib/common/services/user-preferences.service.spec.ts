@@ -165,6 +165,79 @@ describe('UserPreferencesService', () => {
         });
     });
 
+    describe('initialization', () => {
+        it('should use setWithoutStore for locale when it is already in storage', () => {
+            const spySetWithoutStore = spyOn(preferences, 'setWithoutStore').and.callThrough();
+            const spySet = spyOn(preferences, 'set').and.callThrough();
+
+            storage.setItem('GUEST__locale', 'fr');
+            appConfig.config.locale = 'en';
+
+            preferences.setStoragePrefix(null);
+
+            expect(preferences.locale).toBe('fr');
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'fr');
+            expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.Locale, jasmine.any(String));
+        });
+
+        it('should use set for locale when it is in config but not in storage', () => {
+            const spySet = spyOn(preferences, 'set').and.callThrough();
+
+            appConfig.config.locale = 'de';
+
+            preferences.setStoragePrefix(null);
+
+            expect(preferences.locale).toBe('de');
+            expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'de');
+            expect(storage.getItem('GUEST__locale')).toBe('de');
+        });
+
+        it('should use defaults and setWithoutStore for locale when neither storage nor config has values', () => {
+            const spySetWithoutStore = spyOn(preferences, 'setWithoutStore').and.callThrough();
+            const spySet = spyOn(preferences, 'set').and.callThrough();
+
+            delete appConfig.config.locale;
+            spyOn(translate, 'getBrowserCultureLang').and.returnValue(null);
+
+            preferences.setStoragePrefix(null);
+
+            expect(preferences.locale).toBe('en'); // default
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.Locale, 'en');
+            expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.Locale, jasmine.any(String));
+        });
+
+        it('should use setWithoutStore for pagination when it is already in storage', () => {
+            const spySetWithoutStore = spyOn(preferences, 'setWithoutStore').and.callThrough();
+            const spySet = spyOn(preferences, 'set').and.callThrough();
+
+            storage.setItem('GUEST__paginationSize', '50');
+            storage.setItem('GUEST__supportedPageSizes', JSON.stringify([10, 20, 50]));
+            appConfig.config.pagination = { size: 10, supportedPageSizes: [5, 10] };
+
+            preferences.setStoragePrefix(null);
+
+            expect(preferences.paginationSize).toBe(50);
+            expect(preferences.supportedPageSizes).toEqual([10, 20, 50]);
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, 50);
+            expect(spySetWithoutStore).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, JSON.stringify([10, 20, 50]));
+            expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, jasmine.any(Number));
+            expect(spySet).not.toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, jasmine.any(String));
+        });
+
+        it('should use set for pagination when it is in config but not in storage', () => {
+            const spySet = spyOn(preferences, 'set').and.callThrough();
+
+            appConfig.config.pagination = { size: 15, supportedPageSizes: [5, 15] };
+
+            preferences.setStoragePrefix(null);
+
+            expect(preferences.paginationSize).toBe(15);
+            expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.PaginationSize, 15);
+            expect(spySet).toHaveBeenCalledWith(UserPreferenceValues.SupportedPageSizes, JSON.stringify([5, 15]));
+            expect(storage.getItem('GUEST__paginationSize')).toBe('15');
+        });
+    });
+
     describe('with language config', () => {
         it('should store default textOrientation based on language', () => {
             appConfig.config.languages = [

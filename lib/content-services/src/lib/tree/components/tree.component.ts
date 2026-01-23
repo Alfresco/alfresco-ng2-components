@@ -31,7 +31,7 @@ import {
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { TreeService } from '../services/tree.service';
-import { ContextMenuDirective, IconComponent, IconModule, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, IconModule, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { TreeResponse } from '../models/tree-response.interface';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
@@ -52,7 +52,6 @@ import { MatMenuModule } from '@angular/material/menu';
         MatTreeModule,
         MatProgressSpinnerModule,
         MatButtonModule,
-        IconComponent,
         ContextMenuDirective,
         MatCheckboxModule,
         MatMenuModule,

@@ -15,17 +15,31 @@
  * limitations under the License.
  */
 
+export interface ProcessPayloadCloudData {
+    processDefinitionKey?: string;
+    name?: string;
+    businessKey?: string;
+    variables?: any;
+    payloadType?: string;
+    linkedProcessInstanceId?: string;
+    linkedProcessInstanceType?: string;
+}
+
 export class ProcessPayloadCloud {
     processDefinitionKey: string;
     name: string;
     businessKey: string;
     variables: any;
     payloadType: string = 'StartProcessPayload';
+    linkedProcessInstanceId?: string;
+    linkedProcessInstanceType?: string;
 
-    constructor(obj?: any) {
+    constructor(obj?: ProcessPayloadCloudData) {
         this.processDefinitionKey = obj?.processDefinitionKey;
         this.name = obj?.name;
         this.businessKey = obj?.businessKey;
         this.variables = obj?.variables || {};
+        this.linkedProcessInstanceType = obj?.linkedProcessInstanceType;
+        this.linkedProcessInstanceId = obj?.linkedProcessInstanceId;
     }
 }

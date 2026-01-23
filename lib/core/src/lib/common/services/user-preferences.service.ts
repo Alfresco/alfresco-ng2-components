@@ -50,7 +50,7 @@ export class UserPreferencesService {
         expandedSidenav: true
     };
 
-    private userPreferenceStatus: any = this.defaults;
+    private userPreferenceStatus: any = { ...this.defaults };
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
@@ -140,19 +140,48 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.initUserLanguage();
-        this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
-        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
+        this.initPaginationPreferences();
+    }
+
+    private initPaginationPreferences() {
+        // Check if values are already in storage
+        const storedPaginationSize = this.get(UserPreferenceValues.PaginationSize);
+        const storedSupportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
+
+        if (storedPaginationSize) {
+            // Already in storage - just update in-memory state
+            this.setWithoutStore(UserPreferenceValues.PaginationSize, Number(storedPaginationSize));
+        } else {
+            // Not in storage - get from config and save
+            const paginationSize = this.appConfig.get('pagination.size', this.defaults.paginationSize);
+            this.set(UserPreferenceValues.PaginationSize, paginationSize);
+        }
+
+        if (storedSupportedPageSizes) {
+            // Already in storage - just update in-memory state
+            this.setWithoutStore(UserPreferenceValues.SupportedPageSizes, storedSupportedPageSizes);
+        } else {
+            // Not in storage - get from config and save
+            const supportedPageSizes = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+            this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(supportedPageSizes));
+        }
     }
 
     private initUserLanguage() {
-        if (this.locale || this.appConfig.get<string>(UserPreferenceValues.Locale)) {
-            const locale = this.locale || this.getDefaultLocale();
+        const storedLocale = this.get(UserPreferenceValues.Locale);
+        const configLocale = this.appConfig.get<string>(UserPreferenceValues.Locale);
 
-            this.set(UserPreferenceValues.Locale, locale);
-            this.set('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
+        if (storedLocale) {
+            // Locale already in storage - just update in-memory state, don't re-save
+            this.setWithoutStore(UserPreferenceValues.Locale, storedLocale);
+            this.setWithoutStore('textOrientation', this.getLanguageByKey(storedLocale).direction || 'ltr');
+        } else if (configLocale) {
+            // Locale from config but not in storage - save to storage
+            this.set(UserPreferenceValues.Locale, configLocale);
+            this.set('textOrientation', this.getLanguageByKey(configLocale).direction || 'ltr');
         } else {
-            const locale = this.locale || this.getDefaultLocale();
-
+            // No locale anywhere - use default, don't save to storage
+            const locale = this.getDefaultLocale();
             this.setWithoutStore(UserPreferenceValues.Locale, locale);
             this.setWithoutStore('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
         }
@@ -298,7 +327,7 @@ export class UserPreferencesService {
      * @returns locale name
      */
     get locale(): string {
-        return this.get(UserPreferenceValues.Locale);
+        return this.get(UserPreferenceValues.Locale) || this.getDefaultLocale();
     }
 
     set locale(value: string) {

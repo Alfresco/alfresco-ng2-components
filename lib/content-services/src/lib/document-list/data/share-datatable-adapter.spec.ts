@@ -493,4 +493,16 @@ describe('ShareDataTableAdapter', () => {
             expect(adapter.getRowByNodeId('fake-node-id-2')).toEqual(fakeShareDataRows[1]);
         });
     });
+
+    it('should initialize with allowFocusOnRows as true by default', () => {
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+        expect(adapter.allowFocusOnRows).toBe(true);
+    });
+
+    it('should set allowFocusOnRows value', () => {
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+        expect(adapter.allowFocusOnRows).toBe(true);
+        adapter.setAllowFocusOnTableRows(false);
+        expect(adapter.allowFocusOnRows).toBe(false);
+    });
 });

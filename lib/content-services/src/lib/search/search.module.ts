@@ -31,7 +31,6 @@ import { SearchSliderComponent } from './components/search-slider/search-slider.
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
-import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 import { SearchFilterContainerComponent } from './components/search-filter-container/search-filter-container.component';
 import { SearchDatetimeRangeComponent } from './components/search-datetime-range/search-datetime-range.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
@@ -70,7 +69,6 @@ export const CONTENT_SEARCH_DIRECTIVES = [
     SearchFilterTabbedComponent,
     SearchFilterTabDirective,
     SearchDateRangeTabbedComponent,
-    SearchSortingPickerComponent,
     SearchSliderComponent,
     SearchNumberRangeComponent,
     SearchPanelComponent,

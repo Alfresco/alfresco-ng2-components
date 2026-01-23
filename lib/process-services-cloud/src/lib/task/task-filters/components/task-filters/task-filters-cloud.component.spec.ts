@@ -32,6 +32,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TaskFilterCloudAdapter } from '../../../../models/filter-cloud-model';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('TaskFiltersCloudComponent', () => {
     let loader: HarnessLoader;
@@ -89,11 +90,11 @@ describe('TaskFiltersCloudComponent', () => {
 
             expect(component.filters.length).toBe(3);
 
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('done');
-            expect(filters[2].innerText).toContain('inbox');
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('done');
+            expect(await filterIcons[2].getName()).toContain('inbox');
         });
 
         it('should not attach icons for each filter if hasIcon is false', async () => {
@@ -104,8 +105,8 @@ describe('TaskFiltersCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-            expect(filters.length).toBe(0);
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', async () => {
@@ -251,25 +252,24 @@ describe('TaskFiltersCloudComponent', () => {
             component.appName = 'my-app-1';
         });
 
-        it('should attach specific icon for each filter if hasIcon is true', () => {
+        it('should attach specific icon for each filter if hasIcon is true', async () => {
             fixture.detectChanges();
 
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
 
             expect(component.filters.length).toBe(3);
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('done');
-            expect(filters[2].innerText).toContain('inbox');
+            expect(filterIcons.length).toBe(3);
+            expect(await filterIcons[0].getName()).toContain('adjust');
+            expect(await filterIcons[1].getName()).toContain('done');
+            expect(await filterIcons[2].getName()).toContain('inbox');
         });
 
-        it('should not attach icons for each filter if showIcons is false', () => {
+        it('should not attach icons for each filter if showIcons is false', async () => {
             component.showIcons = false;
             fixture.detectChanges();
 
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-
-            expect(filters.length).toBe(0);
+            const filterIcons = await loader.getAllHarnesses(MatIconHarness.with({ selector: '[data-automation-id="adf-filter-icon"]' }));
+            expect(filterIcons.length).toBe(0);
         });
 
         it('should display the filters', () => {

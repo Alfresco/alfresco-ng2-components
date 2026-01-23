@@ -464,6 +464,8 @@ Learn more about styling your datatable: [Customizing the component's styles](#c
 
 ## Details
 
+This component supports rows reordering via keyboard. To enable it first set `enableDragRows` to `true`, focus any selected row and use shift + ArrowUp/ArrowDown combination to reorder selected row.
+
 ### Supplying data for the table
 
 The column layout and row data are supplied to the table using an object that implements the

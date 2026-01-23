@@ -19,7 +19,7 @@ import { effect, Inject, Injectable, InjectionToken, Optional } from '@angular/c
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
@@ -71,13 +71,21 @@ export class TranslationService {
             }
         }
 
-        // Use effect to reactively update translations when locale signal changes
-        // Note: This is a singleton service, so no cleanup needed
+        // Try to read locale from storage synchronously to apply it before components render
+        const storedLocale = userPreferencesService.get(UserPreferenceValues.Locale);
+
+        if (storedLocale) {
+            // Apply stored locale immediately during construction
+            this.userLang = storedLocale;
+            this.loadTranslation(storedLocale, this.defaultLang);
+        }
+
         effect(() => {
             const locale = userPreferencesService.localeSignal();
-            if (locale) {
+
+            if (locale && locale !== this.userLang) {
                 this.userLang = locale;
-                this.use(this.userLang);
+                this.loadTranslation(locale, this.defaultLang);
             }
         });
     }
@@ -128,7 +136,7 @@ export class TranslationService {
     onTranslationChanged(lang: string): void {
         this.translate.onTranslationChange.next({
             lang,
-            translations: this.customLoader.getFullTranslationJSON(lang)
+            translations: this.customLoader.getFullTranslationJSON?.(lang) ?? {}
         });
     }
 

@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
-import { NoopTranslationService } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 import { FileUploadErrorPipe } from './file-upload-error.pipe';
+import { TestBed } from '@angular/core/testing';
 
 describe('FileUploadErrorPipe', () => {
     let pipe: FileUploadErrorPipe;
 
     beforeEach(() => {
-        pipe = new FileUploadErrorPipe(new NoopTranslationService());
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule],
+            providers: [FileUploadErrorPipe]
+        });
+        pipe = TestBed.inject(FileUploadErrorPipe);
     });
 
     it('should return generic message when error code is null', () => {

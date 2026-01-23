@@ -17,7 +17,7 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { DataColumn, IconComponent, TranslationService } from '@alfresco/adf-core';
+import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { SearchCategory } from '../../models/search-category.interface';
@@ -25,9 +25,10 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { FilterSearch } from '../../models/filter-search.interface';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatBadgeModule } from '@angular/material/badge';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-filter-container',
@@ -35,8 +36,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         CommonModule,
         MatButtonModule,
         MatMenuModule,
-        IconComponent,
-        MatBadgeModule,
+        MatIconModule,
         SearchWidgetContainerComponent,
         TranslatePipe,
         MatDialogModule
@@ -69,12 +69,15 @@ export class SearchFilterContainerComponent implements OnInit {
     initialValue: any;
 
     constructor(
-        private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
-        private translationService: TranslationService,
-        private focusTrapFactory: ConfigurableFocusTrapFactory
+        private readonly searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
+        private readonly translationService: TranslationService,
+        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
+        private readonly matIconRegistry: MatIconRegistry,
+        private readonly sanitizer: DomSanitizer
     ) {}
 
     ngOnInit() {
+        this.registerFilterIcon();
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
         this.initialValue = this.value?.[this.category?.id];
     }
@@ -128,5 +131,12 @@ export class SearchFilterContainerComponent implements OnInit {
     onClosed() {
         this.focusTrap.destroy();
         this.focusTrap = null;
+    }
+
+    private registerFilterIcon(): void {
+        const filterIcon = this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/custom_filter.svg');
+        const filterIconFilled = this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/custom_filter_filled.svg');
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'custom_filter', filterIcon);
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'custom_filter_filled', filterIconFilled);
     }
 }

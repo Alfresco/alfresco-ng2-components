@@ -11,13 +11,11 @@
         [attr.aria-label]="isActive() ? getTooltipTranslation(col?.title) + ' (' + ('SEARCH.SEARCH_HEADER.ACTIVE_FILTER' | translate) + ')' : getTooltipTranslation(col?.title)"
         [title]="getTooltipTranslation(col?.title)"
     >
-        <adf-icon
-            value="filter_list"
-            [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
+        <mat-icon
+            [svgIcon]="isActive() ? 'adf:custom_filter_filled' : 'adf:custom_filter'"
+            [ngClass]="{ 'adf-filter-icon-active': isActive() || menuTrigger.menuOpen }"
             class="adf-filter-icon"
-            matBadge="filter"
-            matBadgeColor="warn"
-            [matBadgeHidden]="!isActive()"
+            aria-hidden="true"
         />
     </button>
 

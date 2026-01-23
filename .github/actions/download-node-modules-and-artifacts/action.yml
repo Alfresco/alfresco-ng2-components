@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Restore dist from cache
-      uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
       with:
         path: dist
         key: dist-${{ github.run_id }}-${{ github.run_attempt }}
@@ -13,7 +13,7 @@ runs:
         fail-on-cache-miss: true
 
     - name: Restore nxcache from cache
-      uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
       with:
         path: nxcache
         key: nxcache-${{ github.run_id }}-${{ github.run_attempt }}
@@ -22,7 +22,7 @@ runs:
         fail-on-cache-miss: true
 
     - name: Restore node_modules from cache
-      uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
       with:
         path: node_modules
         key: node-modules-${{ github.run_id }}-${{ github.run_attempt }}

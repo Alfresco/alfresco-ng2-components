@@ -55,7 +55,6 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
-import { IconComponent } from '../../icon';
 import { ThumbnailService } from '../../common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../icon/icon.module';
@@ -88,8 +87,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ViewerToolbarComponent,
         ViewerSidebarComponent,
         ViewerToolbarActionsComponent,
-        ViewerToolbarCustomActionsComponent,
-        IconComponent
+        ViewerToolbarCustomActionsComponent
     ],
     providers: [ViewUtilService]
 })

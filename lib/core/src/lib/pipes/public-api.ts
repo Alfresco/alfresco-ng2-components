@@ -21,7 +21,6 @@ export * from './file-type.pipe';
 export * from './format-space.pipe';
 export * from './full-name.pipe';
 export * from './localized-date.pipe';
-export * from './multi-value.pipe';
 export * from './text-highlight.pipe';
 export * from './time-ago.pipe';
 export * from './user-initial.pipe';

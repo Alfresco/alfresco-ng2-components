@@ -8,13 +8,19 @@
                     <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showFilterActions" class="adf-cloud-edit-process-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
-                            <button *ngFor="let filterAction of processFilterActions"
-                                    mat-icon-button
-                                    [title]="filterAction.tooltip | translate"
-                                    [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
-                                    [disabled]="isDisabledAction(filterAction)"
-                                    (click)="executeFilterActions($event, filterAction)">
-                                <adf-icon [value]="filterAction.icon" />
+                            <button 
+                                *ngFor="let filterAction of processFilterActions"
+                                mat-icon-button
+                                [title]="filterAction.tooltip | translate"
+                                [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
+                                [disabled]="isDisabledAction(filterAction)"
+                                (click)="executeFilterActions($event, filterAction)"
+                            >
+                                @if (filterAction.icon.includes(':')) {
+                                    <mat-icon [svgIcon]="filterAction.icon" aria-hidden="true" />
+                                } @else {
+                                    <mat-icon [adf-icon]="filterAction.icon" aria-hidden="true" />
+                                }   
                             </button>
                         </ng-container>
                     </div>

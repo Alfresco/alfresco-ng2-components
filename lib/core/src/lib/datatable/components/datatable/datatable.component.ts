@@ -68,7 +68,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
-import { IconComponent } from '../../../icon';
 import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadDirective } from '../../../directives';
@@ -104,7 +103,6 @@ export enum ShowHeaderMode {
         DropZoneDirective,
         ResizableDirective,
         CdkDragHandle,
-        IconComponent,
         ResizeHandleDirective,
         MatButtonModule,
         MatMenuModule,
@@ -344,7 +342,35 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     @HostListener('keyup', ['$event'])
     onKeydown(event: KeyboardEvent): void {
-        this.keyManager.onKeydown(event);
+        if (event.shiftKey && this.enableDragRows) {
+            switch (event.key) {
+                case 'ArrowUp': {
+                    if (this.keyManager.activeItemIndex > 1) {
+                        this.dragDropped.emit({
+                            previousIndex: this.keyManager.activeItemIndex - 1,
+                            currentIndex: this.keyManager.activeItemIndex - 2
+                        });
+                        setTimeout(() => {
+                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
+                        });
+                    }
+                    break;
+                }
+                case 'ArrowDown': {
+                    if (this.keyManager.activeItemIndex < this.rowsList.length - 1) {
+                        this.dragDropped.emit({ previousIndex: this.keyManager.activeItemIndex - 1, currentIndex: this.keyManager.activeItemIndex });
+                        setTimeout(() => {
+                            this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
+                        });
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        } else {
+            this.keyManager.onKeydown(event);
+        }
     }
 
     constructor(

@@ -20,7 +20,7 @@ import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.compo
 import { InfoDrawerButtonsDirective, InfoDrawerContentDirective, InfoDrawerTitleDirective } from './info-drawer-layout.component';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 import { provideStoryCore } from '../stories/core-story.providers';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../icon/icon.module';
 
 type InfoDrawerStoryArgs = InfoDrawerComponent & {
     showSecondTab?: boolean;
@@ -48,7 +48,7 @@ const meta: Meta<InfoDrawerStoryArgs> = {
                 InfoDrawerTitleDirective,
                 InfoDrawerButtonsDirective,
                 InfoDrawerContentDirective,
-                MatIconModule
+                IconModule
             ]
         }),
         applicationConfig({
@@ -240,7 +240,7 @@ export const TabLayoutWithTextLabels: Story = {
         props: args,
         template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
-                <mat-icon>clear</mat-icon>
+                <mat-icon adf-icon="clear" />
             </div>
 
             <adf-info-drawer-tab [label]="label1" [icon]="[icon1]">
@@ -276,7 +276,7 @@ export const TabLayoutWithIconLabels: Story = {
         props: args,
         template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
-                <mat-icon>clear</mat-icon>
+                <mat-icon adf-icon="clear" />
             </div>
 
             <adf-info-drawer-tab [label]="label1" [icon]="[icon1]">
@@ -314,7 +314,7 @@ export const SingleLayout: Story = {
             <div info-drawer-title>File info</div>
 
             <div info-drawer-buttons>
-                <mat-icon>clear</mat-icon>
+                <mat-icon adf-icon="clear" />
             </div>
 
             <div info-drawer-content>

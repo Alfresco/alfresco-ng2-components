@@ -323,7 +323,6 @@ backend services have been tested with each released version of ADF.
 -   [Form cloud component](process-services-cloud/components/form-cloud.component.md)
 -   [Form cloud service](process-services-cloud/services/form-cloud.service.md)
 -   [Json cell component](core/components/json-cell.component.md)
--   [Multi value pipe](core/pipes/multi-value.pipe.md)
 -   [Task form cloud component](process-services-cloud/components/task-form-cloud.component.md)
 
 <!--v320 end-->
