@@ -766,7 +766,6 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private updateRepeatableSectionValue(value: string) {
-        //
         if (this.type === FormFieldTypes.SECTION) {
             return;
         }
