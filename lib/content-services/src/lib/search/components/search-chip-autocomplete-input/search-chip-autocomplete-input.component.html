@@ -11,7 +11,8 @@
             <button
                 matChipRemove
                 class="adf-option-chips-delete-button adf-autocomplete-added-option-chips-delete-button"
-                [title]="'SEARCH.FILTER.BUTTONS.REMOVE' | translate"
+                [title]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option.value"
+                [attr.aria-label]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option.value"
             >
                 <mat-icon class="adf-option-chips-delete-icon adf-autocomplete-added-option-chips-delete-icon" adf-icon="close" />
             </button>
