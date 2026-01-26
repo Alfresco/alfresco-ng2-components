@@ -214,7 +214,9 @@
       },
       "CANCEL_BUTTON": {
         "LABEL": "Abbrechen"
-      }
+      },
+      "FOLDER_CREATED_SUCCESS": "Ordner '{{ name }}' erfolgreich erstellt",
+      "FOLDER_UPDATED_SUCCESS": "Ordner '{{ name }}' erfolgreich aktualisiert"
     },
     "MESSAGES": {
       "ERRORS": {

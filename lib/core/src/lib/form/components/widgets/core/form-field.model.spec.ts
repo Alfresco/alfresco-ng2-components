@@ -420,6 +420,33 @@ describe('FormFieldModel', () => {
         expect(formDateTimeFormatted).toEqual(currentDateTimeFormatted);
     });
 
+    it('should handle properly date string that is in ISO format', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'date',
+            name: 'date',
+            type: FormFieldTypes.DATE,
+            value: '',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'date',
+                    name: 'date',
+                    type: FormFieldTypes.DATE,
+                    value: '',
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+
+        field.value = '2026-01-23T15:25:03.439+0000';
+
+        expect(field.getFormValue()).toEqual('2026-01-23T00:00:00.000Z');
+    });
+
     it('should set the value to null when the value is null', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
