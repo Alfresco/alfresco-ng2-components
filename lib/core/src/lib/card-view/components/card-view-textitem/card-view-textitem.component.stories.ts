@@ -67,8 +67,7 @@ export const ChipsCardViewTextItem: Story = {
             multivalued: true,
             icon: 'icon',
             editable: true
-        }),
-        displayLabelForChips: false
+        })
     }
 };
 
@@ -105,24 +104,5 @@ export const DefaultCardViewTextItem: Story = {
             icon: 'close',
             multiline: false
         })
-    }
-};
-
-export const DisplayLabelForChipsCardTextItem: Story = {
-    render: (args) => ({
-        props: args
-    }),
-    args: {
-        property: new CardViewTextItemModel({
-            label: 'CardView Text Item - Multi-Valued Chips template',
-            value: ['Chip 1', 'Chip 2', 'Chip 3'],
-            key: 'multivalued',
-            default: 'default value',
-            multiline: true,
-            multivalued: true,
-            icon: 'icon',
-            editable: true
-        }),
-        displayLabelForChips: false
     }
 };

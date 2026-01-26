@@ -92,14 +92,6 @@ export const cardViewArgTypes: ArgTypes = {
             type: { summary: 'string' },
             defaultValue: { summary: ', ' }
         }
-    },
-    displayLabelForChips: {
-        control: 'boolean',
-        description: 'Display label for chips property',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: 'false' }
-        }
     }
 };
 
@@ -113,8 +105,7 @@ export const cardViewDefaultArgs: Record<string, unknown> = {
     displayClearAction: true,
     copyToClipboardAction: true,
     useChipsForMultiValueProperty: true,
-    multiValueSeparator: ', ',
-    displayLabelForChips: false
+    multiValueSeparator: ', '
 };
 
 /**
