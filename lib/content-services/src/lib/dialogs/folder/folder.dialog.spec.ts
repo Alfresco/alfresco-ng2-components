@@ -19,7 +19,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FolderDialogComponent } from './folder.dialog';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { NotificationService } from '@alfresco/adf-core';
 
@@ -36,9 +36,6 @@ describe('FolderDialogComponent', () => {
     let updateNodeSpy: jasmine.Spy;
     let createFolderSpy: jasmine.Spy;
 
-    const updateNode$ = new BehaviorSubject(null);
-    let createFolderNode$ = null;
-
     beforeEach(() => {
         const notificationServiceMock = {
             showInfo: jasmine.createSpy('showInfo')
@@ -52,11 +49,10 @@ describe('FolderDialogComponent', () => {
         fixture = TestBed.createComponent(FolderDialogComponent);
         component = fixture.componentInstance;
         nodesApi = TestBed.inject(NodesApiService);
-        createFolderNode$ = new BehaviorSubject(null);
         notificationService = TestBed.inject(NotificationService);
 
-        createFolderSpy = spyOn(nodesApi, 'createFolder').and.returnValue(createFolderNode$);
-        updateNodeSpy = spyOn(nodesApi, 'updateNode').and.returnValue(updateNode$);
+        createFolderSpy = spyOn(nodesApi, 'createFolder');
+        updateNodeSpy = spyOn(nodesApi, 'updateNode');
         submitButton = fixture.nativeElement.querySelector('#adf-folder-create-button');
     });
 
@@ -98,7 +94,8 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid', () => {
-            updateNode$.next(null);
+            const updatedFolder: any = { name: 'folder-name-update' };
+            updateNodeSpy.and.returnValue(of(updatedFolder));
 
             setFormValues();
 
@@ -133,7 +130,7 @@ describe('FolderDialogComponent', () => {
 
         it('should show edit success notification with folder name when folder is updated', () => {
             const updatedFolder: any = { name: 'updated-folder' };
-            updateNode$.next(updatedFolder);
+            updateNodeSpy.and.returnValue(of(updatedFolder));
 
             component.form.controls['name'].setValue('updated-folder');
             component.submit();
@@ -145,14 +142,14 @@ describe('FolderDialogComponent', () => {
             const folder: any = { data: 'folder-data', name: 'folder-data' };
 
             it('should call dialog to close with form data', () => {
-                updateNode$.next(folder);
+                updateNodeSpy.and.returnValue(of(folder));
                 component.submit();
 
                 expect(dialogRef.close).toHaveBeenCalledWith(folder);
             });
 
             it('should emit success output event with folder', fakeAsync(() => {
-                updateNode$.next(folder);
+                updateNodeSpy.and.returnValue(of(folder));
                 let emittedNode: any;
                 component.success.subscribe((node) => {
                     emittedNode = node;
@@ -164,7 +161,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not call dialog to close if submit fails', () => {
-            updateNode$.error(throwError('error'));
+            updateNodeSpy.and.returnValue(throwError(() => 'error'));
             spyOn(component, 'handleError').and.callFake((val) => val);
 
             component.submit();
@@ -203,11 +200,13 @@ describe('FolderDialogComponent', () => {
 
         describe('when form is valid', () => {
             beforeEach(() => {
-                createFolderNode$.next(null);
                 setFormValues();
             });
 
             it('should submit updated values', () => {
+                const createdFolder: any = { name: 'folder-name-update' };
+                createFolderSpy.and.returnValue(of(createdFolder));
+
                 component.submit();
 
                 expect(component.disableSubmitButton).toBeTrue();
@@ -222,6 +221,8 @@ describe('FolderDialogComponent', () => {
             });
 
             it('should submit updated values (with custom nodeType)', () => {
+                const createdFolder: any = { name: 'folder-name-update' };
+                createFolderSpy.and.returnValue(of(createdFolder));
                 component.nodeType = 'cm:sushi';
 
                 fixture.detectChanges();
@@ -243,14 +244,10 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should call dialog to close with form data when submit is successfully', () => {
-            const folder: any = {
-                data: 'folder-data'
-            };
+            const folder: any = { data: 'folder-data', name: 'folder-data' };
+            createFolderSpy.and.returnValue(of(folder));
 
             setFormValues();
-
-            createFolderNode$.next(folder);
-
             component.submit();
 
             expect(dialogRef.close).toHaveBeenCalledWith(folder);
@@ -266,7 +263,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not call dialog to close if submit fails', () => {
-            createFolderNode$.error(throwError('error'));
+            createFolderSpy.and.returnValue(throwError(() => 'error'));
             spyOn(component, 'handleError').and.callFake((val) => val);
 
             component.form.controls['name'].setValue('name');
@@ -280,7 +277,7 @@ describe('FolderDialogComponent', () => {
 
         it('should show success notification with folder name when folder is created', () => {
             const createdFolder: any = { name: 'new-folder' };
-            createFolderNode$.next(createdFolder);
+            createFolderSpy.and.returnValue(of(createdFolder));
 
             component.form.controls['name'].setValue('new-folder');
             component.submit();
@@ -289,22 +286,13 @@ describe('FolderDialogComponent', () => {
         });
 
         describe('Error events', () => {
-            let errorSubscriber = null;
-
-            afterEach(() => {
-                createFolderNode$.next(null);
-                if (errorSubscriber) {
-                    errorSubscriber.complete();
-                }
-            });
-
             it('should raise error for 409', (done) => {
                 const error = {
                     message: '{ "error": {  "statusCode" : 409 } }'
                 };
-                createFolderNode$.error(error);
+                createFolderSpy.and.returnValue(throwError(() => error));
 
-                errorSubscriber = component.error.subscribe((message) => {
+                component.error.subscribe((message) => {
                     expect(message).toBe('CORE.MESSAGES.ERRORS.EXISTENT_FOLDER');
                     done();
                 });
@@ -319,9 +307,9 @@ describe('FolderDialogComponent', () => {
                 const error = {
                     message: '{ "error": {  "statusCode" : 123 } }'
                 };
-                createFolderNode$.error(error);
+                createFolderSpy.and.returnValue(throwError(() => error));
 
-                errorSubscriber = component.error.subscribe((message) => {
+                component.error.subscribe((message) => {
                     expect(message).toBe('CORE.MESSAGES.ERRORS.GENERIC');
                     done();
                 });
@@ -333,7 +321,7 @@ describe('FolderDialogComponent', () => {
             });
 
             it('should enable submit button after changing name field when previous value caused error', () => {
-                createFolderNode$.error(throwError('error'));
+                createFolderSpy.and.returnValue(throwError(() => 'error'));
                 spyOn(component, 'handleError').and.callFake((val) => val);
                 component.form.controls['name'].setValue('');
                 component.submit();
