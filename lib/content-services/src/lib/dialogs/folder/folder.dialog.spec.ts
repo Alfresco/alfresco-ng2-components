@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FolderDialogComponent } from './folder.dialog';
@@ -40,9 +40,13 @@ describe('FolderDialogComponent', () => {
     let createFolderNode$ = null;
 
     beforeEach(() => {
+        const notificationServiceMock = {
+            showInfo: jasmine.createSpy('showInfo')
+        };
+
         TestBed.configureTestingModule({
             imports: [],
-            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
+            providers: [{ provide: MatDialogRef, useValue: dialogRef }, { provide: NotificationService, useValue: notificationServiceMock }]
         });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(FolderDialogComponent);
@@ -53,12 +57,7 @@ describe('FolderDialogComponent', () => {
 
         createFolderSpy = spyOn(nodesApi, 'createFolder').and.returnValue(createFolderNode$);
         updateNodeSpy = spyOn(nodesApi, 'updateNode').and.returnValue(updateNode$);
-        spyOn(notificationService, 'showInfo');
         submitButton = fixture.nativeElement.querySelector('#adf-folder-create-button');
-    });
-
-    afterEach(() => {
-        fixture.destroy();
     });
 
     const getTitle = () => fixture.debugElement.query(By.css('[data-automation-id="adf-folder-dialog-title"]'));
@@ -152,20 +151,16 @@ describe('FolderDialogComponent', () => {
                 expect(dialogRef.close).toHaveBeenCalledWith(folder);
             });
 
-            it('should emit success output event with folder', async () => {
+            it('should emit success output event with folder', fakeAsync(() => {
                 updateNode$.next(folder);
-                let expectedNode = null;
-
+                let emittedNode: any;
                 component.success.subscribe((node) => {
-                    expectedNode = node;
+                    emittedNode = node;
                 });
                 component.submit();
-
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                expect(expectedNode).toBe(folder);
-            });
+                tick();
+                expect(emittedNode).toBe(folder);
+            }));
         });
 
         it('should not call dialog to close if submit fails', () => {
