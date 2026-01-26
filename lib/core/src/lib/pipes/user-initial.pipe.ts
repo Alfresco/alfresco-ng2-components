@@ -32,6 +32,7 @@ export class InitialUsernamePipe implements PipeTransform {
             const div = document.createElement('div');
             div.textContent = initialResult;
             div.dataset.automationId = 'user-initials-image';
+            div.ariaLabel = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.displayName || user.username || '';
             div.className = className;
 
             safeHtml = this.sanitized.bypassSecurityTrustHtml(div.outerHTML);
