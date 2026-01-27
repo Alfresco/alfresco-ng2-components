@@ -51,14 +51,10 @@ export abstract class DataTableSchema<T = unknown> {
         protected presetsModel: any
     ) {}
 
-    /*
-     * Creates datatable schema by merging JSON and HTML column definitions.
-     * @param forceCreateColumns If true, forces the creation of columns even if they already exist.
-     */
-    public createDatatableSchema(forceCreateColumns: boolean = false): void {
+    public createDatatableSchema(): void {
         this.loadLayoutPresets();
 
-        if (forceCreateColumns || !this.columns || this.columns.length === 0) {
+        if (!this.columns || this.columns.length === 0) {
             this.createColumns();
         }
         this.columnsSchemaSubject$.next(true);

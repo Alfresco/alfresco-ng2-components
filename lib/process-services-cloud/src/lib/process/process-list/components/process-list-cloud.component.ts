@@ -427,7 +427,7 @@ export class ProcessListCloudComponent
             this.formatSorting(changes['sorting'].currentValue);
         }
 
-        if (changes['appName']) {
+        if (changes['appName'] && this.enableAppChange) {
             this.retrieveProcessPreferences();
         }
 
