@@ -440,6 +440,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         }
     }
 
+    .adf-datatable-library-link {
+        font-weight: 600;
+    }
+
     .adf-dynamic-column .adf-datatable-link:hover {
         text-decoration: none;
 

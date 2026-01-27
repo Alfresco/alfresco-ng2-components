@@ -50,7 +50,7 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: 'adf-datatable-content-cell adf-datatable-link adf-library-name-column'
+        class: 'adf-datatable-content-cell adf-datatable-link adf-datatable-library-link adf-library-name-column'
     }
 })
 export class LibraryNameColumnComponent implements OnInit {
