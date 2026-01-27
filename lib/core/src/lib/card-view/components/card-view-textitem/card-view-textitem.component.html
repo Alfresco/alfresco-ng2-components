@@ -102,20 +102,19 @@
                 />
             </mat-form-field>
         </div>
-        <div
+        <button
+            type="button"
             *ngSwitchCase="'clickableTemplate'"
-            role="button"
             class="adf-textitem-clickable"
             [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
             [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
-            tabindex="0"
-            (keyup.enter)="clicked()"
             (click)="clicked()"
         >
             <mat-form-field class="adf-property-field adf-card-textitem-field">
                 <mat-label
                     [attr.data-automation-id]="'card-textitem-label-' + property.key"
                     class="adf-property-label"
+                    (click)="$event.stopPropagation()"
                     [ngClass]="{ 'adf-property-value-editable': editable }"
                 >
                     {{ property.label | translate }}
@@ -133,11 +132,13 @@
                         'adf-property-value-has-icon-suffix': showClickableIcon
                     }"
                     [placeholder]="property.default"
+                    aria-hidden="true"
                     [attr.aria-label]="property.label | translate"
                     [(ngModel)]="editedValue"
                     (blur)="update()"
                     (keydown.enter)="update()"
                     [disabled]="isReadonlyProperty || !editable"
+                    tabindex="-1"
                     [attr.data-automation-id]="'card-textitem-value-' + property.key"
                     [aria-describedby]="'adf-card-textitem-error-' + property.key"
                 />
@@ -152,7 +153,7 @@
                     <mat-icon class="adf-textitem-icon" [adf-icon]="property?.icon" />
                 </button>
             </mat-form-field>
-        </div>
+        </button>
 
     <mat-error
         *ngIf="isEditable && hasErrors"
