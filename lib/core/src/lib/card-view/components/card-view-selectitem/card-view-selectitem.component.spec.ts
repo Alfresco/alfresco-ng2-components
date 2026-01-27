@@ -62,7 +62,7 @@ describe('CardViewSelectItemComponent', () => {
         editable: true
     };
 
-    const getSelectElement = (): DebugElement => testingUtils.getByDataAutomationClass('select-box');
+    const getSelectElement = (): DebugElement => testingUtils.getByDataAutomationId('select-box');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
