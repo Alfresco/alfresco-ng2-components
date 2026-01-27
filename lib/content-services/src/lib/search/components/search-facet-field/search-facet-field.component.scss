@@ -18,31 +18,6 @@
 
     .adf-facet-result-filter {
         padding-bottom: 16px;
-
-        .adf-facet-search-container {
-            border-radius: 6px;
-            background: var(--theme-background-color);
-            display: flex;
-            height: 32px;
-
-            .adf-facet-search-icon {
-                width: 27px;
-                margin-top: -3px;
-
-                .adf-search-field-icon {
-                    font-size: var(--theme-subheading-1-font-size);
-                }
-            }
-
-            .adf-facet-search-field {
-                padding: 2px;
-                flex: 1;
-                margin-top: -16px;
-                font-size: var(--theme-body-1-font-size);
-                line-height: 24px;
-                letter-spacing: 0.25px;
-            }
-        }
     }
 
     .adf-facet-buttons {

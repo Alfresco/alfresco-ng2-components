@@ -57,7 +57,9 @@
     .adf-login-card-wide {
         border-radius: 8px;
         background-color: var(--adf-theme-background-dialog-color);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        box-shadow:
+            0 2px 2px 0 rgba(0, 0, 0, 0.24),
+            0 0 2px 0 rgba(0, 0, 0, 0.12);
         width: 450px;
         min-width: 320px;
         padding: 21px 64px 34px;
@@ -182,11 +184,11 @@
     }
 
     .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: var(--adf-theme-foreground-text-color);
         font-size: var(--theme-subheading-2-font-size);
-        top: 9px;
-        position: relative;
-        left: 7px;
     }
 
     .adf-login-controls:has(div) {
@@ -205,10 +207,6 @@
             font-size: var(--theme-subheading-2-font-size);
 
             #{ms.$mat-form-field-infix} {
-                min-height: 0;
-                padding-bottom: 3px;
-                padding-top: 20px;
-
                 .adf-login-form-input-label {
                     font-size: var(--theme-subheading-2-font-size);
                 }

@@ -22,8 +22,6 @@ import { CardViewComponent } from './card-view.component';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { of } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-properties.interface';
-import { CardViewItem } from '../../interfaces/card-view-item.interface';
-import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -53,7 +51,7 @@ describe('CardViewComponent', () => {
 
     const getPropertyLabel = (): string => testingUtils.getInnerTextByCSS('.adf-property-label');
     const getPropertyValue = (): string => testingUtils.getByCSS('.adf-property-value').nativeElement.value;
-    const getPropertyValueText = (): string => testingUtils.getInnerTextByCSS('.adf-property-value');
+    const getPropertyValueText = (): string => testingUtils.getInnerTextByCSS('.adf-datepicker-span-button');
     const getPropertyValueByDataAutomationId = (dataAutomationId: string): string =>
         testingUtils.getByDataAutomationId(dataAutomationId).nativeElement.value;
 
@@ -223,34 +221,4 @@ describe('CardViewComponent', () => {
         expect(await currentOptions[0].getText()).toContain(options[0].label);
         expect(await currentOptions[1].getText()).toContain(options[1].label);
     });
-
-    it('should show/hide the label for multivalued chip property based on displayLabelForChips input', () => {
-        const multiValueProperty: CardViewItem = new CardViewTextItemModel({
-            label: 'My Multivalue Label',
-            value: ['Value 1', 'Value 2', 'Value 3'],
-            key: 'multi-key'
-        });
-
-        component.properties = [multiValueProperty];
-        fixture.detectChanges();
-
-        const cardViewItemDispatcherComponent = getCardViewItemDispatcherComponent();
-
-        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(false);
-
-        component.displayLabelForChips = true;
-        fixture.detectChanges();
-
-        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(true);
-    });
-
-    /**
-     * Return the card view item dispatcher component
-     *
-     * @returns the dispatcher component instance
-     */
-    function getCardViewItemDispatcherComponent(): CardViewItemDispatcherComponent {
-        const cardViewItemDispatcherDebugElement = testingUtils.getByDirective(CardViewItemDispatcherComponent);
-        return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
-    }
 });

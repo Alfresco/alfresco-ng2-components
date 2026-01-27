@@ -4,8 +4,11 @@
     display: flow-root;
 
     .adf-dateitem-editable {
-        cursor: pointer;
         width: 100%;
+
+        .adf-date-reset-icon {
+            padding: 0;
+        }
 
         &-controls {
             display: flex;
@@ -31,11 +34,6 @@
                 position: relative;
             }
         }
-
-        #{ms.$mat-line-ripple},
-        #{ms.$mat-form-field-subscript-wrapper} {
-            display: none;
-        }
     }
 
     .adf-property-value {
@@ -48,10 +46,6 @@
             border-radius: 6px;
             border-bottom: inherit;
             padding-left: 0;
-        }
-
-        &.adf-property-readonly-value {
-            padding: 0 0 0 12px;
         }
     }
 

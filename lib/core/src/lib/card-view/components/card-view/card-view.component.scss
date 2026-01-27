@@ -5,21 +5,6 @@
     border-color: var(--adf-theme-foreground-divider-color);
     border-radius: 0;
 
-    .adf-property-label {
-        color: var(--adf-metadata-property-panel-text-color);
-        display: flex;
-        line-height: 20px;
-        margin-bottom: 4px;
-
-        &.adf-property-readonly-value {
-            color: var(--adf-metadata-property-panel-label-color);
-        }
-
-        &.adf-property-value-editable {
-            color: var(--adf-metadata-property-panel-title-color);
-        }
-    }
-
     .adf-property-container {
         margin-bottom: 12px;
     }

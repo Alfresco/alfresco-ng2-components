@@ -42,6 +42,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatInputModule } from '@angular/material/input';
 import { IconModule } from '@alfresco/adf-core';
 
 interface CategoryNameControlErrors {
@@ -64,7 +65,8 @@ interface CategoryNameControlErrors {
         MatButtonModule,
         IconModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatInputModule
     ],
     templateUrl: './categories-management.component.html',
     styleUrls: ['./categories-management.component.scss'],

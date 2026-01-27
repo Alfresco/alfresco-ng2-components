@@ -1,66 +1,51 @@
-<ng-container *ngIf="!property.isEmpty() || isEditable">
+<ng-container *ngIf="showProperty || isEditable">
     <div [ngSwitch]="templateType">
         <div *ngSwitchDefault>
-        <div *ngIf="!isEditable"
-            [attr.data-automation-id]="'card-select-label-' + property.key"
-            class="adf-property-label adf-property-label-non-editable"
-            >{{ property.label | translate }}
-        </div>
             <div class="adf-property-field">
-                <div
-                    *ngIf="!isEditable"
-                    class="adf-property-value adf-property-read-only"
-                    [attr.data-automation-id]="'select-readonly-value-' + property.key"
-                    data-automation-class="read-only-value"
-                    [title]="property.displayValue | async | translate"
-                >
-                    {{ property.displayValue | async | translate }}
-                </div>
-                <div *ngIf="isEditable">
-                    <mat-form-field class="adf-property-value">
-                        <mat-label
-                            [attr.data-automation-id]="'card-select-label-' + property.key"
-                            class="adf-property-label adf-property-value-editable"
-                            [ngClass]="{
-                                'adf-property-readonly-value': isReadonlyProperty
-                            }"
-                            >{{ property.label | translate }}
-                        </mat-label>
-                        <mat-select
-                            [(ngModel)]="value"
-                            [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty }"
-                            panelClass="adf-select-filter"
-                            (selectionChange)="onChange($event)"
-                            data-automation-class="select-box"
-                            [aria-label]="property.label | translate"
-                            adf-card-view-property-validator
-                            [property]="property"
-                            (validated)="onValidation($event)"
-                        >
-                            <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)" />
-                            <mat-option *ngIf="displayNoneOption">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
-                            <mat-option *ngFor="let option of list$ | async" [value]="option.key">
-                                {{ option.label | translate }}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error [innerHTML]="error" />
-                    </mat-form-field>
-                </div>
+                <mat-form-field class="adf-property-value">
+                    <mat-label
+                        [attr.data-automation-id]="'card-select-label-' + property.key"
+                        class="adf-property-label"
+                        [ngClass]="{
+                            'adf-property-value-editable': isEditable,
+                            'adf-property-readonly-value': isReadonlyProperty
+                        }"
+                        >{{ property.label | translate }}
+                    </mat-label>
+                    <mat-select
+                        [(ngModel)]="value"
+                        [disabled]="isReadonlyProperty || !editable"
+                        [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty || !editable }"
+                        panelClass="adf-select-filter"
+                        (selectionChange)="onChange($event)"
+                        data-automation-id="select-box"
+                        [aria-label]="property.label | translate"
+                        adf-card-view-property-validator
+                        [property]="property"
+                        (validated)="onValidation($event)"
+                    >
+                        <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)" />
+                        <mat-option *ngIf="displayNoneOption">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
+                        <mat-option *ngFor="let option of list$ | async" [value]="option.key">
+                            {{ option.label | translate }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error [innerHTML]="error" />
+                </mat-form-field>
             </div>
         </div>
         <div *ngSwitchCase="'autocompleteBased'">
             <mat-form-field
                 class="adf-property-field adf-card-selectitem-autocomplete  "
-                [ngClass]="{ 'adf-property-read-only': !isEditable }"
+                [ngClass]="{ 'adf-property-read-only': isReadonlyProperty || !editable }"
                 [floatLabel]="property.default ? 'always' : null"
             >
                 <mat-label
-                    *ngIf="showProperty || isEditable"
                     [attr.data-automation-id]="'card-autocomplete-based-selectitem-label-' + property.key"
                     class="adf-property-label"
                     [ngClass]="{
                         'adf-property-value-editable': isEditable,
-                        'adf-property-readonly-value': isReadonlyProperty
+                        'adf-property-readonly-value': isReadonlyProperty || !editable
                     }"
                 >
                     {{ property.label | translate }}
@@ -71,7 +56,7 @@
                     class="adf-property-value"
                     [ngClass]="{
                         'adf-property-value-editable': isEditable,
-                        'adf-property-readonly-value': isReadonlyProperty
+                        'adf-property-readonly-value': isReadonlyProperty || !editable
                     }"
                     title="{{ property.label | translate }}"
                     [placeholder]="property.default"
