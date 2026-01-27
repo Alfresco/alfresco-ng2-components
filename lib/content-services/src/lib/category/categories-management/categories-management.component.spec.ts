@@ -118,7 +118,7 @@ describe('CategoriesManagementComponent', () => {
      * @returns error text
      */
     function getFirstError(): string {
-        return fixture.debugElement.query(By.directive(MatError)).nativeElement.textContent;
+        return fixture.debugElement.query(By.directive(MatError)).nativeElement.textContent.trim();
     }
 
     /**

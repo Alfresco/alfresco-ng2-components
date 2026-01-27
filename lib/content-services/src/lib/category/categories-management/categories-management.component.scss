@@ -1,28 +1,11 @@
 @use '../../mat-selectors.scss' as ms;
 
 .adf-categories-management {
+    margin: 5px 0;
+
     .adf-category-name-field {
         display: flex;
         flex-direction: column;
-        margin-right: 12px;
-
-        input {
-            background: var(--adf-metadata-buttons-background-color);
-            border-radius: 12px;
-            padding: 7px 8px;
-            border: none;
-            outline: none;
-            font: inherit;
-            color: currentcolor;
-            margin: 0;
-            vertical-align: bottom;
-            text-align: inherit;
-            box-sizing: content-box;
-        }
-
-        #{ms.$mat-form-field-error} {
-            padding-top: 5px;
-        }
     }
 
     .adf-assigned-categories {

@@ -22,16 +22,18 @@
 
     <mat-divider class="adf-columns-selector-divider" aria-hidden="true" />
 
-    <div class="adf-columns-selector-search-input-container">
-        <mat-icon class="adf-columns-selector-search-input-icon" adf-icon="search" />
-
+    <mat-form-field class="adf-columns-selector-search-input-form">
+        <mat-label>{{ 'ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH' | translate }}</mat-label>
         <input
-            [formControl]="searchInputControl"
-            class="adf-columns-selector-search-input"
-            data-automation-id="adf-columns-selector-search-input"
+            matInput
             type="text"
-            [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
-    </div>
+            data-automation-id="adf-columns-selector-search-input"
+            [placeholder]="'ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH' | translate"
+            [formControl]="searchInputControl"/>
+        <mat-icon matSuffix>
+            search
+        </mat-icon>
+    </mat-form-field>
 
     <mat-selection-list
         class="adf-columns-selector-list-container"

@@ -51,51 +51,8 @@ $search-result-height: calc(100% - 60px);
     &-permission-search {
         &-input {
             width: 100%;
-            padding-bottom: 0;
-            padding-top: 12px;
-
-            #{ms.$mat-form-field-wrapper} {
-                #{ms.$mat-form-field-flex} {
-                    align-items: center;
-
-                    #{ms.$mat-form-field-infix} {
-                        padding-top: 0;
-                        padding-bottom: 0;
-                    }
-                }
-            }
-
-            #{ms.$mat-form-field-subscript-wrapper} {
-                height: 16px;
-            }
-
-            .adf-permission-search-input-control {
-                &:focus::placeholder {
-                    color: var(--theme-primary-color);
-                }
-            }
-
-            .adf-permission-search-icon:is(mat-icon) {
-                padding: 0 0 12px;
-                width: 1em;
-                height: 1em;
-                font-size: 20px;
-            }
-
-            .adf-permission-search-input-clear-button {
-                padding: 0;
-                width: 20px;
-                height: 32px;
-                margin-right: 1.5px;
-
-                .adf-permission-search-icon:is(mat-icon) {
-                    cursor: pointer;
-
-                    &:hover {
-                        color: var(--adf-theme-foreground-base-color);
-                    }
-                }
-            }
+            padding-top: 5px;
+            margin-bottom: 15px;
         }
     }
 

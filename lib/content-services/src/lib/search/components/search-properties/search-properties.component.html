@@ -7,9 +7,7 @@
             <mat-form-field
                 class="adf-search-properties-form-field"
                 [style.flex]="'0 0 ' + fileSizeOperatorsMaxWidth + 'px'"
-                subscriptSizing="dynamic"
-                data-automation-id="adf-search-properties-file-size-operator"
-                appearance="outline">
+                data-automation-id="adf-search-properties-file-size-operator">
                 <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.CONDITION' | translate }}</mat-label>
                 <mat-select
                     data-automation-id="adf-search-properties-file-size-operator-select"
@@ -22,7 +20,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="adf-search-properties-form-field" appearance="outline" floatLabel="always">
+            <mat-form-field class="adf-search-properties-form-field">
                 <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.SIZE_VALUE' | translate }}</mat-label>
                 <input
                     matInput
@@ -39,9 +37,7 @@
             </mat-form-field>
             <mat-form-field
                 class="adf-search-properties-form-field"
-                data-automation-id="adf-search-properties-file-size-unit"
-                subscriptSizing="dynamic"
-                appearance="outline">
+                data-automation-id="adf-search-properties-file-size-unit">
                 <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate }}</mat-label>
                 <mat-select
                     [attr.aria-label]="'SEARCH.SEARCH_PROPERTIES.ACCESSIBILITY.UNIT' | translate"

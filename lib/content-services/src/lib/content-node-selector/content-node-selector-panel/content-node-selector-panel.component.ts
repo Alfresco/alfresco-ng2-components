@@ -42,7 +42,6 @@ import { ShareDataRow } from '../../document-list/data/share-data-row.model';
 import { NodeEntryEvent } from '../../document-list/components/node.event';
 import { debounceTime } from 'rxjs/operators';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
-import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
@@ -63,7 +62,6 @@ export const defaultValidation = () => true;
 @Component({
     selector: 'adf-content-node-selector-panel',
     imports: [
-        CommonModule,
         MatFormFieldModule,
         TranslatePipe,
         MatInputModule,

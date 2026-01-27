@@ -3,7 +3,7 @@
         [@transitionMessages]="subscriptAnimationState"
         (@transitionMessages.done)="applySearchFocus($event)">
         <button mat-icon-button
-                *ngIf="expandable"
+                *ngIf="expandable && !isSearchBarActive()"
                 id="adf-search-button"
                 class="adf-search-button"
                 [ngClass]="{'adf-search-button-inactive': subscriptAnimationState.value === 'inactive'}"

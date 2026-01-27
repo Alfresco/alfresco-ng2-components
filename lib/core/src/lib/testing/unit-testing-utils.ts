@@ -95,6 +95,11 @@ export class UnitTestingUtils {
         element.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
     }
 
+    doubleClickByCSS(selector: string): void {
+        const element = this.getByCSS(selector);
+        element.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+    }
+
     blurByCSS(selector: string): void {
         const element = this.getByCSS(selector);
         element.triggerEventHandler('blur', new FocusEvent('blur'));
@@ -267,6 +272,14 @@ export class UnitTestingUtils {
         return select.getOptions();
     }
 
+    async getMatSelect(): Promise<MatSelectHarness> {
+        return this.loader.getHarness(MatSelectHarness);
+    }
+
+    async getMatSelectByDataAutomationId(dataAutomationId: string): Promise<MatSelectHarness> {
+        return this.loader.getHarness(MatSelectHarness.with({ selector: `[data-automation-id="${dataAutomationId}"]` }));
+    }
+
     async getMatSelectHost(): Promise<TestElement> {
         const select = await this.loader.getHarness(MatSelectHarness);
         return select.host();
@@ -385,6 +398,11 @@ export class UnitTestingUtils {
 
     async getMatInputValue(): Promise<string> {
         const input = await this.getMatInput();
+        return input.getValue();
+    }
+
+    async getMatInputValueByDataAutomationId(dataAutomationId: string): Promise<string> {
+        const input = await this.getMatInputByDataAutomationId(dataAutomationId);
         return input.getValue();
     }
 
