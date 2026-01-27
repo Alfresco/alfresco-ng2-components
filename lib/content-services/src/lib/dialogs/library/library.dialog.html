@@ -57,11 +57,14 @@
       }
     </mat-form-field>
 
+
+    <label id="visibility-label" class="adf-library-dialog-visibility-label"> {{ 'LIBRARY.DIALOG.FORM.VISIBILITY' | translate }} </label>
     <mat-radio-group
       class="adf-library-dialog-radio-group"
       [ngModelOptions]="{ standalone: true }"
       [(ngModel)]="visibilityOption"
       (change)="visibilityChangeHandler($event)"
+      aria-labelledby="visibility-label"
     >
       @for (option of visibilityOptions; track option.value) {
         <mat-radio-button
