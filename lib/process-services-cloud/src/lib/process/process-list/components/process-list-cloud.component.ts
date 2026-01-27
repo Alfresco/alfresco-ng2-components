@@ -64,7 +64,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProcessVariableFilterModel } from '../../../models/process-variable-filter.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -81,7 +81,8 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
         EmptyContentComponent,
         NoContentTemplateDirective,
         LoadingContentTemplateDirective,
-        NgIf
+        NgIf,
+        AsyncPipe
     ],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],
@@ -290,6 +291,12 @@ export class ProcessListCloudComponent
     @Input()
     processVariables: ProcessVariableFilterModel[];
 
+    /**
+     * Enables reloading of preferences and process list when appName changes.
+     */
+    @Input()
+    enableAppChange: boolean = false;
+
     /** Include subprocesses in the process list. */
     @Input()
     includeSubprocesses: boolean | null = null;
@@ -331,7 +338,6 @@ export class ProcessListCloudComponent
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-    isLoading = true;
 
     rows: any[] = [];
     formattedSorting: any[];
@@ -340,6 +346,13 @@ export class ProcessListCloudComponent
     dataAdapter: ProcessListDatatableAdapter;
 
     private defaultSorting = { key: 'startDate', direction: 'desc' };
+
+    protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
+    private readonly isReloadingSubject$ = new BehaviorSubject<boolean>(false);
+
+    isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
+        map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
+    );
 
     private fetchProcessesTrigger$ = new Subject<void>();
 
@@ -361,10 +374,10 @@ export class ProcessListCloudComponent
             totalItems: 0
         });
 
-        combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
+        combineLatest([this.isLoadingPreferences$, this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
-                tap(() => (this.isLoading = true)),
-                filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
+                tap(() => this.isReloadingSubject$.next(true)),
+                filter(([isLoadingPreferences, isColumnSchemaCreated]) => !isLoadingPreferences && !!isColumnSchemaCreated),
                 switchMap(() => {
                     if (this.searchApiMethod === 'POST') {
                         const requestNode = this.createProcessListRequestNode();
@@ -373,7 +386,7 @@ export class ProcessListCloudComponent
                     } else {
                         const requestNode = this.createRequestNode();
                         this.requestNode = requestNode;
-                        return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
+                        return this.processListCloudService.getProcessByRequest(requestNode).pipe();
                     }
                 }),
                 takeUntilDestroyed()
@@ -385,18 +398,46 @@ export class ProcessListCloudComponent
                     this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
 
                     this.success.emit(processes);
-                    this.isLoading = false;
+                    this.isReloadingSubject$.next(false);
                     this.pagination.next(processes.list.pagination);
                 },
                 error: (error) => {
                     console.error(error);
                     this.error.emit(error);
-                    this.isLoading = false;
+                    this.isReloadingSubject$.next(false);
                 }
             });
     }
 
+    reload() {
+        if (this.appName || this.appName === '') {
+            this.isReloadingSubject$.next(true);
+            this.fetchProcessesTrigger$.next();
+        } else {
+            this.rows = [];
+        }
+    }
+
     ngAfterContentInit() {
+        this.retrieveProcessPreferences();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.isPropertyChanged(changes, 'sorting')) {
+            this.formatSorting(changes['sorting'].currentValue);
+        }
+
+        if (changes['appName'] && this.enableAppChange) {
+            this.retrieveProcessPreferences();
+        }
+
+        if (this.isAnyPropertyChanged(changes)) {
+            this.reload();
+        }
+    }
+
+    private retrieveProcessPreferences(): void {
+        this.isLoadingPreferences$.next(true);
         this.cloudPreferenceService
             .getPreferences(this.appName)
             .pipe(
@@ -411,7 +452,7 @@ export class ProcessListCloudComponent
 
                     return {
                         columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
                         columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                     };
                 }),
@@ -419,7 +460,7 @@ export class ProcessListCloudComponent
                     if (error.status === 404) {
                         return of({
                             columnsOrder: undefined,
-                            columnsVisibility: this.columnsVisibility,
+                            columnsVisibility: undefined,
                             columnsWidths: undefined
                         });
                     } else {
@@ -427,42 +468,35 @@ export class ProcessListCloudComponent
                     }
                 })
             )
-            .subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {
-                if (columnsVisibility) {
-                    this.columnsVisibility = columnsVisibility;
+            .subscribe(
+                ({ columnsOrder, columnsVisibility, columnsWidths }) => {
+                    if (columnsVisibility) {
+                        this.columnsVisibility = columnsVisibility;
+                    }
+
+                    if (columnsOrder) {
+                        this.columnsOrder = columnsOrder;
+                    }
+
+                    if (columnsWidths) {
+                        this.columnsWidths = columnsWidths;
+                    }
+
+                    this.createDatatableSchema();
+                    if (this.enableAppChange) {
+                        this.createColumns();
+                    }
+                    this.isLoadingPreferences$.next(false);
+                },
+                (error) => {
+                    this.error.emit(error);
+                    this.isLoadingPreferences$.next(false);
                 }
-
-                if (columnsOrder) {
-                    this.columnsOrder = columnsOrder;
-                }
-
-                if (columnsWidths) {
-                    this.columnsWidths = columnsWidths;
-                }
-
-                this.createDatatableSchema();
-            });
-    }
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes, 'sorting')) {
-            this.formatSorting(changes['sorting'].currentValue);
-        }
-
-        if (this.isAnyPropertyChanged(changes)) {
-            this.reload();
-        }
+            );
     }
 
     getCurrentId(): string {
         return this.currentInstanceId;
-    }
-
-    reload() {
-        if (this.appName || this.appName === '') {
-            this.fetchProcessesTrigger$.next();
-        } else {
-            this.rows = [];
-        }
     }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {

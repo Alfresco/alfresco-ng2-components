@@ -34,7 +34,7 @@ import {
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
-import { of, throwError } from 'rxjs';
+import { of, throwError, firstValueFrom } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -338,15 +338,16 @@ describe('ProcessListCloudComponent', () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-            fixture.detectChanges();
-            expect(component.isLoading).toBe(true);
+            expect(await firstValueFrom(component.isLoading$)).toBe(true);
 
-            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             component.ngOnChanges({ appName });
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            expect(component.isLoading).toBe(false);
+            expect(await firstValueFrom(component.isLoading$)).toBe(false);
             expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
             const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
@@ -424,9 +425,10 @@ describe('ProcessListCloudComponent', () => {
 
                 done();
             });
+
+            component.ngAfterContentInit();
             component.appName = appName.currentValue;
-            component.ngOnChanges({ appName });
-            fixture.detectChanges();
+            component.reload();
         });
 
         it('should shown columns selector', () => {
@@ -633,15 +635,13 @@ describe('ProcessListCloudComponent', () => {
             spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-            fixture.detectChanges();
-            expect(component.isLoading).toBe(true);
-
-            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
+            expect(await firstValueFrom(component.isLoading$)).toBe(true);
 
             component.ngOnChanges({ appName });
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            expect(component.isLoading).toBe(false);
+            expect(await firstValueFrom(component.isLoading$)).toBe(false);
             expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
             const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
@@ -758,9 +758,9 @@ describe('ProcessListCloudComponent', () => {
 
                 done();
             });
+            component.ngAfterContentInit();
             component.appName = appName.currentValue;
-            component.ngOnChanges({ appName });
-            fixture.detectChanges();
+            component.reload();
         });
 
         it('should shown columns selector', () => {
@@ -954,6 +954,34 @@ describe('ProcessListCloudComponent', () => {
                     component.resetPagination();
                 });
             });
+
+            it('should call loadPreferencesAndInitialize when appName changes', () => {
+                spyOn(preferencesService, 'getPreferences').and.returnValue(of({}));
+
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                spyOn(component as any, 'createDatatableSchema');
+                spyOn(component as any, 'createColumns');
+
+                component.enableAppChange = true;
+                component.appName = 'old-app-name';
+
+                const appName = new SimpleChange('old-app-name', 'new-app-name', false);
+                component.appName = 'new-app-name';
+                component.ngOnChanges({ appName });
+
+                expect(preferencesService.getPreferences).toHaveBeenCalledWith('new-app-name');
+                expect((component as any).createDatatableSchema).toHaveBeenCalled();
+                expect((component as any).createColumns).toHaveBeenCalled();
+            });
+
+            it('should not call loadPreferencesAndInitialize when appName does not change', () => {
+                spyOn(preferencesService, 'getPreferences');
+
+                const status = new SimpleChange('old-status', 'new-status', false);
+                component.ngOnChanges({ status });
+
+                expect(preferencesService.getPreferences).not.toHaveBeenCalled();
+            });
         });
     });
 
@@ -974,15 +1002,17 @@ describe('ProcessListCloudComponent', () => {
             const emptyList = { list: { entries: [] } };
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
 
-            fixture.detectChanges();
-            expect(component.isLoading).toBe(true);
+            expect(await firstValueFrom(component.isLoading$)).toBe(true);
 
-            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
             fixture.detectChanges();
+            await fixture.whenStable();
 
+            expect(await firstValueFrom(component.isLoading$)).toBe(false);
             expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
             const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
@@ -1223,7 +1253,7 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
     });
 
     it('should render the custom template', () => {
-        fixtureEmpty.componentInstance.processListCloud.isLoading = false;
+        fixtureEmpty.componentInstance.processListCloud['isLoadingPreferences$'].next(false);
 
         fixtureEmpty.detectChanges();
 

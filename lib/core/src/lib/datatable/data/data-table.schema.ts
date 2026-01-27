@@ -45,17 +45,19 @@ export abstract class DataTableSchema<T = unknown> {
     protected columnsSchemaSubject$ = new BehaviorSubject<boolean>(false);
     isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
-    constructor(private appConfigService: AppConfigService, protected presetKey: string, protected presetsModel: any) {}
+    constructor(
+        private appConfigService: AppConfigService,
+        protected presetKey: string,
+        protected presetsModel: any
+    ) {}
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
 
         if (!this.columns || this.columns.length === 0) {
             this.createColumns();
-            this.columnsSchemaSubject$.next(true);
-        } else {
-            this.columnsSchemaSubject$.next(true);
         }
+        this.columnsSchemaSubject$.next(true);
     }
 
     public createColumns(): void {
