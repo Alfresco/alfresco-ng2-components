@@ -15,7 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, effect, EventEmitter, inject, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    DestroyRef,
+    effect,
+    ElementRef,
+    EventEmitter,
+    inject,
+    Inject,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { endOfDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
@@ -57,7 +71,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDateRangeComponent implements OnInit {
+export class SearchDateRangeComponent implements OnInit, AfterViewInit {
     @Input()
     dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
     @Input()
@@ -78,6 +92,8 @@ export class SearchDateRangeComponent implements OnInit {
     changed = new EventEmitter<Partial<SearchDateRange>>();
     @Output()
     valid = new EventEmitter<boolean>();
+
+    @ViewChild('adfDateRangeInput', { static: false, read: ElementRef }) dateRangeInput: ElementRef;
 
     private readonly formBuilder = inject(FormBuilder);
 
@@ -127,6 +143,13 @@ export class SearchDateRangeComponent implements OnInit {
         this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.onChange());
         this.onReset$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
     }
+
+    ngAfterViewInit() {
+        this.dateRangeInput.nativeElement.querySelectorAll('input').forEach((input: HTMLInputElement) => {
+            input.setAttribute('aria-haspopup', 'false');
+        });
+    }
+
     private updateValidators(dateRangeType: DateRangeType) {
         switch (dateRangeType) {
             case DateRangeType.BETWEEN:

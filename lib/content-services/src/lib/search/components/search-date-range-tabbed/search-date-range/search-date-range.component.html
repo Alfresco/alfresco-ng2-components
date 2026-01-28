@@ -45,7 +45,7 @@
             id="adf-search-date-range-between-range-label">
             {{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.DATE_RANGE' | translate }}
         </mat-label>
-        <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate">
+        <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate" #adfDateRangeInput>
           <input
               matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
               data-automation-id="date-range-between-start-input"
