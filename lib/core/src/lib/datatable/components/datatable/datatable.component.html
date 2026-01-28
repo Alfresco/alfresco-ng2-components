@@ -53,12 +53,8 @@
                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
                 [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
-                [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : (col.title | translate) + (col.subtitle ? ' ' + (col.subtitle | translate) : '')"
-                (click)="onColumnHeaderClick(col, $event)"
-                (keyup.enter)="onColumnHeaderClick(col, $event)"
                 role="columnheader"
-                [attr.tabindex]="col.sortable ? 0 : null"
-                [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
+                [attr.aria-sort]="col.sortable ? getAriaSort(col) : null"
                 cdkDrag
                 cdkDragLockAxis="x"
                 (cdkDragStarted)="isDraggingHeaderColumn = true"
@@ -73,6 +69,22 @@
             <div
                 adf-resizable
                 #resizableElement="adf-resizable"
+                [attr.tabindex]="col.sortable ? 0 : null"
+                [attr.role]="col.sortable ? 'button' : null"
+                [attr.aria-description]="
+                    isColumnSortActive(col) ? (getSortLiveAnnouncement(col) | translate: { string: col.title | translate }) : null
+                "
+                [attr.aria-label]="
+                    col.srTitle
+                        ? (col.srTitle | translate)
+                        : ('ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT' | translate) +
+                            ' ' +
+                            (col.title | translate) +
+                            (col.subtitle ? ' ' + (col.subtitle | translate) : '')
+                "
+                (click)="onColumnHeaderClick(col, $event)"
+                (keyup.enter)="onColumnHeaderClick(col, $event)"
+
                 [coverPadding]="10"
                 (resizing)="onResizing($event, columnIndex)"
                 (keyboardResizing)="onResizing($event, columnIndex)"
@@ -85,6 +97,10 @@
                     !isDraggingHeaderColumn &&
                     !isResizing && col.sortable}"
             >
+                <span *ngIf="col.title && col.sortable" class="adf-sr-only" aria-live="assertive" aria-atomic="true">
+                            {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
+                </span>
+
                 <ng-container *ngIf="!col.header">
                     <span
                         *ngIf="col.title"
@@ -100,10 +116,6 @@
                         class="adf-datatable-cell-value adf-datatable-cell-header_subtitle"
                     >
                         ({{col.subtitle | translate}})
-                    </span>
-
-                    <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
-                        {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
                     </span>
 
                     <span *ngIf="!col.title && !col.sortable && !headerFilterTemplate" [attr.title]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate"></span>

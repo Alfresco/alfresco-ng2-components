@@ -452,10 +452,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     isColumnSortActive(column: DataColumn): boolean {
-        if (!column || !this.data.getSorting()) {
+        const sorting = this.data.getSorting();
+        if (!column || !sorting) {
             return false;
         }
-        return column.key === this.data.getSorting().key;
+        return column.key === sorting.key || column.sortingKey === sorting.key;
     }
 
     getVisibleColumns(): DataColumn[] {
@@ -747,7 +748,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private isValidClickEvent(event: Event): boolean {
         if (event instanceof MouseEvent) {
-            return event.eventPhase === event.BUBBLING_PHASE;
+            return event.eventPhase === event.AT_TARGET || event.eventPhase === event.BUBBLING_PHASE;
         } else if (event instanceof KeyboardEvent) {
             return event.eventPhase === event.AT_TARGET;
         }
@@ -1031,10 +1032,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     getAriaSort(column: DataColumn): string {
         if (!this.isColumnSortActive(column)) {
-            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
+            return 'none';
         }
 
-        return this.isColumnSorted(column, 'asc') ? 'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' : 'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
+        return this.isColumnSorted(column, 'asc') ? 'ascending' : 'descending';
     }
 
     getSortLiveAnnouncement(column: DataColumn): string {
