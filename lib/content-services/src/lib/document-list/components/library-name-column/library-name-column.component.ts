@@ -47,6 +47,7 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
             {{ displayText$ | async }}
         </span>
     `,
+    styleUrls: ['./library-name-column.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
