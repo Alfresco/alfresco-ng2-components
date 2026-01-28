@@ -324,7 +324,7 @@ describe('SearchDateRangeComponent', () => {
 
         component.ngAfterViewInit();
 
-        inputEls.forEach((input: HTMLInputElement) => {
+        inputEls.forEach((input) => {
             expect(input.setAttribute).toHaveBeenCalledWith('aria-haspopup', 'false');
             expect(input.getAttribute('aria-haspopup')).toBe('false');
         });
