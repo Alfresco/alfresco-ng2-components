@@ -57,15 +57,8 @@
       }
     </mat-form-field>
 
+    <span id="visibility-label" class="adf-library-dialog-visibility-label">{{ 'LIBRARY.DIALOG.FORM.VISIBILITY' | translate }}</span>
 
-      <span id="visibility-label" class="adf-library-dialog-visibility-label">{{ 'LIBRARY.DIALOG.FORM.VISIBILITY' | translate }}</span>
-      <mat-radio-group
-          class="adf-library-dialog-radio-group"
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="visibilityOption"
-          (change)="visibilityChangeHandler($event)"
-          aria-labelledby="visibility-label"
-      >
     <mat-radio-group
       class="adf-library-dialog-radio-group"
       [ngModelOptions]="{ standalone: true }"
