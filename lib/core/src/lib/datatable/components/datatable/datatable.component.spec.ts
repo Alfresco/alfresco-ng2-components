@@ -440,6 +440,20 @@ describe('DataTable', () => {
         );
     });
 
+    it('should fallback to column sortingKey if key is missing', () => {
+        const sorting = new DataSorting('displayName', 'asc');
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data.setSorting(sorting);
+
+        const column1 = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'desc', sortingKey: 'displayName' });
+        const column2 = new ObjectDataColumn({ key: 'displayName', sortable: true, direction: 'desc', sortingKey: 'name' });
+        const column3 = new ObjectDataColumn({ key: 'other', sortable: true, direction: 'desc', sortingKey: 'other' });
+
+        expect(dataTable.isColumnSortActive(column1)).toBeTrue();
+        expect(dataTable.isColumnSortActive(column2)).toBeTrue();
+        expect(dataTable.isColumnSortActive(column3)).toBeFalse();
+    });
+
     it('should change the rows on changing of the data', () => {
         const newData = new ObjectDataTableAdapter([{ name: 'TEST' }, { name: 'FAKE' }], [new ObjectDataColumn({ key: 'name' })]);
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
@@ -1588,6 +1602,27 @@ describe('Accessibility', () => {
     let columnCustomTemplate: TemplateRef<any>;
     let testingUtils: UnitTestingUtils;
 
+    const setupAndCheckHeaderColumns = (sortable: boolean, selector: string, assertions: (element: DebugElement | null) => void) => {
+        dataTable.showHeader = ShowHeaderMode.Always;
+        const dataRows = [{ name: 'name1' }];
+
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, sortable })]);
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const element = testingUtils.getByCSS(selector);
+        assertions(element);
+    };
+
+    const headerCellSelector = '.adf-datatable-cell-header';
+    const bodyCellSelector = '.adf-datatable-cell';
+    const headerCellContentSelector = '.adf-datatable-cell-header-content';
+
     const focusTrapFactory = jasmine.createSpyObj('ConfigurableFocusTrapFactory', ['create']);
     const focusTrap = jasmine.createSpyObj('ConfigurableFocusTrap', ['focusInitialElement', 'destroy']);
 
@@ -1638,25 +1673,25 @@ describe('Accessibility', () => {
             column = new ObjectDataColumn({ key: 'key' });
         });
 
-        it('should return correct translation key when no sort is applied', () => {
+        it('should return correct key without translation when no sort is applied', () => {
             spyOn(dataTable, 'isColumnSortActive').and.returnValue(false);
-            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_NONE');
+            expect(dataTable.getAriaSort(column)).toBe('none');
         });
 
-        it('should return translation key when column sort is ascending', () => {
+        it('should return key without translation when column sort is ascending', () => {
             const isColumnSortedAsc = true;
             spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
             spyOn(dataTable, 'isColumnSorted').and.returnValue(isColumnSortedAsc);
 
-            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING');
+            expect(dataTable.getAriaSort(column)).toBe('ascending');
         });
 
-        it('should return translation key when column sort is descending', () => {
+        it('should return key without translation when column sort is descending', () => {
             const isColumnSortedAsc = false;
             spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
             spyOn(dataTable, 'isColumnSorted').and.returnValue(isColumnSortedAsc);
 
-            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING');
+            expect(dataTable.getAriaSort(column)).toBe('descending');
         });
     });
 
@@ -1716,41 +1751,68 @@ describe('Accessibility', () => {
     });
 
     describe('Row cells focus management', () => {
-        const testFocus = (sortable: boolean, selector: string, expectedTabindex: string | null) => {
-            dataTable.showHeader = ShowHeaderMode.Always;
-            const dataRows = [{ name: 'name1' }];
-
-            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, sortable })]);
-
-            dataTable.ngOnChanges({
-                rows: new SimpleChange(null, dataRows, false)
-            });
-
-            fixture.detectChanges();
-            dataTable.ngAfterViewInit();
-
-            const element = testingUtils.getByCSS(selector);
-            expect(element?.nativeElement.getAttribute('tabindex')).toEqual(expectedTabindex);
-        };
-
-        const headerCellSelector = '.adf-datatable-cell-header';
-
         it('should remove header cell focus when cell is not sortable', () => {
-            testFocus(false, headerCellSelector, null);
+            setupAndCheckHeaderColumns(false, headerCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
         });
 
         it('should allow header cell focus when cell is sortable', () => {
-            testFocus(true, headerCellSelector, '0');
+            setupAndCheckHeaderColumns(true, headerCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
         });
 
         it('should set tabindex equal to null on body cell by default (sortable = false)', () => {
-            const bodyCellSelector = '.adf-datatable-cell';
-            testFocus(false, bodyCellSelector, null);
+            setupAndCheckHeaderColumns(false, bodyCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
         });
 
         it('should set tabindex equal to null on body cell by default (sortable = true)', () => {
-            const bodyCellSelector = '.adf-datatable-cell';
-            testFocus(true, bodyCellSelector, null);
+            setupAndCheckHeaderColumns(true, bodyCellSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
+        });
+
+        it('should set tabindex equal to 0 on header cell sortable wrapper when cell is sortable', () => {
+            setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBe('0');
+            });
+        });
+
+        it('should set tabindex equal to null on header cell sortable wrapper when cell is not sortable', () => {
+            setupAndCheckHeaderColumns(false, headerCellContentSelector, (element) => {
+                expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
+            });
+        });
+    });
+
+    it('should set role="button" on sortable header content cells', () => {
+        setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('role')).toEqual('button');
+        });
+    });
+
+    it('should have no role set on non-sortable header content cells', () => {
+        setupAndCheckHeaderColumns(false, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('role')).toBeNull();
+        });
+    });
+
+    it('should set aria-description on an active sortable header content cells', () => {
+        spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
+
+        setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('aria-description')).toBeDefined();
+        });
+    });
+
+    it('should not set aria-description on non-active sortable header content cells', () => {
+        spyOn(dataTable, 'isColumnSortActive').and.returnValue(false);
+
+        setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
+            expect(element?.nativeElement.getAttribute('aria-description')).toBeNull();
         });
     });
 
