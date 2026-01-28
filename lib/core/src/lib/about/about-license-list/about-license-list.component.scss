@@ -1,4 +1,10 @@
 .adf-about-license-cell {
     white-space: pre-line;
     line-height: 30px;
+    align-items: flex-start;
+    flex-direction: column;
+
+    div {
+        white-space: nowrap;
+    }
 }

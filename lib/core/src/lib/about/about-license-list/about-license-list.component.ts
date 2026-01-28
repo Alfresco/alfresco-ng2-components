@@ -18,7 +18,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { LicenseData } from '../interfaces';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
@@ -39,7 +39,20 @@ export class AboutLicenseListComponent {
         {
             columnDef: 'value',
             header: 'ABOUT.LICENSE.VALUE',
-            cell: (row: LicenseData) => `${row.value}`
+            cell: (row: LicenseData) => {
+                const statusAndValueGroupsRegex = /(&#9989|&#10060)\s*([^&#]+)/g;
+                return row.value.replace?.(
+                    statusAndValueGroupsRegex,
+                    (_match, icon, label) =>
+                        `<div>
+                       <span aria-hidden="true">${icon}&nbsp;</span>
+                       <span class="cdk-visually-hidden">
+                         ${this.translateService.instant(icon === '&#9989' ? 'ABOUT.LICENSE.ENABLED' : 'ABOUT.LICENSE.DISABLED')}
+                       </span>
+                       ${label}
+                    </div>`
+                );
+            }
         }
     ];
 
@@ -47,4 +60,6 @@ export class AboutLicenseListComponent {
 
     @Input({ required: true })
     data: LicenseData[] = [];
+
+    constructor(private readonly translateService: TranslateService) {}
 }
