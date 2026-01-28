@@ -314,4 +314,19 @@ describe('SearchDateRangeComponent', () => {
         expect(component.form.controls.betweenEndDate.value).toBeNull();
         expect(component.reset).toHaveBeenCalled();
     });
+
+    it('should set aria-haspopup="false" on date range inputs', () => {
+        const inputEls: NodeListOf<HTMLInputElement> = component.dateRangeInput.nativeElement.querySelectorAll('input');
+
+        inputEls.forEach((input) => {
+            spyOn(input, 'setAttribute').and.callThrough();
+        });
+
+        component.ngAfterViewInit();
+
+        inputEls.forEach((input: HTMLInputElement) => {
+            expect(input.setAttribute).toHaveBeenCalledWith('aria-haspopup', 'false');
+            expect(input.getAttribute('aria-haspopup')).toBe('false');
+        });
+    });
 });
