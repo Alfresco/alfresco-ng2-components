@@ -40,18 +40,22 @@ export class AboutLicenseListComponent {
             columnDef: 'value',
             header: 'ABOUT.LICENSE.VALUE',
             cell: (row: LicenseData) => {
-                const statusAndValueGroupsRegex = /(&#9989|&#10060)\s*([^&#]+)/g;
-                return row.value.replace?.(
-                    statusAndValueGroupsRegex,
-                    (_match, icon, label) =>
-                        `<div>
-                       <span aria-hidden="true">${icon}&nbsp;</span>
+                const enabledIcon = '&#9989';
+                const disabledIcon = '&#10060';
+                const statusAndValueGroupsRegex = new RegExp(`(${enabledIcon}|${disabledIcon})\\s*([^&#]+)`, 'g');
+                return typeof row.value === 'string'
+                    ? row.value.replace(
+                          statusAndValueGroupsRegex,
+                          (_match, icon, label) =>
+                              `<div>
+                       <span aria-hidden="true">${icon}</span>
                        <span class="cdk-visually-hidden">
-                         ${this.translateService.instant(icon === '&#9989' ? 'ABOUT.LICENSE.ENABLED' : 'ABOUT.LICENSE.DISABLED')}
+                         ${this.translateService.instant(icon === enabledIcon ? 'ABOUT.LICENSE.ENABLED' : 'ABOUT.LICENSE.DISABLED')}
                        </span>
                        ${label}
                     </div>`
-                );
+                      )
+                    : row.value;
             }
         }
     ];
