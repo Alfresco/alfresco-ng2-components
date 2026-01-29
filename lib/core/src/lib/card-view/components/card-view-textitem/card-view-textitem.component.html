@@ -102,12 +102,14 @@
                 />
             </mat-form-field>
         </div>
-        <button
-            type="button"
+        <div
             *ngSwitchCase="'clickableTemplate'"
+            role="button"
             class="adf-textitem-clickable"
             [ngClass]="{ 'adf-property-read-only': isReadonlyProperty }"
             [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
+            tabindex="0"
+            (keyup.enter)="clicked()"
             (click)="clicked()"
         >
             <mat-form-field class="adf-property-field adf-card-textitem-field">
@@ -153,7 +155,7 @@
                     <mat-icon class="adf-textitem-icon" [adf-icon]="property?.icon" />
                 </button>
             </mat-form-field>
-        </button>
+        </div>
 
     <mat-error
         *ngIf="isEditable && hasErrors"

@@ -53,12 +53,8 @@
     }
 
     .adf-textitem-clickable {
-        background: none;
-        border: none;
-        margin: 0;
         cursor: pointer;
-        width: 100%;
-        padding: 3px 0 0;
+        padding-top: 3px;
 
         .adf-textitem-action:hover {
             color: var(--adf-theme-foreground-text-color);
