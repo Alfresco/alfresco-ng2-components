@@ -114,7 +114,6 @@
                 <mat-label
                     [attr.data-automation-id]="'card-textitem-label-' + property.key"
                     class="adf-property-label"
-                    (click)="$event.stopPropagation()"
                     [ngClass]="{ 'adf-property-value-editable': editable }"
                 >
                     {{ property.label | translate }}
