@@ -35,9 +35,10 @@
                         </ng-template>
                     </data-column>
 
-                    <data-column class="adf-ellipsis-cell adf-expand-cell-4"
+                    <data-column class="adf-ellipsis-cell adf-expand-cell-3"
                                  title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
-                                 key="role">
+                                 key="role"
+                                 [sortable]="false">
                         <ng-template let-entry="$implicit">
                             <adf-user-role-column [readonly]="entry.row.obj.readonly"
                                                   [value]="entry.data.getValue(entry.row, entry.col)"
