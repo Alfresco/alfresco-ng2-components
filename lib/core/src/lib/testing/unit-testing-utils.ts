@@ -33,6 +33,7 @@ import { MatToolbarHarness } from '@angular/material/toolbar/testing';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { MatProgressBarHarness } from '@angular/material/progress-bar/testing';
 import { MatListOptionHarness } from '@angular/material/list/testing';
+import { MatCellHarness } from '@angular/material/table/testing';
 
 export class UnitTestingUtils {
     constructor(
@@ -462,5 +463,11 @@ export class UnitTestingUtils {
 
     async getAllMatListOptions(): Promise<MatListOptionHarness[]> {
         return this.loader.getAllHarnesses(MatListOptionHarness);
+    }
+
+    /** MatCell related methods */
+
+    async getMatCellByColumnName(columnName: string): Promise<MatCellHarness> {
+        return this.loader.getHarness(MatCellHarness.with({ columnName }));
     }
 }

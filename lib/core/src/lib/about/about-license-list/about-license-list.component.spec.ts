@@ -16,15 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AboutLicenseListComponent } from '@alfresco/adf-core';
+import { AboutLicenseListComponent, UnitTestingUtils } from '@alfresco/adf-core';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { HarnessLoader, HarnessPredicate } from '@angular/cdk/testing';
-import { MatCellHarness } from '@angular/material/table/testing';
 
 describe('AboutLicenseListComponent', () => {
     let fixture: ComponentFixture<AboutLicenseListComponent>;
     let component: AboutLicenseListComponent;
-    let loader: HarnessLoader;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -32,13 +30,12 @@ describe('AboutLicenseListComponent', () => {
         });
         fixture = TestBed.createComponent(AboutLicenseListComponent);
         component = fixture.componentInstance;
-        loader = TestbedHarnessEnvironment.loader(fixture);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement, TestbedHarnessEnvironment.loader(fixture));
     });
 
     describe('Property value', () => {
-        let valueCellHarnessPredicate: HarnessPredicate<MatCellHarness>;
-
         const innerTextPropertyName = 'innerText';
+        const columnName = 'value';
 
         beforeEach(() => {
             component.data = [
@@ -47,14 +44,11 @@ describe('AboutLicenseListComponent', () => {
                     value: '&#9989 Value 1'
                 }
             ];
-            valueCellHarnessPredicate = MatCellHarness.with({
-                columnName: 'value'
-            });
         });
 
         it('should display correct value when contains green check mark icon', async () => {
             fixture.detectChanges();
-            expect(await (await (await loader.getHarness(valueCellHarnessPredicate)).host()).getProperty(innerTextPropertyName)).toEqual(
+            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
                 '✅ ABOUT.LICENSE.ENABLED Value 1'
             );
         });
@@ -63,7 +57,7 @@ describe('AboutLicenseListComponent', () => {
             component.data[0].value = '&#10060 Value 1';
 
             fixture.detectChanges();
-            expect(await (await (await loader.getHarness(valueCellHarnessPredicate)).host()).getProperty(innerTextPropertyName)).toEqual(
+            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
                 '❌ ABOUT.LICENSE.DISABLED Value 1'
             );
         });
@@ -72,14 +66,16 @@ describe('AboutLicenseListComponent', () => {
             component.data[0].value = 'Value 1';
 
             fixture.detectChanges();
-            expect(await (await (await loader.getHarness(valueCellHarnessPredicate)).host()).getProperty(innerTextPropertyName)).toEqual('Value 1');
+            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual(
+                'Value 1'
+            );
         });
 
         it('should display correct value when there is number value', async () => {
             component.data[0].value = 3;
 
             fixture.detectChanges();
-            expect(await (await (await loader.getHarness(valueCellHarnessPredicate)).host()).getProperty(innerTextPropertyName)).toEqual('3');
+            expect(await (await (await unitTestingUtils.getMatCellByColumnName(columnName)).host()).getProperty(innerTextPropertyName)).toEqual('3');
         });
     });
 });
