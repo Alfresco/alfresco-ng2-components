@@ -28,11 +28,17 @@
 
             <!-- Columns -->
             <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
-                <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
-                              [checked]="isSelectAllChecked"
-                              (change)="onSelectAllClick($event)"
-                              class="adf-checkbox-sr-only"
-                              [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate">
+                <mat-checkbox
+                    [indeterminate]="isSelectAllIndeterminate"
+                    [checked]="isSelectAllChecked"
+                    (change)="onSelectAllClick($event)"
+                    class="adf-checkbox-sr-only"
+                    [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate"
+                    [matTooltip]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate"
+                    #tooltip="matTooltip"
+                    (focusin)="tooltip.show()"
+                    (focusout)="tooltip.hide()"
+                >
                     {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
                 </mat-checkbox>
             </div>
