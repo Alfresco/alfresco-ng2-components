@@ -28,6 +28,7 @@ import { By } from '@angular/platform-browser';
 import { AspectListComponent } from './aspect-list.component';
 import { provideApiTesting } from '../testing/providers';
 import { UnitTestingUtils } from '@alfresco/adf-core';
+import { DebugElement } from '@angular/core';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -106,11 +107,11 @@ describe('AspectListDialogComponent', () => {
         keyCode: 27
     } as KeyboardEventInit);
 
-    const getResetButton = () => testingUtils.getByCSS('#aspect-list-dialog-actions-reset');
-    const getClearButton = () => testingUtils.getByCSS('#aspect-list-dialog-actions-clear');
-    const getCancelButton = () => testingUtils.getByCSS('#aspect-list-dialog-actions-cancel');
-    const getApplyButton = () => testingUtils.getByCSS('#aspect-list-dialog-actions-apply');
-    const getAspectCounter = () => testingUtils.getInnerTextByCSS('#aspect-list-dialog-counter');
+    const getResetButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-reset');
+    const getClearButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-clear');
+    const getCancelButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-cancel');
+    const getApplyButton = (): DebugElement => testingUtils.getByCSS('#aspect-list-dialog-actions-apply');
+    const getAspectCounter = (): string => testingUtils.getInnerTextByCSS('#aspect-list-dialog-counter');
     const getAspectCheckbox = (index: number): HTMLInputElement => testingUtils.getByCSS(`#aspect-list-${index}-check-input`).nativeElement;
 
     beforeEach(() => {

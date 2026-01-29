@@ -22,6 +22,7 @@ import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { of } from 'rxjs';
 import { NoopAuthModule } from '@alfresco/adf-core';
+import { SimpleChange } from '@angular/core';
 
 describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
@@ -59,7 +60,7 @@ describe('Breadcrumb', () => {
     it('should root be present as default node if the path is null', () => {
         component.root = 'default';
         component.folderNode = fakeNodeWithCreatePermission;
-        component.ngOnChanges();
+        component.ngOnChanges({});
 
         expect(component.route[0].name).toBe('default');
     });
@@ -313,7 +314,7 @@ describe('Breadcrumb', () => {
             return transformNode;
         };
         component.folderNode = node;
-        component.ngOnChanges();
+        component.ngOnChanges({});
         expect(component.route.length).toBe(4);
         expect(component.route[3].id).toBe('test-id');
         expect(component.route[3].name).toBe('test-name');
@@ -330,7 +331,7 @@ describe('Breadcrumb', () => {
             path: { elements: [{ id: 'element-1-id', name: 'element-1-name' }] }
         } as Node;
 
-        component.ngOnChanges();
+        component.ngOnChanges({});
         fixture.detectChanges();
 
         expect(getBreadcrumbActionText()).toEqual('test-name');
@@ -339,5 +340,16 @@ describe('Breadcrumb', () => {
         fixture.detectChanges();
 
         expect(getBreadcrumbActionText()).toEqual('BREADCRUMB.HEADER.SELECTED');
+    });
+
+    it('should announce number of selected items when selectedRowItemsCount changes', () => {
+        const change = new SimpleChange(null, 10, true);
+        spyOn(component['liveAnnouncer'], 'announce');
+        spyOn(component['translationService'], 'instant').and.callThrough();
+
+        component.ngOnChanges({ selectedRowItemsCount: change });
+
+        expect(component['translationService'].instant).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED', { count: 10 });
+        expect(component['liveAnnouncer'].announce).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED');
     });
 });

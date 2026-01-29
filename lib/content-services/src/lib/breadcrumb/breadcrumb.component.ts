@@ -15,14 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '@alfresco/adf-core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-breadcrumb',
@@ -85,6 +98,8 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     route: PathElement[] = [];
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
+    private readonly translationService = inject(TranslateService);
 
     get hasRoot(): boolean {
         return !!this.root;
@@ -109,8 +124,13 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(): void {
+    ngOnChanges(changes: SimpleChanges): void {
         this.recalculateNodes();
+
+        if (changes['selectedRowItemsCount'] && changes['selectedRowItemsCount'].currentValue > 0) {
+            const msg = this.translationService.instant('BREADCRUMB.HEADER.SELECTED', { count: changes['selectedRowItemsCount'].currentValue });
+            this.liveAnnouncer.announce(msg);
+        }
     }
 
     protected recalculateNodes(): void {
