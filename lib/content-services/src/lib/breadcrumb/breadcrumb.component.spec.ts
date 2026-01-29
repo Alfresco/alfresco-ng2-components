@@ -23,6 +23,8 @@ import { BreadcrumbComponent } from './breadcrumb.component';
 import { of } from 'rxjs';
 import { NoopAuthModule } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
@@ -32,6 +34,8 @@ describe('Breadcrumb', () => {
         isCustomSourceService: false
     });
     let documentListComponent: DocumentListComponent;
+    let liveAnnouncer: LiveAnnouncer;
+    let translateService: TranslateService;
 
     const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
 
@@ -44,6 +48,8 @@ describe('Breadcrumb', () => {
         component = fixture.componentInstance;
         documentListComponent = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
         documentListService = TestBed.inject(DocumentListService);
+        liveAnnouncer = TestBed.inject(LiveAnnouncer);
+        translateService = TestBed.inject(TranslateService);
     });
 
     afterEach(() => {
@@ -344,12 +350,12 @@ describe('Breadcrumb', () => {
 
     it('should announce number of selected items when selectedRowItemsCount changes', () => {
         const change = new SimpleChange(null, 10, true);
-        spyOn(component['liveAnnouncer'], 'announce');
-        spyOn(component['translationService'], 'instant').and.callThrough();
+        spyOn(liveAnnouncer, 'announce');
+        spyOn(translateService, 'instant').and.callThrough();
 
         component.ngOnChanges({ selectedRowItemsCount: change });
 
-        expect(component['translationService'].instant).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED', { count: 10 });
-        expect(component['liveAnnouncer'].announce).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED');
+        expect(translateService.instant).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED', { count: 10 });
+        expect(liveAnnouncer.announce).toHaveBeenCalledWith('BREADCRUMB.HEADER.SELECTED');
     });
 });
