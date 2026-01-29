@@ -48,12 +48,12 @@ export class AboutLicenseListComponent {
                           statusAndValueGroupsRegex,
                           (_match, icon, label) =>
                               `<div>
-                       <span aria-hidden="true">${icon}</span>
-                       <span class="cdk-visually-hidden">
-                         ${this.translateService.instant(icon === enabledIcon ? 'ABOUT.LICENSE.ENABLED' : 'ABOUT.LICENSE.DISABLED')}
-                       </span>
-                       ${label}
-                    </div>`
+                                <span aria-hidden="true">${icon}</span>
+                                <span class="cdk-visually-hidden">
+                                ${this.translateService.instant(icon === enabledIcon ? 'ABOUT.LICENSE.ENABLED' : 'ABOUT.LICENSE.DISABLED')}
+                                </span>
+                                ${label}
+                              </div>`
                       )
                     : row.value;
             }
