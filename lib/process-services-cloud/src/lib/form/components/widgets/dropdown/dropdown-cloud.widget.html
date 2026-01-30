@@ -4,11 +4,13 @@
     [class.adf-readonly]="field.readOnly"
     [class.adf-left-label-input-container]="field.leftLabels"
 >
-    <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
-        </label>
-    </div>
+    @if(field.leftLabels) {
+        <div>
+            <label class="adf-label adf-left-label" [attr.for]="field.id">
+                {{ field.name | translate }}<span class="adf-asterisk" [style.visibility]="isRequired() ? 'visible' : 'hidden'">*</span>
+            </label>
+        </div>
+    }
     <div>
         <mat-form-field class="adf-form-field-input">
             @if ( (field.name || this.field?.required) && !field.leftLabels) {
@@ -27,7 +29,9 @@
                 #select
                 (keydown.escape)="select.close()"
             >
-                <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)" />
+                @if(showInputFilter) {
+                    <adf-select-filter-input (change)="filter$.next($event)" />
+                }
 
                 @for(opt of (list$ | async); track opt.id) {
                     <mat-option [value]="opt" [id]="opt.id">
@@ -48,19 +52,23 @@
 
         <div
             class="adf-error-messages-container"
-            [ngClass]="!previewState && !field.readOnly ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
+            [ngClass]="!field.readOnly ? 'adf-error-messages-container-visible' : 'adf-error-messages-container-hidden'"
         >
-            <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
-            <error-widget
-                class="adf-dropdown-failed-message"
-                *ngIf="isRestApiFailed"
-                required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"
-            />
-            <error-widget
-                class="adf-dropdown-failed-message"
-                *ngIf="variableOptionsFailed"
-                required="{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}"
-            />
+            @if(showRequiredMessage) {
+                <error-widget class="adf-dropdown-required-message" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
+            }
+            @if(!previewState && isRestApiFailed) {
+                <error-widget
+                    class="adf-dropdown-failed-message"
+                    required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"
+                />
+            }
+            @if(!previewState && variableOptionsFailed) {
+                <error-widget
+                    class="adf-dropdown-failed-message"
+                    required="{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}"
+                />
+            }
         </div>
     </div>
 </div>
