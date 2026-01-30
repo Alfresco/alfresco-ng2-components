@@ -92,6 +92,7 @@ export abstract class BaseQueryBuilderService {
     private _userQuery = '';
     private _queryFragments: { [id: string]: string } = {};
 
+    private readonly selectedConfigurationKey = 'selectedConfiguration';
     private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
         set: (target: { [key: string]: any }, property: string, value: any) => {
             target[property as keyof typeof target] = value;
@@ -133,6 +134,8 @@ export abstract class BaseQueryBuilderService {
     ) {
         this.resetToDefaults();
         this._queryFragments = this.createQueryFragmentsProxy({});
+
+        this.populateFilters.subscribe((filters) => this.handleSelectedConfigurationChange(filters));
     }
 
     public abstract loadConfiguration(): SearchConfiguration | SearchConfiguration[];
@@ -174,8 +177,9 @@ export abstract class BaseQueryBuilderService {
             this.searchForms.next(this.getSearchFormDetails());
             this.resetSearchOptions();
             this.setUpSearchConfiguration(currentConfig[index]);
+            this.filterRawParams[this.selectedConfigurationKey] = index;
             this.configUpdated.next(currentConfig[index]);
-            this.update();
+            this.execute();
         }
     }
 
@@ -364,11 +368,11 @@ export abstract class BaseQueryBuilderService {
      */
     async execute(updateQueryParams = true, queryBody?: SearchRequest) {
         try {
+            if (updateQueryParams) {
+                this.updateSearchQueryParams();
+            }
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                if (updateQueryParams) {
-                    this.updateSearchQueryParams();
-                }
                 const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
@@ -653,5 +657,38 @@ export abstract class BaseQueryBuilderService {
 
     private createQueryFragmentsProxy(target: { [key: string]: any }): { [key: string]: any } {
         return new Proxy(target, this.queryFragmentsHandler);
+    }
+
+    private setSelectedConfiguration(index: number): void {
+        const currentConfig = this.loadConfiguration();
+        if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
+            this.selectedConfiguration = index;
+            this.searchForms.next(this.getSearchFormDetails());
+            this.setUpSearchConfiguration(currentConfig[index]);
+            this.filterRawParams[this.selectedConfigurationKey] = index;
+            this.configUpdated.next(currentConfig[index]);
+        }
+    }
+
+    private handleSelectedConfigurationChange(filters: { [key: string]: string | number }): void {
+        if (Object.keys(filters ?? {}).length === 0) {
+            return;
+        }
+
+        const newSelectedConfig = filters?.[this.selectedConfigurationKey];
+
+        if (!!newSelectedConfig) {
+            if (newSelectedConfig !== this.selectedConfiguration) {
+                this.setSelectedConfiguration(newSelectedConfig as number);
+            }
+        } else {
+            const configurations = this.loadConfiguration();
+            if (Array.isArray(configurations)) {
+                const defaultIndex = configurations.findIndex((config) => config.default);
+                if (defaultIndex !== -1 && defaultIndex !== this.selectedConfiguration) {
+                    this.setSelectedConfiguration(defaultIndex);
+                }
+            }
+        }
     }
 }
