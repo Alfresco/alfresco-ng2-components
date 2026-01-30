@@ -453,8 +453,6 @@ describe('BaseQueryBuilderService', () => {
 
             service.updateSelectedConfiguration(1);
 
-            await new Promise((resolve) => setTimeout(resolve, 0));
-
             expect(router.navigate).toHaveBeenCalled();
         });
     });

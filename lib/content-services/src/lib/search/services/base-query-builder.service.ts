@@ -677,7 +677,7 @@ export abstract class BaseQueryBuilderService {
 
         const newSelectedConfig = filters?.[this.selectedConfigurationKey];
 
-        if (!!newSelectedConfig) {
+        if (newSelectedConfig) {
             if (newSelectedConfig !== this.selectedConfiguration) {
                 this.setSelectedConfiguration(newSelectedConfig as number);
             }
