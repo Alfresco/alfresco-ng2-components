@@ -1673,25 +1673,25 @@ describe('Accessibility', () => {
             column = new ObjectDataColumn({ key: 'key' });
         });
 
-        it('should return correct key without translation when no sort is applied', () => {
+        it('should return correct translation key when no sort is applied', () => {
             spyOn(dataTable, 'isColumnSortActive').and.returnValue(false);
-            expect(dataTable.getAriaSort(column)).toBe('none');
+            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_NONE');
         });
 
-        it('should return key without translation when column sort is ascending', () => {
+        it('should return translation key when column sort is ascending', () => {
             const isColumnSortedAsc = true;
             spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
             spyOn(dataTable, 'isColumnSorted').and.returnValue(isColumnSortedAsc);
 
-            expect(dataTable.getAriaSort(column)).toBe('ascending');
+            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING');
         });
 
-        it('should return key without translation when column sort is descending', () => {
+        it('should return translation key when column sort is descending', () => {
             const isColumnSortedAsc = false;
             spyOn(dataTable, 'isColumnSortActive').and.returnValue(true);
             spyOn(dataTable, 'isColumnSorted').and.returnValue(isColumnSortedAsc);
 
-            expect(dataTable.getAriaSort(column)).toBe('descending');
+            expect(dataTable.getAriaSort(column)).toBe('ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING');
         });
     });
 
@@ -1757,7 +1757,7 @@ describe('Accessibility', () => {
             });
         });
 
-        it('should allow header cell focus when cell is sortable', () => {
+        it('should remove header cell focus when cell is sortable', () => {
             setupAndCheckHeaderColumns(true, headerCellSelector, (element) => {
                 expect(element?.nativeElement.getAttribute('tabindex')).toBeNull();
             });
@@ -1775,9 +1775,9 @@ describe('Accessibility', () => {
             });
         });
 
-        it('should set tabindex equal to 0 on header cell sortable wrapper when cell is sortable', () => {
+        it('should set tabindex equal to null on header cell sortable wrapper when cell is sortable', () => {
             setupAndCheckHeaderColumns(true, headerCellContentSelector, (element) => {
-                expect(element?.nativeElement.getAttribute('tabindex')).toBe('0');
+                expect(element?.nativeElement.getAttribute('tabindex')).toEqual('0');
             });
         });
 

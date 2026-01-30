@@ -1032,10 +1032,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     getAriaSort(column: DataColumn): string {
         if (!this.isColumnSortActive(column)) {
-            return 'none';
+            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
         }
 
-        return this.isColumnSorted(column, 'asc') ? 'ascending' : 'descending';
+        return this.isColumnSorted(column, 'asc') ? 'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' : 'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
     }
 
     getSortLiveAnnouncement(column: DataColumn): string {
