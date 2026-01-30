@@ -54,6 +54,7 @@
                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
                 [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}"
                 role="columnheader"
+                [attr.aria-label]="col.srTitle ? (col.srTitle | translate) : (col.title | translate) + (col.subtitle ? ' ' + (col.subtitle | translate) : '')"
                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                 cdkDrag
                 cdkDragLockAxis="x"
