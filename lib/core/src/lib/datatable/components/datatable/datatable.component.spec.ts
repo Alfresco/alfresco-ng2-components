@@ -37,6 +37,7 @@ import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { provideRouter } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { DataTableAdapter } from '@alfresco/adf-core';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -1601,6 +1602,7 @@ describe('Accessibility', () => {
     let dataTable: DataTableComponent;
     let columnCustomTemplate: TemplateRef<any>;
     let testingUtils: UnitTestingUtils;
+    let loader: HarnessLoader;
 
     const setupAndCheckHeaderColumns = (sortable: boolean, selector: string, assertions: (element: DebugElement | null) => void) => {
         dataTable.showHeader = ShowHeaderMode.Always;
@@ -1636,6 +1638,7 @@ describe('Accessibility', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         testingUtils = new UnitTestingUtils(fixture.debugElement);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -1941,6 +1944,70 @@ describe('Accessibility', () => {
         fixture.detectChanges();
 
         expect(dataTable.dragDropped.emit).toHaveBeenCalledWith({ previousIndex: 1, currentIndex: 0 });
+    });
+
+    describe('Select-all accessibility checkbox tooltip', () => {
+        let tooltip: MatTooltipHarness;
+        let checkbox: MatCheckboxHarness;
+
+        beforeEach(() => {
+            dataTable.showHeader = ShowHeaderMode.Always;
+            const dataRows = [{ name: 'name1' }];
+            dataTable.multiselect = true;
+
+            dataTable.data = new ObjectDataTableAdapter(
+                [],
+                [
+                    new ObjectDataColumn({
+                        key: 'name',
+                        template: columnCustomTemplate,
+                        sortable: true
+                    })
+                ]
+            );
+
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
+
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
+        });
+
+        beforeEach(async () => {
+            checkbox = await loader.getHarness(MatCheckboxHarness);
+            tooltip = await loader.getHarness(MatTooltipHarness);
+
+            await checkbox.blur();
+            await tooltip.hide();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+        });
+
+        it('should show accessibility tooltip on select-all checkbox focus', async () => {
+            expect(await tooltip.isOpen()).toBe(false);
+
+            await checkbox.focus();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(await tooltip.isOpen()).toBe(true);
+            expect(await tooltip.getTooltipText()).toBe('ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL');
+        });
+
+        it('should show accessibility tooltip on select-all checkbox mouse enter', async () => {
+            expect(await tooltip.isOpen()).toBe(false);
+
+            await tooltip.show();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(await tooltip.isOpen()).toBe(true);
+            expect(await tooltip.getTooltipText()).toBe('ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL');
+        });
     });
 });
 

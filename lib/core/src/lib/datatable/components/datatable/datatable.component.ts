@@ -83,6 +83,7 @@ import { AmountCellComponent } from '../amount-cell/amount-cell.component';
 import { NumberCellComponent } from '../number-cell/number-cell.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -119,7 +120,8 @@ export enum ShowHeaderMode {
         BooleanCellComponent,
         JsonCellComponent,
         AmountCellComponent,
-        NumberCellComponent
+        NumberCellComponent,
+        MatTooltipModule
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
