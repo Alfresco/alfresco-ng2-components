@@ -11,7 +11,7 @@
             </ng-template>
         </data-column>
 
-        <data-column class="adf-ellipsis-cell adf-expand-cell-5 adf-authorityId-column"
+        <data-column class="adf-ellipsis-cell adf-expand-cell-5"
                      [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:permissions.length}"
                      key="authorityId">
             <ng-template let-context>
@@ -19,7 +19,7 @@
             </ng-template>
         </data-column>d
 
-        <data-column class="adf-ellipsis-cell adf-expand-cell-5 adf-authorityId-column"
+        <data-column class="adf-ellipsis-cell adf-expand-cell-5"
                      title="PERMISSION_MANAGER.COLUMN.LOCATION"
                      key="location"
                      *ngIf="node && showLocation">
@@ -29,7 +29,7 @@
         </data-column>
 
         <data-column
-            class="adf-ellipsis-cell adf-expand-cell-4"
+            class="adf-ellipsis-cell adf-expand-cell-3"
             title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
             key="name"
             [sortable]="false">
