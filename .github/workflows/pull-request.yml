@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Ensure SHA pinned actions
-        uses: hyland/github-actions-ensure-sha-pinned-actions@22ca7a8cf33e873ba1d6fbcd2b71fa0ec5006b17 # v1.1.0
+        uses: hyland/github-actions-ensure-sha-pinned-actions@1afac08cba4e5ea12263a46f49683570690ae3af # v1.2.0
 
       - name: Check package-lock.json version
         run: |
@@ -66,10 +66,10 @@ jobs:
           fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@d2333816055ff07f7497ff8f8176f789dbe7e811 # v12.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@3768f40c71f5f9b0c4e6a507c8f87ed40d9b60c9 # v12.9.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@d2333816055ff07f7497ff8f8176f789dbe7e811 # v12.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@3768f40c71f5f9b0c4e6a507c8f87ed40d9b60c9 # v12.9.0
         with:
           header-only: true
 
