@@ -50,6 +50,7 @@
               matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
               data-automation-id="date-range-between-start-input"
               [formControl]="betweenStartDateFormControl"
+              [required]="true"
               (change)="dateChanged($event, betweenStartDateFormControl)"
               aria-labelledby="adf-search-date-range-between-range-label"
           >
@@ -58,6 +59,7 @@
               placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
               data-automation-id="date-range-between-end-input"
               [formControl]="betweenEndDateFormControl"
+              [required]="true"
               (change)="dateChanged($event, betweenEndDateFormControl)"
               aria-labelledby="adf-search-date-range-between-range-label">
         </mat-date-range-input>
