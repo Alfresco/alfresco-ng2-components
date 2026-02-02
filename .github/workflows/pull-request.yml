@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Ensure SHA pinned actions
-        uses: hyland/github-actions-ensure-sha-pinned-actions@22ca7a8cf33e873ba1d6fbcd2b71fa0ec5006b17 # v1.1.0
+        uses: hyland/github-actions-ensure-sha-pinned-actions@1afac08cba4e5ea12263a46f49683570690ae3af # v1.2.0
 
       - name: Check package-lock.json version
         run: |
