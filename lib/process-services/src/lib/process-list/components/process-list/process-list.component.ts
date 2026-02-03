@@ -193,8 +193,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     pagination: BehaviorSubject<PaginationModel>;
 
     constructor(
-        private processService: ProcessService,
-        private userPreferences: UserPreferencesService,
+        private readonly processService: ProcessService,
+        private readonly userPreferences: UserPreferencesService,
         appConfig: AppConfigService
     ) {
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);

@@ -40,6 +40,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
+import { ProcessInstanceQueryRepresentation } from '@alfresco/js-api';
 
 describe('ProcessInstanceListComponent', () => {
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
@@ -323,7 +324,7 @@ describe('ProcessInstanceListComponent', () => {
         component.page = 0;
         component.size = 25;
 
-        const expectedRequestNode = {
+        const expectedRequestNode: ProcessInstanceQueryRepresentation = {
             appDefinitionId: 1,
             processDefinitionId: 'simple-process',
             processInstanceId: '123',
