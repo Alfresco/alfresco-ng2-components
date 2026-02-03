@@ -605,7 +605,9 @@
     "LICENSE": {
       "TITLE": "Licencja",
       "PROPERTY": "Właściwość",
-      "VALUE": "Wartość"
+      "VALUE": "Wartość",
+      "ENABLED": "Enabled",
+      "DISABLED": "Disabled"
     },
     "STATUS": {
       "TITLE": "Status",
