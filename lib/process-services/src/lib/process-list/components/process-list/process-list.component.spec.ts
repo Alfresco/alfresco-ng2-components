@@ -314,6 +314,30 @@ describe('ProcessInstanceListComponent', () => {
         expect(customColumn[1].nativeElement.innerText).toEqual('initiator - fake-user-2');
     });
 
+    it('should create proper request node once reload called', () => {
+        component.appId = 1;
+        component.processDefinitionId = 'simple-process';
+        component.processInstanceId = '123';
+        component.sort = 'created-desc';
+        component.state = 'all';
+        component.page = 0;
+        component.size = 25;
+
+        const expectedRequestNode = {
+            appDefinitionId: 1,
+            processDefinitionId: 'simple-process',
+            processInstanceId: '123',
+            state: 'all',
+            sort: 'created-desc',
+            page: 0,
+            size: 25
+        };
+
+        component.reload();
+        expect(component.requestNode).toEqual(expectedRequestNode);
+        expect(Object.keys(component.requestNode)).not.toContain('start');
+    });
+
     describe('component changes', () => {
         beforeEach(() => {
             component.data = new ObjectDataTableAdapter([], [{ type: 'text', key: 'fake-id', title: 'Name' }]);

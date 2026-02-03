@@ -192,7 +192,11 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     sorting: any[] = ['created', 'desc'];
     pagination: BehaviorSubject<PaginationModel>;
 
-    constructor(private processService: ProcessService, private userPreferences: UserPreferencesService, appConfig: AppConfigService) {
+    constructor(
+        private processService: ProcessService,
+        private userPreferences: UserPreferencesService,
+        appConfig: AppConfigService
+    ) {
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 
@@ -324,8 +328,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
             state: this.state,
             sort: this.sort,
             page: this.page,
-            size: this.size,
-            start: 0
+            size: this.size
         };
     }
 
