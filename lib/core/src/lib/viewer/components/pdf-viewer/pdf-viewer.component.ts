@@ -37,7 +37,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { from, Subject, switchMap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppConfigService } from '../../../app-config';
@@ -49,6 +49,7 @@ import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 import { IconModule } from '../../../icon/icon.module';
+import { PDFDateString } from 'pdfjs-dist';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
@@ -154,6 +155,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private dialog = inject(MatDialog);
     private renderingQueueServices = inject(RenderingQueueServices);
     private appConfigService = inject(AppConfigService);
+    private translateService = inject(TranslateService);
 
     constructor() {
         // needed to preserve "this" context
@@ -287,7 +289,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus,
-                annotationMode: 0
+                annotationMode: 1
             });
 
             // cspell: disable-next
@@ -301,6 +303,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.eventBus.on('pagerendered', () => {
                 this.onPageRendered();
             });
+            this.eventBus.on('annotationlayerrendered', (event) =>
+                this.handleNotRecognizedAnnotations(pdfDocument, event.source.div, event.pageNumber)
+            );
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
@@ -638,5 +643,72 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             // left arrow
             this.previousPage();
         }
+    }
+
+    private async handleNotRecognizedAnnotations(
+        pdfDocument: PDFDocumentProxy,
+        documentContainer: HTMLDivElement,
+        pageNumber: number
+    ): Promise<void> {
+        const page = await pdfDocument.getPage(pageNumber);
+        const annotations = await page.getAnnotations();
+        annotations.forEach((annotation) => {
+            if (annotation.subtype !== 'Text' || annotation.name !== 'NoIcon') {
+                return;
+            }
+            const annotationElement = documentContainer.querySelector(`[data-annotation-id="${annotation.id}"]`) as HTMLElement;
+            if (!annotationElement) {
+                return;
+            }
+            this.correctAnnotationImage(annotationElement);
+            const text = annotation.contentsObj?.str?.trim();
+            if (!text || (annotation.popupRef && documentContainer.querySelector(`[data-annotation-id="${annotation.popupRef}"]`))) {
+                return;
+            }
+            this.createAnnotationPopup(annotation, text, annotationElement);
+        });
+    }
+
+    private correctAnnotationImage(annotationElement: HTMLElement): void {
+        const annotationImageElement = annotationElement.querySelector('img');
+        if (annotationImageElement) {
+            annotationImageElement.src =
+                'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGV' +
+                'pZ2h0PSIyNCI+PHBhdGggZD0iTTIgMmgxNHYxNEgyeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0zIDNoMTJ2MTJIM3oiIGZpbGw9Ii' +
+                'NmZmRiMDAiLz48cGF0aCBkPSJNNSA1aDh2OGgtOHoiIGZpbGw9IiNmZmJiMDAiLz48L3N2Zz4=';
+            annotationImageElement.alt = this.translateService.instant('ADF_VIEWER.ARIA.NOTE_ANNOTATION_IMG');
+        }
+    }
+
+    private createAnnotationPopup(annotation: any, text: string, annotationElement: HTMLElement): void {
+        const popupElement = document.createElement('div');
+        let headerElement: HTMLSpanElement;
+        if (annotation.titleObj?.str) {
+            headerElement = this.createAnnotationPopupHeader(annotation);
+        }
+        const contentElement = this.createAnnotationPopupContent(text);
+        popupElement.classList.add('popup', 'adf-pdf-viewer-annotation-tooltip');
+        headerElement ? popupElement.append(headerElement, contentElement) : popupElement.append(contentElement);
+        annotationElement.appendChild(popupElement);
+    }
+
+    private createAnnotationPopupHeader(annotation: any): HTMLSpanElement {
+        const headerElement = document.createElement('span');
+        const titleElement = document.createElement('span');
+        const dateElement = document.createElement('time');
+        titleElement.innerText = annotation.titleObj.str;
+        titleElement.classList.add('title');
+        dateElement.innerText = PDFDateString.toDateObject(annotation.modificationDate).toLocaleString();
+        dateElement.classList.add('popupDate');
+        headerElement.classList.add('header');
+        headerElement.append(titleElement, dateElement);
+        return headerElement;
+    }
+
+    private createAnnotationPopupContent(text: string): HTMLSpanElement {
+        const contentElement = document.createElement('span');
+        contentElement.innerText = text;
+        contentElement.classList.add('popupContent');
+        return contentElement;
     }
 }
