@@ -29,7 +29,7 @@ import {
     SelectFilterInputComponent,
     WidgetComponent
 } from '@alfresco/adf-core';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -61,7 +61,6 @@ export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
     },
     encapsulation: ViewEncapsulation.None,
     imports: [
-        NgIf,
         NgClass,
         AsyncPipe,
         ReactiveFormsModule,

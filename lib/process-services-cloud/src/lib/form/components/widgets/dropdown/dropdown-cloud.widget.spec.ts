@@ -253,6 +253,24 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toEqual(0);
                 expect(errorMessageElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
+
+                const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
+                expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-visible')).toBe(true);
+            });
+
+            it('should NOT show required message when REST API failed', () => {
+                widget.field.readOnly = false;
+                widget.field.required = true;
+
+                widget.ngOnInit();
+                widget.dropdownControl.markAsTouched();
+                fixture.detectChanges();
+
+                expect(widget.isRestApiFailed).toBe(true);
+                const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
+                expect(requiredErrorElement).toBeFalsy();
+                const restApiFailedElement = getErrorMessageElement();
+                expect(restApiFailedElement).toBeTruthy();
             });
 
             it('should NOT show error message when widget is readonly', async () => {
@@ -267,6 +285,21 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
                 expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
+            });
+
+            it('should NOT show REST API failed error message when form is in preview state', () => {
+                widget.field.readOnly = false;
+                spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+
+                expect(getRestWidgetDataSpy).toHaveBeenCalled();
+                expect(widget.isRestApiFailed).toBe(true);
+                expect(widget.field.options.length).toEqual(0);
+
+                const failedErrorMsgElement = getErrorMessageElement();
+                expect(failedErrorMsgElement).toBeNull();
             });
         });
 
@@ -404,6 +437,9 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
+
+            const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
+            expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-visible')).toBe(true);
 
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
@@ -1158,6 +1194,24 @@ describe('DropdownCloudWidgetComponent', () => {
             checkDropdownVariableOptionsFailed();
         });
 
+        it('should NOT show required message when variable options failed', () => {
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.wrongPath.players',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
+            widget.field.required = true;
+            fixture.detectChanges();
+
+            expect(widget.variableOptionsFailed).toBe(true);
+            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
+            expect(requiredErrorElement).toBeFalsy();
+            const variableFailedElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+            expect(variableFailedElement).toBeTruthy();
+        });
+
         it('should return empty array and display error when id is incorrect', () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
@@ -1204,7 +1258,7 @@ describe('DropdownCloudWidgetComponent', () => {
             checkDropdownVariableOptionsFailed();
         });
 
-        it('should NOT display errors if form is in the preview state', () => {
+        it('should NOT display variable options failed error when form is in the preview state', () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
                 'response.wrongPath.players',
@@ -1215,8 +1269,8 @@ describe('DropdownCloudWidgetComponent', () => {
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
             fixture.detectChanges();
 
-            const errorsMessagesElement = fixture.debugElement.query(By.css('.adf-error-messages-container'));
-            expect(errorsMessagesElement.nativeElement.classList.contains('adf-error-messages-container-hidden')).toBe(true);
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+            expect(failedErrorMsgElement).toBeNull();
         });
 
         it('should NOT display errors if field is readonly', () => {
