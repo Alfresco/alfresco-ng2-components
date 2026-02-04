@@ -40,6 +40,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
+import { ProcessInstanceQueryRepresentation } from '@alfresco/js-api';
 
 describe('ProcessInstanceListComponent', () => {
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
@@ -312,6 +313,30 @@ describe('ProcessInstanceListComponent', () => {
         const customColumn = fixture.debugElement.queryAll(By.css('[title="Variables"] adf-datatable-cell'));
         expect(customColumn[0].nativeElement.innerText).toEqual('initiator - fake-user-1');
         expect(customColumn[1].nativeElement.innerText).toEqual('initiator - fake-user-2');
+    });
+
+    it('should create proper request node once reload called', () => {
+        component.appId = 1;
+        component.processDefinitionId = 'simple-process';
+        component.processInstanceId = '123';
+        component.sort = 'created-desc';
+        component.state = 'all';
+        component.page = 0;
+        component.size = 25;
+
+        const expectedRequestNode: ProcessInstanceQueryRepresentation = {
+            appDefinitionId: 1,
+            processDefinitionId: 'simple-process',
+            processInstanceId: '123',
+            state: 'all',
+            sort: 'created-desc',
+            page: 0,
+            size: 25
+        };
+
+        component.reload();
+        expect(component.requestNode).toEqual(expectedRequestNode);
+        expect(Object.keys(component.requestNode)).not.toContain('start');
     });
 
     describe('component changes', () => {
