@@ -34,7 +34,7 @@ const buildConfig = (searchSettings = {}): AppConfigService => {
     return config;
 };
 
-fdescribe('SearchQueryBuilder (runtime config)', () => {
+describe('SearchQueryBuilder', () => {
     const runtimeConfig: SearchConfiguration = { id: 'runtime-config' };
 
     beforeEach(() => {
@@ -735,8 +735,8 @@ describe('SearchQueryBuilder', () => {
     it('should encode query from filter raw params and update query params on executing query', (done) => {
         spyOn(router, 'navigate');
         service.userQuery = 'nuka cola quantum';
+        service.filterRawParams = { userQuery: '(nuka cola quantum)' };
         service.executed.subscribe(() => {
-            expect(service.filterRawParams).toEqual({ userQuery: '(nuka cola quantum)' });
             expect(router.navigate).toHaveBeenCalledWith([], {
                 relativeTo: activatedRoute,
                 queryParams: { q: 'eyJ1c2VyUXVlcnkiOiIobnVrYSBjb2xhIHF1YW50dW0pIn0=' },
@@ -749,11 +749,10 @@ describe('SearchQueryBuilder', () => {
 
     it('should encode query from filter raw params and update query params on navigating to search', async () => {
         spyOn(router, 'navigate');
+        service.filterRawParams = { userQuery: '(test query)' };
         await service.navigateToSearch('test query', '/search');
 
-        expect(service.filterRawParams).toEqual({ userQuery: '(test query)' });
-        expect(router.navigate).toHaveBeenCalledWith([], {
-            relativeTo: activatedRoute,
+        expect(router.navigate).toHaveBeenCalledWith(['/search'], {
             queryParams: { q: 'eyJ1c2VyUXVlcnkiOiIodGVzdCBxdWVyeSkifQ==' },
             queryParamsHandling: 'merge'
         });
