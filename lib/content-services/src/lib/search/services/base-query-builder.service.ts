@@ -170,15 +170,15 @@ export abstract class BaseQueryBuilderService {
         return configurations;
     }
 
-    public updateSelectedConfiguration(index: number): void {
+    public updateSelectedConfiguration(id: number): void {
         const currentConfig = this.loadConfiguration();
-        if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
-            this.selectedConfiguration = index;
+        if (Array.isArray(currentConfig) && currentConfig[id] !== undefined) {
+            this.selectedConfiguration = id;
             this.searchForms.next(this.getSearchFormDetails());
             this.resetSearchOptions();
-            this.setUpSearchConfiguration(currentConfig[index]);
-            this.filterRawParams[this.selectedConfigurationKey] = index;
-            this.configUpdated.next(currentConfig[index]);
+            this.setUpSearchConfiguration(currentConfig[id]);
+            this.filterRawParams[this.selectedConfigurationKey] = id;
+            this.configUpdated.next(currentConfig[id]);
             this.execute();
         }
     }
@@ -659,14 +659,14 @@ export abstract class BaseQueryBuilderService {
         return new Proxy(target, this.queryFragmentsHandler);
     }
 
-    private setSelectedConfiguration(index: number): void {
+    private setSelectedConfiguration(id: number): void {
         const currentConfig = this.loadConfiguration();
-        if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
-            this.selectedConfiguration = index;
+        if (Array.isArray(currentConfig) && currentConfig[id] !== undefined) {
+            this.selectedConfiguration = id;
             this.searchForms.next(this.getSearchFormDetails());
-            this.setUpSearchConfiguration(currentConfig[index]);
-            this.filterRawParams[this.selectedConfigurationKey] = index;
-            this.configUpdated.next(currentConfig[index]);
+            this.setUpSearchConfiguration(currentConfig[id]);
+            this.filterRawParams[this.selectedConfigurationKey] = id;
+            this.configUpdated.next(currentConfig[id]);
         }
     }
 

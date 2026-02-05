@@ -22,6 +22,7 @@ import { AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { ResultSetPaging } from '@alfresco/js-api';
+import { skip } from 'rxjs/operators';
 
 describe('BaseQueryBuilderService', () => {
     let service: SearchQueryBuilderService;
@@ -104,25 +105,21 @@ describe('BaseQueryBuilderService', () => {
     });
 
     describe('queryFragments', () => {
-        it('should emit queryFragmentsUpdate when queryFragments change', (done) => {
-            service.queryFragmentsUpdate.subscribe((fragments) => {
-                if (fragments['testId']) {
-                    expect(fragments['testId']).toBe('test query');
-                    done();
-                }
+        it('should emit queryFragmentsUpdate when queryFragments change  after initial fragments emited', (done) => {
+            service.queryFragmentsUpdate.pipe(skip(1)).subscribe((fragments) => {
+                expect(fragments['testId']).toBe('test query');
+                done();
             });
 
             service.queryFragments['testId'] = 'test query';
         });
 
-        it('should emit queryFragmentsUpdate when setting new queryFragments object', (done) => {
+        it('should emit queryFragmentsUpdate when setting new queryFragments object  after initial fragments emited', (done) => {
             const newFragments = { id1: 'query1', id2: 'query2' };
 
-            service.queryFragmentsUpdate.subscribe((fragments) => {
-                if (Object.keys(fragments).length === 2) {
-                    expect(fragments).toEqual(newFragments);
-                    done();
-                }
+            service.queryFragmentsUpdate.pipe(skip(1)).subscribe((fragments) => {
+                expect(fragments).toEqual(newFragments);
+                done();
             });
 
             service.queryFragments = newFragments;
@@ -411,27 +408,23 @@ describe('BaseQueryBuilderService', () => {
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
             service.configUpdated.subscribe((config) => {
-                if (config?.name === 'Config 2') {
-                    expect(config.name).toBe('Config 2');
-                    done();
-                }
+                expect(config.name).toBe('Config 2');
+                done();
             });
 
             service.updateSelectedConfiguration(1);
         });
 
-        it('should update searchForms when configuration changes', (done) => {
+        it('should update searchForms when configuration changes after initial forms emited', (done) => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
             let callCount = 0;
-            service.searchForms.subscribe((forms) => {
+            service.searchForms.pipe(skip(1)).subscribe((forms) => {
                 callCount++;
-                if (callCount === 2) {
-                    expect(forms[1].selected).toBe(true);
-                    expect(forms[0].selected).toBe(false);
-                    done();
-                }
+                expect(forms[1].selected).toBe(true);
+                expect(forms[0].selected).toBe(false);
+                done();
             });
 
             service.updateSelectedConfiguration(1);
@@ -441,7 +434,7 @@ describe('BaseQueryBuilderService', () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
-            await service.updateSelectedConfiguration(1);
+            service.updateSelectedConfiguration(1);
 
             expect(service.filterRawParams['selectedConfiguration']).toBe(1);
         });
@@ -459,7 +452,7 @@ describe('BaseQueryBuilderService', () => {
 
     describe('populateFilters and selectedConfiguration restoration', () => {
         beforeEach(() => {
-            (appConfig.get as jasmine.Spy).and.returnValue(mockMultipleConfigs);
+            (appConfig.get as jasmine.Spy<<T>(key: string, defaultValue?: T) => T>).and.returnValue(mockMultipleConfigs);
             service.resetToDefaults();
         });
 
@@ -467,10 +460,8 @@ describe('BaseQueryBuilderService', () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
 
             service.configUpdated.subscribe((config) => {
-                if (config?.name === 'Config 3') {
-                    expect(config.name).toBe('Config 3');
-                    done();
-                }
+                expect(config.name).toBe('Config 3');
+                done();
             });
 
             service.populateFilters.next({ selectedConfiguration: 2, someOtherFilter: 'value' });
@@ -484,10 +475,8 @@ describe('BaseQueryBuilderService', () => {
 
             setTimeout(() => {
                 service.configUpdated.subscribe((config) => {
-                    if (config?.name === 'Config 1') {
-                        expect(config.name).toBe('Config 1');
-                        done();
-                    }
+                    expect(config.name).toBe('Config 1');
+                    done();
                 });
 
                 service.populateFilters.next({ someOtherFilter: 'value' });
@@ -526,11 +515,9 @@ describe('BaseQueryBuilderService', () => {
         });
 
         it('should update filterRawParams when restoring configuration from populateFilters', (done) => {
-            service.configUpdated.subscribe((config) => {
-                if (config?.name === 'Config 2') {
-                    expect(service.filterRawParams['selectedConfiguration']).toBe(1);
-                    done();
-                }
+            service.configUpdated.subscribe(() => {
+                expect(service.filterRawParams['selectedConfiguration']).toBe(1);
+                done();
             });
 
             service.populateFilters.next({ selectedConfiguration: 1 });
