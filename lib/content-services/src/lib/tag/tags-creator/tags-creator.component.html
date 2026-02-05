@@ -10,7 +10,9 @@
                 (keyup.enter)="addTag()"
                 adf-auto-focus
             />
-            <mat-error *ngIf="tagNameControl.invalid && tagNameControl.touched">
+            <mat-error 
+                *ngIf="tagNameControl.invalid && tagNameControl.touched"
+                data-automation-id="tags-error-message">
                 {{ tagNameErrorMessageKey | translate }}
             </mat-error>
         </mat-form-field>
