@@ -45,7 +45,8 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     it('should load the configuration from app config', () => {
         TestBed.runInInjectionContext(() => {
-            const config = {
+            const config: SearchConfiguration = {
+                id: 'test-config',
                 categories: [
                     { id: 'cat1', enabled: true },
                     { id: 'cat2', enabled: true }
@@ -71,7 +72,8 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     it('should return the category assigned to a column key', () => {
         TestBed.runInInjectionContext(() => {
-            const config = {
+            const config: SearchConfiguration = {
+                id: 'test-config',
                 categories: [
                     { id: 'cat1', columnKey: 'fake-key-1', enabled: true },
                     { id: 'cat2', columnKey: 'fake-key-2', enabled: true }
@@ -92,6 +94,7 @@ describe('SearchHeaderQueryBuilderService', () => {
     it('should return operator for a category by id', () => {
         TestBed.runInInjectionContext(() => {
             const config: SearchConfiguration = {
+                id: 'test-config',
                 categories: [
                     { id: 'cat1', columnKey: 'fake-key-1', enabled: true, component: { settings: { operator: 'operator' } } },
                     { id: 'cat2', columnKey: 'fake-key-2', enabled: true }
@@ -118,7 +121,8 @@ describe('SearchHeaderQueryBuilderService', () => {
 
     it('should add the extra filter for the parent node', () => {
         TestBed.runInInjectionContext(() => {
-            const config = {
+            const config: SearchConfiguration = {
+                id: 'test-config',
                 categories: [
                     { id: 'cat1', enabled: true },
                     { id: 'cat2', enabled: true }
@@ -141,7 +145,8 @@ describe('SearchHeaderQueryBuilderService', () => {
         TestBed.runInInjectionContext(() => {
             const expectedResult = [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }];
 
-            const config = {
+            const config: SearchConfiguration = {
+                id: 'test-config',
                 categories: [
                     { id: 'cat1', enabled: true },
                     { id: 'cat2', enabled: true }
@@ -162,7 +167,8 @@ describe('SearchHeaderQueryBuilderService', () => {
         TestBed.runInInjectionContext(() => {
             const activeFilter = 'FakeColumn';
 
-            const config = {
+            const config: SearchConfiguration = {
+                id: 'test-config',
                 categories: [{ id: 'cat1', enabled: true }],
                 filterQueries: [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id' }]
             } as SearchConfiguration;

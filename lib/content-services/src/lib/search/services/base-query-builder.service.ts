@@ -122,7 +122,8 @@ export abstract class BaseQueryBuilderService {
     }
 
     config: SearchConfiguration = {
-        categories: []
+        categories: [],
+        id: 'SEARCH.UNKNOWN_CONFIGURATION'
     };
 
     // TODO: to be supported in future iterations
@@ -200,6 +201,7 @@ export abstract class BaseQueryBuilderService {
         const configurations = this.loadConfiguration();
         if (Array.isArray(configurations)) {
             return configurations.map((configuration, index) => ({
+                id: configuration.id,
                 index,
                 name: configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                 default: configuration.default || false,
@@ -208,6 +210,7 @@ export abstract class BaseQueryBuilderService {
         } else if (configurations) {
             return [
                 {
+                    id: 'SEARCH.UNKNOWN_CONFIGURATION',
                     index: 0,
                     name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                     default: true,

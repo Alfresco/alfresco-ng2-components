@@ -32,9 +32,9 @@ describe('SearchFormComponent', () => {
     let component: SearchFormComponent;
     let queryBuilder: SearchQueryBuilderService;
     const mockSearchForms: SearchForm[] = [
-        { default: false, index: 0, name: 'All', selected: false },
-        { default: true, index: 1, name: 'First', selected: true },
-        { default: false, index: 2, name: 'Second', selected: false }
+        { id: 'form-all', default: false, index: 0, name: 'All', selected: false },
+        { id: 'form-first', default: true, index: 1, name: 'First', selected: true },
+        { id: 'form-second', default: false, index: 2, name: 'Second', selected: false }
     ];
 
     beforeEach(() => {
@@ -75,7 +75,7 @@ describe('SearchFormComponent', () => {
     });
 
     it('should not show menu if only one config found', async () => {
-        queryBuilder.searchForms.next([{ name: 'one', selected: true, default: true, index: 0 }]);
+        queryBuilder.searchForms.next([{ id: 'form-one', name: 'one', selected: true, default: true, index: 0 }]);
         fixture.detectChanges();
 
         const button = await loader.getHarness(MatButtonHarness.with({ selector: '.adf-search-form' }));

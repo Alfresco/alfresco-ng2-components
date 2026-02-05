@@ -30,6 +30,7 @@ describe('BaseQueryBuilderService', () => {
     let router: Router;
 
     const mockSearchConfig: SearchConfiguration = {
+        id: 'config-default',
         categories: [
             {
                 id: 'cat1',
@@ -63,9 +64,9 @@ describe('BaseQueryBuilderService', () => {
     };
 
     const mockMultipleConfigs: SearchConfiguration[] = [
-        { ...mockSearchConfig, name: 'Config 1', default: true },
-        { ...mockSearchConfig, name: 'Config 2', default: false },
-        { ...mockSearchConfig, name: 'Config 3', default: false }
+        { ...mockSearchConfig, id: 'config-1', name: 'Config 1', default: true },
+        { ...mockSearchConfig, id: 'config-2', name: 'Config 2', default: false },
+        { ...mockSearchConfig, id: 'config-3', name: 'Config 3', default: false }
     ];
 
     beforeEach(() => {
@@ -232,7 +233,7 @@ describe('BaseQueryBuilderService', () => {
         });
 
         it('should include default includes when none configured', () => {
-            service.config = { categories: [] };
+            service.config = { id: 'test-config', categories: [] };
             service.userQuery = 'test';
             const query = service.buildQuery();
 
@@ -331,12 +332,12 @@ describe('BaseQueryBuilderService', () => {
 
             expect(errorSpy).toHaveBeenCalledWith(mockError);
             expect(executedSpy).toHaveBeenCalledWith(
-                jasmine.objectContaining({
-                    list: jasmine.objectContaining({
-                        pagination: { totalItems: 0 },
-                        entries: []
-                    })
-                })
+              jasmine.objectContaining({
+                  list: jasmine.objectContaining({
+                      pagination: { totalItems: 0 },
+                      entries: []
+                  })
+              })
             );
         });
 
@@ -368,6 +369,7 @@ describe('BaseQueryBuilderService', () => {
 
         it('should return sorting options from config', () => {
             service.config = {
+                id: 'test-config',
                 categories: [],
                 sorting: {
                     options: [{ key: 'name', label: 'Name', type: 'FIELD', field: 'cm:name', ascending: true }],
@@ -396,9 +398,11 @@ describe('BaseQueryBuilderService', () => {
             const forms = service.getSearchFormDetails();
 
             expect(forms.length).toBe(3);
+            expect(forms[0].id).toBe('config-1');
             expect(forms[0].name).toBe('Config 1');
             expect(forms[0].default).toBe(true);
             expect(forms[0].selected).toBe(true);
+            expect(forms[1].id).toBe('config-2');
             expect(forms[1].name).toBe('Config 2');
             expect(forms[1].selected).toBe(false);
         });
