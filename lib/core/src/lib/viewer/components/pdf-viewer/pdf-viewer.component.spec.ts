@@ -16,7 +16,7 @@
  */
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -512,6 +512,21 @@ describe('Test PdfViewer - User interaction', () => {
         component.inputPage('2');
 
         expect(component.displayPage).toBe(2);
+    });
+
+    it('should configure PDF.js with the correct wasmUrl', () => {
+        const changes: SimpleChanges = {
+            blobFile: new SimpleChange(null, component.blobFile, true)
+        };
+
+        component.ngOnChanges(changes);
+
+        const spy = pdfjsLibraryMock.getDocument;
+
+        expect(spy).toHaveBeenCalled();
+        const loadingArgs = spy.calls.mostRecent().args[0];
+
+        expect(loadingArgs.wasmUrl).toBe('./wasm/');
     });
 
     describe('Zoom', () => {
