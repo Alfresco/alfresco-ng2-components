@@ -161,5 +161,17 @@ describe('ResizeHandleDirective', () => {
             expect(resizableContainer.resizeByKeyboard).not.toHaveBeenCalled();
             expect(event.preventDefault).not.toHaveBeenCalled();
         });
+
+        it('should not prevent default on Shift+Tab to allow reverse focus navigation', () => {
+            const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true });
+            spyOn(event, 'preventDefault');
+            spyOn(event, 'stopPropagation');
+
+            directive.onKeydown(event);
+
+            expect(resizableContainer.resizeByKeyboard).not.toHaveBeenCalled();
+            expect(event.preventDefault).not.toHaveBeenCalled();
+            expect(event.stopPropagation).not.toHaveBeenCalled();
+        });
     });
 });

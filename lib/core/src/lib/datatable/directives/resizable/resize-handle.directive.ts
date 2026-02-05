@@ -34,31 +34,28 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
     @HostListener('keydown', ['$event'])
     onKeydown(event: KeyboardEvent): void {
-        let delta: number | null = null;
         const shiftDelta = 40;
-        if (event.shiftKey) {
-            delta += shiftDelta;
-        }
         const rightStepBaseValue = 20;
+        const shiftModifier = event.shiftKey ? shiftDelta : 0;
+
+        let delta: number | null = null;
+
         switch (event.key) {
             case 'ArrowRight':
             case 'ArrowUp':
-                delta += rightStepBaseValue;
+                delta = shiftModifier + rightStepBaseValue;
                 break;
             case 'ArrowLeft':
             case 'ArrowDown':
-                delta = -delta;
+                delta = -shiftModifier;
                 break;
             default:
-                break;
+                return;
         }
 
-        if (delta !== null) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            this.resizableContainer.resizeByKeyboard(delta);
-        }
+        event.preventDefault();
+        event.stopPropagation();
+        this.resizableContainer.resizeByKeyboard(delta);
     }
 
     ngOnInit(): void {
