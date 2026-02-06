@@ -26,7 +26,8 @@ import {
     NodesIncludeQuery,
     TrashcanApi,
     SizeDetailsEntry,
-    JobIdBodyEntry
+    JobIdBodyEntry,
+    NodeAssociationPaging
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
@@ -55,7 +56,10 @@ export class NodesApiService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private preferences: UserPreferencesService
+    ) {}
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;
@@ -276,6 +280,17 @@ export class NodesApiService {
      */
     getFolderSizeInfo(nodeId: string, jobId: string): Observable<SizeDetailsEntry> {
         return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
+    }
+
+    listParents(
+        nodeId: string,
+        opts?: {
+            where?: string;
+            includeSource?: boolean;
+        } & NodesIncludeQuery &
+            ContentPagingQuery
+    ): Observable<NodeAssociationPaging> {
+        return from(this.nodesApi.listParents(nodeId, opts));
     }
 
     private randomNodeName(): string {
