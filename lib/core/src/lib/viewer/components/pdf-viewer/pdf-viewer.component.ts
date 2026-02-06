@@ -661,7 +661,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 return;
             }
             this.correctAnnotationImage(annotationElement);
-            const text = annotation.contentsObj?.str?.trim();
+            const text: string = annotation.contentsObj?.str?.trim();
             if (!text || (annotation.popupRef && documentContainer.querySelector(`[data-annotation-id="${annotation.popupRef}"]`))) {
                 return;
             }

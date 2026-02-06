@@ -186,8 +186,8 @@
         }
 
         .adf-pdf-viewer-annotation-tooltip.popup {
-            outline-color: rgb(255, 235, 107);
-            background-color: color-mix(in srgb, rgb(255, 235, 107) 30%, white);
+            outline-color: var(--adf-pdf-viewer-annotation-tooltip-color);
+            background-color: color-mix(in srgb, var(--adf-pdf-viewer-annotation-tooltip-color) 30%, var(--theme-primary-color-default-contrast));
             margin-left: 40px;
             width: fit-content;
             max-width: 300px;
