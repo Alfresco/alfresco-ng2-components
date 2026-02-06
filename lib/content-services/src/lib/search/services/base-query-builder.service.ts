@@ -88,11 +88,11 @@ export abstract class BaseQueryBuilderService {
 
     private encodedQuery: string;
     private scope: RequestScope;
-    private selectedConfiguration: number;
+    private selectedConfigurationId: string;
     private _userQuery = '';
     private _queryFragments: { [id: string]: string } = {};
 
-    private readonly selectedConfigurationKey = 'selectedConfiguration';
+    private readonly selectedConfigurationKey = 'selectedConfigurationId';
     private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
         set: (target: { [key: string]: any }, property: string, value: any) => {
             target[property as keyof typeof target] = value;
@@ -162,8 +162,8 @@ export abstract class BaseQueryBuilderService {
         const configurations = this.loadConfiguration();
 
         if (Array.isArray(configurations)) {
-            if (this.selectedConfiguration !== undefined) {
-                return configurations[this.selectedConfiguration];
+            if (this.selectedConfigurationId !== undefined) {
+                return configurations.find((config) => config.id === this.selectedConfigurationId);
             }
 
             return configurations.find((configuration) => configuration.default);
@@ -171,16 +171,19 @@ export abstract class BaseQueryBuilderService {
         return configurations;
     }
 
-    public updateSelectedConfiguration(id: number): void {
+    public updateSelectedConfiguration(id: string): void {
         const currentConfig = this.loadConfiguration();
-        if (Array.isArray(currentConfig) && currentConfig[id] !== undefined) {
-            this.selectedConfiguration = id;
-            this.searchForms.next(this.getSearchFormDetails());
-            this.resetSearchOptions();
-            this.setUpSearchConfiguration(currentConfig[id]);
-            this.filterRawParams[this.selectedConfigurationKey] = id;
-            this.configUpdated.next(currentConfig[id]);
-            this.execute();
+        if (Array.isArray(currentConfig)) {
+            const selectedConfig = currentConfig.find((config) => config.id === id);
+            if (selectedConfig) {
+                this.selectedConfigurationId = id;
+                this.searchForms.next(this.getSearchFormDetails());
+                this.resetSearchOptions();
+                this.setUpSearchConfiguration(selectedConfig);
+                this.filterRawParams[this.selectedConfigurationKey] = id;
+                this.configUpdated.next(selectedConfig);
+                this.execute();
+            }
         }
     }
 
@@ -205,7 +208,7 @@ export abstract class BaseQueryBuilderService {
                 index,
                 name: configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                 default: configuration.default || false,
-                selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
+                selected: this.selectedConfigurationId !== undefined ? configuration.id === this.selectedConfigurationId : configuration.default
             }));
         } else if (configurations) {
             return [
@@ -662,18 +665,21 @@ export abstract class BaseQueryBuilderService {
         return new Proxy(target, this.queryFragmentsHandler);
     }
 
-    private setSelectedConfiguration(id: number): void {
+    private setSelectedConfiguration(id: string): void {
         const currentConfig = this.loadConfiguration();
-        if (Array.isArray(currentConfig) && currentConfig[id] !== undefined) {
-            this.selectedConfiguration = id;
-            this.searchForms.next(this.getSearchFormDetails());
-            this.setUpSearchConfiguration(currentConfig[id]);
-            this.filterRawParams[this.selectedConfigurationKey] = id;
-            this.configUpdated.next(currentConfig[id]);
+        if (Array.isArray(currentConfig)) {
+            const selectedConfig = currentConfig.find((config) => config.id === id);
+            if (selectedConfig) {
+                this.selectedConfigurationId = id;
+                this.searchForms.next(this.getSearchFormDetails());
+                this.setUpSearchConfiguration(selectedConfig);
+                this.filterRawParams[this.selectedConfigurationKey] = id;
+                this.configUpdated.next(selectedConfig);
+            }
         }
     }
 
-    private handleSelectedConfigurationChange(filters: { [key: string]: string | number }): void {
+    private handleSelectedConfigurationChange(filters: { [key: string]: string }): void {
         if (Object.keys(filters ?? {}).length === 0) {
             return;
         }
@@ -681,15 +687,15 @@ export abstract class BaseQueryBuilderService {
         const newSelectedConfig = filters?.[this.selectedConfigurationKey];
 
         if (newSelectedConfig) {
-            if (newSelectedConfig !== this.selectedConfiguration) {
-                this.setSelectedConfiguration(newSelectedConfig as number);
+            if (newSelectedConfig !== this.selectedConfigurationId) {
+                this.setSelectedConfiguration(newSelectedConfig);
             }
         } else {
             const configurations = this.loadConfiguration();
             if (Array.isArray(configurations)) {
-                const defaultIndex = configurations.findIndex((config) => config.default);
-                if (defaultIndex !== -1 && defaultIndex !== this.selectedConfiguration) {
-                    this.setSelectedConfiguration(defaultIndex);
+                const defaultConfig = configurations.find(config => config.default);
+                if (defaultConfig && this.selectedConfigurationId !== defaultConfig.id) {
+                    this.setSelectedConfiguration(defaultConfig.id);
                 }
             }
         }

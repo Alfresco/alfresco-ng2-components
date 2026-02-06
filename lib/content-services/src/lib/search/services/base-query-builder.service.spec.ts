@@ -416,7 +416,7 @@ describe('BaseQueryBuilderService', () => {
                 done();
             });
 
-            service.updateSelectedConfiguration(1);
+            service.updateSelectedConfiguration('config-2');
         });
 
         it('should update searchForms when configuration changes after initial forms emited', (done) => {
@@ -431,16 +431,16 @@ describe('BaseQueryBuilderService', () => {
                 done();
             });
 
-            service.updateSelectedConfiguration(1);
+            service.updateSelectedConfiguration('config-2');
         });
 
-        it('should store selectedConfiguration in filterRawParams', async () => {
+        it('should store selectedConfigurationId in filterRawParams', async () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
-            service.updateSelectedConfiguration(1);
+            service.updateSelectedConfiguration('config-2');
 
-            expect(service.filterRawParams['selectedConfiguration']).toBe(1);
+            expect(service.filterRawParams['selectedConfigurationId']).toBe('config-2');
         });
 
         it('should call execute when updating configuration', async () => {
@@ -448,7 +448,7 @@ describe('BaseQueryBuilderService', () => {
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
             service.userQuery = 'test';
 
-            service.updateSelectedConfiguration(1);
+            service.updateSelectedConfiguration('config-2');
 
             expect(router.navigate).toHaveBeenCalled();
         });
@@ -468,14 +468,14 @@ describe('BaseQueryBuilderService', () => {
                 done();
             });
 
-            service.populateFilters.next({ selectedConfiguration: 2, someOtherFilter: 'value' });
+            service.populateFilters.next({ selectedConfigurationId: 'config-3', someOtherFilter: 'value' });
         });
 
-        it('should reset to default configuration when populateFilters has no selectedConfiguration', (done) => {
+        it('should reset to default configuration when populateFilters has no selectedConfigurationId', (done) => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
-            service.updateSelectedConfiguration(2);
+            service.updateSelectedConfiguration('config-3');
 
             setTimeout(() => {
                 service.configUpdated.subscribe((config) => {
@@ -503,13 +503,13 @@ describe('BaseQueryBuilderService', () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
-            service.updateSelectedConfiguration(1);
+            service.updateSelectedConfiguration('config-2');
 
             setTimeout(() => {
                 const configUpdatedSpy = jasmine.createSpy('configUpdatedSpy');
                 service.configUpdated.subscribe(configUpdatedSpy);
 
-                service.populateFilters.next({ selectedConfiguration: 1 });
+                service.populateFilters.next({ selectedConfigurationId: 'config-2' });
 
                 setTimeout(() => {
                     expect(configUpdatedSpy).not.toHaveBeenCalled();
@@ -520,11 +520,11 @@ describe('BaseQueryBuilderService', () => {
 
         it('should update filterRawParams when restoring configuration from populateFilters', (done) => {
             service.configUpdated.subscribe(() => {
-                expect(service.filterRawParams['selectedConfiguration']).toBe(1);
+                expect(service.filterRawParams['selectedConfigurationId']).toBe('config-2');
                 done();
             });
 
-            service.populateFilters.next({ selectedConfiguration: 1 });
+            service.populateFilters.next({ selectedConfigurationId: 'config-2' });
         });
     });
 

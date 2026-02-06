@@ -34,7 +34,7 @@ const buildConfig = (searchSettings = {}): AppConfigService => {
     return config;
 };
 
-describe('SearchQueryBuilder', () => {
+describe('SearchQueryBuilder (runtime config)', () => {
     const runtimeConfig: SearchConfiguration = { id: 'runtime-config' };
 
     beforeEach(() => {
@@ -812,14 +812,14 @@ describe('SearchQueryBuilder', () => {
         });
 
         it('should allow the user switch the form', () => {
-            builder.updateSelectedConfiguration(1);
+            builder.updateSelectedConfiguration('config2');
 
             expect(builder.categories.length).toBe(1);
             expect(builder.filterQueries.length).toBe(2);
         });
 
         it('should keep the selected configuration value', (done) => {
-            builder.updateSelectedConfiguration(1);
+            builder.updateSelectedConfiguration('config2');
             builder.searchForms.subscribe((forms) => {
                 expect(forms).toEqual([
                     { id: 'config1', index: 0, name: 'config1', default: true, selected: false },
