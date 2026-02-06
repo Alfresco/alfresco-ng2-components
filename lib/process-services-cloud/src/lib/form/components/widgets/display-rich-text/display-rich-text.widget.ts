@@ -17,9 +17,10 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject, InjectionToken, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
+import { Component, inject, InjectionToken, OnDestroy, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
 import { BaseDisplayTextWidgetComponent } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { RichTextParserService } from '../../../services/rich-text-parser.service';
 
 export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>('RichTextParserService', {
@@ -43,19 +44,24 @@ export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>(
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetComponent implements OnInit {
+export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetComponent implements OnInit, OnDestroy {
     parsedHTML: string | Error;
 
     private readonly richTextParserService = inject(RICH_TEXT_PARSER_TOKEN);
     private readonly sanitizer = inject(DomSanitizer);
+    private fieldChangedSubscription?: Subscription;
 
     ngOnInit(): void {
         this.parseAndSanitize();
 
         // Re-parse when field changes (after expressions are evaluated)
-        this.fieldChanged.subscribe(() => {
+        this.fieldChangedSubscription = this.fieldChanged.subscribe(() => {
             this.parseAndSanitize();
         });
+    }
+
+    ngOnDestroy(): void {
+        this.fieldChangedSubscription?.unsubscribe();
     }
 
     protected storeOriginalValue(): void {
