@@ -155,7 +155,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private dialog = inject(MatDialog);
     private renderingQueueServices = inject(RenderingQueueServices);
     private appConfigService = inject(AppConfigService);
-    private translateService = inject(TranslateService);
+
+    private readonly translateService = inject(TranslateService);
 
     constructor() {
         // needed to preserve "this" context
@@ -656,7 +657,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             if (annotation.subtype !== 'Text' || annotation.name !== 'NoIcon') {
                 return;
             }
-            const annotationElement = documentContainer.querySelector(`[data-annotation-id="${annotation.id}"]`) as HTMLElement;
+            const annotationElement = documentContainer.querySelector<HTMLElement>(`[data-annotation-id="${annotation.id}"]`);
             if (!annotationElement) {
                 return;
             }
