@@ -211,19 +211,6 @@ describe('FormExpressionService', () => {
             expect(result).toBe('underscore value');
         });
 
-        it('should handle field names with dollar sign', () => {
-            const mockField = {
-                id: '$field',
-                value: 'dollar value'
-            };
-            spyOn(formModel, 'getFieldById').and.returnValue(mockField as any);
-
-            const input = '${field.$field}';
-            const result = service.resolveExpressions(formModel, input);
-
-            expect(result).toBe('dollar value');
-        });
-
         it('should handle field names with numbers', () => {
             const mockField = {
                 id: 'field123',
@@ -331,13 +318,6 @@ describe('FormExpressionService', () => {
             const result = service.getFieldDependencies(input);
 
             expect(result).toEqual(['test_field_name']);
-        });
-
-        it('should handle field names with dollar sign', () => {
-            const input = '${field.$field}';
-            const result = service.getFieldDependencies(input);
-
-            expect(result).toEqual(['$field']);
         });
 
         it('should handle field names with numbers', () => {

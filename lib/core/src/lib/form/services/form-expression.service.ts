@@ -22,7 +22,7 @@ import { FormModel } from '../components/widgets/core';
     providedIn: 'root'
 })
 export class FormExpressionService {
-    private readonly GLOBAL_EXPRESSION_REGEX = /\$\{(\s|\S)+?\}/gm;
+    private readonly GLOBAL_EXPRESSION_REGEX = /\$\{[a-zA-Z0-9_.]+\}/g;
     private readonly FIELD_PREFIX = 'field.';
     private readonly VARIABLE_PREFIX = 'variable.';
     private readonly VARIABLES_REGEX = /(?:field|variable)\.[a-zA-Z_$][a-zA-Z0-9_$]*/g;

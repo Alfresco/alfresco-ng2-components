@@ -76,10 +76,7 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
         }
 
         const value = JSON.parse(JSON.stringify(this.field.value));
-        for (const block of value.blocks) {
-            block.data.text = this.resolveExpressions(block.data.text);
-        }
-        this.field.value = value;
+        this.applyExpressionsToBlocks(value);
     }
 
     protected reevaluateExpressions(): void {
@@ -88,6 +85,10 @@ export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetCompone
         }
 
         const value = JSON.parse(this.originalFieldValue);
+        this.applyExpressionsToBlocks(value);
+    }
+
+    private applyExpressionsToBlocks(value: any): void {
         for (const block of value.blocks) {
             block.data.text = this.resolveExpressions(block.data.text);
         }
