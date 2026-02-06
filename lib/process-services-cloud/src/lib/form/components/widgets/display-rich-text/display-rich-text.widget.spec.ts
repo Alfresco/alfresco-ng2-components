@@ -268,11 +268,9 @@ describe('DisplayRichTextWidgetComponent', () => {
 
             expect(widget.field.value.blocks[0].data.text).toBe('Hello John');
 
-            // Change the dependent field value
             nameField.value = 'Jane';
             formService.formRulesEvent.next({ type: 'fieldValueChanged', field: nameField } as any);
 
-            // Wait for debounce
             setTimeout(() => {
                 expect(widget.field.value.blocks[0].data.text).toBe('Hello Jane');
                 done();
@@ -414,7 +412,6 @@ describe('DisplayRichTextWidgetComponent', () => {
             widget.field = form.getFieldById('richText1');
             fixture.detectChanges();
 
-            // Parse should be called with the updated value
             expect(mockRichTextParserService.parse).toHaveBeenCalled();
             const lastCall = mockRichTextParserService.parse.calls.mostRecent();
             expect(lastCall.args[0].blocks[0].data.text).toBe('Hello John');

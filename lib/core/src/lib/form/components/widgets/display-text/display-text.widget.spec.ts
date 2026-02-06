@@ -130,11 +130,9 @@ describe('DisplayTextWidgetComponent', () => {
 
             expect(widget.field.value).toBe('Hello John');
 
-            // Change the dependent field value
             nameField.value = 'Jane';
             formService.formRulesEvent.next({ type: 'fieldValueChanged', field: nameField } as any);
 
-            // Wait for debounce
             setTimeout(() => {
                 expect(widget.field.value).toBe('Hello Jane');
                 done();
