@@ -148,7 +148,7 @@
     "nx": "22.4.1",
     "prettier": "3.6.2",
     "rimraf": "^6.1.2",
-    "sass-loader": "16.0.5",
+    "sass-loader": "16.0.7",
     "spdx-license-list": "^6.11.0",
     "storybook": "^10.2.0",
     "stylelint": "16.20.0",
