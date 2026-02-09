@@ -479,7 +479,8 @@
       "RESET": "Réinitialiser",
       "THUMBNAILS": "Miniatures des documents",
       "THUMBNAILS_PANLEL_CLOSE": "Fermer le panneau des miniatures",
-      "LOADING": "Chargement du document en cours"
+      "LOADING": "Chargement du document en cours",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Affichage en cours",

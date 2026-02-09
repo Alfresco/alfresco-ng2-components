@@ -479,7 +479,8 @@
       "RESET": "Resetuj",
       "THUMBNAILS": "Miniatura dokumentu",
       "THUMBNAILS_PANLEL_CLOSE": "Zamknij panel miniatur",
-      "LOADING": "Wczytywanie dokumentu"
+      "LOADING": "Wczytywanie dokumentu",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wyświetlanie",

@@ -479,7 +479,8 @@
       "RESET": "Zurücksetzen",
       "THUMBNAILS": "Dokumenten-Miniaturansichten",
       "THUMBNAILS_PANLEL_CLOSE": "Miniaturansichten-Fenster schließen",
-      "LOADING": "Dokument wird geladen"
+      "LOADING": "Dokument wird geladen",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Angezeigt",
