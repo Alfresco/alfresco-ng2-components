@@ -120,7 +120,7 @@ export class ProcessFilterCloudModel {
         this.initArrayProperties(obj);
     }
 
-    private initArrayProperties(obj) {
+    private initArrayProperties(obj: ProcessFilterCloudModel) {
         if (obj.processDefinitionNames) {
             this.processDefinitionNames = obj.processDefinitionNames;
         } else {

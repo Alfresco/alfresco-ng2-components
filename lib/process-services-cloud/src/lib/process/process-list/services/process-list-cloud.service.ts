@@ -120,7 +120,8 @@ export class ProcessListCloudService extends BaseCloudService {
             processVariableKeys: requestNode.processVariableKeys,
             processVariableFilters: requestNode.processVariableFilters,
             includeSubprocesses: requestNode.includeSubprocesses,
-            includeUnlinkedProcesses: requestNode.includeUnlinkedProcesses
+            includeUnlinkedProcesses: requestNode.includeUnlinkedProcesses,
+            processRelatedTo: requestNode.processRelatedTo
         };
 
         if (requestNode.sorting) {

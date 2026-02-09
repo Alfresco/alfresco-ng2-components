@@ -21,6 +21,7 @@ import {
     ContentChild,
     EventEmitter,
     Inject,
+    input,
     Input,
     OnChanges,
     Output,
@@ -65,6 +66,8 @@ import { ProcessVariableFilterModel } from '../../../models/process-variable-fil
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { PaginatedList } from '@alfresco/js-api/typings';
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -99,6 +102,8 @@ export class ProcessListCloudComponent
 
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
+
+    processRelatedTo = input<string[]>([]);
 
     /** The name of the application. */
     @Input()
@@ -331,7 +336,7 @@ export class ProcessListCloudComponent
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
-    success = new EventEmitter<any>();
+    success = new EventEmitter<PaginatedList<ProcessInstanceCloud>>();
 
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
@@ -651,7 +656,8 @@ export class ProcessListCloudComponent
             includeSubprocesses: this.includeSubprocesses,
             includeUnlinkedProcesses: this.includeUnlinkedProcesses,
             processVariableKeys: this.getVariableDefinitionsRequestModel(),
-            processVariableFilters: this.processVariables
+            processVariableFilters: this.processVariables,
+            processRelatedTo: this.processRelatedTo()
         };
 
         return new ProcessListRequestModel(requestNode);
