@@ -735,6 +735,35 @@ describe('ProcessListCloudComponent', () => {
             });
         });
 
+        describe('processRelatedTo', () => {
+            it('should include processRelatedTo in request node when values are provided', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                const relatedProcessIds = ['process-id-1', 'process-id-2'];
+                fixture.componentRef.setInput('processRelatedTo', relatedProcessIds);
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.processRelatedTo).toEqual(relatedProcessIds);
+            });
+
+            it('should include empty array in request node when no values are provided', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                fixture.componentRef.setInput('processRelatedTo', []);
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.processRelatedTo).toEqual([]);
+            });
+
+            it('should have default empty array for processRelatedTo', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.processRelatedTo).toEqual(undefined);
+            });
+        });
+
         it('should return the results if an application name is given', (done) => {
             spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);

@@ -22,8 +22,6 @@ import { DataColumnListComponent } from '../data-column/data-column-list.compone
 import { DataColumn } from './data-column.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 
-type ColumnId = string;
-
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class DataTableSchema<T = unknown> {
@@ -36,7 +34,7 @@ export abstract class DataTableSchema<T = unknown> {
 
     columns: DataColumn<T>[];
 
-    protected columnsOrder: ColumnId[] | undefined;
+    protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
 
     protected columnsVisibility: { [columnId: string]: boolean } | undefined;

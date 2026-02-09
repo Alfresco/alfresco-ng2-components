@@ -66,7 +66,7 @@ import { ProcessVariableFilterModel } from '../../../models/process-variable-fil
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { PaginatedList } from '@alfresco/js-api/typings';
+import { PaginatedList } from '@alfresco/js-api';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
@@ -103,7 +103,7 @@ export class ProcessListCloudComponent
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
-    processRelatedTo = input<string[]>([]);
+    processRelatedTo = input<string[] | undefined>();
 
     /** The name of the application. */
     @Input()
