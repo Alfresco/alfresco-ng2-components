@@ -479,7 +479,8 @@
       "RESET": "Redefinir",
       "THUMBNAILS": "Miniaturas do documento",
       "THUMBNAILS_PANLEL_CLOSE": "Fechar painel de miniaturas",
-      "LOADING": "O documento está sendo carregado"
+      "LOADING": "O documento está sendo carregado",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "A mostrar",
