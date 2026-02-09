@@ -17,19 +17,34 @@
 
 export default {
     GlobalWorkerOptions: {},
-    getDocument() {
-        return {
-            loadingTask: () => ({
-                destroy: () => Promise.resolve()
-            }),
-            promise: new Promise((resolve) => {
-                resolve({
-                    numPages: 6,
-                    getPage: () => 'fakePage'
-                });
-            })
-        };
-    },
+    getDocument: jasmine.createSpy('getDocument').and.callFake(() => ({
+        loadingTask: () => ({
+            destroy: () => Promise.resolve()
+        }),
+        promise: new Promise((resolve) => {
+            resolve({
+                numPages: 6,
+                getPage: () =>
+                    Promise.resolve({
+                        getAnnotations: () => [
+                            {
+                                subtype: 'Text',
+                                name: 'NoIcon',
+                                id: 'R13',
+                                titleObj: {
+                                    str: 'Annotation title'
+                                },
+                                contentsObj: {
+                                    str: 'Annotation contents'
+                                },
+                                modificationDate: "D:20260202104106Z00'00",
+                                popupRef: 'R1'
+                            }
+                        ]
+                    })
+            });
+        })
+    })),
     PasswordResponses: {
         NEED_PASSWORD: 1,
         INCORRECT_PASSWORD: 2
