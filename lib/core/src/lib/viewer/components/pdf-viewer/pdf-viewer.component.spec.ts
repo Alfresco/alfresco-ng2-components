@@ -521,10 +521,10 @@ describe('Test PdfViewer - User interaction', () => {
 
         component.ngOnChanges(changes);
 
-        const spy = pdfjsLibraryMock.getDocument;
+        const getDocumentSpy = pdfjsLibraryMock.getDocument;
 
-        expect(spy).toHaveBeenCalled();
-        const loadingArgs = spy.calls.mostRecent().args[0];
+        expect(getDocumentSpy).toHaveBeenCalled();
+        const loadingArgs = getDocumentSpy.calls.mostRecent().args[0];
 
         expect(loadingArgs.wasmUrl).toBe('./wasm/');
     });
