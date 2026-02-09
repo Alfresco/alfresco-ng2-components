@@ -25,7 +25,24 @@ export default {
             promise: new Promise((resolve) => {
                 resolve({
                     numPages: 6,
-                    getPage: () => 'fakePage'
+                    getPage: () =>
+                        Promise.resolve({
+                            getAnnotations: () => [
+                                {
+                                    subtype: 'Text',
+                                    name: 'NoIcon',
+                                    id: 'R13',
+                                    titleObj: {
+                                        str: 'Annotation title'
+                                    },
+                                    contentsObj: {
+                                        str: 'Annotation contents'
+                                    },
+                                    modificationDate: "D:20260202104106Z00'00",
+                                    popupRef: 'R1'
+                                }
+                            ]
+                        })
                 });
             })
         };

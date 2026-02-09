@@ -28,6 +28,7 @@ import { RenderingQueueServices } from '../../services/rendering-queue.services'
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
 import pdfjsLibraryMock from '../mock/pdfjs-lib.mock';
+import { TranslateService } from '@ngx-translate/core';
 
 declare const pdfjsLib: any;
 
@@ -464,8 +465,8 @@ describe('Test PdfViewer - User interaction', () => {
         fixture.destroy();
     });
 
-    it('should init the viewer with annotation mode disabled', () => {
-        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 0 }));
+    it('should init the viewer with annotation mode enabled', () => {
+        expect(pdfViewerSpy).toHaveBeenCalledWith(jasmine.objectContaining({ annotationMode: 1 }));
     });
 
     it('should Total number of pages be loaded', () => {
@@ -599,5 +600,63 @@ describe('Test PdfViewer - User interaction', () => {
 
             expect(component.isPanelDisabled).toBe(false);
         });
+    });
+
+    describe('Annotations', () => {
+        const annotationImageAlt = 'Note Annotation';
+        const annotationAttribute = 'data-annotation-id';
+
+        let annotationElement: HTMLElement;
+        let annotationImageElement: HTMLImageElement;
+        let documentContainer: HTMLDivElement;
+
+        const dispatchAnnotationLayerRenderedEvent = (): void => {
+            pdfViewerSpy.calls.mostRecent().args[0].eventBus.dispatch('annotationlayerrendered', {
+                pageNumber: 1,
+                source: {
+                    div: documentContainer
+                }
+            });
+            tick();
+        };
+
+        const getAnnotationPopupElement = (): HTMLElement => annotationElement.querySelector('.adf-pdf-viewer-annotation-tooltip');
+
+        beforeEach(() => {
+            documentContainer = document.createElement('div');
+            annotationImageElement = document.createElement('img');
+            annotationElement = document.createElement('section');
+            annotationElement.setAttribute(annotationAttribute, 'R13');
+            annotationElement.append(annotationImageElement);
+            documentContainer.append(annotationElement);
+            spyOn(TestBed.inject(TranslateService), 'instant').withArgs('ADF_VIEWER.ARIA.NOTE_ANNOTATION_IMG').and.returnValue(annotationImageAlt);
+        });
+
+        it('should have corrected image in annotation popup', fakeAsync(() => {
+            dispatchAnnotationLayerRenderedEvent();
+            expect(annotationImageElement.src).toBe(
+                'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGV' +
+                    'pZ2h0PSIyNCI+PHBhdGggZD0iTTIgMmgxNHYxNEgyeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0zIDNoMTJ2MTJIM3oiIGZpbGw9Ii' +
+                    'NmZmRiMDAiLz48cGF0aCBkPSJNNSA1aDh2OGgtOHoiIGZpbGw9IiNmZmJiMDAiLz48L3N2Zz4='
+            );
+            expect(annotationImageElement.alt).toBe(annotationImageAlt);
+        }));
+
+        it('should have corrected content in annotation popup', fakeAsync(() => {
+            dispatchAnnotationLayerRenderedEvent();
+            expect(annotationElement.querySelector('.title').textContent).toBe('Annotation title');
+            expect(annotationElement.querySelector('.popupDate').textContent).toBe('2/2/2026, 10:41:06 AM');
+            expect(annotationElement.querySelector('.popupContent').textContent).toBe('Annotation contents');
+            expect(getAnnotationPopupElement()).toBeDefined();
+        }));
+
+        it('should not have corrected content', fakeAsync(() => {
+            const annotationPopupElement = document.createElement('section');
+            annotationPopupElement.setAttribute(annotationAttribute, 'R1');
+            documentContainer.append(annotationPopupElement);
+
+            dispatchAnnotationLayerRenderedEvent();
+            expect(getAnnotationPopupElement()).toBeNull();
+        }));
     });
 });

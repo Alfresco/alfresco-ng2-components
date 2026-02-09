@@ -479,7 +479,8 @@
       "RESET": "Reset",
       "THUMBNAILS": "Document thumbnails",
       "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel",
-      "LOADING": "Document is loading"
+      "LOADING": "Document is loading",
+      "NOTE_ANNOTATION_IMG": "Note Annotation"
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",
