@@ -88,10 +88,11 @@ export abstract class BaseQueryBuilderService {
 
     private encodedQuery: string;
     private scope: RequestScope;
-    private selectedConfiguration: number;
+    private selectedConfigurationId: string;
     private _userQuery = '';
     private _queryFragments: { [id: string]: string } = {};
 
+    private readonly selectedConfigurationKey = 'selectedConfigurationId';
     private readonly queryFragmentsHandler: ProxyHandler<{ [key: string]: any }> = {
         set: (target: { [key: string]: any }, property: string, value: any) => {
             target[property as keyof typeof target] = value;
@@ -121,7 +122,8 @@ export abstract class BaseQueryBuilderService {
     }
 
     config: SearchConfiguration = {
-        categories: []
+        categories: [],
+        id: 'SEARCH.UNKNOWN_CONFIGURATION'
     };
 
     // TODO: to be supported in future iterations
@@ -133,6 +135,8 @@ export abstract class BaseQueryBuilderService {
     ) {
         this.resetToDefaults();
         this._queryFragments = this.createQueryFragmentsProxy({});
+
+        this.populateFilters.subscribe((filters) => this.handleSelectedConfigurationChange(filters));
     }
 
     public abstract loadConfiguration(): SearchConfiguration | SearchConfiguration[];
@@ -158,8 +162,8 @@ export abstract class BaseQueryBuilderService {
         const configurations = this.loadConfiguration();
 
         if (Array.isArray(configurations)) {
-            if (this.selectedConfiguration !== undefined) {
-                return configurations[this.selectedConfiguration];
+            if (this.selectedConfigurationId !== undefined) {
+                return configurations.find((config) => config.id === this.selectedConfigurationId);
             }
 
             return configurations.find((configuration) => configuration.default);
@@ -167,15 +171,19 @@ export abstract class BaseQueryBuilderService {
         return configurations;
     }
 
-    public updateSelectedConfiguration(index: number): void {
+    public updateSelectedConfiguration(id: string): void {
         const currentConfig = this.loadConfiguration();
-        if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
-            this.selectedConfiguration = index;
-            this.searchForms.next(this.getSearchFormDetails());
-            this.resetSearchOptions();
-            this.setUpSearchConfiguration(currentConfig[index]);
-            this.configUpdated.next(currentConfig[index]);
-            this.update();
+        if (Array.isArray(currentConfig)) {
+            const selectedConfig = currentConfig.find((config) => config.id === id);
+            if (selectedConfig) {
+                this.selectedConfigurationId = id;
+                this.searchForms.next(this.getSearchFormDetails());
+                this.resetSearchOptions();
+                this.setUpSearchConfiguration(selectedConfig);
+                this.filterRawParams[this.selectedConfigurationKey] = id;
+                this.configUpdated.next(selectedConfig);
+                this.execute();
+            }
         }
     }
 
@@ -196,14 +204,16 @@ export abstract class BaseQueryBuilderService {
         const configurations = this.loadConfiguration();
         if (Array.isArray(configurations)) {
             return configurations.map((configuration, index) => ({
+                id: configuration.id,
                 index,
                 name: configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                 default: configuration.default || false,
-                selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
+                selected: this.selectedConfigurationId !== undefined ? configuration.id === this.selectedConfigurationId : configuration.default
             }));
         } else if (configurations) {
             return [
                 {
+                    id: 'SEARCH.UNKNOWN_CONFIGURATION',
                     index: 0,
                     name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                     default: true,
@@ -364,11 +374,11 @@ export abstract class BaseQueryBuilderService {
      */
     async execute(updateQueryParams = true, queryBody?: SearchRequest) {
         try {
+            if (updateQueryParams) {
+                this.updateSearchQueryParams();
+            }
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                if (updateQueryParams) {
-                    this.updateSearchQueryParams();
-                }
                 const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
@@ -653,5 +663,41 @@ export abstract class BaseQueryBuilderService {
 
     private createQueryFragmentsProxy(target: { [key: string]: any }): { [key: string]: any } {
         return new Proxy(target, this.queryFragmentsHandler);
+    }
+
+    private setSelectedConfiguration(id: string): void {
+        const currentConfig = this.loadConfiguration();
+        if (Array.isArray(currentConfig)) {
+            const selectedConfig = currentConfig.find((config) => config.id === id);
+            if (selectedConfig) {
+                this.selectedConfigurationId = id;
+                this.searchForms.next(this.getSearchFormDetails());
+                this.setUpSearchConfiguration(selectedConfig);
+                this.filterRawParams[this.selectedConfigurationKey] = id;
+                this.configUpdated.next(selectedConfig);
+            }
+        }
+    }
+
+    private handleSelectedConfigurationChange(filters: { [key: string]: string }): void {
+        if (Object.keys(filters ?? {}).length === 0) {
+            return;
+        }
+
+        const newSelectedConfig = filters?.[this.selectedConfigurationKey];
+
+        if (newSelectedConfig) {
+            if (newSelectedConfig !== this.selectedConfigurationId) {
+                this.setSelectedConfiguration(newSelectedConfig);
+            }
+        } else {
+            const configurations = this.loadConfiguration();
+            if (Array.isArray(configurations)) {
+                const defaultConfig = configurations.find(config => config.default);
+                if (defaultConfig && this.selectedConfigurationId !== defaultConfig.id) {
+                    this.setSelectedConfiguration(defaultConfig.id);
+                }
+            }
+        }
     }
 }

@@ -59,6 +59,7 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetQueries: {
                 label: 'label1',
@@ -97,6 +98,7 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetQueries: {
                 label: 'label1',
@@ -140,6 +142,7 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetQueries: {
                 queries: []
@@ -163,6 +166,7 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -196,6 +200,7 @@ describe('SearchFacetFiltersService', () => {
 
     it('should filter response facet fields based on search filter config method', () => {
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: { fields: [{ label: 'f1', field: 'f1' }] },
             facetQueries: {
@@ -247,6 +252,7 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -286,6 +292,7 @@ describe('SearchFacetFiltersService', () => {
 
     it('should fetch facet fields from response payload and update the existing bucket values', () => {
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -343,6 +350,7 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: { fields: [{ label: 'f1', field: 'f1' }] },
             facetQueries: { queries: [] }
@@ -374,6 +382,7 @@ describe('SearchFacetFiltersService', () => {
     it('should fetch facet intervals from response payload', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetIntervals: {
                 intervals: [
@@ -426,6 +435,7 @@ describe('SearchFacetFiltersService', () => {
     it('should filter out the fetched facet intervals that have bucket values less than their set mincount', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetIntervals: {
                 intervals: [
@@ -479,6 +489,7 @@ describe('SearchFacetFiltersService', () => {
     it('should sort the facets based on the order set in the settings', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetQueries: {
                 label: 'Query 1',
@@ -525,6 +536,7 @@ describe('SearchFacetFiltersService', () => {
         spyOn(categoryService, 'getCategory').and.returnValue(of({ entry }));
 
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -569,6 +581,7 @@ describe('SearchFacetFiltersService', () => {
     it('should extract creator and modifier facets and create tabbed facet for them', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
+            id: 'test-config',
             categories: [],
             facetFields: {
                 fields: [
@@ -671,6 +684,7 @@ describe('SearchFacetFiltersService', () => {
 
         it('should sort the buckets by label', () => {
             queryBuilder.config = {
+                id: 'test-config',
                 categories: [],
                 facetQueries: { queries: [] },
                 facetFields: {
@@ -690,6 +704,7 @@ describe('SearchFacetFiltersService', () => {
 
         it('should sort the buckets by count', () => {
             queryBuilder.config = {
+                id: 'test-config',
                 categories: [],
                 facetQueries: { queries: [] },
                 facetFields: {

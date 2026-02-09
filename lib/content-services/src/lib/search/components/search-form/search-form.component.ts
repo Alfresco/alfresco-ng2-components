@@ -41,7 +41,7 @@ export class SearchFormComponent {
     formChange: EventEmitter<SearchForm> = new EventEmitter<SearchForm>();
 
     onSelectionChange(form: SearchForm) {
-        this.queryBuilder.updateSelectedConfiguration(form.index);
+        this.queryBuilder.updateSelectedConfiguration(form.id);
         this.formChange.emit(form);
     }
 

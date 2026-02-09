@@ -80,6 +80,7 @@ describe('SearchFilterComponent', () => {
         it('should fetch facet fields from response payload and show the already checked items', () => {
             spyOn(queryBuilder, 'execute').and.stub();
             queryBuilder.config = {
+                id: 'test-config',
                 categories: [],
                 facetFields: {
                     fields: [
@@ -138,6 +139,7 @@ describe('SearchFilterComponent', () => {
         it('should fetch facet fields from response payload and show the newly checked items', () => {
             spyOn(queryBuilder, 'execute').and.stub();
             queryBuilder.config = {
+                id: 'test-config',
                 categories: [],
                 facetFields: {
                     fields: [
@@ -196,6 +198,7 @@ describe('SearchFilterComponent', () => {
         it('should show buckets with 0 values when there are no facet fields on the response payload', () => {
             spyOn(queryBuilder, 'execute').and.stub();
             queryBuilder.config = {
+                id: 'test-config',
                 categories: [],
                 facetFields: {
                     fields: [
@@ -278,7 +281,7 @@ describe('SearchFilterComponent', () => {
         });
 
         it('should not show the disabled widget', async () => {
-            appConfigService.config.search = { categories: disabledCategories };
+            appConfigService.config.search = { id: 'test-config', categories: disabledCategories };
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
@@ -289,7 +292,7 @@ describe('SearchFilterComponent', () => {
         });
 
         it('should show the widget in expanded mode', async () => {
-            appConfigService.config.search = { categories: expandedCategories };
+            appConfigService.config.search = { id: 'test-config', categories: expandedCategories };
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
@@ -303,7 +306,7 @@ describe('SearchFilterComponent', () => {
         });
 
         it('should show the widgets only if configured', async () => {
-            appConfigService.config.search = { categories: simpleCategories };
+            appConfigService.config.search = { id: 'test-config', categories: simpleCategories };
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
