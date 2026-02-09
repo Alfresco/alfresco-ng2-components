@@ -755,7 +755,7 @@ describe('ProcessListCloudComponent', () => {
                 expect(component.processListRequestNode.processRelatedTo).toEqual([]);
             });
 
-            it('should have default empty array for processRelatedTo', () => {
+            it('should omit processRelatedTo in request node when values are not provided', () => {
                 spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
                 component.ngAfterContentInit();
                 component.reload();
