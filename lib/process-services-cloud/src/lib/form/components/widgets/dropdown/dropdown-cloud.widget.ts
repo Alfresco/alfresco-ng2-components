@@ -142,14 +142,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             if (Array.isArray(this.field.value)) {
                 value = this.field?.value;
             } else if (this.field?.value && typeof this.field?.value === 'object') {
-                const obj = this.field.value;
-                if (obj.id === DEFAULT_OPTION.id || obj.id === '' || obj.id === undefined) {
-                    value = null;
-                } else {
-                    value = { id: obj.id, name: obj.name };
-                }
-            } else if (this.field.value === null || this.field.value === undefined || this.field.value === '') {
-                value = null;
+                value = { id: this.field?.value.id, name: this.field?.value.name };
+            } else if (this.field.value === null) {
+                value = this.field.value;
             } else {
                 value = { id: this.field?.value, name: '' };
             }
@@ -524,11 +519,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return event.field.type === FormFieldTypes.DROPDOWN;
     }
 
-    private setOptionValue(option: FormFieldOption | FormFieldOption[] | null, field: FormFieldModel) {
-        if (option == null) {
-            field.value = undefined;
-            return;
-        }
+    private setOptionValue(option: FormFieldOption | FormFieldOption[], field: FormFieldModel) {
         if (Array.isArray(option) || field.hasMultipleValues) {
             field.value = option;
             return;
