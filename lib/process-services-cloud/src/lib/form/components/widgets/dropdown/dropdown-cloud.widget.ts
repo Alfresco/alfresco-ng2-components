@@ -143,8 +143,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 value = this.field?.value;
             } else if (this.field?.value && typeof this.field?.value === 'object') {
                 value = { id: this.field?.value.id, name: this.field?.value.name };
-            } else if (this.field.value === null) {
-                value = this.field.value;
+            } else if (this.field.value === null || this.field.value === undefined || this.field.value === '') {
+                value = null;
             } else {
                 value = { id: this.field?.value, name: '' };
             }
@@ -519,7 +519,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return event.field.type === FormFieldTypes.DROPDOWN;
     }
 
-    private setOptionValue(option: FormFieldOption | FormFieldOption[], field: FormFieldModel) {
+    private setOptionValue(option: FormFieldOption | FormFieldOption[] | null, field: FormFieldModel) {
+        if (option == null) {
+            field.value = undefined;
+            return;
+        }
         if (Array.isArray(option) || field.hasMultipleValues) {
             field.value = option;
             return;
