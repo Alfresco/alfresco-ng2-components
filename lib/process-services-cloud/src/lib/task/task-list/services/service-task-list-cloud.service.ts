@@ -60,7 +60,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
     getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
         if (appName) {
             const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
-            return this.get(queryUrl).pipe(map((response: any) => response.entry));
+            return this.get<{ entry: ServiceTaskIntegrationContextCloudModel }>(queryUrl).pipe(map((response) => response.entry));
         } else {
             return throwError('Appname not configured');
         }

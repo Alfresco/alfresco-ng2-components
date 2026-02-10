@@ -41,11 +41,47 @@ export interface ServiceTaskQueryCloudRequestModel {
     startedDate?: Date;
 }
 
-export interface ServiceTaskIntegrationContextCloudModel extends ServiceTaskQueryCloudRequestModel {
-    errorDate?: Date;
-    errorClassName?: string;
+export interface ServiceTaskIntegrationContextCloudModel {
+    id?: string;
+    status?: string;
+    appName?: string;
+    appVersion?: string;
+    serviceName?: string;
+    serviceFullName?: string;
+    serviceVersion?: string;
+    serviceType?: string;
+    processDefinitionId?: string;
+    processDefinitionKey?: string;
+    processDefinitionVersion?: number;
+    processInstanceId?: string;
+    parentProcessInstanceId?: string;
+    rootProcessInstanceId?: string;
+    executionId?: string;
+    connectorType?: string;
+    clientId?: string;
+    clientName?: string;
+    clientType?: string;
+    businessKey?: string;
+    inBoundVariables?: Record<string, any>;
+    outBoundVariables?: Record<string, any>;
+    requestDate?: string;
+    resultDate?: string;
+    errorDate?: string;
     errorCode?: string;
+    errorClassName?: string;
     errorMessage?: string;
+    stackTraceElements?: ServiceTaskStackTraceElement[];
+}
+
+export interface ServiceTaskStackTraceElement {
+    classLoaderName?: string;
+    moduleName?: string;
+    moduleVersion?: string;
+    methodName?: string;
+    fileName?: string;
+    lineNumber?: number;
+    className?: string;
+    nativeMethod?: boolean;
 }
 
 export interface StackTraceElement {
