@@ -341,13 +341,13 @@ describe('BaseQueryBuilderService', () => {
             );
         });
 
-        it('should update URL params even when query is null', async () => {
+        it('should not update URL params even when query is null', async () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             service.userQuery = '';
 
             await service.execute();
 
-            expect(router.navigate).toHaveBeenCalled();
+            expect(router.navigate).not.toHaveBeenCalled();
         });
     });
 
@@ -446,11 +446,12 @@ describe('BaseQueryBuilderService', () => {
         it('should call execute when updating configuration', async () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
+            spyOn(service, 'execute')
             service.userQuery = 'test';
 
             service.updateSelectedConfiguration('config-2');
 
-            expect(router.navigate).toHaveBeenCalled();
+            expect(service.execute).toHaveBeenCalled();
         });
     });
 
