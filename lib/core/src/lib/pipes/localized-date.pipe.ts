@@ -46,10 +46,6 @@ export class LocalizedDatePipe implements PipeTransform {
         const defaultLocale = this.userPreferenceService?.localeSignal() || LocalizedDatePipe.DEFAULT_LOCALE;
         const actualLocale = locale || defaultLocale;
         const datePipe = timezone ? new DatePipe(actualLocale, timezone) : new DatePipe(actualLocale);
-        try {
-            return datePipe.transform(value, actualFormat);
-        } catch {
-            return '';
-        }
+        return datePipe.transform(value, actualFormat);
     }
 }
