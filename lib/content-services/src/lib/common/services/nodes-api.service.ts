@@ -57,8 +57,8 @@ export class NodesApiService {
     }
 
     constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
+        private readonly apiService: AlfrescoApiService,
+        private readonly preferences: UserPreferencesService
     ) {}
 
     private getEntryFromEntity(entity: NodeEntry): Node {
@@ -282,6 +282,13 @@ export class NodesApiService {
         return from(this.nodesApi.getFolderSizeInfo(nodeId, jobId));
     }
 
+    /**
+     * Lists parents of a given node.
+     *
+     * @param nodeId Node ID
+     * @param opts Optional parameters
+     * @returns List of parent nodes
+     */
     listParents(
         nodeId: string,
         opts?: {
