@@ -59,7 +59,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     setupCurrentPagination(maxItems: number, skipCount: number) {
         if (!this.paging || (this.paging && this.paging.maxItems !== maxItems) || this.paging.skipCount !== skipCount) {
             this.paging = { maxItems, skipCount };
-            this.execute();
+            this.execute(false);
         }
     }
 
