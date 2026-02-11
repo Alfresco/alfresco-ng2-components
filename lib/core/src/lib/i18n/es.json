@@ -215,8 +215,8 @@
       "CANCEL_BUTTON": {
         "LABEL": "Cancelar"
       },
-      "FOLDER_CREATED_SUCCESS": "Folder '{{ name }}' created successfully",
-      "FOLDER_UPDATED_SUCCESS": "Folder '{{ name }}' updated successfully"
+      "FOLDER_CREATED_SUCCESS": "La carpeta '{{ name }}' se ha creado correctamente",
+      "FOLDER_UPDATED_SUCCESS": "La carpeta '{{ name }}' se ha actualizado correctamente"
     },
     "MESSAGES": {
       "ERRORS": {
@@ -409,8 +409,8 @@
       "ROW_OPTION_BUTTON": "Acciones",
       "DRAG": "Botón Arrastrar",
       "EMPTY_HEADER": "Encabezado vacío",
-      "RESIZE_COLUMN": "Resize {{ column }} column. Use arrow keys to adjust width, Shift for larger steps.",
-      "COLUMN_WIDTH_CHANGED": "{{ column }} column width: {{ width }} pixels"
+      "RESIZE_COLUMN": "Cambiar el tamaño de la columna {{ column }}. Utilice las teclas de flecha para ajustar el ancho, Mayús para pasos más grandes.",
+      "COLUMN_WIDTH_CHANGED": "Ancho de columna {{ column }}: {{ width }} píxeles"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
@@ -607,8 +607,8 @@
       "TITLE": "Licencia",
       "PROPERTY": "Propiedades",
       "VALUE": "Valor",
-      "ENABLED": "Enabled",
-      "DISABLED": "Disabled"
+      "ENABLED": "Habilitado",
+      "DISABLED": "Deshabilitado"
     },
     "STATUS": {
       "TITLE": "Estado",
