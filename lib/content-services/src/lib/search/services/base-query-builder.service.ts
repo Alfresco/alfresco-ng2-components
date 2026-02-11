@@ -374,11 +374,11 @@ export abstract class BaseQueryBuilderService {
      */
     async execute(updateQueryParams = true, queryBody?: SearchRequest) {
         try {
-            if (updateQueryParams) {
-                this.updateSearchQueryParams();
-            }
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
+                if (updateQueryParams) {
+                    this.updateSearchQueryParams();
+                }
                 const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
