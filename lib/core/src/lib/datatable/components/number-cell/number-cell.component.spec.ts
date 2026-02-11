@@ -60,6 +60,63 @@ describe('NumberCellComponent', () => {
     it('should render decimal value with custom digitsInfo', () => {
         renderAndCheckNumberValue({ digitsInfo: '1.2-2' }, 123.456789, '123.46');
     });
+
+    describe('numberValue validation', () => {
+        it('should return valid number for integer input', () => {
+            component.value$.next(42);
+            fixture.detectChanges();
+            expect(component.numberValue()).toBe(42);
+        });
+
+        it('should return valid number for float input', () => {
+            component.value$.next(3.14159);
+            fixture.detectChanges();
+            expect(component.numberValue()).toBe(3.14159);
+        });
+
+        it('should return valid number for negative number', () => {
+            component.value$.next(-123.45);
+            fixture.detectChanges();
+            expect(component.numberValue()).toBe(-123.45);
+        });
+
+        it('should return valid number for zero', () => {
+            component.value$.next(0);
+            fixture.detectChanges();
+            expect(component.numberValue()).toBe(0);
+        });
+
+        it('should return valid number for numeric string', () => {
+            component.value$.next('456.78');
+            fixture.detectChanges();
+            expect(component.numberValue()).toBe(456.78);
+        });
+
+        it('should return null for boolean true', () => {
+            (component.value$ as { next: (v: unknown) => void }).next(true);
+            fixture.detectChanges();
+            expect(component.numberValue()).toBeNull();
+        });
+
+        it('should return null for NaN', () => {
+            component.value$.next(NaN);
+            fixture.detectChanges();
+            expect(component.numberValue()).toBeNull();
+        });
+
+        it('should return null for non-numeric string', () => {
+            component.value$.next('not a number');
+            fixture.detectChanges();
+            expect(component.numberValue()).toBeNull();
+        });
+
+        it('should not render span when value is invalid', () => {
+            component.value$.next(null);
+            fixture.detectChanges();
+            const displayedNumber = testingUtils.getByCSS('span');
+            expect(displayedNumber).toBeFalsy();
+        });
+    });
 });
 
 describe('NumberCellComponent locale', () => {
