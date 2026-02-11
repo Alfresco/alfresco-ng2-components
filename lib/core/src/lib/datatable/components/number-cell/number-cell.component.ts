@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, computed } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DecimalConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
@@ -38,5 +38,17 @@ export class NumberCellComponent extends DataTableCellComponent {
         locale: undefined
     };
 
-    readonly numberValue = toSignal(this.value$);
+    private readonly rawNumberValue = toSignal(this.value$);
+
+    readonly numberValue = computed<number | null>(() => {
+        const value = this.rawNumberValue();
+
+        if (value == null || value === '' || typeof value === 'boolean') {
+            return null;
+        }
+
+        const numericValue = Number(value);
+
+        return Number.isFinite(numericValue) ? numericValue : null;
+    });
 }

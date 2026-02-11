@@ -64,11 +64,15 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
             return '';
         }
 
-        if (currentConfig.format === 'timeAgo') {
-            return this.timeAgoPipe.transform(date, currentConfig.locale) || '';
-        }
+        try {
+            if (currentConfig.format === 'timeAgo') {
+                return this.timeAgoPipe.transform(date, currentConfig.locale) || '';
+            }
 
-        return this.localizedDatePipe.transform(date, currentConfig.format, currentConfig.locale) || '';
+            return this.localizedDatePipe.transform(date, currentConfig.format, currentConfig.locale) || '';
+        } catch {
+            return '';
+        }
     });
 
     constructor() {
@@ -86,8 +90,12 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     protected override computeTitle(value: any): string {
         if (value) {
-            const currentConfig = this.config();
-            return this.localizedDatePipe.transform(value, currentConfig.tooltipFormat, currentConfig.locale) || '';
+            try {
+                const currentConfig = this.config();
+                return this.localizedDatePipe.transform(value, currentConfig.tooltipFormat, currentConfig.locale) || '';
+            } catch {
+                return '';
+            }
         }
         return '';
     }
