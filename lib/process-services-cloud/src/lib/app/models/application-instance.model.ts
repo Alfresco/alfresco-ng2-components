@@ -48,10 +48,12 @@ export interface Descriptor {
     customUIAuthFlowType?: DescriptorCustomUIAuthFlowType;
 }
 
-export enum DescriptorCustomUIAuthFlowType {
-    CODE = 'CODE',
-    IMPLICIT = 'IMPLICIT'
-}
+export const DescriptorCustomUIAuthFlowType = {
+    CODE: 'CODE',
+    IMPLICIT: 'IMPLICIT'
+} as const;
+
+export type DescriptorCustomUIAuthFlowType = (typeof DescriptorCustomUIAuthFlowType)[keyof typeof DescriptorCustomUIAuthFlowType];
 
 export interface DescriptorSecurity {
     role: string;

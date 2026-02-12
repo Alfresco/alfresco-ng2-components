@@ -18,7 +18,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
 export class FormCloudRepresentation {
-
     id?: string;
     name?: string;
     description?: string;
@@ -57,13 +56,17 @@ export interface DestinationFolderPathModel {
     path: string;
 }
 
-export enum FileSourceTypes {
-    ALL_FILE_SOURCES_SERVICE_ID = 'all-file-sources',
-    ALFRESCO_CONTENT_SOURCES_SERVICE_ID = 'alfresco-content'
-}
+export const FileSourceTypes = {
+    ALL_FILE_SOURCES_SERVICE_ID: 'all-file-sources',
+    ALFRESCO_CONTENT_SOURCES_SERVICE_ID: 'alfresco-content'
+} as const;
 
-export enum DestinationFolderPathType {
-    STATIC_TYPE = 'value',
-    STRING_TYPE = 'string',
-    FOLDER_TYPE = 'folder'
-}
+export type FileSourceTypes = (typeof FileSourceTypes)[keyof typeof FileSourceTypes];
+
+export const DestinationFolderPathType = {
+    STATIC_TYPE: 'value',
+    STRING_TYPE: 'string',
+    FOLDER_TYPE: 'folder'
+} as const;
+
+export type DestinationFolderPathType = (typeof DestinationFolderPathType)[keyof typeof DestinationFolderPathType];

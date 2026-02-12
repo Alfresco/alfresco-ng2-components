@@ -38,8 +38,10 @@ export class Prediction {
 
 export type UpdateType = 'AUTOFILL' | 'AUTOCORRECT';
 
-export enum ReviewStatus {
-    UNREVIEWED = 'UNREVIEWED',
-    CONFIRMED = 'CONFIRMED',
-    REJECTED = 'REJECTED'
-}
+export const ReviewStatus = {
+    UNREVIEWED: 'UNREVIEWED',
+    CONFIRMED: 'CONFIRMED',
+    REJECTED: 'REJECTED'
+} as const;
+
+export type ReviewStatus = (typeof ReviewStatus)[keyof typeof ReviewStatus];

@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line no-shadow
-export enum ProcessListCloudPreferences {
-    columnOrder = 'processes-cloud-list-columns-order',
-    columnsVisibility = 'processes-cloud-columns-visibility',
-    columnsWidths = 'processes-cloud-columns-widths'
-}
+export const ProcessListCloudPreferences = {
+    columnOrder: 'processes-cloud-list-columns-order',
+    columnsVisibility: 'processes-cloud-columns-visibility',
+    columnsWidths: 'processes-cloud-columns-widths'
+} as const;
+
+export type ProcessListCloudPreferences = (typeof ProcessListCloudPreferences)[keyof typeof ProcessListCloudPreferences];

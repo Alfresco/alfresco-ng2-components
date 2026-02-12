@@ -17,18 +17,19 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-// eslint-disable-next-line no-shadow
-export enum DateCloudFilterType {
-    NO_DATE = 'NO_DATE',
-    TODAY = 'TODAY',
-    TOMORROW = 'TOMORROW',
-    NEXT_7_DAYS = 'NEXT_7_DAYS',
-    WEEK = 'WEEK',
-    MONTH = 'MONTH',
-    QUARTER = 'QUARTER',
-    YEAR = 'YEAR',
-    RANGE = 'RANGE'
-}
+export const DateCloudFilterType = {
+    NO_DATE: 'NO_DATE',
+    TODAY: 'TODAY',
+    TOMORROW: 'TOMORROW',
+    NEXT_7_DAYS: 'NEXT_7_DAYS',
+    WEEK: 'WEEK',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR',
+    RANGE: 'RANGE'
+} as const;
+
+export type DateCloudFilterType = (typeof DateCloudFilterType)[keyof typeof DateCloudFilterType];
 
 export interface DateRangeFilter {
     startDate: string;

@@ -16,7 +16,9 @@
  */
 
 /* Enum listing the allowed actions that can be emitted from the NonResponsivePreview dialog component */
-export enum DownloadPromptActions {
-    'WAIT',
-    'DOWNLOAD'
-}
+export const DownloadPromptActions = {
+    WAIT: 'WAIT',
+    DOWNLOAD: 'DOWNLOAD'
+} as const;
+
+export type DownloadPromptActions = (typeof DownloadPromptActions)[keyof typeof DownloadPromptActions];

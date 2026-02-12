@@ -17,14 +17,15 @@
 
 import { ExtensionElement } from './extension-element';
 
-// eslint-disable-next-line no-shadow
-export enum ContentActionType {
-    default = 'default',
-    button = 'button',
-    separator = 'separator',
-    menu = 'menu',
-    custom = 'custom'
-}
+export const ContentActionType = {
+    default: 'default',
+    button: 'button',
+    separator: 'separator',
+    menu: 'menu',
+    custom: 'custom'
+} as const;
+
+export type ContentActionType = (typeof ContentActionType)[keyof typeof ContentActionType];
 
 export interface ContentActionRef extends ExtensionElement {
     type: ContentActionType;
