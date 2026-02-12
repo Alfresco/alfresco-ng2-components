@@ -28,12 +28,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-export enum LogicalSearchFields {
-    MATCH_ALL = 'matchAll',
-    MATCH_ANY = 'matchAny',
-    EXCLUDE = 'exclude',
-    MATCH_EXACT = 'matchExact'
-}
+export const LogicalSearchFields = {
+    MATCH_ALL: 'matchAll',
+    MATCH_ANY: 'matchAny',
+    EXCLUDE: 'exclude',
+    MATCH_EXACT: 'matchExact'
+} as const;
+
+export type LogicalSearchFields = (typeof LogicalSearchFields)[keyof typeof LogicalSearchFields];
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

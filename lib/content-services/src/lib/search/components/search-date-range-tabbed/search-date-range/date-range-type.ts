@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-export enum DateRangeType {
-    ANY = 'ANY',
-    IN_LAST = 'IN_LAST',
-    BETWEEN = 'BETWEEN',
-}
+export const DateRangeType = {
+    ANY: 'ANY',
+    IN_LAST: 'IN_LAST',
+    BETWEEN: 'BETWEEN'
+} as const;
+
+export type DateRangeType = (typeof DateRangeType)[keyof typeof DateRangeType];

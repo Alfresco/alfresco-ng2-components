@@ -55,11 +55,13 @@ import { CategoriesManagementComponent } from '../../../category/categories-mana
 
 const DEFAULT_SEPARATOR = ', ';
 
-enum DefaultPanels {
-    PROPERTIES = 'Properties',
-    TAGS = 'Tags',
-    CATEGORIES = 'Categories'
-}
+const DefaultPanels = {
+    PROPERTIES: 'Properties',
+    TAGS: 'Tags',
+    CATEGORIES: 'Categories'
+} as const;
+
+export type DefaultPanels = (typeof DefaultPanels)[keyof typeof DefaultPanels];
 
 @Component({
     selector: 'adf-content-metadata',
