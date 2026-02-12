@@ -303,6 +303,34 @@ describe('DropdownCloudWidgetComponent', () => {
             });
         });
 
+        describe('when options load successfully from restUrl', () => {
+            beforeEach(() => {
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
+                widget.field.restUrl = 'https://fake-rest-url';
+                widget.field.optionType = 'rest';
+                widget.field.required = true;
+                widget.field.value = '';
+                widget.field.isVisible = true;
+            });
+
+            it('should show required message for rest type when required and value is empty after touch', fakeAsync(() => {
+                widget.ngOnInit();
+                fixture.detectChanges();
+                tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+                fixture.detectChanges();
+
+                expect(widget.isRestApiFailed).toBe(false);
+                expect(widget.dropdownControl.errors?.required).toBeTruthy();
+
+                widget.dropdownControl.markAsTouched();
+                fixture.detectChanges();
+
+                const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
+                expect(requiredErrorElement).toBeTruthy();
+                expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
+            }));
+        });
+
         it('should preselect dropdown widget value when Json (rest call) passed', async () => {
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
@@ -1127,6 +1155,54 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.dropdownControl.value).toEqual({ id: 'testValueObj', name: 'testValueObjName' });
         }));
 
+        it('should set dropdownControl value to null when field value is undefined', fakeAsync(() => {
+            widget.field = {
+                value: undefined,
+                options: [],
+                isVisible: true,
+                markAsValid: () => {}
+            } as FormFieldModel;
+
+            fixture.detectChanges();
+            widget['setFormControlValue']();
+
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+
+            expect(widget.dropdownControl.value).toBeNull();
+        }));
+
+        it('should set dropdownControl value to null when field value is empty string', fakeAsync(() => {
+            widget.field = {
+                value: '',
+                options: [],
+                isVisible: true,
+                markAsValid: () => {}
+            } as FormFieldModel;
+
+            fixture.detectChanges();
+            widget['setFormControlValue']();
+
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+
+            expect(widget.dropdownControl.value).toBeNull();
+        }));
+
+        it('should set dropdownControl value to null when field value is null', fakeAsync(() => {
+            widget.field = {
+                value: null,
+                options: [],
+                isVisible: true,
+                markAsValid: () => {}
+            } as FormFieldModel;
+
+            fixture.detectChanges();
+            widget['setFormControlValue']();
+
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+
+            expect(widget.dropdownControl.value).toBeNull();
+        }));
+
         it('should display options persisted from process variable', async () => {
             widget.field = getVariableDropdownWidget(
                 'variables.json-variable',
@@ -1211,6 +1287,33 @@ describe('DropdownCloudWidgetComponent', () => {
             const variableFailedElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
             expect(variableFailedElement).toBeTruthy();
         });
+
+        it('should show required message for variable type when options load successfully and required and value is empty after touch', fakeAsync(() => {
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.people.players',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
+            widget.field.required = true;
+            widget.field.value = '';
+            widget.field.isVisible = true;
+            widget.ngOnInit();
+            fixture.detectChanges();
+            tick(DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE);
+            fixture.detectChanges();
+
+            expect(widget.variableOptionsFailed).toBe(false);
+            expect(widget.dropdownControl.errors?.required).toBeTruthy();
+
+            widget.dropdownControl.markAsTouched();
+            fixture.detectChanges();
+
+            const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
+            expect(requiredErrorElement).toBeTruthy();
+            expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
+        }));
 
         it('should return empty array and display error when id is incorrect', () => {
             widget.field = getVariableDropdownWidget(
