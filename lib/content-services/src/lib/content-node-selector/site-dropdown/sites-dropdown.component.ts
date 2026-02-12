@@ -28,10 +28,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export enum Relations {
-    Members = 'members',
-    Containers = 'containers'
-}
+export const Relations = {
+    Members: 'members',
+    Containers: 'containers'
+} as const;
+
+export type Relations = (typeof Relations)[keyof typeof Relations];
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -124,7 +126,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private loadSiteList() {
-        const extendedOptions: any = {
+        const extendedOptions: { skipCount: number; maxItems: number; relations?: string[] } = {
             skipCount: this.skipCount,
             maxItems: InfiniteSelectScrollDirective.MAX_ITEMS
         };
@@ -135,8 +137,8 @@ export class DropdownSitesComponent implements OnInit {
             extendedOptions.relations = [this.relations];
         }
 
-        this.sitesService.getSites(extendedOptions).subscribe(
-            (sitePaging: SitePaging) => {
+        this.sitesService.getSites(extendedOptions).subscribe({
+            next: (sitePaging: SitePaging) => {
                 if (!this.siteList) {
                     this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
@@ -163,13 +165,15 @@ export class DropdownSitesComponent implements OnInit {
                 if (this.value && !this.selected && this.siteListHasMoreItems()) {
                     this.loadSiteList();
                 }
-
-                this.loading = false;
             },
-            (error) => {
+            error: (error) => {
+                this.loading = false;
                 this.error.emit(error);
+            },
+            complete: () => {
+                this.loading = false;
             }
-        );
+        });
     }
 
     showLoading(): boolean {

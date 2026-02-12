@@ -136,7 +136,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     private updateQuery(updateContext = true) {
         this.context.filterRawParams[this.id] = this.selectedOptions.length > 0 ? this.selectedOptions : undefined;
         this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
-        if (this.context && this.settings && this.settings.field) {
+        if (this.context && this.settings?.field) {
             let queryFragments;
             switch (this.settings.field) {
                 case AutocompleteField.CATEGORIES:
