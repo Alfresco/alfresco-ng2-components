@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Routes } from '@angular/router';
-import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
-import { OidcAuthGuard } from './oidc-auth.guard';
-import { FrontChannelLogoutComponent } from './front-channel-logout.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { AuthService } from './auth.service';
 
-export const AUTH_ROUTES: Routes = [
-    { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent, canActivate: [OidcAuthGuard] },
-    { path: 'oidc/frontchannel_logout', component: FrontChannelLogoutComponent }
-];
+@Component({ template: '', standalone: true })
+export class FrontChannelLogoutComponent implements OnInit {
+    private readonly authService = inject(AuthService);
+
+    ngOnInit() {
+        this.authService.logout();
+    }
+}
