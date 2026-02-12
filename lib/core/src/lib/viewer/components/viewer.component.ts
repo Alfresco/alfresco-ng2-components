@@ -230,7 +230,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
      * Change the close button position Right/Left.
      */
     @Input()
-    closeButtonPosition = CloseButtonPosition.Left;
+    closeButtonPosition: CloseButtonPosition = CloseButtonPosition.Left;
 
     /** Toggles the 'Info Button' */
     @Input()
