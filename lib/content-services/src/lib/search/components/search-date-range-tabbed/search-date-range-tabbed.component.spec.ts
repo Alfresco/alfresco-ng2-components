@@ -106,7 +106,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.WEEKS,
-            inLastValue: '5',
+            inLastValue: 5,
             betweenStartDate: undefined,
             betweenEndDate: undefined
         };
@@ -173,7 +173,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.DAYS,
-            inLastValue: '9',
+            inLastValue: 9,
             betweenStartDate: null,
             betweenEndDate: null
         };
@@ -189,7 +189,7 @@ describe('SearchDateRangeTabbedComponent', () => {
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.MONTHS,
-            inLastValue: '7',
+            inLastValue: 7,
             betweenStartDate: null,
             betweenEndDate: null
         };

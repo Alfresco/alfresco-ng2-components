@@ -155,15 +155,16 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         let endDate: Date;
         if (value.dateRangeType === DateRangeType.IN_LAST) {
             if (value.inLastValue) {
+                const numValue = typeof value.inLastValue === 'number' ? value.inLastValue : parseInt(value.inLastValue, 10);
                 switch (value.inLastValueType) {
                     case InLastDateType.DAYS:
-                        startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue, 10)));
+                        startDate = startOfDay(subDays(new Date(), numValue));
                         break;
                     case InLastDateType.WEEKS:
-                        startDate = startOfWeek(subWeeks(new Date(), parseInt(value.inLastValue, 10)));
+                        startDate = startOfWeek(subWeeks(new Date(), numValue));
                         break;
                     case InLastDateType.MONTHS:
-                        startDate = startOfMonth(subMonths(new Date(), parseInt(value.inLastValue, 10)));
+                        startDate = startOfMonth(subMonths(new Date(), numValue));
                         break;
                     default:
                         break;
