@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContentNodeSelectorPanelComponent, DocumentListService, SitesService, NodesApiService } from '@alfresco/adf-content-services';
-import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 import { AuthenticationService, NoopAuthModule } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
@@ -53,8 +53,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 { provide: MatDialogRef, useValue: { close: () => of() } }
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+            ]
         });
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
@@ -71,7 +70,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         authService.onLogin = new Subject<any>();
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } } as NodeEntry));
-        spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
+        spyOn(documentListService, 'getFolder').and.returnValue(throwError(() => new Error('No results for test')));
         spyOn(nodeService, 'getNode').and.returnValue(
             of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] } }))
         );

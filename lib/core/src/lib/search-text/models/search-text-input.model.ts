@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line no-shadow
-export enum SearchTextStateEnum {
-    expanded = 'expanded',
-    collapsed = 'collapsed'
-}
+export const SearchTextStateEnum = {
+    expanded: 'expanded',
+    collapsed: 'collapsed'
+} as const;
+export type SearchTextStateEnum = (typeof SearchTextStateEnum)[keyof typeof SearchTextStateEnum];
 
 export interface SearchAnimationState {
     value: string;

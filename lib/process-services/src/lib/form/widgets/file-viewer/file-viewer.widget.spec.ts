@@ -18,7 +18,6 @@
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormModel, FormService, FormFieldModel, RedirectAuthService } from '@alfresco/adf-core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EMPTY, of } from 'rxjs';
 
 describe('FileViewerWidgetComponent', () => {
@@ -48,8 +47,7 @@ describe('FileViewerWidgetComponent', () => {
             providers: [
                 { provide: FormService, useValue: formServiceStub },
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            ]
         });
 
         formServiceStub = TestBed.inject(FormService);

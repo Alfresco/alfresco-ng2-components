@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskFormComponent } from './task-form.component';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
-import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import {
     claimableTaskDetailsMock,
@@ -45,7 +45,7 @@ import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { TaskService } from '../../../form/services/task.service';
 import { PeopleProcessService } from '../../../services/people-process.service';
-import { TaskRepresentation } from '@alfresco/js-api';
+import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -61,7 +61,7 @@ describe('TaskFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [TaskFormComponent]
         });
         fixture = TestBed.createComponent(TaskFormComponent);
         component = fixture.componentInstance;
@@ -77,7 +77,7 @@ describe('TaskFormComponent', () => {
         taskDetailsMock.processDefinitionId = null;
         spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
         peopleProcessService = TestBed.inject(PeopleProcessService);
-        getBpmLoggedUserSpy = spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(fakeUser as any));
+        getBpmLoggedUserSpy = spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(fakeUser as UserRepresentation));
     });
 
     afterEach(async () => {
@@ -754,12 +754,12 @@ describe('TaskFormComponent', () => {
 
         it('should emit error event in case claim task api fails', (done) => {
             const mockError = { message: 'Api Failed' };
-            spyOn(taskListService, 'claimTask').and.returnValue(throwError(mockError));
+            spyOn(taskListService, 'claimTask').and.returnValue(throwError(() => mockError));
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
 
             component.taskId = 'mock-task-id';
 
-            component.error.subscribe((error) => {
+            component.error.subscribe((error: unknown) => {
                 expect(error).toEqual(mockError);
                 done();
             });
@@ -792,13 +792,13 @@ describe('TaskFormComponent', () => {
 
         it('should emit error event in case unclaim task api fails', (done) => {
             const mockError = { message: 'Api Failed' };
-            spyOn(taskListService, 'unclaimTask').and.returnValue(throwError(mockError));
+            spyOn(taskListService, 'unclaimTask').and.returnValue(throwError(() => mockError));
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
 
             component.taskId = 'mock-task-id';
 
-            component.error.subscribe((error: any) => {
+            component.error.subscribe((error: unknown) => {
                 expect(error).toEqual(mockError);
                 done();
             });

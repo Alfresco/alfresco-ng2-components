@@ -85,12 +85,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IconModule } from '../../../icon/icon.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-// eslint-disable-next-line no-shadow
-export enum ShowHeaderMode {
-    Never = 'never',
-    Always = 'always',
-    Data = 'data'
-}
+export const ShowHeaderMode = {
+    Never: 'never',
+    Always: 'always',
+    Data: 'data'
+} as const;
+
+export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode];
 
 @Component({
     selector: 'adf-datatable',
@@ -216,7 +217,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     /** Toggles the header. */
     @Input()
-    showHeader = ShowHeaderMode.Data;
+    showHeader: ShowHeaderMode = ShowHeaderMode.Data;
 
     /** Toggles the sticky header mode. */
     @Input()

@@ -22,8 +22,10 @@ export interface AutocompleteOption {
     query?: string;
 }
 
-export enum AutocompleteField {
-    TAG = 'TAG',
-    CATEGORIES = 'cm:categories',
-    LOCATION = 'SITE'
-}
+export const AutocompleteField = {
+    TAG: 'TAG',
+    CATEGORIES: 'cm:categories',
+    LOCATION: 'SITE'
+} as const;
+
+export type AutocompleteField = (typeof AutocompleteField)[keyof typeof AutocompleteField];

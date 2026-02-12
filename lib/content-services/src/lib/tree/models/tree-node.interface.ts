@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-export enum TreeNodeType {
-    RegularNode,
-    LoadMoreNode
-}
+export const TreeNodeType = {
+    RegularNode: 'RegularNode',
+    LoadMoreNode: 'LoadMoreNode'
+} as const;
+
+export type TreeNodeType = (typeof TreeNodeType)[keyof typeof TreeNodeType];
 
 export interface TreeNode {
     id: string;

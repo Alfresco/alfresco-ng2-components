@@ -114,7 +114,7 @@ export class DocumentActionsService {
         return actionObservable;
     }
 
-    private prepareHandlers(actionObservable: Subject<string>): void {
+    private prepareHandlers(actionObservable: Observable<string>): void {
         actionObservable.subscribe((fileOperationMessage) => {
             this.success.next(fileOperationMessage);
         }, this.error.next.bind(this.error));

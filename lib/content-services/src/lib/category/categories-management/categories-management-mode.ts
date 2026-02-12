@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export enum CategoriesManagementMode {
-    CRUD,
-    ASSIGN
-}
+export const CategoriesManagementMode = {
+    CRUD: 'CRUD',
+    ASSIGN: 'ASSIGN'
+} as const;
+
+export type CategoriesManagementMode = (typeof CategoriesManagementMode)[keyof typeof CategoriesManagementMode];

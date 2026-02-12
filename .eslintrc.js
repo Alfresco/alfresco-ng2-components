@@ -141,7 +141,8 @@ module.exports = {
                 ],
                 'no-duplicate-imports': 'error',
                 'no-multiple-empty-lines': 'error',
-                'no-redeclare': 'error',
+                'no-redeclare': 'off',
+                '@typescript-eslint/no-redeclare': ['off', { ignoreDeclarationMerge: true }],
                 'no-return-await': 'error',
                 'rxjs/no-create': 'error',
                 'rxjs/no-subject-unsubscribe': 'error',
@@ -176,6 +177,21 @@ module.exports = {
                         ' * limitations under the License.',
                         ' */'
                     ]
+                ],
+                'no-restricted-syntax': [
+                    'error',
+                    {
+                        selector: "Identifier[name='CUSTOM_ELEMENTS_SCHEMA']",
+                        message: 'The use of CUSTOM_ELEMENTS_SCHEMA is not allowed. Consider alternatives for proper schema handling.'
+                    },
+                    {
+                        selector: "Identifier[name='NO_ERRORS_SCHEMA']",
+                        message: 'The use of NO_ERRORS_SCHEMA is not allowed. Consider alternatives for proper schema handling.'
+                    },
+                    {
+                        selector: 'TSEnumDeclaration',
+                        message: 'Enums are not allowed. Use string literal types (e.g., type Foo = "a" | "b") or const objects instead.'
+                    }
                 ]
             }
         },

@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-export enum InLastDateType {
-    DAYS = 'DAYS',
-    WEEKS = 'WEEKS',
-    MONTHS = 'MONTHS'
-}
+export const InLastDateType = {
+    DAYS: 'DAYS',
+    WEEKS: 'WEEKS',
+    MONTHS: 'MONTHS'
+} as const;
+
+export type InLastDateType = (typeof InLastDateType)[keyof typeof InLastDateType];

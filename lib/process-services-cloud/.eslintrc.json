@@ -74,7 +74,6 @@
         "no-bitwise": "off",
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
-        "no-redeclare": "error",
         "no-return-await": "error",
         "rxjs/no-create": "error",
         "rxjs/no-subject-unsubscribe": "error",

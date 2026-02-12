@@ -18,6 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchDateRangeComponent } from './search-date-range.component';
+import { SearchDateRange } from './search-date-range';
 import { addDays, endOfToday, format, parse, startOfYesterday, subDays } from 'date-fns';
 import { Validators } from '@angular/forms';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -226,7 +227,7 @@ describe('SearchDateRangeComponent', () => {
 
     it('should not emit values when form is invalid', async () => {
         spyOn(component.changed, 'emit');
-        let value = {
+        let value: Partial<SearchDateRange> = {
             dateRangeType: component.DateRangeType.IN_LAST,
             inLastValueType: component.InLastDateType.WEEKS,
             inLastValue: '',
@@ -251,8 +252,8 @@ describe('SearchDateRangeComponent', () => {
             dateRangeType: component.DateRangeType.BETWEEN,
             inLastValueType: component.InLastDateType.DAYS,
             inLastValue: undefined,
-            betweenStartDate: '',
-            betweenEndDate: ''
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
         };
         dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-between"]' }));
         await dateRangeTypeRadioButton.check();
@@ -262,7 +263,7 @@ describe('SearchDateRangeComponent', () => {
 
     it('should emit values when form is valid', async () => {
         spyOn(component.changed, 'emit');
-        let value = {
+        let value: Partial<SearchDateRange> = {
             dateRangeType: component.DateRangeType.IN_LAST,
             inLastValueType: component.InLastDateType.WEEKS,
             inLastValue: 5,

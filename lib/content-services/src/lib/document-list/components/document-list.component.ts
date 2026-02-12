@@ -171,7 +171,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /** Toggles the header */
     @Input()
-    showHeader = ShowHeaderMode.Data;
+    showHeader: ShowHeaderMode = ShowHeaderMode.Data;
 
     /**
      * User interaction for folder navigation or file preview.

@@ -103,7 +103,7 @@ export class UploadService {
      * @returns True if files in the queue are still uploading, false otherwise
      */
     isUploading(): boolean {
-        const finishedFileStates = [
+        const finishedFileStates: FileUploadStatus[] = [
             FileUploadStatus.Complete,
             FileUploadStatus.Cancelled,
             FileUploadStatus.Aborted,

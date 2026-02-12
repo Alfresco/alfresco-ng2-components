@@ -74,17 +74,18 @@ export class FileUploadOptions {
     versioningEnabled?: boolean;
 }
 
-// eslint-disable-next-line no-shadow
-export enum FileUploadStatus {
-    Pending = 0,
-    Complete = 1,
-    Starting = 2,
-    Progress = 3,
-    Cancelled = 4,
-    Aborted = 5,
-    Error = 6,
-    Deleted = 7
-}
+export const FileUploadStatus = {
+    Pending: 0,
+    Complete: 1,
+    Starting: 2,
+    Progress: 3,
+    Cancelled: 4,
+    Aborted: 5,
+    Error: 6,
+    Deleted: 7
+} as const;
+
+export type FileUploadStatus = (typeof FileUploadStatus)[keyof typeof FileUploadStatus];
 
 export class FileModel {
     readonly name: string;

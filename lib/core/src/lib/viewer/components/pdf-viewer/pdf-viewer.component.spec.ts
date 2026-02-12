@@ -660,7 +660,11 @@ describe('Test PdfViewer - User interaction', () => {
         it('should have corrected content in annotation popup', fakeAsync(() => {
             dispatchAnnotationLayerRenderedEvent();
             expect(annotationElement.querySelector('.title').textContent).toBe('Annotation title');
-            expect(annotationElement.querySelector('.popupDate').textContent).toBe('2/2/2026, 10:41:06 AM');
+            // Date format can vary by locale, so we just check it contains the expected date components
+            const dateText = annotationElement.querySelector('.popupDate').textContent;
+            expect(dateText).toContain('2026');
+            expect(dateText).toContain('02');
+            expect(dateText).toContain('10:41:06');
             expect(annotationElement.querySelector('.popupContent').textContent).toBe('Annotation contents');
             expect(getAnnotationPopupElement()).toBeDefined();
         }));

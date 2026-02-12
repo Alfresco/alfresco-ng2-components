@@ -51,12 +51,13 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-// eslint-disable-next-line no-shadow
-export enum TasksListCloudPreferences {
-    columnOrder = 'tasks-list-cloud-columns-order',
-    columnsVisibility = 'tasks-list-cloud-columns-visibility',
-    columnsWidths = 'tasks-list-cloud-columns-widths'
-}
+export const TasksListCloudPreferences = {
+    columnOrder: 'tasks-list-cloud-columns-order',
+    columnsVisibility: 'tasks-list-cloud-columns-visibility',
+    columnsWidths: 'tasks-list-cloud-columns-widths'
+} as const;
+
+export type TasksListCloudPreferences = (typeof TasksListCloudPreferences)[keyof typeof TasksListCloudPreferences];
 
 const taskPresetsCloudDefaultModel = {
     default: [

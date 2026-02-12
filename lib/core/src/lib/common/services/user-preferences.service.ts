@@ -27,13 +27,14 @@ import { Directionality, Direction } from '@angular/cdk/bidi';
 import { DEFAULT_LANGUAGE_LIST } from '../models/default-languages.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-// eslint-disable-next-line no-shadow
-export enum UserPreferenceValues {
-    PaginationSize = 'paginationSize',
-    Locale = 'locale',
-    SupportedPageSizes = 'supportedPageSizes',
-    ExpandedSideNavStatus = 'expandedSidenav'
-}
+export const UserPreferenceValues = {
+    PaginationSize: 'paginationSize',
+    Locale: 'locale',
+    SupportedPageSizes: 'supportedPageSizes',
+    ExpandedSideNavStatus: 'expandedSidenav'
+} as const;
+
+export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof UserPreferenceValues];
 
 @Injectable({
     providedIn: 'root'

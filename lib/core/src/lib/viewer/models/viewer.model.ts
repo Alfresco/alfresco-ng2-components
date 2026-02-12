@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-export enum CloseButtonPosition {
-    Right = 'right',
-    Left = 'left'
-}
+export const CloseButtonPosition = {
+    Right: 'right',
+    Left: 'left'
+} as const;
+
+export type CloseButtonPosition = (typeof CloseButtonPosition)[keyof typeof CloseButtonPosition];
 
 export interface Track {
     src: string;
