@@ -217,7 +217,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     /** Toggles the header. */
     @Input()
-    showHeader = ShowHeaderMode.Data;
+    showHeader: ShowHeaderMode = ShowHeaderMode.Data;
 
     /** Toggles the sticky header mode. */
     @Input()
