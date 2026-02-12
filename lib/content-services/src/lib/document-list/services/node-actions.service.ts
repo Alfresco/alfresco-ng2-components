@@ -103,12 +103,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    private doFileOperation(
-        action: NodeAction.COPY | NodeAction.MOVE,
-        type: 'content' | 'folder',
-        contentEntry: Node,
-        permission?: string
-    ): Subject<string> {
+    private doFileOperation(action: 'COPY' | 'MOVE', type: 'content' | 'folder', contentEntry: Node, permission?: string): Subject<string> {
         const observable = new Subject<string>();
 
         this.contentDialogService.openCopyMoveDialog(action, contentEntry, permission).subscribe(
