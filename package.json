@@ -155,16 +155,9 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-node": "^10.9.2",
     "typescript": "5.9.3",
-    "webpack": "5.104.1"
+    "webpack": "5.105.0"
   },
-  "overrides": {
-    "@storybook/angular": {
-      "webpack": "5.104.1"
-    },
-    "@angular-devkit/build-angular": {
-      "webpack": "5.104.1"
-    }
-  },
+  "overrides": {},
   "license": "Apache-2.0",
   "engines": {
     "node": ">=18.0.0"
