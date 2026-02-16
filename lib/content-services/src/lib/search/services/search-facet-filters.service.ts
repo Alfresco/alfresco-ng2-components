@@ -395,7 +395,7 @@ export class SearchFacetFiltersService {
     unselectFacetBucket(facetField: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = false;
-            this.queryBuilder.removeUserFacetBucket(facetField.field, bucket);
+            this.queryBuilder.removeUserFacetBucket(facetField?.field, bucket);
             this.updateSelectedBuckets();
             this.queryBuilder.update();
         }

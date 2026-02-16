@@ -438,7 +438,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
             if (!externalHash) {
                 hash = decodeURIComponent(window.location.hash);
-                if (!this.startWithHashRoute(hash)) {
+                if (hash && !this.startWithHashRoute(hash)) {
                     window.location.hash = '';
                 }
             } else {

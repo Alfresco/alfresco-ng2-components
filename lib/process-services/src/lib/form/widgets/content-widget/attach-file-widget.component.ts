@@ -166,6 +166,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 const nodeUrl = this.contentService.getContentUrl(nodeUploaded.id);
                 this.downloadService.downloadUrl(nodeUrl, file.name);
             }
+            return;
         }
         if (file.sourceId) {
             const sourceHost = this.findSource(file.source);
