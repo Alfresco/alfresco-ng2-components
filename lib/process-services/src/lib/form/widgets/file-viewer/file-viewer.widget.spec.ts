@@ -18,7 +18,7 @@
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormModel, FormService, FormFieldModel, RedirectAuthService } from '@alfresco/adf-core';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, Subject } from 'rxjs';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -42,6 +42,11 @@ describe('FileViewerWidgetComponent', () => {
     };
 
     beforeEach(() => {
+        formServiceStub = {
+            formEvents: new Subject(),
+            formRulesEvent: new Subject()
+        };
+
         TestBed.configureTestingModule({
             imports: [FileViewerWidgetComponent],
             providers: [
@@ -49,8 +54,6 @@ describe('FileViewerWidgetComponent', () => {
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
-
-        formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);
         widget = fixture.componentInstance;
     });

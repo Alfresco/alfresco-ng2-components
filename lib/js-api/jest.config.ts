@@ -5,7 +5,6 @@ export default {
     testEnvironment: '<rootDir>/test/jest-jsdom-fetch-environment.ts',
     setupFiles: ['<rootDir>/src/test-fetch-setup.ts'],
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-    collectCoverage: true,
     coverageReporters: ['html', ['text-summary', { file: 'summary.txt' }], 'text-summary'],
     coverageDirectory: '../../coverage/js-api',
     moduleNameMapper: {

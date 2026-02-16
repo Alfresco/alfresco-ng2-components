@@ -16,7 +16,7 @@
  */
 
 import { ProcessFormRenderingService } from './process-form-rendering.service';
-import { FormFieldModel, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormService } from '@alfresco/adf-core';
 import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './widgets/dynamic-table/dynamic-table.widget';
@@ -27,13 +27,16 @@ import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
 import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
+import { TestBed } from '@angular/core/testing';
 
 describe('ProcessFormRenderingService', () => {
-
     let service: ProcessFormRenderingService;
 
     beforeEach(() => {
-        service = new ProcessFormRenderingService();
+        TestBed.configureTestingModule({
+            providers: [ProcessFormRenderingService, FormService]
+        });
+        service = TestBed.inject(ProcessFormRenderingService);
     });
 
     it('should resolve Upload field as Upload widget', () => {
@@ -106,5 +109,4 @@ describe('ProcessFormRenderingService', () => {
         const type = resolver(null);
         expect(type).toBe(FileViewerWidgetComponent);
     });
-
 });
