@@ -51,7 +51,7 @@
     "@angular/router": "20.3.9",
     "@apollo/client": "3.13.1",
     "@cspell/eslint-plugin": "9.4.0",
-    "@mat-datetimepicker/core": "15.0.2",
+    "@mat-datetimepicker/core": "16.0.1",
     "@ngx-translate/core": "^16.0.4",
     "@nx/webpack": "22.5.1",
     "angular-oauth2-oidc": "17.0.2",
@@ -159,7 +159,10 @@
   },
   "overrides": {
     "@storybook/angular": {
-      "webpack": "5.101.3"
+      "webpack": "5.104.1"
+    },
+    "@angular-devkit/build-angular": {
+      "webpack": "5.104.1"
     }
   },
   "license": "Apache-2.0",
