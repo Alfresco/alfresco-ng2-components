@@ -47,9 +47,11 @@ I need a comprehensive plan for migrating this Nx monorepo to Angular 20 and Ang
 
 5. **Code Changes Checklist**:
    - Search for Angular CDK deprecated APIs (PortalInjector, etc.)
+   - **Search for `directionality.value =` assignments** (Breaking: use `directionality.valueSignal.set()`)
    - Check for Material component API changes
    - Review import path changes (@angular/common → @angular/core for some APIs)
    - Plan for new Angular 20 lint rules (prefer-inject, etc.)
+   - **Check tests using `ng-reflect-*` attributes** (Breaking: these are removed by default)
 
 6. **Verification Strategy**:
    - Run ESLint: `npx nx run-many -t lint --all --fix --skip-nx-cache --parallel=5`
@@ -62,7 +64,7 @@ I need a comprehensive plan for migrating this Nx monorepo to Angular 20 and Ang
      * process-services-cloud (depends on js-api, core, content-services, extensions)
      * insights (depends on core, content-services, js-api)
    - Test Storybook compilation: `npm run storybook`
-   - Run tests if time permits
+   - **Run unit tests**: `nx test <library-name>` (Critical - catches runtime breaking changes)
 
 7. **CI/CD Considerations**:
    - Ensure .npmrc is committed (not gitignored) for `npm ci` to work
@@ -95,6 +97,8 @@ Document solutions for:
 3. PortalInjector removal → Replace with Injector.create()
 4. ESLint deprecated rules → Remove/update in .eslintrc
 5. Pre-commit hook failures → Use --no-verify for migration commit
+6. **Angular CDK Directionality API change** → Use valueSignal.set() instead of direct assignment
+7. **ng-reflect-* attributes removed** → Update tests to use proper testing APIs
 
 ## Output Format
 
@@ -186,3 +190,125 @@ Original prompt didn't mention Storybook:
 1. **Save troubleshooting log**: Create a "lessons learned" doc
 2. **Update migration template**: Incorporate new insights
 3. **Share with team**: Help others avoid same issues
+
+## Angular 20 Specific Breaking Changes
+
+### 1. Angular CDK Directionality API Change ⚠️
+
+**Issue**: In Angular CDK 20+, `Directionality.value` is now a read-only getter backed by a signal.
+
+**Error**: `TypeError: Cannot set property value of [object Object] which has only a getter`
+
+**Search Pattern**: `directionality.*\.value\s*=`
+
+**Fix**:
+```typescript
+// ❌ BEFORE (Angular 19 and earlier)
+(this.directionality as any).value = direction;
+
+// ✅ AFTER (Angular 20+)
+this.directionality.valueSignal.set(direction);
+this.directionality.change.emit(direction);
+```
+
+**Files to Check**:
+- Services that manage text direction (RTL/LTR)
+- Components using `@angular/cdk/bidi`
+- User preference services
+
+### 2. ng-reflect-* Debug Attributes Removed ⚠️
+
+**Issue**: Angular 20 no longer adds `ng-reflect-*` attributes to elements with bindings by default.
+
+**Error**: Tests checking `getAttribute('ng-reflect-*')` return `null`
+
+**Search Pattern**: `getAttribute\(['"]ng-reflect-`
+
+**Impact**: Tests relying on these debug attributes will fail
+
+**Fixes by Test Type**:
+
+#### A. Testing RouterLink:
+```typescript
+// ❌ BEFORE
+const link = element.getAttribute('ng-reflect-router-link');
+expect(link).toEqual('/home');
+
+// ✅ AFTER - Query the directive
+import { By } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
+
+const linkDebugEl = fixture.debugElement.query(By.directive(RouterLink));
+const routerLinkInstance = linkDebugEl.injector.get(RouterLink);
+expect(routerLinkInstance.routerLink).toEqual('/home');
+
+// OR - Verify component input
+expect(component.routerLink).toEqual('/home');
+```
+
+#### B. Testing Material Form Field floatLabel:
+```typescript
+// ❌ BEFORE
+const floatLabel = await host.getAttribute('ng-reflect-float-label');
+expect(floatLabel).toBe('always');
+
+// ✅ AFTER - Use Material harness
+const matFormField = await loader.getHarness(MatFormFieldHarness);
+const isFloating = await matFormField.isLabelFloating();
+expect(isFloating).toBe(true);
+```
+
+#### C. Testing Material Toolbar color:
+```typescript
+// ❌ BEFORE
+const color = await host.getAttribute('ng-reflect-color');
+expect(color).toBe('primary');
+
+// ✅ AFTER - Check CSS class or component property
+const toolbar = fixture.debugElement.query(By.css('mat-toolbar')).nativeElement;
+expect(toolbar.classList.contains('mat-primary')).toBe(true);
+// OR
+expect(component.color).toBe('primary');
+```
+
+**Files to Check**:
+- All `.spec.ts` test files
+- Search for `ng-reflect-` string literals
+- Tests using `getAttribute()` or `nativeElement.getAttribute()`
+
+**Alternative (Not Recommended)**: Add `provideNgReflectAttributes()` to providers array for backward compatibility, but this should only be temporary.
+
+### 3. Test Migration Checklist
+
+After Angular 20 migration, run these checks:
+
+1. **Search for ng-reflect usage**:
+   ```bash
+   grep -r "ng-reflect-" --include="*.spec.ts" lib/
+   ```
+
+2. **Search for directionality assignment**:
+   ```bash
+   grep -r "directionality.*\.value\s*=" --include="*.ts" lib/
+   ```
+
+3. **Run all tests**:
+   ```bash
+   nx run-many -t test --all
+   ```
+
+4. **Common test patterns to update**:
+   - `getAttribute('ng-reflect-router-link')` → Use `By.directive(RouterLink)`
+   - `getAttribute('ng-reflect-color')` → Check CSS classes
+   - `getAttribute('ng-reflect-float-label')` → Use Material harnesses
+   - Any test checking internal Angular binding attributes
+
+### 4. Migration Time Estimates Update
+
+| Issue | Detection Time | Fix Time | Total |
+|-------|---------------|----------|-------|
+| Directionality API | 5 min | 2 min | ~7 min |
+| ng-reflect tests (per file) | 2 min | 5 min | ~7 min |
+| **Per breaking change** | | | **~10-15 min** |
+
+**Total estimated for Angular 20 specific issues**: ~1-2 hours (depending on test count)
