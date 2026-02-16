@@ -124,7 +124,7 @@ export class ServiceTaskFilterCloudService {
         const key: string = this.prepareKey(appName);
         return this.getTaskFiltersByKey(appName, key).pipe(
             switchMap((filters) => {
-                if (filters && filters.length === 0) {
+                if (filters?.length === 0) {
                     return this.createTaskFilters(appName, key, this.defaultServiceTaskFilters(appName));
                 } else {
                     return of(filters);
@@ -144,7 +144,7 @@ export class ServiceTaskFilterCloudService {
         const key: string = this.prepareKey(newFilter.appName);
         return this.getTaskFiltersByKey(newFilter.appName, key).pipe(
             switchMap((filters) => {
-                if (filters && filters.length === 0) {
+                if (filters?.length === 0) {
                     return this.createTaskFilters(newFilter.appName, key, [newFilter]);
                 } else {
                     filters.push(newFilter);

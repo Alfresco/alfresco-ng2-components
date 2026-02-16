@@ -334,7 +334,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private selectProcessDefinitionByProcessDefinitionName(processDefinitionName: string): void {
         this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
-        this.isFormCloudLoading = this.isProcessFormValid && this.filteredProcesses && this.filteredProcesses.length === 1;
+        this.isFormCloudLoading = this.isProcessFormValid && this.filteredProcesses?.length === 1;
 
         if (this.isFormCloudLoading) {
             this.setProcessDefinitionOnForm(this.filteredProcesses[0].name);

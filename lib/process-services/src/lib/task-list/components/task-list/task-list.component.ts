@@ -238,7 +238,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     ngAfterContentInit() {
         this.createDatatableSchema();
-        if (this.data && this.data.getColumns().length === 0) {
+        if (this.data?.getColumns().length === 0) {
             this.data.setColumns(this.columns);
         }
 

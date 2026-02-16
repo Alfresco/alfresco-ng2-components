@@ -286,7 +286,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
                     let currentApplication: AppDefinitionRepresentation;
 
-                    if (applications && applications.length === 1) {
+                    if (applications?.length === 1) {
                         currentApplication = applications[0];
                     }
 

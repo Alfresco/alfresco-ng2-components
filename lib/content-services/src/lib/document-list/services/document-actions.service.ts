@@ -83,7 +83,7 @@ export class DocumentActionsService {
      * @returns True if the action can be executed on this item, false otherwise
      */
     canExecuteAction(nodeEntry: NodeEntry): boolean {
-        return this.documentListService && nodeEntry && nodeEntry.entry.isFile === true;
+        return this.documentListService && nodeEntry?.entry.isFile === true;
     }
 
     private setupActionHandlers() {

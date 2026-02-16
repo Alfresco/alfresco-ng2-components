@@ -38,7 +38,7 @@ export class FormListComponent implements OnChanges {
     }
 
     isEmpty(): boolean {
-        return this.forms && this.forms.length === 0;
+        return this.forms?.length === 0;
     }
 
     getForms() {

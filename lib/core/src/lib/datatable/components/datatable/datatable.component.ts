@@ -912,11 +912,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     isSingleSelectionMode(): boolean {
-        return this.selectionMode && this.selectionMode.toLowerCase() === 'single';
+        return this.selectionMode?.toLowerCase() === 'single';
     }
 
     isMultiSelectionMode(): boolean {
-        return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
+        return this.selectionMode?.toLowerCase() === 'multiple';
     }
 
     getRowStyle(row: DataRow): string {

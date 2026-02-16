@@ -194,7 +194,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                 (processFilter, index) =>
                     filterParam.index === index ||
                     filterParam.id === processFilter.id ||
-                    (filterParam.name && filterParam.name.toLocaleLowerCase() === processFilter.name.toLocaleLowerCase())
+                    (filterParam.name?.toLocaleLowerCase() === processFilter.name.toLocaleLowerCase())
             );
             this.currentFilter = newFilter;
 
@@ -228,7 +228,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
-        return this.filters === undefined || (this.filters && this.filters.length === 0);
+        return this.filters === undefined || (this.filters?.length === 0);
     }
 
     /**

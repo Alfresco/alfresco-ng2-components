@@ -149,7 +149,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
-        return this.filters === undefined || (this.filters && this.filters.length === 0);
+        return this.filters === undefined || (this.filters?.length === 0);
     }
 
     /**

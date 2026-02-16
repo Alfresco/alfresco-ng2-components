@@ -72,7 +72,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     isECMProvider(): boolean {
         const provider = this.appConfig.get('providers') as string;
-        return provider && provider.toUpperCase() === 'ECM';
+        return provider?.toUpperCase() === 'ECM';
     }
 
     /**
@@ -96,7 +96,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
      */
     isALLProvider(): boolean {
         const provider = this.appConfig.get('providers') as string;
-        return provider && provider.toUpperCase() === 'ALL';
+        return provider?.toUpperCase() === 'ALL';
     }
 
     /**

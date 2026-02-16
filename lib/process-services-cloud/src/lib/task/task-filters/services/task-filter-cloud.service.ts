@@ -156,7 +156,7 @@ export class TaskFilterCloudService extends BaseCloudService {
         const key: string = this.prepareKey(appName);
         return this.getTaskFiltersByKey(appName, key).pipe(
             switchMap((filters) => {
-                if (filters && filters.length === 0) {
+                if (filters?.length === 0) {
                     return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
                 } else {
                     return of(filters);

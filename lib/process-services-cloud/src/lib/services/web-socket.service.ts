@@ -122,7 +122,7 @@ export class WebSocketService {
         const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
             if (graphQLErrors) {
                 for (const error of graphQLErrors) {
-                    if (error.extensions && error.extensions['code'] === 'UNAUTHENTICATED') {
+                    if (error.extensions?.['code'] === 'UNAUTHENTICATED') {
                         authLink(operation, forward);
                     }
                 }
