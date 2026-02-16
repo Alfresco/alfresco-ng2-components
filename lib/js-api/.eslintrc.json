@@ -49,6 +49,7 @@
         "no-redeclare": "off",
         "space-before-function-paren": "off",
         "@typescript-eslint/no-empty-interface": "warn",
+        "@angular-eslint/prefer-inject": "warn",
         "@typescript-eslint/no-explicit-any": "off"
       }
     }

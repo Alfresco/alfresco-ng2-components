@@ -71,8 +71,6 @@ import { ProcessInstanceCloud } from '../../start-process/models/process-instanc
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
-/* eslint-disable @typescript-eslint/brace-style */
-
 @Component({
     selector: 'adf-cloud-process-list',
     imports: [
