@@ -80,7 +80,8 @@
         "rxjs/no-subject-value": "error",
         "rxjs/no-unsafe-takeuntil": "error",
         "unicorn/filename-case": "error",
-        "@angular-eslint/prefer-standalone": "off"
+        "@angular-eslint/prefer-standalone": "off",
+        "@angular-eslint/prefer-inject": "warn"
       }
     },
     {
