@@ -160,7 +160,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     }
 
     apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean, updateContext = true) {
-        if (isValidValue && this.id && this.context && this.settings && this.settings.field) {
+        if (isValidValue && this.id && this.context?.queryFragments && this.settings?.field) {
             this.isActive = true;
 
             const start = DateFnsUtils.utcToLocal(startOfMinute(model.from)).toISOString();

@@ -128,7 +128,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     private updateQuery(value: number | null, updateContext = true) {
         this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(this.value ? `${this.value} ${this.settings.unit ?? ''}` : '');
-        if (this.id && this.context && this.settings && this.settings.field) {
+        if (this.id && this.context?.queryFragments && this.settings?.field) {
             if (value === null) {
                 this.context.queryFragments[this.id] = '';
             } else {

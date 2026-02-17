@@ -357,7 +357,7 @@ const render = (args: DataColumnComponent & { rows: DataRow[] }) => ({
 
 // Text Column
 export const TextColumn: Story = {
-    render: render,
+    render,
     args: {
         rows: mockData.textColumnRows,
         key: 'firstname',
@@ -368,7 +368,7 @@ export const TextColumn: Story = {
 
 // Text Column With Custom Tooltip
 export const TextColumnWithCustomTooltip: Story = {
-    render: render,
+    render,
     argTypes: {
         formatTooltip: { control: { disable: false } }
     },
@@ -383,7 +383,7 @@ export const TextColumnWithCustomTooltip: Story = {
 
 // Icon Column
 export const IconColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } }
     },
@@ -397,7 +397,7 @@ export const IconColumn: Story = {
 
 // Image Column
 export const ImageColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } }
     },
@@ -411,7 +411,7 @@ export const ImageColumn: Story = {
 
 // Date Column
 export const DateColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } },
         dateConfig: { control: { disable: false } }
@@ -426,7 +426,7 @@ export const DateColumn: Story = {
 
 // Date Column Time Ago
 export const DateColumnTimeAgo: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } },
         dateConfig: { control: { disable: false } }
@@ -442,7 +442,7 @@ export const DateColumnTimeAgo: Story = {
 
 // File Size Column
 export const FileSizeColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } }
     },
@@ -456,7 +456,7 @@ export const FileSizeColumn: Story = {
 
 // Location Column
 export const LocationColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } },
         format: { control: { disable: false } },
@@ -473,7 +473,7 @@ export const LocationColumn: Story = {
 
 // Boolean Column
 export const BooleanColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } }
     },
@@ -487,7 +487,7 @@ export const BooleanColumn: Story = {
 
 // Json Column
 export const JsonColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         editable: { control: { disable: false } },
         copyContent: { control: { disable: true } }
@@ -502,7 +502,7 @@ export const JsonColumn: Story = {
 
 // Amount Column
 export const AmountColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         copyContent: { control: { disable: true } },
         currencyConfig: { control: { disable: false } }
@@ -517,7 +517,7 @@ export const AmountColumn: Story = {
 
 // Number Column
 export const NumberColumn: Story = {
-    render: render,
+    render,
     argTypes: {
         decimalConfig: { control: { disable: false } },
         copyContent: { control: { disable: true } }

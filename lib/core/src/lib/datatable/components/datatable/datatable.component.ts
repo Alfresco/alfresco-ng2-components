@@ -963,7 +963,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     getCellTooltip(row: DataRow, col: DataColumn): string {
-        if (row && col && col.formatTooltip) {
+        if (row && col?.formatTooltip) {
             const result: string = col.formatTooltip(row, col);
             if (result) {
                 return result;
