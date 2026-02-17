@@ -76,6 +76,12 @@
         color: var(--adf-metadata-property-panel-title-color);
     }
 
+    input.adf-property-value:disabled,
+    textarea.adf-property-value:disabled {
+        user-select: none;
+        pointer-events: none;
+    }
+
     .adf-property-value-has-icon-suffix {
         padding-right: 34px;
         overflow: hidden;
