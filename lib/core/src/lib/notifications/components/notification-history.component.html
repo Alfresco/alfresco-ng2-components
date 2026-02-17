@@ -8,7 +8,7 @@
     id="adf-notification-history-open-button"
     (menuOpened)="onMenuOpened()"
 >
-    <mat-icon matBadge="&#8288;" [matBadgeHidden]="!notifications.length" class="adf-notification-history-menu_button-icon" matBadgeColor="accent" matBadgeSize="small" adf-icon="notifications" />
+    <mat-icon aria-hidden="false" matBadge="&#8288;" [matBadgeHidden]="!notifications.length" class="adf-notification-history-menu_button-icon" matBadgeColor="accent" matBadgeSize="small" adf-icon="notifications" />
 </button>
 
 <mat-menu #menu="matMenu"
