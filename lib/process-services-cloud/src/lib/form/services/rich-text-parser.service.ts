@@ -29,7 +29,7 @@ export interface OutputData {
 export class RichTextParserService {
     private static readonly CUSTOM_PARSER = {
         header: (block: any): string => {
-            if (!block.data || !block.data.text || !block.data.level) {
+            if (!block.data?.text || !block.data.level) {
                 return '';
             }
             const paragraphAlign = block.data.alignment || block.data.align || block.tunes?.anyTuneName?.alignment;
@@ -40,7 +40,7 @@ export class RichTextParserService {
             }
         },
         paragraph: (block: any): string => {
-            if (!block.data || !block.data.text) {
+            if (!block.data?.text) {
                 return '';
             }
             const paragraphAlign = block.data.alignment || block.data.align || block.tunes?.anyTuneName?.alignment;

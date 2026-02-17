@@ -1905,7 +1905,7 @@ describe('retrieve metadata on submit', () => {
     });
 
     it('should handle outcomeId correctly when completing form with confirmation dialog', () => {
-        let matDialog = TestBed.inject(MatDialog);
+        const matDialog = TestBed.inject(MatDialog);
         spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) } as any);
         spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of({} as any));
 

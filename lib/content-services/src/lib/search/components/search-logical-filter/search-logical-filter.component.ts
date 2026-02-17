@@ -82,7 +82,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     }
 
     submitValues(updateContext = true) {
-        if (this.hasValidValue() && this.id && this.context && this.settings && this.settings.field) {
+        if (this.hasValidValue() && this.id && this.context?.queryFragments && this.settings?.field) {
             this.updateDisplayValue();
             const fields = this.settings.field.split(',').map((field) => (field += ':'));
             let query = '';
