@@ -25,7 +25,6 @@ import { ContextMenuListComponent } from './context-menu-list.component';
 
 interface OverlayRefWithBackdrop {
     backdropElement: HTMLElement;
-    _backdropClick: { next: (value: unknown) => void };
 }
 
 const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
@@ -61,8 +60,7 @@ export class ContextMenuOverlayService {
                 'contextmenu',
                 (event) => {
                     event.preventDefault();
-                    // eslint-disable-next-line no-underscore-dangle
-                    overlayWithBackdrop._backdropClick.next(null);
+                    overlayRef.close();
                 },
                 true
             );
