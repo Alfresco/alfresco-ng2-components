@@ -15,6 +15,21 @@
  * limitations under the License.
  */
 
+export const annotations = [
+    {
+        subtype: 'Text',
+        name: 'NoIcon',
+        id: 'R13',
+        titleObj: {
+            str: 'Annotation title'
+        },
+        contentsObj: {
+            str: 'Annotation contents'
+        },
+        modificationDate: "D:20260202104106Z00'00",
+        popupRef: 'R1'
+    }
+];
 export default {
     GlobalWorkerOptions: {},
     getDocument: jasmine.createSpy('getDocument').and.callFake(() => ({
@@ -26,21 +41,7 @@ export default {
                 numPages: 6,
                 getPage: () =>
                     Promise.resolve({
-                        getAnnotations: () => [
-                            {
-                                subtype: 'Text',
-                                name: 'NoIcon',
-                                id: 'R13',
-                                titleObj: {
-                                    str: 'Annotation title'
-                                },
-                                contentsObj: {
-                                    str: 'Annotation contents'
-                                },
-                                modificationDate: "D:20260202104106Z00'00",
-                                popupRef: 'R1'
-                            }
-                        ]
+                        getAnnotations: () => annotations
                     })
             });
         })

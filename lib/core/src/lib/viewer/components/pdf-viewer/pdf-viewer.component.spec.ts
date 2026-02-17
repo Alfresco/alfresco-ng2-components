@@ -27,7 +27,7 @@ import { UnitTestingUtils, provideCoreAuthTesting } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-viewer.component';
-import pdfjsLibraryMock from '../mock/pdfjs-lib.mock';
+import pdfjsLibraryMock, { annotations } from '../mock/pdfjs-lib.mock';
 import { TranslateService } from '@ngx-translate/core';
 
 declare const pdfjsLib: any;
@@ -637,6 +637,12 @@ describe('Test PdfViewer - User interaction', () => {
 
         const getAnnotationPopupElement = (): HTMLElement => annotationElement.querySelector('.adf-pdf-viewer-annotation-tooltip');
 
+        const getAnnotationTitle = (): string => annotationElement.querySelector('.title').textContent;
+
+        const getAnnotationDate = (): string => annotationElement.querySelector('.popupDate')?.textContent;
+
+        const getAnnotationContent = (): string => annotationElement.querySelector('.popupContent').textContent;
+
         beforeEach(() => {
             documentContainer = document.createElement('div');
             annotationImageElement = document.createElement('img');
@@ -659,13 +665,18 @@ describe('Test PdfViewer - User interaction', () => {
 
         it('should have corrected content in annotation popup', fakeAsync(() => {
             dispatchAnnotationLayerRenderedEvent();
-            expect(annotationElement.querySelector('.title').textContent).toBe('Annotation title');
-            // Date format can vary by locale, so we just check it contains the expected date components
-            const dateText = annotationElement.querySelector('.popupDate').textContent;
-            expect(dateText).toContain('2026');
-            expect(dateText).toContain('02');
-            expect(dateText).toContain('10:41:06');
-            expect(annotationElement.querySelector('.popupContent').textContent).toBe('Annotation contents');
+            expect(getAnnotationTitle()).toBe('Annotation title');
+            expect(getAnnotationDate()).toBe('2/2/2026, 10:41:06 AM');
+            expect(getAnnotationContent()).toBe('Annotation contents');
+            expect(getAnnotationPopupElement()).toBeDefined();
+        }));
+
+        it('should have corrected content in annotation popup if there is no modification date', fakeAsync(() => {
+            annotations[0].modificationDate = null;
+            dispatchAnnotationLayerRenderedEvent();
+            expect(getAnnotationTitle()).toBe('Annotation title');
+            expect(getAnnotationDate()).toBeUndefined();
+            expect(getAnnotationContent()).toBe('Annotation contents');
             expect(getAnnotationPopupElement()).toBeDefined();
         }));
 
