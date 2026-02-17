@@ -85,7 +85,7 @@
                         <ng-container  *ngIf="hasStartForm(); else noStartFormTemplate">
                             <adf-start-form
                                 #startForm
-                                [data]="movedNodeToPS"
+                                [data]="populatedFormData"
                                 [disableStartProcessButton]="processNameInput.invalid"
                                 [processDefinitionId]="selectedProcessDef.id"
                                 (outcomeClick)="onOutcomeClick($event)"
