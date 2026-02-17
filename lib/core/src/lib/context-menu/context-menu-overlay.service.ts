@@ -23,10 +23,6 @@ import { ContextMenuOverlayConfig } from './interfaces';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 import { ContextMenuListComponent } from './context-menu-list.component';
 
-interface OverlayRefWithBackdrop {
-    backdropElement: HTMLElement;
-}
-
 const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     panelClass: 'cdk-overlay-pane',
     backdropClass: 'cdk-overlay-transparent-backdrop',
@@ -54,9 +50,8 @@ export class ContextMenuOverlayService {
         overlay.backdropClick().subscribe(() => overlayRef.close());
 
         // prevent native contextmenu on overlay element if config.hasBackdrop is true
-        if (overlayConfig.hasBackdrop) {
-            const overlayWithBackdrop = overlay as unknown as OverlayRefWithBackdrop;
-            overlayWithBackdrop.backdropElement.addEventListener(
+        if (overlayConfig.hasBackdrop && overlay.backdropElement) {
+            overlay.backdropElement.addEventListener(
                 'contextmenu',
                 (event) => {
                     event.preventDefault();
