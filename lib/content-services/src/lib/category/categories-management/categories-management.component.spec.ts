@@ -328,7 +328,6 @@ describe('CategoriesManagementComponent', () => {
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
             typeCategory('test');
             const options = getExistingCategoriesList();
-            // eslint-disable-next-line no-underscore-dangle
             options[0].click();
 
             expect(component.categories.length).toBe(3);
@@ -342,7 +341,6 @@ describe('CategoriesManagementComponent', () => {
         it('should remove selected category from categories list and add it back to existing categories', fakeAsync(() => {
             typeCategory('test');
             const options = getExistingCategoriesList();
-            // eslint-disable-next-line no-underscore-dangle
             options[0].click();
             fixture.detectChanges();
 

@@ -56,7 +56,6 @@ export class ContextMenuOverlayService {
 
         // prevent native contextmenu on overlay element if config.hasBackdrop is true
         if (overlayConfig.hasBackdrop) {
-            // eslint-disable-next-line no-underscore-dangle
             const overlayWithBackdrop = overlay as unknown as OverlayRefWithBackdrop;
             overlayWithBackdrop.backdropElement.addEventListener(
                 'contextmenu',
