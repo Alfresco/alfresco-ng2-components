@@ -26,6 +26,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { IconModule } from '../icon/icon.module';
+import { ContextMenuItem } from './interfaces';
 
 @Component({
     selector: 'adf-context-menu',
@@ -42,10 +43,10 @@ import { IconModule } from '../icon/icon.module';
 export class ContextMenuListComponent implements AfterViewInit {
     private keyManager: FocusKeyManager<MatMenuItem>;
     @ViewChildren(MatMenuItem) items: QueryList<MatMenuItem>;
-    links: any[];
+    links: ContextMenuItem[];
 
     @HostListener('document:keydown.Escape', ['$event'])
-    handleKeydownEscape(event: KeyboardEvent) {
+    handleKeydownEscape(event: Event) {
         if (event) {
             this.contextMenuOverlayRef.close();
         }
@@ -63,12 +64,12 @@ export class ContextMenuListComponent implements AfterViewInit {
 
     constructor(
         @Inject(ContextMenuOverlayRef) private contextMenuOverlayRef: ContextMenuOverlayRef,
-        @Optional() @Inject(CONTEXT_MENU_DATA) private data: any
+        @Optional() @Inject(CONTEXT_MENU_DATA) private data: ContextMenuItem[]
     ) {
         this.links = this.data;
     }
 
-    onMenuItemClick(event: Event, menuItem: any) {
+    onMenuItemClick(event: Event, menuItem: ContextMenuItem) {
         if (menuItem?.model?.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
