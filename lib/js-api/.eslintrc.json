@@ -48,7 +48,8 @@
         "@typescript-eslint/consistent-type-definitions": "off",
         "no-redeclare": "off",
         "space-before-function-paren": "off",
-        "@typescript-eslint/no-empty-interface": "warn"
+        "@typescript-eslint/no-empty-interface": "warn",
+        "@typescript-eslint/no-explicit-any": "off"
       }
     }
   ]

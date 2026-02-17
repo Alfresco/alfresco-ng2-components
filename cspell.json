@@ -145,7 +145,8 @@
     "Whitespaces",
     "xdescribe",
     "xsrf",
-    "zestiria"
+    "zestiria",
+    "webscript"
   ],
   "dictionaries": [
     "html",
