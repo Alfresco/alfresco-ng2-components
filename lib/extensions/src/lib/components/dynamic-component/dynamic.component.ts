@@ -37,7 +37,7 @@ import { MatMenuItem } from '@angular/material/menu';
     template: `<div #content></div>`
 })
 export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterViewInit {
-    private extensions = inject(ExtensionService);
+    private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;

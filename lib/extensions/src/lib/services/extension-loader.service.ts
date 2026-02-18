@@ -28,7 +28,7 @@ import { RuleRef } from '../config/rule.extensions';
     providedIn: 'root'
 })
 export class ExtensionLoaderService {
-    private http = inject(HttpClient);
+    private readonly http = inject(HttpClient);
 
     load(configPath: string, pluginsPath: string, extensions?: string[], extensionValues?: ExtensionConfig[]): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {

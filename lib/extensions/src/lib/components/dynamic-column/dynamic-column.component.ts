@@ -48,7 +48,7 @@ import { ExtensionService } from '../../services/extension.service';
     ]
 })
 export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
-    private extensions = inject(ExtensionService);
+    private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;

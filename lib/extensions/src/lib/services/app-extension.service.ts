@@ -29,7 +29,7 @@ export class AppExtensionService {
     protected extensionService = inject(ExtensionService);
 
     references$: Observable<ExtensionRef[]>;
-    private _references = new BehaviorSubject<ExtensionRef[]>([]);
+    private readonly _references = new BehaviorSubject<ExtensionRef[]>([]);
 
     constructor() {
         this.references$ = this._references.asObservable();

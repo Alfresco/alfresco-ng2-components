@@ -37,7 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     template: `<div #content></div>`
 })
 export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
-    private extensionService = inject(ExtensionService);
+    private readonly extensionService = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;

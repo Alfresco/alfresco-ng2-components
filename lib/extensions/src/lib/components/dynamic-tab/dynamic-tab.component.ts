@@ -24,7 +24,7 @@ import { ExtensionService } from '../../services/extension.service';
     template: `<div #content></div>`
 })
 export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
-    private extensions = inject(ExtensionService);
+    private readonly extensions = inject(ExtensionService);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
