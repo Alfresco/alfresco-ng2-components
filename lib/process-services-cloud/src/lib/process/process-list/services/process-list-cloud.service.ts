@@ -121,6 +121,7 @@ export class ProcessListCloudService extends BaseCloudService {
             processVariableFilters: requestNode.processVariableFilters,
             includeSubprocesses: requestNode.includeSubprocesses,
             includeUnlinkedProcesses: requestNode.includeUnlinkedProcesses,
+            includeLinkedProcesses: requestNode.includeLinkedProcesses,
             processRelatedTo: requestNode.processRelatedTo
         };
 

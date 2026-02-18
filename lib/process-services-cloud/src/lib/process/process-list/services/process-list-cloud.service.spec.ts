@@ -258,6 +258,48 @@ describe('ProcessListCloudService', () => {
                 expect(requestBodyParams.includeUnlinkedProcesses).toBeUndefined();
             });
         });
+
+        describe('includeLinkedProcesses', () => {
+            it('should include includeLinkedProcesses=true in body', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeLinkedProcesses: true
+                } as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
+
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+                expect(requestBodyParams).toEqual({ includeLinkedProcesses: true });
+            });
+
+            it('should include includeLinkedProcesses=false in body', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeLinkedProcesses: false
+                } as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
+
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+                expect(requestBodyParams).toEqual({ includeLinkedProcesses: false });
+            });
+
+            it('should omit includeLinkedProcesses when null', async () => {
+                const processRequest = {
+                    appName: 'fakeName',
+                    pagination: { skipCount: 0, maxItems: 20 },
+                    includeLinkedProcesses: null
+                } as unknown as ProcessListRequestModel;
+                requestSpy.and.callFake(returnCallBody);
+
+                const requestBodyParams = await firstValueFrom(service.fetchProcessList(processRequest));
+
+                expect(requestBodyParams).toEqual({});
+                expect(requestBodyParams.includeLinkedProcesses).toBeUndefined();
+            });
+        });
     });
 
     describe('getAdminProcessRequest', () => {

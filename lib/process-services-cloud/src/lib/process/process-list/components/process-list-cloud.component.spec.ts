@@ -735,6 +735,35 @@ describe('ProcessListCloudComponent', () => {
             });
         });
 
+        describe('includeLinkedProcesses', () => {
+            it('should set includeLinkedProcesses to true in request node when input is true', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeLinkedProcesses = true;
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.includeLinkedProcesses).toBeTrue();
+            });
+
+            it('should set includeLinkedProcesses to false in request node when input is false', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeLinkedProcesses = false;
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.includeLinkedProcesses).toBeFalse();
+            });
+
+            it('should omit includeLinkedProcesses in request node when input is null', () => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.includeLinkedProcesses = null;
+                component.ngAfterContentInit();
+                component.reload();
+
+                expect(component.processListRequestNode.includeLinkedProcesses).toBeNull();
+            });
+        });
+
         describe('processRelatedTo', () => {
             it('should include processRelatedTo in request node when values are provided', () => {
                 spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));

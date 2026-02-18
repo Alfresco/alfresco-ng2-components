@@ -104,6 +104,7 @@ export class ProcessListRequestModel {
     suspendedTo?: string;
     includeSubprocesses?: boolean;
     includeUnlinkedProcesses?: boolean;
+    includeLinkedProcesses?: boolean;
     processRelatedTo?: string[];
 
     processVariableFilters?: ProcessVariableFilterModel[];
@@ -135,6 +136,7 @@ export class ProcessListRequestModel {
         this.suspendedTo = obj.suspendedTo;
         this.includeSubprocesses = obj.includeSubprocesses;
         this.includeUnlinkedProcesses = obj.includeUnlinkedProcesses;
+        this.includeLinkedProcesses = obj.includeLinkedProcesses;
 
         this.processVariableKeys = obj.processVariableKeys;
         this.processVariableFilters = obj.processVariableFilters;
