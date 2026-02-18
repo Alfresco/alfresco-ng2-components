@@ -269,7 +269,6 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
     private readonly fetchProcessesTrigger$ = new Subject<void>();
 
-
     constructor() {
         const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
         super(PRESET_KEY, cloudPreferenceService);
