@@ -519,7 +519,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnChanges {
             minWidth: '30%'
         });
         dialogRef.afterClosed().subscribe((result) => {
-            if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
+            if (result?.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
                 const filterId = Math.random().toString(36).substr(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
                 const newFilter = {

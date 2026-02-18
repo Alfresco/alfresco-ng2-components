@@ -81,7 +81,7 @@ export class FolderActionsService {
      * @returns True if the action is available, false otherwise
      */
     canExecuteAction(nodeEntry: NodeEntry): boolean {
-        return this.documentListService && nodeEntry && nodeEntry.entry.isFolder === true;
+        return this.documentListService && nodeEntry?.entry.isFolder === true;
     }
 
     private setupActionHandlers() {

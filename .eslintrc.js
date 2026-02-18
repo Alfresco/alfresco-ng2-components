@@ -68,6 +68,7 @@ module.exports = {
                 ],
                 '@angular-eslint/no-host-metadata-property': 'off',
                 '@angular-eslint/no-input-prefix': 'error',
+                '@angular-eslint/prefer-inject': 1,
                 '@typescript-eslint/consistent-type-definitions': 'error',
                 '@typescript-eslint/dot-notation': 'off',
                 '@typescript-eslint/explicit-member-accessibility': [
@@ -103,7 +104,6 @@ module.exports = {
                 'prefer-arrow/prefer-arrow-functions': 'off',
                 'prefer-promise-reject-errors': 'error',
                 'brace-style': 'off',
-                '@typescript-eslint/brace-style': 'error',
                 'comma-dangle': 'error',
                 'default-case': 'error',
                 'import/order': 'off',
@@ -214,7 +214,10 @@ module.exports = {
         {
             files: ['*.ts'],
             extends: ['plugin:@angular-eslint/template/process-inline-templates'],
-            excludedFiles: ['*.spec.ts']
+            excludedFiles: ['*.spec.ts'],
+            rules: {
+                '@angular-eslint/prefer-inject': 1
+            }
         },
         {
             files: ['*.json'],

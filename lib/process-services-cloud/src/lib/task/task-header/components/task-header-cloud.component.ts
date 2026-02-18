@@ -291,7 +291,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     }
 
     isCompleted(): boolean {
-        return this.taskDetails && this.taskDetails.status === 'COMPLETED';
+        return this.taskDetails?.status === 'COMPLETED';
     }
 
     hasAssignee(): boolean {

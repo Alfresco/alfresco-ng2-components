@@ -595,11 +595,11 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
     }
 
     isBpmConfiguration(): boolean {
-        return this.config.provider && this.config.provider.toUpperCase() === 'BPM';
+        return this.config.provider?.toUpperCase() === 'BPM';
     }
 
     isEcmConfiguration(): boolean {
-        return this.config.provider && this.config.provider.toUpperCase() === 'ECM';
+        return this.config.provider?.toUpperCase() === 'ECM';
     }
 
     isOauthConfiguration(): boolean {
@@ -614,7 +614,7 @@ export class AlfrescoApi extends AlfrescoApiClient implements AlfrescoApiType {
     }
 
     isEcmBpmConfiguration(): boolean {
-        return this.config.provider && this.config.provider.toUpperCase() === 'ALL';
+        return this.config.provider?.toUpperCase() === 'ALL';
     }
 
     private emitBuffer(event: string, callback?: any): void {

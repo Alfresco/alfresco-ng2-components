@@ -38,7 +38,7 @@ export const LogicalSearchFields = {
 export type LogicalSearchFields = (typeof LogicalSearchFields)[keyof typeof LogicalSearchFields];
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line
 export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
 
 @Component({

@@ -37,6 +37,7 @@
         "prefer-const": "warn",
         "arrow-body-style": "warn",
         "@angular-eslint/no-output-native": "off",
+        "@angular-eslint/prefer-inject": "warn",
         "space-before-function-paren": "off",
         "@angular-eslint/component-selector": [
           "error",

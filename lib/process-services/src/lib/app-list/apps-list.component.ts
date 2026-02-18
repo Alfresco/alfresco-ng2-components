@@ -128,7 +128,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
      * @returns `true` if application is selected, otherwise `false`
      */
     isSelected(appId: number): boolean {
-        return this.currentApp !== undefined && appId === this.currentApp.id;
+        return appId === this.currentApp?.id;
     }
 
     /**

@@ -83,7 +83,7 @@ export class NodeDeleteDirective implements OnChanges {
     constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService, private elementRef: ElementRef) {}
 
     ngOnChanges() {
-        if (!this.selection || (this.selection && this.selection.length === 0)) {
+        if (!this.selection || (this.selection?.length === 0)) {
             this.setDisableAttribute(true);
         } else {
             if (!this.elementRef.nativeElement.hasAttribute('adf-check-allowable-operation')) {

@@ -270,6 +270,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     private handleArrowLeftKey(event: KeyboardEvent) {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         event.preventDefault();
         if (event.shiftKey) {
             this.changeCropBoxArea(-3, 3, 0, 0);
@@ -281,6 +284,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     private handleArrowUpKey(event: KeyboardEvent) {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         event.preventDefault();
         if (event.shiftKey) {
             this.changeCropBoxArea(0, 0, -3, 3);
@@ -292,6 +298,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     private handleArrowRightKey(event: KeyboardEvent) {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         event.preventDefault();
         if (event.shiftKey) {
             this.changeCropBoxArea(0, 3, 0, 0);
@@ -303,6 +312,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     private handleArrowDownKey(event: KeyboardEvent) {
+        if (this.destroyed || !this.cropper) {
+            return;
+        }
         event.preventDefault();
         if (event.shiftKey) {
             this.changeCropBoxArea(0, 0, 0, 3);

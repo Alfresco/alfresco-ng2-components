@@ -540,7 +540,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
             minWidth: '30%'
         });
         dialogRef.afterClosed().subscribe((result) => {
-            if (result && result.action === ProcessFilterDialogCloudComponent.ACTION_SAVE) {
+            if (result?.action === ProcessFilterDialogCloudComponent.ACTION_SAVE) {
                 const filterId = Math.random().toString(36).substring(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
                 const newFilter = {

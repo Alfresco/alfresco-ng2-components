@@ -112,7 +112,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     isValidOptionName(optionName: string): boolean {
-        const option = this.field.options.find((item) => item.name && item.name.toLocaleLowerCase() === optionName.toLocaleLowerCase());
+        const option = this.field.options.find((item) => item.name?.toLocaleLowerCase() === optionName.toLocaleLowerCase());
         return !!option;
     }
 

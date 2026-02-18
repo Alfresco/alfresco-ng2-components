@@ -373,10 +373,10 @@ describe('CardViewDateItemComponent', () => {
             fixture.detectChanges();
 
             const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
+            // Check the actual floatLabel behavior by verifying the label is always floating
+            const isFloating = await matFormField.isLabelFloating();
 
-            expect(floatLabel).toBe('always');
+            expect(isFloating).toBe(true);
         });
 
         it('should set floatLabel to null when property has no default value and is editable', async () => {

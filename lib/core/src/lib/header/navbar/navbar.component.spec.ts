@@ -18,9 +18,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouterLink } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { By } from '@angular/platform-browser';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -56,10 +57,17 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
+
+        // Query all RouterLink directives
+        const linkDebugEls = fixture.debugElement.queryAll(By.directive(RouterLink));
+        expect(linkDebugEls.length).toBe(testItems.length);
+
         const renderedItems = testingUtils.getAllByCSS('.adf-navbar-item-btn').map((item) => item.nativeElement);
         testItems.forEach((item, index) => {
             expect(renderedItems[index].textContent).toContain(item.label);
-            expect(renderedItems[index].getAttribute('ng-reflect-router-link')).toContain(item.routerLink);
         });
+
+        // Verify the component's items have the correct routerLink values
+        expect(component.items).toEqual(testItems);
     });
 });

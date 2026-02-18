@@ -309,7 +309,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
     }
 
     isProcessInitiator(): boolean {
-        return this.currentLoggedUser && this.currentLoggedUser.id === +this.taskDetails.processInstanceStartUserId;
+        return this.currentLoggedUser?.id === +this.taskDetails.processInstanceStartUserId;
     }
 
     isSaveButtonVisible(): boolean {
@@ -362,13 +362,11 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
     private isEmailEqual(): boolean {
         return (
-            this.taskDetails.assignee &&
-            this.currentLoggedUser &&
-            this.taskDetails.assignee.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase()
+            this.taskDetails.assignee?.email.toLocaleLowerCase() === this.currentLoggedUser?.email.toLocaleLowerCase()
         );
     }
 
     private isExternalIdEqual(): boolean {
-        return this.taskDetails.assignee && this.currentLoggedUser && this.taskDetails.assignee.externalId === this.currentLoggedUser.externalId;
+        return this.taskDetails.assignee?.externalId === this.currentLoggedUser?.externalId;
     }
 }

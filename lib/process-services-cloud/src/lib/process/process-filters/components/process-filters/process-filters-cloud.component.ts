@@ -236,7 +236,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
-        return this.filters === undefined || (this.filters && this.filters.length === 0);
+        return this.filters === undefined || (this.filters?.length === 0);
     }
 
     /**
