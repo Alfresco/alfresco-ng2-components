@@ -22,9 +22,6 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
 import { Subject } from 'rxjs';
 
-/**
- * @deprecated This service is deprecated and will be removed in future versions.
- */
 @Injectable({
     providedIn: 'root'
 })
