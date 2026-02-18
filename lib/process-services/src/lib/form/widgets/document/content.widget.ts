@@ -34,9 +34,9 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ContentWidgetComponent implements OnChanges {
     protected formService = inject(FormService);
-    private downloadService = inject(DownloadService);
-    private urlService = inject(UrlService);
-    private processContentService = inject(ProcessContentService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly urlService = inject(UrlService);
+    private readonly processContentService = inject(ProcessContentService);
 
     /** The content id to show. */
     @Input()

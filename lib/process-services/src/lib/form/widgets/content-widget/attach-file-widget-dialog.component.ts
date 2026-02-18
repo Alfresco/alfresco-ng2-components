@@ -48,11 +48,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ]
 })
 export class AttachFileWidgetDialogComponent implements OnInit {
-    private translation = inject(TranslationService);
+    private readonly translation = inject(TranslationService);
     data = inject<AttachFileWidgetDialogComponentData>(MAT_DIALOG_DATA);
-    private externalApiService = inject(AlfrescoApiService);
-    private authenticationService = inject(AuthenticationService);
-    private matDialogRef = inject<MatDialogRef<AttachFileWidgetDialogComponent>>(MatDialogRef);
+    private readonly externalApiService = inject(AlfrescoApiService);
+    private readonly authenticationService = inject(AuthenticationService);
+    private readonly matDialogRef = inject<MatDialogRef<AttachFileWidgetDialogComponent>>(MatDialogRef);
 
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;

@@ -39,7 +39,7 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {
-    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
     DATE_FORMAT: string = 'DD-MM-YYYY';
 

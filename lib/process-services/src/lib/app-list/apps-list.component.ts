@@ -54,7 +54,7 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
     host: { class: 'adf-apps' }
 })
 export class AppsListComponent implements OnInit, AfterContentInit {
-    private appsProcessService = inject(AppsProcessService);
+    private readonly appsProcessService = inject(AppsProcessService);
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;

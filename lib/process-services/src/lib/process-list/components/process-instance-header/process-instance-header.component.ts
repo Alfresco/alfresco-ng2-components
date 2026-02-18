@@ -36,8 +36,8 @@ import { MatCardModule } from '@angular/material/card';
     styleUrls: ['./process-instance-header.component.css']
 })
 export class ProcessInstanceHeaderComponent implements OnChanges {
-    private translationService = inject(TranslationService);
-    private appConfig = inject(AppConfigService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
 
     /** (**required**) Full details of the process instance to display information about. */
     @Input({ required: true })

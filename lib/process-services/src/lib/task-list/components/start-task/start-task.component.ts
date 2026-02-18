@@ -64,8 +64,8 @@ const MAX_LENGTH = 255;
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit {
-    private taskService = inject(TaskListService);
-    private formBuilder = inject(UntypedFormBuilder);
+    private readonly taskService = inject(TaskListService);
+    private readonly formBuilder = inject(UntypedFormBuilder);
 
     /** (required) The id of the app. */
     @Input({ required: true })

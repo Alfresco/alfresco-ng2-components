@@ -25,7 +25,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class AppsProcessService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _appsApi: RuntimeAppDefinitionsApi;
     get appsApi(): RuntimeAppDefinitionsApi {

@@ -31,7 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class SelectAppsDialogComponent {
-    private appsProcessService = inject(AppsProcessService);
+    private readonly appsProcessService = inject(AppsProcessService);
     dialogRef = inject<MatDialogRef<SelectAppsDialogComponent>>(MatDialogRef);
     data = inject(MAT_DIALOG_DATA);
 

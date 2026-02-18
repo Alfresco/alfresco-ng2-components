@@ -36,10 +36,10 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {
-    private processFilterService = inject(ProcessFilterService);
-    private appsProcessService = inject(AppsProcessService);
-    private router = inject(Router);
-    private location = inject(Location);
+    private readonly processFilterService = inject(ProcessFilterService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly router = inject(Router);
+    private readonly location = inject(Location);
 
     /**
      * The parameters to filter the task filter. If there is no match then the default one

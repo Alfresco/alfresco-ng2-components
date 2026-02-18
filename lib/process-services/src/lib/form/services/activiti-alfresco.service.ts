@@ -33,8 +33,8 @@ import { map, catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ActivitiContentService {
-    private apiService = inject(AlfrescoApiService);
-    private sitesService = inject(SitesService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly sitesService = inject(SitesService);
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';

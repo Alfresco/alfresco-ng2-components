@@ -26,7 +26,7 @@ import { FormDefinitionModel } from '../model/form-definition.model';
     providedIn: 'root'
 })
 export class EditorService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';

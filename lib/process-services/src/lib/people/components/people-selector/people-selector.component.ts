@@ -39,8 +39,8 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleSelectorComponent {
-    private peopleProcessService = inject(PeopleProcessService);
-    private translationService = inject(TranslationService);
+    private readonly peopleProcessService = inject(PeopleProcessService);
+    private readonly translationService = inject(TranslationService);
 
     @Input()
     peopleId: LightUserRepresentation;

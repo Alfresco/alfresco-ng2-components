@@ -61,10 +61,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
-    private processContentService = inject(ProcessContentService);
-    private downloadService = inject(DownloadService);
-    private thumbnailService = inject(ThumbnailService);
-    private ngZone = inject(NgZone);
+    private readonly processContentService = inject(ProcessContentService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly thumbnailService = inject(ThumbnailService);
+    private readonly ngZone = inject(NgZone);
 
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;

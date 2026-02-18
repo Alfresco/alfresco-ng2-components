@@ -26,7 +26,7 @@ import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepres
     providedIn: 'root'
 })
 export class PeopleProcessService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _taskActionsApi: TaskActionsApi;
     get taskActionsApi(): TaskActionsApi {

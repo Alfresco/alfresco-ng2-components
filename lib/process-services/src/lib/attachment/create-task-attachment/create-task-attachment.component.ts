@@ -30,7 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {
-    private processContentService = inject(ProcessContentService);
+    private readonly processContentService = inject(ProcessContentService);
 
     /** (required) The numeric ID of the task to display. */
     @Input({ required: true })

@@ -42,7 +42,7 @@ import { ProcessCommentsComponent } from '../../../process-comments';
     styleUrls: ['./process-instance-details.component.css']
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {
-    private processService = inject(ProcessService);
+    private readonly processService = inject(ProcessService);
 
     /** (required) The numeric ID of the process instance to display. */
     @Input({ required: true })

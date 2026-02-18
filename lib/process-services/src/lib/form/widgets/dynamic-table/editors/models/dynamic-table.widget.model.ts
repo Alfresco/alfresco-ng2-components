@@ -54,7 +54,10 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    constructor(field: FormFieldModel, private formService: FormService) {
+    constructor(
+        field: FormFieldModel,
+        private readonly formService: FormService
+    ) {
         super(field.form, field.json);
         this.field = field;
 
@@ -66,7 +69,7 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (field.json.value) {
-                this.rows = field.json.value.map((obj) => ({ selected: false, value: obj } as DynamicTableRow));
+                this.rows = field.json.value.map((obj) => ({ selected: false, value: obj }) as DynamicTableRow);
             }
         }
 

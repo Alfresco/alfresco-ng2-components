@@ -29,7 +29,7 @@ import {
     providedIn: 'root'
 })
 export class ProcessFilterService {
-    private alfrescoApiService = inject(AlfrescoApiService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {

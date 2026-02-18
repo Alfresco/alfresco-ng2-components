@@ -38,11 +38,11 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
-    private taskFilterService = inject(TaskFilterService);
-    private taskListService = inject(TaskListService);
-    private appsProcessService = inject(AppsProcessService);
-    private router = inject(Router);
-    private activatedRoute = inject(ActivatedRoute);
+    private readonly taskFilterService = inject(TaskFilterService);
+    private readonly taskListService = inject(TaskListService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
     /**
      * Parameters to use for the task filter. If there is no match then

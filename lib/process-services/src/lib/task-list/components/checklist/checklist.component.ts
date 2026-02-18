@@ -45,8 +45,8 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./checklist.component.scss']
 })
 export class ChecklistComponent implements OnChanges {
-    private taskListService = inject(TaskListService);
-    private dialog = inject(MatDialog);
+    private readonly taskListService = inject(TaskListService);
+    private readonly dialog = inject(MatDialog);
 
     /**
      * The id of the parent task to which subtasks are attached.

@@ -25,7 +25,7 @@ import { catchError, map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ModelService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';

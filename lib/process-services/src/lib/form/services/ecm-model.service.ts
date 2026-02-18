@@ -26,7 +26,7 @@ import { CustomModelApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class EcmModelService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     public static MODEL_NAMESPACE: string = 'activitiForms';
     public static MODEL_NAME: string = 'activitiFormsModel';

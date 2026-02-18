@@ -51,8 +51,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {
-    private peopleProcessService = inject(PeopleProcessService);
-    private translationService = inject(TranslationService);
+    private readonly peopleProcessService = inject(PeopleProcessService);
+    private readonly translationService = inject(TranslationService);
     private readonly appConfig = inject(AppConfigService);
     private readonly cardViewUpdateService = inject(CardViewUpdateService);
 

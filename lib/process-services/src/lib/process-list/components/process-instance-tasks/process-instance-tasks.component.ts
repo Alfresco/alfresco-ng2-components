@@ -38,8 +38,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./process-instance-tasks.component.css']
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
-    private processService = inject(ProcessService);
-    private dialog = inject(MatDialog);
+    private readonly processService = inject(ProcessService);
+    private readonly dialog = inject(MatDialog);
 
     /** The ID of the process instance to display tasks for. */
     @Input({ required: true })

@@ -23,7 +23,7 @@ import { TaskListService } from '../../services/tasklist.service';
     selector: '[adf-claim-task]'
 })
 export class ClaimTaskDirective implements OnInit {
-    private taskListService = inject(TaskListService);
+    private readonly taskListService = inject(TaskListService);
 
     /** (Required) The id of the task. */
     @Input()

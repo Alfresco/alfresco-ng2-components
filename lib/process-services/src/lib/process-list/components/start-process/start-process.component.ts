@@ -82,11 +82,11 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit {
-    private processService = inject(ProcessService);
-    private contentService = inject(ActivitiContentService);
-    private appsProcessService = inject(AppsProcessService);
-    private appConfig = inject(AppConfigService);
-    private datePipe = inject(LocalizedDatePipe);
+    private readonly processService = inject(ProcessService);
+    private readonly contentService = inject(ActivitiContentService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly datePipe = inject(LocalizedDatePipe);
 
     /**
      * Limit the list of processes that can be started to those

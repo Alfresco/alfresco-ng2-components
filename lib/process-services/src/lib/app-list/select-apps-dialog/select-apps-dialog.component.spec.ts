@@ -29,7 +29,7 @@ import { SelectAppsDialogComponent } from './select-apps-dialog.component';
     template: ''
 })
 export class DialogSelectAppTestComponent {
-    private dialog = inject_1(MatDialog);
+    private readonly dialog = inject_1(MatDialog);
 
     processId: any;
     dialogRef: any;

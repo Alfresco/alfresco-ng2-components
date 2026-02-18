@@ -36,9 +36,9 @@ import { FormComponent } from '../../../form';
     styleUrls: ['./attach-form.component.scss']
 })
 export class AttachFormComponent implements OnInit, OnChanges {
-    private taskService = inject(TaskListService);
-    private modelService = inject(ModelService);
-    private taskFormService = inject(TaskFormService);
+    private readonly taskService = inject(TaskListService);
+    private readonly modelService = inject(ModelService);
+    private readonly taskFormService = inject(TaskFormService);
 
     /** Id of the task. */
     @Input({ required: true })

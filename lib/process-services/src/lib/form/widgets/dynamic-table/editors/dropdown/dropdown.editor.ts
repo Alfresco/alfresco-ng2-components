@@ -38,8 +38,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class DropdownEditorComponent implements OnInit {
     formService = inject(FormService);
-    private taskFormService = inject(TaskFormService);
-    private processDefinitionService = inject(ProcessDefinitionService);
+    private readonly taskFormService = inject(TaskFormService);
+    private readonly processDefinitionService = inject(ProcessDefinitionService);
 
     value: any = null;
     options: DynamicTableColumnOption[] = [];

@@ -40,7 +40,7 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./datetime.editor.scss']
 })
 export class DateTimeEditorComponent implements OnInit {
-    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
     DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 

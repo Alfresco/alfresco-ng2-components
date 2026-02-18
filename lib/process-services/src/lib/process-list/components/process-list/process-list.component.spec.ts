@@ -594,7 +594,7 @@ class ProcessListContextMenuComponent implements OnInit {
 
     appId: number;
 
-    private performAction$ = new Subject<any>();
+    private readonly performAction$ = new Subject<any>();
 
     ngOnInit() {
         this.performContextActions();

@@ -63,10 +63,10 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
-    private activitiContentService = inject(ProcessContentService);
-    private downloadService = inject(DownloadService);
-    private thumbnailService = inject(ThumbnailService);
-    private ngZone = inject(NgZone);
+    private readonly activitiContentService = inject(ProcessContentService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly thumbnailService = inject(ThumbnailService);
+    private readonly ngZone = inject(NgZone);
 
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;

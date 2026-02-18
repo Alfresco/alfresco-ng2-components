@@ -47,7 +47,7 @@ import { PeopleListComponent } from '../people-list/people-list.component';
 })
 export class PeopleSearchFieldComponent {
     peopleProcessService = inject(PeopleProcessService);
-    private translationService = inject(TranslationService);
+    private readonly translationService = inject(TranslationService);
 
     @Input()
     performSearch: PerformSearchCallback;

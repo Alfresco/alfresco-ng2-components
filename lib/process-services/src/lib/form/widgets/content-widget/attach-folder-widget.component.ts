@@ -46,9 +46,9 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {
-    private contentDialog = inject(ContentNodeDialogService);
+    private readonly contentDialog = inject(ContentNodeDialogService);
     formService = inject(FormService);
-    private nodeService = inject(NodesApiService);
+    private readonly nodeService = inject(NodesApiService);
 
     typeId = 'AttachFolderWidgetComponent';
     hasFolder: boolean = false;

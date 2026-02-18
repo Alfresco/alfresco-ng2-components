@@ -27,8 +27,8 @@ import { PeopleProcessService } from '../../services/people-process.service';
     providedIn: 'root'
 })
 export class CommentProcessService implements CommentsService {
-    private apiService = inject(AlfrescoApiService);
-    private peopleProcessService = inject(PeopleProcessService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly peopleProcessService = inject(PeopleProcessService);
 
     private _commentsApi: ActivitiCommentsApi;
     get commentsApi(): ActivitiCommentsApi {

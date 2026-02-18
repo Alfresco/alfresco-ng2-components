@@ -43,14 +43,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
-    private activitiContentService = inject(ActivitiContentService);
-    private contentService = inject(ContentService);
-    private contentDialog = inject(ContentNodeDialogService);
-    private appConfigService = inject(AppConfigService);
-    private downloadService = inject(DownloadService);
-    private router = inject(Router);
-    private activatedRoute = inject(ActivatedRoute);
-    private attachDialogService = inject(AttachFileWidgetDialogService);
+    private readonly activitiContentService = inject(ActivitiContentService);
+    private readonly contentService = inject(ContentService);
+    private readonly contentDialog = inject(ContentNodeDialogService);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly attachDialogService = inject(AttachFileWidgetDialogService);
 
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
