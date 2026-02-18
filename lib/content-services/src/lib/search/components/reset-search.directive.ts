@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
 
 @Directive({
     selector: '[adf-reset-search]'
 })
 export class ResetSearchDirective {
+    private filterService = inject(SearchFacetFiltersService);
+
     @HostListener('click')
     onClick() {
         this.filterService.reset();
     }
-
-    constructor(private filterService: SearchFacetFiltersService) {}
 }

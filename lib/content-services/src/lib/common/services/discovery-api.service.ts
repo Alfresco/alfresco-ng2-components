@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
 import { RepositoryInfo, SystemPropertiesRepresentation, DiscoveryApi, AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
@@ -27,6 +27,9 @@ import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-cor
     providedIn: 'root'
 })
 export class DiscoveryApiService {
+    private readonly authenticationService = inject(AuthenticationService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+
     private _discoveryApi: DiscoveryApi;
     get discoveryApi(): DiscoveryApi {
         this._discoveryApi = this._discoveryApi ?? new DiscoveryApi(this.alfrescoApiService.getInstance());
@@ -38,10 +41,7 @@ export class DiscoveryApiService {
      */
     ecmProductInfo$ = new Subject<RepositoryInfo>();
 
-    constructor(
-        private readonly authenticationService: AuthenticationService,
-        private readonly alfrescoApiService: AlfrescoApiService
-    ) {
+    constructor() {
         this.authenticationService.onLogin.subscribe(() => {
             this.alfrescoApiService.alfrescoApiInitialized
                 .pipe(

@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
@@ -27,6 +27,8 @@ import { map, catchError, retry } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TranslateLoaderService implements TranslateLoader {
+    private http = inject(HttpClient);
+
     private prefix: string = 'i18n';
     private suffix: string = '.json';
     private providers: ComponentTranslationModel[] = [
@@ -37,8 +39,6 @@ export class TranslateLoaderService implements TranslateLoader {
     ];
     private queue: string[][] = [];
     private defaultLang: string = 'en';
-
-    constructor(private http: HttpClient) {}
 
     setDefaultLang(value: string) {
         this.defaultLang = value || 'en';

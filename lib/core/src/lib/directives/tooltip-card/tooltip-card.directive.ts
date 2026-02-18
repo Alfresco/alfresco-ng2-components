@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentRef, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
@@ -24,6 +24,10 @@ import { TooltipCardComponent } from './tooltip-card.component';
     selector: '[adf-tooltip-card]'
 })
 export class TooltipCardDirective implements OnInit, OnDestroy {
+    private overlay = inject(Overlay);
+    private overlayPositionBuilder = inject(OverlayPositionBuilder);
+    private elementRef = inject(ElementRef);
+
     @Input('adf-tooltip-card') text = '';
     @Input() image = '';
     @Input() width = '300';
@@ -36,12 +40,6 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     @Input() offsetY = -8;
 
     private overlayRef: OverlayRef;
-
-    constructor(
-        private overlay: Overlay,
-        private overlayPositionBuilder: OverlayPositionBuilder,
-        private elementRef: ElementRef
-    ) {}
 
     ngOnDestroy(): void {
         if (this.overlayRef) {

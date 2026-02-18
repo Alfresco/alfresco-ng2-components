@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ContentLinkModel } from '../components/widgets/core/content-link.model';
 import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
@@ -62,7 +62,9 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor(@Optional() @Inject(FORM_SERVICE_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]) {
+    constructor() {
+        const injectedFieldValidators = inject(FORM_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true });
+
         this.fieldValidators = injectedFieldValidators || [];
     }
 

@@ -51,6 +51,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
+    private readonly mediaMatcher = inject(MediaMatcher);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
     static STEP_OVER = 600;
 
     /** The direction of the layout. 'ltr' or 'rtl' */
@@ -102,11 +106,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private readonly mediaMatcher: MediaMatcher,
-        private readonly userPreferencesService: UserPreferencesService,
-        private readonly changeDetectorRef: ChangeDetectorRef
-    ) {
+    constructor() {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 

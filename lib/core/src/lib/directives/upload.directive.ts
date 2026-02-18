@@ -17,13 +17,17 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import { FileInfo, FileUtils } from '../common/utils/file-utils';
 
 @Directive({
     selector: '[adf-upload]'
 })
 export class UploadDirective implements OnInit, OnDestroy {
+    private el = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private ngZone = inject(NgZone);
+
     /** Enables/disables uploading. */
     @Input('adf-upload')
     enabled: boolean = true;
@@ -57,7 +61,9 @@ export class UploadDirective implements OnInit, OnDestroy {
     private upload: HTMLInputElement;
     private element: HTMLElement;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone) {
+    constructor() {
+        const el = this.el;
+
         this.element = el.nativeElement;
     }
 

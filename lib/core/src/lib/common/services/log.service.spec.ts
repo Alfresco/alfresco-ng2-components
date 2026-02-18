@@ -18,7 +18,7 @@
 /* eslint-disable no-console */
 
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject as inject_1 } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { LogService } from './log.service';
@@ -28,7 +28,7 @@ import { LogService } from './log.service';
     providers: [LogService]
 })
 class ProvidesLogComponent {
-    constructor(public logService: LogService) {}
+    logService = inject_1(LogService);
 
     error() {
         this.logService.error('Test message');

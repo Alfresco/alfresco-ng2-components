@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiConfig } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues, StorageService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { SecurityOptionsLoaderService } from '../security-options-loader/security-options-loader.service';
@@ -35,12 +35,10 @@ export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApi
     providedIn: 'root'
 })
 export class AlfrescoApiLoaderService {
-    constructor(
-        private readonly appConfig: AppConfigService,
-        private readonly apiService: AlfrescoApiService,
-        private readonly securityOptionsLoaderService: SecurityOptionsLoaderService,
-        private storageService: StorageService
-    ) {}
+    private readonly appConfig = inject(AppConfigService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly securityOptionsLoaderService = inject(SecurityOptionsLoaderService);
+    private storageService = inject(StorageService);
 
     async init(): Promise<any> {
         await this.appConfig.load(this.securityOptionsLoaderService.load);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DialogAspectListService } from './dialog-aspect-list.service';
 import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -25,12 +25,10 @@ import { TagService } from '../../tag/services/tag.service';
     providedIn: 'root'
 })
 export class NodeAspectService {
-    constructor(
-        private nodesApiService: NodesApiService,
-        private dialogAspectListService: DialogAspectListService,
-        private cardViewContentUpdateService: CardViewContentUpdateService,
-        private tagService: TagService
-    ) {}
+    private nodesApiService = inject(NodesApiService);
+    private dialogAspectListService = inject(DialogAspectListService);
+    private cardViewContentUpdateService = inject(CardViewContentUpdateService);
+    private tagService = inject(TagService);
 
     updateNodeAspects(nodeId: string, selectorAutoFocusedOnClose?: string) {
         this.dialogAspectListService.openAspectListDialog(nodeId, selectorAutoFocusedOnClose).subscribe((aspectList) => {

@@ -25,7 +25,6 @@ import {
     ElementRef,
     EventEmitter,
     HostListener,
-    Inject,
     Input,
     OnDestroy,
     OnInit,
@@ -33,7 +32,8 @@ import {
     QueryList,
     TemplateRef,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.component';
@@ -47,6 +47,9 @@ import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.componen
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
+    private element = inject(ElementRef);
+    private document = inject(DOCUMENT);
+
     @Input({ required: true }) pdfViewer: any;
 
     @Output()
@@ -103,7 +106,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.calculateItems();
     }
 
-    constructor(private element: ElementRef, @Inject(DOCUMENT) private document: any) {
+    constructor() {
         this.calculateItems = this.calculateItems.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
     }

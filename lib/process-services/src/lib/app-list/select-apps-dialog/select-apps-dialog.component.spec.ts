@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, inject as inject_1 } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -29,10 +29,10 @@ import { SelectAppsDialogComponent } from './select-apps-dialog.component';
     template: ''
 })
 export class DialogSelectAppTestComponent {
+    private dialog = inject_1(MatDialog);
+
     processId: any;
     dialogRef: any;
-
-    constructor(private dialog: MatDialog) {}
 
     startProcessAction() {
         this.dialogRef = this.dialog.open(SelectAppsDialogComponent, {

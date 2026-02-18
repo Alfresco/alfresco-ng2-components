@@ -16,7 +16,7 @@
  */
 
 import { TypeEntry, TypePaging, TypesApi } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,13 +25,13 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ContentTypeService {
+    private alfrescoApiService = inject(AlfrescoApiService);
+
     private _typesApi: TypesApi;
     get typesApi(): TypesApi {
         this._typesApi = this._typesApi ?? new TypesApi(this.alfrescoApiService.getInstance());
         return this._typesApi;
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     getContentTypeByPrefix(prefixedType: string): Observable<TypeEntry> {
         return from(this.typesApi.getType(prefixedType));

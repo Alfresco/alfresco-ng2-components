@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { FeaturesServiceToken, FlagChangeset, IFeaturesService } from '../interfaces/features.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -25,6 +25,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: '[adfNotForFeatures]'
 })
 export class NotFeaturesDirective {
+    private featuresService = inject<IFeaturesService>(FeaturesServiceToken);
+    private templateRef = inject<TemplateRef<any>>(TemplateRef);
+    private viewContainer = inject(ViewContainerRef);
+
     private hasView = false;
     private inputUpdate$ = new BehaviorSubject([] as string[]);
 
@@ -33,11 +37,7 @@ export class NotFeaturesDirective {
         this.inputUpdate$.next(Array.isArray(feature) ? feature : [feature]);
     }
 
-    constructor(
-        @Inject(FeaturesServiceToken) private featuresService: IFeaturesService,
-        private templateRef: TemplateRef<any>,
-        private viewContainer: ViewContainerRef
-    ) {
+    constructor() {
         combineLatest([this.featuresService.getFlags$(), this.inputUpdate$])
             .pipe(takeUntilDestroyed())
             .subscribe(([flags, features]: any) => this.updateView(flags, features));

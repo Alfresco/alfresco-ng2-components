@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthConfig } from 'angular-oauth2-oidc';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -37,10 +37,8 @@ export function authConfigFactory(authConfigService: AuthConfigService): Promise
     providedIn: 'root'
 })
 export class AuthConfigService {
-    constructor(
-        private appConfigService: AppConfigService,
-        @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
-    ) {}
+    private appConfigService = inject(AppConfigService);
+    private readonly authModuleConfig = inject<AuthModuleConfig>(AUTH_MODULE_CONFIG);
 
     private _authConfig!: AuthConfig;
     get authConfig(): AuthConfig {

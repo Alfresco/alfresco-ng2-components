@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 import { SecurityControlsGroupResponse } from './models/security-controls-group-response.interface';
 import { SecurityControlsMarkResponse } from './models/security-controls-mark-response.interface';
@@ -41,6 +41,9 @@ const DEFAULT_INCLUDE = 'inUse';
 
 @Injectable({ providedIn: 'root' })
 export class SecurityControlsService {
+    private apiService = inject(AlfrescoApiService);
+    private userPreferencesService = inject(UserPreferencesService);
+
     private groupsPaginatedSource = new Subject<SecurityControlsGroupResponse>();
     groupsPaginated$ = this.groupsPaginatedSource.asObservable();
 
@@ -59,7 +62,6 @@ export class SecurityControlsService {
     private securityGroup: SecurityGroupsApi;
     private securityMark: SecurityMarksApi;
     private authorityClearance: AuthorityClearanceApi;
-    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
 
     get groupsApi(): SecurityGroupsApi {
         return this.securityGroup || (this.securityGroup = new SecurityGroupsApi(this.apiService.getInstance()));

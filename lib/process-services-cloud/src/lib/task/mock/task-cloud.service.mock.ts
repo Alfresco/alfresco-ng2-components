@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task-details-cloud.model';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
@@ -27,7 +27,9 @@ export class TaskCloudServiceMock extends TaskCloudService {
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
 
-    constructor(adfHttpClient: AdfHttpClient) {
+    constructor() {
+        const adfHttpClient = inject(AdfHttpClient);
+
         super(adfHttpClient);
     }
 

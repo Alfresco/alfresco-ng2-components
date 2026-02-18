@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, inject } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
@@ -32,6 +32,10 @@ import { Subscription } from 'rxjs';
     providers: [DocumentActionsService, FolderActionsService]
 })
 export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
+    private list = inject(ContentActionListComponent);
+    private documentActions = inject(DocumentActionsService);
+    private folderActions = inject(FolderActionsService);
+
     /** The title of the action as shown in the menu. */
     @Input()
     title: string = 'Action';
@@ -90,12 +94,6 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
     folderActionModel: ContentActionModel;
 
     private subscriptions: Subscription[] = [];
-
-    constructor(
-        private list: ContentActionListComponent,
-        private documentActions: DocumentActionsService,
-        private folderActions: FolderActionsService
-    ) {}
 
     ngOnInit() {
         if (this.target === ContentActionTarget.All) {

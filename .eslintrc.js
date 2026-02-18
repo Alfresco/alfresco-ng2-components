@@ -68,6 +68,7 @@ module.exports = {
                 ],
                 '@angular-eslint/no-host-metadata-property': 'off',
                 '@angular-eslint/no-input-prefix': 'error',
+                '@angular-eslint/prefer-inject': 'error',
                 '@typescript-eslint/consistent-type-definitions': 'error',
                 '@typescript-eslint/dot-notation': 'off',
                 '@typescript-eslint/explicit-member-accessibility': [

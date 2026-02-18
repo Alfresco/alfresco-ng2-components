@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslationService } from '../../translation/translation.service';
@@ -24,10 +24,16 @@ import { TranslationService } from '../../translation/translation.service';
     providedIn: 'root'
 })
 export class PageTitleService {
+    private titleService = inject(Title);
+    private appConfig = inject(AppConfigService);
+    private translationService = inject(TranslationService);
+
     private originalTitle: string = '';
     private translatedTitle: string = '';
 
-    constructor(private titleService: Title, private appConfig: AppConfigService, private translationService: TranslationService) {
+    constructor() {
+        const translationService = this.translationService;
+
         translationService.translate.onLangChange.subscribe(() => this.onLanguageChanged());
         translationService.translate.onTranslationChange.subscribe(() => this.onLanguageChanged());
     }

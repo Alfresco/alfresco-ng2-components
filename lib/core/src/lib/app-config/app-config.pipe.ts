@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from './app-config.service';
 
 @Pipe({
     name: 'adfAppConfig'
 })
 export class AppConfigPipe implements PipeTransform {
-    constructor(private config: AppConfigService) {}
+    private config = inject(AppConfigService);
 
     transform(value: string, fallback?: any): any {
         return this.config.get(value, fallback);

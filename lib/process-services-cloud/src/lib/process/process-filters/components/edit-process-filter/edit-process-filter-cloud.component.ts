@@ -100,6 +100,15 @@ interface ProcessFilterFormProps {
     encapsulation: ViewEncapsulation.None
 })
 export class EditProcessFilterCloudComponent implements OnChanges {
+    private formBuilder = inject(FormBuilder);
+    dialog = inject(MatDialog);
+    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private userPreferencesService = inject(UserPreferencesService);
+    private translateService = inject(TranslationService);
+    private processFilterCloudService = inject(ProcessFilterCloudService);
+    private appsProcessCloudService = inject(AppsProcessCloudService);
+    private processCloudService = inject(ProcessCloudService);
+
     /** The name of the application. */
     @Input()
     appName: string = '';
@@ -217,16 +226,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private formBuilder: FormBuilder,
-        public dialog: MatDialog,
-        private dateAdapter: DateAdapter<Date>,
-        private userPreferencesService: UserPreferencesService,
-        private translateService: TranslationService,
-        private processFilterCloudService: ProcessFilterCloudService,
-        private appsProcessCloudService: AppsProcessCloudService,
-        private processCloudService: ProcessCloudService
-    ) {
+    constructor() {
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             const locale = this.userPreferencesService.localeSignal();

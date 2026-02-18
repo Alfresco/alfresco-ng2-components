@@ -51,6 +51,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
+    private readonly translateService = inject(TranslateService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -107,8 +109,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     }
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private readonly translateService: TranslateService) {}
 
     ngOnInit() {
         if (this.settings) {

@@ -16,7 +16,7 @@
  */
 
 import { LanguageServiceInterface } from './language.service.interface';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { LanguageItem } from '../../common/services/language-item.interface';
@@ -25,11 +25,15 @@ import { DEFAULT_LANGUAGE_LIST } from '../../common/models/default-languages.mod
 
 @Injectable({ providedIn: 'root' })
 export class LanguageService implements LanguageServiceInterface {
+    private readonly userPreferencesService = inject(UserPreferencesService);
+
     private languages = new BehaviorSubject<LanguageItem[]>(DEFAULT_LANGUAGE_LIST);
 
     languages$ = this.languages.asObservable();
 
-    constructor(appConfigService: AppConfigService, private readonly userPreferencesService: UserPreferencesService) {
+    constructor() {
+        const appConfigService = inject(AppConfigService);
+
         const customLanguages = appConfigService.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         this.setLanguages(customLanguages);
     }

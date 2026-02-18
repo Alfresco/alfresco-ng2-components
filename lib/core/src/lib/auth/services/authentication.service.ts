@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { Observable, Subject, from } from 'rxjs';
@@ -28,14 +28,14 @@ type EventEmitterInstance = InstanceType<typeof EventEmitter>;
     providedIn: 'root'
 })
 export class AuthenticationService implements AuthenticationServiceInterface {
+    private readonly injector = inject(Injector);
+    private readonly redirectAuthService = inject(RedirectAuthService);
+
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
     onTokenReceived: Subject<any> = new Subject<any>();
 
-    constructor(
-        private readonly injector: Injector,
-        private readonly redirectAuthService: RedirectAuthService
-    ) {
+    constructor() {
         this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
         this.redirectAuthService.onTokenReceived.subscribe((value) => this.onTokenReceived.next(value));

@@ -16,13 +16,13 @@
  */
 
 import { gql } from '@apollo/client/core';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { WebSocketService } from './web-socket.service';
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationCloudService {
-    constructor(private readonly webSocketService: WebSocketService) {}
+    private readonly webSocketService = inject(WebSocketService);
 
     makeGQLQuery(appName: string, gqlQuery: string) {
         return this.webSocketService.getSubscription({

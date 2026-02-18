@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserLike } from './user-like.interface';
 
@@ -23,7 +23,7 @@ import { UserLike } from './user-like.interface';
     name: 'usernameInitials'
 })
 export class InitialUsernamePipe implements PipeTransform {
-    constructor(private sanitized: DomSanitizer) {}
+    private sanitized = inject(DomSanitizer);
 
     transform(user: UserLike & { displayName?: string }, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';

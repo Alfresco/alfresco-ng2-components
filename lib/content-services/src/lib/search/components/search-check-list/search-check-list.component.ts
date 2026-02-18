@@ -44,6 +44,8 @@ export interface SearchListOption {
     host: { class: 'adf-search-check-list' }
 })
 export class SearchCheckListComponent implements SearchWidget, OnInit {
+    private translationService = inject(TranslationService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -57,7 +59,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private translationService: TranslationService) {
+    constructor() {
         this.options = new SearchFilterList<SearchListOption>();
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { map, tap } from 'rxjs/operators';
@@ -44,6 +44,9 @@ export interface PeopleContentQueryRequestModel {
     providedIn: 'root'
 })
 export class PeopleContentService {
+    private apiService = inject(AlfrescoApiService);
+    private contentService = inject(ContentService);
+
     private currentUser: EcmUserModel;
 
     private _peopleApi: PeopleApi;
@@ -52,7 +55,9 @@ export class PeopleContentService {
         return this._peopleApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, authenticationService: AuthenticationService, private contentService: ContentService) {
+    constructor() {
+        const authenticationService = inject(AuthenticationService);
+
         authenticationService.onLogout.subscribe(() => {
             this.resetLocalCurrentUser();
         });

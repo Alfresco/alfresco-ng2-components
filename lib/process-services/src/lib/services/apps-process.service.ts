@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RuntimeAppDefinitionsApi, AppDefinitionRepresentation } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
@@ -25,13 +25,13 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class AppsProcessService {
+    private apiService = inject(AlfrescoApiService);
+
     private _appsApi: RuntimeAppDefinitionsApi;
     get appsApi(): RuntimeAppDefinitionsApi {
         this._appsApi = this._appsApi ?? new RuntimeAppDefinitionsApi(this.apiService.getInstance());
         return this._appsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets a list of deployed apps for this user.

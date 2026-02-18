@@ -75,6 +75,16 @@ interface LoginFormValues {
     host: { class: 'adf-login' }
 })
 export class LoginComponent implements OnInit {
+    private _fb = inject(UntypedFormBuilder);
+    private authService = inject(AuthenticationService);
+    private basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
+    private oidcAuthenticationService = inject(OidcAuthenticationService);
+    private translateService = inject(TranslationService);
+    private router = inject(Router);
+    private appConfig = inject(AppConfigService);
+    private userPreferences = inject(UserPreferencesService);
+    private route = inject(ActivatedRoute);
+
     isPasswordShow: boolean = false;
 
     /**
@@ -146,18 +156,6 @@ export class LoginComponent implements OnInit {
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private _fb: UntypedFormBuilder,
-        private authService: AuthenticationService,
-        private basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        private oidcAuthenticationService: OidcAuthenticationService,
-        private translateService: TranslationService,
-        private router: Router,
-        private appConfig: AppConfigService,
-        private userPreferences: UserPreferencesService,
-        private route: ActivatedRoute
-    ) {}
 
     ngOnInit() {
         this.initFormError();

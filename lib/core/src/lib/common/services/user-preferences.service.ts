@@ -40,6 +40,10 @@ export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof Us
     providedIn: 'root'
 })
 export class UserPreferencesService {
+    translate = inject(TranslateService);
+    private appConfig = inject(AppConfigService);
+    private storage = inject(StorageService);
+
     private document = inject(DOCUMENT);
     private rendererFactory = inject(RendererFactory2);
     private directionality = inject(Directionality);
@@ -107,11 +111,7 @@ export class UserPreferencesService {
      */
     readonly supportedPageSizesSignal: Signal<number[]>;
 
-    constructor(
-        public translate: TranslateService,
-        private appConfig: AppConfigService,
-        private storage: StorageService
-    ) {
+    constructor() {
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
 

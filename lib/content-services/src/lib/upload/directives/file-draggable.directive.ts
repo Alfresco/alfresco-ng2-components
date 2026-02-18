@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { FileUtils } from '@alfresco/adf-core';
-import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, inject } from '@angular/core';
 
 export const INPUT_FOCUS_CSS_CLASS = 'adf-file-draggable-input-focus';
 export const DROP_EFFECT = 'copy';
@@ -27,6 +27,8 @@ export const DROP_EFFECT = 'copy';
     selector: '[adf-file-draggable]'
 })
 export class FileDraggableDirective implements OnInit, OnDestroy {
+    private ngZone = inject(NgZone);
+
     files: File[];
 
     /** Enables/disables drag-and-drop functionality. */
@@ -43,7 +45,9 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     private element: HTMLElement;
 
-    constructor(el: ElementRef, private ngZone: NgZone) {
+    constructor() {
+        const el = inject(ElementRef);
+
         this.element = el.nativeElement;
     }
 

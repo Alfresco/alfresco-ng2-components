@@ -17,7 +17,7 @@
 
 import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AppsProcessService } from '../services/apps-process.service';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { IconModel } from './icon.model';
 import { finalize, map } from 'rxjs/operators';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
@@ -54,6 +54,8 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
     host: { class: 'adf-apps' }
 })
 export class AppsListComponent implements OnInit, AfterContentInit {
+    private appsProcessService = inject(AppsProcessService);
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -86,7 +88,6 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     hasEmptyCustomContentTemplate: boolean = false;
 
     private iconsMDL: IconModel;
-    constructor(private appsProcessService: AppsProcessService) {}
 
     ngOnInit() {
         if (!this.isValidType()) {

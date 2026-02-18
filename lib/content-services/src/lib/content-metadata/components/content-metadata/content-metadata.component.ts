@@ -86,6 +86,16 @@ export type DefaultPanels = (typeof DefaultPanels)[keyof typeof DefaultPanels];
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
+    private contentMetadataService = inject(ContentMetadataService);
+    private cardViewContentUpdateService = inject(CardViewContentUpdateService);
+    private nodesApiService = inject(NodesApiService);
+    private translationService = inject(TranslationService);
+    private appConfig = inject(AppConfigService);
+    private tagService = inject(TagService);
+    private categoryService = inject(CategoryService);
+    private contentService = inject(ContentService);
+    private notificationService = inject(NotificationService);
+
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })
     node: Node;
@@ -174,17 +184,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private contentMetadataService: ContentMetadataService,
-        private cardViewContentUpdateService: CardViewContentUpdateService,
-        private nodesApiService: NodesApiService,
-        private translationService: TranslationService,
-        private appConfig: AppConfigService,
-        private tagService: TagService,
-        private categoryService: CategoryService,
-        private contentService: ContentService,
-        private notificationService: NotificationService
-    ) {
+    constructor() {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');

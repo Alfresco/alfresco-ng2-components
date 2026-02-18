@@ -82,6 +82,9 @@ const DEFAULT_TAGS_SORTING = {
     encapsulation: ViewEncapsulation.None
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
+    private tagService = inject(TagService);
+    private notificationService = inject(NotificationService);
+
     /**
      * Mode for component.
      * In Create mode we can't select existing tags, we can only create them.
@@ -185,8 +188,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private tagNameInputElement: ElementRef;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private tagService: TagService, private notificationService: NotificationService) {}
 
     ngOnInit(): void {
         this.tagNameControl.valueChanges

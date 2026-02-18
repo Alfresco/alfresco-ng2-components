@@ -16,7 +16,7 @@
  */
 
 import { ADF_DATETIME_FORMATS, ADF_DATE_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -40,6 +40,8 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./datetime.editor.scss']
 })
 export class DateTimeEditorComponent implements OnInit {
+    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+
     DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 
     @Input()
@@ -56,8 +58,6 @@ export class DateTimeEditorComponent implements OnInit {
 
     minDate: Date;
     maxDate: Date;
-
-    constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
         const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;

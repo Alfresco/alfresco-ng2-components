@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ContentIncludeQuery, Group, GroupEntry, GroupsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
@@ -25,13 +25,13 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class GroupService {
+    private alfrescoApiService = inject(AlfrescoApiService);
+
     private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
         return this._groupsApi;
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
         const groupsPaginated = await this.groupsApi.listGroupMembershipsForPerson(personId, opts);

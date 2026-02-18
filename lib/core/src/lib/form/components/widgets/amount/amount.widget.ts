@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { CurrencyPipe, NgIf } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation, InjectionToken, Inject, Optional, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, InjectionToken, inject, DestroyRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -57,6 +57,9 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<Observable<AmountWidgetSet
     encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
+    private currencyPipe = inject(CurrencyPipe);
+    private translationService = inject(TranslationService);
+
     static DEFAULT_CURRENCY: string = '$';
     private showPlaceholder = true;
     private readonly destroyRef = inject(DestroyRef);
@@ -85,11 +88,9 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         return this.currencyPipe.transform(this.field.placeholder, this.currency, this.currencyDisplay, this.decimalProperty, this.locale);
     }
 
-    constructor(
-        @Optional() @Inject(ADF_AMOUNT_SETTINGS) settings: Observable<AmountWidgetSettings> | AmountWidgetSettings,
-        private currencyPipe: CurrencyPipe,
-        private translationService: TranslationService
-    ) {
+    constructor() {
+        const settings = inject<Observable<AmountWidgetSettings> | AmountWidgetSettings>(ADF_AMOUNT_SETTINGS, { optional: true });
+
         super();
         if (isObservable(settings)) {
             settings.pipe(takeUntilDestroyed()).subscribe((data: AmountWidgetSettings) => {

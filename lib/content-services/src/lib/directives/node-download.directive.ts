@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener } from '@angular/core';
+import { Directive, Input, HostListener, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from '@alfresco/adf-core';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip/download-zip.dialog';
@@ -31,6 +31,10 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
+    private apiService = inject(AlfrescoApiService);
+    private downloadService = inject(DownloadService);
+    private dialog = inject(MatDialog);
+
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
@@ -49,8 +53,6 @@ export class NodeDownloadDirective {
     onClick() {
         this.downloadNodes(this.nodes);
     }
-
-    constructor(private apiService: AlfrescoApiService, private downloadService: DownloadService, private dialog: MatDialog) {}
 
     /**
      * Downloads multiple selected nodes.

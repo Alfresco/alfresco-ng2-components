@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,6 +32,9 @@ import { CommonModule } from '@angular/common';
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListDialogComponent implements OnInit {
+    private dialog = inject<MatDialogRef<AspectListDialogComponent>>(MatDialogRef);
+    data = inject<AspectListDialogComponentData>(MAT_DIALOG_DATA);
+
     title: string;
     description: string;
     currentNodeId: string;
@@ -40,7 +43,9 @@ export class AspectListDialogComponent implements OnInit {
 
     currentAspectSelection: string[] = [];
 
-    constructor(private dialog: MatDialogRef<AspectListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
+    constructor() {
+        const data = this.data;
+
         this.title = data.title;
         this.description = data.description;
         this.overTableMessage = data.overTableMessage;

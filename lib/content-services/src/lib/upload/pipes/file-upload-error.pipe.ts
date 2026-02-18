@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { TranslationService } from '@alfresco/adf-core';
 
 @Pipe({
@@ -23,7 +23,7 @@ import { TranslationService } from '@alfresco/adf-core';
     pure: true
 })
 export class FileUploadErrorPipe implements PipeTransform {
-    constructor(private translation: TranslationService) {}
+    private translation = inject(TranslationService);
 
     transform(errorCode: number): string {
         return this.translation.instant(`FILE_UPLOAD.ERRORS.${errorCode || 'GENERIC'}`);

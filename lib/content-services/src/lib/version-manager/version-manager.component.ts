@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -44,6 +44,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerComponent implements OnInit {
+    private contentService = inject(ContentService);
+    private nodesApiService = inject(NodesApiService);
+
     /** Target node to manage version history. */
     @Input({ required: true })
     node: Node;
@@ -96,8 +99,6 @@ export class VersionManagerComponent implements OnInit {
     versionListComponent: VersionListComponent;
 
     uploadState: string = 'close';
-
-    constructor(private contentService: ContentService, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         if (this.newFileVersion) {

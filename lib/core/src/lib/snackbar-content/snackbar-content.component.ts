@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { SnackBarData } from './snack-bar-data';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,10 +32,12 @@ import { IconModule } from '../icon/icon.module';
     }
 })
 export class SnackbarContentComponent {
-    constructor(
-        public snackBarRef: MatSnackBarRef<SnackbarContentComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
-    ) {
+    snackBarRef = inject<MatSnackBarRef<SnackbarContentComponent>>(MatSnackBarRef);
+    data = inject<SnackBarData>(MAT_SNACK_BAR_DATA);
+
+    constructor() {
+        const data = this.data;
+
         if (!data) {
             this.data = { message: '' };
         }

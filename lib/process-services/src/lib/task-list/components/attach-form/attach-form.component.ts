@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, inject } from '@angular/core';
 import { Form } from '../../models/form.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
@@ -36,6 +36,10 @@ import { FormComponent } from '../../../form';
     styleUrls: ['./attach-form.component.scss']
 })
 export class AttachFormComponent implements OnInit, OnChanges {
+    private taskService = inject(TaskListService);
+    private modelService = inject(ModelService);
+    private taskFormService = inject(TaskFormService);
+
     /** Id of the task. */
     @Input({ required: true })
     taskId: any;
@@ -63,8 +67,6 @@ export class AttachFormComponent implements OnInit, OnChanges {
     selectedFormId: number;
 
     attachFormControl: UntypedFormControl;
-
-    constructor(private taskService: TaskListService, private modelService: ModelService, private taskFormService: TaskFormService) {}
 
     ngOnInit() {
         this.attachFormControl = new UntypedFormControl('', Validators.required);

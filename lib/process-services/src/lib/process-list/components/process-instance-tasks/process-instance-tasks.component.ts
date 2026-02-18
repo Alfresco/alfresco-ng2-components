@@ -38,6 +38,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./process-instance-tasks.component.css']
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
+    private processService = inject(ProcessService);
+    private dialog = inject(MatDialog);
+
     /** The ID of the process instance to display tasks for. */
     @Input({ required: true })
     processInstanceDetails: ProcessInstanceRepresentation;
@@ -75,7 +78,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private processService: ProcessService, private dialog: MatDialog) {
+    constructor() {
         this.task$ = new Observable<TaskRepresentation>((observer) => (this.taskObserver = observer)).pipe(share());
         this.completedTask$ = new Observable<TaskRepresentation>((observer) => (this.completedTaskObserver = observer)).pipe(share());
     }

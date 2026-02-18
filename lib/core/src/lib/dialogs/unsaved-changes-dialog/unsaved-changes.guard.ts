@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,10 +31,12 @@ import { AuthenticationService, AuthGuardService } from '../../auth';
     providedIn: 'root'
 })
 export class UnsavedChangesGuard implements CanDeactivate<any> {
+    private dialog = inject(MatDialog);
+    private authenticationService = inject(AuthenticationService);
+    private authGuardBaseService = inject(AuthGuardService);
+
     unsaved = false;
     data: UnsavedChangesDialogData;
-
-    constructor(private dialog: MatDialog, private authenticationService: AuthenticationService, private authGuardBaseService: AuthGuardService) {}
 
     /**
      * Allows to deactivate route when there is no unsaved changes, otherwise displays dialog to confirm discarding changes.

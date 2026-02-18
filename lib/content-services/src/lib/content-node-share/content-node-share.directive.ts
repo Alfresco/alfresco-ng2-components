@@ -29,6 +29,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     exportAs: 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges {
+    private dialog = inject(MatDialog);
+    private zone = inject(NgZone);
+    private alfrescoApiService = inject(AlfrescoApiService);
+
     isFile: boolean = false;
     isShared: boolean = false;
 
@@ -48,8 +52,6 @@ export class NodeSharedDirective implements OnChanges {
     }
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
     shareNode(nodeEntry: NodeEntry) {
         if (nodeEntry?.entry?.isFile) {
             // shared and favorite

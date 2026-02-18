@@ -16,7 +16,7 @@
  */
 
 import { TypeEntry } from '@alfresco/js-api';
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
 import { ContentTypeService } from './content-type.service';
@@ -34,6 +34,10 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentTypeDialogComponent implements OnInit {
+    private dialog = inject<MatDialogRef<ContentTypeDialogComponent>>(MatDialogRef);
+    data = inject<ContentTypeDialogComponentData>(MAT_DIALOG_DATA);
+    private contentTypeService = inject(ContentTypeService);
+
     title: string;
     description: string;
     nodeType: string;
@@ -44,11 +48,9 @@ export class ContentTypeDialogComponent implements OnInit {
 
     propertyColumns: string[] = ['name', 'title', 'dataType'];
 
-    constructor(
-        private dialog: MatDialogRef<ContentTypeDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: ContentTypeDialogComponentData,
-        private contentTypeService: ContentTypeService
-    ) {
+    constructor() {
+        const data = this.data;
+
         this.title = data.title;
         this.description = data.description;
         this.confirmMessage = data.confirmMessage;

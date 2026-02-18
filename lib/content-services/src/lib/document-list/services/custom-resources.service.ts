@@ -35,7 +35,7 @@ import {
     ResultSetPaging,
     SEARCH_LANGUAGE
 } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -43,6 +43,8 @@ const CREATE_PERMISSION: string = 'create';
 
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
+    private apiService = inject(AlfrescoApiService);
+
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
@@ -84,8 +86,6 @@ export class CustomResourcesService {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets files recently accessed by a user.

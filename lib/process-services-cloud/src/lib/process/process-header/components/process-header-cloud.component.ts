@@ -40,6 +40,10 @@ import { NgIf } from '@angular/common';
     host: { class: 'adf-cloud-process-header' }
 })
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
+    private processCloudService = inject(ProcessCloudService);
+    private translationService = inject(TranslationService);
+    private appConfig = inject(AppConfigService);
+
     /** (Required) The name of the application. */
     @Input({ required: true })
     appName: string = '';
@@ -58,12 +62,6 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
     dateLocale: string;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private processCloudService: ProcessCloudService,
-        private translationService: TranslationService,
-        private appConfig: AppConfigService
-    ) {}
 
     ngOnInit() {
         this.dateFormat = this.appConfig.get('adf-cloud-process-header.defaultDateFormat');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { DownloadZipService } from './services/download-zip.service';
@@ -35,19 +35,16 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {
+    private dialogRef = inject<MatDialogRef<DownloadZipDialogComponent>>(MatDialogRef);
+    data = inject(MAT_DIALOG_DATA);
+    private downloadZipService = inject(DownloadZipService);
+    private nodeService = inject(NodesApiService);
+    private contentService = inject(ContentService);
+
     // flag for async threads
     cancelled = false;
     downloadId: string;
     percentageDone = 0;
-
-    constructor(
-        private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
-        @Inject(MAT_DIALOG_DATA)
-        public data: any,
-        private downloadZipService: DownloadZipService,
-        private nodeService: NodesApiService,
-        private contentService: ContentService
-    ) {}
 
     ngOnInit() {
         if (this.data?.nodeIds?.length > 0) {

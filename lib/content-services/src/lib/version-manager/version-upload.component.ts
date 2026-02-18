@@ -48,6 +48,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-version-upload' }
 })
 export class VersionUploadComponent implements OnInit {
+    private contentService = inject(ContentService);
+    private uploadService = inject(UploadService);
+
     semanticVersion: string = 'minor';
     comment: string;
     uploadVersion: boolean = false;
@@ -105,8 +108,6 @@ export class VersionUploadComponent implements OnInit {
     uploadStarted = new EventEmitter<FileUploadEvent>();
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private contentService: ContentService, private uploadService: UploadService) {}
 
     ngOnInit() {
         this.uploadService.fileUploadStarting.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event: FileUploadEvent) => {

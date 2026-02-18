@@ -68,6 +68,12 @@ interface VisibilityOption {
     host: { class: 'adf-library-dialog' }
 })
 export class LibraryDialogComponent implements OnInit {
+    private alfrescoApiService = inject(AlfrescoApiService);
+    private sitesService = inject(SitesService);
+    private formBuilder = inject(UntypedFormBuilder);
+    private dialog = inject<MatDialogRef<LibraryDialogComponent>>(MatDialogRef);
+    private notificationService = inject(NotificationService);
+
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter<any>();
@@ -102,14 +108,6 @@ export class LibraryDialogComponent implements OnInit {
     }
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private alfrescoApiService: AlfrescoApiService,
-        private sitesService: SitesService,
-        private formBuilder: UntypedFormBuilder,
-        private dialog: MatDialogRef<LibraryDialogComponent>,
-        private notificationService: NotificationService
-    ) {}
 
     ngOnInit() {
         const validators = {

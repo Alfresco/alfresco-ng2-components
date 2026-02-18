@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, forwardRef, Input, Output, inject } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,13 +31,13 @@ import { TranslateService } from '@ngx-translate/core';
     ]
 })
 export class CardViewPropertyValidatorDirective {
+    private readonly translateService = inject(TranslateService);
+
     @Input()
     property: CardViewBaseItemModel;
 
     @Output()
     validated = new EventEmitter<string[]>();
-
-    constructor(private readonly translateService: TranslateService) {}
 
     validate(control: AbstractControl): ValidationErrors | null {
         const errors: ValidationErrors | null = this.property.isValid(control.value)

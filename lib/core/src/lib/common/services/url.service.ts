@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UrlService {
-    constructor(private sanitizer: DomSanitizer) {}
+    private sanitizer = inject(DomSanitizer);
 
     /**
      * Creates a trusted object URL from the Blob.

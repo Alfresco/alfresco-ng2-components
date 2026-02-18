@@ -112,6 +112,18 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
+    private documentListService = inject(DocumentListService);
+    private elementRef = inject(ElementRef);
+    private appConfig: AppConfigService;
+    private userPreferencesService = inject(UserPreferencesService);
+    private contentService = inject(ContentService);
+    private thumbnailService = inject(ThumbnailService);
+    private alfrescoApiService = inject(AlfrescoApiService);
+    private nodeService = inject(NodesApiService);
+    private dataTableService = inject(DataTableService);
+    private lockService = inject(LockService);
+    private dialog = inject(MatDialog);
+
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -463,20 +475,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return this._nodesApi;
     }
 
-    constructor(
-        private documentListService: DocumentListService,
-        private elementRef: ElementRef,
-        private appConfig: AppConfigService,
-        private userPreferencesService: UserPreferencesService,
-        private contentService: ContentService,
-        private thumbnailService: ThumbnailService,
-        private alfrescoApiService: AlfrescoApiService,
-        private nodeService: NodesApiService,
-        private dataTableService: DataTableService,
-        private lockService: LockService,
-        private dialog: MatDialog
-    ) {
+    constructor() {
+        const appConfig = inject(AppConfigService);
+
         super(appConfig, 'default', presetsDefaultModel);
+        this.appConfig = appConfig;
+
         this.nodeService.nodeUpdated.pipe(takeUntilDestroyed()).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
         });

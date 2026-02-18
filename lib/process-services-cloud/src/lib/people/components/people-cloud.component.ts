@@ -78,6 +78,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
+    private identityUserService = inject(IdentityUserService);
+
     /** Label for the user selection component. */
     @Input()
     label: string;
@@ -226,8 +228,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     typingUniqueValueNotEmpty$: Observable<string>;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private identityUserService: IdentityUserService) {}
 
     ngOnInit(): void {
         this.initSearch();

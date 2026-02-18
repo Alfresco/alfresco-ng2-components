@@ -35,7 +35,7 @@ import {
     NoContentTemplateDirective,
     ObjectDataRow
 } from '@alfresco/adf-core';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { ProcessService } from '../../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -84,6 +84,9 @@ export const processPresetsDefaultModel = {
     templateUrl: './process-list.component.html'
 })
 export class ProcessInstanceListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
+    private readonly processService = inject(ProcessService);
+    private readonly userPreferences = inject(UserPreferencesService);
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
@@ -192,11 +195,9 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     sorting: any[] = ['created', 'desc'];
     pagination: BehaviorSubject<PaginationModel>;
 
-    constructor(
-        private readonly processService: ProcessService,
-        private readonly userPreferences: UserPreferencesService,
-        appConfig: AppConfigService
-    ) {
+    constructor() {
+        const appConfig = inject(AppConfigService);
+
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 

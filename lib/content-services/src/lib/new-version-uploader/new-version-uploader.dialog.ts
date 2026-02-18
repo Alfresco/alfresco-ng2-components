@@ -16,7 +16,7 @@
  */
 
 import { Node } from '@alfresco/js-api';
-import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
 import { CommonModule } from '@angular/common';
@@ -45,6 +45,9 @@ import { VersionListComponent } from '../version-manager/version-list.component'
     }
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
+    data = inject<NewVersionUploaderDialogData>(MAT_DIALOG_DATA);
+    private dialogRef = inject<MatDialogRef<NewVersionUploaderDialogComponent>>(MatDialogRef);
+
     /**
      * Dialog title to show into the header.
      * If data.title is not provided, a default title is set
@@ -58,11 +61,6 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     /** Emitted when an error occurs. */
     @Output()
     uploadError = new EventEmitter<any>();
-
-    constructor(
-        @Inject(MAT_DIALOG_DATA) public data: NewVersionUploaderDialogData,
-        private dialogRef: MatDialogRef<NewVersionUploaderDialogComponent>
-    ) {}
 
     ngOnInit(): void {
         this.setDialogTitle();

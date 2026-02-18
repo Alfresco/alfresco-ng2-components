@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoriesApi,
@@ -32,6 +32,10 @@ import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
+    private apiService = inject(AlfrescoApiService);
+    private userPreferencesService = inject(UserPreferencesService);
+    private appConfigService = inject(AppConfigService);
+
     private _categoriesApi: CategoriesApi;
     private _searchApi: SearchApi;
 
@@ -44,12 +48,6 @@ export class CategoryService {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
-
-    constructor(
-        private apiService: AlfrescoApiService,
-        private userPreferencesService: UserPreferencesService,
-        private appConfigService: AppConfigService
-    ) {}
 
     /**
      * Get subcategories of a given parent category

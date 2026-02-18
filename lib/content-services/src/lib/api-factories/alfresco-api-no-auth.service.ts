@@ -16,16 +16,13 @@
  */
 
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { StorageService, AppConfigService } from '@alfresco/adf-core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Injectable()
 export class AlfrescoApiNoAuthService extends AlfrescoApiService {
-    constructor(storage: StorageService, appConfig: AppConfigService, private readonly adfHttpClient: AdfHttpClient) {
-        super(appConfig, storage);
-    }
+    private readonly adfHttpClient = inject(AdfHttpClient);
 
     override createInstance(config: AlfrescoApiConfig) {
         return new AlfrescoApi(

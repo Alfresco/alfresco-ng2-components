@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,13 +36,13 @@ export interface EditJsonDialogSettings {
     host: { class: 'adf-edit-json-dialog' }
 })
 export class EditJsonDialogComponent implements OnInit {
+    private settings = inject<EditJsonDialogSettings>(MAT_DIALOG_DATA);
+
     editable: boolean = false;
     title: string = 'JSON';
 
     @Input()
     value: string = '';
-
-    constructor(@Inject(MAT_DIALOG_DATA) private settings: EditJsonDialogSettings) {}
 
     ngOnInit() {
         if (this.settings) {

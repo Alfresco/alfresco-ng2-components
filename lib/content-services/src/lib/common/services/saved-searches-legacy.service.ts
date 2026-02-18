@@ -16,7 +16,7 @@
  */
 
 import { NodeEntry } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, concatMap, first, map } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services';
@@ -32,7 +32,10 @@ export class SavedSearchesLegacyService extends SavedSearchesBaseService {
     private currentUserLocalStorageKey: string;
     private createFileAttempt = false;
 
-    constructor(apiService: AlfrescoApiService, authService: AuthenticationService) {
+    constructor() {
+        const apiService = inject(AlfrescoApiService);
+        const authService = inject(AuthenticationService);
+
         super(apiService, authService);
     }
 

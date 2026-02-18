@@ -38,6 +38,12 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
+    private taskFilterService = inject(TaskFilterService);
+    private taskListService = inject(TaskListService);
+    private appsProcessService = inject(AppsProcessService);
+    private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
+
     /**
      * Parameters to use for the task filter. If there is no match then
      * the default filter (the first one the list) is selected.
@@ -82,14 +88,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private iconsMDL: IconModel;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private taskFilterService: TaskFilterService,
-        private taskListService: TaskListService,
-        private appsProcessService: AppsProcessService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) {}
 
     ngOnInit() {
         this.iconsMDL = new IconModel();

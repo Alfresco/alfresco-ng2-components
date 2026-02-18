@@ -20,14 +20,14 @@ import {
     Component,
     ContentChild,
     EventEmitter,
-    Inject,
     input,
     Input,
     OnChanges,
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import {
     AppConfigService,
@@ -95,6 +95,11 @@ export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
     implements OnChanges, AfterContentInit, PaginatedComponent
 {
+    private processListCloudService = inject(ProcessListCloudService);
+    private userPreferences = inject(UserPreferencesService);
+    private cloudPreferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
+    private variableMapperService = inject(VariableMapperService);
+
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -365,14 +370,12 @@ export class ProcessListCloudComponent
 
     private fetchProcessesTrigger$ = new Subject<void>();
 
-    constructor(
-        private processListCloudService: ProcessListCloudService,
-        appConfigService: AppConfigService,
-        private userPreferences: UserPreferencesService,
-        @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface,
-        private variableMapperService: VariableMapperService
-    ) {
+    constructor() {
+        const appConfigService = inject(AppConfigService);
+
         super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
+        const userPreferences = this.userPreferences;
+
         this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;

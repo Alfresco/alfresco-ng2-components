@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
@@ -30,13 +30,15 @@ import { take } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class NewVersionUploaderService {
+    private apiService = inject(AlfrescoApiService);
+    private dialog = inject(MatDialog);
+    private overlayContainer = inject(OverlayContainer);
+
     private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService, private dialog: MatDialog, private overlayContainer: OverlayContainer) {}
 
     /**
      * Open a dialog NewVersionUploaderDialogComponent to display:

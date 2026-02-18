@@ -51,6 +51,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {
+    private peopleProcessService = inject(PeopleProcessService);
+    private translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
+
     /** The name of the form. */
     @Input()
     formName: string = null;
@@ -94,12 +99,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private peopleProcessService: PeopleProcessService,
-        private translationService: TranslationService,
-        private readonly appConfig: AppConfigService,
-        private readonly cardViewUpdateService: CardViewUpdateService
-    ) {
+    constructor() {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }

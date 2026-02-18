@@ -60,6 +60,12 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, MatMenuModule]
 })
 export class PaginationComponent implements OnInit, PaginationComponentInterface {
+    private elementRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private cdr = inject(ChangeDetectorRef);
+    private userPreferencesService = inject(UserPreferencesService);
+    private translate = inject(TranslateService);
+
     private _pagination: PaginationModel;
     private _isEmpty = true;
     private _hasItems = false;
@@ -117,14 +123,6 @@ export class PaginationComponent implements OnInit, PaginationComponentInterface
     prevPage = new EventEmitter<PaginationModel>();
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
-        private cdr: ChangeDetectorRef,
-        private userPreferencesService: UserPreferencesService,
-        private translate: TranslateService
-    ) {}
 
     ngOnInit() {
         this.userPreferencesService

@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 
@@ -26,7 +26,7 @@ import { DocumentListComponent } from './../document-list.component';
     template: ''
 })
 export class ContentActionListComponent {
-    constructor(private documentList: DocumentListComponent) {}
+    private documentList = inject(DocumentListComponent);
 
     /**
      * Registers action handler within the parent document list component.

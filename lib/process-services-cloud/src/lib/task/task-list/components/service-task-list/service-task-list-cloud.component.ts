@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import {
     AppConfigService,
     ColumnsSelectorComponent,
@@ -58,6 +58,8 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
+    private serviceTaskListCloudService = inject(ServiceTaskListCloudService);
+
     @Input()
     queryParams: { [key: string]: any } = {};
 
@@ -66,13 +68,12 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(
-        private serviceTaskListCloudService: ServiceTaskListCloudService,
-        appConfigService: AppConfigService,
-        taskCloudService: TaskCloudService,
-        userPreferences: UserPreferencesService,
-        @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
-    ) {
+    constructor() {
+        const appConfigService = inject(AppConfigService);
+        const taskCloudService = inject(TaskCloudService);
+        const userPreferences = inject(UserPreferencesService);
+        const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
+
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 

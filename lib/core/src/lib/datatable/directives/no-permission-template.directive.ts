@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, TemplateRef, inject } from '@angular/core';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
 /**
@@ -25,10 +25,10 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-no-permission-template, no-permission-template'
 })
 export class NoPermissionTemplateDirective implements AfterContentInit {
+    private dataTable = inject(DataTableComponent);
+
     @ContentChild(TemplateRef)
     template: any;
-
-    constructor(private dataTable: DataTableComponent) {}
 
     ngAfterContentInit() {
         if (this.dataTable) {

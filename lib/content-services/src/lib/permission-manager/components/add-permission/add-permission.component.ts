@@ -16,7 +16,7 @@
  */
 
 import { Node, NodeEntry, PermissionElement } from '@alfresco/js-api';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { RoleModel } from '../../models/role.model';
 import { ContentService } from '../../../common/services/content.service';
@@ -37,6 +37,9 @@ import { TranslatePipe } from '@ngx-translate/core';
  * @deprecated in 4.4.0, use adf-add-permission-panel instead.
  */
 export class AddPermissionComponent implements OnInit {
+    private nodePermissionService = inject(NodePermissionService);
+    private contentService = inject(ContentService);
+
     /** ID of the target node. */
     @Input({ required: true })
     nodeId: string;
@@ -52,8 +55,6 @@ export class AddPermissionComponent implements OnInit {
     selectedItems: NodeEntry[] = [];
     currentNode: Node;
     currentNodeRoles: RoleModel[];
-
-    constructor(private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
 
     ngOnInit(): void {
         this.nodePermissionService.getNodeWithRoles(this.nodeId).subscribe(({ node, roles }) => {

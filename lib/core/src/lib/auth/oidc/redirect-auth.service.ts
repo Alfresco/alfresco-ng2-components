@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
     AuthConfig,
     AUTH_CONFIG,
@@ -40,6 +40,9 @@ const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && ty
 
 @Injectable()
 export class RedirectAuthService extends AuthService {
+    private oauthService = inject(OAuthService);
+    private _oauthStorage = inject(OAuthStorage);
+
     readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
     private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
     private readonly _oauthLogger: OAuthLogger = inject(OAuthLogger);
@@ -136,8 +139,11 @@ export class RedirectAuthService extends AuthService {
         'session_state'
     ];
 
-    constructor(private oauthService: OAuthService, private _oauthStorage: OAuthStorage, @Inject(AUTH_CONFIG) authConfig: AuthConfig) {
+    constructor() {
+        const authConfig = inject<AuthConfig>(AUTH_CONFIG);
+
         super();
+        const oauthService = this.oauthService;
 
         this.authConfig = authConfig;
 

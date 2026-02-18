@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
-import { Directive, ElementRef, forwardRef, HostListener, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, forwardRef, HostListener, Input, OnChanges, Renderer2, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -34,6 +34,9 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {
+    private el = inject(ElementRef);
+    private render = inject(Renderer2);
+
     /** Object defining mask and "reversed" status. */
     @Input('textMask') inputMask: {
         mask: string;
@@ -51,8 +54,6 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     private byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
     private value;
     private invalidCharacters = [];
-
-    constructor(private el: ElementRef, private render: Renderer2) {}
 
     _onChange = (_: any) => {};
 

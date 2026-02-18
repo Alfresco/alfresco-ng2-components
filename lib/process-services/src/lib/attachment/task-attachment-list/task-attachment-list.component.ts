@@ -36,7 +36,8 @@ import {
     OnChanges,
     Output,
     SimpleChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
@@ -62,6 +63,11 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
+    private activitiContentService = inject(ProcessContentService);
+    private downloadService = inject(DownloadService);
+    private thumbnailService = inject(ThumbnailService);
+    private ngZone = inject(NgZone);
+
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
@@ -96,13 +102,6 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
 
     attachments: any[] = [];
     isLoading: boolean = false;
-
-    constructor(
-        private activitiContentService: ProcessContentService,
-        private downloadService: DownloadService,
-        private thumbnailService: ThumbnailService,
-        private ngZone: NgZone
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['taskId']?.currentValue) {

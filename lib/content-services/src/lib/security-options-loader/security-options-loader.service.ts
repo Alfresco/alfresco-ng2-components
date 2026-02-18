@@ -17,13 +17,14 @@
 
 import { AppConfigService, AppConfigValues } from '@alfresco/adf-core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SecurityOptionsLoaderService {
-    constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient) {}
+    private appConfigService = inject(AppConfigService);
+    private adfHttpClient = inject(AdfHttpClient);
 
     load = () => {
         const withCredentials = this.appConfigService.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS);

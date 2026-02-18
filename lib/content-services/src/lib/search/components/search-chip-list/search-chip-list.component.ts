@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, inject } from '@angular/core';
 import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { CommonModule } from '@angular/common';
@@ -32,6 +32,8 @@ import { IconModule } from '@alfresco/adf-core';
     host: { class: 'adf-search-chip-list' }
 })
 export class SearchChipListComponent {
+    facetFiltersService = inject(SearchFacetFiltersService);
+
     /**
      * Search filter to supply the data for the chips.
      * Not required from 4.5.0 and later versions @deprecated
@@ -42,6 +44,4 @@ export class SearchChipListComponent {
     /** Flag used to enable the display of a clear-all-filters button. */
     @Input()
     clearAll: boolean = false;
-
-    constructor(public facetFiltersService: SearchFacetFiltersService) {}
 }

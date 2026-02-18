@@ -24,7 +24,7 @@ import {
     CardViewTextItemModel,
     TranslationService
 } from '@alfresco/adf-core';
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, inject } from '@angular/core';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -36,6 +36,9 @@ import { MatCardModule } from '@angular/material/card';
     styleUrls: ['./process-instance-header.component.css']
 })
 export class ProcessInstanceHeaderComponent implements OnChanges {
+    private translationService = inject(TranslationService);
+    private appConfig = inject(AppConfigService);
+
     /** (**required**) Full details of the process instance to display information about. */
     @Input({ required: true })
     processInstance: ProcessInstanceRepresentation;
@@ -44,7 +47,7 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
     dateFormat: string;
     dateLocale: string;
 
-    constructor(private translationService: TranslationService, private appConfig: AppConfigService) {
+    constructor() {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }

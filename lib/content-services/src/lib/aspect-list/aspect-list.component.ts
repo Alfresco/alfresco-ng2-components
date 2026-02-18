@@ -37,6 +37,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListComponent implements OnInit {
+    private aspectListService = inject(AspectListService);
+    private nodeApiService = inject(NodesApiService);
+
     /** Node Id of the node that we want to update */
     @Input({ required: true })
     nodeId: string = '';
@@ -66,8 +69,6 @@ export class AspectListComponent implements OnInit {
     private customAspectsLoaded = 0;
     private standardAspectsLoaded = 0;
     private hasMoreAspects = false;
-
-    constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
 
     ngOnInit(): void {
         let aspects$: Observable<AspectEntry[]>;

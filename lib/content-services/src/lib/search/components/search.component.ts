@@ -28,7 +28,8 @@ import {
     SimpleChanges,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -49,6 +50,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-search' }
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges {
+    private searchService = inject(SearchService);
+    private _elementRef = inject(ElementRef);
+
     @ViewChild('panel', { static: true })
     panel: ElementRef;
 
@@ -106,7 +110,9 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     _isOpen: boolean = false;
     keyPressedStream = new Subject<string>();
     _classList: { [key: string]: boolean } = {};
-    constructor(private searchService: SearchService, private _elementRef: ElementRef) {
+    constructor() {
+        const searchService = this.searchService;
+
         this.keyPressedStream.pipe(debounceTime(200), takeUntilDestroyed()).subscribe((searchedWord) => {
             this.loadSearchResults(searchedWord);
         });

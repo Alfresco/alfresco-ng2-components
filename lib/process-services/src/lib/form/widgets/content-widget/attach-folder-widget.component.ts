@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, inject } from '@angular/core';
 import { WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
@@ -46,13 +46,13 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {
+    private contentDialog = inject(ContentNodeDialogService);
+    formService = inject(FormService);
+    private nodeService = inject(NodesApiService);
+
     typeId = 'AttachFolderWidgetComponent';
     hasFolder: boolean = false;
     selectedFolderName: string = '';
-
-    constructor(private contentDialog: ContentNodeDialogService, public formService: FormService, private nodeService: NodesApiService) {
-        super();
-    }
 
     ngOnInit() {
         if (this.field?.value) {

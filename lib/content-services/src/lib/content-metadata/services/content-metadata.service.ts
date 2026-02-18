@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { BasicPropertiesService } from './basic-properties.service';
 import { Observable, of, iif, Subject } from 'rxjs';
@@ -30,15 +30,13 @@ import { ContentTypePropertiesService } from './content-type-property.service';
     providedIn: 'root'
 })
 export class ContentMetadataService {
-    error = new Subject<{ statusCode: number; message: string }>();
+    private basicPropertiesService = inject(BasicPropertiesService);
+    private contentMetadataConfigFactory = inject(ContentMetadataConfigFactory);
+    private propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
+    private propertyDescriptorsService = inject(PropertyDescriptorsService);
+    private contentTypePropertyService = inject(ContentTypePropertiesService);
 
-    constructor(
-        private basicPropertiesService: BasicPropertiesService,
-        private contentMetadataConfigFactory: ContentMetadataConfigFactory,
-        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-        private propertyDescriptorsService: PropertyDescriptorsService,
-        private contentTypePropertyService: ContentTypePropertiesService
-    ) {}
+    error = new Subject<{ statusCode: number; message: string }>();
 
     getBasicProperties(node: Node): Observable<CardViewItem[]> {
         return of(this.basicPropertiesService.getProperties(node));

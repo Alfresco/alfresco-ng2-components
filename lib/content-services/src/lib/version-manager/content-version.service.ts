@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { ContentApi } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContentVersionService {
+    private alfrescoApi = inject(AlfrescoApiService);
+
     private _contentApi: ContentApi;
 
     get contentApi(): ContentApi {
@@ -30,8 +32,6 @@ export class ContentVersionService {
         }
         return this._contentApi;
     }
-
-    constructor(private alfrescoApi: AlfrescoApiService) {}
 
     /**
      * Get content URL for the given nodeId and specific version.

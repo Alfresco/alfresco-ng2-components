@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output, inject } from '@angular/core';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
@@ -39,6 +39,9 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleSelectorComponent {
+    private peopleProcessService = inject(PeopleProcessService);
+    private translationService = inject(TranslationService);
+
     @Input()
     peopleId: LightUserRepresentation;
 
@@ -53,7 +56,7 @@ export class PeopleSelectorComponent {
     selectedUser: LightUserRepresentation;
     defaultPlaceholder: string;
 
-    constructor(private peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
+    constructor() {
         this.peopleIdChange = new EventEmitter();
         this.performSearch = this.searchUser.bind(this);
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);

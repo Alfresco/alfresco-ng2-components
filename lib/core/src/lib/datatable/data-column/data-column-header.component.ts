@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { AfterContentInit, Component, ContentChild, TemplateRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, TemplateRef, inject } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
@@ -25,10 +25,10 @@ import { DataColumnComponent } from './data-column.component';
     template: ''
 })
 export class DateColumnHeaderComponent implements AfterContentInit {
+    private columnComponent = inject(DataColumnComponent);
+
     @ContentChild(TemplateRef)
     public header: TemplateRef<any>;
-
-    constructor(private columnComponent: DataColumnComponent) {}
 
     ngAfterContentInit() {
         if (this.columnComponent) {

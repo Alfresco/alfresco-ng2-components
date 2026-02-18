@@ -74,6 +74,8 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges {
+    private identityGroupService = inject(IdentityGroupService);
+
     /** Label for the user selection component. */
     @Input()
     label: string;
@@ -164,8 +166,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     typingUniqueValueNotEmpty$: Observable<any>;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private identityGroupService: IdentityGroupService) {}
 
     ngOnInit(): void {
         this.initSearch();

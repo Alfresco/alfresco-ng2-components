@@ -16,7 +16,7 @@
  */
 
 import { NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -70,6 +70,8 @@ import { IconModule } from '../../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {
+    private middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
+
     public readonly formService = inject(FormService);
     private readonly formRulesManager = inject(FormRulesManager<T>);
     private readonly dialog = inject(MatDialog);
@@ -84,12 +86,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     debugMode: boolean;
 
     fields: FormFieldModel[];
-
-    constructor(
-        @Optional()
-        @Inject(FORM_FIELD_MODEL_RENDER_MIDDLEWARE)
-        private middlewareServices?: FormFieldModelRenderMiddleware[]
-    ) {}
 
     ngOnInit(): void {
         this.runMiddlewareServices();

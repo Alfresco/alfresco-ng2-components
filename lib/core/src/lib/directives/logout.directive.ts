@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Input, Directive, ElementRef, OnInit, Renderer2, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from '../auth/services/authentication.service';
@@ -24,6 +24,12 @@ import { AuthenticationService } from '../auth/services/authentication.service';
     selector: '[adf-logout]'
 })
 export class LogoutDirective implements OnInit {
+    private elementRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private router = inject(Router);
+    private appConfig = inject(AppConfigService);
+    private authenticationService = inject(AuthenticationService);
+
     /** URI to redirect to after logging out. */
     @Input()
     redirectUri: string;
@@ -31,14 +37,6 @@ export class LogoutDirective implements OnInit {
     /** Enable redirecting after logout */
     @Input()
     enableRedirect: boolean = true;
-
-    constructor(
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
-        private router: Router,
-        private appConfig: AppConfigService,
-        private authenticationService: AuthenticationService
-    ) {}
 
     ngOnInit() {
         if (this.elementRef.nativeElement) {

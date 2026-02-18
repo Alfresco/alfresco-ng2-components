@@ -32,7 +32,8 @@ import {
     SimpleChanges,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChip, MatChipsModule } from '@angular/material/chips';
@@ -51,6 +52,8 @@ import { IconModule } from '../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
     /** Provide if you want to use paginated chips. */
     @Input()
@@ -109,8 +112,6 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
             this.changeDetectorRef.detectChanges();
         }
     });
-
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.pagination) {

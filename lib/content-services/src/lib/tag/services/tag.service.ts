@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
@@ -26,6 +26,10 @@ import { TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class TagService {
+    private apiService = inject(AlfrescoApiService);
+    private userPreferencesService = inject(UserPreferencesService);
+    private appConfigService = inject(AppConfigService);
+
     private _tagsApi: TagsApi;
     get tagsApi(): TagsApi {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
@@ -35,12 +39,6 @@ export class TagService {
     /** Emitted when tag information is updated. */
     @Output()
     refresh = new EventEmitter();
-
-    constructor(
-        private apiService: AlfrescoApiService,
-        private userPreferencesService: UserPreferencesService,
-        private appConfigService: AppConfigService
-    ) {}
 
     /**
      * Gets a list of tags added to a node.

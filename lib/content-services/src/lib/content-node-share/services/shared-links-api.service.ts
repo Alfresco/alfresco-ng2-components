@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NodePaging, SharedLinkBodyCreate, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
 import { Observable, from, of, Subject } from 'rxjs';
 import { UserPreferencesService } from '@alfresco/adf-core';
@@ -26,6 +26,9 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SharedLinksApiService {
+    private apiService = inject(AlfrescoApiService);
+    private preferences = inject(UserPreferencesService);
+
     error = new Subject<{ statusCode: number; message: string }>();
 
     private _sharedLinksApi: SharedlinksApi;
@@ -33,8 +36,6 @@ export class SharedLinksApiService {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
     }
-
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     /**
      * Gets shared links available to the current user.

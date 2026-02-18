@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, inject } from '@angular/core';
 import { NodeEntry, Node, DeletedNodeEntry, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { TranslationService } from '@alfresco/adf-core';
@@ -51,6 +51,10 @@ interface ProcessStatus {
     selector: '[adf-delete]'
 })
 export class NodeDeleteDirective implements OnChanges {
+    private alfrescoApiService = inject(AlfrescoApiService);
+    private translation = inject(TranslationService);
+    private elementRef = inject(ElementRef);
+
     /** Array of nodes to delete. */
     @Input('adf-delete')
     selection: NodeEntry[] | DeletedNodeEntry[];
@@ -79,8 +83,6 @@ export class NodeDeleteDirective implements OnChanges {
     onClick() {
         this.process(this.selection);
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService, private elementRef: ElementRef) {}
 
     ngOnChanges() {
         if (!this.selection || (this.selection && this.selection.length === 0)) {

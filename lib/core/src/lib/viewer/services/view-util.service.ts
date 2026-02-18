@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ViewUtilService {
+    private extensionService = inject(AppExtensionService);
+
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
@@ -55,8 +57,6 @@ export class ViewUtilService {
     get externalExtensions(): string[] {
         return this.viewerExtensions.map((extension) => extension.fileExtension);
     }
-
-    constructor(private extensionService: AppExtensionService) {}
 
     /**
      * get File name from url

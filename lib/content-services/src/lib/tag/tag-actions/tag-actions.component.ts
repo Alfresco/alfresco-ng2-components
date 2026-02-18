@@ -42,6 +42,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-tag-node-actions-list' }
 })
 export class TagActionsComponent implements OnChanges, OnInit {
+    private tagService = inject(TagService);
+    private translateService = inject(TranslationService);
+
     /** The identifier of a node. */
     @Input({ required: true })
     nodeId: string;
@@ -64,11 +67,6 @@ export class TagActionsComponent implements OnChanges, OnInit {
     disableAddTag: boolean = true;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private tagService: TagService,
-        private translateService: TranslationService
-    ) {}
 
     ngOnInit() {
         this.tagService.refresh.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.refreshTag());

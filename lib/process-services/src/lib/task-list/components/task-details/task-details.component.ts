@@ -38,7 +38,8 @@ import {
     SimpleChanges,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of } from 'rxjs';
@@ -88,6 +89,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges {
+    private readonly taskListService = inject(TaskListService);
+    private readonly peopleProcessService = inject(PeopleProcessService);
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
+    private readonly dialog = inject(MatDialog);
+    private readonly destroyRef = inject(DestroyRef);
+
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
 
@@ -208,14 +215,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     data: any;
 
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
-
-    constructor(
-        private readonly taskListService: TaskListService,
-        private readonly peopleProcessService: PeopleProcessService,
-        private readonly cardViewUpdateService: CardViewUpdateService,
-        private readonly dialog: MatDialog,
-        private readonly destroyRef: DestroyRef
-    ) {}
 
     ngOnInit() {
         this.peopleSearch = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());

@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActionRef, ContentActionRef, ContentActionType } from '../config/action.extensions';
 import { ExtensionElement } from '../config/extension-element';
 import { filterEnabled, getValue, mergeObjects, sortByOrder } from '../config/extension-utils';
@@ -28,7 +28,7 @@ import { RuleRef } from '../config/rule.extensions';
     providedIn: 'root'
 })
 export class ExtensionLoaderService {
-    constructor(private http: HttpClient) {}
+    private http = inject(HttpClient);
 
     load(configPath: string, pluginsPath: string, extensions?: string[], extensionValues?: ExtensionConfig[]): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {

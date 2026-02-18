@@ -21,7 +21,7 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
 import { Group, GroupMemberPaging, GroupsApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
 import { SearchService } from '../../search/services/search.service';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { PermissionDisplayModel } from '../models/permission.model';
@@ -31,18 +31,16 @@ import { RoleModel } from '../models/role.model';
     providedIn: 'root'
 })
 export class NodePermissionService {
+    private apiService = inject(AlfrescoApiService);
+    private searchApiService = inject(SearchService);
+    private nodeService = inject(NodesApiService);
+    private translation = inject(TranslationService);
+
     private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
         return this._groupsApi;
     }
-
-    constructor(
-        private apiService: AlfrescoApiService,
-        private searchApiService: SearchService,
-        private nodeService: NodesApiService,
-        private translation: TranslationService
-    ) {}
 
     /**
      * Gets a list of roles for the current node.

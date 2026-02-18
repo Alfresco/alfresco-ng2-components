@@ -92,6 +92,11 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
+    private el = inject(ElementRef);
+    dialog = inject(MatDialog);
+    private viewUtilsService = inject(ViewUtilService);
+    private appConfigService = inject(AppConfigService);
+
     private thumbnailService = inject(ThumbnailService);
 
     @HostBinding('class.adf-viewer-inline')
@@ -343,13 +348,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     get fileNameWithoutExtension(): string {
         return this._fileNameWithoutExtension;
     }
-
-    constructor(
-        private el: ElementRef,
-        public dialog: MatDialog,
-        private viewUtilsService: ViewUtilService,
-        private appConfigService: AppConfigService
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const { blobFile, urlFile, mimeType, nodeMimeType } = changes;

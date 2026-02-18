@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, ElementRef, Renderer2, HostListener, Input, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, Renderer2, HostListener, Input, AfterViewInit, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService } from '../common/services/content.service';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
@@ -28,6 +28,11 @@ import { ContentNodeDialogService } from '../content-node-selector/content-node-
     selector: '[adf-node-lock]'
 })
 export class NodeLockDirective implements AfterViewInit {
+    element = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private contentService = inject(ContentService);
+    private contentNodeDialogService = inject(ContentNodeDialogService);
+
     /** Node to lock/unlock. */
     @Input('adf-node-lock')
     node: Node;
@@ -37,13 +42,6 @@ export class NodeLockDirective implements AfterViewInit {
         event.stopPropagation();
         this.contentNodeDialogService.openLockNodeDialog(this.node);
     }
-
-    constructor(
-        public element: ElementRef,
-        private renderer: Renderer2,
-        private contentService: ContentService,
-        private contentNodeDialogService: ContentNodeDialogService
-    ) {}
 
     ngAfterViewInit() {
         const hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.LOCK);

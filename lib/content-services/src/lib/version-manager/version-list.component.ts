@@ -72,6 +72,11 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
     host: { class: 'adf-version-list' }
 })
 export class VersionListComponent implements OnChanges, OnInit {
+    private alfrescoApi = inject(AlfrescoApiService);
+    private contentService = inject(ContentService);
+    private contentVersionService = inject(ContentVersionService);
+    private dialog = inject(MatDialog);
+
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
@@ -134,13 +139,6 @@ export class VersionListComponent implements OnChanges, OnInit {
     viewport: CdkVirtualScrollViewport;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private alfrescoApi: AlfrescoApiService,
-        private contentService: ContentService,
-        private contentVersionService: ContentVersionService,
-        private dialog: MatDialog
-    ) {}
 
     ngOnInit() {
         this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);

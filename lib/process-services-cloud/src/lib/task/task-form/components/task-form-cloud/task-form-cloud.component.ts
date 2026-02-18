@@ -16,7 +16,7 @@
  */
 
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
 import { AttachFileCloudWidgetComponent } from '../../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DateCloudWidgetComponent } from '../../../../form/components/widgets/date/date-cloud.widget';
@@ -36,6 +36,9 @@ import { FormCustomOutcomesComponent } from '../../../../form/components/form-cl
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFormCloudComponent {
+    private taskCloudService = inject(TaskCloudService);
+    private formRenderingService = inject(FormRenderingService);
+
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -174,10 +177,7 @@ export class TaskFormCloudComponent {
 
     loading: boolean = false;
 
-    constructor(
-        private taskCloudService: TaskCloudService,
-        private formRenderingService: FormRenderingService
-    ) {
+    constructor() {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);

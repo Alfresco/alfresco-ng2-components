@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { Authentication } from '../interfaces/authentication.interface';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
@@ -26,6 +26,10 @@ import { ReplaySubject, Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class ProcessAuth {
+    private appConfigService = inject(AppConfigService);
+    private adfHttpClient = inject(AdfHttpClient);
+    private storageService = inject(StorageService);
+
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
     onError = new Subject<any>();
@@ -45,7 +49,7 @@ export class ProcessAuth {
         return this.appConfigService.get<string>(AppConfigValues.BPMHOST) + '/' + contextRootBpm;
     }
 
-    constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient, private storageService: StorageService) {
+    constructor() {
         this.appConfigService.onLoad.subscribe(() => {
             this.setConfig();
         });

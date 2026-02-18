@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, ComponentRef, ViewChild, ViewContainerRef, OnDestroy, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
+import {
+    Component,
+    Input,
+    ComponentRef,
+    ViewChild,
+    ViewContainerRef,
+    OnDestroy,
+    OnChanges,
+    SimpleChanges,
+    AfterViewInit,
+    inject
+} from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
 import { MatMenuItem } from '@angular/material/menu';
@@ -26,6 +37,8 @@ import { MatMenuItem } from '@angular/material/menu';
     template: `<div #content></div>`
 })
 export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterViewInit {
+    private extensions = inject(ExtensionService);
+
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
@@ -40,8 +53,6 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterVie
 
     private componentRef: ComponentRef<ExtensionComponent>;
     private loaded: boolean = false;
-
-    constructor(private extensions: ExtensionService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!this.loaded) {

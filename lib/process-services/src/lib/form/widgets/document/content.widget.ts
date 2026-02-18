@@ -16,7 +16,7 @@
  */
 
 import { UrlService, ContentLinkModel, FormService, DownloadService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
 import { CommonModule } from '@angular/common';
@@ -33,6 +33,11 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentWidgetComponent implements OnChanges {
+    protected formService = inject(FormService);
+    private downloadService = inject(DownloadService);
+    private urlService = inject(UrlService);
+    private processContentService = inject(ProcessContentService);
+
     /** The content id to show. */
     @Input()
     id: string;
@@ -58,13 +63,6 @@ export class ContentWidgetComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     content: ContentLinkModel;
-
-    constructor(
-        protected formService: FormService,
-        private downloadService: DownloadService,
-        private urlService: UrlService,
-        private processContentService: ProcessContentService
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const contentId = changes['id'];

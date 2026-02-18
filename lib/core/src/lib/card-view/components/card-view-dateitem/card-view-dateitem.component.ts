@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, effect, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, effect, Input, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
@@ -69,6 +69,11 @@ import { IconModule } from '../../../icon/icon.module';
     host: { class: 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit {
+    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private userPreferencesService = inject(UserPreferencesService);
+    private clipboardService = inject(ClipboardService);
+    private translateService = inject(TranslationService);
+
     @Input()
     displayEmpty = true;
 
@@ -82,12 +87,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     cardViewDateTimeControl: FormControl<Date> = new FormControl<Date>(null);
 
-    constructor(
-        private dateAdapter: DateAdapter<Date>,
-        private userPreferencesService: UserPreferencesService,
-        private clipboardService: ClipboardService,
-        private translateService: TranslationService
-    ) {
+    constructor() {
         super();
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {

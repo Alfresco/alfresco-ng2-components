@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
@@ -23,7 +23,7 @@ import { TranslationService } from '../translation/translation.service';
     pure: false
 })
 export class FileSizePipe implements PipeTransform {
-    constructor(private translation: TranslationService) {}
+    private translation = inject(TranslationService);
 
     transform(paramByte: any, decimals: number = 2): string {
         if (paramByte == null) {

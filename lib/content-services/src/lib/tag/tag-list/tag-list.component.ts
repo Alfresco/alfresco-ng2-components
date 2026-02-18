@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { IconModule, PaginationModel } from '@alfresco/adf-core';
 import { TagEntry } from '@alfresco/js-api';
@@ -36,6 +36,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-tag-list' }
 })
 export class TagListComponent implements OnInit {
+    private tagService = inject(TagService);
+
     /** Emitted when a tag is selected. */
     @Output()
     result = new EventEmitter();
@@ -56,7 +58,7 @@ export class TagListComponent implements OnInit {
     isLoading = false;
     isSizeMinimum = true;
 
-    constructor(private tagService: TagService) {
+    constructor() {
         this.defaultPagination = {
             skipCount: 0,
             maxItems: this.size,

@@ -49,7 +49,10 @@ export class SavedSearchesService extends SavedSearchesBaseService {
         return this._preferencesApi;
     }
 
-    constructor(apiService: AlfrescoApiService, authService: AuthenticationService) {
+    constructor() {
+        const apiService = inject(AlfrescoApiService);
+        const authService = inject(AuthenticationService);
+
         super(apiService, authService);
     }
 

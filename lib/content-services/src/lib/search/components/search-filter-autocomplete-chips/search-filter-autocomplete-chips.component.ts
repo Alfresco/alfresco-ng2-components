@@ -39,6 +39,10 @@ import { SitesService } from '../../../common/services/sites.service';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly sitesService = inject(SitesService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -55,11 +59,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private readonly tagService: TagService,
-        private readonly categoryService: CategoryService,
-        private readonly sitesService: SitesService
-    ) {
+    constructor() {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 

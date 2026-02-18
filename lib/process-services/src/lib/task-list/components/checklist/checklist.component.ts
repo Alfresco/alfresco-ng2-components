@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation } from '@alfresco/js-api';
@@ -45,6 +45,9 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./checklist.component.scss']
 })
 export class ChecklistComponent implements OnChanges {
+    private taskListService = inject(TaskListService);
+    private dialog = inject(MatDialog);
+
     /**
      * The id of the parent task to which subtasks are attached.
      */
@@ -80,8 +83,6 @@ export class ChecklistComponent implements OnChanges {
     taskName: string;
 
     checklist: TaskRepresentation[] = [];
-
-    constructor(private taskListService: TaskListService, private dialog: MatDialog) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const taskId = changes['taskId'];

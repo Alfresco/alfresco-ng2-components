@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import {
@@ -26,12 +26,15 @@ import {
     WritableFeaturesServiceToken,
     WritableFeaturesServiceConfigToken,
     WritableFeaturesServiceConfig,
-    FlagSet,
-    IWritableFeaturesService
+    FlagSet
 } from '../interfaces/features.interface';
 
 @Injectable()
 export class DebugFeaturesService implements IDebugFeaturesService {
+    private overriddenFeaturesService = inject<IFeaturesService>(OverridableFeaturesServiceToken);
+    private writableFeaturesService = inject(WritableFeaturesServiceToken);
+    private config = inject<WritableFeaturesServiceConfig>(WritableFeaturesServiceConfigToken, { optional: true });
+
     private readonly isInDebugModeSubject = new BehaviorSubject<boolean>(false);
     private readonly isInDebugMode$ = this.isInDebugModeSubject.asObservable();
     private readonly initSubject = new BehaviorSubject<boolean>(false);
@@ -40,11 +43,7 @@ export class DebugFeaturesService implements IDebugFeaturesService {
         return `${this.config?.storageKey || 'feature-flags'}-override`;
     }
 
-    constructor(
-        @Inject(OverridableFeaturesServiceToken) private overriddenFeaturesService: IFeaturesService,
-        @Inject(WritableFeaturesServiceToken) private writableFeaturesService: IFeaturesService & IWritableFeaturesService,
-        @Optional() @Inject(WritableFeaturesServiceConfigToken) private config?: WritableFeaturesServiceConfig
-    ) {
+    constructor() {
         this.init();
 
         combineLatest({

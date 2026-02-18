@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, inject } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { CommonModule } from '@angular/common';
@@ -34,6 +34,8 @@ import { IconModule } from '../../../icon/icon.module';
     host: { class: 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {
+    private appConfigService = inject(AppConfigService);
+
     /** Title of the application. */
     @Input() title: string;
 
@@ -75,8 +77,6 @@ export class HeaderLayoutComponent implements OnInit {
 
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
-
-    constructor(private appConfigService: AppConfigService) {}
 
     toggleMenu() {
         this.clicked.emit(true);

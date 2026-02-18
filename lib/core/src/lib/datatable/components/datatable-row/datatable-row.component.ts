@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
 import { DataRow } from '../../data/data-row.model';
 
@@ -29,6 +29,8 @@ import { DataRow } from '../../data/data-row.model';
     }
 })
 export class DataTableRowComponent implements FocusableOption {
+    private element = inject(ElementRef);
+
     @Input() row: DataRow;
 
     @Input() disabled = true;
@@ -73,8 +75,6 @@ export class DataTableRowComponent implements FocusableOption {
             this.select.emit(event);
         }
     }
-
-    constructor(private element: ElementRef) {}
 
     focus() {
         this.element.nativeElement.focus();

@@ -16,7 +16,7 @@
  */
 
 /* spellchecker: disable */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -161,7 +161,10 @@ export class ThumbnailService {
         'multipart/related': './assets/images/ft_ic_website.svg'
     };
 
-    constructor(matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor() {
+        const matIconRegistry = inject(MatIconRegistry);
+        const sanitizer = inject(DomSanitizer);
+
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 

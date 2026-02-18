@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
@@ -50,6 +50,8 @@ interface DateRangeProps {
     encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit {
+    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+
     @Input('group')
     dateRange: FormGroup<DateRangeProps>;
 
@@ -63,8 +65,6 @@ export class DateRangeWidgetComponent implements OnInit {
     maxDate: Date;
     startDateValue = new Date();
     endDateValue = new Date();
-
-    constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
         const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;

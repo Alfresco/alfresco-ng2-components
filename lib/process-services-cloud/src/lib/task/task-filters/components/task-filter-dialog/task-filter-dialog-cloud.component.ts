@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -32,17 +32,15 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFilterDialogCloudComponent implements OnInit {
+    private fb = inject(UntypedFormBuilder);
+    dialogRef = inject<MatDialogRef<TaskFilterDialogCloudComponent>>(MatDialogRef);
+    data = inject(MAT_DIALOG_DATA);
+
     // eslint-disable-next-line @typescript-eslint/naming-convention
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 
     filterForm: UntypedFormGroup;
-
-    constructor(
-        private fb: UntypedFormBuilder,
-        public dialogRef: MatDialogRef<TaskFilterDialogCloudComponent>,
-        @Inject(MAT_DIALOG_DATA) public data
-    ) {}
 
     ngOnInit() {
         this.filterForm = this.fb.group({

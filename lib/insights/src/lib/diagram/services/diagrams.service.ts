@@ -16,19 +16,19 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { ModelJsonBpmnApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class DiagramsService {
+    private apiService = inject(AlfrescoApiService);
+
     private _modelJsonBpmnApi: ModelJsonBpmnApi;
     get modelJsonBpmnApi(): ModelJsonBpmnApi {
         this._modelJsonBpmnApi = this._modelJsonBpmnApi ?? new ModelJsonBpmnApi(this.apiService.getInstance());
         return this._modelJsonBpmnApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
         return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId));

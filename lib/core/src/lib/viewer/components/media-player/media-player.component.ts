@@ -16,7 +16,7 @@
  */
 
 import { NgClass, NgForOf } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { UrlService } from '../../../common';
 import { Track } from '../../models/viewer.model';
 
@@ -29,6 +29,8 @@ import { Track } from '../../models/viewer.model';
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
+    private urlService = inject(UrlService);
+
     @Input()
     urlFile: string;
 
@@ -50,8 +52,6 @@ export class MediaPlayerComponent implements OnChanges {
 
     @Output()
     canPlay = new EventEmitter<void>();
-
-    constructor(private urlService: UrlService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];

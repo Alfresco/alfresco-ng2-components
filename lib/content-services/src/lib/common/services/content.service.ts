@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ContentApi, Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
@@ -34,6 +34,10 @@ export interface FolderCreatedEvent {
     providedIn: 'root'
 })
 export class ContentService {
+    authService = inject(AuthenticationService);
+    apiService = inject(AlfrescoApiService);
+    private thumbnailService = inject(ThumbnailService);
+
     folderCreated = new Subject<FolderCreatedEvent>();
     folderCreate = new Subject<Node>();
     folderEdit = new Subject<Node>();
@@ -43,8 +47,6 @@ export class ContentService {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
-
-    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService, private thumbnailService?: ThumbnailService) {}
 
     /**
      * Gets a content URL for the given node.

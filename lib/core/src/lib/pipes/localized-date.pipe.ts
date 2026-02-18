@@ -16,7 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 
@@ -26,15 +26,15 @@ import { UserPreferencesService } from '../common/services/user-preferences.serv
     pure: false
 })
 export class LocalizedDatePipe implements PipeTransform {
+    userPreferenceService? = inject(UserPreferencesService);
+    appConfig? = inject(AppConfigService);
+
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_FORMAT = 'mediumDate';
 
     defaultFormat: string = LocalizedDatePipe.DEFAULT_DATE_FORMAT;
 
-    constructor(
-        public userPreferenceService?: UserPreferencesService,
-        public appConfig?: AppConfigService
-    ) {
+    constructor() {
         if (this.appConfig) {
             this.defaultFormat = this.appConfig.get<string>('dateValues.defaultDateFormat', LocalizedDatePipe.DEFAULT_DATE_FORMAT);
         }

@@ -24,6 +24,8 @@ import { RequestOptions } from '@alfresco/js-api';
 
 @Injectable()
 export class BaseCloudService {
+    protected adfHttpClient = inject(AdfHttpClient);
+
     protected apiService = inject(AlfrescoApiService);
     protected appConfigService = inject(AppConfigService);
 
@@ -33,8 +35,6 @@ export class BaseCloudService {
         contentTypes: ['application/json'],
         accepts: ['application/json']
     };
-
-    constructor(protected adfHttpClient: AdfHttpClient) {}
 
     getBasePath(appName: string): string {
         return appName ? `${this.contextRoot}/${appName}` : this.contextRoot;

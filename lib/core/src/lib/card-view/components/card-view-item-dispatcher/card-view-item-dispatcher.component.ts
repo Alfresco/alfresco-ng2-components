@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
@@ -25,6 +25,8 @@ import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.comp
     template: '<ng-template #content />'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {
+    private cardItemTypeService = inject(CardItemTypeService);
+
     @Input()
     property: CardViewItem;
 
@@ -58,7 +60,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content!: ViewContainerRef;
 
-    constructor(private cardItemTypeService: CardItemTypeService) {
+    constructor() {
         const dynamicLifeCycleMethods = [
             'ngOnInit',
             'ngDoCheck',

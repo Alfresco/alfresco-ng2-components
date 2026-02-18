@@ -26,7 +26,8 @@ import {
     QueryList,
     TemplateRef,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
@@ -63,6 +64,9 @@ import { MatMenuModule } from '@angular/material/menu';
     encapsulation: ViewEncapsulation.None
 })
 export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
+    treeService = inject<TreeService<T>>(TreeService);
+    private userPreferenceService = inject(UserPreferencesService);
+
     /** TemplateRef to provide empty template when no nodes are loaded */
     @Input()
     public emptyContentTemplate: TemplateRef<any>;
@@ -113,11 +117,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     private contextMenuOptionsChanged$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
-
-    constructor(
-        public treeService: TreeService<T>,
-        private userPreferenceService: UserPreferencesService
-    ) {}
 
     set contextMenuSource(contextMenuSource: T) {
         this._contextMenuSource = contextMenuSource;

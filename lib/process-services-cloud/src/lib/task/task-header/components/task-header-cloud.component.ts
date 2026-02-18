@@ -48,6 +48,11 @@ import { MatCardModule } from '@angular/material/card';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderCloudComponent implements OnInit, OnChanges {
+    private taskCloudService = inject(TaskCloudService);
+    private translationService = inject(TranslationService);
+    private appConfig = inject(AppConfigService);
+    private cardViewUpdateService = inject(CardViewUpdateService);
+
     /** (Required) The name of the application. */
     @Input({ required: true })
     appName: string = '';
@@ -86,12 +91,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private taskCloudService: TaskCloudService,
-        private translationService: TranslationService,
-        private appConfig: AppConfigService,
-        private cardViewUpdateService: CardViewUpdateService
-    ) {
+    constructor() {
         this.dateFormat = this.appConfig.get('adf-cloud-task-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }

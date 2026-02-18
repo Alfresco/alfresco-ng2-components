@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -26,10 +26,12 @@ import { DocumentListPresetRef } from '../config/document-list.extensions';
     providedIn: 'root'
 })
 export class AppExtensionService {
+    protected extensionService = inject(ExtensionService);
+
     references$: Observable<ExtensionRef[]>;
     private _references = new BehaviorSubject<ExtensionRef[]>([]);
 
-    constructor(protected extensionService: ExtensionService) {
+    constructor() {
         this.references$ = this._references.asObservable();
     }
 

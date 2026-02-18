@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ExtensionService } from '../../services/extension.service';
 
@@ -24,6 +24,8 @@ import { ExtensionService } from '../../services/extension.service';
     template: `<div #content></div>`
 })
 export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
+    private extensions = inject(ExtensionService);
+
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
@@ -35,8 +37,6 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
     node: Node;
 
     private componentRef: ComponentRef<any>;
-
-    constructor(private extensions: ExtensionService) {}
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);

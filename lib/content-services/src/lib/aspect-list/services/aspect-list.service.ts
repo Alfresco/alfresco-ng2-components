@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { from, Observable, of, zip } from 'rxjs';
@@ -30,13 +30,14 @@ export const CustomAspectsWhere = `(not namespaceUri matches('http://www.alfresc
     providedIn: 'root'
 })
 export class AspectListService {
+    private alfrescoApiService = inject(AlfrescoApiService);
+    private appConfigService = inject(AppConfigService);
+
     private _aspectsApi: AspectsApi;
     get aspectsApi(): AspectsApi {
         this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
         return this._aspectsApi;
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
 
     getAllAspects(standardOpts?: ListAspectsOpts, customOpts?: ListAspectsOpts): Observable<CustomAspectPaging> {
         const visibleAspectList = this.getVisibleAspects();

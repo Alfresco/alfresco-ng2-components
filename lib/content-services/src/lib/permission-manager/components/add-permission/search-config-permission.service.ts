@@ -16,7 +16,7 @@
  */
 
 import { SearchRequest } from '@alfresco/js-api';
-import { Injectable, Optional, Inject, InjectionToken } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { SearchConfigurationInterface } from '../../../common/interfaces/search-configuration.interface';
 
 export const SEARCH_QUERY_TOKEN = new InjectionToken<QueryProvider>('Alfresco Search Query Token');
@@ -26,11 +26,7 @@ export interface QueryProvider {
 
 @Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
-    constructor(
-        @Optional()
-        @Inject(SEARCH_QUERY_TOKEN)
-        private queryProvider: QueryProvider
-    ) {}
+    private queryProvider = inject<QueryProvider>(SEARCH_QUERY_TOKEN, { optional: true });
 
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
         return {

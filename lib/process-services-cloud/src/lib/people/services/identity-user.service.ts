@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, JwtHelperService, OAuth2Service } from '@alfresco/adf-core';
 import { EMPTY, Observable } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
@@ -32,9 +32,11 @@ export interface IdentityUserFilterInterface {
     providedIn: 'root'
 })
 export class IdentityUserService {
-    queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
+    private jwtHelperService = inject(JwtHelperService);
+    private oAuth2Service = inject(OAuth2Service);
+    private appConfigService = inject(AppConfigService);
 
-    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
+    queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
     /**
      * Gets the name and other basic details of the current user.

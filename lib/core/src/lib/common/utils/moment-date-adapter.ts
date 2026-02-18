@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { effect, Injectable } from '@angular/core';
+import { effect, Injectable, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { UserPreferencesService } from '../services/user-preferences.service';
 
@@ -34,7 +34,9 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
     overrideDisplayFormat: string;
 
-    constructor(preferences: UserPreferencesService) {
+    constructor() {
+        const preferences = inject(UserPreferencesService);
+
         super();
 
         // Use effect to reactively update locale when signal changes

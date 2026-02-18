@@ -23,7 +23,6 @@ import {
     ElementRef,
     EventEmitter,
     inject,
-    Inject,
     Input,
     OnInit,
     Output,
@@ -72,6 +71,10 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements OnInit, AfterViewInit {
+    private userPreferencesService = inject(UserPreferencesService);
+    private dateAdapter = inject<DateAdapter<DateFnsAdapter>>(DateAdapter);
+    private dateFormatConfig = inject<MatDateFormats>(MAT_DATE_FORMATS);
+
     @Input()
     dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
     @Input()
@@ -113,11 +116,7 @@ export class SearchDateRangeComponent implements OnInit, AfterViewInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private userPreferencesService: UserPreferencesService,
-        private dateAdapter: DateAdapter<DateFnsAdapter>,
-        @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats
-    ) {
+    constructor() {
         // Use effect to react to locale signal changes (must be in injection context)
         effect(() => {
             const locale = this.userPreferencesService.localeSignal();

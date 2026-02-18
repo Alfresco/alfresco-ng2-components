@@ -56,6 +56,8 @@ import { IconModule } from '../icon/icon.module';
     }
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
+    private userPreferencesService = inject(UserPreferencesService);
+
     /** Toggles auto-completion of the search input field. */
     @Input()
     autocomplete: boolean = false;
@@ -173,7 +175,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private userPreferencesService: UserPreferencesService) {
+    constructor() {
         this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();

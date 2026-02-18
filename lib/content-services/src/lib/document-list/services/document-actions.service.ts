@@ -17,7 +17,7 @@
 
 import { TranslationService } from '@alfresco/adf-core';
 import { ContentService } from '../../common/services/content.service';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, throwError, of } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -30,19 +30,19 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
     providedIn: 'root'
 })
 export class DocumentActionsService {
+    private nodeActionsService = inject(NodeActionsService);
+    private contentNodeDialogService = inject(ContentNodeDialogService);
+    private translation = inject(TranslationService);
+    private documentListService = inject(DocumentListService);
+    private contentService = inject(ContentService);
+
     permissionEvent = new Subject<PermissionModel>();
     error = new Subject<Error>();
     success = new Subject<string>();
 
     private handlers: { [id: string]: ContentActionHandler } = {};
 
-    constructor(
-        private nodeActionsService: NodeActionsService,
-        private contentNodeDialogService: ContentNodeDialogService,
-        private translation: TranslationService,
-        private documentListService?: DocumentListService,
-        private contentService?: ContentService
-    ) {
+    constructor() {
         this.setupActionHandlers();
     }
 

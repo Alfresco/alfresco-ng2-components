@@ -61,6 +61,10 @@ const templateTypes = {
     host: { class: 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
+    private clipboardService = inject(ClipboardService);
+    private translateService = inject(TranslationService);
+    private cd = inject(ChangeDetectorRef);
+
     @Input()
     displayEmpty = true;
 
@@ -79,14 +83,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     textInput = new UntypedFormControl();
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private clipboardService: ClipboardService,
-        private translateService: TranslationService,
-        private cd: ChangeDetectorRef
-    ) {
-        super();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.property?.firstChange) {

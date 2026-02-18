@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DateFnsUtils } from './date-fns-utils';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimeFormats } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -60,6 +60,8 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
 
 @Injectable({ providedIn: 'root' })
 export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
+    private formats = inject<MatDatetimeFormats>(MAT_DATETIME_FORMATS, { optional: true });
+
     private _displayFormat?: string = null;
 
     get displayFormat(): string | null {
@@ -70,11 +72,10 @@ export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
         this._displayFormat = value ? DateFnsUtils.convertMomentToDateFnsFormat(value) : null;
     }
 
-    constructor(
-        @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: Locale,
-        @Optional() @Inject(MAT_DATETIME_FORMATS) private formats: MatDatetimeFormats,
-        dateAdapter: DateAdapter<Date, Locale>
-    ) {
+    constructor() {
+        const matDateLocale = inject<Locale>(MAT_DATE_LOCALE, { optional: true });
+        const dateAdapter = inject<DateAdapter<Date, Locale>>(DateAdapter);
+
         super(dateAdapter);
         this.setLocale(matDateLocale);
     }

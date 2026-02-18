@@ -51,16 +51,14 @@ interface serviceOptions {
     providedIn: 'root'
 })
 export class WebSocketService {
+    private readonly apollo = inject(Apollo);
+    private readonly httpLink = inject(HttpLink);
+    private readonly authService = inject(AuthenticationService);
+
     private appConfigService = inject(AppConfigService);
     private subscriptionProtocol = 'graphql-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
     private httpLinkHandler: HttpLinkHandler;
-
-    constructor(
-        private readonly apollo: Apollo,
-        private readonly httpLink: HttpLink,
-        private readonly authService: AuthenticationService
-    ) {}
 
     public getSubscription<T>(options: serviceOptions): Observable<FetchResult<T>> {
         const { apolloClientName, subscriptionOptions } = options;

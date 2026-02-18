@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -25,9 +25,9 @@ import { MatButtonModule } from '@angular/material/button';
     template: ` <button mat-raised-button (click)="showInfo()">Add Notification</button>`
 })
 export class AddNotificationStorybookComponent {
-    infoCounter: number = 1;
+    private notificationService = inject(NotificationService);
 
-    constructor(private notificationService: NotificationService) {}
+    infoCounter: number = 1;
 
     showInfo() {
         this.notificationService.showInfo(`Example notification ${this.infoCounter}`);

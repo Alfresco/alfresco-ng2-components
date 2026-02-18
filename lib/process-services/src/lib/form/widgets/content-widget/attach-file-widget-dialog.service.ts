@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { MatDialog } from '@angular/material/dialog';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { TranslationService } from '@alfresco/adf-core';
 import { Observable, of, Subject } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
@@ -30,13 +30,14 @@ import { switchMap } from 'rxjs/operators';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class AttachFileWidgetDialogService {
+    private dialog = inject(MatDialog);
+    private translation = inject(TranslationService);
+
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter<any>();
 
     private externalApis: { [key: string]: AlfrescoApiService } = {};
-
-    constructor(private dialog: MatDialog, private translation: TranslationService) {}
 
     /**
      * Opens a dialog to choose a file to upload.

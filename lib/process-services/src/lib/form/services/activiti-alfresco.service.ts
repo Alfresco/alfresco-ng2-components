@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, SitesService } from '@alfresco/adf-content-services';
 import { ExternalContent } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
     IntegrationAlfrescoOnPremiseApi,
     Node,
@@ -33,6 +33,9 @@ import { map, catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ActivitiContentService {
+    private apiService = inject(AlfrescoApiService);
+    private sitesService = inject(SitesService);
+
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -48,8 +51,6 @@ export class ActivitiContentService {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
-
-    constructor(private apiService: AlfrescoApiService, private sitesService: SitesService) {}
 
     /**
      * Returns a list of child nodes below the specified folder
@@ -128,8 +129,8 @@ export class ActivitiContentService {
             errMsg = error.message
                 ? error.message
                 : error.status
-                ? `${error.status} - ${error.statusText}`
-                : ActivitiContentService.GENERIC_ERROR_MESSAGE;
+                  ? `${error.status} - ${error.statusText}`
+                  : ActivitiContentService.GENERIC_ERROR_MESSAGE;
         }
         return throwError(errMsg);
     }

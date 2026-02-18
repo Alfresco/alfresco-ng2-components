@@ -18,7 +18,7 @@
 import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
 import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient, EventEmitterInstance, EventEmitterEvents } from '@alfresco/js-api';
 import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import {
@@ -45,6 +45,8 @@ export interface Emitters {
     providedIn: 'root'
 })
 export class AdfHttpClient implements JsApiHttpClient {
+    private httpClient = inject(HttpClient);
+
     private eventEmitter = new EventEmitter();
 
     _disableCsrf: boolean;
@@ -63,10 +65,6 @@ export class AdfHttpClient implements JsApiHttpClient {
         authentications: {},
         defaultHeaders: {}
     };
-
-    constructor(private httpClient: HttpClient) {
-        // No need for ee(this) anymore - we use composition instead of inheritance
-    }
 
     // EventEmitter delegation methods
     on(event: EventEmitterEvents, fn: (...args: any[]) => void, context?: any): this {

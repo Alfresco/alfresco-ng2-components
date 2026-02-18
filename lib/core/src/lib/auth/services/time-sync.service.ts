@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
@@ -32,9 +32,12 @@ export interface TimeSync {
     providedIn: 'root'
 })
 export class TimeSyncService {
+    private _injector = inject(Injector);
+    private _appConfigService = inject(AppConfigService);
+
     private readonly _http: HttpClient;
 
-    constructor(private _injector: Injector, private _appConfigService: AppConfigService) {
+    constructor() {
         this._http = this._injector.get(HttpClient);
     }
 

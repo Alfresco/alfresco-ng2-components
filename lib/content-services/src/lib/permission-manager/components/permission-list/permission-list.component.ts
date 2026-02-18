@@ -49,6 +49,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class PermissionListComponent implements OnInit {
+    readonly permissionList = inject(PermissionListService);
+    private readonly contentService = inject(ContentService);
+
     /** ID of the node whose permissions you want to show. */
     @Input({ required: true })
     nodeId: string;
@@ -71,10 +74,7 @@ export class PermissionListComponent implements OnInit {
         return this._updatePermissionsAllowed;
     }
 
-    constructor(
-        public readonly permissionList: PermissionListService,
-        private readonly contentService: ContentService
-    ) {
+    constructor() {
         this.error = this.permissionList.errored;
         this.update = this.permissionList.updated;
     }

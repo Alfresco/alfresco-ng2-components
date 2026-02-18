@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, Input, OnChanges, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Directive, HostListener, Input, OnChanges, Output, EventEmitter, SimpleChanges, inject } from '@angular/core';
 import { FavoriteBodyCreate, FavoritesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
@@ -27,6 +27,9 @@ import { NotificationService } from '@alfresco/adf-core';
     exportAs: 'favoriteLibrary'
 })
 export class LibraryFavoriteDirective implements OnChanges {
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly notificationService = inject(NotificationService);
+
     @Input('adf-favorite-library')
     library: LibraryEntity = null;
 
@@ -58,8 +61,6 @@ export class LibraryFavoriteDirective implements OnChanges {
             });
         }
     }
-
-    constructor(private readonly alfrescoApiService: AlfrescoApiService, private readonly notificationService: NotificationService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.library.currentValue) {

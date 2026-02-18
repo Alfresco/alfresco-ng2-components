@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import {
@@ -31,12 +31,14 @@ import { FlagSetParser } from './flagset.parser';
 
 @Injectable({ providedIn: 'root' })
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
+    private config = inject<WritableFeaturesServiceConfig>(WritableFeaturesServiceConfigToken, { optional: true });
+
     private currentFlagState: WritableFlagChangeset = {};
     private readonly flags = new BehaviorSubject<WritableFlagChangeset>({});
     private readonly flags$ = this.flags.asObservable();
     private readonly initSubject = new BehaviorSubject<boolean>(false);
 
-    constructor(@Optional() @Inject(WritableFeaturesServiceConfigToken) private config?: WritableFeaturesServiceConfig) {
+    constructor() {
         combineLatest({
             flags: this.flags,
             init: this.waitForInitializationToFinish()

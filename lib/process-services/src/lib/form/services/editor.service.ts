@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { FormModelsApi, FormRepresentation } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
@@ -26,6 +26,8 @@ import { FormDefinitionModel } from '../model/form-definition.model';
     providedIn: 'root'
 })
 export class EditorService {
+    private apiService = inject(AlfrescoApiService);
+
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -34,8 +36,6 @@ export class EditorService {
         this._editorApi = this._editorApi ?? new FormModelsApi(this.apiService.getInstance());
         return this._editorApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Saves a form.

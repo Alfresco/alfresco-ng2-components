@@ -28,7 +28,8 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -47,6 +48,9 @@ import { IconModule } from '../../../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly urlService = inject(UrlService);
+
     @Input()
     showToolbar = true;
 
@@ -139,10 +143,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(
-        private readonly appConfigService: AppConfigService,
-        private readonly urlService: UrlService
-    ) {
+    constructor() {
         this.initializeScaling();
     }
 

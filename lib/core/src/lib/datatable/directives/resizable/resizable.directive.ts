@@ -26,6 +26,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     exportAs: 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {
+    private readonly renderer = inject(Renderer2);
+    private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+    private readonly zone = inject(NgZone);
+
     /**
      * Emitted when the mouse is pressed and a resize event is about to begin.
      */
@@ -71,7 +75,10 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {
+    constructor() {
+        const renderer = this.renderer;
+        const zone = this.zone;
+
         this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
             zone.runOutsideAngular(() => {
                 this.unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { GroupModel } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
@@ -26,6 +26,8 @@ import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepres
     providedIn: 'root'
 })
 export class PeopleProcessService {
+    private apiService = inject(AlfrescoApiService);
+
     private _taskActionsApi: TaskActionsApi;
     get taskActionsApi(): TaskActionsApi {
         this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
@@ -49,8 +51,6 @@ export class PeopleProcessService {
         this._profileApi = this._profileApi ?? new UserProfileApi(this.apiService.getInstance());
         return this._profileApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets information about the current user.

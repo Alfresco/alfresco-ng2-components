@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, OAuth2Service } from '@alfresco/adf-core';
 import { EMPTY, Observable } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
@@ -29,9 +29,10 @@ export interface IdentityGroupFilterInterface {
 
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService {
-    queryParams: { search: string; application?: string; roles?: string[] };
+    private oAuth2Service = inject(OAuth2Service);
+    private appConfigService = inject(AppConfigService);
 
-    constructor(private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
+    queryParams: { search: string; application?: string; roles?: string[] };
 
     public search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {

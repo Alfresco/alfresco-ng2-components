@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Injector, ElementRef, ComponentRef } from '@angular/core';
+import { Injectable, Injector, ElementRef, ComponentRef, inject } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
@@ -33,10 +33,8 @@ const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     providedIn: 'root'
 })
 export class ContextMenuOverlayService {
-    constructor(
-        private injector: Injector,
-        private overlay: Overlay
-    ) {}
+    private injector = inject(Injector);
+    private overlay = inject(Overlay);
 
     open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };

@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Directive, ElementRef } from '@angular/core';
+import { AfterContentInit, Directive, ElementRef, inject } from '@angular/core';
 
 @Directive({
     standalone: true,
     selector: '[adf-auto-focus]'
 })
 export class AutoFocusDirective implements AfterContentInit {
-    public constructor(private el: ElementRef) {}
+    private el = inject(ElementRef);
 
     public ngAfterContentInit() {
         setTimeout(() => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -32,7 +32,8 @@ import { OAuth2Service } from './oauth2.service';
 
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService implements IdentityGroupServiceInterface {
-    constructor(private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
+    private oAuth2Service = inject(OAuth2Service);
+    private appConfigService = inject(AppConfigService);
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
@@ -133,7 +134,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
                                     hasMoreItems: false,
                                     totalItems: totalCount.count
                                 }
-                            } as IdentityGroupQueryResponse)
+                            }) as IdentityGroupQueryResponse
                     )
                 )
             )

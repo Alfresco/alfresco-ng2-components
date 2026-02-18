@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, ElementRef, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { Directive, Input, ElementRef, NgZone, OnInit, OnDestroy, inject } from '@angular/core';
 import { DataRow } from '../data/data-row.model';
 import { DataColumn } from '../data/data-column.model';
 
@@ -23,6 +23,8 @@ import { DataColumn } from '../data/data-column.model';
     selector: '[adf-drop-zone]'
 })
 export class DropZoneDirective implements OnInit, OnDestroy {
+    private ngZone = inject(NgZone);
+
     private element: HTMLElement;
 
     @Input()
@@ -34,7 +36,9 @@ export class DropZoneDirective implements OnInit, OnDestroy {
     @Input()
     dropColumn: DataColumn;
 
-    constructor(elementRef: ElementRef, private ngZone: NgZone) {
+    constructor() {
+        const elementRef = inject(ElementRef);
+
         this.element = elementRef.nativeElement;
     }
 

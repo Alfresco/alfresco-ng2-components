@@ -55,6 +55,9 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
     }
 })
 export class LibraryNameColumnComponent implements OnInit {
+    private element = inject(ElementRef);
+    private nodesApiService = inject(NodesApiService);
+
     @Input({ required: true })
     context: any;
 
@@ -63,11 +66,6 @@ export class LibraryNameColumnComponent implements OnInit {
     node: NodeEntry;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private element: ElementRef,
-        private nodesApiService: NodesApiService
-    ) {}
 
     ngOnInit() {
         this.updateValue();

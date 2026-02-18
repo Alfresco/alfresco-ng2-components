@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel } from '@alfresco/adf-core';
 import { Observable, of, Subject, zip } from 'rxjs';
@@ -31,12 +31,10 @@ import { VersionCompatibilityService } from '../../version-compatibility/version
     providedIn: 'root'
 })
 export class ContentTypePropertiesService {
-    constructor(
-        private contentTypeService: ContentTypeService,
-        private dialog: MatDialog,
-        private versionCompatibilityService: VersionCompatibilityService,
-        private propertyGroupTranslatorService: PropertyGroupTranslatorService
-    ) {}
+    private contentTypeService = inject(ContentTypeService);
+    private dialog = inject(MatDialog);
+    private versionCompatibilityService = inject(VersionCompatibilityService);
+    private propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
 
     getContentTypeCardItem(node: Node): Observable<CardViewItem[]> {
         if (this.versionCompatibilityService.isVersionSupported('7')) {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -32,10 +32,13 @@ export interface IdentityRoleResponseModel {
     providedIn: 'root'
 })
 export class IdentityRoleService {
+    protected http = inject(HttpClient);
+    protected appConfig = inject(AppConfigService);
+
     contextRoot = '';
     identityHost = '';
 
-    constructor(protected http: HttpClient, protected appConfig: AppConfigService) {
+    constructor() {
         this.contextRoot = this.appConfig.get('apiHost', '');
         this.identityHost = this.appConfig.get('identityHost');
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslationService } from '../../translation/translation.service';
 import { Subject } from 'rxjs';
@@ -32,9 +32,10 @@ const ERROR_SNACK_CLASS = 'adf-error-snackbar';
     providedIn: 'root'
 })
 export class NotificationService {
-    notifications$: Subject<NotificationModel> = new Subject();
+    private snackBar = inject(MatSnackBar);
+    private translationService = inject(TranslationService);
 
-    constructor(private snackBar: MatSnackBar, private translationService: TranslationService) {}
+    notifications$: Subject<NotificationModel> = new Subject();
 
     /**
      * Opens a SnackBar notification to show a message.

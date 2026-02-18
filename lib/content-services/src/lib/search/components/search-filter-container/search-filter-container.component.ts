@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
@@ -32,20 +32,18 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-filter-container',
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatIconModule,
-        SearchWidgetContainerComponent,
-        TranslatePipe,
-        MatDialogModule
-    ],
+    imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule, SearchWidgetContainerComponent, TranslatePipe, MatDialogModule],
     templateUrl: './search-filter-container.component.html',
     styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterContainerComponent implements OnInit {
+    private readonly searchFilterQueryBuilder = inject(SearchHeaderQueryBuilderService);
+    private readonly translationService = inject(TranslationService);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly sanitizer = inject(DomSanitizer);
+
     /** The column the filter will be applied on. */
     @Input({ required: true })
     col: DataColumn;
@@ -67,14 +65,6 @@ export class SearchFilterContainerComponent implements OnInit {
     category: SearchCategory;
     focusTrap: ConfigurableFocusTrap;
     initialValue: any;
-
-    constructor(
-        private readonly searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
-        private readonly translationService: TranslationService,
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
-        private readonly matIconRegistry: MatIconRegistry,
-        private readonly sanitizer: DomSanitizer
-    ) {}
 
     ngOnInit() {
         this.registerFilterIcon();

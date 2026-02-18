@@ -73,6 +73,8 @@ interface CategoryNameControlErrors {
     encapsulation: ViewEncapsulation.None
 })
 export class CategoriesManagementComponent implements OnInit, OnDestroy {
+    private categoryService = inject(CategoryService);
+
     readonly nameErrorMessagesByErrors = new Map<keyof CategoryNameControlErrors, string>([
         ['duplicatedExistingCategory', 'ALREADY_EXISTS'],
         ['duplicatedCategory', 'DUPLICATED_CATEGORY'],
@@ -171,8 +173,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private categoryNameInputElement: ElementRef;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private categoryService: CategoryService) {}
 
     ngOnInit() {
         this.categoryNameControl.valueChanges

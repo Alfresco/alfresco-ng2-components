@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { IndifferentConfigService } from './indifferent-config.service';
@@ -29,7 +29,8 @@ const DEFAULT_PRESET_NAME = 'default';
     providedIn: 'root'
 })
 export class ContentMetadataConfigFactory {
-    constructor(private appConfigService: AppConfigService, private logService: LogService) {}
+    private appConfigService = inject(AppConfigService);
+    private logService = inject(LogService);
 
     public get(presetName: string = 'default'): ContentMetadataConfig {
         let presetConfig: PresetConfig;

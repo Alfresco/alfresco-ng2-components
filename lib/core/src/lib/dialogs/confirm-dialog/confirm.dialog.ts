@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, SecurityContext, ViewEncapsulation } from '@angular/core';
+import { Component, SecurityContext, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -41,6 +41,9 @@ export interface ConfirmDialogComponentProps {
     imports: [TranslatePipe, MatDialogModule, NgIf, MatButtonModule]
 })
 export class ConfirmDialogComponent {
+    private sanitizer = inject(DomSanitizer);
+    private data = inject<ConfirmDialogComponentProps>(MAT_DIALOG_DATA) ?? {};
+
     title: string;
     message: string;
     yesLabel: string;
@@ -48,14 +51,13 @@ export class ConfirmDialogComponent {
     thirdOptionLabel: string;
     htmlContent: string;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: ConfirmDialogComponentProps, private sanitizer: DomSanitizer) {
-        data = data || {};
-        this.title = data.title || 'ADF_CONFIRM_DIALOG.TITLE';
-        this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
-        this.yesLabel = data.yesLabel || 'ADF_CONFIRM_DIALOG.YES_LABEL';
-        this.thirdOptionLabel = data.thirdOptionLabel;
-        this.noLabel = data.noLabel || 'ADF_CONFIRM_DIALOG.NO_LABEL';
-        this.htmlContent = data.htmlContent;
+    constructor() {
+        this.title = this.data.title || 'ADF_CONFIRM_DIALOG.TITLE';
+        this.message = this.data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
+        this.yesLabel = this.data.yesLabel || 'ADF_CONFIRM_DIALOG.YES_LABEL';
+        this.thirdOptionLabel = this.data.thirdOptionLabel;
+        this.noLabel = this.data.noLabel || 'ADF_CONFIRM_DIALOG.NO_LABEL';
+        this.htmlContent = this.data.htmlContent;
     }
 
     sanitizedHtmlContent(): string {

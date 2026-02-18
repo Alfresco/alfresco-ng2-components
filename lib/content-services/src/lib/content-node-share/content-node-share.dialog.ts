@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -59,6 +59,13 @@ interface SharedDialogFormProps {
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit {
+    private sharedLinksApiService = inject(SharedLinksApiService);
+    private dialogRef = inject<MatDialogRef<ShareDialogComponent>>(MatDialogRef);
+    private dialog = inject(MatDialog);
+    private contentService = inject(ContentService);
+    private renditionService = inject(RenditionService);
+    data = inject<ContentNodeShareSettings>(MAT_DIALOG_DATA);
+
     private minDateValidator = (control: FormControl<Date>): any =>
         isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
 
@@ -77,14 +84,6 @@ export class ShareDialogComponent implements OnInit {
 
     @ViewChild('slideToggleExpirationDate', { static: true })
     slideToggleExpirationDate;
-    constructor(
-        private sharedLinksApiService: SharedLinksApiService,
-        private dialogRef: MatDialogRef<ShareDialogComponent>,
-        private dialog: MatDialog,
-        private contentService: ContentService,
-        private renditionService: RenditionService,
-        @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
-    ) {}
 
     ngOnInit() {
         if (this.data.node?.entry) {

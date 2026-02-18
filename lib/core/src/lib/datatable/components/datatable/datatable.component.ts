@@ -130,6 +130,11 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
+    private readonly elementRef = inject(ElementRef);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
     private static MINIMUM_COLUMN_SIZE = 100;
 
     @ViewChildren(DataTableRowComponent)
@@ -376,13 +381,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
-    constructor(
-        private readonly elementRef: ElementRef,
-        differs: IterableDiffers,
-        private readonly matIconRegistry: MatIconRegistry,
-        private readonly sanitizer: DomSanitizer,
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {
+    constructor() {
+        const differs = inject(IterableDiffers);
+
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
