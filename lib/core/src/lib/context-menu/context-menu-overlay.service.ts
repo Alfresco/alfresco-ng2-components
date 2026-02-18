@@ -33,8 +33,8 @@ const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     providedIn: 'root'
 })
 export class ContextMenuOverlayService {
-    private injector = inject(Injector);
-    private overlay = inject(Overlay);
+    private readonly injector = inject(Injector);
+    private readonly overlay = inject(Overlay);
 
     open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };

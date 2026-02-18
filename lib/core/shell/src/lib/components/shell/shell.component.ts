@@ -48,10 +48,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'app-shell' }
 })
 export class ShellLayoutComponent implements OnInit {
-    private router = inject(Router);
-    private appConfigService = inject(AppConfigService);
-    private breakpointObserver = inject(BreakpointObserver);
-    private shellService = inject<ShellAppService>(SHELL_APP_SERVICE);
+    private readonly router = inject(Router);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly breakpointObserver = inject(BreakpointObserver);
+    private readonly shellService = inject<ShellAppService>(SHELL_APP_SERVICE);
 
     @ViewChild('layout', { static: true })
     layout: SidenavLayoutComponent;

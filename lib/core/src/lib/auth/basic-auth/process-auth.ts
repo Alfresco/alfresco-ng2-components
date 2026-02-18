@@ -26,9 +26,9 @@ import { ReplaySubject, Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class ProcessAuth {
-    private appConfigService = inject(AppConfigService);
-    private adfHttpClient = inject(AdfHttpClient);
-    private storageService = inject(StorageService);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly adfHttpClient = inject(AdfHttpClient);
+    private readonly storageService = inject(StorageService);
 
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);

@@ -35,7 +35,7 @@ import { IconModule } from '../../../../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class SelectFilterInputComponent implements OnInit {
-    private matSelect = inject<MatSelect>(MatSelect);
+    private readonly matSelect = inject<MatSelect>(MatSelect);
 
     @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();

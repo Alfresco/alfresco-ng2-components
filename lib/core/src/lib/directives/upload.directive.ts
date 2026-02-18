@@ -24,9 +24,9 @@ import { FileInfo, FileUtils } from '../common/utils/file-utils';
     selector: '[adf-upload]'
 })
 export class UploadDirective implements OnInit, OnDestroy {
-    private el = inject(ElementRef);
-    private renderer = inject(Renderer2);
-    private ngZone = inject(NgZone);
+    private readonly el = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly ngZone = inject(NgZone);
 
     /** Enables/disables uploading. */
     @Input('adf-upload')
@@ -57,9 +57,9 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     isDragging: boolean = false;
 
-    private cssClassName: string = 'adf-upload__dragging';
+    private readonly cssClassName: string = 'adf-upload__dragging';
     private upload: HTMLInputElement;
-    private element: HTMLElement;
+    private readonly element: HTMLElement;
 
     constructor() {
         const el = this.el;

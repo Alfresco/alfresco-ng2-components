@@ -37,10 +37,10 @@ export function authConfigFactory(authConfigService: AuthConfigService): Promise
     providedIn: 'root'
 })
 export class AuthConfigService {
-    private appConfigService = inject(AppConfigService);
+    private readonly appConfigService = inject(AppConfigService);
     private readonly authModuleConfig = inject<AuthModuleConfig>(AUTH_MODULE_CONFIG);
 
-    private _authConfig!: AuthConfig;
+    private readonly _authConfig!: AuthConfig;
     get authConfig(): AuthConfig {
         return this._authConfig;
     }

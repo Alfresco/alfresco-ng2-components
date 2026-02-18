@@ -25,7 +25,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-no-permission-template, no-permission-template'
 })
 export class NoPermissionTemplateDirective implements AfterContentInit {
-    private dataTable = inject(DataTableComponent);
+    private readonly dataTable = inject(DataTableComponent);
 
     @ContentChild(TemplateRef)
     template: any;

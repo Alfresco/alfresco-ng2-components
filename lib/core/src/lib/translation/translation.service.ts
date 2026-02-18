@@ -51,8 +51,8 @@ export function provideTranslations(id: string, path: string) {
 })
 export class TranslationService {
     translate = inject(TranslateService);
-    private userPreferencesService = inject(UserPreferencesService);
-    private providers = inject<TranslationProvider[]>(TRANSLATION_PROVIDER, { optional: true }) ?? [];
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly providers = inject<TranslationProvider[]>(TRANSLATION_PROVIDER, { optional: true }) ?? [];
 
     defaultLang: string;
     userLang: string;

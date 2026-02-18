@@ -25,9 +25,12 @@ export interface MinMaxValidatorParams {
 
 export class CardViewItemMinMaxValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.MINMAX_VALIDATION_ERROR';
-    private intValidator: CardViewItemIntValidator;
+    private readonly intValidator: CardViewItemIntValidator;
 
-    constructor(private minValue: number, private maxValue: number) {
+    constructor(
+        private readonly minValue: number,
+        private readonly maxValue: number
+    ) {
         this.intValidator = new CardViewItemIntValidator();
     }
 

@@ -135,7 +135,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private readonly sanitizer = inject(DomSanitizer);
     private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
 
-    private static MINIMUM_COLUMN_SIZE = 100;
+    private static readonly MINIMUM_COLUMN_SIZE = 100;
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -338,9 +338,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
-    private click$: Observable<DataRowEvent>;
+    private readonly click$: Observable<DataRowEvent>;
 
-    private differ: any;
+    private readonly differ: any;
     private rowMenuCache: any = {};
 
     private singleClickStreamSub: Subscription;

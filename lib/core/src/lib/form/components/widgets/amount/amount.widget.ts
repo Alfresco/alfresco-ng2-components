@@ -57,8 +57,8 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<Observable<AmountWidgetSet
     encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
-    private currencyPipe = inject(CurrencyPipe);
-    private translationService = inject(TranslationService);
+    private readonly currencyPipe = inject(CurrencyPipe);
+    private readonly translationService = inject(TranslationService);
 
     static DEFAULT_CURRENCY: string = '$';
     private showPlaceholder = true;

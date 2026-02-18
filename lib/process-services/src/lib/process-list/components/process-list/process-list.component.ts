@@ -23,7 +23,6 @@ import {
     CustomLoadingContentTemplateDirective,
     DataRow,
     DataColumn,
-    AppConfigService,
     PaginatedComponent,
     PaginationModel,
     UserPreferencesService,
@@ -196,9 +195,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     pagination: BehaviorSubject<PaginationModel>;
 
     constructor() {
-        const appConfig = inject(AppConfigService);
-
-        super(appConfig, PRESET_KEY, processPresetsDefaultModel);
+        super(PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>({

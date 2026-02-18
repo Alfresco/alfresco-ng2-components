@@ -59,8 +59,8 @@ import { IconModule } from '@alfresco/adf-core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlagsComponent {
-    private featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
-    private writableFeaturesService = inject<IWritableFeaturesService>(WritableFeaturesServiceToken);
+    private readonly featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
+    private readonly writableFeaturesService = inject<IWritableFeaturesService>(WritableFeaturesServiceToken);
 
     displayedColumns: string[] = ['icon', 'flag', 'value'];
     flags$: Observable<{ fictive: boolean; flag: string; value: any }[]>;

@@ -22,7 +22,7 @@ import { AppConfigService } from './app-config.service';
     name: 'adfAppConfig'
 })
 export class AppConfigPipe implements PipeTransform {
-    private config = inject(AppConfigService);
+    private readonly config = inject(AppConfigService);
 
     transform(value: string, fallback?: any): any {
         return this.config.get(value, fallback);

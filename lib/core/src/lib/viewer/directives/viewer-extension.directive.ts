@@ -23,7 +23,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-viewer-extension'
 })
 export class ViewerExtensionDirective implements AfterContentInit {
-    private viewerComponent = inject(ViewerRenderComponent);
+    private readonly viewerComponent = inject(ViewerRenderComponent);
 
     @ContentChild(TemplateRef)
     template: any;

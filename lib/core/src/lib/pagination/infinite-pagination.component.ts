@@ -52,8 +52,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, MatButtonModule, MatProgressBarModule, TranslatePipe]
 })
 export class InfinitePaginationComponent implements OnInit, PaginationComponentInterface {
-    private cdr = inject(ChangeDetectorRef);
-    private userPreferencesService = inject(UserPreferencesService);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly userPreferencesService = inject(UserPreferencesService);
 
     static DEFAULT_PAGINATION: PaginationModel = new PaginationModel({
         skipCount: 0,

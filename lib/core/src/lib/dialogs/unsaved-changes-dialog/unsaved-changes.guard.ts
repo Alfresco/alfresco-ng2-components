@@ -31,9 +31,9 @@ import { AuthenticationService, AuthGuardService } from '../../auth';
     providedIn: 'root'
 })
 export class UnsavedChangesGuard implements CanDeactivate<any> {
-    private dialog = inject(MatDialog);
-    private authenticationService = inject(AuthenticationService);
-    private authGuardBaseService = inject(AuthGuardService);
+    private readonly dialog = inject(MatDialog);
+    private readonly authenticationService = inject(AuthenticationService);
+    private readonly authGuardBaseService = inject(AuthGuardService);
 
     unsaved = false;
     data: UnsavedChangesDialogData;

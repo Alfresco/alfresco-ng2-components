@@ -35,7 +35,7 @@ declare const pdfjsLib: any;
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
-    private dialogRef = inject<MatDialogRef<PdfPasswordDialogComponent>>(MatDialogRef);
+    private readonly dialogRef = inject<MatDialogRef<PdfPasswordDialogComponent>>(MatDialogRef);
     data = inject(MAT_DIALOG_DATA);
 
     passwordFormControl: UntypedFormControl;

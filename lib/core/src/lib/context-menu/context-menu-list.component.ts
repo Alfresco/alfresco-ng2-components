@@ -41,8 +41,8 @@ import { ContextMenuItem } from './interfaces';
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {
-    private contextMenuOverlayRef = inject<ContextMenuOverlayRef>(ContextMenuOverlayRef);
-    private data = inject(CONTEXT_MENU_DATA, { optional: true });
+    private readonly contextMenuOverlayRef = inject<ContextMenuOverlayRef>(ContextMenuOverlayRef);
+    private readonly data = inject(CONTEXT_MENU_DATA, { optional: true });
 
     private keyManager: FocusKeyManager<MatMenuItem>;
     @ViewChildren(MatMenuItem) items: QueryList<MatMenuItem>;

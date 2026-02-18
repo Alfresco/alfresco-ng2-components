@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
     ]
 })
 export class TooltipCardComponent {
-    private sanitizer = inject(DomSanitizer);
+    private readonly sanitizer = inject(DomSanitizer);
 
     @Input() image = '';
     @Input() text = '';

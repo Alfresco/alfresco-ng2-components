@@ -32,8 +32,8 @@ const ERROR_SNACK_CLASS = 'adf-error-snackbar';
     providedIn: 'root'
 })
 export class NotificationService {
-    private snackBar = inject(MatSnackBar);
-    private translationService = inject(TranslationService);
+    private readonly snackBar = inject(MatSnackBar);
+    private readonly translationService = inject(TranslationService);
 
     notifications$: Subject<NotificationModel> = new Subject();
 

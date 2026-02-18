@@ -24,8 +24,8 @@ import { AppConfigService } from '../../app-config/app-config.service';
     providedIn: 'root'
 })
 export class UserAccessService {
-    private jwtHelperService = inject(JwtHelperService);
-    private appConfigService = inject(AppConfigService);
+    private readonly jwtHelperService = inject(JwtHelperService);
+    private readonly appConfigService = inject(AppConfigService);
 
     private globalAccess: string[];
     private applicationAccess: ApplicationAccessModel[];

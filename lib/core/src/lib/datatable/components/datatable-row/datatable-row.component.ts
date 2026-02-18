@@ -29,7 +29,7 @@ import { DataRow } from '../../data/data-row.model';
     }
 })
 export class DataTableRowComponent implements FocusableOption {
-    private element = inject(ElementRef);
+    private readonly element = inject(ElementRef);
 
     @Input() row: DataRow;
 

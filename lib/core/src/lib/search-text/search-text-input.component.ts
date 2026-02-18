@@ -56,7 +56,7 @@ import { IconModule } from '../icon/icon.module';
     }
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
-    private userPreferencesService = inject(UserPreferencesService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
 
     /** Toggles auto-completion of the search input field. */
     @Input()
@@ -168,8 +168,8 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private dir = 'ltr';
     private toggleSearch = new Subject<any>();
     private focusSubscription: Subscription;
-    private valueChange = new Subject<string>();
-    private toggleSubscription: Subscription;
+    private readonly valueChange = new Subject<string>();
+    private readonly toggleSubscription: Subscription;
 
     toggle$ = this.toggleSearch.asObservable();
 

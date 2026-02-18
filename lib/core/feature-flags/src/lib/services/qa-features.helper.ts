@@ -20,8 +20,8 @@ import { FeaturesServiceToken, FlagSet } from '../interfaces/features.interface'
 import { DebugFeaturesService } from './debug-features.service';
 @Injectable()
 export class QaFeaturesHelper {
-    private applicationRef = inject(ApplicationRef);
-    private debugFeaturesService = inject<DebugFeaturesService>(FeaturesServiceToken);
+    private readonly applicationRef = inject(ApplicationRef);
+    private readonly debugFeaturesService = inject<DebugFeaturesService>(FeaturesServiceToken);
 
     isOn(key: string): boolean {
         let isOn = false;

@@ -25,7 +25,7 @@ const SELECT_ITEM_HEIGHT_EM = 3;
     selector: '[adf-infinite-select-scroll]'
 })
 export class InfiniteSelectScrollDirective implements AfterViewInit {
-    private matSelect = inject<MatSelect>(MatSelect);
+    private readonly matSelect = inject<MatSelect>(MatSelect);
 
     static readonly MAX_ITEMS = 50;
 

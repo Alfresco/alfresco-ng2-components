@@ -27,8 +27,8 @@ import { AppConfigService } from '../../../app-config';
     encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {
-    private http = inject(HttpClient);
-    private appConfigService = inject(AppConfigService);
+    private readonly http = inject(HttpClient);
+    private readonly appConfigService = inject(AppConfigService);
 
     @Input()
     urlFile: any;

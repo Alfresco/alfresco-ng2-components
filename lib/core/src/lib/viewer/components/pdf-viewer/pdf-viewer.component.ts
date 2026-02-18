@@ -140,22 +140,22 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return currentScaleText;
     }
 
-    private pdfjsLib = inject(PDFJS_MODULE);
-    private pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
+    private readonly pdfjsLib = inject(PDFJS_MODULE);
+    private readonly pdfjsViewer = inject(PDFJS_VIEWER_MODULE);
 
-    private eventBus = new EventBus();
-    private pdfjsDefaultOptions = {
+    private readonly eventBus = new EventBus();
+    private readonly pdfjsDefaultOptions = {
         disableAutoFetch: true,
         disableStream: true,
         cMapUrl: './cmaps/',
         cMapPacked: true,
         wasmUrl: './wasm/'
     };
-    private pdfjsWorkerDestroy$ = new Subject<boolean>();
+    private readonly pdfjsWorkerDestroy$ = new Subject<boolean>();
 
-    private dialog = inject(MatDialog);
-    private renderingQueueServices = inject(RenderingQueueServices);
-    private appConfigService = inject(AppConfigService);
+    private readonly dialog = inject(MatDialog);
+    private readonly renderingQueueServices = inject(RenderingQueueServices);
+    private readonly appConfigService = inject(AppConfigService);
 
     private readonly translateService = inject(TranslateService);
 

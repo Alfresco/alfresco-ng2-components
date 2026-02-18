@@ -69,10 +69,10 @@ import { IconModule } from '../../../icon/icon.module';
     host: { class: 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit {
-    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
-    private userPreferencesService = inject(UserPreferencesService);
-    private clipboardService = inject(ClipboardService);
-    private translateService = inject(TranslationService);
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly clipboardService = inject(ClipboardService);
+    private readonly translateService = inject(TranslationService);
 
     @Input()
     displayEmpty = true;

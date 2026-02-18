@@ -52,7 +52,7 @@ import { IconModule } from '../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
-    private changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
     /** Provide if you want to use paginated chips. */
@@ -106,7 +106,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     private initialLimitChipsDisplayed: boolean;
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
     private requestedDisplayingAllChips = false;
-    private resizeObserver = new ResizeObserver(() => {
+    private readonly resizeObserver = new ResizeObserver(() => {
         if (this.initialLimitChipsDisplayed && this.chipsToDisplay.length) {
             this.calculateChipsToDisplay();
             this.changeDetectorRef.detectChanges();

@@ -63,8 +63,8 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     providers: [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit {
-    private viewUtilService = inject(ViewUtilService);
-    private extensionService = inject(AppExtensionService);
+    private readonly viewUtilService = inject(ViewUtilService);
+    private readonly extensionService = inject(AppExtensionService);
     dialog = inject(MatDialog);
     readonly injector = inject(Injector);
 

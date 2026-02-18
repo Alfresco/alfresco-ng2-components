@@ -34,9 +34,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { class: 'adf-error-content' }
 })
 export class ErrorContentComponent implements OnInit {
-    private route = inject(ActivatedRoute);
-    private translateService = inject(TranslationService);
-    private breakpointObserver = inject(BreakpointObserver);
+    private readonly route = inject(ActivatedRoute);
+    private readonly translateService = inject(TranslationService);
+    private readonly breakpointObserver = inject(BreakpointObserver);
 
     static UNKNOWN_ERROR = 'UNKNOWN';
 

@@ -47,7 +47,7 @@ import { IconModule } from '@alfresco/adf-core';
     imports: [CommonModule, IconModule, TranslatePipe, MatButtonModule, BreadcrumbFocusDirective]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
-    private cdr = inject(ChangeDetectorRef);
+    private readonly cdr = inject(ChangeDetectorRef);
 
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
 

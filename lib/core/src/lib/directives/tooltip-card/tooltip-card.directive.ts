@@ -24,9 +24,9 @@ import { TooltipCardComponent } from './tooltip-card.component';
     selector: '[adf-tooltip-card]'
 })
 export class TooltipCardDirective implements OnInit, OnDestroy {
-    private overlay = inject(Overlay);
-    private overlayPositionBuilder = inject(OverlayPositionBuilder);
-    private elementRef = inject(ElementRef);
+    private readonly overlay = inject(Overlay);
+    private readonly overlayPositionBuilder = inject(OverlayPositionBuilder);
+    private readonly elementRef = inject(ElementRef);
 
     @Input('adf-tooltip-card') text = '';
     @Input() image = '';

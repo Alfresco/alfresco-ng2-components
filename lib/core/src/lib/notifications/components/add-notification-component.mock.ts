@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
     template: ` <button mat-raised-button (click)="showInfo()">Add Notification</button>`
 })
 export class AddNotificationStorybookComponent {
-    private notificationService = inject(NotificationService);
+    private readonly notificationService = inject(NotificationService);
 
     infoCounter: number = 1;
 

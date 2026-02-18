@@ -25,12 +25,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: '[adfNotForFeatures]'
 })
 export class NotFeaturesDirective {
-    private featuresService = inject<IFeaturesService>(FeaturesServiceToken);
-    private templateRef = inject<TemplateRef<any>>(TemplateRef);
-    private viewContainer = inject(ViewContainerRef);
+    private readonly featuresService = inject<IFeaturesService>(FeaturesServiceToken);
+    private readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
+    private readonly viewContainer = inject(ViewContainerRef);
 
     private hasView = false;
-    private inputUpdate$ = new BehaviorSubject([] as string[]);
+    private readonly inputUpdate$ = new BehaviorSubject([] as string[]);
 
     @Input()
     set adfNotForFeatures(feature: string[] | string) {

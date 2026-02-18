@@ -32,8 +32,8 @@ export interface TimeSync {
     providedIn: 'root'
 })
 export class TimeSyncService {
-    private _injector = inject(Injector);
-    private _appConfigService = inject(AppConfigService);
+    private readonly _injector = inject(Injector);
+    private readonly _appConfigService = inject(AppConfigService);
 
     private readonly _http: HttpClient;
 

@@ -22,7 +22,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-main-menu-datatable-template'
 })
 export class MainMenuDataTableTemplateDirective implements AfterContentInit {
-    private dataTable = inject(DataTableComponent);
+    private readonly dataTable = inject(DataTableComponent);
 
     @ContentChild(TemplateRef)
     template: any;

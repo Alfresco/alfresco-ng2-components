@@ -31,7 +31,7 @@ export interface OAuth2RequestParams {
 
 @Injectable({ providedIn: 'root' })
 export class OAuth2Service {
-    private adfHttpClient = inject(AdfHttpClient);
+    private readonly adfHttpClient = inject(AdfHttpClient);
 
     request<T>(opts: OAuth2RequestParams): Observable<T> {
         const { httpMethod, url, bodyParam, queryParams } = opts;

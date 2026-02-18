@@ -47,8 +47,8 @@ import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.componen
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
-    private element = inject(ElementRef);
-    private document = inject(DOCUMENT);
+    private readonly element = inject(ElementRef);
+    private readonly document = inject(DOCUMENT);
 
     @Input({ required: true }) pdfViewer: any;
 
@@ -62,7 +62,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     currentHeight: number = 0;
 
     private items = [];
-    private margin: number = 15;
+    private readonly margin: number = 15;
     private itemHeight: number = 114 + this.margin;
     private previouslyFocusedElement: HTMLElement | null = null;
     private keyManager: FocusKeyManager<PdfThumbComponent>;

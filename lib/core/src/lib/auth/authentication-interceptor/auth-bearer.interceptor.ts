@@ -33,9 +33,9 @@ import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
-    private authenticationService = inject(AuthenticationService);
+    private readonly authenticationService = inject(AuthenticationService);
 
-    private _bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
+    private readonly _bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
 
     private excludedUrlsRegex: RegExp[];
 

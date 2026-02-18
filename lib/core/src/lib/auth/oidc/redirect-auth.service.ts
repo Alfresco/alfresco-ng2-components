@@ -40,15 +40,15 @@ const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && ty
 
 @Injectable()
 export class RedirectAuthService extends AuthService {
-    private oauthService = inject(OAuthService);
-    private _oauthStorage = inject(OAuthStorage);
+    private readonly oauthService = inject(OAuthService);
+    private readonly _oauthStorage = inject(OAuthStorage);
 
     readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
     private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
     private readonly _oauthLogger: OAuthLogger = inject(OAuthLogger);
     private readonly _timeSyncService: TimeSyncService = inject(TimeSyncService);
 
-    private _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
+    private readonly _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
     public isDiscoveryDocumentLoaded$ = this._isDiscoveryDocumentLoadedSubject$.asObservable();
 
     onLogin: Observable<any>;
@@ -122,7 +122,7 @@ export class RedirectAuthService extends AuthService {
         return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
     }
 
-    private authConfig!: AuthConfig | Promise<AuthConfig>;
+    private readonly authConfig!: AuthConfig | Promise<AuthConfig>;
 
     private readonly AUTH_STORAGE_ITEMS: string[] = [
         'access_token',

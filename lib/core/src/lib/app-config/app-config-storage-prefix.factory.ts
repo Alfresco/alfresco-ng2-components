@@ -30,8 +30,8 @@ export const STORAGE_PREFIX_FACTORY_SERVICE = new InjectionToken<StoragePrefixFa
     providedIn: 'root'
 })
 export class StoragePrefixFactory {
-    private appConfigService = inject(AppConfigService);
-    private storagePrefixFactory = inject<StoragePrefixFactoryService>(STORAGE_PREFIX_FACTORY_SERVICE, { optional: true });
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly storagePrefixFactory = inject<StoragePrefixFactoryService>(STORAGE_PREFIX_FACTORY_SERVICE, { optional: true });
 
     getPrefix(): Observable<string | undefined> {
         return this.appConfigService.select(AppConfigValues.STORAGE_PREFIX).pipe(

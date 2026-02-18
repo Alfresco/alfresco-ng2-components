@@ -41,8 +41,8 @@ export interface ConfirmDialogComponentProps {
     imports: [TranslatePipe, MatDialogModule, NgIf, MatButtonModule]
 })
 export class ConfirmDialogComponent {
-    private sanitizer = inject(DomSanitizer);
-    private data = inject<ConfirmDialogComponentProps>(MAT_DIALOG_DATA) ?? {};
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly data = inject<ConfirmDialogComponentProps>(MAT_DIALOG_DATA) ?? {};
 
     title: string;
     message: string;

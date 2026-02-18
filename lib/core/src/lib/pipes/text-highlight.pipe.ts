@@ -22,7 +22,7 @@ import { HighlightTransformService, HighlightTransformResult } from '../common/s
     name: 'highlight'
 })
 export class HighlightPipe implements PipeTransform {
-    private highlightTransformService = inject(HighlightTransformService);
+    private readonly highlightTransformService = inject(HighlightTransformService);
 
     transform(text: string, search: string): string {
         const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(text, search);

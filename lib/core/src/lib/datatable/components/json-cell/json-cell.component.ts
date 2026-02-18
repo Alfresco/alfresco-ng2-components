@@ -36,7 +36,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent {
-    private dialog = inject(MatDialog);
+    private readonly dialog = inject(MatDialog);
 
     /** Editable JSON. */
     @Input()

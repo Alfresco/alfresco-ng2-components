@@ -31,9 +31,9 @@ import {
 
 @Injectable()
 export class DebugFeaturesService implements IDebugFeaturesService {
-    private overriddenFeaturesService = inject<IFeaturesService>(OverridableFeaturesServiceToken);
-    private writableFeaturesService = inject(WritableFeaturesServiceToken);
-    private config = inject<WritableFeaturesServiceConfig>(WritableFeaturesServiceConfigToken, { optional: true });
+    private readonly overriddenFeaturesService = inject<IFeaturesService>(OverridableFeaturesServiceToken);
+    private readonly writableFeaturesService = inject(WritableFeaturesServiceToken);
+    private readonly config = inject<WritableFeaturesServiceConfig>(WritableFeaturesServiceConfigToken, { optional: true });
 
     private readonly isInDebugModeSubject = new BehaviorSubject<boolean>(false);
     private readonly isInDebugMode$ = this.isInDebugModeSubject.asObservable();

@@ -61,9 +61,9 @@ const templateTypes = {
     host: { class: 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
-    private clipboardService = inject(ClipboardService);
-    private translateService = inject(TranslationService);
-    private cd = inject(ChangeDetectorRef);
+    private readonly clipboardService = inject(ClipboardService);
+    private readonly translateService = inject(TranslationService);
+    private readonly cd = inject(ChangeDetectorRef);
 
     @Input()
     displayEmpty = true;

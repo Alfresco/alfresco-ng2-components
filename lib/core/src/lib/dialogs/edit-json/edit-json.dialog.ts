@@ -36,7 +36,7 @@ export interface EditJsonDialogSettings {
     host: { class: 'adf-edit-json-dialog' }
 })
 export class EditJsonDialogComponent implements OnInit {
-    private settings = inject<EditJsonDialogSettings>(MAT_DIALOG_DATA);
+    private readonly settings = inject<EditJsonDialogSettings>(MAT_DIALOG_DATA);
 
     editable: boolean = false;
     title: string = 'JSON';

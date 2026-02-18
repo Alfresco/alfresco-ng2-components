@@ -41,12 +41,12 @@ export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof Us
 })
 export class UserPreferencesService {
     translate = inject(TranslateService);
-    private appConfig = inject(AppConfigService);
-    private storage = inject(StorageService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly storage = inject(StorageService);
 
-    private document = inject(DOCUMENT);
-    private rendererFactory = inject(RendererFactory2);
-    private directionality = inject(Directionality);
+    private readonly document = inject(DOCUMENT);
+    private readonly rendererFactory = inject(RendererFactory2);
+    private readonly directionality = inject(Directionality);
 
     defaults = {
         paginationSize: 25,
@@ -56,7 +56,7 @@ export class UserPreferencesService {
     };
 
     private userPreferenceStatus: any = { ...this.defaults };
-    private onChangeSubject: BehaviorSubject<any>;
+    private readonly onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
     /**

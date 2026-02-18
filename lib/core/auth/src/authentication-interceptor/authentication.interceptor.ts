@@ -36,7 +36,7 @@ export const SHOULD_ADD_AUTH_TOKEN = new HttpContextToken<boolean>(() => false);
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-    private authService = inject(Authentication);
+    private readonly authService = inject(Authentication);
 
     intercept(
         req: HttpRequest<any>,

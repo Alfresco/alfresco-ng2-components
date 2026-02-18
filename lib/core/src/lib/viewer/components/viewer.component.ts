@@ -92,12 +92,12 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
-    private el = inject(ElementRef);
+    private readonly el = inject(ElementRef);
     dialog = inject(MatDialog);
-    private viewUtilsService = inject(ViewUtilService);
-    private appConfigService = inject(AppConfigService);
+    private readonly viewUtilsService = inject(ViewUtilService);
+    private readonly appConfigService = inject(AppConfigService);
 
-    private thumbnailService = inject(ThumbnailService);
+    private readonly thumbnailService = inject(ThumbnailService);
 
     @HostBinding('class.adf-viewer-inline')
     get isInline() {
@@ -307,7 +307,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     viewerRenderer: ViewerRenderComponent;
 
     private closeViewer = true;
-    private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
+    private readonly keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible = false;
     private _fileName: string;
     private _fileNameWithoutExtension: string;

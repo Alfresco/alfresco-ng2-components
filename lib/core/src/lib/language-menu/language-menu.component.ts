@@ -32,7 +32,7 @@ import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
     `
 })
 export class LanguageMenuComponent {
-    private languageService = inject(LanguageService);
+    private readonly languageService = inject(LanguageService);
 
     /** Emitted when the language change */
     @Output()

@@ -89,7 +89,7 @@ export class DateFnsUtils {
         return dateFnsLocale;
     }
 
-    private static momentToDateFnsMap = {
+    private static readonly momentToDateFnsMap = {
         D: 'd',
         Y: 'y',
         AZ: 'aa',

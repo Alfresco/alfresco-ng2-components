@@ -24,11 +24,11 @@ import { AuthenticationService } from '../auth/services/authentication.service';
     selector: '[adf-logout]'
 })
 export class LogoutDirective implements OnInit {
-    private elementRef = inject(ElementRef);
-    private renderer = inject(Renderer2);
-    private router = inject(Router);
-    private appConfig = inject(AppConfigService);
-    private authenticationService = inject(AuthenticationService);
+    private readonly elementRef = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly router = inject(Router);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly authenticationService = inject(AuthenticationService);
 
     /** URI to redirect to after logging out. */
     @Input()

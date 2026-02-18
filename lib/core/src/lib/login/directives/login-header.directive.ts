@@ -22,7 +22,7 @@ import { LoginComponent } from '../components/login/login.component';
     selector: 'adf-login-header'
 })
 export class LoginHeaderDirective implements AfterContentInit {
-    private alfrescoLoginComponent = inject(LoginComponent);
+    private readonly alfrescoLoginComponent = inject(LoginComponent);
 
     @ContentChild(TemplateRef)
     template: any;

@@ -29,7 +29,7 @@ import { MatCardModule } from '@angular/material/card';
     imports: [CommonModule, TranslatePipe, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {
-    private appConfig = inject(AppConfigService);
+    private readonly appConfig = inject(AppConfigService);
 
     ecmHost = '';
     bpmHost = '';

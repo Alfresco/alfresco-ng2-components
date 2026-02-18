@@ -60,11 +60,11 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, MatMenuModule]
 })
 export class PaginationComponent implements OnInit, PaginationComponentInterface {
-    private elementRef = inject(ElementRef);
-    private renderer = inject(Renderer2);
-    private cdr = inject(ChangeDetectorRef);
-    private userPreferencesService = inject(UserPreferencesService);
-    private translate = inject(TranslateService);
+    private readonly elementRef = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly translate = inject(TranslateService);
 
     private _pagination: PaginationModel;
     private _isEmpty = true;

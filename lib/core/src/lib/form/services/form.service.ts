@@ -38,7 +38,7 @@ export const FORM_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<FormFieldV
     providedIn: 'root'
 })
 export class FormService implements FormValidationService {
-    private fieldValidators: FormFieldValidator[];
+    private readonly fieldValidators: FormFieldValidator[];
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
     formFieldValueChanged = new Subject<FormFieldEvent>();

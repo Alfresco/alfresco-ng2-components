@@ -29,13 +29,13 @@ import { Injectable, inject } from '@angular/core';
     providedIn: 'root'
 })
 export class AuthGuardService {
-    private authenticationService = inject(AuthenticationService);
-    private basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
-    private oidcAuthenticationService = inject(OidcAuthenticationService);
-    private router = inject(Router);
-    private appConfigService = inject(AppConfigService);
-    private dialog = inject(MatDialog);
-    private storageService = inject(StorageService);
+    private readonly authenticationService = inject(AuthenticationService);
+    private readonly basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
+    private readonly oidcAuthenticationService = inject(OidcAuthenticationService);
+    private readonly router = inject(Router);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly dialog = inject(MatDialog);
+    private readonly storageService = inject(StorageService);
 
     get withCredentials(): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);

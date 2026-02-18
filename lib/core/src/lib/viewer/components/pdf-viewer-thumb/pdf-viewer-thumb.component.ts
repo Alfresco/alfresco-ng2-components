@@ -29,8 +29,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { tabindex: '0' }
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {
-    private sanitizer = inject(DomSanitizer);
-    private element = inject(ElementRef);
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly element = inject(ElementRef);
 
     @Input()
     page: any = null;

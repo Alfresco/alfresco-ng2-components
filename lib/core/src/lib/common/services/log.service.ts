@@ -29,7 +29,7 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class LogService {
-    private appConfig = inject(AppConfigService);
+    private readonly appConfig = inject(AppConfigService);
 
     get currentLogLevel(): number {
         const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);

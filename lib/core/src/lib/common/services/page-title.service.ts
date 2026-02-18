@@ -24,9 +24,9 @@ import { TranslationService } from '../../translation/translation.service';
     providedIn: 'root'
 })
 export class PageTitleService {
-    private titleService = inject(Title);
-    private appConfig = inject(AppConfigService);
-    private translationService = inject(TranslationService);
+    private readonly titleService = inject(Title);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly translationService = inject(TranslationService);
 
     private originalTitle: string = '';
     private translatedTitle: string = '';

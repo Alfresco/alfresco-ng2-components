@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     providedIn: 'root'
 })
 export class UrlService {
-    private sanitizer = inject(DomSanitizer);
+    private readonly sanitizer = inject(DomSanitizer);
 
     /**
      * Creates a trusted object URL from the Blob.

@@ -31,7 +31,7 @@ import { FlagSetParser } from './flagset.parser';
 
 @Injectable({ providedIn: 'root' })
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
-    private config = inject<WritableFeaturesServiceConfig>(WritableFeaturesServiceConfigToken, { optional: true });
+    private readonly config = inject<WritableFeaturesServiceConfig>(WritableFeaturesServiceConfigToken, { optional: true });
 
     private currentFlagState: WritableFlagChangeset = {};
     private readonly flags = new BehaviorSubject<WritableFlagChangeset>({});

@@ -45,7 +45,7 @@ import { IconModule } from '../../icon/icon.module';
 })
 export class UnsavedChangesDialogComponent implements OnInit {
     data = inject<UnsavedChangesDialogData>(MAT_DIALOG_DATA);
-    private userPreferencesService = inject(UserPreferencesService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
 
     dialogData: UnsavedChangesDialogData;
 

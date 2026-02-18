@@ -24,9 +24,9 @@ import { HighlightTransformService, HighlightTransformResult } from '../common/s
     selector: '[adf-highlight]'
 })
 export class HighlightDirective implements AfterViewChecked {
-    private el = inject(ElementRef);
-    private renderer = inject(Renderer2);
-    private highlightTransformService = inject(HighlightTransformService);
+    private readonly el = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly highlightTransformService = inject(HighlightTransformService);
 
     /** Class selector for highlightable elements. */
     @Input('adf-highlight-selector')

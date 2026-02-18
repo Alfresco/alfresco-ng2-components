@@ -27,11 +27,11 @@ import { map, catchError, retry } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TranslateLoaderService implements TranslateLoader {
-    private http = inject(HttpClient);
+    private readonly http = inject(HttpClient);
 
-    private prefix: string = 'i18n';
-    private suffix: string = '.json';
-    private providers: ComponentTranslationModel[] = [
+    private readonly prefix: string = 'i18n';
+    private readonly suffix: string = '.json';
+    private readonly providers: ComponentTranslationModel[] = [
         new ComponentTranslationModel({
             name: 'adf-core',
             path: 'assets/adf-core'

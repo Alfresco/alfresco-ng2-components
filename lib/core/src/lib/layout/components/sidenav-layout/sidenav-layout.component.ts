@@ -90,7 +90,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @ContentChild(SidenavLayoutContentDirective)
     contentDirective: SidenavLayoutContentDirective;
 
-    private menuOpenStateSubject = new BehaviorSubject<boolean>(false);
+    private readonly menuOpenStateSubject = new BehaviorSubject<boolean>(false);
     public menuOpenState$ = this.menuOpenStateSubject.asObservable();
 
     @ViewChild('container', { static: true }) container: any;

@@ -27,7 +27,7 @@ import { DEFAULT_LANGUAGE_LIST } from '../../common/models/default-languages.mod
 export class LanguageService implements LanguageServiceInterface {
     private readonly userPreferencesService = inject(UserPreferencesService);
 
-    private languages = new BehaviorSubject<LanguageItem[]>(DEFAULT_LANGUAGE_LIST);
+    private readonly languages = new BehaviorSubject<LanguageItem[]>(DEFAULT_LANGUAGE_LIST);
 
     languages$ = this.languages.asObservable();
 

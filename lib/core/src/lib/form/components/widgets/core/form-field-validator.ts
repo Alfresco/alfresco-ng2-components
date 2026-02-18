@@ -27,7 +27,7 @@ export interface FormFieldValidator {
 }
 
 export class RequiredFieldValidator implements FormFieldValidator {
-    private supportedTypes = [
+    private readonly supportedTypes = [
         FormFieldTypes.TEXT,
         FormFieldTypes.MULTILINE_TEXT,
         FormFieldTypes.NUMBER,
@@ -78,7 +78,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
 }
 
 export class NumberFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.AMOUNT];
+    private readonly supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.AMOUNT];
 
     static isNumber(value: any): boolean {
         return isNumberValue(value);
@@ -109,7 +109,7 @@ export class NumberFieldValidator implements FormFieldValidator {
 }
 
 export class MinLengthFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+    private readonly supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && field.minLength > 0;
@@ -130,8 +130,8 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 
 export class MaxLengthFieldValidator implements FormFieldValidator {
     constructor(
-        private supportedTypes: FormFieldTypes[] = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT],
-        private maxLength?: number
+        private readonly supportedTypes: FormFieldTypes[] = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT],
+        private readonly maxLength?: number
     ) {}
 
     isSupported(field: FormFieldModel): boolean {
@@ -159,7 +159,7 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
 }
 
 export class MinValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
+    private readonly supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && NumberFieldValidator.isNumber(field.minValue);
@@ -183,7 +183,7 @@ export class MinValueFieldValidator implements FormFieldValidator {
 }
 
 export class MaxValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
+    private readonly supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && NumberFieldValidator.isNumber(field.maxValue);
@@ -207,7 +207,7 @@ export class MaxValueFieldValidator implements FormFieldValidator {
 }
 
 export class RegExFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+    private readonly supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
@@ -226,7 +226,7 @@ export class RegExFieldValidator implements FormFieldValidator {
 }
 
 export class FixedValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TYPEAHEAD];
+    private readonly supportedTypes = [FormFieldTypes.TYPEAHEAD];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
@@ -264,7 +264,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
 }
 
 export class DecimalFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DECIMAL];
+    private readonly supportedTypes = [FormFieldTypes.DECIMAL];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.value;

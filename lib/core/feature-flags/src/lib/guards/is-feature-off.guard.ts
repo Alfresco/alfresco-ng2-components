@@ -24,7 +24,7 @@ export const isFeatureOff = (flag: string) => () => inject(FeaturesServiceToken)
 
 @Injectable({ providedIn: 'root' })
 export class IsFeatureOff {
-    private featuresServiceToken = inject<IFeaturesService>(FeaturesServiceToken);
+    private readonly featuresServiceToken = inject<IFeaturesService>(FeaturesServiceToken);
 
     canMatch(route: Route): Observable<boolean> {
         return this.featuresServiceToken.isOff$(route?.data?.['feature']);

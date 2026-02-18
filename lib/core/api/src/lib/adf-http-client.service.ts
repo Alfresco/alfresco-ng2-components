@@ -45,9 +45,9 @@ export interface Emitters {
     providedIn: 'root'
 })
 export class AdfHttpClient implements JsApiHttpClient {
-    private httpClient = inject(HttpClient);
+    private readonly httpClient = inject(HttpClient);
 
-    private eventEmitter = new EventEmitter();
+    private readonly eventEmitter = new EventEmitter();
 
     _disableCsrf: boolean;
 

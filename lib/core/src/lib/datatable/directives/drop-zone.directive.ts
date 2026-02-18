@@ -23,9 +23,9 @@ import { DataColumn } from '../data/data-column.model';
     selector: '[adf-drop-zone]'
 })
 export class DropZoneDirective implements OnInit, OnDestroy {
-    private ngZone = inject(NgZone);
+    private readonly ngZone = inject(NgZone);
 
-    private element: HTMLElement;
+    private readonly element: HTMLElement;
 
     @Input()
     dropTarget: 'header' | 'cell' = 'cell';

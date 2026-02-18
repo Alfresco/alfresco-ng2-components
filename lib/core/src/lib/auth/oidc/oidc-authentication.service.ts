@@ -33,9 +33,9 @@ import { HttpHeaders } from '@angular/common/http';
     providedIn: 'root'
 })
 export class OidcAuthenticationService extends BaseAuthenticationService {
-    private jwtHelperService = inject(JwtHelperService);
-    private authStorage = inject(OAuthStorage);
-    private oauthService = inject(OAuthService);
+    private readonly jwtHelperService = inject(JwtHelperService);
+    private readonly authStorage = inject(OAuthStorage);
+    private readonly oauthService = inject(OAuthService);
     private readonly authConfig = inject(AuthConfigService);
 
     private readonly auth = inject(AuthService);

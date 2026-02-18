@@ -25,7 +25,7 @@ import { DataColumnComponent } from './data-column.component';
     template: ''
 })
 export class DateColumnHeaderComponent implements AfterContentInit {
-    private columnComponent = inject(DataColumnComponent);
+    private readonly columnComponent = inject(DataColumnComponent);
 
     @ContentChild(TemplateRef)
     public header: TemplateRef<any>;

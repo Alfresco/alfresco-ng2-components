@@ -50,10 +50,10 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     providers: [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
-    private element = inject(ElementRef);
-    private ngZone = inject(NgZone);
-    private changeDetectorRef = inject(ChangeDetectorRef);
-    private document = inject(DOCUMENT, { optional: true });
+    private readonly element = inject(ElementRef);
+    private readonly ngZone = inject(NgZone);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly document = inject(DOCUMENT, { optional: true });
 
     @Input('searchAutocomplete')
     searchPanel: SearchComponentInterface;

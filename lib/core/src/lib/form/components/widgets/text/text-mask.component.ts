@@ -34,8 +34,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {
-    private el = inject(ElementRef);
-    private render = inject(Renderer2);
+    private readonly el = inject(ElementRef);
+    private readonly render = inject(Renderer2);
 
     /** Object defining mask and "reversed" status. */
     @Input('textMask') inputMask: {
@@ -43,7 +43,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         isReversed: boolean;
     };
 
-    private translationMask = {
+    private readonly translationMask = {
         '0': { pattern: /\d/ },
         '9': { pattern: /\d/, optional: true },
         '#': { pattern: /\d/, recursive: true },
@@ -51,9 +51,9 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         S: { pattern: /[a-zA-Z]/ }
     };
 
-    private byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
+    private readonly byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
     private value;
-    private invalidCharacters = [];
+    private readonly invalidCharacters = [];
 
     _onChange = (_: any) => {};
 

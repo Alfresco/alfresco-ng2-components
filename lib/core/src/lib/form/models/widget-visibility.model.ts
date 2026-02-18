@@ -24,7 +24,7 @@ export class WidgetVisibilityModel {
     nextCondition?: WidgetVisibilityModel;
     nextConditionOperator: string;
 
-    constructor(private json?: any) {
+    constructor(private readonly json?: any) {
         if (json) {
             this.operator = json.operator;
             this.nextCondition = new WidgetVisibilityModel(json.nextCondition);

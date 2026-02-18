@@ -75,15 +75,15 @@ interface LoginFormValues {
     host: { class: 'adf-login' }
 })
 export class LoginComponent implements OnInit {
-    private _fb = inject(UntypedFormBuilder);
-    private authService = inject(AuthenticationService);
-    private basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
-    private oidcAuthenticationService = inject(OidcAuthenticationService);
-    private translateService = inject(TranslationService);
-    private router = inject(Router);
-    private appConfig = inject(AppConfigService);
-    private userPreferences = inject(UserPreferencesService);
-    private route = inject(ActivatedRoute);
+    private readonly _fb = inject(UntypedFormBuilder);
+    private readonly authService = inject(AuthenticationService);
+    private readonly basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
+    private readonly oidcAuthenticationService = inject(OidcAuthenticationService);
+    private readonly translateService = inject(TranslationService);
+    private readonly router = inject(Router);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly userPreferences = inject(UserPreferencesService);
+    private readonly route = inject(ActivatedRoute);
 
     isPasswordShow: boolean = false;
 

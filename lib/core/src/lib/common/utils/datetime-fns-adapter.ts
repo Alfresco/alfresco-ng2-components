@@ -60,7 +60,7 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
 
 @Injectable({ providedIn: 'root' })
 export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
-    private formats = inject<MatDatetimeFormats>(MAT_DATETIME_FORMATS, { optional: true });
+    private readonly formats = inject<MatDatetimeFormats>(MAT_DATETIME_FORMATS, { optional: true });
 
     private _displayFormat?: string = null;
 

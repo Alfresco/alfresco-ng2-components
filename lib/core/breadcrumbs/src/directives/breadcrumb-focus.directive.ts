@@ -26,7 +26,7 @@ import { Directive, ElementRef, inject } from '@angular/core';
     }
 })
 export class BreadcrumbFocusDirective {
-    private elementRef = inject(ElementRef);
+    private readonly elementRef = inject(ElementRef);
 
     focusOnFirstFocusableElement() {
         this.getFocusableElements(this.elementRef.nativeElement)[0].focus();

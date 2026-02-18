@@ -24,7 +24,7 @@ import { ContextMenuOverlayService } from './context-menu-overlay.service';
     selector: '[adf-context-menu]'
 })
 export class ContextMenuDirective {
-    private contextMenuService = inject(ContextMenuOverlayService);
+    private readonly contextMenuService = inject(ContextMenuOverlayService);
 
     /** Items for the menu. */
     @Input('adf-context-menu')

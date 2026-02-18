@@ -29,7 +29,7 @@ import { Track } from '../../models/viewer.model';
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
-    private urlService = inject(UrlService);
+    private readonly urlService = inject(UrlService);
 
     @Input()
     urlFile: string;

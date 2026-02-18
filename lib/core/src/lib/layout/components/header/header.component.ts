@@ -34,7 +34,7 @@ import { IconModule } from '../../../icon/icon.module';
     host: { class: 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {
-    private appConfigService = inject(AppConfigService);
+    private readonly appConfigService = inject(AppConfigService);
 
     /** Title of the application. */
     @Input() title: string;

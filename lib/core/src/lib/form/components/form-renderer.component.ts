@@ -70,12 +70,12 @@ import { IconModule } from '../../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {
-    private middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
+    private readonly middlewareServices = inject<FormFieldModelRenderMiddleware[]>(FORM_FIELD_MODEL_RENDER_MIDDLEWARE, { optional: true }) ?? [];
 
     public readonly formService = inject(FormService);
     private readonly formRulesManager = inject(FormRulesManager<T>);
     private readonly dialog = inject(MatDialog);
-    private cdr = inject(ChangeDetectorRef);
+    private readonly cdr = inject(ChangeDetectorRef);
 
     @Input({ required: true })
     formDefinition: FormModel;

@@ -48,7 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlagsOverrideComponent {
-    private featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
+    private readonly featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
 
     isEnabled = false;
 

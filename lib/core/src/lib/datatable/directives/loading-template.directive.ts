@@ -25,7 +25,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-loading-content-template, loading-content-template'
 })
 export class LoadingContentTemplateDirective implements AfterContentInit {
-    private dataTable = inject(DataTableComponent);
+    private readonly dataTable = inject(DataTableComponent);
 
     @ContentChild(TemplateRef)
     template: any;

@@ -23,7 +23,7 @@ import { TranslationService } from '../translation/translation.service';
     pure: false
 })
 export class FileSizePipe implements PipeTransform {
-    private translation = inject(TranslationService);
+    private readonly translation = inject(TranslationService);
 
     transform(paramByte: any, decimals: number = 2): string {
         if (paramByte == null) {

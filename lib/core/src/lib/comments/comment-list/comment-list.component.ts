@@ -41,7 +41,7 @@ export class CommentListComponent {
     @Output()
     clickRow = new EventEmitter<CommentModel>();
 
-    private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
+    private readonly commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
     selectComment(comment: CommentModel): void {
         this.clickRow.emit(comment);

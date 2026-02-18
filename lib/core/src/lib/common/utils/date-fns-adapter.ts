@@ -68,7 +68,7 @@ export const ADF_DATE_FORMATS: MatDateFormats = {
 
 @Injectable({ providedIn: 'root' })
 export class AdfDateFnsAdapter extends DateFnsAdapter {
-    private formats = inject<MatDateFormats>(MAT_DATE_FORMATS, { optional: true });
+    private readonly formats = inject<MatDateFormats>(MAT_DATE_FORMATS, { optional: true });
 
     private _displayFormat?: string = null;
 
