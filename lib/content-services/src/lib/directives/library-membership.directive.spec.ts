@@ -35,8 +35,8 @@ describe('LibraryMembershipDirective', () => {
     let deleteMembershipSpy: jasmine.Spy;
     let mockSupportedVersion = false;
 
-    let testSiteEntry: any;
-    let requestedMembershipResponse: any;
+    let testSiteEntry: Partial<{ id: string; guid: string; title: string; visibility: string }>;
+    let requestedMembershipResponse: Partial<{ id: string; createdAt: string; site: typeof testSiteEntry }>;
 
     beforeEach(() => {
         versionCompatibilityService = jasmine.createSpyObj('VersionCompatibilityService', ['isVersionSupported']);
@@ -73,7 +73,7 @@ describe('LibraryMembershipDirective', () => {
     describe('markMembershipRequest', () => {
         beforeEach(() => {
             getMembershipSpy = spyOn(directive.sitesApi, 'getSiteMembershipRequestForPerson').and.returnValue(
-                Promise.resolve({ entry: requestedMembershipResponse })
+                Promise.resolve({ entry: requestedMembershipResponse } as never)
             );
         });
 
@@ -116,10 +116,10 @@ describe('LibraryMembershipDirective', () => {
         beforeEach(() => {
             mockSupportedVersion = false;
             getMembershipSpy = spyOn(directive.sitesApi, 'getSiteMembershipRequestForPerson').and.returnValue(
-                Promise.resolve({ entry: requestedMembershipResponse })
+                Promise.resolve({ entry: requestedMembershipResponse } as never)
             );
             addMembershipSpy = spyOn(directive.sitesApi, 'createSiteMembershipRequestForPerson').and.returnValue(
-                Promise.resolve({ entry: requestedMembershipResponse })
+                Promise.resolve({ entry: requestedMembershipResponse } as never)
             );
             deleteMembershipSpy = spyOn(directive.sitesApi, 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve());
         });
@@ -169,7 +169,7 @@ describe('LibraryMembershipDirective', () => {
         }));
 
         it('should call API to add user to library if admin user', fakeAsync(() => {
-            const createSiteMembershipSpy = spyOn(sitesService, 'createSiteMembership').and.returnValue(of({} as any));
+            const createSiteMembershipSpy = spyOn(sitesService, 'createSiteMembership').and.returnValue(of({} as never));
             const selection = { entry: { id: 'no-membership-requested' } };
             const selectionChange = new SimpleChange(null, selection, true);
             directive.isAdmin = true;
@@ -183,7 +183,7 @@ describe('LibraryMembershipDirective', () => {
 
         it('should emit error when the request to join a library fails', fakeAsync(() => {
             spyOn(directive.error, 'emit');
-            addMembershipSpy.and.returnValue(throwError('err'));
+            addMembershipSpy.and.returnValue(throwError(() => 'err'));
 
             const selection = { entry: { id: 'no-membership-requested' } };
             const change = new SimpleChange(null, selection, true);
@@ -213,7 +213,7 @@ describe('LibraryMembershipDirective', () => {
             ];
 
             testData.forEach((data) => {
-                addMembershipSpy.and.returnValue(throwError({ message: data.fixture }));
+                addMembershipSpy.and.returnValue(throwError(() => ({ message: data.fixture })));
                 emitErrorSpy.calls.reset();
                 directive.toggleMembershipRequest();
                 tick();
