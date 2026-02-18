@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ExtensionService } from './extension.service';
+import { ExtensionService, EXTENSION_JSONS, EXTENSION_JSON_VALUES } from './extension.service';
 import { ExtensionLoaderService } from './extension-loader.service';
 import { ExtensionConfig } from '../config/extension.config';
 import { RuleRef } from '../config/rule.extensions';
@@ -23,6 +23,9 @@ import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('ExtensionService', () => {
     const blankConfig: ExtensionConfig = {
@@ -35,15 +38,24 @@ describe('ExtensionService', () => {
     };
 
     let loader: ExtensionLoaderService;
-    let componentRegister: ComponentRegisterService;
     let service: ExtensionService;
-    let ruleService: RuleService;
 
     beforeEach(() => {
-        loader = new ExtensionLoaderService(null);
-        componentRegister = new ComponentRegisterService();
-        ruleService = new RuleService(loader);
-        service = new ExtensionService(loader, componentRegister, ruleService, [], []);
+        TestBed.configureTestingModule({
+            providers: [
+                provideHttpClient(),
+                provideHttpClientTesting(),
+                ExtensionService,
+                ExtensionLoaderService,
+                ComponentRegisterService,
+                RuleService,
+                { provide: EXTENSION_JSONS, useValue: [] },
+                { provide: EXTENSION_JSON_VALUES, useValue: [] }
+            ]
+        });
+
+        loader = TestBed.inject(ExtensionLoaderService);
+        service = TestBed.inject(ExtensionService);
     });
 
     it('should load and setup a config', async () => {
