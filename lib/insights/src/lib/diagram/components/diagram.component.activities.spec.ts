@@ -28,7 +28,6 @@ declare let jasmine: any;
 describe('Diagrams activities', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
-    let element: HTMLElement;
     let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
@@ -37,7 +36,6 @@ describe('Diagrams activities', () => {
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
         unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
     });
@@ -412,8 +410,8 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const task = element.querySelector('diagram-user-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
-                    expect(task).not.toBeNull();
+                    const task = unitTestingUtils.getByCSS('diagram-user-task > diagram-task > raphael-rect');
+                    expect(task?.injector.get(RaphaelRectDirective).stroke).toBe('#017501');
 
                     const taskText = unitTestingUtils.getByCSS('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();

@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { NavbarItemComponent } from '@alfresco/adf-core';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -45,8 +46,7 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = testingUtils.getAllByCSS('.adf-navbar-item-btn');
-        expect(renderedItems.length).toBe(testItems.length);
+        expect(testingUtils.getAllByDirective(NavbarItemComponent).length).toBe(testItems.length);
     });
 
     it('should render navbar items with correct label and router-link', () => {
@@ -56,10 +56,10 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = testingUtils.getAllByCSS('.adf-navbar-item-btn').map((item) => item.nativeElement);
+        const navbarItems = testingUtils.getAllByDirective(NavbarItemComponent);
         testItems.forEach((item, index) => {
-            expect(renderedItems[index].textContent).toContain(item.label);
-            expect(renderedItems[index].getAttribute('ng-reflect-router-link')).toContain(item.routerLink);
+            expect(navbarItems[index].componentInstance.label).toBe(item.label);
+            expect(navbarItems[index].componentInstance.routerLink).toBe(item.routerLink);
         });
     });
 });

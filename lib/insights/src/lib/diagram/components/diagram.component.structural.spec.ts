@@ -19,13 +19,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as structuralMock from '../../mock/diagram/diagram-structural.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { RaphaelRectDirective } from '@alfresco/adf-insights';
 
 declare let jasmine: any;
 
 describe('Diagrams structural', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
-    let element: HTMLElement;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -33,8 +35,8 @@ describe('Diagrams structural', () => {
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
         fixture.detectChanges();
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
@@ -62,12 +64,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect');
+                    const shape = unitTestingUtils.getByCSS('diagram-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -81,12 +83,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
+                    const shape = unitTestingUtils.getByCSS('diagram-event-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -102,12 +104,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect');
+                    const shape = unitTestingUtils.getByCSS('diagram-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -121,12 +123,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect[ng-reflect-stroke="#017501"]');
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-subprocess > raphael-rect');
+                    expect(shape.injector.get(RaphaelRectDirective).stroke).toBe('#017501');
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -140,12 +142,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect[ng-reflect-stroke="#2632aa"]');
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-subprocess > raphael-rect');
+                    expect(shape.injector.get(RaphaelRectDirective).stroke).toBe('#2632aa');
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -159,12 +161,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
+                    const shape = unitTestingUtils.getByCSS('diagram-event-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -178,12 +180,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect[ng-reflect-stroke="#017501"]');
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-event-subprocess > raphael-rect');
+                    expect(shape.injector.get(RaphaelRectDirective).stroke).toBe('#017501');
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -197,12 +199,12 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect[ng-reflect-stroke="#2632aa"]');
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-event-subprocess > raphael-rect');
+                    expect(shape.injector.get(RaphaelRectDirective).stroke).toBe('#2632aa');
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });

@@ -17,14 +17,16 @@
 
 import { DEFAULT_DATETIME_FORMAT, SearchDatetimeRangeComponent } from './search-datetime-range.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
-import { DateFnsUtils } from '@alfresco/adf-core';
+import { MatDatetimepickerInputDirective, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { DateFnsUtils, UnitTestingUtils } from '@alfresco/adf-core';
 import { endOfMinute, isValid, startOfMinute } from 'date-fns';
 import { ReplaySubject } from 'rxjs';
 
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
     let component: SearchDatetimeRangeComponent;
+    let unitTestingUtils: UnitTestingUtils;
+
     const fromDatetime = new Date('2016-10-16 12:30');
     const toDatetime = new Date('2017-10-16 20:00');
     const datetimeFormatFixture = 'DD-MMM-YY HH:mm'; // dd-MMM-yy HH:mm
@@ -35,6 +37,7 @@ describe('SearchDatetimeRangeComponent', () => {
             imports: [SearchDatetimeRangeComponent]
         });
         fixture = TestBed.createComponent(SearchDatetimeRangeComponent);
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
         component.id = 'createdDateRange';
         component.context = {
@@ -207,8 +210,7 @@ describe('SearchDatetimeRangeComponent', () => {
     it('should have no maximum datetime by default', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
-
-        expect(fixture.debugElement.nativeElement.querySelector('input[ng-reflect-max]')).toBeNull();
+        expect(unitTestingUtils.getByCSS('input').injector.get(MatDatetimepickerInputDirective).max).toBeNull();
     });
 
     it('should be able to set a fixed maximum datetime', async () => {
@@ -217,12 +219,16 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max]');
+        const inputs = unitTestingUtils.getAllByCSS('input');
 
-        expect(inputs[0]).toBeDefined();
-        expect(inputs[0]).not.toBeNull();
-        expect(inputs[1]).toBeDefined();
-        expect(inputs[1]).not.toBeNull();
+        const input1 = inputs[0];
+        const input2 = inputs[1];
+        expect(input1).toBeDefined();
+        expect(input1).not.toBeNull();
+        expect(input1.injector.get(MatDatetimepickerInputDirective).max).toBeDefined();
+        expect(input2).toBeDefined();
+        expect(input2).not.toBeNull();
+        expect(input2.injector.get(MatDatetimepickerInputDirective).max).toBeDefined();
     });
 
     it('should populate filter state when populate filters event has been observed', () => {
