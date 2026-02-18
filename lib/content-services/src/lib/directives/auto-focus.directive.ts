@@ -22,7 +22,7 @@ import { AfterContentInit, Directive, ElementRef, inject } from '@angular/core';
     selector: '[adf-auto-focus]'
 })
 export class AutoFocusDirective implements AfterContentInit {
-    private el = inject(ElementRef);
+    private readonly el = inject(ElementRef);
 
     public ngAfterContentInit() {
         setTimeout(() => {

@@ -28,13 +28,12 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'content-action',
-    template: '',
-    providers: [DocumentActionsService, FolderActionsService]
+    template: ''
 })
 export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
-    private list = inject(ContentActionListComponent);
-    private documentActions = inject(DocumentActionsService);
-    private folderActions = inject(FolderActionsService);
+    private readonly list = inject(ContentActionListComponent);
+    private readonly documentActions = inject(DocumentActionsService);
+    private readonly folderActions = inject(FolderActionsService);
 
     /** The title of the action as shown in the menu. */
     @Input()

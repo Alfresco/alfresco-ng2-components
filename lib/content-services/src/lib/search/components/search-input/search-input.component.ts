@@ -31,7 +31,7 @@ import { SearchConfiguration } from '../../models';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchInputComponent implements OnInit {
-    private appConfig = inject(AppConfigService);
+    private readonly appConfig = inject(AppConfigService);
 
     @Input()
     value = '';

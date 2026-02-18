@@ -49,10 +49,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-folder-dialog' }
 })
 export class FolderDialogComponent implements OnInit {
-    private formBuilder = inject(UntypedFormBuilder);
-    private dialog = inject<MatDialogRef<FolderDialogComponent>>(MatDialogRef);
-    private nodesApi = inject(NodesApiService);
-    private translation = inject(TranslationService);
+    private readonly formBuilder = inject(UntypedFormBuilder);
+    private readonly dialog = inject<MatDialogRef<FolderDialogComponent>>(MatDialogRef);
+    private readonly nodesApi = inject(NodesApiService);
+    private readonly translation = inject(TranslationService);
     data = inject(MAT_DIALOG_DATA, { optional: true });
 
     /**

@@ -34,7 +34,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     private readonly nodeApiService = inject(NodesApiService);
 
-    private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
+    private readonly customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: FilterSearch[] = [];
 

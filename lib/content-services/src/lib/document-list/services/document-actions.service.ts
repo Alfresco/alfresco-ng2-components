@@ -30,11 +30,11 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
     providedIn: 'root'
 })
 export class DocumentActionsService {
-    private nodeActionsService = inject(NodeActionsService);
-    private contentNodeDialogService = inject(ContentNodeDialogService);
-    private translation = inject(TranslationService);
-    private documentListService = inject(DocumentListService);
-    private contentService = inject(ContentService);
+    private readonly nodeActionsService = inject(NodeActionsService);
+    private readonly contentNodeDialogService = inject(ContentNodeDialogService);
+    private readonly translation = inject(TranslationService);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly contentService = inject(ContentService);
 
     permissionEvent = new Subject<PermissionModel>();
     error = new Subject<Error>();

@@ -26,8 +26,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SharedLinksApiService {
-    private apiService = inject(AlfrescoApiService);
-    private preferences = inject(UserPreferencesService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly preferences = inject(UserPreferencesService);
 
     error = new Subject<{ statusCode: number; message: string }>();
 

@@ -55,7 +55,7 @@ export class RenditionService {
     /**
      * Timeout used for setInterval.
      */
-    private TRY_TIMEOUT: number = 10000;
+    private readonly TRY_TIMEOUT: number = 10000;
 
     _renditionsApi: RenditionsApi;
     get renditionsApi(): RenditionsApi {
@@ -70,7 +70,7 @@ export class RenditionService {
     }
 
     _versionsApi: VersionsApi;
-    private DEFAULT_RENDITION: string = 'imgpreview';
+    private readonly DEFAULT_RENDITION: string = 'imgpreview';
 
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());

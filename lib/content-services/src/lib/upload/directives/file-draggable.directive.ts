@@ -27,7 +27,7 @@ export const DROP_EFFECT = 'copy';
     selector: '[adf-file-draggable]'
 })
 export class FileDraggableDirective implements OnInit, OnDestroy {
-    private ngZone = inject(NgZone);
+    private readonly ngZone = inject(NgZone);
 
     files: File[];
 
@@ -43,7 +43,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     @Output()
     folderEntityDropped = new EventEmitter<any>();
 
-    private element: HTMLElement;
+    private readonly element: HTMLElement;
 
     constructor() {
         const el = inject(ElementRef);

@@ -22,7 +22,7 @@ import { SearchFacetFiltersService } from '../services/search-facet-filters.serv
     selector: '[adf-reset-search]'
 })
 export class ResetSearchDirective {
-    private filterService = inject(SearchFacetFiltersService);
+    private readonly filterService = inject(SearchFacetFiltersService);
 
     @HostListener('click')
     onClick() {

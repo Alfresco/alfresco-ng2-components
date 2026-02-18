@@ -104,7 +104,7 @@ export class SearchControlComponent {
     searchAutocomplete: SearchComponent;
 
     @ViewChildren(MatListItem)
-    private listResultElement: QueryList<MatListItem>;
+    private readonly listResultElement: QueryList<MatListItem>;
 
     @ContentChild(EmptySearchResultComponent)
     emptySearchTemplate: EmptySearchResultComponent;

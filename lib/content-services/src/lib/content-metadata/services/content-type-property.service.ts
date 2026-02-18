@@ -31,10 +31,10 @@ import { VersionCompatibilityService } from '../../version-compatibility/version
     providedIn: 'root'
 })
 export class ContentTypePropertiesService {
-    private contentTypeService = inject(ContentTypeService);
-    private dialog = inject(MatDialog);
-    private versionCompatibilityService = inject(VersionCompatibilityService);
-    private propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
+    private readonly contentTypeService = inject(ContentTypeService);
+    private readonly dialog = inject(MatDialog);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
+    private readonly propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
 
     getContentTypeCardItem(node: Node): Observable<CardViewItem[]> {
         if (this.versionCompatibilityService.isVersionSupported('7')) {

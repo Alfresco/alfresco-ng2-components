@@ -57,8 +57,8 @@ export class SearchFacetChipTabbedComponent {
     @ViewChild('menuTrigger', { static: false })
     menuTrigger: MatMenuTrigger;
 
-    private resetSubject$ = new Subject<void>();
-    private applySubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
+    private readonly applySubject$ = new Subject<void>();
 
     displayValue = '';
     reset$ = this.resetSubject$.asObservable();

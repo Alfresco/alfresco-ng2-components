@@ -59,14 +59,14 @@ interface SharedDialogFormProps {
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit {
-    private sharedLinksApiService = inject(SharedLinksApiService);
-    private dialogRef = inject<MatDialogRef<ShareDialogComponent>>(MatDialogRef);
-    private dialog = inject(MatDialog);
-    private contentService = inject(ContentService);
-    private renditionService = inject(RenditionService);
+    private readonly sharedLinksApiService = inject(SharedLinksApiService);
+    private readonly dialogRef = inject<MatDialogRef<ShareDialogComponent>>(MatDialogRef);
+    private readonly dialog = inject(MatDialog);
+    private readonly contentService = inject(ContentService);
+    private readonly renditionService = inject(RenditionService);
     data = inject<ContentNodeShareSettings>(MAT_DIALOG_DATA);
 
-    private minDateValidator = (control: FormControl<Date>): any =>
+    private readonly minDateValidator = (control: FormControl<Date>): any =>
         isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
 
     minDate = add(new Date(), { days: 1 });

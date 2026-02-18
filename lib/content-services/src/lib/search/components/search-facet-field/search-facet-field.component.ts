@@ -39,9 +39,9 @@ import { FormsModule } from '@angular/forms';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {
-    private queryBuilder = inject(SearchQueryBuilderService);
-    private searchFacetFiltersService = inject(SearchFacetFiltersService);
-    private translationService = inject(TranslationService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
+    private readonly searchFacetFiltersService = inject(SearchFacetFiltersService);
+    private readonly translationService = inject(TranslationService);
 
     @Input({ required: true })
     field: FacetField;

@@ -28,10 +28,10 @@ import { CategoryService } from '../../category';
     providedIn: 'root'
 })
 export class DialogAspectListService {
-    private dialog = inject(MatDialog);
-    private overlayContainer = inject(OverlayContainer);
-    private tagService = inject(TagService);
-    private categoryService = inject(CategoryService);
+    private readonly dialog = inject(MatDialog);
+    private readonly overlayContainer = inject(OverlayContainer);
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
 
     openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
         const select = new Subject<string[]>();

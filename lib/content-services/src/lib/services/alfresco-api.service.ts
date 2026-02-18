@@ -29,7 +29,7 @@ export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
 export class AlfrescoApiService {
     protected appConfig = inject(AppConfigService);
     protected storageService = inject(StorageService);
-    private alfrescoApiFactory = inject<AlfrescoApiFactory>(ALFRESCO_API_FACTORY, { optional: true });
+    private readonly alfrescoApiFactory = inject<AlfrescoApiFactory>(ALFRESCO_API_FACTORY, { optional: true });
 
     alfrescoApiInitialized = new ReplaySubject<boolean>(1);
 
@@ -40,7 +40,7 @@ export class AlfrescoApiService {
 
     idpConfig: OpenidConfiguration;
 
-    private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
+    private readonly excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;

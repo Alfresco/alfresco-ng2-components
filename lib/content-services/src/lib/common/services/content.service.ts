@@ -36,7 +36,7 @@ export interface FolderCreatedEvent {
 export class ContentService {
     authService = inject(AuthenticationService);
     apiService = inject(AlfrescoApiService);
-    private thumbnailService = inject(ThumbnailService);
+    private readonly thumbnailService = inject(ThumbnailService);
 
     folderCreated = new Subject<FolderCreatedEvent>();
     folderCreate = new Subject<Node>();

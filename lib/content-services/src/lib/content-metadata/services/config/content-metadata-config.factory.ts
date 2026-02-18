@@ -29,8 +29,8 @@ const DEFAULT_PRESET_NAME = 'default';
     providedIn: 'root'
 })
 export class ContentMetadataConfigFactory {
-    private appConfigService = inject(AppConfigService);
-    private logService = inject(LogService);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly logService = inject(LogService);
 
     public get(presetName: string = 'default'): ContentMetadataConfig {
         let presetConfig: PresetConfig;

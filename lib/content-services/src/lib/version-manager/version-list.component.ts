@@ -37,8 +37,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
     constructor(
-        private versionsApi: VersionsApi,
-        private node: Node
+        private readonly versionsApi: VersionsApi,
+        private readonly node: Node
     ) {
         super();
     }
@@ -72,10 +72,10 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
     host: { class: 'adf-version-list' }
 })
 export class VersionListComponent implements OnChanges, OnInit {
-    private alfrescoApi = inject(AlfrescoApiService);
-    private contentService = inject(ContentService);
-    private contentVersionService = inject(ContentVersionService);
-    private dialog = inject(MatDialog);
+    private readonly alfrescoApi = inject(AlfrescoApiService);
+    private readonly contentService = inject(ContentService);
+    private readonly contentVersionService = inject(ContentVersionService);
+    private readonly dialog = inject(MatDialog);
 
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {

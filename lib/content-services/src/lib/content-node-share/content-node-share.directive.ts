@@ -29,9 +29,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     exportAs: 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges {
-    private dialog = inject(MatDialog);
-    private zone = inject(NgZone);
-    private alfrescoApiService = inject(AlfrescoApiService);
+    private readonly dialog = inject(MatDialog);
+    private readonly zone = inject(NgZone);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     isFile: boolean = false;
     isShared: boolean = false;

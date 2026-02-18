@@ -36,11 +36,11 @@ const SITE_MANAGER_ROLE = 'SiteManager';
     providedIn: 'root'
 })
 export class PermissionListService {
-    private nodeService = inject(NodesApiService);
-    private nodePermissionService = inject(NodePermissionService);
-    private nodePermissionDialogService = inject(NodePermissionDialogService);
-    private contentService = inject(ContentService);
-    private notificationService = inject(NotificationService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly nodePermissionService = inject(NodePermissionService);
+    private readonly nodePermissionDialogService = inject(NodePermissionDialogService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
 
     updated = new EventEmitter<PermissionDisplayModel>();
     errored = new EventEmitter<PermissionDisplayModel>();

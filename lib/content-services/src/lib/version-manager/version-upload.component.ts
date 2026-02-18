@@ -48,8 +48,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-version-upload' }
 })
 export class VersionUploadComponent implements OnInit {
-    private contentService = inject(ContentService);
-    private uploadService = inject(UploadService);
+    private readonly contentService = inject(ContentService);
+    private readonly uploadService = inject(UploadService);
 
     semanticVersion: string = 'minor';
     comment: string;

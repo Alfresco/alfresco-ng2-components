@@ -30,8 +30,8 @@ import { SearchFilterComponent } from '../search-filter';
     host: { class: 'adf-search-panel' }
 })
 export class SearchPanelComponent implements OnInit {
-    private contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
-    private queryBuilderService = inject(SearchQueryBuilderService);
+    private readonly contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
+    private readonly queryBuilderService = inject(SearchQueryBuilderService);
 
     ngOnInit(): void {
         this.queryBuilderService.categories = this.contentNodeSelectorPanelService.convertCustomModelPropertiesToSearchCategories();

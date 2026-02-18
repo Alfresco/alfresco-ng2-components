@@ -53,8 +53,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     constructor(
-        private thumbnailService: ThumbnailService,
-        private contentService: ContentService,
+        private readonly thumbnailService: ThumbnailService,
+        private readonly contentService: ContentService,
         schema: DataColumn[] = [],
         sorting?: DataSorting,
         sortingMode: string = 'client',

@@ -25,10 +25,10 @@ import { AlfrescoApiService } from '../../services';
     providedIn: 'root'
 })
 export class AgentService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _agentsApi: AgentsApi;
-    private agents = new BehaviorSubject<Agent[]>([]);
+    private readonly agents = new BehaviorSubject<Agent[]>([]);
 
     get agentsApi(): AgentsApi {
         this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());

@@ -24,7 +24,7 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class CardViewContentUpdateService {
-    private cardViewUpdateService = inject(CardViewUpdateService);
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
 
     itemUpdated$ = new Subject<UpdateNotification>();
     updatedAspect$ = new Subject<Node>();

@@ -25,7 +25,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class GroupService {
-    private alfrescoApiService = inject(AlfrescoApiService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {

@@ -30,9 +30,9 @@ import { take } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class NewVersionUploaderService {
-    private apiService = inject(AlfrescoApiService);
-    private dialog = inject(MatDialog);
-    private overlayContainer = inject(OverlayContainer);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly dialog = inject(MatDialog);
+    private readonly overlayContainer = inject(OverlayContainer);
 
     private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {

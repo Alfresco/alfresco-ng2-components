@@ -22,7 +22,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class PredictionService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _predictionsApi: PredictionsApi;
 

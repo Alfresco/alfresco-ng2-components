@@ -52,8 +52,8 @@ export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT
     providedIn: 'root'
 })
 export class PropertyGroupTranslatorService {
-    private appConfig = inject(AppConfigService);
-    private logService = inject(LogService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly logService = inject(LogService);
 
     valueSeparator: string;
 

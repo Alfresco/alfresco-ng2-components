@@ -30,8 +30,8 @@ export const CustomAspectsWhere = `(not namespaceUri matches('http://www.alfresc
     providedIn: 'root'
 })
 export class AspectListService {
-    private alfrescoApiService = inject(AlfrescoApiService);
-    private appConfigService = inject(AppConfigService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly appConfigService = inject(AppConfigService);
 
     private _aspectsApi: AspectsApi;
     get aspectsApi(): AspectsApi {

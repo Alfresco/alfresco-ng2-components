@@ -32,9 +32,9 @@ const ROOT_ID = '-root-';
     providedIn: 'root'
 })
 export class DocumentListService implements DocumentListLoader {
-    private nodesApiService = inject(NodesApiService);
-    private apiService = inject(AlfrescoApiService);
-    private customResourcesService = inject(CustomResourcesService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly customResourcesService = inject(CustomResourcesService);
 
     private _nodesApi: NodesApi;
     get nodes(): NodesApi {
@@ -42,8 +42,8 @@ export class DocumentListService implements DocumentListLoader {
         return this._nodesApi;
     }
 
-    private _reload = new Subject<void>();
-    private _resetSelection = new Subject<void>();
+    private readonly _reload = new Subject<void>();
+    private readonly _resetSelection = new Subject<void>();
 
     /** Gets an observable that emits when the document list should be reloaded. */
     reload$ = this._reload.asObservable();

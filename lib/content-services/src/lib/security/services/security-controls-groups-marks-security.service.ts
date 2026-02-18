@@ -41,22 +41,22 @@ const DEFAULT_INCLUDE = 'inUse';
 
 @Injectable({ providedIn: 'root' })
 export class SecurityControlsService {
-    private apiService = inject(AlfrescoApiService);
-    private userPreferencesService = inject(UserPreferencesService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
 
-    private groupsPaginatedSource = new Subject<SecurityControlsGroupResponse>();
+    private readonly groupsPaginatedSource = new Subject<SecurityControlsGroupResponse>();
     groupsPaginated$ = this.groupsPaginatedSource.asObservable();
 
-    private reloadSecurityControls: Subject<void> = new Subject<void>();
+    private readonly reloadSecurityControls: Subject<void> = new Subject<void>();
     reloadSecurityControls$ = this.reloadSecurityControls.asObservable();
 
-    private _reloadAuthorityClearance: Subject<void> = new Subject<void>();
+    private readonly _reloadAuthorityClearance: Subject<void> = new Subject<void>();
     reloadAuthorityClearance$ = this._reloadAuthorityClearance.asObservable();
 
-    private marksPaginatedSource = new Subject<SecurityControlsMarkResponse>();
+    private readonly marksPaginatedSource = new Subject<SecurityControlsMarkResponse>();
     marksPaginated$ = this.marksPaginatedSource.asObservable();
 
-    private loadingSource = new BehaviorSubject<boolean>(true);
+    private readonly loadingSource = new BehaviorSubject<boolean>(true);
     loading$ = this.loadingSource.asObservable();
 
     private securityGroup: SecurityGroupsApi;

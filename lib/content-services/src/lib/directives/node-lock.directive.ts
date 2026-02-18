@@ -29,9 +29,9 @@ import { ContentNodeDialogService } from '../content-node-selector/content-node-
 })
 export class NodeLockDirective implements AfterViewInit {
     element = inject(ElementRef);
-    private renderer = inject(Renderer2);
-    private contentService = inject(ContentService);
-    private contentNodeDialogService = inject(ContentNodeDialogService);
+    private readonly renderer = inject(Renderer2);
+    private readonly contentService = inject(ContentService);
+    private readonly contentNodeDialogService = inject(ContentNodeDialogService);
 
     /** Node to lock/unlock. */
     @Input('adf-node-lock')

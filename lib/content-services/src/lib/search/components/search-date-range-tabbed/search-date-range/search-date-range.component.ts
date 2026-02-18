@@ -71,9 +71,9 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements OnInit, AfterViewInit {
-    private userPreferencesService = inject(UserPreferencesService);
-    private dateAdapter = inject<DateAdapter<DateFnsAdapter>>(DateAdapter);
-    private dateFormatConfig = inject<MatDateFormats>(MAT_DATE_FORMATS);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly dateAdapter = inject<DateAdapter<DateFnsAdapter>>(DateAdapter);
+    private readonly dateFormatConfig = inject<MatDateFormats>(MAT_DATE_FORMATS);
 
     @Input()
     dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;

@@ -35,7 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-library-role-column adf-datatable-content-cell' }
 })
 export class LibraryRoleColumnComponent implements OnInit {
-    private nodesApiService = inject(NodesApiService);
+    private readonly nodesApiService = inject(NodesApiService);
 
     @Input({ required: true })
     context: any;

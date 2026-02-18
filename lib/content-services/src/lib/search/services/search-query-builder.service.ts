@@ -24,7 +24,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
-    private configuration = inject<SearchConfiguration>(ADF_SEARCH_CONFIGURATION, { optional: true });
+    private readonly configuration = inject<SearchConfiguration>(ADF_SEARCH_CONFIGURATION, { optional: true });
 
     public isFilterServiceActive(): boolean {
         return false;

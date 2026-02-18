@@ -52,8 +52,8 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
     host: { class: 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
 })
 export class NameColumnComponent implements OnInit {
-    private element = inject(ElementRef);
-    private nodesApiService = inject(NodesApiService);
+    private readonly element = inject(ElementRef);
+    private readonly nodesApiService = inject(NodesApiService);
 
     @Input({ required: true })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

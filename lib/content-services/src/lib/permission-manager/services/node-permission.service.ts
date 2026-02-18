@@ -31,10 +31,10 @@ import { RoleModel } from '../models/role.model';
     providedIn: 'root'
 })
 export class NodePermissionService {
-    private apiService = inject(AlfrescoApiService);
-    private searchApiService = inject(SearchService);
-    private nodeService = inject(NodesApiService);
-    private translation = inject(TranslationService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly searchApiService = inject(SearchService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly translation = inject(TranslationService);
 
     private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {

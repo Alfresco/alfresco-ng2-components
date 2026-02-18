@@ -30,11 +30,11 @@ import { ContentTypePropertiesService } from './content-type-property.service';
     providedIn: 'root'
 })
 export class ContentMetadataService {
-    private basicPropertiesService = inject(BasicPropertiesService);
-    private contentMetadataConfigFactory = inject(ContentMetadataConfigFactory);
-    private propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
-    private propertyDescriptorsService = inject(PropertyDescriptorsService);
-    private contentTypePropertyService = inject(ContentTypePropertiesService);
+    private readonly basicPropertiesService = inject(BasicPropertiesService);
+    private readonly contentMetadataConfigFactory = inject(ContentMetadataConfigFactory);
+    private readonly propertyGroupTranslatorService = inject(PropertyGroupTranslatorService);
+    private readonly propertyDescriptorsService = inject(PropertyDescriptorsService);
+    private readonly contentTypePropertyService = inject(ContentTypePropertiesService);
 
     error = new Subject<{ statusCode: number; message: string }>();
 

@@ -30,8 +30,8 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
     selector: '[adf-restore]'
 })
 export class NodeRestoreDirective {
-    private alfrescoApiService = inject(AlfrescoApiService);
-    private translation = inject(TranslationService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly translation = inject(TranslationService);
 
     private readonly restoreProcessStatus;
 

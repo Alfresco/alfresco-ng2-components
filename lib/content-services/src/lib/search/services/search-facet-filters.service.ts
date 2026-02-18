@@ -40,10 +40,10 @@ const DEFAULT_PAGE_SIZE: number = 5;
     providedIn: 'root'
 })
 export class SearchFacetFiltersService {
-    private queryBuilder = inject(SearchQueryBuilderService);
-    private searchService = inject(SearchService);
-    private translationService = inject(TranslationService);
-    private categoryService = inject(CategoryService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
+    private readonly searchService = inject(SearchService);
+    private readonly translationService = inject(TranslationService);
+    private readonly categoryService = inject(CategoryService);
 
     /**
      * All facet field items to be displayed in the component. These are updated according to the response.
@@ -283,7 +283,7 @@ export class SearchFacetFiltersService {
         return bucket.count === null ? '' : `(${bucket.count})`;
     }
 
-    private getFilterByMinCount =
+    private readonly getFilterByMinCount =
         (minCountInput: number) =>
         (bucket: FacetFieldBucket): boolean => {
             let minCount = minCountInput;
@@ -365,7 +365,7 @@ export class SearchFacetFiltersService {
         });
     }
 
-    private getBucketFilterFunction =
+    private readonly getBucketFilterFunction =
         (bucketList: SearchFilterList<FacetFieldBucket>) =>
         (bucket: FacetFieldBucket): boolean => {
             if (bucket && bucketList.filterText) {

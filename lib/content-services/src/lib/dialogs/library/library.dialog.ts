@@ -68,11 +68,11 @@ interface VisibilityOption {
     host: { class: 'adf-library-dialog' }
 })
 export class LibraryDialogComponent implements OnInit {
-    private alfrescoApiService = inject(AlfrescoApiService);
-    private sitesService = inject(SitesService);
-    private formBuilder = inject(UntypedFormBuilder);
-    private dialog = inject<MatDialogRef<LibraryDialogComponent>>(MatDialogRef);
-    private notificationService = inject(NotificationService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly sitesService = inject(SitesService);
+    private readonly formBuilder = inject(UntypedFormBuilder);
+    private readonly dialog = inject<MatDialogRef<LibraryDialogComponent>>(MatDialogRef);
+    private readonly notificationService = inject(NotificationService);
 
     /** Emitted when an error occurs. */
     @Output()

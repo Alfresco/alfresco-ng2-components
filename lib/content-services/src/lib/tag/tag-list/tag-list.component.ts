@@ -36,7 +36,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-tag-list' }
 })
 export class TagListComponent implements OnInit {
-    private tagService = inject(TagService);
+    private readonly tagService = inject(TagService);
 
     /** Emitted when a tag is selected. */
     @Output()

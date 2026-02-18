@@ -53,10 +53,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
-    private uploadService = inject(UploadService);
-    private changeDetector = inject(ChangeDetectorRef);
-    private userPreferencesService = inject(UserPreferencesService);
-    private elementRef = inject(ElementRef);
+    private readonly uploadService = inject(UploadService);
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly elementRef = inject(ElementRef);
 
     /** Dialog direction. Can be 'ltr' or 'rtl. */
     private direction: Direction = 'ltr';
@@ -92,7 +92,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     isDialogMinimized: boolean = false;
     isConfirmation: boolean = false;
 
-    private dialogActive = new Subject<boolean>();
+    private readonly dialogActive = new Subject<boolean>();
 
     private readonly destroyRef = inject(DestroyRef);
 

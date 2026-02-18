@@ -26,7 +26,7 @@ import { DocumentListComponent } from './../document-list.component';
     template: ''
 })
 export class ContentActionListComponent {
-    private documentList = inject(DocumentListComponent);
+    private readonly documentList = inject(DocumentListComponent);
 
     /**
      * Registers action handler within the parent document list component.

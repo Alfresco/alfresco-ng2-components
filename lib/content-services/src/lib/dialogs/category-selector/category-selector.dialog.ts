@@ -37,8 +37,8 @@ export interface CategorySelectorDialogOptions {
     encapsulation: ViewEncapsulation.None
 })
 export class CategorySelectorDialogComponent implements OnInit {
-    private dialog = inject<MatDialogRef<CategorySelectorDialogComponent, boolean>>(MatDialogRef);
-    private options = inject<CategorySelectorDialogOptions>(MAT_DIALOG_DATA);
+    private readonly dialog = inject<MatDialogRef<CategorySelectorDialogComponent, boolean>>(MatDialogRef);
+    private readonly options = inject<CategorySelectorDialogOptions>(MAT_DIALOG_DATA);
 
     categories: Category[] = [];
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;

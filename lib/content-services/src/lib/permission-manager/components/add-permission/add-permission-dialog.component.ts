@@ -52,12 +52,12 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
 })
 export class AddPermissionDialogComponent {
     data = inject<AddPermissionDialogData>(MAT_DIALOG_DATA);
-    private dialogRef = inject<MatDialogRef<AddPermissionDialogComponent>>(MatDialogRef);
+    private readonly dialogRef = inject<MatDialogRef<AddPermissionDialogComponent>>(MatDialogRef);
 
     isSearchActive = true;
     selectedMembers: MemberModel[] = [];
 
-    private existingMembers: PermissionElement[] = [];
+    private readonly existingMembers: PermissionElement[] = [];
     currentSelection: NodeEntry[] = [];
 
     constructor() {

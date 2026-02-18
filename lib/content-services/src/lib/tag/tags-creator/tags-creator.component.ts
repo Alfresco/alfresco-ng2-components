@@ -82,8 +82,8 @@ const DEFAULT_TAGS_SORTING = {
     encapsulation: ViewEncapsulation.None
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
-    private tagService = inject(TagService);
-    private notificationService = inject(NotificationService);
+    private readonly tagService = inject(TagService);
+    private readonly notificationService = inject(NotificationService);
 
     /**
      * Mode for component.
@@ -164,9 +164,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     private readonly existingTagsListLimit = 15;
 
-    private exactTagSet$ = new Subject<void>();
+    private readonly exactTagSet$ = new Subject<void>();
     private _tags: string[] = [];
-    private _tagNameControl = new FormControl<string>(
+    private readonly _tagNameControl = new FormControl<string>(
         '',
         [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyTag, this.validateSpecialCharacters],
         this.validateIfNotExistingTag.bind(this)
@@ -178,14 +178,14 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _spinnerVisible = false;
     private _typing = false;
     private _tagsListScrollbarVisible = false;
-    private cancelExistingTagsLoading$ = new Subject<void>();
+    private readonly cancelExistingTagsLoading$ = new Subject<void>();
     private existingExactTag: TagEntry;
     private _existingTagsPanelVisible: boolean;
 
     @ViewChild('tagsList')
-    private tagsListElement: ElementRef;
+    private readonly tagsListElement: ElementRef;
     @ViewChild('tagNameInput')
-    private tagNameInputElement: ElementRef;
+    private readonly tagNameInputElement: ElementRef;
 
     private readonly destroyRef = inject(DestroyRef);
 

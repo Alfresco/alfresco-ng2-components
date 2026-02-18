@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common';
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListDialogComponent implements OnInit {
-    private dialog = inject<MatDialogRef<AspectListDialogComponent>>(MatDialogRef);
+    private readonly dialog = inject<MatDialogRef<AspectListDialogComponent>>(MatDialogRef);
     data = inject<AspectListDialogComponentData>(MAT_DIALOG_DATA);
 
     title: string;

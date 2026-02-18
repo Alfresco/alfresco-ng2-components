@@ -51,7 +51,6 @@ import {
     mockNodePagingWithPreselectedNodes,
     mockPreselectedNodes
 } from '../../mock';
-import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { ImageResolver } from '../data/image-resolver.model';
 import { RowFilter } from '../data/row-filter.model';
 import { ShareDataRow } from '../data/share-data-row.model';
@@ -1179,7 +1178,7 @@ describe('DocumentList', () => {
     it('should display [empty folder] template ', () => {
         fixture.detectChanges();
         runInInjectionContext(injector, () => {
-            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock, null);
+            documentList.dataTable = TestBed.createComponent(DataTableComponent).componentInstance as DataTableComponent;
         });
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
@@ -1200,7 +1199,7 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         runInInjectionContext(injector, () => {
-            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock, null);
+            documentList.dataTable = TestBed.createComponent(DataTableComponent).componentInstance as DataTableComponent;
         });
 
         expect(documentList.isEmpty()).toBeTruthy();

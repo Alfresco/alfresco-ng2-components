@@ -30,9 +30,9 @@ import { SitesService } from '../common/services/sites.service';
     exportAs: 'libraryMembership'
 })
 export class LibraryMembershipDirective implements OnChanges {
-    private alfrescoApiService = inject(AlfrescoApiService);
-    private sitesService = inject(SitesService);
-    private versionCompatibilityService = inject(VersionCompatibilityService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly sitesService = inject(SitesService);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
 
     targetSite: any = null;
 

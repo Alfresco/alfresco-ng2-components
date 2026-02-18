@@ -65,7 +65,7 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     treeService = inject<TreeService<T>>(TreeService);
-    private userPreferenceService = inject(UserPreferencesService);
+    private readonly userPreferenceService = inject(UserPreferencesService);
 
     /** TemplateRef to provide empty template when no nodes are loaded */
     @Input()
@@ -111,10 +111,10 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @ViewChildren(MatCheckbox)
     public nodeCheckboxes: QueryList<MatCheckbox>;
 
-    private loadingRootSource = new BehaviorSubject<boolean>(false);
+    private readonly loadingRootSource = new BehaviorSubject<boolean>(false);
     private _contextMenuSource: T;
     private _contextMenuOptions: any[];
-    private contextMenuOptionsChanged$ = new Subject<void>();
+    private readonly contextMenuOptionsChanged$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 

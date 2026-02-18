@@ -36,12 +36,12 @@ import { SitesService } from '../common/services/sites.service';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class ContentNodeDialogService {
-    private dialog = inject(MatDialog);
-    private contentService = inject(ContentService);
-    private documentListService = inject(DocumentListService);
-    private siteService = inject(SitesService);
-    private translation = inject(TranslationService);
-    private thumbnailService = inject(ThumbnailService);
+    private readonly dialog = inject(MatDialog);
+    private readonly contentService = inject(ContentService);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly siteService = inject(SitesService);
+    private readonly translation = inject(TranslationService);
+    private readonly thumbnailService = inject(ThumbnailService);
 
     static nonDocumentSiteContent = ['blog', 'calendar', 'dataLists', 'discussions', 'links', 'wiki'];
 

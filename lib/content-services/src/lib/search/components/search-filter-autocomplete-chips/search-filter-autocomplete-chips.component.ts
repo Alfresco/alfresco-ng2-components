@@ -52,9 +52,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     selectedOptions: AutocompleteOption[] = [];
     enableChangeUpdate: boolean;
 
-    private resetSubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
-    private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
+    private readonly autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);

@@ -25,8 +25,8 @@ import { TreeViewService } from '../services/tree-view.service';
 
 @Injectable()
 export class TreeViewDataSource {
-    private treeControl = inject<FlatTreeControl<TreeBaseNode>>(FlatTreeControl);
-    private treeViewService = inject(TreeViewService);
+    private readonly treeControl = inject<FlatTreeControl<TreeBaseNode>>(FlatTreeControl);
+    private readonly treeViewService = inject(TreeViewService);
 
     treeNodes: TreeBaseNode[];
     dataChange = new BehaviorSubject<TreeBaseNode[]>([]);

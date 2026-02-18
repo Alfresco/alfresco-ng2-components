@@ -26,7 +26,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TreeViewService {
-    private nodeApi = inject(NodesApiService);
+    private readonly nodeApi = inject(NodesApiService);
 
     getTreeNodes(nodeId: string): Observable<TreeBaseNode[]> {
         return this.nodeApi.getNodeChildren(nodeId).pipe(

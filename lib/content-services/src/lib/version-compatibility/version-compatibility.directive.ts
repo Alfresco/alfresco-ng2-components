@@ -23,9 +23,9 @@ import { take } from 'rxjs/operators';
     selector: '[adf-acs-version]'
 })
 export class VersionCompatibilityDirective {
-    private templateRef = inject<TemplateRef<any>>(TemplateRef);
-    private viewContainer = inject(ViewContainerRef);
-    private versionCompatibilityService = inject(VersionCompatibilityService);
+    private readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
+    private readonly viewContainer = inject(ViewContainerRef);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
 
     /** Minimum version required for component to work correctly . */
     @Input('adf-acs-version')

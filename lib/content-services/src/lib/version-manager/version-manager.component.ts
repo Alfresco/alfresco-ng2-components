@@ -44,8 +44,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerComponent implements OnInit {
-    private contentService = inject(ContentService);
-    private nodesApiService = inject(NodesApiService);
+    private readonly contentService = inject(ContentService);
+    private readonly nodesApiService = inject(NodesApiService);
 
     /** Target node to manage version history. */
     @Input({ required: true })

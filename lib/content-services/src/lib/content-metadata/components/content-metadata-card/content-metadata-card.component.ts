@@ -38,9 +38,9 @@ import { IconModule } from '@alfresco/adf-core';
     host: { class: 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
-    private contentService = inject(ContentService);
-    private nodeAspectService = inject(NodeAspectService);
-    private versionCompatibilityService = inject(VersionCompatibilityService);
+    private readonly contentService = inject(ContentService);
+    private readonly nodeAspectService = inject(NodeAspectService);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
 
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })

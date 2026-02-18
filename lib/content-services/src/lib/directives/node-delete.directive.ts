@@ -51,9 +51,9 @@ interface ProcessStatus {
     selector: '[adf-delete]'
 })
 export class NodeDeleteDirective implements OnChanges {
-    private alfrescoApiService = inject(AlfrescoApiService);
-    private translation = inject(TranslationService);
-    private elementRef = inject(ElementRef);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly translation = inject(TranslationService);
+    private readonly elementRef = inject(ElementRef);
 
     /** Array of nodes to delete. */
     @Input('adf-delete')

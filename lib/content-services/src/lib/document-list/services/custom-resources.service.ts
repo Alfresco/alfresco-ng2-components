@@ -43,7 +43,7 @@ const CREATE_PERMISSION: string = 'create';
 
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {

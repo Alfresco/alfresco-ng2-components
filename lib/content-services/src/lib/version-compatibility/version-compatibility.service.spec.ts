@@ -23,7 +23,6 @@ import { VersionCompatibilityService } from './version-compatibility.service';
 
 describe('VersionCompatibilityService', () => {
     let versionCompatibilityService: VersionCompatibilityService;
-    let discoveryApiService: DiscoveryApiService;
     const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
 
     const acsResponseMock = {
@@ -47,9 +46,8 @@ describe('VersionCompatibilityService', () => {
                 }
             ]
         });
-        discoveryApiService = TestBed.inject(DiscoveryApiService);
         mockProductInfo.next(acsResponseMock as RepositoryInfo);
-        versionCompatibilityService = new VersionCompatibilityService(discoveryApiService);
+        versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
     });
 
     it('should get ACS running version', () => {

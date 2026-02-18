@@ -24,7 +24,7 @@ import { isAfter } from 'date-fns';
     providedIn: 'root'
 })
 export class LockService {
-    private authService = inject(AuthenticationService);
+    private readonly authService = inject(AuthenticationService);
 
     isLocked(node: Node): boolean {
         let isLocked = false;

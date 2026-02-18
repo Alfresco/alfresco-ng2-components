@@ -26,7 +26,7 @@ export interface QueryProvider {
 
 @Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
-    private queryProvider = inject<QueryProvider>(SEARCH_QUERY_TOKEN, { optional: true });
+    private readonly queryProvider = inject<QueryProvider>(SEARCH_QUERY_TOKEN, { optional: true });
 
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
         return {

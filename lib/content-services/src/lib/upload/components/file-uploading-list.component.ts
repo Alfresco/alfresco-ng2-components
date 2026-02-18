@@ -29,8 +29,8 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
-    private uploadService = inject(UploadService);
-    private translateService = inject(TranslationService);
+    private readonly uploadService = inject(UploadService);
+    private readonly translateService = inject(TranslationService);
 
     @ContentChild(TemplateRef)
     template: any;

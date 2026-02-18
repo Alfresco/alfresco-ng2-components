@@ -25,7 +25,7 @@ import { DiscoveryApiService } from '../common/services/discovery-api.service';
     providedIn: 'root'
 })
 export class VersionCompatibilityService {
-    private discoveryApiService = inject(DiscoveryApiService);
+    private readonly discoveryApiService = inject(DiscoveryApiService);
 
     private acsVersion: VersionInfo;
 

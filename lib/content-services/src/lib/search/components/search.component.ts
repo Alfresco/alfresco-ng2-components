@@ -50,8 +50,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-search' }
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges {
-    private searchService = inject(SearchService);
-    private _elementRef = inject(ElementRef);
+    private readonly searchService = inject(SearchService);
+    private readonly _elementRef = inject(ElementRef);
 
     @ViewChild('panel', { static: true })
     panel: ElementRef;

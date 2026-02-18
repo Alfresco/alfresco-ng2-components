@@ -39,7 +39,7 @@ import { CommonModule } from '@angular/common';
     host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' }
 })
 export class UserNameColumnComponent implements OnInit {
-    private nodePermissionService = inject(NodePermissionService);
+    private readonly nodePermissionService = inject(NodePermissionService);
 
     @Input()
     context: any;

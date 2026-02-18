@@ -25,7 +25,7 @@ import {
 import { getProperty } from './property-group-reader';
 
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
-    constructor(private config: any) {}
+    constructor(private readonly config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         if (this.isIncludeAllEnabled()) {

@@ -42,7 +42,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
-    private translateService = inject(TranslationService);
+    private readonly translateService = inject(TranslationService);
 
     private value: { [key: string]: Partial<SearchDateRange> } = {};
 

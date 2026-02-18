@@ -44,8 +44,8 @@ export interface PeopleContentQueryRequestModel {
     providedIn: 'root'
 })
 export class PeopleContentService {
-    private apiService = inject(AlfrescoApiService);
-    private contentService = inject(ContentService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly contentService = inject(ContentService);
 
     private currentUser: EcmUserModel;
 

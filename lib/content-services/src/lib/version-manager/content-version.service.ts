@@ -22,7 +22,7 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContentVersionService {
-    private alfrescoApi = inject(AlfrescoApiService);
+    private readonly alfrescoApi = inject(AlfrescoApiService);
 
     private _contentApi: ContentApi;
 

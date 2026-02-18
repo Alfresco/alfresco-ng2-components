@@ -23,7 +23,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: '[adf-node-counter]'
 })
 export class NodeCounterDirective implements OnInit, OnChanges {
-    private viewContainerRef = inject(ViewContainerRef);
+    private readonly viewContainerRef = inject(ViewContainerRef);
 
     /** Number to display in the counter badge */
     @Input('adf-node-counter')

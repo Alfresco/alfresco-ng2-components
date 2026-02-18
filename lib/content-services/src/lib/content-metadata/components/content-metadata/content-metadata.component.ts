@@ -86,15 +86,15 @@ export type DefaultPanels = (typeof DefaultPanels)[keyof typeof DefaultPanels];
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
-    private contentMetadataService = inject(ContentMetadataService);
-    private cardViewContentUpdateService = inject(CardViewContentUpdateService);
-    private nodesApiService = inject(NodesApiService);
-    private translationService = inject(TranslationService);
-    private appConfig = inject(AppConfigService);
-    private tagService = inject(TagService);
-    private categoryService = inject(CategoryService);
-    private contentService = inject(ContentService);
-    private notificationService = inject(NotificationService);
+    private readonly contentMetadataService = inject(ContentMetadataService);
+    private readonly cardViewContentUpdateService = inject(CardViewContentUpdateService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
 
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })
@@ -156,10 +156,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
-    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private readonly _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
-    private classifiableChangedSubject = new Subject<void>();
+    private readonly classifiableChangedSubject = new Subject<void>();
     private _saving = false;
 
     DefaultPanels = DefaultPanels;

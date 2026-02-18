@@ -31,9 +31,9 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
     providedIn: 'root'
 })
 export class NodePermissionDialogService {
-    private dialog = inject(MatDialog);
-    private nodePermissionService = inject(NodePermissionService);
-    private contentService = inject(ContentService);
+    private readonly dialog = inject(MatDialog);
+    private readonly nodePermissionService = inject(NodePermissionService);
+    private readonly contentService = inject(ContentService);
 
     /**
      * Opens a dialog to add permissions to a node.

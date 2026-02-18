@@ -24,7 +24,7 @@ import { map, mergeMap, toArray } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryTreeDatasourceService extends TreeService<CategoryNode> {
-    private categoryService = inject(CategoryService);
+    private readonly categoryService = inject(CategoryService);
 
     public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
         return !name

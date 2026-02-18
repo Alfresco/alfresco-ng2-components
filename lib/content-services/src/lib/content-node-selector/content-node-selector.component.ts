@@ -62,12 +62,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit {
-    private translation = inject(TranslationService);
-    private contentService = inject(ContentService);
-    private notificationService = inject(NotificationService);
-    private uploadService = inject(UploadService);
-    private dialog = inject<MatDialogRef<ContentNodeSelectorComponent>>(MatDialogRef);
-    private overlayContainer = inject(OverlayContainer);
+    private readonly translation = inject(TranslationService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
+    private readonly uploadService = inject(UploadService);
+    private readonly dialog = inject<MatDialogRef<ContentNodeSelectorComponent>>(MatDialogRef);
+    private readonly overlayContainer = inject(OverlayContainer);
     data = inject<ContentNodeSelectorComponentData>(MAT_DIALOG_DATA);
 
     title: string;

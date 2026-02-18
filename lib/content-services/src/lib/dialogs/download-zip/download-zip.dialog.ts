@@ -35,11 +35,11 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {
-    private dialogRef = inject<MatDialogRef<DownloadZipDialogComponent>>(MatDialogRef);
+    private readonly dialogRef = inject<MatDialogRef<DownloadZipDialogComponent>>(MatDialogRef);
     data = inject(MAT_DIALOG_DATA);
-    private downloadZipService = inject(DownloadZipService);
-    private nodeService = inject(NodesApiService);
-    private contentService = inject(ContentService);
+    private readonly downloadZipService = inject(DownloadZipService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly contentService = inject(ContentService);
 
     // flag for async threads
     cancelled = false;

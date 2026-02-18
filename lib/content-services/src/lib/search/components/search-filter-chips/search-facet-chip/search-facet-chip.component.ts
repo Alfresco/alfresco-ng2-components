@@ -44,7 +44,7 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {
-    private focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
 
     @Input({ required: true })
     field: FacetField;

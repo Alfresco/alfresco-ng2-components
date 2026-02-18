@@ -30,8 +30,8 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
     }
 })
 export class InheritPermissionDirective {
-    private nodeService = inject(NodesApiService);
-    private contentService = inject(ContentService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly contentService = inject(ContentService);
 
     /** ID of the node to add/remove inherited permissions. */
     @Input()

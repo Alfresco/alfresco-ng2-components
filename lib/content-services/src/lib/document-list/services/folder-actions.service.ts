@@ -29,10 +29,10 @@ import { NodeActionsService } from './node-actions.service';
     providedIn: 'root'
 })
 export class FolderActionsService {
-    private nodeActionsService = inject(NodeActionsService);
-    private documentListService = inject(DocumentListService);
-    private contentService = inject(ContentService);
-    private translation = inject(TranslationService);
+    private readonly nodeActionsService = inject(NodeActionsService);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly contentService = inject(ContentService);
+    private readonly translation = inject(TranslationService);
 
     permissionEvent = new Subject<PermissionModel>();
     error = new Subject<Error>();

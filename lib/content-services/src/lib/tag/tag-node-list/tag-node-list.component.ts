@@ -33,7 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges, OnInit {
-    private tagService = inject(TagService);
+    private readonly tagService = inject(TagService);
 
     /** The identifier of a node. */
     @Input({ required: true })

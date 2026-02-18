@@ -37,8 +37,8 @@ import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../.
     template: '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {
-    private searchFilterService = inject(SearchFilterService);
-    private injector = inject(Injector);
+    private readonly searchFilterService = inject(SearchFilterService);
+    private readonly injector = inject(Injector);
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;

@@ -26,7 +26,7 @@ import { ClassesApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class PropertyDescriptorsService {
-    private alfrescoApiService = inject(AlfrescoApiService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     private _classesApi: ClassesApi;
     get classesApi(): ClassesApi {

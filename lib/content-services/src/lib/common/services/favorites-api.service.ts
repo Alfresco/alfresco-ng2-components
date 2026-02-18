@@ -26,8 +26,8 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class FavoritesApiService {
-    private apiService = inject(AlfrescoApiService);
-    private preferences = inject(UserPreferencesService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly preferences = inject(UserPreferencesService);
 
     private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {

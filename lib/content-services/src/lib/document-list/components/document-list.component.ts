@@ -112,17 +112,17 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
-    private documentListService = inject(DocumentListService);
-    private elementRef = inject(ElementRef);
-    private appConfig: AppConfigService;
-    private userPreferencesService = inject(UserPreferencesService);
-    private contentService = inject(ContentService);
-    private thumbnailService = inject(ThumbnailService);
-    private alfrescoApiService = inject(AlfrescoApiService);
-    private nodeService = inject(NodesApiService);
-    private dataTableService = inject(DataTableService);
-    private lockService = inject(LockService);
-    private dialog = inject(MatDialog);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly elementRef = inject(ElementRef);
+    private readonly appConfig: AppConfigService;
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly contentService = inject(ContentService);
+    private readonly thumbnailService = inject(ThumbnailService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly dataTableService = inject(DataTableService);
+    private readonly lockService = inject(LockService);
+    private readonly dialog = inject(MatDialog);
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -460,7 +460,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     // @deprecated 3.0.0
     folderNode: Node;
 
-    private _pagination: PaginationModel = this.DEFAULT_PAGINATION;
+    private readonly _pagination: PaginationModel = this.DEFAULT_PAGINATION;
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
     sortingSubject: BehaviorSubject<DataSorting[]> = new BehaviorSubject<DataSorting[]>(this.DEFAULT_SORTING);
 
@@ -478,7 +478,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     constructor() {
         const appConfig = inject(AppConfigService);
 
-        super(appConfig, 'default', presetsDefaultModel);
+        super('default', presetsDefaultModel);
         this.appConfig = appConfig;
 
         this.nodeService.nodeUpdated.pipe(takeUntilDestroyed()).subscribe((node) => {

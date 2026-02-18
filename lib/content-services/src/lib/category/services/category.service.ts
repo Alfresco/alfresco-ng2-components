@@ -32,9 +32,9 @@ import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-    private apiService = inject(AlfrescoApiService);
-    private userPreferencesService = inject(UserPreferencesService);
-    private appConfigService = inject(AppConfigService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly appConfigService = inject(AppConfigService);
 
     private _categoriesApi: CategoriesApi;
     private _searchApi: SearchApi;

@@ -29,11 +29,19 @@ describe('ContentColumnList', () => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule]
         });
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
-        actionList = new ContentActionListComponent(documentList);
+
+        const docListFixture = TestBed.createComponent(DocumentListComponent);
+        documentList = docListFixture.componentInstance;
     });
 
     it('should register action', () => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListComponent, useValue: documentList }, ContentActionListComponent]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
+
         spyOn(documentList.actions, 'push').and.callThrough();
 
         const action = new ContentActionModel();
@@ -44,12 +52,24 @@ describe('ContentColumnList', () => {
     });
 
     it('should require document list instance to register action', () => {
-        actionList = new ContentActionListComponent(null);
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListComponent, useValue: null }, ContentActionListComponent]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
         const action = new ContentActionModel();
         expect(actionList.registerAction(action)).toBeFalsy();
     });
 
     it('should require action instance to register', () => {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListComponent, useValue: documentList }, ContentActionListComponent]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
+
         spyOn(documentList.actions, 'push').and.callThrough();
         const result = actionList.registerAction(null);
 

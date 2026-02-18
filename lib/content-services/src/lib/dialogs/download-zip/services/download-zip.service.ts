@@ -24,7 +24,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class DownloadZipService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _downloadsApi: DownloadsApi;
     get downloadsApi(): DownloadsApi {

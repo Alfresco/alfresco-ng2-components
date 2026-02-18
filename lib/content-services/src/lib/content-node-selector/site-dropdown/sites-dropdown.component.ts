@@ -43,10 +43,10 @@ export type Relations = (typeof Relations)[keyof typeof Relations];
     host: { class: 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
-    private authService = inject(AuthenticationService);
-    private sitesService = inject(SitesService);
-    private liveAnnouncer = inject(LiveAnnouncer);
-    private translateService = inject(TranslateService);
+    private readonly authService = inject(AuthenticationService);
+    private readonly sitesService = inject(SitesService);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
+    private readonly translateService = inject(TranslateService);
 
     /** Hide the "My Files" option. */
     @Input()

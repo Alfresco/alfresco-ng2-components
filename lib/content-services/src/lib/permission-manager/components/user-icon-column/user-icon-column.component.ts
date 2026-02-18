@@ -50,7 +50,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {
-    private nodePermissionService = inject(NodePermissionService);
+    private readonly nodePermissionService = inject(NodePermissionService);
 
     @Input()
     context: any;

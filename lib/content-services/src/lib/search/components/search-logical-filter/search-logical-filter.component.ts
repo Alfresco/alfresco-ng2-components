@@ -49,7 +49,7 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     encapsulation: ViewEncapsulation.None
 })
 export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
-    private translationService = inject(TranslationService);
+    private readonly translationService = inject(TranslationService);
 
     id: string;
     settings?: SearchWidgetSettings;

@@ -19,7 +19,7 @@ import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer, 
 import { getGroup, getProperty } from './property-group-reader';
 
 export class AspectOrientedConfigService implements ContentMetadataConfig {
-    constructor(private config: any) {}
+    constructor(private readonly config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         if (this.isIncludeAllEnabled()) {

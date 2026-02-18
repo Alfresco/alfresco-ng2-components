@@ -38,7 +38,7 @@ export class AlfrescoApiLoaderService {
     private readonly appConfig = inject(AppConfigService);
     private readonly apiService = inject(AlfrescoApiService);
     private readonly securityOptionsLoaderService = inject(SecurityOptionsLoaderService);
-    private storageService = inject(StorageService);
+    private readonly storageService = inject(StorageService);
 
     async init(): Promise<any> {
         await this.appConfig.load(this.securityOptionsLoaderService.load);

@@ -37,8 +37,8 @@ import { TranslatePipe } from '@ngx-translate/core';
  * @deprecated in 4.4.0, use adf-add-permission-panel instead.
  */
 export class AddPermissionComponent implements OnInit {
-    private nodePermissionService = inject(NodePermissionService);
-    private contentService = inject(ContentService);
+    private readonly nodePermissionService = inject(NodePermissionService);
+    private readonly contentService = inject(ContentService);
 
     /** ID of the target node. */
     @Input({ required: true })

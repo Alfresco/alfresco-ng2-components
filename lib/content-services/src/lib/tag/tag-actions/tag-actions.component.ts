@@ -42,8 +42,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'adf-tag-node-actions-list' }
 })
 export class TagActionsComponent implements OnChanges, OnInit {
-    private tagService = inject(TagService);
-    private translateService = inject(TranslationService);
+    private readonly tagService = inject(TagService);
+    private readonly translateService = inject(TranslationService);
 
     /** The identifier of a node. */
     @Input({ required: true })

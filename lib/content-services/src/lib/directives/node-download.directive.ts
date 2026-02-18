@@ -31,9 +31,9 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
-    private apiService = inject(AlfrescoApiService);
-    private downloadService = inject(DownloadService);
-    private dialog = inject(MatDialog);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly dialog = inject(MatDialog);
 
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {

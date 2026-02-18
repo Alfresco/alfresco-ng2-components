@@ -32,11 +32,11 @@ import { NodeAction } from '../models/node-action.enum';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NodeActionsService {
-    private contentDialogService = inject(ContentNodeDialogService);
+    private readonly contentDialogService = inject(ContentNodeDialogService);
     dialogRef = inject(MatDialog);
     content = inject(ContentService);
-    private documentListService = inject(DocumentListService);
-    private injector = inject(Injector);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly injector = inject(Injector);
 
     @Output()
     error = new EventEmitter<any>();

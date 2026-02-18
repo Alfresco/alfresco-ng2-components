@@ -34,8 +34,8 @@ import { IconModule } from '@alfresco/adf-core';
     styleUrls: ['./tree-view.component.scss']
 })
 export class TreeViewComponent implements OnChanges {
-    private treeViewService = inject(TreeViewService);
-    private injector = inject(Injector);
+    private readonly treeViewService = inject(TreeViewService);
+    private readonly injector = inject(Injector);
 
     /** Identifier of the node to display. */
     @Input({ required: true })

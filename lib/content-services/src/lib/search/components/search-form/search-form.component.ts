@@ -32,7 +32,7 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFormComponent {
-    private queryBuilder = inject(SearchQueryBuilderService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
 
     searchForms$ = this.queryBuilder.searchForms;
 

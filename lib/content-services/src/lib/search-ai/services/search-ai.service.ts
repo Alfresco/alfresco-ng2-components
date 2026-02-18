@@ -27,10 +27,10 @@ import { AlfrescoApiService } from '../../services';
     providedIn: 'root'
 })
 export class SearchAiService {
-    private apiService = inject(AlfrescoApiService);
-    private translateService = inject(TranslateService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly translateService = inject(TranslateService);
 
-    private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
+    private readonly toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
         active: false
     });
     private _searchAiApi: SearchAiApi;

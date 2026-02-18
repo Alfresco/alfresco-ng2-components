@@ -46,9 +46,9 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     encapsulation: ViewEncapsulation.None
 })
 export class NodeLockDialogComponent implements OnInit {
-    private formBuilder = inject(UntypedFormBuilder);
+    private readonly formBuilder = inject(UntypedFormBuilder);
     dialog = inject<MatDialogRef<NodeLockDialogComponent>>(MatDialogRef);
-    private alfrescoApi = inject(AlfrescoApiService);
+    private readonly alfrescoApi = inject(AlfrescoApiService);
     data = inject(MAT_DIALOG_DATA, { optional: true });
 
     form: UntypedFormGroup;

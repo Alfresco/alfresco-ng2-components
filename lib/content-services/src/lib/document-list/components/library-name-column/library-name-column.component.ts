@@ -55,8 +55,8 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
     }
 })
 export class LibraryNameColumnComponent implements OnInit {
-    private element = inject(ElementRef);
-    private nodesApiService = inject(NodesApiService);
+    private readonly element = inject(ElementRef);
+    private readonly nodesApiService = inject(NodesApiService);
 
     @Input({ required: true })
     context: any;

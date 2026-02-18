@@ -18,16 +18,17 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { SimpleChange } from '@angular/core';
-import { of, throwError, Subject } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { SitesService } from '../common/services/sites.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 
 describe('LibraryMembershipDirective', () => {
-    let alfrescoApiService: AlfrescoApiService;
     let directive: LibraryMembershipDirective;
     let sitesService: SitesService;
+    let versionCompatibilityService: jasmine.SpyObj<VersionCompatibilityService>;
     let addMembershipSpy: jasmine.Spy;
     let getMembershipSpy: jasmine.Spy;
     let deleteMembershipSpy: jasmine.Spy;
@@ -37,9 +38,17 @@ describe('LibraryMembershipDirective', () => {
     let requestedMembershipResponse: any;
 
     beforeEach(() => {
+        versionCompatibilityService = jasmine.createSpyObj('VersionCompatibilityService', ['isVersionSupported']);
+        versionCompatibilityService.isVersionSupported.and.callFake(() => mockSupportedVersion);
+
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [SitesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            providers: [
+                LibraryMembershipDirective,
+                SitesService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: VersionCompatibilityService, useValue: versionCompatibilityService }
+            ]
         });
 
         testSiteEntry = {
@@ -55,12 +64,8 @@ describe('LibraryMembershipDirective', () => {
             site: testSiteEntry
         };
 
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         sitesService = TestBed.inject(SitesService);
-        directive = new LibraryMembershipDirective(alfrescoApiService, sitesService, {
-            ecmProductInfo$: new Subject(),
-            isVersionSupported: () => mockSupportedVersion
-        } as any);
+        directive = TestBed.inject(LibraryMembershipDirective);
     });
 
     describe('markMembershipRequest', () => {

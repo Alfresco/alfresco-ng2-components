@@ -46,7 +46,7 @@ import { VersionListComponent } from '../version-manager/version-list.component'
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
     data = inject<NewVersionUploaderDialogData>(MAT_DIALOG_DATA);
-    private dialogRef = inject<MatDialogRef<NewVersionUploaderDialogComponent>>(MatDialogRef);
+    private readonly dialogRef = inject<MatDialogRef<NewVersionUploaderDialogComponent>>(MatDialogRef);
 
     /**
      * Dialog title to show into the header.

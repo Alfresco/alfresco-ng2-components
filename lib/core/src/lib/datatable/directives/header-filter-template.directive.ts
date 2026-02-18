@@ -22,7 +22,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-header-filter-template'
 })
 export class HeaderFilterTemplateDirective implements AfterContentInit {
-    private readonly dataTable = inject(DataTableComponent);
+    private readonly dataTable = inject(DataTableComponent, { optional: true });
 
     @ContentChild(TemplateRef)
     template: any;

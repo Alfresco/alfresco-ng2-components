@@ -23,7 +23,7 @@ import { CardViewDateItemModel, CardViewItemMatchValidator, CardViewTextItemMode
     providedIn: 'root'
 })
 export class BasicPropertiesService {
-    private injector = inject(Injector);
+    private readonly injector = inject(Injector);
 
     getProperties(node: Node) {
         const sizeInBytes = node.content ? node.content.sizeInBytes : '';

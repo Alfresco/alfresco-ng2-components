@@ -34,9 +34,9 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentTypeDialogComponent implements OnInit {
-    private dialog = inject<MatDialogRef<ContentTypeDialogComponent>>(MatDialogRef);
+    private readonly dialog = inject<MatDialogRef<ContentTypeDialogComponent>>(MatDialogRef);
     data = inject<ContentTypeDialogComponentData>(MAT_DIALOG_DATA);
-    private contentTypeService = inject(ContentTypeService);
+    private readonly contentTypeService = inject(ContentTypeService);
 
     title: string;
     description: string;

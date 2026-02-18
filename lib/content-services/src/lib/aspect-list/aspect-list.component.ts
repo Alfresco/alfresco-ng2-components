@@ -37,8 +37,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListComponent implements OnInit {
-    private aspectListService = inject(AspectListService);
-    private nodeApiService = inject(NodesApiService);
+    private readonly aspectListService = inject(AspectListService);
+    private readonly nodeApiService = inject(NodesApiService);
 
     /** Node Id of the node that we want to update */
     @Input({ required: true })

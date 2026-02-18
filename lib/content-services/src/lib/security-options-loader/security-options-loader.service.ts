@@ -23,8 +23,8 @@ import { Injectable, inject } from '@angular/core';
     providedIn: 'root'
 })
 export class SecurityOptionsLoaderService {
-    private appConfigService = inject(AppConfigService);
-    private adfHttpClient = inject(AdfHttpClient);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly adfHttpClient = inject(AdfHttpClient);
 
     load = () => {
         const withCredentials = this.appConfigService.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS);
