@@ -36,8 +36,8 @@ import { FormCustomOutcomesComponent } from '../../../../form/components/form-cl
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFormCloudComponent {
-    private taskCloudService = inject(TaskCloudService);
-    private formRenderingService = inject(FormRenderingService);
+    private readonly taskCloudService = inject(TaskCloudService);
+    private readonly formRenderingService = inject(FormRenderingService);
 
     /** App id to fetch corresponding form and values. */
     @Input()

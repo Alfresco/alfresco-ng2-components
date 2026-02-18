@@ -35,7 +35,7 @@ import { PeopleCloudComponent } from '../../../../people/components/people-cloud
     styleUrls: ['./task-assignment-filter.component.scss']
 })
 export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
-    private identityUserService = inject(IdentityUserService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     @Input() appName: string;
 

@@ -47,15 +47,15 @@ const TASK_EVENT_SUBSCRIPTION_QUERY = `
     providedIn: 'root'
 })
 export class TaskFilterCloudService extends BaseCloudService {
-    private notificationCloudService = inject(NotificationCloudService);
+    private readonly notificationCloudService = inject(NotificationCloudService);
 
     public preferenceService = inject<PreferenceCloudServiceInterface>(TASK_FILTERS_SERVICE_TOKEN);
 
     protected identityUserService = inject(IdentityUserService);
 
-    private filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
+    private readonly filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
     filters$ = this.filtersSubject.asObservable();
-    private filterKeyToBeRefreshedSource = new Subject<string>();
+    private readonly filterKeyToBeRefreshedSource = new Subject<string>();
     filterKeyToBeRefreshed$ = this.filterKeyToBeRefreshedSource.asObservable();
 
     /**

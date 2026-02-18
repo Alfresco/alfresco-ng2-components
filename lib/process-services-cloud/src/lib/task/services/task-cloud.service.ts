@@ -37,8 +37,8 @@ import { IdentityUserService } from '../../people/services/identity-user.service
     providedIn: 'root'
 })
 export class TaskCloudService extends BaseCloudService {
-    private translateService = inject(TranslationService);
-    private identityUserService = inject(IdentityUserService);
+    private readonly translateService = inject(TranslationService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     dataChangesDetected$ = new Subject();
 

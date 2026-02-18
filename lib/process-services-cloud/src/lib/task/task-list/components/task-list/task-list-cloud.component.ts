@@ -18,19 +18,16 @@
 import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import {
     AdfDateFnsAdapter,
-    AppConfigService,
     ColumnsSelectorComponent,
     DataTableComponent,
     EmptyContentComponent,
     LoadingContentTemplateDirective,
     MainMenuDataTableTemplateDirective,
     MOMENT_DATE_FORMATS,
-    NoContentTemplateDirective,
-    UserPreferencesService
+    NoContentTemplateDirective
 } from '@alfresco/adf-core';
 import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from '../base-task-list-cloud.component';
-import { TaskCloudService } from '../../../services/task-cloud.service';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../../services/task-list-cloud.service.interface';
@@ -75,7 +72,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
 })
 export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {
     taskListCloudService = inject<TaskListCloudServiceInterface>(TASK_LIST_CLOUD_TOKEN);
-    private viewModelCreator = inject(VariableMapperService);
+    private readonly viewModelCreator = inject(VariableMapperService);
 
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
@@ -265,20 +262,17 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     rows: TaskInstanceCloudListViewModel[] = [];
     declare dataAdapter: TasksListDatatableAdapter | undefined;
 
-    private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
+    private readonly isReloadingSubject$ = new BehaviorSubject<boolean>(false);
     isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    private fetchProcessesTrigger$ = new Subject<void>();
+    private readonly fetchProcessesTrigger$ = new Subject<void>();
+
 
     constructor() {
-        const appConfigService = inject(AppConfigService);
-        const taskCloudService = inject(TaskCloudService);
-        const userPreferences = inject(UserPreferencesService);
         const cloudPreferenceService = inject<PreferenceCloudServiceInterface>(TASK_LIST_PREFERENCES_SERVICE_TOKEN);
-
-        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
+        super(PRESET_KEY, cloudPreferenceService);
 
         combineLatest([this.isLoadingPreferences$, this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(

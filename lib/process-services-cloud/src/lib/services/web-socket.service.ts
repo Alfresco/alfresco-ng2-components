@@ -55,8 +55,8 @@ export class WebSocketService {
     private readonly httpLink = inject(HttpLink);
     private readonly authService = inject(AuthenticationService);
 
-    private appConfigService = inject(AppConfigService);
-    private subscriptionProtocol = 'graphql-ws';
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly subscriptionProtocol: 'graphql-ws' | 'transport-ws' = 'graphql-ws';
     private wsLink: GraphQLWsLink | WebSocketLink;
     private httpLinkHandler: HttpLinkHandler;
 

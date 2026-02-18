@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
-    private nodesApiService = inject(NodesApiService);
+    private readonly nodesApiService = inject(NodesApiService);
 
     node: Node;
     loading = true;

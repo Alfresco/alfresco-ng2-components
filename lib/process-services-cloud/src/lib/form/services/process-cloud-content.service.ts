@@ -26,10 +26,10 @@ import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class ProcessCloudContentService {
-    private apiService = inject(AlfrescoApiService);
-    private nodesApiService = inject(NodesApiService);
-    private contentService = inject(ContentService);
-    private downloadService = inject(DownloadService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly contentService = inject(ContentService);
+    private readonly downloadService = inject(DownloadService);
 
     private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {

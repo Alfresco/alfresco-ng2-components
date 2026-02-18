@@ -48,10 +48,10 @@ import { MatCardModule } from '@angular/material/card';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderCloudComponent implements OnInit, OnChanges {
-    private taskCloudService = inject(TaskCloudService);
-    private translationService = inject(TranslationService);
-    private appConfig = inject(AppConfigService);
-    private cardViewUpdateService = inject(CardViewUpdateService);
+    private readonly taskCloudService = inject(TaskCloudService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly cardViewUpdateService = inject(CardViewUpdateService);
 
     /** (Required) The name of the application. */
     @Input({ required: true })

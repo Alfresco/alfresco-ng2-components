@@ -45,9 +45,9 @@ const PROCESS_EVENT_SUBSCRIPTION_QUERY = `
     providedIn: 'root'
 })
 export class ProcessFilterCloudService {
-    private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
+    private readonly filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
     filters$: Observable<ProcessFilterCloudModel[]>;
-    private filterKeyToBeRefreshedSource = new Subject<string>();
+    private readonly filterKeyToBeRefreshedSource = new Subject<string>();
     filterKeyToBeRefreshed$: Observable<string> = this.filterKeyToBeRefreshedSource.asObservable();
 
     protected readonly preferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_FILTERS_SERVICE_TOKEN);

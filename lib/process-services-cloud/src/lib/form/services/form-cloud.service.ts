@@ -33,8 +33,8 @@ export const FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN = new InjectionToken<Form
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
     private _uploadApi: UploadApi;
-    private fieldValidators: FormFieldValidator[] = inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [];
-    private formService = inject(FormService);
+    private readonly fieldValidators: FormFieldValidator[] = inject(FORM_CLOUD_SERVICE_FIELD_VALIDATORS_TOKEN, { optional: true }) ?? [];
+    private readonly formService = inject(FormService);
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;

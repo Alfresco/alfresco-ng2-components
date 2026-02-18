@@ -64,7 +64,7 @@ export class ProcessFilterCloudModel {
 
     processVariableFilters?: ProcessVariableFilterModel[];
 
-    private dateRangeFilterService = new DateRangeFilterService();
+    private readonly dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string | null;
     private _completedTo: string | null;
     private _startFrom: string | null;

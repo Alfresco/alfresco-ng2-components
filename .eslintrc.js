@@ -79,6 +79,7 @@ module.exports = {
                 ],
                 '@typescript-eslint/await-thenable': 'error',
                 '@typescript-eslint/prefer-optional-chain': 'error',
+                '@typescript-eslint/prefer-readonly': 'error',
                 '@typescript-eslint/no-inferrable-types': 'off',
                 '@typescript-eslint/no-require-imports': 'off',
                 '@typescript-eslint/no-var-requires': 'error',

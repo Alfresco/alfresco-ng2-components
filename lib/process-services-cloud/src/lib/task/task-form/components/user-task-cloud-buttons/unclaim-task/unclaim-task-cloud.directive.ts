@@ -26,7 +26,7 @@ import { firstValueFrom } from 'rxjs';
 export class UnClaimTaskCloudDirective implements OnInit {
     private readonly el = inject(ElementRef);
     private readonly renderer = inject(Renderer2);
-    private taskListService = inject(TaskCloudService);
+    private readonly taskListService = inject(TaskCloudService);
 
     /** (Required) The id of the task. */
     @Input()

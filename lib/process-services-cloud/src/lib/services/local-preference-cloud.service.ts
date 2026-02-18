@@ -22,7 +22,7 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
-    private storage = inject(StorageService);
+    private readonly storage = inject(StorageService);
 
     /**
      * Gets local preferences

@@ -32,9 +32,9 @@ export interface IdentityUserFilterInterface {
     providedIn: 'root'
 })
 export class IdentityUserService {
-    private jwtHelperService = inject(JwtHelperService);
-    private oAuth2Service = inject(OAuth2Service);
-    private appConfigService = inject(AppConfigService);
+    private readonly jwtHelperService = inject(JwtHelperService);
+    private readonly oAuth2Service = inject(OAuth2Service);
+    private readonly appConfigService = inject(AppConfigService);
 
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 

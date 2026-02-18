@@ -29,8 +29,8 @@ export interface IdentityGroupFilterInterface {
 
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService {
-    private oAuth2Service = inject(OAuth2Service);
-    private appConfigService = inject(AppConfigService);
+    private readonly oAuth2Service = inject(OAuth2Service);
+    private readonly appConfigService = inject(AppConfigService);
 
     queryParams: { search: string; application?: string; roles?: string[] };
 

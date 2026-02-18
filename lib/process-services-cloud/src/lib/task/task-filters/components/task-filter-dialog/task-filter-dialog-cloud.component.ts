@@ -32,7 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFilterDialogCloudComponent implements OnInit {
-    private fb = inject(UntypedFormBuilder);
+    private readonly fb = inject(UntypedFormBuilder);
     dialogRef = inject<MatDialogRef<TaskFilterDialogCloudComponent>>(MatDialogRef);
     data = inject(MAT_DIALOG_DATA);
 

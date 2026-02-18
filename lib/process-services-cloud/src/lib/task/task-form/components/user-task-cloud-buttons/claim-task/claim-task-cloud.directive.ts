@@ -27,8 +27,8 @@ import { firstValueFrom } from 'rxjs';
 export class ClaimTaskCloudDirective implements OnInit {
     private readonly el = inject(ElementRef);
     private readonly renderer = inject(Renderer2);
-    private taskListService = inject(TaskCloudService);
-    private identityUserService = inject(IdentityUserService);
+    private readonly taskListService = inject(TaskCloudService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     /** (Required) The id of the task. */
     @Input()

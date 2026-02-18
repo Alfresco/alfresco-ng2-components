@@ -100,14 +100,14 @@ interface ProcessFilterFormProps {
     encapsulation: ViewEncapsulation.None
 })
 export class EditProcessFilterCloudComponent implements OnChanges {
-    private formBuilder = inject(FormBuilder);
+    private readonly formBuilder = inject(FormBuilder);
     dialog = inject(MatDialog);
-    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
-    private userPreferencesService = inject(UserPreferencesService);
-    private translateService = inject(TranslationService);
-    private processFilterCloudService = inject(ProcessFilterCloudService);
-    private appsProcessCloudService = inject(AppsProcessCloudService);
-    private processCloudService = inject(ProcessCloudService);
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly translateService = inject(TranslationService);
+    private readonly processFilterCloudService = inject(ProcessFilterCloudService);
+    private readonly appsProcessCloudService = inject(AppsProcessCloudService);
+    private readonly processCloudService = inject(ProcessCloudService);
 
     /** The name of the application. */
     @Input()

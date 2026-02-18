@@ -194,16 +194,16 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 
     protected readonly destroyRef = inject(DestroyRef);
+    protected readonly appConfigService = inject(AppConfigService);
+    protected readonly taskCloudService = inject(TaskCloudService);
+    protected readonly userPreferences = inject(UserPreferencesService);
+    private readonly cloudPreferenceService: PreferenceCloudServiceInterface;
 
-    constructor(
-        appConfigService: AppConfigService,
-        private taskCloudService: TaskCloudService,
-        private userPreferences: UserPreferencesService,
-        presetKey: string,
-        private cloudPreferenceService: PreferenceCloudServiceInterface
-    ) {
-        super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
-        this.size = userPreferences.paginationSize;
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    constructor(presetKey: string, cloudPreferenceService: PreferenceCloudServiceInterface) {
+        super(presetKey, taskPresetsCloudDefaultModel);
+        this.cloudPreferenceService = cloudPreferenceService;
+        this.size = this.userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,

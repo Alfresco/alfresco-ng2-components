@@ -74,7 +74,7 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges {
-    private identityGroupService = inject(IdentityGroupService);
+    private readonly identityGroupService = inject(IdentityGroupService);
 
     /** Label for the user selection component. */
     @Input()
@@ -145,7 +145,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     warning = new EventEmitter<any>();
 
     @ViewChild('groupInput')
-    private groupInput: ElementRef<HTMLInputElement>;
+    private readonly groupInput: ElementRef<HTMLInputElement>;
 
     private searchGroups: IdentityGroupModel[] = [];
 

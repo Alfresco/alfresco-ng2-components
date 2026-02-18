@@ -40,9 +40,9 @@ import { NgIf } from '@angular/common';
     host: { class: 'adf-cloud-process-header' }
 })
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
-    private processCloudService = inject(ProcessCloudService);
-    private translationService = inject(TranslationService);
-    private appConfig = inject(AppConfigService);
+    private readonly processCloudService = inject(ProcessCloudService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
 
     /** (Required) The name of the application. */
     @Input({ required: true })

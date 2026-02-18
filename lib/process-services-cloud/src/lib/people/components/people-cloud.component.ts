@@ -78,7 +78,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
-    private identityUserService = inject(IdentityUserService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     /** Label for the user selection component. */
     @Input()
@@ -207,7 +207,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     warning = new EventEmitter<any>();
 
     @ViewChild('userInput')
-    private userInput: ElementRef<HTMLInputElement>;
+    private readonly userInput: ElementRef<HTMLInputElement>;
 
     private searchUsers: IdentityUserModel[] = [];
 

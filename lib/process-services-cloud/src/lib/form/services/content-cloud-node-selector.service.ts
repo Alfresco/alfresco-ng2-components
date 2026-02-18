@@ -28,9 +28,9 @@ import { DestinationFolderPathModel } from '../models/form-cloud-representation.
     providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
-    private apiService = inject(AlfrescoApiService);
-    private notificationService = inject(NotificationService);
-    private dialog = inject(MatDialog);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly notificationService = inject(NotificationService);
+    private readonly dialog = inject(MatDialog);
 
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
