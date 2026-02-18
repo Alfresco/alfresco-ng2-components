@@ -153,10 +153,10 @@ describe('StartTaskComponent', () => {
                 })
             );
             const successSpy = spyOn(component.success, 'emit');
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
-            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
@@ -259,11 +259,11 @@ describe('StartTaskComponent', () => {
 
         it('should not assign task when no assignee is selected', () => {
             const successSpy = spyOn(component.success, 'emit');
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
             component.assigneeId = null;
-            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();

@@ -21,14 +21,21 @@ import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
 import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-summary.model';
+import { TestBed } from '@angular/core/testing';
 
 describe('RowEditorComponent', () => {
     let component: RowEditorComponent;
+    let formService: FormService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [FormService]
+        });
+
+        formService = TestBed.inject(FormService);
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
-        component.table = new DynamicTableModel(field, new FormService());
+        component.table = new DynamicTableModel(field, formService);
         component.row = {} as DynamicTableRow;
         component.column = {} as DynamicTableColumn;
     });
