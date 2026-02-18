@@ -16,8 +16,8 @@
  */
 
 import { Emitters, RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
-import { HttpParams } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpParams, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AdfHttpClient } from './adf-http-client.service';
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
@@ -52,8 +52,7 @@ describe('AdfHttpClient', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [AdfHttpClient]
+            providers: [AdfHttpClient, provideHttpClient(), provideHttpClientTesting()]
         });
         angularHttpClient = TestBed.inject(AdfHttpClient);
         controller = TestBed.inject(HttpTestingController);

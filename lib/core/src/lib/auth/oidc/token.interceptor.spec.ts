@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { TokenInterceptor } from './token.interceptor';
@@ -38,7 +38,6 @@ describe('TokenInterceptor', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 { provide: OAuthService, useValue: oauthServiceMock },
                 { provide: OAuthStorage, useValue: oauthStorageMock },
@@ -46,7 +45,9 @@ describe('TokenInterceptor', () => {
                     provide: HTTP_INTERCEPTORS,
                     useClass: TokenInterceptor,
                     multi: true
-                }
+                },
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
 

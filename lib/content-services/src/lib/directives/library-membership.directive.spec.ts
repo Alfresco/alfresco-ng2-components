@@ -20,7 +20,8 @@ import { LibraryMembershipDirective } from './library-membership.directive';
 import { SimpleChange } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { SitesService } from '../common/services/sites.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
@@ -42,12 +43,13 @@ describe('LibraryMembershipDirective', () => {
         versionCompatibilityService.isVersionSupported.and.callFake(() => mockSupportedVersion);
 
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 LibraryMembershipDirective,
                 SitesService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: VersionCompatibilityService, useValue: versionCompatibilityService }
+                { provide: VersionCompatibilityService, useValue: versionCompatibilityService },
+                provideHttpClient(),
+                provideHttpClientTesting()
             ]
         });
 
