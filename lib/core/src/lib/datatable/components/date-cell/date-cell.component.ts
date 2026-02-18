@@ -63,7 +63,6 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         if (!date) {
             return '';
         }
-
         if (currentConfig.format === 'timeAgo') {
             return this.timeAgoPipe.transform(date, currentConfig.locale) || '';
         }

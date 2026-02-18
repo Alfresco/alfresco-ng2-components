@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, DEFAULT_CURRENCY_CODE, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, DEFAULT_CURRENCY_CODE, inject, computed } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CurrencyConfig } from '../../data/data-column.model';
 import { CurrencyPipe } from '@angular/common';
@@ -41,5 +41,17 @@ export class AmountCellComponent extends DataTableCellComponent {
         locale: undefined
     };
 
-    readonly amountValue = toSignal(this.value$);
+    private readonly rawAmountValue = toSignal(this.value$);
+
+    readonly amountValue = computed<number | null>(() => {
+        const value = this.rawAmountValue();
+
+        if (value == null || value === '') {
+            return null;
+        }
+
+        const numericValue = Number(value);
+
+        return Number.isFinite(numericValue) ? numericValue : null;
+    });
 }
