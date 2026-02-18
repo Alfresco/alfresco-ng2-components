@@ -17,7 +17,7 @@
 
 import { Overlay } from '@angular/cdk/overlay';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
-import { Injector } from '@angular/core';
+import { Injector, runInInjectionContext } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 describe('ContextMenuOverlayService', () => {
@@ -43,7 +43,15 @@ describe('ContextMenuOverlayService', () => {
 
     describe('Overlay', () => {
         beforeEach(() => {
-            contextMenuOverlayService = new ContextMenuOverlayService(injector, overlay);
+            const testInjector = Injector.create({
+                providers: [
+                    { provide: Injector, useValue: injector },
+                    { provide: Overlay, useValue: overlay }
+                ],
+                parent: TestBed.inject(Injector)
+            });
+
+            contextMenuOverlayService = runInInjectionContext(testInjector, () => new ContextMenuOverlayService());
         });
 
         it('should create a custom overlay', () => {

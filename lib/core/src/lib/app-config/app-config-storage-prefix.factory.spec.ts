@@ -16,8 +16,10 @@
  */
 
 import { of } from 'rxjs';
-import { StoragePrefixFactory, StoragePrefixFactoryService } from './app-config-storage-prefix.factory';
+import { StoragePrefixFactory, StoragePrefixFactoryService, STORAGE_PREFIX_FACTORY_SERVICE } from './app-config-storage-prefix.factory';
 import { AppConfigService } from './app-config.service';
+import { Injector, runInInjectionContext } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 type TestAppConfigService = Pick<AppConfigService, 'select'>;
 
@@ -31,7 +33,12 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService);
+        const injector = Injector.create({
+            providers: [{ provide: AppConfigService, useValue: appConfigService }],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);
@@ -47,7 +54,12 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService);
+        const injector = Injector.create({
+            providers: [{ provide: AppConfigService, useValue: appConfigService }],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);
@@ -69,7 +81,15 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService, externalPrefixFactory);
+        const injector = Injector.create({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: STORAGE_PREFIX_FACTORY_SERVICE, useValue: externalPrefixFactory }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe('prefix-from-factory');
@@ -92,7 +112,15 @@ describe('StoragePrefixFactory', () => {
             }
         };
 
-        const prefixFactory = new StoragePrefixFactory(appConfigService as AppConfigService, externalPrefixFactory);
+        const injector = Injector.create({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: STORAGE_PREFIX_FACTORY_SERVICE, useValue: externalPrefixFactory }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        const prefixFactory = runInInjectionContext(injector, () => new StoragePrefixFactory());
 
         prefixFactory.getPrefix().subscribe((prefix) => {
             expect(prefix).toBe(appConfigPrefix);

@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { of } from 'rxjs';
 import { DecimalNumberPipe } from './decimal-number.pipe';
-import { Injector, runInInjectionContext } from '@angular/core';
 import { AppConfigService } from '@alfresco/adf-core';
 
 describe('DecimalNumberPipe', () => {
@@ -27,12 +26,13 @@ describe('DecimalNumberPipe', () => {
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
-        userPreferences = TestBed.inject(UserPreferencesService);
-        const injector = TestBed.inject(Injector);
-        spyOn(userPreferences, 'select').and.returnValue(of(''));
-        runInInjectionContext(injector, () => {
-            pipe = new DecimalNumberPipe(userPreferences, TestBed.inject(AppConfigService));
+        TestBed.configureTestingModule({
+            providers: [DecimalNumberPipe, UserPreferencesService, AppConfigService]
         });
+
+        userPreferences = TestBed.inject(UserPreferencesService);
+        spyOn(userPreferences, 'select').and.returnValue(of(''));
+        pipe = TestBed.inject(DecimalNumberPipe);
     });
 
     it('should return number localized and rounded following the default config', () => {

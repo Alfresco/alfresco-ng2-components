@@ -18,6 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
+import { Injector, runInInjectionContext } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { provideCoreAuth } from '../oidc/auth.module';
@@ -28,7 +29,6 @@ import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { OAuthEvent } from 'angular-oauth2-oidc';
 import { firstValueFrom, of, Subject, throwError } from 'rxjs';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-import { Injector } from '@angular/core';
 import { ContentAuth, ProcessAuth } from '../public-api';
 
 declare let jasmine: any;
@@ -335,8 +335,15 @@ describe('AuthenticationService', () => {
             redirectAuthService = TestBed.inject(RedirectAuthService);
             redirectAuthService.onTokenReceived = onTokenReceived$;
 
-            const injector = TestBed.inject(Injector);
-            authenticationService = new AuthenticationService(injector, redirectAuthService);
+            const injector = Injector.create({
+                providers: [
+                    { provide: Injector, useValue: TestBed.inject(Injector) },
+                    { provide: RedirectAuthService, useValue: redirectAuthService }
+                ],
+                parent: TestBed.inject(Injector)
+            });
+
+            authenticationService = runInInjectionContext(injector, () => new AuthenticationService());
         });
 
         it('should emit event when RedirectAuthService onTokenReceived emits', () => {

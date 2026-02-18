@@ -18,6 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { NoPermissionTemplateDirective } from './no-permission-template.directive';
+import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('NoPermissionTemplateDirective', () => {
     let fixture: ComponentFixture<DataTableComponent>;
@@ -30,7 +31,13 @@ describe('NoPermissionTemplateDirective', () => {
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
-        directive = new NoPermissionTemplateDirective(dataTable);
+
+        const injector = Injector.create({
+            providers: [{ provide: DataTableComponent, useValue: dataTable }],
+            parent: TestBed.inject(Injector)
+        });
+
+        directive = runInInjectionContext(injector, () => new NoPermissionTemplateDirective());
     });
 
     afterEach(() => {
