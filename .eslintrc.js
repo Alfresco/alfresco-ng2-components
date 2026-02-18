@@ -191,6 +191,10 @@ module.exports = {
                     {
                         selector: 'TSEnumDeclaration',
                         message: 'Enums are not allowed. Use string literal types (e.g., type Foo = "a" | "b") or const objects instead.'
+                    },
+                    {
+                        selector: 'Literal[value=/^ng-reflect-/]',
+                        message: 'ng-reflect-* attributes should not be used. Consider alternatives for proper selectors.'
                     }
                 ]
             }

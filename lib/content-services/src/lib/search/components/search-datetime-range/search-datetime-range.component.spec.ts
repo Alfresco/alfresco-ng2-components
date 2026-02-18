@@ -221,8 +221,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
         const inputs = unitTestingUtils.getAllByCSS('input');
 
-        const input1 = inputs[0];
-        const input2 = inputs[1];
+        const [input1, input2] = inputs;
         expect(input1).toBeDefined();
         expect(input1).not.toBeNull();
         expect(input1.injector.get(MatDatetimepickerInputDirective).max).toBeDefined();
