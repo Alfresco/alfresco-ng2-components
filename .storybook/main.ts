@@ -11,6 +11,9 @@ const config: StorybookConfig = {
     stories: ['lib/**/*.stories.ts'],
     features: {
         backgrounds: false
+    },
+    core: {
+        disableTelemetry: true
     }
 };
 

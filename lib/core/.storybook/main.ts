@@ -13,7 +13,10 @@ const config: StorybookConfig = {
     staticDirs: [
         { from: '../src/lib/i18n', to: 'assets/adf-core/i18n' },
         { from: '../src/lib/assets/images', to: 'assets/images' }
-    ]
+    ],
+    core: {
+        disableTelemetry: true
+    }
 };
 
 export default config;
