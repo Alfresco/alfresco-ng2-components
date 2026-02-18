@@ -133,11 +133,11 @@ export interface ReportFormValues {
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, AfterContentChecked {
-    private analyticsService = inject(AnalyticsService);
-    private formBuilder = inject(FormBuilder);
-    private downloadService = inject(DownloadService);
-    private dialog = inject(MatDialog);
-    private dateAdapter = inject(AdfDateFnsAdapter);
+    private readonly analyticsService = inject(AnalyticsService);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly downloadService = inject(DownloadService);
+    private readonly dialog = inject(MatDialog);
+    private readonly dateAdapter = inject(AdfDateFnsAdapter);
 
     /** appId ID of the target app. */
     @Input()

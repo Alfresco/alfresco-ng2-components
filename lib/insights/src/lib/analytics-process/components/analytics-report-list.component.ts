@@ -36,7 +36,7 @@ export const LAYOUT_GRID = 'GRID';
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportListComponent implements OnInit {
-    private analyticsService = inject(AnalyticsService);
+    private readonly analyticsService = inject(AnalyticsService);
 
     /** layout Type LIST or GRID. */
     @Input()

@@ -34,7 +34,7 @@ import { LineChart } from '../../diagram/models/chart/line-chart.model';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _reportApi: ReportApi;
     get reportApi(): ReportApi {

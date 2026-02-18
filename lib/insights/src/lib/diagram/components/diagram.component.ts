@@ -73,9 +73,9 @@ const PADDING_HEIGHT: number = 60;
     templateUrl: './diagram.component.html'
 })
 export class DiagramComponent implements OnChanges {
-    private diagramColorService = inject(DiagramColorService);
-    private raphaelService = inject(RaphaelService);
-    private diagramsService = inject(DiagramsService);
+    private readonly diagramColorService = inject(DiagramColorService);
+    private readonly raphaelService = inject(RaphaelService);
+    private readonly diagramsService = inject(DiagramsService);
 
     /** processDefinitionId. */
     @Input()

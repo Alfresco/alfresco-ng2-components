@@ -22,7 +22,7 @@ import { ModelJsonBpmnApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class DiagramsService {
-    private apiService = inject(AlfrescoApiService);
+    private readonly apiService = inject(AlfrescoApiService);
 
     private _modelJsonBpmnApi: ModelJsonBpmnApi;
     get modelJsonBpmnApi(): ModelJsonBpmnApi {

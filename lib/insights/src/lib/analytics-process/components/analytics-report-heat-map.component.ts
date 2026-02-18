@@ -29,8 +29,8 @@ import { DiagramComponent } from '../../diagram/components/diagram.component';
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements OnInit {
-    private analyticsService = inject(AnalyticsService);
-    private formBuilder = inject(UntypedFormBuilder);
+    private readonly analyticsService = inject(AnalyticsService);
+    private readonly formBuilder = inject(UntypedFormBuilder);
 
     /** reportId. */
     @Input()

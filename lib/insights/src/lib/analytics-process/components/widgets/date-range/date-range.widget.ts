@@ -50,7 +50,7 @@ interface DateRangeProps {
     encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit {
-    private dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
     @Input('group')
     dateRange: FormGroup<DateRangeProps>;
