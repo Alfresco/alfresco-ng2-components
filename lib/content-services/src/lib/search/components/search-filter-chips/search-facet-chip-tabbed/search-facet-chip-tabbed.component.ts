@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
@@ -45,6 +45,9 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipTabbedComponent {
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
     @Input()
     tabbedFacet: TabbedFacetField;
 
@@ -54,8 +57,8 @@ export class SearchFacetChipTabbedComponent {
     @ViewChild('menuTrigger', { static: false })
     menuTrigger: MatMenuTrigger;
 
-    private resetSubject$ = new Subject<void>();
-    private applySubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
+    private readonly applySubject$ = new Subject<void>();
 
     displayValue = '';
     reset$ = this.resetSubject$.asObservable();
@@ -63,11 +66,6 @@ export class SearchFacetChipTabbedComponent {
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
     isPopulated = false;
-
-    constructor(
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory,
-        private readonly changeDetectorRef: ChangeDetectorRef
-    ) {}
 
     onMenuOpen() {
         setTimeout(() => {

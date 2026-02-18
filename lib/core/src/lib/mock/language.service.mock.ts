@@ -22,7 +22,7 @@ import { LanguageItem } from '../common/services/language-item.interface';
 
 @Injectable()
 export class LanguageServiceMock implements LanguageServiceInterface {
-    private languages = new BehaviorSubject<LanguageItem[]>([
+    private readonly languages = new BehaviorSubject<LanguageItem[]>([
         { key: 'de', label: 'Deutsch' },
         { key: 'en', label: 'English' },
         { key: 'es', label: 'Español' },

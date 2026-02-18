@@ -60,6 +60,9 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
+    private readonly dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
+    private readonly dateTimeAdapter = inject<DatetimeAdapter<Date>>(DatetimeAdapter);
+
     from: FormControl<Date>;
     to: FormControl<Date>;
 
@@ -78,11 +81,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     displayValue$ = new ReplaySubject<string>(1);
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private readonly dateAdapter: DateAdapter<Date>,
-        private readonly dateTimeAdapter: DatetimeAdapter<Date>
-    ) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)

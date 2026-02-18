@@ -53,8 +53,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     oldValue: string;
     options: FormFieldOption[] = [];
 
-    private taskFormService = inject(TaskFormService);
-    private processDefinitionService = inject(ProcessDefinitionService);
+    private readonly taskFormService = inject(TaskFormService);
+    private readonly processDefinitionService = inject(ProcessDefinitionService);
 
     ngOnInit() {
         if (this.field.form.taskId && this.field.restUrl) {

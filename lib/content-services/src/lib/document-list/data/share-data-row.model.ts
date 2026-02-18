@@ -41,10 +41,10 @@ export class ShareDataRow implements DataRow {
 
     constructor(
         private obj: NodeEntry,
-        private contentService: ContentService,
-        private permissionsStyle: PermissionStyleModel[],
-        private thumbnailService?: ThumbnailService,
-        private allowDropFiles?: boolean
+        private readonly contentService: ContentService,
+        private readonly permissionsStyle: PermissionStyleModel[],
+        private readonly thumbnailService?: ThumbnailService,
+        private readonly allowDropFiles?: boolean
     ) {
         if (!obj) {
             throw new Error(ERR_OBJECT_NOT_FOUND);

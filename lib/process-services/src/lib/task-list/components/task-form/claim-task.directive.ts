@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, Output, EventEmitter, HostListener, OnInit } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, HostListener, OnInit, inject } from '@angular/core';
 import { TaskListService } from '../../services/tasklist.service';
 
 @Directive({
@@ -23,6 +23,8 @@ import { TaskListService } from '../../services/tasklist.service';
     selector: '[adf-claim-task]'
 })
 export class ClaimTaskDirective implements OnInit {
+    private readonly taskListService = inject(TaskListService);
+
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
@@ -36,8 +38,6 @@ export class ClaimTaskDirective implements OnInit {
     error = new EventEmitter<any>();
 
     invalidParams: string[] = [];
-
-    constructor(private taskListService: TaskListService) {}
 
     @HostListener('click')
     onClick() {

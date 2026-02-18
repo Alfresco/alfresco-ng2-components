@@ -67,9 +67,17 @@ describe('ResizableDirective', () => {
         const injector = TestBed.inject(Injector);
         spyOn(ngZone, 'runOutsideAngular').and.callFake((fn) => fn());
         spyOn(ngZone, 'run').and.callFake((fn) => fn());
-        runInInjectionContext(injector, () => {
-            directive = new ResizableDirective(renderer, element, ngZone);
+
+        const testInjector = Injector.create({
+            providers: [
+                { provide: Renderer2, useValue: renderer },
+                { provide: ElementRef, useValue: element },
+                { provide: NgZone, useValue: ngZone }
+            ],
+            parent: injector
         });
+
+        directive = runInInjectionContext(testInjector, () => new ResizableDirective());
 
         directive.ngOnInit();
     });

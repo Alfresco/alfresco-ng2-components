@@ -16,7 +16,7 @@
  */
 
 import { NgIf } from '@angular/common';
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
@@ -35,12 +35,10 @@ declare const pdfjsLib: any;
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
-    passwordFormControl: UntypedFormControl;
+    private readonly dialogRef = inject<MatDialogRef<PdfPasswordDialogComponent>>(MatDialogRef);
+    data = inject(MAT_DIALOG_DATA);
 
-    constructor(
-        private dialogRef: MatDialogRef<PdfPasswordDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) {}
+    passwordFormControl: UntypedFormControl;
 
     ngOnInit() {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);

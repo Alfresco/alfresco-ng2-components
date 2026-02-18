@@ -24,8 +24,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class FormCloudSpinnerService {
-    private formService = inject(FormService);
-    private overlay = inject(Overlay);
+    private readonly formService = inject(FormService);
+    private readonly overlay = inject(Overlay);
 
     private overlayRef?: OverlayRef = null;
 

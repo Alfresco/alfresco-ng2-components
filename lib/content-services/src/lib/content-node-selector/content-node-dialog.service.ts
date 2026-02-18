@@ -16,7 +16,7 @@
  */
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { ThumbnailService, TranslationService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
@@ -36,20 +36,18 @@ import { SitesService } from '../common/services/sites.service';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class ContentNodeDialogService {
+    private readonly dialog = inject(MatDialog);
+    private readonly contentService = inject(ContentService);
+    private readonly documentListService = inject(DocumentListService);
+    private readonly siteService = inject(SitesService);
+    private readonly translation = inject(TranslationService);
+    private readonly thumbnailService = inject(ThumbnailService);
+
     static nonDocumentSiteContent = ['blog', 'calendar', 'dataLists', 'discussions', 'links', 'wiki'];
 
     /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(
-        private dialog: MatDialog,
-        private contentService: ContentService,
-        private documentListService: DocumentListService,
-        private siteService: SitesService,
-        private translation: TranslationService,
-        private thumbnailService: ThumbnailService
-    ) {}
 
     /**
      * Opens a file browser at a chosen folder location.

@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { AppConfigService } from '../../../app-config';
 
 @Component({
@@ -27,6 +27,9 @@ import { AppConfigService } from '../../../app-config';
     encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {
+    private readonly http = inject(HttpClient);
+    private readonly appConfigService = inject(AppConfigService);
+
     @Input()
     urlFile: any;
 
@@ -37,8 +40,6 @@ export class TxtViewerComponent implements OnChanges {
     contentLoaded = new EventEmitter<void>();
 
     content: string | ArrayBuffer;
-
-    constructor(private http: HttpClient, private appConfigService: AppConfigService) {}
 
     ngOnChanges(changes: SimpleChanges): Promise<void> {
         const blobFile = changes['blobFile'];

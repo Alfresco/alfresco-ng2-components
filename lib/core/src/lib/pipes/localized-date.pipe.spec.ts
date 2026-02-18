@@ -29,9 +29,13 @@ describe('LocalizedDatePipe', () => {
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [LocalizedDatePipe, UserPreferencesService, AppConfigService]
+        });
+
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
-        pipe = new LocalizedDatePipe(userPreferences, TestBed.inject(AppConfigService));
+        pipe = TestBed.inject(LocalizedDatePipe);
     });
 
     it('should return time with locale en-US', () => {

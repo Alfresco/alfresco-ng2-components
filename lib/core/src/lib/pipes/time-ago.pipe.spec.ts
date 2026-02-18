@@ -20,19 +20,19 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { of } from 'rxjs';
-import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('TimeAgoPipe', () => {
     let pipe: TimeAgoPipe;
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
-        userPreferences = TestBed.inject(UserPreferencesService);
-        const injector = TestBed.inject(Injector);
-        spyOn(userPreferences, 'select').and.returnValue(of(''));
-        runInInjectionContext(injector, () => {
-            pipe = new TimeAgoPipe(userPreferences, TestBed.inject(AppConfigService));
+        TestBed.configureTestingModule({
+            providers: [TimeAgoPipe, UserPreferencesService, AppConfigService]
         });
+
+        userPreferences = TestBed.inject(UserPreferencesService);
+        spyOn(userPreferences, 'select').and.returnValue(of(''));
+        pipe = TestBed.inject(TimeAgoPipe);
     });
 
     it('should return time difference for a given date', () => {

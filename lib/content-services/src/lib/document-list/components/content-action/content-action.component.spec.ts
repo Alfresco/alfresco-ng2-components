@@ -21,46 +21,55 @@ import { FileNode } from '../../../mock';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
-import { NodeActionsService } from './../../services/node-actions.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
-import { ContentService } from '../../../common/services/content.service';
 import { NoopAuthModule } from '@alfresco/adf-core';
 
 describe('ContentAction', () => {
     let documentList: DocumentListComponent;
     let actionList: ContentActionListComponent;
-    let documentActions: DocumentActionsService;
-    let folderActions: FolderActionsService;
-
-    let contentService: ContentService;
-    let nodeActionsService: NodeActionsService;
+    let documentActionsService: DocumentActionsService;
+    let folderActionsService: FolderActionsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopAuthModule]
         });
-        contentService = TestBed.inject(ContentService);
-        nodeActionsService = new NodeActionsService(null, null, null);
-        documentActions = new DocumentActionsService(nodeActionsService, null, null, null);
-        folderActions = new FolderActionsService(nodeActionsService, null, contentService, null);
 
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
-        actionList = new ContentActionListComponent(documentList);
+        const docListFixture = TestBed.createComponent(DocumentListComponent);
+        documentList = docListFixture.componentInstance;
+
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [
+                { provide: DocumentListComponent, useValue: documentList },
+                ContentActionListComponent,
+                DocumentActionsService,
+                FolderActionsService
+            ]
+        });
+        actionList = TestBed.inject(ContentActionListComponent);
+        documentActionsService = TestBed.inject(DocumentActionsService);
+        folderActionsService = TestBed.inject(FolderActionsService);
+    });
+
+    afterEach(() => {
+        documentList.actions = [];
     });
 
     it('should register within parent actions list', () => {
         spyOn(actionList, 'registerAction').and.stub();
 
-        const action = new ContentActionComponent(actionList, null, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         action.ngOnInit();
 
         expect(actionList.registerAction).toHaveBeenCalled();
     });
 
     it('should setup and register model', () => {
-        const action = new ContentActionComponent(actionList, null, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         action.target = 'document';
         action.title = '<title>';
         action.icon = '<icon>';
@@ -77,7 +86,7 @@ describe('ContentAction', () => {
     });
 
     it('should update visibility binding', () => {
-        const action = new ContentActionComponent(actionList, null, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         action.target = 'document';
         action.title = '<title>';
         action.icon = '<icon>';
@@ -96,14 +105,15 @@ describe('ContentAction', () => {
 
     it('should get action handler from document actions service', () => {
         const handler = () => {};
-        spyOn(documentActions, 'getHandler').and.returnValue(handler);
+        spyOn(documentActionsService, 'getHandler').and.returnValue(handler);
 
-        const action = new ContentActionComponent(actionList, documentActions, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.target = 'document';
         action.handler = '<handler>';
         action.ngOnInit();
 
-        expect(documentActions.getHandler).toHaveBeenCalledWith(action.handler);
+        expect(documentActionsService.getHandler).toHaveBeenCalledWith(action.handler);
         expect(documentList.actions.length).toBe(1);
 
         const model = documentList.actions[0];
@@ -112,14 +122,15 @@ describe('ContentAction', () => {
 
     it('should get action handler from folder actions service', () => {
         const handler = () => {};
-        spyOn(folderActions, 'getHandler').and.returnValue(handler);
+        spyOn(folderActionsService, 'getHandler').and.returnValue(handler);
 
-        const action = new ContentActionComponent(actionList, null, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.target = 'folder';
         action.handler = '<handler>';
         action.ngOnInit();
 
-        expect(folderActions.getHandler).toHaveBeenCalledWith(action.handler);
+        expect(folderActionsService.getHandler).toHaveBeenCalledWith(action.handler);
         expect(documentList.actions.length).toBe(1);
 
         const model = documentList.actions[0];
@@ -127,69 +138,75 @@ describe('ContentAction', () => {
     });
 
     it('should create document and folder action when there is no target', () => {
-        spyOn(folderActions, 'getHandler').and.stub();
-        spyOn(documentActions, 'getHandler').and.stub();
+        spyOn(folderActionsService, 'getHandler').and.stub();
+        spyOn(documentActionsService, 'getHandler').and.stub();
 
-        const action = new ContentActionComponent(actionList, documentActions, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.handler = '<handler>';
 
         action.ngOnInit();
         expect(documentList.actions.length).toBe(2);
-        expect(folderActions.getHandler).toHaveBeenCalled();
-        expect(documentActions.getHandler).toHaveBeenCalled();
+        expect(folderActionsService.getHandler).toHaveBeenCalled();
+        expect(documentActionsService.getHandler).toHaveBeenCalled();
     });
 
     it('should create document action when target is document', () => {
-        spyOn(folderActions, 'getHandler').and.stub();
-        spyOn(documentActions, 'getHandler').and.stub();
+        spyOn(folderActionsService, 'getHandler').and.stub();
+        spyOn(documentActionsService, 'getHandler').and.stub();
 
-        const action = new ContentActionComponent(actionList, documentActions, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.handler = '<handler>';
         action.target = 'document';
 
         action.ngOnInit();
         expect(documentList.actions.length).toBe(1);
-        expect(folderActions.getHandler).not.toHaveBeenCalled();
-        expect(documentActions.getHandler).toHaveBeenCalled();
+        expect(folderActionsService.getHandler).not.toHaveBeenCalled();
+        expect(documentActionsService.getHandler).toHaveBeenCalled();
     });
 
     it('should create folder action when target is folder', () => {
-        spyOn(folderActions, 'getHandler').and.stub();
-        spyOn(documentActions, 'getHandler').and.stub();
+        spyOn(folderActionsService, 'getHandler').and.stub();
+        spyOn(documentActionsService, 'getHandler').and.stub();
 
-        const action = new ContentActionComponent(actionList, documentActions, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.handler = '<handler>';
         action.target = 'folder';
 
         action.ngOnInit();
         expect(documentList.actions.length).toBe(1);
-        expect(folderActions.getHandler).toHaveBeenCalled();
-        expect(documentActions.getHandler).not.toHaveBeenCalled();
+        expect(folderActionsService.getHandler).toHaveBeenCalled();
+        expect(documentActionsService.getHandler).not.toHaveBeenCalled();
     });
 
     it('should be case insensitive for document target', () => {
-        spyOn(documentActions, 'getHandler').and.stub();
+        spyOn(documentActionsService, 'getHandler').and.stub();
 
-        const action = new ContentActionComponent(actionList, documentActions, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.target = 'DoCuMeNt';
         action.handler = '<handler>';
 
         action.ngOnInit();
-        expect(documentActions.getHandler).toHaveBeenCalledWith(action.handler);
+        expect(documentActionsService.getHandler).toHaveBeenCalledWith(action.handler);
     });
 
     it('should be case insensitive for folder target', () => {
-        spyOn(folderActions, 'getHandler').and.stub();
+        spyOn(folderActionsService, 'getHandler').and.stub();
 
-        const action = new ContentActionComponent(actionList, null, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.target = 'FoLdEr';
         action.handler = '<handler>';
 
         action.ngOnInit();
-        expect(folderActions.getHandler).toHaveBeenCalledWith(action.handler);
+        expect(folderActionsService.getHandler).toHaveBeenCalledWith(action.handler);
     });
 
     it('should use custom "execute" emitter', (done) => {
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         const emitter = new EventEmitter();
 
         emitter.subscribe((e) => {
@@ -197,7 +214,6 @@ describe('ContentAction', () => {
             done();
         });
 
-        const action = new ContentActionComponent(actionList, null, null);
         action.target = 'document';
         action.execute = emitter;
 
@@ -209,42 +225,44 @@ describe('ContentAction', () => {
     });
 
     it('should not find document action handler with missing service', () => {
-        const action = new ContentActionComponent(actionList, null, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         expect(action.getSystemHandler('document', 'name')).toBeNull();
     });
 
     it('should not find folder action handler with missing service', () => {
-        const action = new ContentActionComponent(actionList, null, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         expect(action.getSystemHandler('folder', 'name')).toBeNull();
     });
 
     it('should find document action handler via service', () => {
         const handler = () => {};
-        const action = new ContentActionComponent(actionList, documentActions, null);
-        spyOn(documentActions, 'getHandler').and.returnValue(handler);
+        spyOn(documentActionsService, 'getHandler').and.returnValue(handler);
+
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         expect(action.getSystemHandler('document', 'name')).toBe(handler);
     });
 
     it('should find folder action handler via service', () => {
         const handler = () => {};
-        const action = new ContentActionComponent(actionList, null, folderActions);
-        spyOn(folderActions, 'getHandler').and.returnValue(handler);
+        spyOn(folderActionsService, 'getHandler').and.returnValue(handler);
+
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         expect(action.getSystemHandler('folder', 'name')).toBe(handler);
     });
 
     it('should not find actions for unknown target type', () => {
-        spyOn(folderActions, 'getHandler').and.stub();
-        spyOn(documentActions, 'getHandler').and.stub();
+        spyOn(folderActionsService, 'getHandler').and.stub();
+        spyOn(documentActionsService, 'getHandler').and.stub();
 
-        const action = new ContentActionComponent(actionList, documentActions, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
 
         expect(action.getSystemHandler('unknown', 'name')).toBeNull();
-        expect(folderActions.getHandler).not.toHaveBeenCalled();
-        expect(documentActions.getHandler).not.toHaveBeenCalled();
+        expect(folderActionsService.getHandler).not.toHaveBeenCalled();
+        expect(documentActionsService.getHandler).not.toHaveBeenCalled();
     });
 
     it('should wire model with custom event handler', (done) => {
-        const action = new ContentActionComponent(actionList, documentActions, folderActions);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         const file = new FileNode();
 
         const handler = new EventEmitter();
@@ -260,9 +278,10 @@ describe('ContentAction', () => {
     });
 
     it('should allow registering model without handler', () => {
-        const action = new ContentActionComponent(actionList, documentActions, folderActions);
-
         spyOn(actionList, 'registerAction').and.callThrough();
+
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
+
         action.execute = null;
         action.handler = null;
         action.target = 'document';
@@ -272,7 +291,7 @@ describe('ContentAction', () => {
     });
 
     it('should register on init', () => {
-        const action = new ContentActionComponent(actionList, null, null);
+        const action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         spyOn(action, 'register').and.callThrough();
 
         action.ngOnInit();
@@ -281,10 +300,15 @@ describe('ContentAction', () => {
 
     it('should require action list to register action with', () => {
         const fakeModel = new ContentActionModel();
-        let action = new ContentActionComponent(actionList, null, null);
+        let action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         expect(action.register(fakeModel)).toBeTruthy();
 
-        action = new ContentActionComponent(null, null, null);
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: ContentActionListComponent, useValue: null }]
+        });
+        action = TestBed.createComponent(ContentActionComponent).componentInstance as ContentActionComponent;
         expect(action.register(fakeModel)).toBeFalsy();
     });
 });

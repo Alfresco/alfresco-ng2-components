@@ -96,6 +96,8 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {
+    private readonly translateService = inject(TranslationService);
+
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
@@ -263,7 +265,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return this.translateService.instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL').toUpperCase();
     }
 
-    constructor(private readonly translateService: TranslationService) {
+    constructor() {
         this.startProcessButtonLabel = this.defaultStartProcessButtonLabel;
         this.cancelButtonLabel = this.defaultCancelProcessButtonLabel;
     }

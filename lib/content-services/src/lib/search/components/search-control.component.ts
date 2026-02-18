@@ -26,7 +26,8 @@ import {
     TemplateRef,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -46,6 +47,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { class: 'adf-search-control' }
 })
 export class SearchControlComponent {
+    authService = inject(AuthenticationService);
+    private readonly thumbnailService = inject(ThumbnailService);
+
     /** Toggles highlighting of the search term in the results. */
     @Input()
     highlight: boolean = false;
@@ -100,7 +104,7 @@ export class SearchControlComponent {
     searchAutocomplete: SearchComponent;
 
     @ViewChildren(MatListItem)
-    private listResultElement: QueryList<MatListItem>;
+    private readonly listResultElement: QueryList<MatListItem>;
 
     @ContentChild(EmptySearchResultComponent)
     emptySearchTemplate: EmptySearchResultComponent;
@@ -108,11 +112,6 @@ export class SearchControlComponent {
     focusSubject = new Subject<FocusEvent>();
     noSearchResultTemplate: TemplateRef<any> = null;
     searchTerm: string = '';
-
-    constructor(
-        public authService: AuthenticationService,
-        private readonly thumbnailService: ThumbnailService
-    ) {}
 
     isNoSearchTemplatePresent(): boolean {
         return !!this.emptySearchTemplate;

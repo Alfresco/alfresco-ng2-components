@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { AssignmentType, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
@@ -35,6 +35,8 @@ import { PeopleCloudComponent } from '../../../../people/components/people-cloud
     styleUrls: ['./task-assignment-filter.component.scss']
 })
 export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
+    private readonly identityUserService = inject(IdentityUserService);
+
     @Input() appName: string;
 
     @Input() taskFilterProperty: TaskFilterProperties;
@@ -52,8 +54,6 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
     candidateGroups: IdentityGroupModel[] = [];
     groupForm = new FormControl('');
     assignmentTypeOptions: DropdownOption[];
-
-    constructor(private identityUserService: IdentityUserService) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.status?.currentValue !== changes?.status?.previousValue) {

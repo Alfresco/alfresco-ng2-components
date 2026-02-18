@@ -45,8 +45,8 @@ import { FormsModule } from '@angular/forms';
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
-    private taskFormService = inject(TaskFormService);
-    private processDefinitionService = inject(ProcessDefinitionService);
+    private readonly taskFormService = inject(TaskFormService);
+    private readonly processDefinitionService = inject(ProcessDefinitionService);
 
     ngOnInit() {
         if (this.isValidRestConfig() && !this.isReadOnlyForm()) {

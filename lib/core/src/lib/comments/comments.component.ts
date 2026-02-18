@@ -16,17 +16,7 @@
  */
 
 import { CommentModel } from '../models/comment.model';
-import {
-    Component, ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { CommonModule } from '@angular/common';
@@ -75,7 +65,7 @@ export class CommentsComponent implements OnChanges {
     comments: CommentModel[] = [];
     beingAdded: boolean = false;
 
-    private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
+    private readonly commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
     private readonly _commentControl = new FormControl('', [this.validateEmptyComment]);
 

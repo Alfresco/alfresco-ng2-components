@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
@@ -43,6 +43,11 @@ export type Relations = (typeof Relations)[keyof typeof Relations];
     host: { class: 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
+    private readonly authService = inject(AuthenticationService);
+    private readonly sitesService = inject(SitesService);
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
+    private readonly translateService = inject(TranslateService);
+
     /** Hide the "My Files" option. */
     @Input()
     hideMyFiles: boolean = false;
@@ -94,13 +99,6 @@ export class DropdownSitesComponent implements OnInit {
     get isLoading(): boolean {
         return this.loading;
     }
-
-    constructor(
-        private authService: AuthenticationService,
-        private sitesService: SitesService,
-        private liveAnnouncer: LiveAnnouncer,
-        private translateService: TranslateService
-    ) {}
 
     ngOnInit() {
         if (!this.siteList) {

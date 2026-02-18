@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, DataSorting } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
@@ -32,15 +32,16 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
-    private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
+    private readonly nodeApiService = inject(NodesApiService);
+
+    private readonly customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(
-        appConfig: AppConfigService,
-        alfrescoApiService: AlfrescoApiService,
-        private readonly nodeApiService: NodesApiService
-    ) {
+    constructor() {
+        const appConfig = inject(AppConfigService);
+        const alfrescoApiService = inject(AlfrescoApiService);
+
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(filter((query) => !!query)).subscribe(() => {

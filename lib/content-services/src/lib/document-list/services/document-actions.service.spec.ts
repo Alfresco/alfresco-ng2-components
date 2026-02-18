@@ -69,7 +69,12 @@ describe('DocumentActionsService', () => {
         const file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(null, null, null);
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule],
+            providers: [{ provide: DocumentListService, useValue: null }]
+        });
+        service = TestBed.inject(DocumentActionsService);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 

@@ -49,7 +49,7 @@ import { WidgetComponent } from '../widget.component';
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     displayValue: number;
 
-    private decimalNumberPipe = inject(DecimalNumberPipe);
+    private readonly decimalNumberPipe = inject(DecimalNumberPipe);
 
     ngOnInit() {
         if (this.field.readOnly) {

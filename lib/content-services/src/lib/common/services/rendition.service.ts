@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
 import { Track, TranslationService, ViewUtilService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -24,6 +24,10 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class RenditionService {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly translateService = inject(TranslationService);
+    private readonly viewUtilsService = inject(ViewUtilService);
+
     static TARGET = '_new';
 
     /**
@@ -51,7 +55,7 @@ export class RenditionService {
     /**
      * Timeout used for setInterval.
      */
-    private TRY_TIMEOUT: number = 10000;
+    private readonly TRY_TIMEOUT: number = 10000;
 
     _renditionsApi: RenditionsApi;
     get renditionsApi(): RenditionsApi {
@@ -66,18 +70,12 @@ export class RenditionService {
     }
 
     _versionsApi: VersionsApi;
-    private DEFAULT_RENDITION: string = 'imgpreview';
+    private readonly DEFAULT_RENDITION: string = 'imgpreview';
 
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
-
-    constructor(
-        private readonly apiService: AlfrescoApiService,
-        private readonly translateService: TranslationService,
-        private readonly viewUtilsService: ViewUtilService
-    ) {}
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
         return renditionExists && type !== RenditionService.ContentGroup.IMAGE

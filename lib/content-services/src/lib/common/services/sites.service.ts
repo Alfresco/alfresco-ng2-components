@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import {
     Node,
@@ -37,13 +37,13 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class SitesService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     private _sitesApi: SitesApi;
     get sitesApi(): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
         return this._sitesApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Create a site

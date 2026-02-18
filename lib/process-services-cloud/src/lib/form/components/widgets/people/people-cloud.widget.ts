@@ -48,7 +48,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit {
-    private identityUserService = inject(IdentityUserService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;

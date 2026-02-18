@@ -76,7 +76,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
     protected visibilityService = inject(WidgetVisibilityService);
     protected ecmModelService = inject(EcmModelService);
     protected nodeService = inject(NodesApiService);
-    private cdRef = inject(ChangeDetectorRef);
+    private readonly cdRef = inject(ChangeDetectorRef);
 
     /** Task id to fetch corresponding form and values. */
     @Input()

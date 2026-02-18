@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthenticationService, BasicAlfrescoAuthService } from '@alfresco/adf-core';
 import { take } from 'rxjs/operators';
 
 @Injectable()
 export class ContentAuthLoaderService {
-    constructor(private readonly basicAlfrescoAuthService: BasicAlfrescoAuthService, private readonly authService: AuthenticationService) {}
+    private readonly basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
+    private readonly authService = inject(AuthenticationService);
 
     init(): void {
         this.authService.onLogin.pipe(take(1)).subscribe({

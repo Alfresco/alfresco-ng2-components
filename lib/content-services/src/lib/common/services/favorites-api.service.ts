@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FavoritesApi, NodePaging, FavoritePaging } from '@alfresco/js-api';
 import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -26,6 +26,9 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class FavoritesApiService {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly preferences = inject(UserPreferencesService);
+
     private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
@@ -40,8 +43,6 @@ export class FavoritesApiService {
 
         return { entry };
     }
-
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     remapFavoritesData(data: FavoritePaging = {}): NodePaging {
         const pagination = data?.list?.pagination || {};

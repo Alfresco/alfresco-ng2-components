@@ -35,8 +35,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent implements OnInit {
-    private queryBuilder = inject(SearchQueryBuilderService);
-    private facetFiltersService = inject(SearchFacetFiltersService);
+    private readonly queryBuilder = inject(SearchQueryBuilderService);
+    private readonly facetFiltersService = inject(SearchFacetFiltersService);
 
     private readonly destroyRef = inject(DestroyRef);
 

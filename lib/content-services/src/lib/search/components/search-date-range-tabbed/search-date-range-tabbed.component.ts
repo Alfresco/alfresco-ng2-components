@@ -42,6 +42,8 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
+    private readonly translateService = inject(TranslationService);
+
     private value: { [key: string]: Partial<SearchDateRange> } = {};
 
     private readonly queryMapByField = new Map<string, string>();
@@ -66,8 +68,6 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     combinedQuery: string;
     combinedDisplayValue: string;
     reset$ = this.resetSubject$.asObservable();
-
-    constructor(private translateService: TranslationService) {}
 
     ngOnInit(): void {
         this.fields = this.settings?.field.split(',').map((field) => field.trim());

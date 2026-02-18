@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
@@ -46,6 +46,8 @@ import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleComponent {
+    peopleProcessService = inject(PeopleProcessService);
+
     /** The array of User objects to display. */
     @Input()
     people: LightUserRepresentation[] = [];
@@ -69,7 +71,7 @@ export class PeopleComponent {
 
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
 
-    constructor(public peopleProcessService: PeopleProcessService) {
+    constructor() {
         this.peopleSearch$ = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
     }
 

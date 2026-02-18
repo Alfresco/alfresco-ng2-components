@@ -33,6 +33,11 @@ import { HttpHeaders } from '@angular/common/http';
     providedIn: 'root'
 })
 export class OidcAuthenticationService extends BaseAuthenticationService {
+    private readonly jwtHelperService = inject(JwtHelperService);
+    private readonly authStorage = inject(OAuthStorage);
+    private readonly oauthService = inject(OAuthService);
+    private readonly authConfig = inject(AuthConfigService);
+
     private readonly auth = inject(AuthService);
 
     /**
@@ -46,14 +51,10 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         map(([authenticated, isDiscoveryDocumentLoaded]) => !authenticated && isDiscoveryDocumentLoaded)
     );
 
-    constructor(
-        appConfig: AppConfigService,
-        cookie: CookieService,
-        private jwtHelperService: JwtHelperService,
-        private authStorage: OAuthStorage,
-        private oauthService: OAuthService,
-        private readonly authConfig: AuthConfigService
-    ) {
+    constructor() {
+        const appConfig = inject(AppConfigService);
+        const cookie = inject(CookieService);
+
         super(appConfig, cookie);
     }
 

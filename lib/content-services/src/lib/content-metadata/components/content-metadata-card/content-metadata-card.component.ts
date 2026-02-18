@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataCustomPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
@@ -38,6 +38,10 @@ import { IconModule } from '@alfresco/adf-core';
     host: { class: 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
+    private readonly contentService = inject(ContentService);
+    private readonly nodeAspectService = inject(NodeAspectService);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
+
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })
     node: Node;
@@ -110,11 +114,7 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     editAspectSupported = false;
 
-    constructor(
-        private contentService: ContentService,
-        private nodeAspectService: NodeAspectService,
-        private versionCompatibilityService: VersionCompatibilityService
-    ) {
+    constructor() {
         this.editAspectSupported = this.versionCompatibilityService.isVersionSupported('7');
     }
 

@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { PredictionsApi, PredictionPaging, ReviewStatus } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class PredictionService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     private _predictionsApi: PredictionsApi;
 
     get predictionsApi(): PredictionsApi {
         this._predictionsApi = this._predictionsApi ?? new PredictionsApi(this.apiService.getInstance());
         return this._predictionsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Get predictions for a given node

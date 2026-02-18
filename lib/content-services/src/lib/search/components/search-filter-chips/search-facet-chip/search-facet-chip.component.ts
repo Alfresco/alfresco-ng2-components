@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { FacetField } from '../../../models/facet-field.interface';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -44,6 +44,8 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
     @Input({ required: true })
     field: FacetField;
 
@@ -58,8 +60,6 @@ export class SearchFacetChipComponent {
 
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
-
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
 
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {

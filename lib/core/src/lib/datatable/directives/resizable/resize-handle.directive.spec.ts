@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { ElementRef, NgZone, Renderer2 } from '@angular/core';
+import { ElementRef, NgZone, Renderer2, Injector, runInInjectionContext } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { ResizeHandleDirective } from './resize-handle.directive';
 import { ResizableDirective } from './resizable.directive';
 import { Subject } from 'rxjs';
@@ -38,7 +39,16 @@ describe('ResizeHandleDirective', () => {
             mousemove: new Subject()
         });
 
-        directive = new ResizeHandleDirective(renderer, element, ngZone);
+        const injector = Injector.create({
+            providers: [
+                { provide: Renderer2, useValue: renderer },
+                { provide: ElementRef, useValue: element },
+                { provide: NgZone, useValue: ngZone }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        directive = runInInjectionContext(injector, () => new ResizeHandleDirective());
         directive.resizableContainer = resizableContainer;
     });
 

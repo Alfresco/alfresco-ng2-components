@@ -40,7 +40,7 @@ import { DatePipe } from '@angular/common';
     providedIn: 'root'
 })
 export class ProcessService {
-    private alfrescoApiService = inject(AlfrescoApiService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     private _tasksApi: TasksApi;
     get tasksApi(): TasksApi {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, computed, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
@@ -36,6 +36,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent {
+    private readonly dialog = inject(MatDialog);
+
     /** Editable JSON. */
     @Input()
     editable: boolean = false;
@@ -46,10 +48,6 @@ export class JsonCellComponent extends DataTableCellComponent {
         const value = this.jsonValue();
         return !!value || this.editable;
     });
-
-    constructor(private dialog: MatDialog) {
-        super();
-    }
 
     view() {
         const rawValue = this.data.getValue(this.row, this.column, this.resolverFn);

@@ -26,7 +26,6 @@ import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -48,21 +47,16 @@ const TASK_EVENT_SUBSCRIPTION_QUERY = `
     providedIn: 'root'
 })
 export class TaskFilterCloudService extends BaseCloudService {
+    private readonly notificationCloudService = inject(NotificationCloudService);
+
     public preferenceService = inject<PreferenceCloudServiceInterface>(TASK_FILTERS_SERVICE_TOKEN);
 
     protected identityUserService = inject(IdentityUserService);
 
-    private filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
+    private readonly filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
     filters$ = this.filtersSubject.asObservable();
-    private filterKeyToBeRefreshedSource = new Subject<string>();
+    private readonly filterKeyToBeRefreshedSource = new Subject<string>();
     filterKeyToBeRefreshed$ = this.filterKeyToBeRefreshedSource.asObservable();
-
-    constructor(
-        private notificationCloudService: NotificationCloudService,
-        adfHttpClient: AdfHttpClient
-    ) {
-        super(adfHttpClient);
-    }
 
     /**
      * Creates and returns the default task filters for an app.

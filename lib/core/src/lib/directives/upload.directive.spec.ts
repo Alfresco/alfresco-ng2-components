@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { ElementRef, Renderer2, NgZone, Injector, runInInjectionContext } from '@angular/core';
+import { fakeAsync, tick, TestBed } from '@angular/core/testing';
 import { UploadDirective } from './upload.directive';
 
 describe('UploadDirective', () => {
@@ -26,9 +26,26 @@ describe('UploadDirective', () => {
     beforeEach(() => {
         nativeElement = {
             classList: jasmine.createSpyObj('classList', ['add', 'remove']),
-            dispatchEvent: () => {}
+            dispatchEvent: () => {},
+            parentElement: {
+                appendChild: jasmine.createSpy('appendChild')
+            }
         };
-        directive = new UploadDirective(new ElementRef(nativeElement), null, null);
+
+        const mockRenderer = jasmine.createSpyObj('Renderer2', ['createElement']);
+        const mockNgZone = jasmine.createSpyObj('NgZone', ['runOutsideAngular']);
+        mockNgZone.runOutsideAngular.and.callFake((fn: () => void) => fn());
+
+        const injector = Injector.create({
+            providers: [
+                { provide: ElementRef, useValue: new ElementRef(nativeElement) },
+                { provide: Renderer2, useValue: mockRenderer },
+                { provide: NgZone, useValue: mockNgZone }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        directive = runInInjectionContext(injector, () => new UploadDirective());
     });
 
     it('should be enabled by default', () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, inject, AfterViewInit, DestroyRef, InjectionToken, Optional, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, AfterViewInit, DestroyRef, InjectionToken } from '@angular/core';
 import { debounceTime, filter, isObservable, Observable } from 'rxjs';
 import { FormRulesEvent } from '../../../events';
 import { FormExpressionService } from '../../../services/form-expression.service';
@@ -39,14 +39,18 @@ export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent imp
     private enableExpressionEvaluation: boolean = false;
     protected originalFieldValue?: string;
 
-    constructor(@Optional() @Inject(ADF_DISPLAY_TEXT_SETTINGS) settings: Observable<DisplayTextWidgetSettings> | DisplayTextWidgetSettings) {
+    private readonly settings = inject<Observable<DisplayTextWidgetSettings> | DisplayTextWidgetSettings>(ADF_DISPLAY_TEXT_SETTINGS, {
+        optional: true
+    });
+
+    constructor() {
         super();
-        if (isObservable(settings)) {
-            settings.pipe(takeUntilDestroyed()).subscribe((data: DisplayTextWidgetSettings) => {
+        if (isObservable(this.settings)) {
+            this.settings.pipe(takeUntilDestroyed()).subscribe((data: DisplayTextWidgetSettings) => {
                 this.updateSettingsBasedProperties(data);
             });
         } else {
-            this.updateSettingsBasedProperties(settings);
+            this.updateSettingsBasedProperties(this.settings);
         }
     }
 

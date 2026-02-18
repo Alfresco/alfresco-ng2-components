@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { FormService, FormFieldModel } from '@alfresco/adf-core';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -37,6 +37,10 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./dropdown.editor.scss']
 })
 export class DropdownEditorComponent implements OnInit {
+    formService = inject(FormService);
+    private readonly taskFormService = inject(TaskFormService);
+    private readonly processDefinitionService = inject(ProcessDefinitionService);
+
     value: any = null;
     options: DynamicTableColumnOption[] = [];
 
@@ -48,12 +52,6 @@ export class DropdownEditorComponent implements OnInit {
 
     @Input()
     column: DynamicTableColumn;
-
-    constructor(
-        public formService: FormService,
-        private taskFormService: TaskFormService,
-        private processDefinitionService: ProcessDefinitionService
-    ) {}
 
     ngOnInit() {
         const field = this.table.field;

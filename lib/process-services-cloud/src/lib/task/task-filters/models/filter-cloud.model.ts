@@ -78,7 +78,7 @@ export class TaskFilterCloudModel {
     private _dueDateTo: string;
     private _createdFrom: string;
     private _createdTo: string;
-    private dateRangeFilterService = new DateRangeFilterService();
+    private readonly dateRangeFilterService = new DateRangeFilterService();
 
     processVariableFilters?: ProcessVariableFilterModel[];
 

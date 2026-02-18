@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
     ActivitiContentApi,
     RelatedContentRepresentation,
@@ -30,6 +30,8 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ProcessContentService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -38,8 +40,6 @@ export class ProcessContentService {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Create temporary related content from an uploaded file.

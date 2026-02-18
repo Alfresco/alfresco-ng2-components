@@ -43,6 +43,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
+    private readonly activitiContentService = inject(ActivitiContentService);
+    private readonly contentService = inject(ContentService);
+    private readonly contentDialog = inject(ContentNodeDialogService);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly downloadService = inject(DownloadService);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly attachDialogService = inject(AttachFileWidgetDialogService);
+
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
     isStartProcessPage = false;
@@ -50,19 +59,6 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private tempFilesList = [];
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private activitiContentService: ActivitiContentService,
-        private contentService: ContentService,
-        private contentDialog: ContentNodeDialogService,
-        private appConfigService: AppConfigService,
-        private downloadService: DownloadService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private attachDialogService: AttachFileWidgetDialogService
-    ) {
-        super();
-    }
 
     ngOnInit() {
         super.ngOnInit();

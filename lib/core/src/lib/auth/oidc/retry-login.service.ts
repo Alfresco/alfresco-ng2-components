@@ -22,7 +22,7 @@ import { LoginOptions, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc
     providedIn: 'root'
 })
 export class RetryLoginService {
-    private oauthService = inject(OAuthService);
+    private readonly oauthService = inject(OAuthService);
 
     /**
      * Attempts to log in a specified number of times if the initial login attempt fails.

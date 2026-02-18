@@ -17,7 +17,7 @@
 
 import { NotificationService } from '@alfresco/adf-core';
 import { Node, PermissionElement } from '@alfresco/js-api';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import { finalize, map, switchMap } from 'rxjs/operators';
@@ -36,6 +36,12 @@ const SITE_MANAGER_ROLE = 'SiteManager';
     providedIn: 'root'
 })
 export class PermissionListService {
+    private readonly nodeService = inject(NodesApiService);
+    private readonly nodePermissionService = inject(NodePermissionService);
+    private readonly nodePermissionDialogService = inject(NodePermissionDialogService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
+
     updated = new EventEmitter<PermissionDisplayModel>();
     errored = new EventEmitter<PermissionDisplayModel>();
 
@@ -57,14 +63,6 @@ export class PermissionListService {
 
     private node: Node;
     private roles: RoleModel[];
-
-    constructor(
-        private nodeService: NodesApiService,
-        private nodePermissionService: NodePermissionService,
-        private nodePermissionDialogService: NodePermissionDialogService,
-        private contentService: ContentService,
-        private notificationService: NotificationService
-    ) {}
 
     fetchPermission(nodeId: string) {
         this.loading$.next(true);

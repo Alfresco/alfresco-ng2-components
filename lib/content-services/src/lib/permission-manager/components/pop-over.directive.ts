@@ -38,6 +38,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     exportAs: 'adfPopOver'
 })
 export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
+    private readonly element = inject(ElementRef);
+    private readonly overlay = inject(Overlay);
+    private readonly vcr = inject(ViewContainerRef);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
     get open(): boolean {
         return this._open;
     }
@@ -52,13 +57,6 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     private focusTrap: ConfigurableFocusTrap;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private element: ElementRef,
-        private overlay: Overlay,
-        private vcr: ViewContainerRef,
-        private focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {}
 
     ngOnInit(): void {
         this.createOverlay();

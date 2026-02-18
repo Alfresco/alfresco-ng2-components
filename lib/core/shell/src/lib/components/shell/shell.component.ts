@@ -23,7 +23,7 @@ import {
     SidenavLayoutNavigationDirective
 } from '@alfresco/adf-core';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
-import { Component, DestroyRef, inject, Inject, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
@@ -48,6 +48,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     host: { class: 'app-shell' }
 })
 export class ShellLayoutComponent implements OnInit {
+    private readonly router = inject(Router);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly breakpointObserver = inject(BreakpointObserver);
+    private readonly shellService = inject<ShellAppService>(SHELL_APP_SERVICE);
+
     @ViewChild('layout', { static: true })
     layout: SidenavLayoutComponent;
 
@@ -62,14 +67,10 @@ export class ShellLayoutComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private router: Router,
-        private appConfigService: AppConfigService,
-        private breakpointObserver: BreakpointObserver,
-        @Inject(SHELL_APP_SERVICE) private shellService: ShellAppService,
-        @Optional() @Inject(SHELL_NAVBAR_MIN_WIDTH) navBarMinWidth: number,
-        @Optional() @Inject(SHELL_NAVBAR_MAX_WIDTH) navbarMaxWidth: number
-    ) {
+    constructor() {
+        const navBarMinWidth = inject(SHELL_NAVBAR_MIN_WIDTH, { optional: true });
+        const navbarMaxWidth = inject(SHELL_NAVBAR_MAX_WIDTH, { optional: true });
+
         this.sidenavMin = navBarMinWidth ?? 70;
         this.sidenavMax = navbarMaxWidth ?? 320;
     }

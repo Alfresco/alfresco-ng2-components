@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, ElementRef, EventEmitter, Inject, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,6 +35,8 @@ import { IconModule } from '../../../../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class SelectFilterInputComponent implements OnInit {
+    private readonly matSelect = inject<MatSelect>(MatSelect);
+
     @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();
 
@@ -42,8 +44,6 @@ export class SelectFilterInputComponent implements OnInit {
     previousSelected: any[];
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
 
     onModelChange(value: string) {
         this.change.next(value);

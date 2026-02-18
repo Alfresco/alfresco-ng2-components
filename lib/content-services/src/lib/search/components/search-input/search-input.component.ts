@@ -17,7 +17,7 @@
 
 import { AppConfigService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -31,6 +31,8 @@ import { SearchConfiguration } from '../../models';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchInputComponent implements OnInit {
+    private readonly appConfig = inject(AppConfigService);
+
     @Input()
     value = '';
 
@@ -45,8 +47,6 @@ export class SearchInputComponent implements OnInit {
 
     @Output()
     changed = new EventEmitter<string>();
-
-    constructor(private appConfig: AppConfigService) {}
 
     ngOnInit(): void {
         const searchConfig = this.appConfig.get<SearchConfiguration>('search') || {};

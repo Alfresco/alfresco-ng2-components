@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { CardViewDateItemModel, CardViewItemMatchValidator, CardViewTextItemModel, FileSizePipe, TranslationService } from '@alfresco/adf-core';
+import { CardViewDateItemModel, CardViewItemMatchValidator, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BasicPropertiesService {
-    private translationService = inject(TranslationService);
+    private readonly injector = inject(Injector);
 
     getProperties(node: Node) {
         const sizeInBytes = node.content ? node.content.sizeInBytes : '';
@@ -63,7 +63,7 @@ export class BasicPropertiesService {
                 label: 'CORE.METADATA.BASIC.SIZE',
                 value: sizeInBytes,
                 key: 'content.sizeInBytes',
-                pipes: [{ pipe: new FileSizePipe(this.translationService) }],
+                pipes: [{ pipe: runInInjectionContext(this.injector, () => new FileSizePipe()) }],
                 editable: false
             }),
             new CardViewTextItemModel({

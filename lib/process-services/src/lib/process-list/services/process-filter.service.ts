@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -29,13 +29,13 @@ import {
     providedIn: 'root'
 })
 export class ProcessFilterService {
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+
     private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.alfrescoApiService.getInstance());
         return this._userFiltersApi;
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     /**
      * Gets all filters defined for a Process App.

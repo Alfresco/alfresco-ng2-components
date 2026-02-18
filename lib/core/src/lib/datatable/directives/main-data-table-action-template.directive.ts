@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, TemplateRef, inject } from '@angular/core';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
     selector: 'adf-main-menu-datatable-template'
 })
 export class MainMenuDataTableTemplateDirective implements AfterContentInit {
+    private readonly dataTable = inject(DataTableComponent);
+
     @ContentChild(TemplateRef)
     template: any;
-
-    constructor(private dataTable: DataTableComponent) {}
 
     ngAfterContentInit() {
         if (this.dataTable) {

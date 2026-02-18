@@ -49,6 +49,8 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     encapsulation: ViewEncapsulation.None
 })
 export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
+    private readonly translationService = inject(TranslationService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -59,8 +61,6 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     displayValue$ = new ReplaySubject<string>(1);
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private translationService: TranslationService) {}
 
     ngOnInit(): void {
         this.clearSearchInputs();

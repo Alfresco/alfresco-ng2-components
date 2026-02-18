@@ -30,7 +30,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AppExtensionServiceMock {
     references$: Observable<ExtensionRef[]>;
-    private _references = new BehaviorSubject<ExtensionRef[]>([]);
+    private readonly _references = new BehaviorSubject<ExtensionRef[]>([]);
 
     constructor() {
         this.references$ = this._references.asObservable();

@@ -749,7 +749,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 class TaskListContextMenuComponent implements OnInit {
     @Output()
     contextAction = new EventEmitter<any>();
-    private performAction$ = new Subject<any>();
+    private readonly performAction$ = new Subject<any>();
 
     ngOnInit() {
         this.performContextActions();

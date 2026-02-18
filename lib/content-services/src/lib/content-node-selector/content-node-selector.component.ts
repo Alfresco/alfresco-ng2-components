@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { EmptyListComponent, IconModule, NotificationService, ToolbarComponent, ToolbarTitleComponent, TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
@@ -62,6 +62,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit {
+    private readonly translation = inject(TranslationService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
+    private readonly uploadService = inject(UploadService);
+    private readonly dialog = inject<MatDialogRef<ContentNodeSelectorComponent>>(MatDialogRef);
+    private readonly overlayContainer = inject(OverlayContainer);
+    data = inject<ContentNodeSelectorComponentData>(MAT_DIALOG_DATA);
+
     title: string;
     action: NodeAction;
     buttonActionName: string;
@@ -78,15 +86,9 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private translation: TranslationService,
-        private contentService: ContentService,
-        private notificationService: NotificationService,
-        private uploadService: UploadService,
-        private dialog: MatDialogRef<ContentNodeSelectorComponent>,
-        private overlayContainer: OverlayContainer,
-        @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData
-    ) {
+    constructor() {
+        const data = this.data;
+
         this.action = data.actionName ?? NodeAction.CHOOSE;
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;

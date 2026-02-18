@@ -37,8 +37,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
     constructor(
-        private versionsApi: VersionsApi,
-        private node: Node
+        private readonly versionsApi: VersionsApi,
+        private readonly node: Node
     ) {
         super();
     }
@@ -72,6 +72,11 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
     host: { class: 'adf-version-list' }
 })
 export class VersionListComponent implements OnChanges, OnInit {
+    private readonly alfrescoApi = inject(AlfrescoApiService);
+    private readonly contentService = inject(ContentService);
+    private readonly contentVersionService = inject(ContentVersionService);
+    private readonly dialog = inject(MatDialog);
+
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
@@ -134,13 +139,6 @@ export class VersionListComponent implements OnChanges, OnInit {
     viewport: CdkVirtualScrollViewport;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private alfrescoApi: AlfrescoApiService,
-        private contentService: ContentService,
-        private contentVersionService: ContentVersionService,
-        private dialog: MatDialog
-    ) {}
 
     ngOnInit() {
         this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { FileTypePipe, ThumbnailService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class VersionComparisonComponent {
+    thumbnailService = inject(ThumbnailService);
+
     /** Target node. */
     @Input({ required: true })
     node: Node;
@@ -36,6 +38,4 @@ export class VersionComparisonComponent {
     /** New file for updating current version. */
     @Input({ required: true })
     newFileVersion: File;
-
-    constructor(public thumbnailService: ThumbnailService) {}
 }

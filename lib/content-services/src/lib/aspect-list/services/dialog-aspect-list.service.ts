@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { AspectListDialogComponentData } from '../aspect-list-dialog-data.interface';
@@ -28,12 +28,10 @@ import { CategoryService } from '../../category';
     providedIn: 'root'
 })
 export class DialogAspectListService {
-    constructor(
-        private dialog: MatDialog,
-        private overlayContainer: OverlayContainer,
-        private tagService: TagService,
-        private categoryService: CategoryService
-    ) {}
+    private readonly dialog = inject(MatDialog);
+    private readonly overlayContainer = inject(OverlayContainer);
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
 
     openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
         const select = new Subject<string[]>();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, ViewContainerRef, Self, Optional } from '@angular/core';
+import { Directive, Input, HostListener, ViewContainerRef, inject } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -27,6 +27,11 @@ import { MatTooltip } from '@angular/material/tooltip';
     hostDirectives: [MatTooltip]
 })
 export class ClipboardDirective {
+    private readonly clipboardService = inject(ClipboardService);
+    viewContainerRef = inject(ViewContainerRef);
+    private readonly matTooltip = inject(MatTooltip, { self: true });
+    private readonly translate = inject(TranslateService, { optional: true });
+
     /** Translation key or message for the tooltip. */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('adf-clipboard')
@@ -39,13 +44,6 @@ export class ClipboardDirective {
     /** Translation key or message for snackbar notification. */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
-
-    constructor(
-        private readonly clipboardService: ClipboardService,
-        public viewContainerRef: ViewContainerRef,
-        @Self() private readonly matTooltip: MatTooltip,
-        @Optional() private readonly translate: TranslateService
-    ) {}
 
     @HostListener('mouseenter')
     showTooltip() {

@@ -17,18 +17,17 @@
 
 /* eslint-disable no-console */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
 import { Subject } from 'rxjs';
 
-/**
- * @deprecated This service is deprecated and will be removed in future versions.
- */
 @Injectable({
     providedIn: 'root'
 })
 export class LogService {
+    private readonly appConfig = inject(AppConfigService);
+
     get currentLogLevel(): number {
         const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
@@ -41,7 +40,7 @@ export class LogService {
 
     onMessage: Subject<any>;
 
-    constructor(private appConfig: AppConfigService) {
+    constructor() {
         this.onMessage = new Subject();
     }
 

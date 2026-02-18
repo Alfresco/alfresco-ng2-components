@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
@@ -37,14 +37,12 @@ export interface CategorySelectorDialogOptions {
     encapsulation: ViewEncapsulation.None
 })
 export class CategorySelectorDialogComponent implements OnInit {
+    private readonly dialog = inject<MatDialogRef<CategorySelectorDialogComponent, boolean>>(MatDialogRef);
+    private readonly options = inject<CategorySelectorDialogOptions>(MAT_DIALOG_DATA);
+
     categories: Category[] = [];
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     multiSelect = true;
-
-    constructor(
-        private dialog: MatDialogRef<CategorySelectorDialogComponent, boolean>,
-        @Inject(MAT_DIALOG_DATA) private options: CategorySelectorDialogOptions
-    ) {}
 
     ngOnInit() {
         this.multiSelect = this.options.multiSelect ?? true;

@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
@@ -27,9 +27,11 @@ import { map, catchError, retry } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TranslateLoaderService implements TranslateLoader {
-    private prefix: string = 'i18n';
-    private suffix: string = '.json';
-    private providers: ComponentTranslationModel[] = [
+    private readonly http = inject(HttpClient);
+
+    private readonly prefix: string = 'i18n';
+    private readonly suffix: string = '.json';
+    private readonly providers: ComponentTranslationModel[] = [
         new ComponentTranslationModel({
             name: 'adf-core',
             path: 'assets/adf-core'
@@ -37,8 +39,6 @@ export class TranslateLoaderService implements TranslateLoader {
     ];
     private queue: string[][] = [];
     private defaultLang: string = 'en';
-
-    constructor(private http: HttpClient) {}
 
     setDefaultLang(value: string) {
         this.defaultLang = value || 'en';

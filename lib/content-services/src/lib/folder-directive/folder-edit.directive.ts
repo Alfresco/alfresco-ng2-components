@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Output, EventEmitter, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
 import { FolderDialogComponent } from '../dialogs/folder/folder.dialog';
@@ -29,6 +29,10 @@ const DIALOG_WIDTH: number = 400;
     selector: '[adf-edit-folder]'
 })
 export class FolderEditDirective {
+    dialogRef = inject(MatDialog);
+    elementRef = inject(ElementRef);
+    content = inject(ContentService);
+
     /** Folder node to edit. */
     @Input('adf-edit-folder')
     folder: Node;
@@ -52,8 +56,6 @@ export class FolderEditDirective {
             this.openDialog();
         }
     }
-
-    constructor(public dialogRef: MatDialog, public elementRef: ElementRef, public content: ContentService) {}
 
     private get dialogConfig() {
         const { folder } = this;

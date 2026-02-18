@@ -49,7 +49,7 @@ import { APP_CUSTOM_SCREEN_TOKEN, CustomScreen } from './provide-screen';
     providedIn: 'root'
 })
 export class ScreenRenderingService extends DynamicComponentMapper {
-    private customScreens = inject<CustomScreen[]>(APP_CUSTOM_SCREEN_TOKEN, { optional: true }) || [];
+    private readonly customScreens = inject<CustomScreen[]>(APP_CUSTOM_SCREEN_TOKEN, { optional: true }) || [];
 
     constructor() {
         super();

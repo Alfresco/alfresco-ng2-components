@@ -45,7 +45,7 @@ import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.com
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsGeneratorComponent implements OnChanges {
-    private analyticsService = inject(AnalyticsService);
+    private readonly analyticsService = inject(AnalyticsService);
 
     /** reportId. */
     @Input()

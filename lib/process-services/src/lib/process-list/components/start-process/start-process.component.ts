@@ -82,6 +82,12 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit {
+    private readonly processService = inject(ProcessService);
+    private readonly contentService = inject(ActivitiContentService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly datePipe = inject(LocalizedDatePipe);
+
     /**
      * Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -165,14 +171,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     populatedFormData: FormValues;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private processService: ProcessService,
-        private contentService: ActivitiContentService,
-        private appsProcessService: AppsProcessService,
-        private appConfig: AppConfigService,
-        private datePipe: LocalizedDatePipe
-    ) {}
 
     ngOnInit() {
         this.processNameInput = new UntypedFormControl('', [

@@ -39,6 +39,10 @@ import { SitesService } from '../../../common/services/sites.service';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly sitesService = inject(SitesService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -48,18 +52,14 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     selectedOptions: AutocompleteOption[] = [];
     enableChangeUpdate: boolean;
 
-    private resetSubject$ = new Subject<void>();
+    private readonly resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
-    private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
+    private readonly autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private readonly tagService: TagService,
-        private readonly categoryService: CategoryService,
-        private readonly sitesService: SitesService
-    ) {
+    constructor() {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 

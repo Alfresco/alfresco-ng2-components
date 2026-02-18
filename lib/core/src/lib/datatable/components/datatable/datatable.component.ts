@@ -130,7 +130,12 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
-    private static MINIMUM_COLUMN_SIZE = 100;
+    private readonly elementRef = inject(ElementRef);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
+    private static readonly MINIMUM_COLUMN_SIZE = 100;
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -333,9 +338,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
-    private click$: Observable<DataRowEvent>;
+    private readonly click$: Observable<DataRowEvent>;
 
-    private differ: any;
+    private readonly differ: any;
     private rowMenuCache: any = {};
 
     private singleClickStreamSub: Subscription;
@@ -376,13 +381,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
-    constructor(
-        private readonly elementRef: ElementRef,
-        differs: IterableDiffers,
-        private readonly matIconRegistry: MatIconRegistry,
-        private readonly sanitizer: DomSanitizer,
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {
+    constructor() {
+        const differs = inject(IterableDiffers);
+
         if (differs) {
             this.differ = differs.find([]).create(null);
         }

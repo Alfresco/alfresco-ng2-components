@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Observable, defer, forkJoin } from 'rxjs';
 import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
@@ -26,13 +26,13 @@ import { ClassesApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class PropertyDescriptorsService {
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+
     private _classesApi: ClassesApi;
     get classesApi(): ClassesApi {
         this._classesApi = this._classesApi ?? new ClassesApi(this.alfrescoApiService.getInstance());
         return this._classesApi;
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     load(groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames

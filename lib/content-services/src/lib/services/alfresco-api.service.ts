@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { ReplaySubject } from 'rxjs';
 import { AlfrescoApiFactory } from './alfresco-api.interface';
@@ -27,6 +27,10 @@ export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
     providedIn: 'root'
 })
 export class AlfrescoApiService {
+    protected appConfig = inject(AppConfigService);
+    protected storageService = inject(StorageService);
+    private readonly alfrescoApiFactory = inject<AlfrescoApiFactory>(ALFRESCO_API_FACTORY, { optional: true });
+
     alfrescoApiInitialized = new ReplaySubject<boolean>(1);
 
     protected alfrescoApi: AlfrescoApi;
@@ -36,19 +40,11 @@ export class AlfrescoApiService {
 
     idpConfig: OpenidConfiguration;
 
-    private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
+    private readonly excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
     }
-
-    constructor(
-        protected appConfig: AppConfigService,
-        protected storageService: StorageService,
-        @Optional()
-        @Inject(ALFRESCO_API_FACTORY)
-        private alfrescoApiFactory?: AlfrescoApiFactory
-    ) {}
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;

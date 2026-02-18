@@ -20,8 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from './identity-group.service';
 import { mockFoodGroups } from '../mock/group-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpErrorResponse } from '@angular/common/http';
+import { provideHttpClient, HttpErrorResponse } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 const mockHttpErrorResponse = new HttpErrorResponse({
     error: 'Mock Error',
@@ -36,8 +36,8 @@ describe('IdentityGroupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [IdentityGroupService]
+            imports: [TranslateModule.forRoot()],
+            providers: [IdentityGroupService, provideHttpClient(), provideHttpClientTesting()]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -64,18 +64,18 @@ describe('IdentityGroupService', () => {
 
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake').subscribe(
-                () => {
+            service.search('fake').subscribe({
+                next: () => {
                     fail('expected an error, not groups');
                 },
-                (error) => {
+                error: (error) => {
                     expect(searchSpy).toHaveBeenCalled();
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
                     expect(error.error).toEqual('Mock Error');
                     done();
                 }
-            );
+            });
         });
 
         it('should fetch groups by roles', (done) => {
@@ -107,11 +107,11 @@ describe('IdentityGroupService', () => {
                     roles: ['fake-role-1', 'fake-role-2'],
                     withinApplication: ''
                 })
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         fail('expected an error, not groups');
                     },
-                    (error) => {
+                    error: (error) => {
                         expect(searchSpy).toHaveBeenCalled();
                         expect(service.queryParams).toEqual({
                             search: 'fake',
@@ -122,7 +122,7 @@ describe('IdentityGroupService', () => {
                         expect(error.error).toEqual('Mock Error');
                         done();
                     }
-                );
+                });
         });
 
         it('should fetch groups within app', (done) => {
@@ -171,11 +171,11 @@ describe('IdentityGroupService', () => {
                     roles: [],
                     withinApplication: 'fake-app-name'
                 })
-                .subscribe(
-                    () => {
+                .subscribe({
+                    next: () => {
                         fail('expected an error, not groups');
                     },
-                    (error) => {
+                    error: (error) => {
                         expect(searchSpy).toHaveBeenCalled();
                         expect(service.queryParams).toEqual({
                             search: 'fake',
@@ -186,7 +186,7 @@ describe('IdentityGroupService', () => {
                         expect(error.error).toEqual('Mock Error');
                         done();
                     }
-                );
+                });
         });
     });
 });

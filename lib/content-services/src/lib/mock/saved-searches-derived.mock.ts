@@ -17,8 +17,6 @@
 
 import { NodeEntry } from '@alfresco/js-api';
 import { of, Observable, ReplaySubject } from 'rxjs';
-import { AlfrescoApiService } from '../services';
-import { AuthenticationService } from '@alfresco/adf-core';
 import { SavedSearch, SavedSearchesBaseService } from '../common';
 import { Injectable } from '@angular/core';
 
@@ -27,10 +25,6 @@ export class MockSavedSearchesService extends SavedSearchesBaseService {
     public fetchSubject = new ReplaySubject<SavedSearch[]>();
 
     public updateSpy = jasmine.createSpy('updateSavedSearches').and.returnValue(of({} as NodeEntry));
-
-    constructor(apiService: AlfrescoApiService, authService: AuthenticationService) {
-        super(apiService, authService);
-    }
 
     protected fetchAllSavedSearches(): Observable<SavedSearch[]> {
         return this.fetchSubject.asObservable();

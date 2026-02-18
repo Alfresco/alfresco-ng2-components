@@ -26,6 +26,9 @@ const config: StorybookConfig = {
             config.performance = { hints: false };
         }
         return config;
+    },
+    core: {
+        disableTelemetry: true
     }
 };
 

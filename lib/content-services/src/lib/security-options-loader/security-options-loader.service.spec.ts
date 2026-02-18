@@ -18,6 +18,7 @@
 import { SecurityOptionsLoaderService } from './security-options-loader.service';
 import { AppConfigService, AppConfigValues } from '@alfresco/adf-core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { TestBed } from '@angular/core/testing';
 
 describe('SecurityOptionsLoaderService', () => {
     let service: SecurityOptionsLoaderService;
@@ -28,7 +29,13 @@ describe('SecurityOptionsLoaderService', () => {
         appConfigServiceSpy = jasmine.createSpyObj('AppConfigService', ['get']);
         adfHttpClientSpy = jasmine.createSpyObj('AdfHttpClient', ['setDefaultSecurityOption']);
 
-        service = new SecurityOptionsLoaderService(appConfigServiceSpy, adfHttpClientSpy);
+        TestBed.configureTestingModule({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigServiceSpy },
+                { provide: AdfHttpClient, useValue: adfHttpClientSpy }
+            ]
+        });
+        service = TestBed.inject(SecurityOptionsLoaderService);
     });
 
     it('should set withCredentials when value is true', () => {

@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
@@ -34,6 +34,8 @@ import { LineChart } from '../../diagram/models/chart/line-chart.model';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     private _reportApi: ReportApi;
     get reportApi(): ReportApi {
         this._reportApi = this._reportApi ?? new ReportApi(this.apiService.getInstance());
@@ -45,8 +47,6 @@ export class AnalyticsService {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
         return this._processDefinitionsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Retrieve all the Deployed app

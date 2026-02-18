@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -51,6 +51,9 @@ import { IconModule } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchWidgetChipComponent implements AfterViewInit {
+    private readonly cd = inject(ChangeDetectorRef);
+    private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
     @Input({ required: true })
     category: SearchCategory;
 
@@ -68,11 +71,6 @@ export class SearchWidgetChipComponent implements AfterViewInit {
 
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
-
-    constructor(
-        private readonly cd: ChangeDetectorRef,
-        private readonly focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {}
 
     ngAfterViewInit(): void {
         this.widgetContainerComponent

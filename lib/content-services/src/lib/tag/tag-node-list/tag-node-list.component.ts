@@ -33,6 +33,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges, OnInit {
+    private readonly tagService = inject(TagService);
+
     /** The identifier of a node. */
     @Input({ required: true })
     nodeId: string;
@@ -56,8 +58,6 @@ export class TagNodeListComponent implements OnChanges, OnInit {
     }
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private tagService: TagService) {}
 
     ngOnChanges(): void {
         this.refreshTag();

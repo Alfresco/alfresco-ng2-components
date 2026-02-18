@@ -68,6 +68,7 @@ module.exports = {
                 ],
                 '@angular-eslint/no-host-metadata-property': 'off',
                 '@angular-eslint/no-input-prefix': 'error',
+                '@angular-eslint/prefer-inject': 'error',
                 '@typescript-eslint/consistent-type-definitions': 'error',
                 '@typescript-eslint/dot-notation': 'off',
                 '@typescript-eslint/explicit-member-accessibility': [
@@ -78,6 +79,7 @@ module.exports = {
                 ],
                 '@typescript-eslint/await-thenable': 'error',
                 '@typescript-eslint/prefer-optional-chain': 'error',
+                '@typescript-eslint/prefer-readonly': 'error',
                 '@typescript-eslint/no-inferrable-types': 'off',
                 '@typescript-eslint/no-require-imports': 'off',
                 '@typescript-eslint/no-var-requires': 'error',

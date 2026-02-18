@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, ViewContainerRef, TemplateRef } from '@angular/core';
+import { Directive, Input, ViewContainerRef, TemplateRef, inject } from '@angular/core';
 import { VersionCompatibilityService } from './version-compatibility.service';
 import { take } from 'rxjs/operators';
 
@@ -23,17 +23,15 @@ import { take } from 'rxjs/operators';
     selector: '[adf-acs-version]'
 })
 export class VersionCompatibilityDirective {
+    private readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
+    private readonly viewContainer = inject(ViewContainerRef);
+    private readonly versionCompatibilityService = inject(VersionCompatibilityService);
+
     /** Minimum version required for component to work correctly . */
     @Input('adf-acs-version')
     set version(requiredVersion: string) {
         this.validateAcsVersion(requiredVersion);
     }
-
-    constructor(
-        private templateRef: TemplateRef<any>,
-        private viewContainer: ViewContainerRef,
-        private versionCompatibilityService: VersionCompatibilityService
-    ) {}
 
     private validateAcsVersion(requiredVersion: string) {
         this.versionCompatibilityService.acsVersionInitialized$.pipe(take(1)).subscribe(() => {

@@ -21,6 +21,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { DEFAULT_LANGUAGE_LIST } from '../../common/models/default-languages.model';
 import { LanguageItem } from '../../common/services/language-item.interface';
+import { Injector, runInInjectionContext } from '@angular/core';
 
 describe('LanguageService', () => {
     let service: LanguageService;
@@ -54,7 +55,16 @@ describe('LanguageService', () => {
 
     it('should initialize with default languages when no custom languages are provided', (done) => {
         appConfigService.get.and.returnValue(null);
-        service = new LanguageService(appConfigService, userPreferencesService);
+
+        const injector = Injector.create({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: UserPreferencesService, useValue: userPreferencesService }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        service = runInInjectionContext(injector, () => new LanguageService());
 
         service.languages$.subscribe((languages) => {
             expect(languages).toEqual(DEFAULT_LANGUAGE_LIST);
@@ -64,7 +74,16 @@ describe('LanguageService', () => {
 
     it('should initialize with custom languages when provided', (done) => {
         appConfigService.get.and.returnValue(customLanguages);
-        service = new LanguageService(appConfigService, userPreferencesService);
+
+        const injector = Injector.create({
+            providers: [
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: UserPreferencesService, useValue: userPreferencesService }
+            ],
+            parent: TestBed.inject(Injector)
+        });
+
+        service = runInInjectionContext(injector, () => new LanguageService());
 
         service.languages$.subscribe((languages) => {
             expect(languages).toEqual(customLanguages);

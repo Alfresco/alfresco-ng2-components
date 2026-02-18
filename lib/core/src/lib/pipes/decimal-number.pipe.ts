@@ -16,7 +16,7 @@
  */
 
 import { DecimalPipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { DecimalNumberModel } from '../models/decimal-number.model';
@@ -26,6 +26,9 @@ import { DecimalNumberModel } from '../models/decimal-number.model';
     pure: false
 })
 export class DecimalNumberPipe implements PipeTransform {
+    userPreferenceService? = inject(UserPreferencesService);
+    appConfig? = inject(AppConfigService);
+
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_MIN_INTEGER_DIGITS = 1;
     static DEFAULT_MIN_FRACTION_DIGITS = 0;
@@ -35,10 +38,7 @@ export class DecimalNumberPipe implements PipeTransform {
     defaultMinFractionDigits: number = DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS;
     defaultMaxFractionDigits: number = DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS;
 
-    constructor(
-        public userPreferenceService?: UserPreferencesService,
-        public appConfig?: AppConfigService
-    ) {
+    constructor() {
         if (this.appConfig) {
             this.defaultMinIntegerDigits = this.appConfig.get<number>('decimalValues.minIntegerDigits', DecimalNumberPipe.DEFAULT_MIN_INTEGER_DIGITS);
             this.defaultMinFractionDigits = this.appConfig.get<number>(

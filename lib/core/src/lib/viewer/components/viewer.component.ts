@@ -92,7 +92,12 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
-    private thumbnailService = inject(ThumbnailService);
+    private readonly el = inject(ElementRef);
+    dialog = inject(MatDialog);
+    private readonly viewUtilsService = inject(ViewUtilService);
+    private readonly appConfigService = inject(AppConfigService);
+
+    private readonly thumbnailService = inject(ThumbnailService);
 
     @HostBinding('class.adf-viewer-inline')
     get isInline() {
@@ -302,7 +307,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     viewerRenderer: ViewerRenderComponent;
 
     private closeViewer = true;
-    private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
+    private readonly keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible = false;
     private _fileName: string;
     private _fileNameWithoutExtension: string;
@@ -343,13 +348,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     get fileNameWithoutExtension(): string {
         return this._fileNameWithoutExtension;
     }
-
-    constructor(
-        private el: ElementRef,
-        public dialog: MatDialog,
-        private viewUtilsService: ViewUtilService,
-        private appConfigService: AppConfigService
-    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const { blobFile, urlFile, mimeType, nodeMimeType } = changes;

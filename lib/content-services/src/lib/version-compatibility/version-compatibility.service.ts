@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 import { VersionInfo, RepositoryInfo } from '@alfresco/js-api';
@@ -25,11 +25,13 @@ import { DiscoveryApiService } from '../common/services/discovery-api.service';
     providedIn: 'root'
 })
 export class VersionCompatibilityService {
+    private readonly discoveryApiService = inject(DiscoveryApiService);
+
     private acsVersion: VersionInfo;
 
     acsVersionInitialized$ = new ReplaySubject<void>();
 
-    constructor(private discoveryApiService: DiscoveryApiService) {
+    constructor() {
         this.discoveryApiService.ecmProductInfo$
             .pipe(filter((acsInfo) => !!acsInfo))
             .subscribe((acsInfo: RepositoryInfo) => this.initializeAcsVersion(acsInfo.version));

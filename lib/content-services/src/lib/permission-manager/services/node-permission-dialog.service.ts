@@ -17,7 +17,7 @@
 
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { NodePermissionService } from './node-permission.service';
@@ -31,7 +31,9 @@ import { AllowableOperationsEnum } from '../../common/models/allowable-operation
     providedIn: 'root'
 })
 export class NodePermissionDialogService {
-    constructor(private dialog: MatDialog, private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
+    private readonly dialog = inject(MatDialog);
+    private readonly nodePermissionService = inject(NodePermissionService);
+    private readonly contentService = inject(ContentService);
 
     /**
      * Opens a dialog to add permissions to a node.

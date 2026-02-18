@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { isAfter } from 'date-fns';
@@ -24,7 +24,7 @@ import { isAfter } from 'date-fns';
     providedIn: 'root'
 })
 export class LockService {
-    constructor(private authService: AuthenticationService) {}
+    private readonly authService = inject(AuthenticationService);
 
     isLocked(node: Node): boolean {
         let isLocked = false;

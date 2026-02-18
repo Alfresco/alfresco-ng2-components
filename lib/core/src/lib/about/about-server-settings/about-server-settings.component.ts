@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,10 +29,10 @@ import { MatCardModule } from '@angular/material/card';
     imports: [CommonModule, TranslatePipe, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {
+    private readonly appConfig = inject(AppConfigService);
+
     ecmHost = '';
     bpmHost = '';
-
-    constructor(private appConfig: AppConfigService) {}
 
     ngOnInit() {
         this.ecmHost = this.appConfig.get(AppConfigValues.ECMHOST);

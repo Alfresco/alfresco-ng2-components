@@ -36,8 +36,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges {
-    private contentService = inject(ContentService);
-    private nodesApiService = inject(NodesApiService);
+    private readonly contentService = inject(ContentService);
+    private readonly nodesApiService = inject(NodesApiService);
 
     /** Allows/disallows upload folders (only for Chrome). */
     @Input()

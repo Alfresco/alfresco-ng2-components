@@ -29,7 +29,7 @@ import {
     JobIdBodyEntry,
     NodeAssociationPaging
 } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
@@ -39,6 +39,9 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class NodesApiService {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly preferences = inject(UserPreferencesService);
+
     /**
      * Publish/subscribe to events related to node updates.
      */
@@ -55,11 +58,6 @@ export class NodesApiService {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
-
-    constructor(
-        private readonly apiService: AlfrescoApiService,
-        private readonly preferences: UserPreferencesService
-    ) {}
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;

@@ -36,6 +36,11 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {
+    private readonly processFilterService = inject(ProcessFilterService);
+    private readonly appsProcessService = inject(AppsProcessService);
+    private readonly router = inject(Router);
+    private readonly location = inject(Location);
+
     /**
      * The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
@@ -81,13 +86,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     private iconsMDL: IconModel;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private processFilterService: ProcessFilterService,
-        private appsProcessService: AppsProcessService,
-        private router: Router,
-        private location: Location
-    ) {}
 
     ngOnInit() {
         this.iconsMDL = new IconModel();

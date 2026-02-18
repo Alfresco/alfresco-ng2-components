@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TreeNodeType, TreeResponse, TreeService } from '../../tree';
 import { CategoryNode } from '../models/category-node.interface';
 import { CategoryService } from './category.service';
@@ -24,9 +24,7 @@ import { map, mergeMap, toArray } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryTreeDatasourceService extends TreeService<CategoryNode> {
-    constructor(private categoryService: CategoryService) {
-        super();
-    }
+    private readonly categoryService = inject(CategoryService);
 
     public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
         return !name

@@ -18,28 +18,39 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { SimpleChange } from '@angular/core';
-import { of, throwError, Subject } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { SitesService } from '../common/services/sites.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 
 describe('LibraryMembershipDirective', () => {
-    let alfrescoApiService: AlfrescoApiService;
     let directive: LibraryMembershipDirective;
     let sitesService: SitesService;
+    let versionCompatibilityService: jasmine.SpyObj<VersionCompatibilityService>;
     let addMembershipSpy: jasmine.Spy;
     let getMembershipSpy: jasmine.Spy;
     let deleteMembershipSpy: jasmine.Spy;
     let mockSupportedVersion = false;
 
-    let testSiteEntry: any;
-    let requestedMembershipResponse: any;
+    let testSiteEntry: Partial<{ id: string; guid: string; title: string; visibility: string }>;
+    let requestedMembershipResponse: Partial<{ id: string; createdAt: string; site: typeof testSiteEntry }>;
 
     beforeEach(() => {
+        versionCompatibilityService = jasmine.createSpyObj('VersionCompatibilityService', ['isVersionSupported']);
+        versionCompatibilityService.isVersionSupported.and.callFake(() => mockSupportedVersion);
+
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [SitesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            providers: [
+                LibraryMembershipDirective,
+                SitesService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: VersionCompatibilityService, useValue: versionCompatibilityService },
+                provideHttpClient(),
+                provideHttpClientTesting()
+            ]
         });
 
         testSiteEntry = {
@@ -55,18 +66,14 @@ describe('LibraryMembershipDirective', () => {
             site: testSiteEntry
         };
 
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         sitesService = TestBed.inject(SitesService);
-        directive = new LibraryMembershipDirective(alfrescoApiService, sitesService, {
-            ecmProductInfo$: new Subject(),
-            isVersionSupported: () => mockSupportedVersion
-        } as any);
+        directive = TestBed.inject(LibraryMembershipDirective);
     });
 
     describe('markMembershipRequest', () => {
         beforeEach(() => {
             getMembershipSpy = spyOn(directive.sitesApi, 'getSiteMembershipRequestForPerson').and.returnValue(
-                Promise.resolve({ entry: requestedMembershipResponse })
+                Promise.resolve({ entry: requestedMembershipResponse } as never)
             );
         });
 
@@ -109,10 +116,10 @@ describe('LibraryMembershipDirective', () => {
         beforeEach(() => {
             mockSupportedVersion = false;
             getMembershipSpy = spyOn(directive.sitesApi, 'getSiteMembershipRequestForPerson').and.returnValue(
-                Promise.resolve({ entry: requestedMembershipResponse })
+                Promise.resolve({ entry: requestedMembershipResponse } as never)
             );
             addMembershipSpy = spyOn(directive.sitesApi, 'createSiteMembershipRequestForPerson').and.returnValue(
-                Promise.resolve({ entry: requestedMembershipResponse })
+                Promise.resolve({ entry: requestedMembershipResponse } as never)
             );
             deleteMembershipSpy = spyOn(directive.sitesApi, 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve());
         });
@@ -162,7 +169,7 @@ describe('LibraryMembershipDirective', () => {
         }));
 
         it('should call API to add user to library if admin user', fakeAsync(() => {
-            const createSiteMembershipSpy = spyOn(sitesService, 'createSiteMembership').and.returnValue(of({} as any));
+            const createSiteMembershipSpy = spyOn(sitesService, 'createSiteMembership').and.returnValue(of({} as never));
             const selection = { entry: { id: 'no-membership-requested' } };
             const selectionChange = new SimpleChange(null, selection, true);
             directive.isAdmin = true;
@@ -176,7 +183,7 @@ describe('LibraryMembershipDirective', () => {
 
         it('should emit error when the request to join a library fails', fakeAsync(() => {
             spyOn(directive.error, 'emit');
-            addMembershipSpy.and.returnValue(throwError('err'));
+            addMembershipSpy.and.returnValue(throwError(() => 'err'));
 
             const selection = { entry: { id: 'no-membership-requested' } };
             const change = new SimpleChange(null, selection, true);
@@ -206,7 +213,7 @@ describe('LibraryMembershipDirective', () => {
             ];
 
             testData.forEach((data) => {
-                addMembershipSpy.and.returnValue(throwError({ message: data.fixture }));
+                addMembershipSpy.and.returnValue(throwError(() => ({ message: data.fixture })));
                 emitErrorSpy.calls.reset();
                 directive.toggleMembershipRequest();
                 tick();

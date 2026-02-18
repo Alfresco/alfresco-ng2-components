@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, inject as inject_1 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
@@ -29,7 +29,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
-    constructor(public notificationService: NotificationService) {}
+    notificationService = inject_1(NotificationService);
 
     sendMessageWithoutConfig() {
         return this.notificationService.openSnackMessage('Test notification');

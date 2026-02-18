@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SavedSearchStrategy } from '../interfaces/saved-searches-strategy.interface';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { ReplaySubject, Observable, catchError, switchMap, take, tap, throwError, map } from 'rxjs';
@@ -32,15 +32,13 @@ export abstract class SavedSearchesBaseService implements SavedSearchStrategy {
     protected readonly _savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
     readonly savedSearches$: Observable<SavedSearch[]> = this._savedSearches$.asObservable();
 
+    protected readonly apiService = inject(AlfrescoApiService);
+    protected readonly authService = inject(AuthenticationService);
+
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
-
-    protected constructor(
-        protected readonly apiService: AlfrescoApiService,
-        protected readonly authService: AuthenticationService
-    ) {}
 
     protected abstract fetchAllSavedSearches(): Observable<SavedSearch[]>;
     protected abstract updateSavedSearches(searches: SavedSearch[]): Observable<NodeEntry>;

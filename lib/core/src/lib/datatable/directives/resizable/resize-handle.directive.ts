@@ -16,12 +16,16 @@
  */
 
 import { ResizableDirective } from './resizable.directive';
-import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 
 @Directive({
     selector: '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
+    private readonly renderer = inject(Renderer2);
+    private readonly element = inject(ElementRef);
+    private readonly zone = inject(NgZone);
+
     /**
      * Reference to ResizableDirective
      */
@@ -30,7 +34,6 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private unlistenMouseDown?: () => void;
     private unlistenMouseMove?: () => void;
     private unlistenMouseUp?: () => void;
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
 
     @HostListener('keydown', ['$event'])
     onKeydown(event: KeyboardEvent): void {

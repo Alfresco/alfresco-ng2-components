@@ -18,20 +18,15 @@
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { FacetField } from '../models/facet-field.interface';
 import { TestBed } from '@angular/core/testing';
 import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { skip } from 'rxjs/operators';
 
-const buildConfig = (searchSettings = {}): AppConfigService => {
-    let config: AppConfigService;
-    TestBed.runInInjectionContext(() => {
-        config = TestBed.inject(AppConfigService);
-    });
+const buildConfig = (searchSettings = {}): void => {
+    const config = TestBed.inject(AppConfigService);
     config.config.search = searchSettings;
-    return config;
 };
 
 describe('SearchQueryBuilder (runtime config)', () => {
@@ -60,11 +55,10 @@ describe('SearchQueryBuilder (runtime config)', () => {
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
-        let alfrescoApiService: AlfrescoApiService;
         let builder: SearchQueryBuilderService;
         TestBed.runInInjectionContext(() => {
-            alfrescoApiService = TestBed.inject(AlfrescoApiService);
-            builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService, runtimeConfig);
+            buildConfig(config);
+            builder = TestBed.inject(SearchQueryBuilderService);
         });
         const currentConfig = builder.loadConfiguration();
 
@@ -87,12 +81,23 @@ describe('SearchQueryBuilder', () => {
     });
 
     const createQueryBuilder = (config?: any) => {
-        let builder: SearchQueryBuilderService;
-        TestBed.runInInjectionContext(() => {
-            const alfrescoApiService = TestBed.inject(AlfrescoApiService);
-            builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+            providers: [
+                provideRouter([]),
+                {
+                    provide: AppConfigService,
+                    useFactory: () => {
+                        const appConfig = new AppConfigService();
+                        if (config !== undefined) {
+                            appConfig.config.search = config;
+                        }
+                        return appConfig;
+                    }
+                }
+            ]
         });
-        return builder;
+        return TestBed.inject(SearchQueryBuilderService);
     };
 
     it('should reset to defaults', () => {

@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, SimpleChanges, OnChanges, Injector } from '@angular/core';
+import {
+    Component,
+    Input,
+    ViewChild,
+    ViewContainerRef,
+    OnInit,
+    OnDestroy,
+    ComponentRef,
+    SimpleChanges,
+    OnChanges,
+    Injector,
+    inject
+} from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
 import { Observable } from 'rxjs';
 import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../../services';
@@ -25,6 +37,9 @@ import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../.
     template: '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {
+    private readonly searchFilterService = inject(SearchFilterService);
+    private readonly injector = inject(Injector);
+
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
@@ -47,8 +62,6 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     useHeaderQueryBuilder: boolean;
 
     componentRef: ComponentRef<any>;
-
-    constructor(private searchFilterService: SearchFilterService, private injector: Injector) {}
 
     ngOnInit() {
         const componentType = this.searchFilterService.widgets[this.selector];

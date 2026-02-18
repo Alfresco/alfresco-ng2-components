@@ -64,6 +64,10 @@ import { IconModule } from '../../icon/icon.module';
     encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnInit, AfterViewInit {
+    private readonly notificationService = inject(NotificationService);
+    private readonly storageService = inject(StorageService);
+    private readonly cd = inject(ChangeDetectorRef);
+
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
     public static NOTIFICATION_STORAGE = 'notification-history';
 
@@ -98,12 +102,6 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     private readonly destroyRef = inject(DestroyRef);
 
     private focusKeyManager: FocusKeyManager<MatIconButton | MatMenuItem | MatButton>;
-
-    constructor(
-        private readonly notificationService: NotificationService,
-        private readonly storageService: StorageService,
-        private readonly cd: ChangeDetectorRef
-    ) {}
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];

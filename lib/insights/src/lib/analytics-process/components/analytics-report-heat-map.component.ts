@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AnalyticsService } from '../services/analytics.service';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
@@ -29,6 +29,9 @@ import { DiagramComponent } from '../../diagram/components/diagram.component';
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements OnInit {
+    private readonly analyticsService = inject(AnalyticsService);
+    private readonly formBuilder = inject(UntypedFormBuilder);
+
     /** reportId. */
     @Input()
     report: any;
@@ -47,8 +50,6 @@ export class AnalyticsReportHeatMapComponent implements OnInit {
     currentMetric: string;
     currentMetricColors: any;
     metricType: string;
-
-    constructor(private analyticsService: AnalyticsService, private formBuilder: UntypedFormBuilder) {}
 
     ngOnInit() {
         this.initForm();

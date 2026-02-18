@@ -53,11 +53,11 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     editMode: boolean = false;
     editRow: DynamicTableRow = null;
 
-    private selectArrayCode = [32, 0, 13];
+    private readonly selectArrayCode = [32, 0, 13];
 
     public elementRef = inject(ElementRef);
-    private visibilityService = inject(WidgetVisibilityService);
-    private cd = inject(ChangeDetectorRef);
+    private readonly visibilityService = inject(WidgetVisibilityService);
+    private readonly cd = inject(ChangeDetectorRef);
 
     ngOnInit() {
         if (this.field) {

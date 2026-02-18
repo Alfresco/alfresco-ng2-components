@@ -153,9 +153,9 @@ export class TaskFormComponent implements OnInit, OnChanges {
     loading: boolean = false;
     internalReadOnlyForm: boolean = false;
 
-    private taskListService = inject(TaskListService);
-    private peopleProcessService = inject(PeopleProcessService);
-    private translationService = inject(TranslationService);
+    private readonly taskListService = inject(TaskListService);
+    private readonly peopleProcessService = inject(PeopleProcessService);
+    private readonly translationService = inject(TranslationService);
 
     ngOnInit() {
         this.peopleProcessService.getCurrentUserInfo().subscribe((user) => {

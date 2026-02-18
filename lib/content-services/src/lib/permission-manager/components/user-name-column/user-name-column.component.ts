@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Group, NodeEntry } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
@@ -39,6 +39,8 @@ import { CommonModule } from '@angular/common';
     host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' }
 })
 export class UserNameColumnComponent implements OnInit {
+    private readonly nodePermissionService = inject(NodePermissionService);
+
     @Input()
     context: any;
 
@@ -47,8 +49,6 @@ export class UserNameColumnComponent implements OnInit {
 
     displayText$ = new BehaviorSubject<string>('');
     subTitleText$ = new BehaviorSubject<string>('');
-
-    constructor(private nodePermissionService: NodePermissionService) {}
 
     ngOnInit() {
         if (this.context != null) {

@@ -112,6 +112,18 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
+    private readonly documentListService = inject(DocumentListService);
+    private readonly elementRef = inject(ElementRef);
+    private readonly appConfig: AppConfigService;
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly contentService = inject(ContentService);
+    private readonly thumbnailService = inject(ThumbnailService);
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly nodeService = inject(NodesApiService);
+    private readonly dataTableService = inject(DataTableService);
+    private readonly lockService = inject(LockService);
+    private readonly dialog = inject(MatDialog);
+
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -448,7 +460,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     // @deprecated 3.0.0
     folderNode: Node;
 
-    private _pagination: PaginationModel = this.DEFAULT_PAGINATION;
+    private readonly _pagination: PaginationModel = this.DEFAULT_PAGINATION;
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
     sortingSubject: BehaviorSubject<DataSorting[]> = new BehaviorSubject<DataSorting[]>(this.DEFAULT_SORTING);
 
@@ -463,20 +475,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return this._nodesApi;
     }
 
-    constructor(
-        private documentListService: DocumentListService,
-        private elementRef: ElementRef,
-        private appConfig: AppConfigService,
-        private userPreferencesService: UserPreferencesService,
-        private contentService: ContentService,
-        private thumbnailService: ThumbnailService,
-        private alfrescoApiService: AlfrescoApiService,
-        private nodeService: NodesApiService,
-        private dataTableService: DataTableService,
-        private lockService: LockService,
-        private dialog: MatDialog
-    ) {
-        super(appConfig, 'default', presetsDefaultModel);
+    constructor() {
+        const appConfig = inject(AppConfigService);
+
+        super('default', presetsDefaultModel);
+        this.appConfig = appConfig;
+
         this.nodeService.nodeUpdated.pipe(takeUntilDestroyed()).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
         });

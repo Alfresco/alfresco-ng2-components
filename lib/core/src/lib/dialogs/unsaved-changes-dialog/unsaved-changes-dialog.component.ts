@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
@@ -44,12 +44,10 @@ import { IconModule } from '../../icon/icon.module';
     imports: [MatDialogModule, TranslatePipe, MatButtonModule, IconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
 })
 export class UnsavedChangesDialogComponent implements OnInit {
-    dialogData: UnsavedChangesDialogData;
+    data = inject<UnsavedChangesDialogData>(MAT_DIALOG_DATA);
+    private readonly userPreferencesService = inject(UserPreferencesService);
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData,
-        private userPreferencesService: UserPreferencesService
-    ) {}
+    dialogData: UnsavedChangesDialogData;
 
     ngOnInit() {
         this.dialogData = {

@@ -26,7 +26,7 @@ import {
     LegalHoldApi,
     RequestQuery
 } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -35,13 +35,13 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class LegalHoldService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     private _legalHoldApi: LegalHoldApi;
     get legalHoldApi(): LegalHoldApi {
         this._legalHoldApi = this._legalHoldApi ?? new LegalHoldApi(this.apiService.getInstance());
         return this._legalHoldApi;
     }
-
-    constructor(private readonly apiService: AlfrescoApiService) {}
 
     /**
      * Gets the list of holds available in the file plan.

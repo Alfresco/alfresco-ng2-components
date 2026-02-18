@@ -41,7 +41,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
-    private dialog = inject(MatDialog);
+    private readonly dialog = inject(MatDialog);
 
     view() {
         const rawValue = this.field.value;

@@ -21,7 +21,7 @@ import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { contextMenuAnimation } from './animations';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
-import { AfterViewInit, Component, HostListener, Inject, Optional, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, inject } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
@@ -41,6 +41,9 @@ import { ContextMenuItem } from './interfaces';
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {
+    private readonly contextMenuOverlayRef = inject<ContextMenuOverlayRef>(ContextMenuOverlayRef);
+    private readonly data = inject(CONTEXT_MENU_DATA, { optional: true });
+
     private keyManager: FocusKeyManager<MatMenuItem>;
     @ViewChildren(MatMenuItem) items: QueryList<MatMenuItem>;
     links: ContextMenuItem[];
@@ -62,10 +65,7 @@ export class ContextMenuListComponent implements AfterViewInit {
         }
     }
 
-    constructor(
-        @Inject(ContextMenuOverlayRef) private contextMenuOverlayRef: ContextMenuOverlayRef,
-        @Optional() @Inject(CONTEXT_MENU_DATA) private data: ContextMenuItem[]
-    ) {
+    constructor() {
         this.links = this.data;
     }
 

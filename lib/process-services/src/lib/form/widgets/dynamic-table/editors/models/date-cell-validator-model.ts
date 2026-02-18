@@ -26,7 +26,7 @@ import { isValid } from 'date-fns';
 export class DateCellValidator implements CellValidator {
     static DATE_TYPE = 'Date';
 
-    private supportedTypes: string[] = [DateCellValidator.DATE_TYPE];
+    private readonly supportedTypes: string[] = [DateCellValidator.DATE_TYPE];
 
     isSupported(column: DynamicTableColumn): boolean {
         return !!(column?.editable && this.supportedTypes.indexOf(column?.type) > -1);

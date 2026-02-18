@@ -20,16 +20,11 @@ import { Observable, of, Subject } from 'rxjs';
 import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task-details-cloud.model';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
 import { TaskCloudService } from '../services/task-cloud.service';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable()
 export class TaskCloudServiceMock extends TaskCloudService {
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
-
-    constructor(adfHttpClient: AdfHttpClient) {
-        super(adfHttpClient);
-    }
 
     getTaskById(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);

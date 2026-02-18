@@ -16,6 +16,8 @@
  */
 
 import { FileSizePipe } from './file-size.pipe';
+import { TestBed } from '@angular/core/testing';
+import { TranslationService } from '../translation/translation.service';
 
 describe('FileSizePipe', () => {
     let pipe: FileSizePipe;
@@ -37,7 +39,12 @@ describe('FileSizePipe', () => {
                 return enUs[key];
             }
         };
-        pipe = new FileSizePipe(translation);
+
+        TestBed.configureTestingModule({
+            providers: [FileSizePipe, { provide: TranslationService, useValue: translation }]
+        });
+
+        pipe = TestBed.inject(FileSizePipe);
     });
 
     it('returns empty string with invalid input', () => {

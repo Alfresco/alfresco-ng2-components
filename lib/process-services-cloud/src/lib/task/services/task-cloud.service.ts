@@ -32,20 +32,15 @@ import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.m
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 import { IdentityUserService } from '../../people/services/identity-user.service';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskCloudService extends BaseCloudService {
-    private translateService = inject(TranslationService);
-    private identityUserService = inject(IdentityUserService);
+    private readonly translateService = inject(TranslationService);
+    private readonly identityUserService = inject(IdentityUserService);
 
     dataChangesDetected$ = new Subject();
-
-    constructor(adfHttpClient: AdfHttpClient) {
-        super(adfHttpClient);
-    }
 
     /**
      * Complete a task.

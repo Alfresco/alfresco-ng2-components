@@ -40,9 +40,13 @@ export type UserPreferenceValues = (typeof UserPreferenceValues)[keyof typeof Us
     providedIn: 'root'
 })
 export class UserPreferencesService {
-    private document = inject(DOCUMENT);
-    private rendererFactory = inject(RendererFactory2);
-    private directionality = inject(Directionality);
+    translate = inject(TranslateService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly storage = inject(StorageService);
+
+    private readonly document = inject(DOCUMENT);
+    private readonly rendererFactory = inject(RendererFactory2);
+    private readonly directionality = inject(Directionality);
 
     defaults = {
         paginationSize: 25,
@@ -52,7 +56,7 @@ export class UserPreferencesService {
     };
 
     private userPreferenceStatus: any = { ...this.defaults };
-    private onChangeSubject: BehaviorSubject<any>;
+    private readonly onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
     /**
@@ -107,11 +111,7 @@ export class UserPreferencesService {
      */
     readonly supportedPageSizesSignal: Signal<number[]>;
 
-    constructor(
-        public translate: TranslateService,
-        private appConfig: AppConfigService,
-        private storage: StorageService
-    ) {
+    constructor() {
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
 

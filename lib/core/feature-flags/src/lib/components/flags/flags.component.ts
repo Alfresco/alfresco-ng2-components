@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Inject, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     FeaturesServiceToken,
     IDebugFeaturesService,
-    IFeaturesService,
     IWritableFeaturesService,
     WritableFeaturesServiceToken,
     WritableFlagChangeset
@@ -60,6 +59,9 @@ import { IconModule } from '@alfresco/adf-core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlagsComponent {
+    private readonly featuresService = inject<IDebugFeaturesService>(FeaturesServiceToken);
+    private readonly writableFeaturesService = inject<IWritableFeaturesService>(WritableFeaturesServiceToken);
+
     displayedColumns: string[] = ['icon', 'flag', 'value'];
     flags$: Observable<{ fictive: boolean; flag: string; value: any }[]>;
     isEnabled = false;
@@ -68,12 +70,7 @@ export class FlagsComponent {
     inputValue$ = new BehaviorSubject<string>('');
     showPlusButton$!: Observable<boolean>;
     writableFlagChangeset: WritableFlagChangeset = {};
-    constructor(
-        @Inject(FeaturesServiceToken)
-        private featuresService: IDebugFeaturesService & IFeaturesService<WritableFlagChangeset>,
-        @Inject(WritableFeaturesServiceToken)
-        private writableFeaturesService: IWritableFeaturesService
-    ) {
+    constructor() {
         if (this.featuresService.isEnabled$) {
             this.featuresService
                 .isEnabled$()

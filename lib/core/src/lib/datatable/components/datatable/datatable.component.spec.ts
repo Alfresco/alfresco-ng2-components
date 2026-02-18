@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
@@ -1631,8 +1631,7 @@ describe('Accessibility', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CustomColumnTemplateComponent],
-            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [{ provide: ConfigurableFocusTrapFactory, useValue: focusTrapFactory }]
         });
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
         fixture = TestBed.createComponent(DataTableComponent);
@@ -2020,8 +2019,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CustomColumnTemplateComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [CustomColumnTemplateComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
@@ -2114,8 +2112,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CustomColumnTemplateComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [CustomColumnTemplateComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
@@ -2222,8 +2219,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CustomColumnTemplateComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [CustomColumnTemplateComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;

@@ -70,6 +70,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     providers: [ViewUtilService]
 })
 export class AlfrescoViewerComponent implements OnChanges, OnInit {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly renditionService = inject(RenditionService);
+    private readonly viewUtilService = inject(ViewUtilService);
+    private readonly contentService = inject(ContentService);
+    private readonly uploadService = inject(UploadService);
+    dialog = inject(MatDialog);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly nodeActionsService = inject(NodeActionsService);
+
     @ViewChild('adfViewer')
     adfViewer: ViewerComponent<{ node: Node }>;
 
@@ -256,17 +266,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private nodesApiService: NodesApiService,
-        private renditionService: RenditionService,
-        private viewUtilService: ViewUtilService,
-        private contentService: ContentService,
-        private uploadService: UploadService,
-        public dialog: MatDialog,
-        private cdr: ChangeDetectorRef,
-        private nodeActionsService: NodeActionsService
-    ) {
+    constructor() {
+        const renditionService = this.renditionService;
+
         renditionService.maxRetries = this.maxRetries;
     }
 

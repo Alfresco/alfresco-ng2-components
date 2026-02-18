@@ -133,6 +133,12 @@ export interface ReportFormValues {
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, AfterContentChecked {
+    private readonly analyticsService = inject(AnalyticsService);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly downloadService = inject(DownloadService);
+    private readonly dialog = inject(MatDialog);
+    private readonly dateAdapter = inject(AdfDateFnsAdapter);
+
     /** appId ID of the target app. */
     @Input()
     appId: number;
@@ -187,14 +193,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, Af
     private hideParameters: boolean = true;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private analyticsService: AnalyticsService,
-        private formBuilder: FormBuilder,
-        private downloadService: DownloadService,
-        private dialog: MatDialog,
-        private dateAdapter: AdfDateFnsAdapter
-    ) {}
 
     ngOnInit() {
         this.onDropdownChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((field: any) => {

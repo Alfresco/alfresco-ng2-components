@@ -19,7 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import { NotificationCloudService } from './notification-cloud.service';
 import { WebSocketService } from './web-socket.service';
 import { Apollo } from 'apollo-angular';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { of, Subject } from 'rxjs';
 
@@ -42,7 +43,6 @@ describe('NotificationCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
             providers: [
                 WebSocketService,
                 {
@@ -55,7 +55,9 @@ describe('NotificationCloudService', () => {
                         getToken: () => 'testToken',
                         onLogout: onLogoutSubject.asObservable()
                     }
-                }
+                },
+                provideHttpClient(),
+                provideHttpClientTesting()
             ]
         });
         service = TestBed.inject(NotificationCloudService);

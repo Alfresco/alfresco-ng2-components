@@ -16,12 +16,10 @@
  */
 
 import { NodeEntry, PreferencesApi, ContentFieldsQuery, PreferenceEntry } from '@alfresco/js-api';
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
-import { AuthenticationService } from '@alfresco/adf-core';
 import { SavedSearchesBaseService } from './saved-searches-base.service';
 
 export interface SavedSearchesPreferencesApiService {
@@ -37,7 +35,7 @@ export const SAVED_SEARCHES_SERVICE_PREFERENCES = new InjectionToken<SavedSearch
 export class SavedSearchesService extends SavedSearchesBaseService {
     private savedSearchFileNodeId: string;
     private _preferencesApi: SavedSearchesPreferencesApiService;
-    private preferencesService = inject(SAVED_SEARCHES_SERVICE_PREFERENCES, { optional: true });
+    private readonly preferencesService = inject(SAVED_SEARCHES_SERVICE_PREFERENCES, { optional: true });
 
     get preferencesApi(): SavedSearchesPreferencesApiService {
         if (this.preferencesService) {
@@ -47,10 +45,6 @@ export class SavedSearchesService extends SavedSearchesBaseService {
 
         this._preferencesApi = this._preferencesApi ?? new PreferencesApi(this.apiService.getInstance());
         return this._preferencesApi;
-    }
-
-    constructor(apiService: AlfrescoApiService, authService: AuthenticationService) {
-        super(apiService, authService);
     }
 
     protected fetchAllSavedSearches(): Observable<SavedSearch[]> {

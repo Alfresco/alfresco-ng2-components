@@ -17,7 +17,7 @@
 
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { DateFnsUtils } from './date-fns-utils';
-import { effect, Inject, Injectable, Optional } from '@angular/core';
+import { effect, Injectable, inject } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { isValid, Locale, parse } from 'date-fns';
@@ -68,6 +68,8 @@ export const ADF_DATE_FORMATS: MatDateFormats = {
 
 @Injectable({ providedIn: 'root' })
 export class AdfDateFnsAdapter extends DateFnsAdapter {
+    private readonly formats = inject<MatDateFormats>(MAT_DATE_FORMATS, { optional: true });
+
     private _displayFormat?: string = null;
 
     get displayFormat(): string | null {
@@ -78,11 +80,10 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         this._displayFormat = value ? DateFnsUtils.convertMomentToDateFnsFormat(value) : null;
     }
 
-    constructor(
-        @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: Locale,
-        @Optional() @Inject(MAT_DATE_FORMATS) private formats: MatDateFormats,
-        preferences: UserPreferencesService
-    ) {
+    constructor() {
+        const matDateLocale = inject<Locale>(MAT_DATE_LOCALE, { optional: true });
+        const preferences = inject(UserPreferencesService);
+
         // Ensure we have a valid locale for the base class
         // If matDateLocale is not provided, use enUS as default
         super(matDateLocale || enUS);

@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, ContentChildren, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    ViewChild,
+    ViewEncapsulation,
+    inject
+} from '@angular/core';
 import { SearchFilterTabDirective } from './search-filter-tab.directive';
 import { CommonModule } from '@angular/common';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
@@ -29,6 +40,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterTabbedComponent implements OnInit, OnDestroy {
+    private readonly element = inject(ElementRef);
+    private readonly changeDetector = inject(ChangeDetectorRef);
+
     @ContentChildren(SearchFilterTabDirective)
     tabsContents: QueryList<SearchFilterTabDirective>;
 
@@ -50,8 +64,6 @@ export class SearchFilterTabbedComponent implements OnInit, OnDestroy {
             threshold: [0, 1]
         }
     );
-
-    constructor(private readonly element: ElementRef, private readonly changeDetector: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.intersectionObserver.observe(this.element.nativeElement);

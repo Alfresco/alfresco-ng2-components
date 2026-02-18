@@ -52,6 +52,9 @@ import { NodeTooltipUtils } from '../../utils/node-tooltip.utils';
     host: { class: 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
 })
 export class NameColumnComponent implements OnInit {
+    private readonly element = inject(ElementRef);
+    private readonly nodesApiService = inject(NodesApiService);
+
     @Input({ required: true })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: any;
@@ -65,11 +68,6 @@ export class NameColumnComponent implements OnInit {
     readonly tooltip = computed(() => NodeTooltipUtils.getNodeTooltip(this.node));
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private element: ElementRef,
-        private nodesApiService: NodesApiService
-    ) {}
 
     ngOnInit() {
         this.updateValue();

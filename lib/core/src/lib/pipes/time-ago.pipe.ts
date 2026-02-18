@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
@@ -28,15 +28,15 @@ import { DateFnsUtils } from '../common/utils/date-fns-utils';
     pure: false
 })
 export class TimeAgoPipe implements PipeTransform {
+    userPreferenceService = inject(UserPreferencesService);
+    appConfig = inject(AppConfigService);
+
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
 
     defaultDateTimeFormat: string;
 
-    constructor(
-        public userPreferenceService: UserPreferencesService,
-        public appConfig: AppConfigService
-    ) {
+    constructor() {
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 

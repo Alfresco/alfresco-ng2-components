@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
 import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
@@ -30,6 +30,9 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
     selector: '[adf-restore]'
 })
 export class NodeRestoreDirective {
+    private readonly alfrescoApiService = inject(AlfrescoApiService);
+    private readonly translation = inject(TranslationService);
+
     private readonly restoreProcessStatus;
 
     private _trashcanApi: TrashcanApi;
@@ -51,7 +54,7 @@ export class NodeRestoreDirective {
         this.recover(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService) {
+    constructor() {
         this.restoreProcessStatus = this.processStatus();
     }
 

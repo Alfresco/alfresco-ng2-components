@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2, inject } from '@angular/core';
 import { TaskCloudService } from '../../../../services/task-cloud.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -24,6 +24,10 @@ import { firstValueFrom } from 'rxjs';
     selector: '[adf-cloud-unclaim-task]'
 })
 export class UnClaimTaskCloudDirective implements OnInit {
+    private readonly el = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly taskListService = inject(TaskCloudService);
+
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
@@ -41,12 +45,6 @@ export class UnClaimTaskCloudDirective implements OnInit {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     invalidParams: string[] = [];
-
-    constructor(
-        private readonly el: ElementRef,
-        private readonly renderer: Renderer2,
-        private taskListService: TaskCloudService
-    ) {}
 
     ngOnInit() {
         this.validateInputs();

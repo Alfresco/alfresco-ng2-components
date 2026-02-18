@@ -16,7 +16,7 @@
  */
 
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { TaskDetailsEvent } from '../../../task-list';
 import { ProcessService } from '../../services/process.service';
 import { ProcessInstanceHeaderComponent } from '../process-instance-header/process-instance-header.component';
@@ -42,6 +42,8 @@ import { ProcessCommentsComponent } from '../../../process-comments';
     styleUrls: ['./process-instance-details.component.css']
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {
+    private readonly processService = inject(ProcessService);
+
     /** (required) The numeric ID of the process instance to display. */
     @Input({ required: true })
     processInstanceId: string;
@@ -77,8 +79,6 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     showProcessDiagram = new EventEmitter<any>();
 
     processInstanceDetails: ProcessInstanceRepresentation;
-
-    constructor(private processService: ProcessService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const processInstanceId = changes['processInstanceId'];

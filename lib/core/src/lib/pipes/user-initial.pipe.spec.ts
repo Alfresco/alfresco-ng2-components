@@ -18,6 +18,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { User } from '../models/general-user.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
+import { TestBed } from '@angular/core/testing';
 
 class FakeSanitizer extends DomSanitizer {
     constructor() {
@@ -54,7 +55,10 @@ describe('UserInitialPipe', () => {
     let fakeUser: User;
 
     beforeEach(() => {
-        pipe = new InitialUsernamePipe(new FakeSanitizer());
+        TestBed.configureTestingModule({
+            providers: [InitialUsernamePipe, { provide: DomSanitizer, useClass: FakeSanitizer }]
+        });
+        pipe = TestBed.inject(InitialUsernamePipe);
         fakeUser = { username: '' } as User;
     });
 

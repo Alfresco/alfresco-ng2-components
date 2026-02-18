@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NotificationService } from '../notifications/services/notification.service';
 
 @Injectable({ providedIn: 'root' })
 export class ClipboardService {
-    constructor(@Inject(DOCUMENT) private document: any, private notificationService: NotificationService) {}
+    private readonly document = inject(DOCUMENT);
+    private readonly notificationService = inject(NotificationService);
 
     /**
      * Checks if the target element can have its text copied.

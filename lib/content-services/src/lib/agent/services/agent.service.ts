@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Agent, AgentsApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -25,8 +25,10 @@ import { AlfrescoApiService } from '../../services';
     providedIn: 'root'
 })
 export class AgentService {
+    private readonly apiService = inject(AlfrescoApiService);
+
     private _agentsApi: AgentsApi;
-    private agents = new BehaviorSubject<Agent[]>([]);
+    private readonly agents = new BehaviorSubject<Agent[]>([]);
 
     get agentsApi(): AgentsApi {
         this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());
@@ -34,8 +36,6 @@ export class AgentService {
     }
 
     agents$ = this.agents.asObservable();
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets all agents from cache. If cache is empty, fetches agents from backend.

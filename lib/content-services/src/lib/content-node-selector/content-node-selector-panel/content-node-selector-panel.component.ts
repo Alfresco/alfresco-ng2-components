@@ -90,6 +90,14 @@ export const defaultValidation = () => true;
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
+    private readonly customResourcesService = inject(CustomResourcesService);
+    private readonly queryBuilderService = inject(SearchQueryBuilderService);
+    private readonly userPreferencesService = inject(UserPreferencesService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly uploadService = inject(UploadService);
+    private readonly sitesService = inject(SitesService);
+    private readonly contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
+
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
@@ -303,16 +311,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     searchPanelExpanded: boolean = false;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(
-        private customResourcesService: CustomResourcesService,
-        private queryBuilderService: SearchQueryBuilderService,
-        private userPreferencesService: UserPreferencesService,
-        private nodesApiService: NodesApiService,
-        private uploadService: UploadService,
-        private sitesService: SitesService,
-        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
-    ) {}
 
     set chosenNode(value: Node[]) {
         this._chosenNode = value;

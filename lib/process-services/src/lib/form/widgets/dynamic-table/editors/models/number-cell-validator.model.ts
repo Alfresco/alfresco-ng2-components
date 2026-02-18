@@ -23,7 +23,7 @@ import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 
 export class NumberCellValidator implements CellValidator {
-    private supportedTypes: string[] = ['Number', 'Amount'];
+    private readonly supportedTypes: string[] = ['Number', 'Amount'];
 
     isSupported(column: DynamicTableColumn): boolean {
         return column?.required && this.supportedTypes.indexOf(column.type) > -1;

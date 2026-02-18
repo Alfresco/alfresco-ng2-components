@@ -23,21 +23,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardService {
-    constructor(
-        private authenticationService: AuthenticationService,
-        private basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        private oidcAuthenticationService: OidcAuthenticationService,
-        private router: Router,
-        private appConfigService: AppConfigService,
-        private dialog: MatDialog,
-        private storageService: StorageService
-    ) {}
+    private readonly authenticationService = inject(AuthenticationService);
+    private readonly basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
+    private readonly oidcAuthenticationService = inject(OidcAuthenticationService);
+    private readonly router = inject(Router);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly dialog = inject(MatDialog);
+    private readonly storageService = inject(StorageService);
 
     get withCredentials(): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);

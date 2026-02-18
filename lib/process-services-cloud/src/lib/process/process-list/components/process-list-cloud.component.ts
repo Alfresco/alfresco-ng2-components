@@ -20,17 +20,16 @@ import {
     Component,
     ContentChild,
     EventEmitter,
-    Inject,
     input,
     Input,
     OnChanges,
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    inject
 } from '@angular/core';
 import {
-    AppConfigService,
     ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
@@ -95,6 +94,11 @@ export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
     implements OnChanges, AfterContentInit, PaginatedComponent
 {
+    private readonly processListCloudService = inject(ProcessListCloudService);
+    private readonly userPreferences = inject(UserPreferencesService);
+    private readonly cloudPreferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
+    private readonly variableMapperService = inject(VariableMapperService);
+
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -354,7 +358,7 @@ export class ProcessListCloudComponent
     processListRequestNode: ProcessListRequestModel;
     dataAdapter: ProcessListDatatableAdapter;
 
-    private defaultSorting = { key: 'startDate', direction: 'desc' };
+    private readonly defaultSorting = { key: 'startDate', direction: 'desc' };
 
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
     private readonly isReloadingSubject$ = new BehaviorSubject<boolean>(false);
@@ -363,20 +367,19 @@ export class ProcessListCloudComponent
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    private fetchProcessesTrigger$ = new Subject<void>();
+    private readonly fetchProcessesTrigger$ = new Subject<void>();
 
-    constructor(
-        private processListCloudService: ProcessListCloudService,
-        appConfigService: AppConfigService,
-        private userPreferences: UserPreferencesService,
-        @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface,
-        private variableMapperService: VariableMapperService
-    ) {
-        super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
+    constructor() {
+        super(PRESET_KEY, processCloudPresetsDefaultModel);
+        const userPreferences = this.userPreferences;
+
         this.size = userPreferences.paginationSize;
-        this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
-            this.size = pageSize;
-        });
+        this.userPreferences
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntilDestroyed())
+            .subscribe((pageSize) => {
+                this.size = pageSize;
+            });
         this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,

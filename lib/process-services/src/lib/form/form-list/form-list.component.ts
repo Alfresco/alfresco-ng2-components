@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, inject } from '@angular/core';
 import { ModelService } from '../services/model.service';
 import { CommonModule } from '@angular/common';
 import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from '@alfresco/adf-core';
@@ -27,11 +27,11 @@ import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from
     encapsulation: ViewEncapsulation.None
 })
 export class FormListComponent implements OnChanges {
+    protected modelService = inject(ModelService);
+
     /** The array that contains the information to show inside the list. */
     @Input()
     forms: any[] = [];
-
-    constructor(protected modelService: ModelService) {}
 
     ngOnChanges() {
         this.getForms();

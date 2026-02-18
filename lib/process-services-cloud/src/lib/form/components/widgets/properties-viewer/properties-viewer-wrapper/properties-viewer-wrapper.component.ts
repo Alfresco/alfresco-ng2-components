@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { PresetConfig, NodesApiService, ContentMetadataComponent } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -30,6 +30,8 @@ import { CommonModule } from '@angular/common';
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
+    private readonly nodesApiService = inject(NodesApiService);
+
     node: Node;
     loading = true;
 
@@ -77,8 +79,6 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
 
     @Output()
     nodeContentLoaded = new EventEmitter<Node>();
-
-    constructor(private nodesApiService: NodesApiService) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.['nodeId']?.currentValue && !changes['nodeId'].isFirstChange()) {

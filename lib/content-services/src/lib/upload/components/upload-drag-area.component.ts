@@ -33,8 +33,8 @@ import { FileDraggableDirective } from '../directives/file-draggable.directive';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadDragAreaComponent extends UploadBase {
-    private notificationService = inject(NotificationService);
-    private contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
+    private readonly contentService = inject(ContentService);
 
     /**
      * Method called when files are dropped in the drag area.

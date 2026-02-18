@@ -17,7 +17,7 @@
 
 import { IconModule, InitialUsernamePipe, User } from '@alfresco/adf-core';
 import { Group, NodeEntry } from '@alfresco/js-api';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { CommonModule } from '@angular/common';
@@ -50,6 +50,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {
+    private readonly nodePermissionService = inject(NodePermissionService);
+
     @Input()
     context: any;
 
@@ -65,8 +67,6 @@ export class UserIconColumnComponent implements OnInit {
     get isSelected(): boolean {
         return this.context?.row?.isSelected || this.selected;
     }
-
-    constructor(private nodePermissionService: NodePermissionService) {}
 
     ngOnInit() {
         if (this.context) {

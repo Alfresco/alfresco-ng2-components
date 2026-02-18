@@ -58,11 +58,11 @@ const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
-    private contentNodeSelectorService = inject(ContentCloudNodeSelectorService);
-    private appConfigService = inject(AppConfigService);
-    private apiService = inject(AlfrescoApiService);
-    private contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
-    private newVersionUploaderService = inject(NewVersionUploaderService);
+    private readonly contentNodeSelectorService = inject(ContentCloudNodeSelectorService);
+    private readonly appConfigService = inject(AppConfigService);
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly contentNodeSelectorPanelService = inject(ContentNodeSelectorPanelService);
+    private readonly newVersionUploaderService = inject(NewVersionUploaderService);
 
     typeId = 'AttachFileCloudWidgetComponent';
     rootNodeId = ALIAS_USER_FOLDER;

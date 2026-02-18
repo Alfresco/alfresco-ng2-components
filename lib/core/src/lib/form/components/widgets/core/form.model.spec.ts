@@ -25,12 +25,16 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
+import { TestBed } from '@angular/core/testing';
 
 describe('FormModel', () => {
     let formService: FormService;
 
     beforeEach(() => {
-        formService = new FormService();
+        TestBed.configureTestingModule({
+            providers: [FormService]
+        });
+        formService = TestBed.inject(FormService);
     });
 
     it('should store original json', () => {

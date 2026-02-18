@@ -188,7 +188,7 @@ export class UserTaskCloudComponent implements OnInit, OnChanges {
     taskTypeEnum = UserTaskContentType;
     screenId: string;
 
-    private taskCloudService: TaskCloudService = inject(TaskCloudService);
+    private readonly taskCloudService: TaskCloudService = inject(TaskCloudService);
     private readonly taskTypeResolverService = inject(TaskTypeResolverService);
     private readonly destroyRef = inject(DestroyRef);
 

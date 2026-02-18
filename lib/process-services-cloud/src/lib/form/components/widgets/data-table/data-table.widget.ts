@@ -61,9 +61,9 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private rowsData: DataRow[];
     private columnsSchema: DataColumn[];
     private variableName: string;
-    private defaultResponseProperty = 'data';
-    private pathParserHelper = new DataTablePathParserHelper();
-    private formCloudService = inject(FormCloudService);
+    private readonly defaultResponseProperty = 'data';
+    private readonly pathParserHelper = new DataTablePathParserHelper();
+    private readonly formCloudService = inject(FormCloudService);
 
     ngOnInit(): void {
         this.init();

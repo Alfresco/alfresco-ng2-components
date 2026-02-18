@@ -86,6 +86,16 @@ export type DefaultPanels = (typeof DefaultPanels)[keyof typeof DefaultPanels];
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
+    private readonly contentMetadataService = inject(ContentMetadataService);
+    private readonly cardViewContentUpdateService = inject(CardViewContentUpdateService);
+    private readonly nodesApiService = inject(NodesApiService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfig = inject(AppConfigService);
+    private readonly tagService = inject(TagService);
+    private readonly categoryService = inject(CategoryService);
+    private readonly contentService = inject(ContentService);
+    private readonly notificationService = inject(NotificationService);
+
     /** (required) The node entity to fetch metadata about */
     @Input({ required: true })
     node: Node;
@@ -146,10 +156,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
-    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private readonly _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
-    private classifiableChangedSubject = new Subject<void>();
+    private readonly classifiableChangedSubject = new Subject<void>();
     private _saving = false;
 
     DefaultPanels = DefaultPanels;
@@ -174,17 +184,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private contentMetadataService: ContentMetadataService,
-        private cardViewContentUpdateService: CardViewContentUpdateService,
-        private nodesApiService: NodesApiService,
-        private translationService: TranslationService,
-        private appConfig: AppConfigService,
-        private tagService: TagService,
-        private categoryService: CategoryService,
-        private contentService: ContentService,
-        private notificationService: NotificationService
-    ) {
+    constructor() {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');

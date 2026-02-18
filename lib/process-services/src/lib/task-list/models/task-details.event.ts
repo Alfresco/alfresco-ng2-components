@@ -18,7 +18,7 @@
 import { TaskRepresentation } from '@alfresco/js-api';
 
 export class TaskDetailsEvent {
-    private _value: TaskRepresentation;
+    private readonly _value: TaskRepresentation;
     private _defaultPrevented: boolean = false;
 
     get value(): TaskRepresentation {

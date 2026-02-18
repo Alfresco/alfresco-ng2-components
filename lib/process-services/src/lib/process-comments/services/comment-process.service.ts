@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { CommentModel, CommentsService, User } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
@@ -27,13 +27,14 @@ import { PeopleProcessService } from '../../services/people-process.service';
     providedIn: 'root'
 })
 export class CommentProcessService implements CommentsService {
+    private readonly apiService = inject(AlfrescoApiService);
+    private readonly peopleProcessService = inject(PeopleProcessService);
+
     private _commentsApi: ActivitiCommentsApi;
     get commentsApi(): ActivitiCommentsApi {
         this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
         return this._commentsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
 
     /**
      * Gets all comments that have been added to a process instance.

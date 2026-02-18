@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AuthenticationService, LoginDialogPanelComponent, TranslationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
@@ -48,6 +48,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ]
 })
 export class AttachFileWidgetDialogComponent implements OnInit {
+    private readonly translation = inject(TranslationService);
+    data = inject<AttachFileWidgetDialogComponentData>(MAT_DIALOG_DATA);
+    private readonly externalApiService = inject(AlfrescoApiService);
+    private readonly authenticationService = inject(AuthenticationService);
+    private readonly matDialogRef = inject<MatDialogRef<AttachFileWidgetDialogComponent>>(MatDialogRef);
+
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
@@ -58,13 +64,10 @@ export class AttachFileWidgetDialogComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(
-        private translation: TranslationService,
-        @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
-        private externalApiService: AlfrescoApiService,
-        private authenticationService: AuthenticationService,
-        private matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>
-    ) {
+    constructor() {
+        const data = this.data;
+        const externalApiService = this.externalApiService;
+
         (externalApiService as ExternalAlfrescoApiService).init(data.ecmHost, data.context);
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;

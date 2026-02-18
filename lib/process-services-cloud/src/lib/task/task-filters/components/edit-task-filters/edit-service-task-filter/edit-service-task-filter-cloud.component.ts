@@ -61,7 +61,7 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
     encapsulation: ViewEncapsulation.None
 })
 export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<ServiceTaskFilterCloudModel> {
-    private serviceTaskFilterCloudService = inject(ServiceTaskFilterCloudService);
+    private readonly serviceTaskFilterCloudService = inject(ServiceTaskFilterCloudService);
 
     constructor() {
         super();

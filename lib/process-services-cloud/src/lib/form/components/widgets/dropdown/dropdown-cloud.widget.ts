@@ -76,7 +76,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly formCloudService = inject(FormCloudService);
     private readonly appConfig = inject(AppConfigService);
     private readonly formUtilsService = inject(FormUtilsService);
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
@@ -93,7 +93,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
 
-    private debounceSetValue = new Subject<void>();
+    private readonly debounceSetValue = new Subject<void>();
 
     get showRequiredMessage(): boolean {
         return this.dropdownControl.touched && this.dropdownControl.errors?.required && !this.isRestApiFailed && !this.variableOptionsFailed;

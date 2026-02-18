@@ -20,9 +20,9 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
 import { Subject } from 'rxjs';
 
 export class WidgetDataTableAdapter implements DataTableAdapter {
-    private adapter: ObjectDataTableAdapter;
-    private columnKeys: string[] = [];
-    private helper = new DataTablePathParserHelper();
+    private readonly adapter: ObjectDataTableAdapter;
+    private readonly columnKeys: string[] = [];
+    private readonly helper = new DataTablePathParserHelper();
 
     get selectedRow(): DataRow {
         return this.adapter.selectedRow;

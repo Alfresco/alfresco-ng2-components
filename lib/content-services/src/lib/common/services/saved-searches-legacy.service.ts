@@ -19,9 +19,7 @@ import { NodeEntry } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, concatMap, first, map } from 'rxjs/operators';
-import { AlfrescoApiService } from '../../services';
 import { SavedSearch } from '../interfaces/saved-search.interface';
-import { AuthenticationService } from '@alfresco/adf-core';
 import { SavedSearchesBaseService } from './saved-searches-base.service';
 
 @Injectable({
@@ -31,10 +29,6 @@ export class SavedSearchesLegacyService extends SavedSearchesBaseService {
     private savedSearchFileNodeId: string;
     private currentUserLocalStorageKey: string;
     private createFileAttempt = false;
-
-    constructor(apiService: AlfrescoApiService, authService: AuthenticationService) {
-        super(apiService, authService);
-    }
 
     protected fetchAllSavedSearches(): Observable<SavedSearch[]> {
         return this.getSavedSearchesNodeId().pipe(

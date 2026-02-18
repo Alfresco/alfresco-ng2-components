@@ -21,13 +21,11 @@ import {
     DestroyRef,
     EventEmitter,
     HostListener,
-    Inject,
     inject,
     InjectionToken,
     Input,
     OnChanges,
     OnInit,
-    Optional,
     Output,
     SimpleChanges
 } from '@angular/core';
@@ -190,7 +188,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private readonly destroyRef = inject(DestroyRef);
 
-    constructor(@Optional() @Inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN) injectedFieldValidators?: FormFieldValidator[]) {
+    constructor() {
+        const injectedFieldValidators = inject(FORM_CLOUD_FIELD_VALIDATORS_TOKEN, { optional: true });
+
         super();
         this.loadInjectedFieldValidators(injectedFieldValidators);
         this.spinnerService.initSpinnerHandling(this.destroyRef);

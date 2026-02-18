@@ -51,6 +51,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
+    private readonly translateService = inject(TranslateService);
+
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -61,17 +63,17 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     private readonly formBuilder = inject(FormBuilder);
 
-    private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
+    private readonly _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
         fileSize: undefined,
         fileSizeUnit: FileSizeUnit.KB
     });
-    private _fileSizeOperators = Object.keys(FileSizeOperator).map<string>((key) => FileSizeOperator[key]);
-    private _fileSizeUnits = [FileSizeUnit.KB, FileSizeUnit.MB, FileSizeUnit.GB];
-    private canvas = document.createElement('canvas');
+    private readonly _fileSizeOperators = Object.keys(FileSizeOperator).map<string>((key) => FileSizeOperator[key]);
+    private readonly _fileSizeUnits = [FileSizeUnit.KB, FileSizeUnit.MB, FileSizeUnit.GB];
+    private readonly canvas = document.createElement('canvas');
     private _fileSizeOperatorsMaxWidth: number;
     private _selectedExtensions: string[];
-    private _reset$ = new Subject<void>();
+    private readonly _reset$ = new Subject<void>();
     private sizeField: string;
     private nameField: string;
 
@@ -107,8 +109,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     }
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private readonly translateService: TranslateService) {}
 
     ngOnInit() {
         if (this.settings) {

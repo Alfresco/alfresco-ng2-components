@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { LicenseData } from '../interfaces';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -30,6 +30,8 @@ import { MatTableModule } from '@angular/material/table';
     imports: [CommonModule, TranslatePipe, MatTableModule]
 })
 export class AboutLicenseListComponent {
+    private readonly translateService = inject(TranslateService);
+
     columns = [
         {
             columnDef: 'property',
@@ -64,6 +66,4 @@ export class AboutLicenseListComponent {
 
     @Input({ required: true })
     data: LicenseData[] = [];
-
-    constructor(private readonly translateService: TranslateService) {}
 }

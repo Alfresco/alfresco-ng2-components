@@ -17,13 +17,15 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input, inject } from '@angular/core';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 
 @Directive({
     selector: '[adf-context-menu]'
 })
 export class ContextMenuDirective {
+    private readonly contextMenuService = inject(ContextMenuOverlayService);
+
     /** Items for the menu. */
     @Input('adf-context-menu')
     links: any[] | (() => any[]);
@@ -31,8 +33,6 @@ export class ContextMenuDirective {
     /** Is the menu enabled? */
     @Input('adf-context-menu-enabled')
     enabled: boolean = false;
-
-    constructor(private contextMenuService: ContextMenuOverlayService) {}
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {

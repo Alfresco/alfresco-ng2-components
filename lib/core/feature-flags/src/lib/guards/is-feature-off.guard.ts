@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FeaturesServiceToken, IFeaturesService } from '../interfaces/features.interface';
 import { Route } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -24,7 +24,7 @@ export const isFeatureOff = (flag: string) => () => inject(FeaturesServiceToken)
 
 @Injectable({ providedIn: 'root' })
 export class IsFeatureOff {
-    constructor(@Inject(FeaturesServiceToken) private featuresServiceToken: IFeaturesService) {}
+    private readonly featuresServiceToken = inject<IFeaturesService>(FeaturesServiceToken);
 
     canMatch(route: Route): Observable<boolean> {
         return this.featuresServiceToken.isOff$(route?.data?.['feature']);

@@ -39,8 +39,8 @@ const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
     styleUrls: ['./file-properties-table-cloud.component.scss']
 })
 export class FilePropertiesTableCloudComponent {
-    private localizedDatePipe = inject(LocalizedDatePipe);
-    private thumbnailService = inject(ThumbnailService);
+    private readonly localizedDatePipe = inject(LocalizedDatePipe);
+    private readonly thumbnailService = inject(ThumbnailService);
 
     @Input()
     uploadedFiles;

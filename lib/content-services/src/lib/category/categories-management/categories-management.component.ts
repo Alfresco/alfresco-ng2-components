@@ -73,6 +73,8 @@ interface CategoryNameControlErrors {
     encapsulation: ViewEncapsulation.None
 })
 export class CategoriesManagementComponent implements OnInit, OnDestroy {
+    private readonly categoryService = inject(CategoryService);
+
     readonly nameErrorMessagesByErrors = new Map<keyof CategoryNameControlErrors, string>([
         ['duplicatedExistingCategory', 'ALREADY_EXISTS'],
         ['duplicatedCategory', 'DUPLICATED_CATEGORY'],
@@ -82,9 +84,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         ['endsWithDot', 'ENDS_WITH_DOT']
     ]);
 
-    private existingCategoryLoaded$ = new Subject<void>();
-    private cancelExistingCategoriesLoading$ = new Subject<void>();
-    private _categoryNameControl = new FormControl<string>(
+    private readonly existingCategoryLoaded$ = new Subject<void>();
+    private readonly cancelExistingCategoriesLoading$ = new Subject<void>();
+    private readonly _categoryNameControl = new FormControl<string>(
         '',
         [
             this.validateIfNotAlreadyAdded.bind(this),
@@ -168,11 +170,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     categoryNameControlVisibleChange = new EventEmitter<boolean>();
 
     @ViewChild('categoryNameInput')
-    private categoryNameInputElement: ElementRef;
+    private readonly categoryNameInputElement: ElementRef;
 
     private readonly destroyRef = inject(DestroyRef);
-
-    constructor(private categoryService: CategoryService) {}
 
     ngOnInit() {
         this.categoryNameControl.valueChanges

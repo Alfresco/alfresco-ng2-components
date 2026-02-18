@@ -17,13 +17,17 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, ElementRef, Input, Renderer2, AfterViewChecked } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, AfterViewChecked, inject } from '@angular/core';
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Directive({
     selector: '[adf-highlight]'
 })
 export class HighlightDirective implements AfterViewChecked {
+    private readonly el = inject(ElementRef);
+    private readonly renderer = inject(Renderer2);
+    private readonly highlightTransformService = inject(HighlightTransformService);
+
     /** Class selector for highlightable elements. */
     @Input('adf-highlight-selector')
     selector: string = '';
@@ -35,8 +39,6 @@ export class HighlightDirective implements AfterViewChecked {
     /** CSS class used to apply highlighting. */
     @Input('adf-highlight-class')
     classToApply: string = 'adf-highlight';
-
-    constructor(private el: ElementRef, private renderer: Renderer2, private highlightTransformService: HighlightTransformService) {}
 
     ngAfterViewChecked() {
         this.highlight();
