@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
 import { EMPTY, of, ReplaySubject } from 'rxjs';
-import { AutocompleteField } from '../../models/autocomplete-option.interface';
+import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { TagService } from '../../../tag/services/tag.service';
 import { SitesService } from '../../../common/services/sites.service';
 import { SitePaging } from '@alfresco/js-api';
@@ -212,6 +212,18 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         });
     });
 
+    it('should use id if present, otherwise value, in LOCATION query fragment', () => {
+        component.settings.field = AutocompleteField.LOCATION;
+        component.settings.autocompleteOptions = [];
+        component.selectedOptions = [
+            { id: 'site1', value: 'Marketing' },
+            { value: 'custom' }
+        ];
+        component.submitValues();
+        expect(component.context.queryFragments[component.id])
+            .toBe('SITE:"site1" OR SITE:"custom"');
+    });
+
     it('should still call sitesService.getSites when input is empty for LOCATION field', () => {
         component.settings.field = AutocompleteField.LOCATION;
         const getSitesSpy = spyOn(sitesService, 'getSites').and.returnValue(
@@ -237,5 +249,27 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.onInputChange('');
 
         expect(searchSpy).toHaveBeenCalledWith('', 0, 15);
+    });
+
+    describe('optionComparator', () => {
+        it('should return false if either option is undefined', () => {
+            expect(component.optionComparator(undefined, { value: 'A' })).toBe(false);
+            expect(component.optionComparator({ value: 'A' }, undefined)).toBe(false);
+        });
+
+        it('should compare by id if both have id', () => {
+            expect(component.optionComparator({ id: 'abc', value: 'B' } , { id: 'ABC', value: 'B' })).toBe(true);
+            expect(component.optionComparator({ id: 'abc', value: 'B' }, { id: 'def', value: 'B' })).toBe(false);
+        });
+
+        it('should compare by value if both have value and one has no id', () => {
+            expect(component.optionComparator({ value: 'A', id: 'id1' }, { value: 'a' })).toBe(true);
+            expect(component.optionComparator({ value: 'A', id: 'id1' }, { value: 'B' })).toBe(false);
+        });
+
+        it('should return false if only one has id or value', () => {
+            expect(component.optionComparator({ id: 'abc' } as AutocompleteOption, { value: 'abc' })).toBe(false);
+            expect(component.optionComparator({ value: 'abc' }, { id: 'abc' } as AutocompleteOption)).toBe(false);
+        });
     });
 });

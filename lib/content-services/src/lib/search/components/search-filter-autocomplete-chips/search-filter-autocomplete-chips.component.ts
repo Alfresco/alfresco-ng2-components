@@ -130,7 +130,14 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
-        return option1.id ? option1.id.toUpperCase() === option2.id.toUpperCase() : option1.value.toUpperCase() === option2.value.toUpperCase();
+        if (!option1 || !option2) return false;
+        if (option1.id && option2.id) {
+            return option1.id.toUpperCase() === option2.id.toUpperCase();
+        }
+        if (option1.value && option2.value) {
+            return option1.value.toUpperCase() === option2.value.toUpperCase();
+        }
+        return false;
     }
 
     private updateQuery(updateContext = true) {
@@ -143,7 +150,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                     queryFragments = this.selectedOptions.map((val) => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
                     break;
                 case AutocompleteField.LOCATION:
-                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id}"`);
+                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id ? val.id : val.value}"`);
                     break;
                 default:
                     queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
