@@ -49,18 +49,18 @@ import { WidgetComponent } from '../widget.component';
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
-    private readonly settings = inject(ADF_CUSTOM_MESSAGE, { optional: true });
+    private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
 
     ngOnInit(): void {
-        if (this.settings != null) {
-            if (isObservable(this.settings)) {
-                this.settings.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+        if (this.enableCustomMessage != null) {
+            if (isObservable(this.enableCustomMessage)) {
+                this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
                     if (this.field) {
                         this.field.enableCustomValidationMessage = enabled ?? false;
                     }
                 });
             } else {
-                this.field.enableCustomValidationMessage = this.settings;
+                this.field.enableCustomValidationMessage = this.enableCustomMessage;
             }
         } else {
             this.field.enableCustomValidationMessage = false;
