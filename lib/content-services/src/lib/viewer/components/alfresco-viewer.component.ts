@@ -188,7 +188,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     /** Change the close button position Right/Left */
     @Input()
-    closeButtonPosition = CloseButtonPosition.Left;
+    closeButtonPosition: CloseButtonPosition = CloseButtonPosition.Left;
 
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
