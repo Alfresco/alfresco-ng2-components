@@ -150,7 +150,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                     queryFragments = this.selectedOptions.map((val) => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
                     break;
                 case AutocompleteField.LOCATION:
-                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id ? val.id : val.value}"`);
+                    queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.id || val.value}"`);
                     break;
                 default:
                     queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
