@@ -71,6 +71,8 @@ export class FormFieldModel extends FormWidgetModel {
     precision: number;
     dynamicDateRangeSelection: boolean;
     regexPattern: string;
+    customValidationMessage?: string;
+    enableCustomValidationMessage?: boolean;
     options: FormFieldOption[] = [];
     restUrl: string;
     roles: string[];
@@ -211,6 +213,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxDateRangeValue = json.maxDateRangeValue;
             this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
+            this.customValidationMessage = json.customValidationMessage;
             this.options = this.parseOptions(json.options, json.optionType);
             this.emptyOption = this.getEmptyOption(this.options);
             this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;

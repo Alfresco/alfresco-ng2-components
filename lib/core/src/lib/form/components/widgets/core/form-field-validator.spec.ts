@@ -1309,6 +1309,50 @@ describe('FormFieldValidator', () => {
             field.isVisible = true;
             expect(validator.validate(field)).toBe(false);
         });
+
+        it('should use default message when ADF_CUSTOM_MESSAGE is off (enableCustomValidationMessage false on field)', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'invalid',
+                regexPattern: '^valid$',
+                customValidationMessage: 'My custom error'
+            });
+            field.enableCustomValidationMessage = false;
+            field.isVisible = true;
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+        });
+
+        it('should use custom message when ADF_CUSTOM_MESSAGE is on and customValidationMessage is set (set by widget on field)', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'invalid',
+                regexPattern: '^valid$',
+                customValidationMessage: 'My custom error'
+            });
+            field.enableCustomValidationMessage = true;
+            field.isVisible = true;
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('My custom error');
+        });
+
+        it('should use default message when ADF_CUSTOM_MESSAGE is on but customValidationMessage is not set', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                id: 'field1',
+                type: FormFieldTypes.TEXT,
+                value: 'invalid',
+                regexPattern: '^valid$'
+            });
+            field.enableCustomValidationMessage = true;
+            field.isVisible = true;
+            expect(validator.validate(field)).toBe(false);
+            expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+        });
     });
 
     describe('FixedValueFieldValidator', () => {
