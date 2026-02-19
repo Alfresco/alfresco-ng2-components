@@ -562,7 +562,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            testingUtils.doubleClickByDataAutomationId(`card-textitem-value-${component.property.key}`);
+            testingUtils.doubleClickByDataAutomationId(`card-textitem-field-${component.property.key}`);
             fixture.detectChanges();
 
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(
