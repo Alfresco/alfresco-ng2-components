@@ -27,6 +27,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { addMinutes } from 'date-fns';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
+import { MatFormField } from '@angular/material/form-field';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -372,14 +373,10 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
-
-            expect(floatLabel).toBe('always');
+            expect(testingUtils.getByDirective(MatFormField).componentInstance.floatLabel).toBe('always');
         });
 
-        it('should set floatLabel to null when property has no default value and is editable', async () => {
+        it('should set floatLabel to auto when property has no default value and is editable', async () => {
             component.property = new CardViewDateItemModel({
                 label: 'Date label',
                 value: new Date('07/10/2017'),
@@ -391,14 +388,10 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
-
-            expect(floatLabel).toBe(null);
+            expect(testingUtils.getByDirective(MatFormField).componentInstance.floatLabel).toBe('auto');
         });
 
-        it('should set floatLabel to null when property has null default value and is editable', async () => {
+        it('should set floatLabel to auto when property has null default value and is editable', async () => {
             component.property = new CardViewDateItemModel({
                 label: 'Date label',
                 value: new Date('07/10/2017'),
@@ -409,12 +402,7 @@ describe('CardViewDateItemComponent', () => {
             });
             component.editable = true;
             fixture.detectChanges();
-
-            const matFormField = await testingUtils.getMatFormField();
-            const host = await matFormField.host();
-            const floatLabel = await host.getAttribute('ng-reflect-float-label');
-
-            expect(floatLabel).toBe(null);
+            expect(testingUtils.getByDirective(MatFormField).componentInstance.floatLabel).toBe('auto');
         });
     });
 });

@@ -34,7 +34,7 @@
                 }
 
                 @for(opt of (list$ | async); track opt.id) {
-                    <mat-option [value]="opt" [id]="opt.id">
+                    <mat-option [value]="opt" [id]="opt.id" [attr.data-automation-id]="'adf-dropdown-widget-option-' + opt.id">
                         {{opt.name}}
                     </mat-option>
                 }

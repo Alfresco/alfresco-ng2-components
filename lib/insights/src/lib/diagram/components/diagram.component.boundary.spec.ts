@@ -20,13 +20,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as boundaryEventMock from '../../mock/diagram/diagram-boundary.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { RaphaelCircleDirective } from '@alfresco/adf-insights';
 
 declare let jasmine: any;
 
 describe('Diagrams boundary', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
-    let element: HTMLElement;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,8 +36,8 @@ describe('Diagrams boundary', () => {
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
         fixture.detectChanges();
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
@@ -62,24 +64,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -94,27 +96,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#017501');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -129,27 +131,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#2632aa');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -163,24 +165,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -195,27 +197,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#017501');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -230,27 +232,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#2632aa');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -264,24 +266,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -296,27 +298,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#017501');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -331,27 +333,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#2632aa');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -365,24 +367,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -397,27 +399,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#017501');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -432,27 +434,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#2632aa');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -466,24 +468,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -498,27 +500,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#017501');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -533,27 +535,27 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
-                    expect(coloredShape).not.toBeNull();
+                    const coloredShape = unitTestingUtils.getByCSS('diagram-boundary-event>raphael-circle');
+                    expect(coloredShape.injector.get(RaphaelCircleDirective).stroke).toBe('#2632aa');
 
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -569,24 +571,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -600,24 +602,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -631,24 +633,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -662,24 +664,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -693,24 +695,24 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-boundary-event');
+                    const shape = unitTestingUtils.getByCSS('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
                     const outerCircle = shape.children[0];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape.children[1];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector(
+                    const iconShape = unitTestingUtils.getByCSS(
                         'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
                     );
                     expect(iconShape).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });

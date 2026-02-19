@@ -20,13 +20,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as diagramsGatewaysMock from '../../mock/diagram/diagram-gateways.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { RaphaelRhombusDirective } from '@alfresco/adf-insights';
 
 declare let jasmine: any;
 
 describe('Diagrams gateways', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
-    let element: HTMLElement;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -34,7 +36,7 @@ describe('Diagrams gateways', () => {
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.detectChanges();
 
         jasmine.Ajax.install();
@@ -63,15 +65,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -85,15 +87,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -107,15 +109,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -129,25 +131,25 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-event-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
                     const outerCircle = shape1.children[1];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape1.children[2];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2 = unitTestingUtils.getByCSS('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -163,15 +165,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -185,17 +187,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#017501');
 
-                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -209,17 +209,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#2632aa');
 
-                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -233,15 +231,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -255,17 +253,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#017501');
 
-                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -279,17 +275,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#2632aa');
 
-                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -303,15 +297,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -325,17 +319,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#017501');
 
-                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -349,17 +341,15 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#2632aa');
 
-                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -373,25 +363,25 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    const shape = unitTestingUtils.getByCSS('diagram-event-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    const shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
                     const outerCircle = shape1.children[1];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape1.children[2];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2 = unitTestingUtils.getByCSS('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -405,27 +395,25 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#017501');
 
-                    const shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
                     const outerCircle = shape1.children[1];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape1.children[2];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2 = unitTestingUtils.getByCSS('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });
@@ -439,27 +427,25 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector(
-                        'diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
-                    );
-                    expect(shape).not.toBeNull();
+                    const shape = unitTestingUtils.getByCSS('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape.injector.get(RaphaelRhombusDirective).stroke).toBe('#2632aa');
 
-                    const shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1 = unitTestingUtils.getByCSS('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
                     const outerCircle = shape1.children[1];
-                    expect(outerCircle.localName).toEqual('raphael-circle');
+                    expect(outerCircle.nativeElement.localName).toEqual('raphael-circle');
 
                     const innerCircle = shape1.children[2];
-                    expect(innerCircle.localName).toEqual('raphael-circle');
+                    expect(innerCircle.nativeElement.localName).toEqual('raphael-circle');
 
-                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2 = unitTestingUtils.getByCSS('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    const tooltip: any = element.querySelector('diagram-tooltip > div');
-                    expect(tooltip.textContent).toContain(res.elements[0].id);
-                    expect(tooltip.textContent).toContain(res.elements[0].type);
+                    const tooltip = unitTestingUtils.getInnerTextByCSS('diagram-tooltip > div');
+                    expect(tooltip).toContain(res.elements[0].id);
+                    expect(tooltip).toContain(res.elements[0].type);
                     done();
                 });
             });

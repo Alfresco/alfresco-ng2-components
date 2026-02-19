@@ -22,6 +22,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 import { provideRouter } from '@angular/router';
+import { MatToolbar } from '@angular/material/toolbar';
 
 describe('HeaderLayoutComponent', () => {
     let loader: HarnessLoader;
@@ -56,13 +57,11 @@ describe('HeaderLayoutComponent', () => {
             expect(testingUtils.getInnerTextByCSS('.adf-app-title')).toEqual('TEST TITLE');
         });
 
-        it('color attribute should be present on toolbar', async () => {
+        it('should have assigned correct color on toolbar', async () => {
             component.color = 'primary';
             fixture.detectChanges();
 
-            const host = await testingUtils.getMatToolbarHost();
-
-            expect(await host.getAttribute('ng-reflect-color')).toBe('primary');
+            expect(testingUtils.getByDirective(MatToolbar).componentInstance.color).toBe('primary');
         });
 
         it('should change background color when custom is provided', async () => {

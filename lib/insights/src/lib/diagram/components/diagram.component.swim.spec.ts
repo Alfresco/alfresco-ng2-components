@@ -19,13 +19,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as swimLanesMock from '../../mock/diagram/diagram-swimlanes.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { UnitTestingUtils } from '@alfresco/adf-core';
+import { RaphaelTextDirective } from '@alfresco/adf-insights';
 
 declare let jasmine: any;
 
 describe('Diagrams swim', () => {
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
-    let element: HTMLElement;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -33,8 +35,8 @@ describe('Diagrams swim', () => {
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
         fixture.detectChanges();
+        unitTestingUtils = new UnitTestingUtils(fixture.debugElement);
 
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
@@ -62,12 +64,12 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-pool > raphael-rect');
+                    const shape = unitTestingUtils.getByCSS('diagram-pool > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    const shapeText: any = element.querySelector('diagram-pool > raphael-text');
+                    const shapeText = unitTestingUtils.getByCSS('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Activiti');
+                    expect(shapeText.injector.get(RaphaelTextDirective).text).toEqual('Activiti');
                     done();
                 });
             });
@@ -81,15 +83,15 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
+                    const shapeLane = unitTestingUtils.getByCSS('diagram-lanes > div > div > diagram-lane');
                     expect(shapeLane).not.toBeNull();
 
-                    const shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
+                    const shapeRect = unitTestingUtils.getByCSS('diagram-lanes > div > div > diagram-lane > raphael-rect');
                     expect(shapeRect).not.toBeNull();
 
-                    const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
+                    const shapeText = unitTestingUtils.getByCSS('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Backend');
+                    expect(shapeText.injector.get(RaphaelTextDirective).text).toEqual('Backend');
                     done();
                 });
             });
@@ -105,12 +107,12 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-pool > raphael-rect');
+                    const shape = unitTestingUtils.getByCSS('diagram-pool > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    const shapeText: any = element.querySelector('diagram-pool > raphael-text');
+                    const shapeText = unitTestingUtils.getByCSS('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Activiti');
+                    expect(shapeText.injector.get(RaphaelTextDirective).text).toEqual('Activiti');
                     done();
                 });
             });
@@ -124,15 +126,15 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
+                    const shapeLane = unitTestingUtils.getByCSS('diagram-lanes > div > div > diagram-lane');
                     expect(shapeLane).not.toBeNull();
 
-                    const shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
+                    const shapeRect = unitTestingUtils.getByCSS('diagram-lanes > div > div > diagram-lane > raphael-rect');
                     expect(shapeRect).not.toBeNull();
 
-                    const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
+                    const shapeText = unitTestingUtils.getByCSS('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Backend');
+                    expect(shapeText.injector.get(RaphaelTextDirective).text).toEqual('Backend');
                     done();
                 });
             });

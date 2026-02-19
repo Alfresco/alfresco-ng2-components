@@ -1417,6 +1417,7 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
     let formFieldComponent: FormFieldComponent;
     let loader: HarnessLoader;
     let formRenderingService: FormRenderingService;
+    let unitTestingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -1425,6 +1426,7 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
 
         formFieldFixture = TestBed.createComponent(FormFieldComponent);
         formFieldComponent = formFieldFixture.componentInstance;
+        unitTestingUtils = new UnitTestingUtils(formFieldFixture.debugElement);
 
         loader = TestbedHarnessEnvironment.loader(formFieldFixture);
 
@@ -1464,7 +1466,7 @@ describe('DropdownCloudWidgetComponent instantiated by FormFieldComponent wrappe
 
         // Not using dropdown.clickOptions from harness since it need ot be awaited
         // I want to simulate other events at the same time
-        const option1 = formFieldFixture.debugElement.query(By.css('[ng-reflect-id="option1"]'));
+        const option1 = unitTestingUtils.getByDataAutomationId('adf-dropdown-widget-option-option1');
         option1.triggerEventHandler('click');
         dropdownCloudWidgetInstanceComponent.event(new Event('focusout'));
 
