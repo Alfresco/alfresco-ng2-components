@@ -195,7 +195,7 @@ module.exports = {
                         message: 'Enums are not allowed. Use string literal types (e.g., type Foo = "a" | "b") or const objects instead.'
                     },
                     {
-                        selector: 'Literal[value=/ng-reflect-/]',
+                        selector: ':matches(Literal[value=/ng-reflect-/], TemplateElement[value.cooked=/ng-reflect-/])',
                         message: '*ng-reflect-* attributes should not be used. Consider alternatives for proper selectors.'
                     }
                 ]
