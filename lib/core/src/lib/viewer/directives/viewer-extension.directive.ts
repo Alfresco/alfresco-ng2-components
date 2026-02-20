@@ -26,7 +26,7 @@ export class ViewerExtensionDirective implements AfterContentInit {
     private readonly viewerComponent = inject(ViewerRenderComponent);
 
     @ContentChild(TemplateRef)
-    template: any;
+    template: TemplateRef<unknown>;
 
     @Input()
     urlFileContent: string;
@@ -37,7 +37,7 @@ export class ViewerExtensionDirective implements AfterContentInit {
     @Input()
     supportedExtensions: string[];
 
-    templateModel: any;
+    templateModel: { template: TemplateRef<unknown>; isVisible: boolean };
 
     private readonly destroyRef = inject(DestroyRef);
 

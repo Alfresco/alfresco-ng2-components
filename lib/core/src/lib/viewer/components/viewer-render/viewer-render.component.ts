@@ -89,7 +89,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     /** The template for the pdf thumbnails. */
     @Input()
-    thumbnailsTemplate: TemplateRef<any> = null;
+    thumbnailsTemplate: TemplateRef<unknown> = null;
 
     /** MIME type of the file content (when not determined by the filename extension). */
     @Input()
@@ -124,7 +124,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
     @Input()
-    viewerTemplateExtensions: TemplateRef<any>;
+    viewerTemplateExtensions: TemplateRef<unknown>;
 
     /** Custom error message to be displayed in the viewer. */
     @Input()
@@ -149,7 +149,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     @ViewChild(ImgViewerComponent)
     imgViewer: ImgViewerComponent;
 
-    extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
+    extensionTemplates: { template: TemplateRef<unknown>; isVisible: boolean }[] = [];
     extensionsSupportedByTemplates: string[] = [];
     extension: string;
     internalFileName: string;

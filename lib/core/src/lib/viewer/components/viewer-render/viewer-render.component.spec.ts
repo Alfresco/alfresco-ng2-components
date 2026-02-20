@@ -54,7 +54,7 @@ class DoubleViewerComponent {
     viewer2: ViewerRenderComponent;
 
     @ViewChild('viewerExtension', { static: true })
-    viewerTemplateExtensions: TemplateRef<any>;
+    viewerTemplateExtensions: TemplateRef<unknown>;
 
     urlFileViewer1: string;
     urlFileViewer2: string;

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 
-declare const pdfjsLib: any;
+declare const pdfjsLib: { PasswordResponses: { NEED_PASSWORD: number; INCORRECT_PASSWORD: number } };
 
 describe('PdfPasswordDialogComponent', () => {
     let component: PdfPasswordDialogComponent;

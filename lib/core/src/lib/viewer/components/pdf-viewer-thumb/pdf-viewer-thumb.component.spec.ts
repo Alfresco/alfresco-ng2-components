@@ -28,7 +28,7 @@ describe('PdfThumbComponent', () => {
     const width = 91;
     const height = 119;
     const page = {
-        id: 'pageId',
+        id: 1,
         getPage: jasmine.createSpy('getPage').and.returnValue(
             Promise.resolve({
                 getViewport: () => ({ width, height }),

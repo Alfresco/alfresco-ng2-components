@@ -74,11 +74,11 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
-    error = new EventEmitter<any>();
+    error = new EventEmitter<void>();
 
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
-    submit = new EventEmitter<any>();
+    submit = new EventEmitter<Blob>();
 
     @Output()
     isSaving = new EventEmitter<boolean>();

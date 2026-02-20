@@ -26,4 +26,4 @@ TestBed.initTestEnvironment(GlobalTestingModule, platformBrowserDynamicTesting()
     teardown: { destroyAfterEach: true }
 });
 
-(window as any).pdfjsLib = pdfjsLibraryMock;
+(window as unknown as { pdfjsLib: typeof pdfjsLibraryMock }).pdfjsLib = pdfjsLibraryMock;
