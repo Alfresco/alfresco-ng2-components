@@ -1,17 +1,16 @@
 <ng-container *ngIf="!property.isEmpty() || isEditable">
     <div class="adf-property-value">
         <mat-checkbox
+            #checkbox="ngModel"
+            adf-card-view-property-validator
             [attr.data-automation-id]="'card-boolean-' + property.key"
             [attr.title]="'CORE.METADATA.ACTIONS.TOGGLE' | translate"
-            [ngModel]="property.displayValue"
             [checked]="property.displayValue"
             [disabled]="!isEditable"
-            color="primary"
-            (ngModelChange)="changed($event)"
-            adf-card-view-property-validator
+            [ngModel]="property.displayValue"
             [property]="property"
+            (ngModelChange)="changed($event)"
             (validated)="onValidation($event)"
-            #checkbox="ngModel"
         >
             <div
                 [attr.data-automation-id]="'card-boolean-label-' + property.key"
