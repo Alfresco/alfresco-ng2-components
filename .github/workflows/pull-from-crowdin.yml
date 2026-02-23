@@ -19,7 +19,7 @@ jobs:
           ref: develop
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
       - name: Pull translations from Crowdin
-        uses: crowdin/github-action@b4b468cffefb50bdd99dd83e5d2eaeb63c880380 # v2.14.0
+        uses: crowdin/github-action@5587c43063e52090026857d386174d2599ad323b # v2.14.1
         with:
           skip_ref_checkout: true
           upload_sources: false
