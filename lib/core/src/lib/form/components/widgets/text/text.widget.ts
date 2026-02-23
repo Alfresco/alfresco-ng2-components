@@ -18,11 +18,14 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, Directive, inject, InjectionToken, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, Directive, inject, InjectionToken, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
+import { isObservable } from 'rxjs';
+import { ADF_CUSTOM_MESSAGE } from '../core/custom-validation-message.token';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { InputMaskDirective } from './text-mask.component';
@@ -69,7 +72,24 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
     isMaskReversed: boolean;
     fieldStatusTemplate = inject(FIELD_STATUS_TEMPLATE, { optional: true });
 
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly enableCustomMessage = inject(ADF_CUSTOM_MESSAGE, { optional: true });
+
     ngOnInit() {
+        if (this.enableCustomMessage != null) {
+            if (isObservable(this.enableCustomMessage)) {
+                this.enableCustomMessage.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((enabled: boolean) => {
+                    if (this.field) {
+                        this.field.enableCustomValidationMessage = enabled ?? false;
+                    }
+                });
+            } else {
+                this.field.enableCustomValidationMessage = this.enableCustomMessage;
+            }
+        } else {
+            this.field.enableCustomValidationMessage = false;
+        }
+
         if (this.field.params) {
             this.mask = this.field.params['inputMask'];
             this.placeholder =

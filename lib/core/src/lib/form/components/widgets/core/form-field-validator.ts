@@ -218,7 +218,12 @@ export class RegExFieldValidator implements FormFieldValidator {
             if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
                 return true;
             }
-            field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+
+            if (field.enableCustomValidationMessage === true && !!field.customValidationMessage) {
+                field.validationSummary.message = field.customValidationMessage;
+            } else {
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
+            }
             return false;
         }
         return true;

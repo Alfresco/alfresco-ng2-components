@@ -42,6 +42,7 @@ export interface FormFieldRepresentation {
     placeholder?: string;
     readOnly?: boolean;
     regexPattern?: string;
+    customValidationMessage?: string;
     required?: boolean;
     restIdProperty?: string;
     restLabelProperty?: string;
