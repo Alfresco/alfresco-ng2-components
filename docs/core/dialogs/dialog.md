@@ -53,8 +53,8 @@ With icon:
 ```
 
 ```ts
-@ViewChild('contentDialogTemplate') contentDialogTemplate: TemplateRef<any>;
-@ViewChild('actionsDialogTemplate') actionsDialogTemplate: TemplateRef<any>;
+@ViewChild('contentDialogTemplate') contentDialogTemplate: TemplateRef<unknown>;
+@ViewChild('actionsDialogTemplate') actionsDialogTemplate: TemplateRef<unknown>;
 
 constructor(private dialog: MatDialog) {}
 
