@@ -91,7 +91,6 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
     }
 
     removeFlag(key: string): void {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [key]: _, ...flags } = this.currentFlagState;
         this.flags.next(flags);
     }
