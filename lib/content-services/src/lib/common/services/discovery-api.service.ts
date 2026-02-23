@@ -18,10 +18,16 @@
 import { Injectable, inject } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { RepositoryInfo, SystemPropertiesRepresentation, DiscoveryApi, AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
-
+import {
+    RepositoryInfo,
+    SystemPropertiesRepresentation,
+    DiscoveryApi,
+    AboutApi,
+    SystemPropertiesApi,
+    BpmProductVersionModel
+} from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -66,24 +72,21 @@ export class DiscoveryApiService {
     }
 
     /**
+     * @deprecated since 8.3.0 this method is no longer used, and will be removed in the next major release.
      * Gets product information for Process Services.
      *
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
         const aboutApi = new AboutApi(this.alfrescoApiService.getInstance());
-
-        return from(aboutApi.getAppVersion()).pipe(
-            map((res) => new BpmProductVersionModel(res)),
-            catchError((err) => throwError(err))
-        );
+        return from(aboutApi.getAppVersion());
     }
 
     getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
         const systemPropertiesApi = new SystemPropertiesApi(this.alfrescoApiService.getInstance());
 
         return from(systemPropertiesApi.getProperties()).pipe(
-            map((res: any) => {
+            map((res) => {
                 if ('string' === typeof res) {
                     throw new Error('Not valid response');
                 }

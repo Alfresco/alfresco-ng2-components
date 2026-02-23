@@ -61,7 +61,7 @@ export class RenderingQueueServices {
     onIdle: (() => void) | null = null;
 
     highestPriorityPage: string | null = null;
-    idleTimeout: ReturnType<typeof setTimeout> | null = null;
+    idleTimeout: number | null = null;
     printing = false;
     isThumbnailViewEnabled = false;
 
@@ -114,7 +114,10 @@ export class RenderingQueueServices {
         }
 
         if (this.onIdle) {
-            this.idleTimeout = setTimeout(this.onIdle.bind(this), this.CLEANUP_TIMEOUT);
+            // Type assertion needed: setTimeout returns NodeJS.Timeout in Node types,
+            // but returns number at runtime in browser (where this code executes).
+            // PDFRenderingQueue interface requires idleTimeout to be number.
+            this.idleTimeout = setTimeout(this.onIdle.bind(this), this.CLEANUP_TIMEOUT) as unknown as number;
         }
     }
 

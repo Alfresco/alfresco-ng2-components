@@ -25,12 +25,12 @@ import { TranslationService } from '../translation/translation.service';
 export class FileSizePipe implements PipeTransform {
     private readonly translation = inject(TranslationService);
 
-    transform(paramByte: any, decimals: number = 2): string {
+    transform(paramByte: number | string | null, decimals: number = 2): string {
         if (paramByte == null) {
             return '';
         }
 
-        const bytes = parseInt(paramByte, 10);
+        const bytes = typeof paramByte === 'number' ? paramByte : parseInt(paramByte as string, 10);
         if (isNaN(bytes)) {
             return '';
         }

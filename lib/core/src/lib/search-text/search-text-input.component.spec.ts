@@ -40,7 +40,7 @@ describe('SearchTextInputComponent', () => {
         debugElement = fixture.debugElement;
         testingUtils = new UnitTestingUtils(debugElement);
         userPreferencesService = TestBed.inject(UserPreferencesService);
-        component.focusListener = new Subject<any>();
+        component.focusListener = new Subject();
     });
 
     afterEach(() => {
