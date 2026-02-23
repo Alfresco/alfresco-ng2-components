@@ -69,6 +69,19 @@ export interface PdfThumbnailPage {
     getPage: () => Promise<PDFPageProxy>;
 }
 
+export interface PdfAnnotationData {
+    titleObj?: {
+        str?: string;
+    };
+    modificationDate?: string;
+}
+
+export interface PdfAnnotationWithTitle extends PdfAnnotationData {
+    titleObj: {
+        str: string;
+    };
+}
+
 export const PDFJS_MODULE = new InjectionToken('PDFJS_MODULE', { factory: () => pdfjsLib });
 export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => PDFViewer });
 
@@ -707,11 +720,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    private createAnnotationPopup(annotation: { titleObj?: { str?: string }; modificationDate?: string }, text: string, annotationElement: HTMLElement): void {
+    private createAnnotationPopup(annotation: PdfAnnotationData, text: string, annotationElement: HTMLElement): void {
         const popupElement = document.createElement('div');
         let headerElement: HTMLSpanElement;
         if (annotation.titleObj?.str) {
-            headerElement = this.createAnnotationPopupHeader(annotation as { titleObj: { str: string }; modificationDate?: string });
+            headerElement = this.createAnnotationPopupHeader(annotation as PdfAnnotationWithTitle);
         }
         const contentElement = this.createAnnotationPopupContent(text);
         popupElement.classList.add('popup', 'adf-pdf-viewer-annotation-tooltip');
@@ -719,7 +732,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         annotationElement.appendChild(popupElement);
     }
 
-    private createAnnotationPopupHeader(annotation: { titleObj: { str: string }; modificationDate?: string }): HTMLSpanElement {
+    private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLSpanElement {
         const headerElement = document.createElement('span');
         const titleElement = document.createElement('span');
         let dateElement: HTMLTimeElement;

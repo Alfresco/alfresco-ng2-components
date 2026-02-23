@@ -37,6 +37,7 @@ import {
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import { PDFPageProxy } from 'pdfjs-dist/types/src/display/api';
 import { PageChangingEvent, PdfThumbnailPage } from '../pdf-viewer/pdf-viewer.component';
 import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.component';
 
@@ -187,7 +188,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.pdfViewer.pdfDocument.getPage(id).then((page) => this.calculateHeight(page));
     }
 
-    private calculateHeight(page) {
+    private calculateHeight(page: PDFPageProxy) {
         const viewport = page.getViewport({ scale: 1 });
         const pageRatio = viewport.width / viewport.height;
         const height = Math.floor(this.width / pageRatio);

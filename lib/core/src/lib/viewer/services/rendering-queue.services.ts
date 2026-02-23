@@ -31,6 +31,16 @@ interface VisiblePages {
 }
 
 /**
+ * Type helper for accessing the resume method on PDFPageView.
+ * PDFPageView implements IRenderableView which includes a resume method,
+ * but the TypeScript definitions don't properly expose it.
+ */
+// cspell:ignore Renderable
+interface ResumableView {
+    resume?: () => void;
+}
+
+/**
  *
  * RenderingQueueServices rendering of the views for pages and thumbnails.
  *
@@ -51,7 +61,7 @@ export class RenderingQueueServices {
     onIdle: (() => void) | null = null;
 
     highestPriorityPage: string | null = null;
-    idleTimeout: number | null = null;
+    idleTimeout: ReturnType<typeof setTimeout> | null = null;
     printing = false;
     isThumbnailViewEnabled = false;
 
@@ -104,7 +114,7 @@ export class RenderingQueueServices {
         }
 
         if (this.onIdle) {
-            this.idleTimeout = setTimeout(this.onIdle.bind(this), this.CLEANUP_TIMEOUT) as unknown as number;
+            this.idleTimeout = setTimeout(this.onIdle.bind(this), this.CLEANUP_TIMEOUT);
         }
     }
 
@@ -188,9 +198,9 @@ export class RenderingQueueServices {
             }
             case this.renderingStates.PAUSED: {
                 this.highestPriorityPage = view.renderingId;
-                const resume = (view as { resume?: () => void }).resume;
-                if (resume) {
-                    resume();
+                const resumableView = view as unknown as ResumableView;
+                if (resumableView.resume) {
+                    resumableView.resume();
                 }
                 break;
             }
