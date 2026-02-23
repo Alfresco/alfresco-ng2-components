@@ -1414,9 +1414,9 @@ export const customWidgetForm = {
                         ],
                         '2': [
                             {
-                                id: 'bananaforevah0k8gui',
-                                name: 'bananaforevah',
-                                type: 'bananaforevah',
+                                id: 'banana0k8gui',
+                                name: 'banana',
+                                type: 'banana',
                                 required: true,
                                 readOnly: false,
                                 isCustomType: true,
@@ -1478,9 +1478,9 @@ export const customWidgetFormWithVisibility = {
                         ],
                         '2': [
                             {
-                                id: 'bananaforevah0k8gui',
-                                name: 'bananaforevah',
-                                type: 'bananaforevah',
+                                id: 'banana0k8gui',
+                                name: 'banana',
+                                type: 'banana',
                                 required: true,
                                 readOnly: false,
                                 isCustomType: true,

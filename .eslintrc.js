@@ -236,6 +236,12 @@ module.exports = {
             rules: {
                 'comma-dangle': ['error', 'never']
             }
+        },
+        {
+            files: ['**/*.stories.ts'],
+            rules: {
+                '@cspell/spellchecker': 'off'
+            }
         }
     ],
 

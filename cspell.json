@@ -157,7 +157,8 @@
   ],
   "ignorePaths": [
     "lib/{content-services,core,extensions,insights,process-services}/**/*.spec.ts",
-    "lib/{content-services,core,extensions,insights,process-services}/**/*.mock.ts"
+    "lib/{content-services,core,extensions,insights,process-services}/**/*.mock.ts",
+    "**/*.stories.ts"
   ],
   "ignoreRegExpList": [
     "(\"|'|`)((?:\\\\1|(?:(?!\\1).))*)\\1"

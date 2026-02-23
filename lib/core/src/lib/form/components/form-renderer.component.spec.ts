@@ -613,24 +613,24 @@ describe('Form Renderer Component', () => {
 
     describe('Custom Widget', () => {
         it('Should be able to correctly display a custom process cloud widget', async () => {
-            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
+            formRenderingService.register({ banana: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             expectElementToBeVisible(testingUtils, 'Text0vdi18');
-            expectElementToBeVisible(testingUtils, 'bananaforevah0k8gui');
+            expectElementToBeVisible(testingUtils, 'banana0k8gui');
         });
 
         it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
-            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
+            formRenderingService.register({ banana: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeHidden(testingUtils, 'bananaforevah0k8gui');
+            expectElementToBeHidden(testingUtils, 'banana0k8gui');
             typeIntoInput(testingUtils, '#Text0vdi18', 'no');
             fixture.detectChanges();
             await fixture.whenStable();
-            expectElementToBeVisible(testingUtils, 'bananaforevah0k8gui');
+            expectElementToBeVisible(testingUtils, 'banana0k8gui');
         });
     });
 
