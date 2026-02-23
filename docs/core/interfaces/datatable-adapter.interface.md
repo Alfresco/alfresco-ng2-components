@@ -68,7 +68,7 @@ interface DataColumn {
     title?: string;
     srTitle?: string;
     cssClass?: string;
-    template?: TemplateRef<any>;
+    template?: TemplateRef<unknown>;
     formatTooltip?: Function;
     focus?: boolean;
 }

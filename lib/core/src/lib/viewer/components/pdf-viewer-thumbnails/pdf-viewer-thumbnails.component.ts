@@ -36,6 +36,9 @@ import {
     inject
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
+import { PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
+import { PDFPageProxy } from 'pdfjs-dist/types/src/display/api';
+import { PageChangingEvent, PdfThumbnailPage } from '../pdf-viewer/pdf-viewer.component';
 import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.component';
 
 @Component({
@@ -50,25 +53,25 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly element = inject(ElementRef);
     private readonly document = inject(DOCUMENT);
 
-    @Input({ required: true }) pdfViewer: any;
+    @Input({ required: true }) pdfViewer: PDFViewer;
 
     @Output()
     close = new EventEmitter<void>();
 
     virtualHeight: number = 0;
     translateY: number = 0;
-    renderItems = [];
+    renderItems: PdfThumbnailPage[] = [];
     width: number = 91;
     currentHeight: number = 0;
 
-    private items = [];
+    private items: PdfThumbnailPage[] = [];
     private readonly margin: number = 15;
     private itemHeight: number = 114 + this.margin;
     private previouslyFocusedElement: HTMLElement | null = null;
     private keyManager: FocusKeyManager<PdfThumbComponent>;
 
     @ContentChild(TemplateRef)
-    template: any;
+    template: TemplateRef<unknown>;
 
     @ViewChildren(PdfThumbComponent)
     thumbsList: QueryList<PdfThumbComponent>;
@@ -145,7 +148,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    trackByFn(_: number, item: any): number {
+    trackByFn(_: number, item: PdfThumbnailPage): number {
         return item.id;
     }
 
@@ -171,7 +174,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    getPages() {
+    getPages(): PdfThumbnailPage[] {
         // eslint-disable-next-line no-underscore-dangle
         return this.pdfViewer._pages.map((page) => ({
             id: page.id,
@@ -181,12 +184,11 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }));
     }
 
-    private setHeight(id): number {
-        const height = this.pdfViewer.pdfDocument.getPage(id).then((page) => this.calculateHeight(page));
-        return height;
+    private setHeight(id: number): Promise<void> {
+        return this.pdfViewer.pdfDocument.getPage(id).then((page) => this.calculateHeight(page));
     }
 
-    private calculateHeight(page) {
+    private calculateHeight(page: PDFPageProxy) {
         const viewport = page.getViewport({ scale: 1 });
         const pageRatio = viewport.width / viewport.height;
         const height = Math.floor(this.width / pageRatio);
@@ -222,7 +224,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         };
     }
 
-    private onPageChange(event) {
+    private onPageChange(event: PageChangingEvent) {
         const index = this.renderItems.findIndex((element) => element.id === event.pageNumber);
 
         if (index < 0) {

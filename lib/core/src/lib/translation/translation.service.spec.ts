@@ -91,7 +91,7 @@ describe('TranslationService', () => {
             const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
                 language: 'en-GB',
                 languages: returnedLanguages
-            } as any);
+            } as unknown as Navigator);
 
             expect(translationService.getLocale()).toBe('fr-FR');
             expect(mockLanguages).toHaveBeenCalled();
@@ -102,7 +102,7 @@ describe('TranslationService', () => {
             const mockLanguages = spyOnProperty(window, 'navigator').and.returnValue({
                 language: 'de-DE',
                 languages: []
-            } as any);
+            } as unknown as Navigator);
 
             expect(translationService.getLocale()).toBe('de-DE');
             expect(mockLanguages).toHaveBeenCalled();

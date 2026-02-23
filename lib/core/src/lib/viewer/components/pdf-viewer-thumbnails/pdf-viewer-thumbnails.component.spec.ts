@@ -19,8 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { UnitTestingUtils } from '../../../testing';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
+import { PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 
-declare const pdfjsViewer: any;
+declare const pdfjsViewer: { EventBus: new () => { dispatch: (event: string, data: unknown) => void } };
 
 describe('PdfThumbListComponent', () => {
     let fixture: ComponentFixture<PdfThumbListComponent>;
@@ -77,7 +78,7 @@ describe('PdfThumbListComponent', () => {
         fixture = TestBed.createComponent(PdfThumbListComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         component = fixture.componentInstance;
-        component.pdfViewer = viewerMock;
+        component.pdfViewer = viewerMock as unknown as PDFViewer;
 
         // provide scrollable container
         fixture.nativeElement.style.display = 'block';

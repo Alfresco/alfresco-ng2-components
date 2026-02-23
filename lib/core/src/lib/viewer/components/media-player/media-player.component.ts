@@ -48,7 +48,7 @@ export class MediaPlayerComponent implements OnChanges {
     tracks: Track[] = [];
 
     @Output()
-    error = new EventEmitter<any>();
+    error = new EventEmitter<Event>();
 
     @Output()
     canPlay = new EventEmitter<void>();
@@ -66,7 +66,7 @@ export class MediaPlayerComponent implements OnChanges {
         }
     }
 
-    onMediaPlayerError(event: any) {
+    onMediaPlayerError(event: Event) {
         this.error.emit(event);
     }
 }

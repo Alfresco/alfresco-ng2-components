@@ -25,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IconModule } from '../../../icon/icon.module';
 
-declare const pdfjsLib: any;
+declare const pdfjsLib: { PasswordResponses: { NEED_PASSWORD: number; INCORRECT_PASSWORD: number } };
 
 @Component({
     selector: 'adf-pdf-viewer-password-dialog',

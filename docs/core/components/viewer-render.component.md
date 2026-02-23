@@ -236,7 +236,7 @@ Next in your component you need to get a reference of created template
 
 ```ts
 @ViewChild('viewerExtensions')
-viewerTemplateExtensions: TemplateRef<any>;
+viewerTemplateExtensions: TemplateRef<unknown>;
 ```
 
 and pass it via `viewerTemplateExtensions` input:

@@ -18,6 +18,17 @@
 import { BaseApi } from './base.api';
 
 /**
+ * Product version model for Process Services.
+ */
+export interface BpmProductVersionModel {
+    edition: string;
+    majorVersion: string;
+    revisionVersion: string;
+    minorVersion: string;
+    type: string;
+}
+
+/**
  * About service.
  */
 export class AboutApi extends BaseApi {
@@ -26,7 +37,7 @@ export class AboutApi extends BaseApi {
      * Provides information about the running Alfresco Process Services Suite. The response payload object has the properties type, majorVersion, minorVersion, revisionVersion and edition.
      * @return Promise<{ [key: string]: string; }>
      */
-    getAppVersion(): Promise<{ [key: string]: string }> {
+    getAppVersion(): Promise<BpmProductVersionModel> {
         return this.get({
             path: '/api/enterprise/app-version'
         });

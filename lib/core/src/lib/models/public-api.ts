@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './product-version.model';
 export * from './comment.model';
 export * from './pagination.model';
 export * from './request-pagination.model';

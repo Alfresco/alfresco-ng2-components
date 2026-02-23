@@ -31,7 +31,7 @@ export class TxtViewerComponent implements OnChanges {
     private readonly appConfigService = inject(AppConfigService);
 
     @Input()
-    urlFile: any;
+    urlFile: string;
 
     @Input()
     blobFile: Blob;
@@ -86,7 +86,7 @@ export class TxtViewerComponent implements OnChanges {
                 this.content = reader.result;
             };
 
-            reader.onerror = (error: any) => {
+            reader.onerror = (error: ProgressEvent<FileReader>) => {
                 reject(error);
             };
 

@@ -30,7 +30,12 @@ import { PDFJS_MODULE, PDFJS_VIEWER_MODULE, PdfViewerComponent } from './pdf-vie
 import pdfjsLibraryMock, { annotations } from '../mock/pdfjs-lib.mock';
 import { TranslateService } from '@ngx-translate/core';
 
-declare const pdfjsLib: any;
+declare const pdfjsLib: {
+    PasswordResponses: {
+        NEED_PASSWORD: number;
+        INCORRECT_PASSWORD: number;
+    };
+};
 
 @Component({
     selector: 'adf-url-test-component',
@@ -41,7 +46,7 @@ class UrlTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
-    urlFile: any;
+    urlFile: string;
 
     constructor() {
         this.urlFile = './fake-test-file.pdf';
@@ -57,7 +62,7 @@ class UrlTestPasswordComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
-    urlFile: any;
+    urlFile: string;
 
     constructor() {
         this.urlFile = './fake-test-password-file.pdf';
@@ -72,7 +77,7 @@ class BlobTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
-    blobFile: any;
+    blobFile: Blob;
 
     constructor() {
         this.blobFile = this.createFakeBlob();
@@ -101,7 +106,7 @@ class BlobTestComponent {
 describe('Test PdfViewer component', () => {
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
-    let change: any;
+    let change: SimpleChange;
     let dialog: MatDialog;
     let testingUtils: UnitTestingUtils;
 
@@ -265,17 +270,17 @@ describe('Test PdfViewer component', () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-                spyOn(dialog, 'open').and.callFake((_: any, context: any) => {
+                spyOn(dialog, 'open').and.callFake((_dialogComponent: unknown, context: { data: { reason: number } }) => {
                     if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
                         return {
                             afterClosed: () => of('wrong_password')
-                        } as any;
+                        } as ReturnType<MatDialog['open']>;
                     }
 
                     if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
                         return {
                             afterClosed: () => of('password')
-                        } as any;
+                        } as ReturnType<MatDialog['open']>;
                     }
 
                     return undefined;
@@ -328,7 +333,7 @@ describe('Test PdfViewer component', () => {
                     () =>
                         ({
                             afterClosed: () => of('')
-                        }) as any
+                        }) as ReturnType<MatDialog['open']>
                 );
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
@@ -456,7 +461,9 @@ describe('Test PdfViewer - User interaction', () => {
 
         component.urlFile = './fake-test-file.pdf';
         fixture.detectChanges();
-        component.ngOnChanges({ urlFile: { currentValue: './fake-test-file.pdf' } } as any);
+        component.ngOnChanges({ 
+            urlFile: new SimpleChange(null, './fake-test-file.pdf', true)
+        });
 
         flush();
     }));
@@ -666,7 +673,10 @@ describe('Test PdfViewer - User interaction', () => {
         it('should have corrected content in annotation popup', fakeAsync(() => {
             dispatchAnnotationLayerRenderedEvent();
             expect(getAnnotationTitle()).toBe('Annotation title');
-            expect(getAnnotationDate()).toBe('2/2/2026, 10:41:06 AM');
+            const dateText = getAnnotationDate();
+            // Date format may vary by locale, so check it contains the key parts
+            expect(dateText).toMatch(/2026/);
+            expect(dateText).toMatch(/10:41:06|10:41:6/);
             expect(getAnnotationContent()).toBe('Annotation contents');
             expect(getAnnotationPopupElement()).toBeDefined();
         }));

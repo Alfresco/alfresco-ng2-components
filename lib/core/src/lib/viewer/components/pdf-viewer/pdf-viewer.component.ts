@@ -47,11 +47,40 @@ import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-vi
 import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf.min.mjs';
 import { EventBus, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
-import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
+import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api';
 import { IconModule } from '../../../icon/icon.module';
 import { PDFDateString } from 'pdfjs-dist';
 
 export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
+
+export interface PageChangingEvent {
+    pageNumber: number;
+    source?: {
+        container?: {
+            id?: string;
+        };
+    };
+}
+
+export interface PdfThumbnailPage {
+    id: number;
+    getWidth: () => number;
+    getHeight: () => number;
+    getPage: () => Promise<PDFPageProxy>;
+}
+
+export interface PdfAnnotationData {
+    titleObj?: {
+        str?: string;
+    };
+    modificationDate?: string;
+}
+
+export interface PdfAnnotationWithTitle extends PdfAnnotationData {
+    titleObj: {
+        str: string;
+    };
+}
 
 export const PDFJS_MODULE = new InjectionToken('PDFJS_MODULE', { factory: () => pdfjsLib });
 export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { factory: () => PDFViewer });
@@ -93,19 +122,19 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     allowThumbnails = false;
 
     @Input()
-    thumbnailsTemplate: TemplateRef<any> = null;
+    thumbnailsTemplate: TemplateRef<unknown> = null;
 
     @Input()
     cacheType: string = '';
 
     @Output()
-    rendered = new EventEmitter<any>();
+    rendered = new EventEmitter<void>();
 
     @Output()
-    error = new EventEmitter<any>();
+    error = new EventEmitter<void>();
 
     @Output()
-    close = new EventEmitter<any>();
+    close = new EventEmitter<void>();
 
     @Output()
     pagesLoaded = new EventEmitter<void>();
@@ -127,7 +156,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingTask: PDFDocumentLoadingTask;
     isPanelDisabled = true;
     showThumbnails: boolean = false;
-    pdfThumbnailsContext: { viewer: any } = { viewer: null };
+    pdfThumbnailsContext: { viewer: PDFViewer | null } = { viewer: null };
     randomPdfId: string;
     documentOverflow = false;
 
@@ -214,7 +243,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         const urlFile = changes['urlFile'];
         if (urlFile?.currentValue) {
-            const pdfOptions: any = {
+            const pdfOptions: {
+                url: string;
+                withCredentials: boolean | undefined;
+                isEvalSupported: boolean;
+                httpHeaders?: { 'Cache-Control': string };
+            } & typeof this.pdfjsDefaultOptions = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined),
@@ -233,7 +267,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(pdfOptions: any) {
+    executePdf(pdfOptions: Parameters<typeof this.pdfjsLib.getDocument>[0]) {
         this.setupPdfJsWorker().then(() => {
             this.loadingTask = this.pdfjsLib.getDocument(pdfOptions);
 
@@ -282,7 +316,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
-        const viewer: any = this.getViewer();
+        const viewer: HTMLDivElement = this.getViewer();
         const container = this.getDocumentContainer();
 
         if (viewer && container) {
@@ -433,8 +467,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`) as HTMLDivElement;
     }
 
-    private getViewer(): HTMLElement {
-        return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
+    private getViewer(): HTMLDivElement {
+        return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`) as HTMLDivElement;
     }
 
     checkPageFitInContainer(scale: number): number {
@@ -519,9 +553,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param ticks number of ticks to zoom
      */
     zoomIn(ticks?: number): void {
-        let newScale: any = this.pdfViewer.currentScaleValue;
+        let newScale: number = Number(this.pdfViewer.currentScaleValue);
         do {
-            newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
+            newScale = Number((newScale * this.DEFAULT_SCALE_DELTA).toFixed(2));
             newScale = Math.ceil(newScale * 10) / 10;
             newScale = Math.min(this.MAX_SCALE, newScale);
         } while (--ticks > 0 && newScale < this.MAX_SCALE);
@@ -535,9 +569,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param ticks number of ticks to scale
      */
     zoomOut(ticks?: number): void {
-        let newScale: any = this.pdfViewer.currentScaleValue;
+        let newScale: number = Number(this.pdfViewer.currentScaleValue);
         do {
-            newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
+            newScale = Number((newScale / this.DEFAULT_SCALE_DELTA).toFixed(2));
             newScale = Math.floor(newScale * 10) / 10;
             newScale = Math.max(this.MIN_SCALE, newScale);
         } while (--ticks > 0 && newScale > this.MIN_SCALE);
@@ -589,9 +623,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Page Change Event
      *
-     * @param event event
+     * @param event - page change event
+     * @param event.pageNumber - the new page number
+     * @param event.source - the source object
+     * @param event.source.container - the container element
+     * @param event.source.container.id - the container id
      */
-    onPageChange(event: any) {
+    onPageChange(event: PageChangingEvent) {
         if (event.source && event.source.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {
             this.page = event.pageNumber;
             this.displayPage = event.pageNumber;
@@ -682,11 +720,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    private createAnnotationPopup(annotation: any, text: string, annotationElement: HTMLElement): void {
+    private createAnnotationPopup(annotation: PdfAnnotationData, text: string, annotationElement: HTMLElement): void {
         const popupElement = document.createElement('div');
         let headerElement: HTMLSpanElement;
         if (annotation.titleObj?.str) {
-            headerElement = this.createAnnotationPopupHeader(annotation);
+            headerElement = this.createAnnotationPopupHeader(annotation as PdfAnnotationWithTitle);
         }
         const contentElement = this.createAnnotationPopupContent(text);
         popupElement.classList.add('popup', 'adf-pdf-viewer-annotation-tooltip');
@@ -694,7 +732,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         annotationElement.appendChild(popupElement);
     }
 
-    private createAnnotationPopupHeader(annotation: any): HTMLSpanElement {
+    private createAnnotationPopupHeader(annotation: PdfAnnotationWithTitle): HTMLSpanElement {
         const headerElement = document.createElement('span');
         const titleElement = document.createElement('span');
         let dateElement: HTMLTimeElement;

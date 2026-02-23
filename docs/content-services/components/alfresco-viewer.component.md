@@ -92,8 +92,8 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | showRightSidebar     | `boolean`             | false         | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                         |
 | showToolbar          | `boolean`             | true          | Hide or show the toolbar                                                                                                    |
 | showViewer           | `boolean`             | true          | Hide or show the viewer                                                                                                     |
-| sidebarLeftTemplate  | `TemplateRef<any>`    | null          | The template for the left sidebar. The template context contains the loaded node data.                                      |
-| sidebarRightTemplate | `TemplateRef<any>`    | null          | The template for the right sidebar. The template context contains the loaded node data.                                     |
+| sidebarLeftTemplate  | `TemplateRef<unknown>`    | null          | The template for the left sidebar. The template context contains the loaded node data.                                      |
+| sidebarRightTemplate | `TemplateRef<unknown>`    | null          | The template for the right sidebar. The template context contains the loaded node data.                                     |
 | versionId            | `string`              | null          | Version Id of the file to load.                                                                                             |
 
 ### Events

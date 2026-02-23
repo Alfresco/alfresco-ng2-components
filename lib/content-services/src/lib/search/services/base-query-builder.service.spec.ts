@@ -207,7 +207,6 @@ describe('BaseQueryBuilderService', () => {
             expect(service.getUserFacetBuckets('field1').length).toBe(0);
             expect(service.getUserFacetBuckets('field2').length).toBe(0);
         });
-
     });
 
     describe('buildQuery', () => {
@@ -332,12 +331,12 @@ describe('BaseQueryBuilderService', () => {
 
             expect(errorSpy).toHaveBeenCalledWith(mockError);
             expect(executedSpy).toHaveBeenCalledWith(
-              jasmine.objectContaining({
-                  list: jasmine.objectContaining({
-                      pagination: { totalItems: 0 },
-                      entries: []
-                  })
-              })
+                jasmine.objectContaining({
+                    list: jasmine.objectContaining({
+                        pagination: { totalItems: 0 },
+                        entries: []
+                    })
+                })
             );
         });
 
@@ -423,9 +422,7 @@ describe('BaseQueryBuilderService', () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
 
-            let callCount = 0;
             service.searchForms.pipe(skip(1)).subscribe((forms) => {
-                callCount++;
                 expect(forms[1].selected).toBe(true);
                 expect(forms[0].selected).toBe(false);
                 done();
@@ -446,7 +443,7 @@ describe('BaseQueryBuilderService', () => {
         it('should call execute when updating configuration', async () => {
             spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
             spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } } as ResultSetPaging));
-            spyOn(service, 'execute')
+            spyOn(service, 'execute');
             service.userQuery = 'test';
 
             service.updateSelectedConfiguration('config-2');

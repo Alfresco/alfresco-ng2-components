@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -42,8 +42,8 @@ import { ThumbnailService } from '../../common/services/thumbnail.service';
 class DummyDialogComponent {}
 
 describe('ViewerComponent', () => {
-    let component: ViewerComponent<any>;
-    let fixture: ComponentFixture<ViewerComponent<any>>;
+    let component: ViewerComponent<unknown>;
+    let fixture: ComponentFixture<ViewerComponent<unknown>>;
     let dialog: MatDialog;
     let viewUtilService: ViewUtilService;
     let appConfigService: AppConfigService;
@@ -106,7 +106,9 @@ describe('ViewerComponent', () => {
 
     describe('Mime Type Test', () => {
         it('should mimeType change when blobFile changes', () => {
-            const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
+            const mockSimpleChanges: SimpleChanges = { 
+                blobFile: new SimpleChange(null, { type: 'image/png' }, true) 
+            };
 
             component.ngOnChanges(mockSimpleChanges);
 
@@ -115,7 +117,10 @@ describe('ViewerComponent', () => {
 
         it('should set mimeTypeIconUrl when mimeType changes and no nodeMimeType is provided', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('image/png');
-            const mockSimpleChanges: any = { mimeType: { currentValue: 'image/png' }, nodeMimeType: undefined };
+            const mockSimpleChanges: SimpleChanges = { 
+                mimeType: new SimpleChange(null, 'image/png', true), 
+                nodeMimeType: undefined 
+            };
 
             component.ngOnChanges(mockSimpleChanges);
 
@@ -125,7 +130,10 @@ describe('ViewerComponent', () => {
 
         it('should set mimeTypeIconUrl when nodeMimeType changes', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('application/pdf');
-            const mockSimpleChanges: any = { mimeType: { currentValue: 'image/png' }, nodeMimeType: { currentValue: 'application/pdf' } };
+            const mockSimpleChanges: SimpleChanges = { 
+                mimeType: new SimpleChange(null, 'image/png', true), 
+                nodeMimeType: new SimpleChange(null, 'application/pdf', true) 
+            };
 
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();
@@ -523,7 +531,9 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
-                    const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
+                    const mockSimpleChanges: SimpleChanges = { 
+                        blobFile: new SimpleChange(null, { type: 'image/png' }, true) 
+                    };
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
@@ -705,7 +715,7 @@ describe('ViewerComponent', () => {
                     downloadPromptReminderDelay: 2
                 }
             };
-            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as ReturnType<MatDialog['open']>);
             component.urlFile = undefined;
             component.clearDownloadPromptTimeouts();
         });
@@ -716,11 +726,11 @@ describe('ViewerComponent', () => {
         });
 
         it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(() => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as ReturnType<MatDialog['open']>);
             fixture.detectChanges();
             tick(3000);
             expect(component.downloadPromptReminderTimer).toBeDefined();
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as ReturnType<MatDialog['open']>);
             flush();
             discardPeriodicTasks();
         }));
@@ -741,12 +751,12 @@ describe('ViewerComponent', () => {
         }));
 
         it('should show reminder non responsive dialog after initial dialog', fakeAsync(() => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as ReturnType<MatDialog['open']>);
             fixture.detectChanges();
             tick(3000);
             expect(dialogOpenSpy).toHaveBeenCalled();
 
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as ReturnType<MatDialog['open']>);
             tick(2000);
             expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
 
@@ -755,7 +765,7 @@ describe('ViewerComponent', () => {
         }));
 
         it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync(() => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as ReturnType<MatDialog['open']>);
             spyOn(component.downloadFile, 'emit');
             fixture.detectChanges();
             tick(3000);

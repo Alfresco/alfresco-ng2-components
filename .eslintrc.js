@@ -145,6 +145,14 @@ module.exports = {
                 'no-multiple-empty-lines': 'error',
                 'no-redeclare': 'off',
                 '@typescript-eslint/no-redeclare': ['off', { ignoreDeclarationMerge: true }],
+                '@typescript-eslint/no-unused-vars': [
+                    'error',
+                    {
+                        argsIgnorePattern: '^_',
+                        varsIgnorePattern: '^_',
+                        caughtErrorsIgnorePattern: '^_'
+                    }
+                ],
                 'no-return-await': 'error',
                 'rxjs/no-create': 'error',
                 'rxjs/no-subject-unsubscribe': 'error',

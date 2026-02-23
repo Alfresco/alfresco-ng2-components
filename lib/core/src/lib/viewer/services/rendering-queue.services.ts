@@ -16,6 +16,29 @@
  */
 
 import { Injectable } from '@angular/core';
+import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';
+import type { PDFThumbnailViewer } from 'pdfjs-dist/types/web/pdf_thumbnail_viewer';
+import type { PDFPageView } from 'pdfjs-dist/types/web/pdf_page_view';
+
+interface VisiblePage {
+    id: number;
+}
+
+interface VisiblePages {
+    first?: VisiblePage;
+    last?: VisiblePage;
+    views?: Array<{ view: PDFPageView }>;
+}
+
+/**
+ * Type helper for accessing the resume method on PDFPageView.
+ * PDFPageView implements IRenderableView which includes a resume method,
+ * but the TypeScript definitions don't properly expose it.
+ */
+// cspell:ignore Renderable
+interface ResumableView {
+    resume?: () => void;
+}
 
 /**
  *
@@ -33,13 +56,13 @@ export class RenderingQueueServices {
 
     CLEANUP_TIMEOUT: number = 30_000;
 
-    pdfViewer: any = null;
-    pdfThumbnailViewer: any = null;
-    onIdle: any = null;
+    pdfViewer: PDFViewer | null = null;
+    pdfThumbnailViewer: PDFThumbnailViewer | null = null;
+    onIdle: (() => void) | null = null;
 
     highestPriorityPage: string | null = null;
-    idleTimeout: any = null;
-    printing: any = false;
+    idleTimeout: number | null = null;
+    printing = false;
     isThumbnailViewEnabled = false;
 
     /**
@@ -47,7 +70,7 @@ export class RenderingQueueServices {
      *
      * @param pdfViewer viewer instance
      */
-    setViewer(pdfViewer): void {
+    setViewer(pdfViewer: PDFViewer): void {
         this.pdfViewer = pdfViewer;
     }
 
@@ -56,7 +79,7 @@ export class RenderingQueueServices {
      *
      * @param pdfThumbnailViewer viewer instance
      */
-    setThumbnailViewer(pdfThumbnailViewer): void {
+    setThumbnailViewer(pdfThumbnailViewer: PDFThumbnailViewer): void {
         this.pdfThumbnailViewer = pdfThumbnailViewer;
     }
 
@@ -66,18 +89,18 @@ export class RenderingQueueServices {
      * @param view view to render
      * @returns `true` if the view has higher priority, otherwise `false`
      */
-    isHighestPriority(view: any): boolean {
+    isHighestPriority(view: PDFPageView): boolean {
         return this.highestPriorityPage === view.renderingId;
     }
 
-    renderHighestPriority(currentlyVisiblePages) {
+    renderHighestPriority(currentlyVisiblePages?: unknown): void {
         if (this.idleTimeout) {
             clearTimeout(this.idleTimeout);
             this.idleTimeout = null;
         }
 
         // Pages have a higher priority than thumbnails, so check them first.
-        if (this.pdfViewer.forceRendering(currentlyVisiblePages)) {
+        if (this.pdfViewer?.forceRendering(currentlyVisiblePages)) {
             return;
         }
         // No pages needed rendering so check thumbnails.
@@ -91,11 +114,23 @@ export class RenderingQueueServices {
         }
 
         if (this.onIdle) {
-            this.idleTimeout = setTimeout(this.onIdle.bind(this), this.CLEANUP_TIMEOUT);
+            // Type assertion needed: setTimeout returns NodeJS.Timeout in Node types,
+            // but returns number at runtime in browser (where this code executes).
+            // PDFRenderingQueue interface requires idleTimeout to be number.
+            this.idleTimeout = setTimeout(this.onIdle.bind(this), this.CLEANUP_TIMEOUT) as unknown as number;
         }
     }
 
-    getHighestPriority(visible, views, scrolledDown) {
+    /**
+     * Gets the highest priority page to render from the visible pages
+     * This method is part of the PDFRenderingQueue interface compatibility
+     *
+     * @param visible visible pages information
+     * @param views array of page views
+     * @param scrolledDown whether the user scrolled down
+     * @returns the highest priority page view to render, null if all done, or false if no visible pages
+     */
+    getHighestPriority(visible: VisiblePages, views: PDFPageView[], scrolledDown: boolean): PDFPageView | null | false {
         // The state has changed figure out which page has the highest priority to
         // render next (if any).
         // Priority:
@@ -103,6 +138,10 @@ export class RenderingQueueServices {
         // 2 if last scrolled down page after the visible pages
         // 2 if last scrolled up page before the visible pages
         const visibleViews = visible.views;
+
+        if (!visibleViews) {
+            return false;
+        }
 
         const numberVisible = visibleViews.length;
         if (numberVisible === 0) {
@@ -116,13 +155,13 @@ export class RenderingQueueServices {
         }
 
         // All the visible views have rendered, try to render next/previous pages.
-        if (scrolledDown) {
+        if (scrolledDown && visible.last) {
             const nextPageIndex = visible.last.id;
             // ID's start at 1 so no need to add 1.
             if (views[nextPageIndex] && !this.isViewFinished(views[nextPageIndex])) {
                 return views[nextPageIndex];
             }
-        } else {
+        } else if (visible.first) {
             const previousPageIndex = visible.first.id - 2;
             if (views[previousPageIndex] && !this.isViewFinished(views[previousPageIndex])) {
                 return views[previousPageIndex];
@@ -142,7 +181,7 @@ export class RenderingQueueServices {
      * @param view the View instance to check
      * @returns `true` if rendering is finished, otherwise `false`
      */
-    isViewFinished(view): boolean {
+    isViewFinished(view: PDFPageView): boolean {
         return view.renderingState === this.renderingStates.FINISHED;
     }
 
@@ -154,7 +193,7 @@ export class RenderingQueueServices {
      * @param view View instance to render
      * @returns the rendered state of the view
      */
-    renderView(view: any): boolean {
+    renderView(view: PDFPageView): boolean {
         const state = view.renderingState;
         switch (state) {
             case this.renderingStates.FINISHED: {
@@ -162,7 +201,10 @@ export class RenderingQueueServices {
             }
             case this.renderingStates.PAUSED: {
                 this.highestPriorityPage = view.renderingId;
-                view.resume();
+                const resumableView = view as unknown as ResumableView;
+                if (resumableView.resume) {
+                    resumableView.resume();
+                }
                 break;
             }
             case this.renderingStates.RUNNING: {
@@ -171,10 +213,9 @@ export class RenderingQueueServices {
             }
             case this.renderingStates.INITIAL: {
                 this.highestPriorityPage = view.renderingId;
-                // eslint-disable-next-line space-before-function-paren
-                const continueRendering = function () {
+                const continueRendering = () => {
                     this.renderHighestPriority();
-                }.bind(this);
+                };
                 view.draw().then(continueRendering, continueRendering);
                 break;
             }

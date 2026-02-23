@@ -117,7 +117,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     mnuMoreActions: ViewerMoreActionsComponent;
 
     @ContentChild('viewerExtensions', { static: false })
-    viewerTemplateExtensions: TemplateRef<any>;
+    viewerTemplateExtensions: TemplateRef<unknown>;
 
     get CloseButtonPosition() {
         return CloseButtonPosition;
@@ -190,11 +190,11 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
-    sidebarRightTemplate: TemplateRef<any> = null;
+    sidebarRightTemplate: TemplateRef<unknown> = null;
 
     /** The template for the left sidebar. The template context contains the loaded node data. */
     @Input()
-    sidebarLeftTemplate: TemplateRef<any> = null;
+    sidebarLeftTemplate: TemplateRef<unknown> = null;
 
     /** Enable when where is possible the editing functionalities  */
     @Input()
@@ -243,7 +243,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
     @Input()
-    viewerExtensions: TemplateRef<any>;
+    viewerExtensions: TemplateRef<unknown>;
 
     /** Identifier of a node that is opened by the viewer. */
     @Input()

@@ -20,6 +20,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
+import { PdfThumbnailPage } from '../pdf-viewer/pdf-viewer.component';
 
 @Component({
     selector: 'adf-pdf-thumb',
@@ -33,7 +34,7 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
     private readonly element = inject(ElementRef);
 
     @Input()
-    page: any = null;
+    page: PdfThumbnailPage = null;
 
     image$: Promise<string>;
 
