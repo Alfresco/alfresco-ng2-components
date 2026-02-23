@@ -27,6 +27,7 @@ import { FormControl, NgModel } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 import { Injector } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatErrorHarness } from '@angular/material/form-field/testing';
 
 describe('CardViewBoolItemComponent', () => {
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
@@ -235,6 +236,57 @@ describe('CardViewBoolItemComponent', () => {
 
             fixture.detectChanges();
             expect(testingUtils.getByDirective(MatError).nativeElement.textContent).toBe('Error 1Error 2');
+        });
+
+        it('should join multiple errors with br tag in innerHTML', () => {
+            cardViewPropertyValidator.validated.emit(['Error 1', 'Error 2']);
+            control.setErrors({
+                error1: 'Error 1',
+                error2: 'Error 2'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.innerHTML).toContain('Error 1<br>Error 2');
+        });
+
+        it('should not contain br tag when there is only one error', () => {
+            cardViewPropertyValidator.validated.emit(['Single Error']);
+            control.setErrors({
+                error1: 'Single Error'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.innerHTML).not.toContain('<br>');
+            expect(testingUtils.getByDirective(MatError).nativeElement.textContent).toBe('Single Error');
+        });
+
+        it('should join three errors with br tags', () => {
+            cardViewPropertyValidator.validated.emit(['Error A', 'Error B', 'Error C']);
+            control.setErrors({
+                errorA: 'Error A',
+                errorB: 'Error B',
+                errorC: 'Error C'
+            });
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            expect(testingUtils.getByDirective(MatError).nativeElement.innerHTML).toContain('Error A<br>Error B<br>Error C');
+        });
+
+        it('should set empty error string when validated with empty array', () => {
+            cardViewPropertyValidator.validated.emit([]);
+
+            expect(component.error).toBe('');
+        });
+
+        it('should not display error message when control is touched and has no errors', async () => {
+            control.markAsTouched();
+
+            fixture.detectChanges();
+            const errors = await loader.getAllHarnesses(MatErrorHarness);
+            expect(errors.length).toBe(0);
         });
     });
 });
