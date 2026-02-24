@@ -17,7 +17,7 @@
 
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ESCAPE, TAB, UP_ARROW } from '@angular/cdk/keycodes';
-import { DOCUMENT, NgClass, NgForOf } from '@angular/common';
+import { DOCUMENT, NgClass } from '@angular/common';
 import {
     AfterViewInit,
     Component,
@@ -36,9 +36,6 @@ import {
     inject
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
-import { PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
-import { PDFPageProxy } from 'pdfjs-dist/types/src/display/api';
-import { PageChangingEvent, PdfThumbnailPage } from '../pdf-viewer/pdf-viewer.component';
 import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.component';
 
 @Component({
@@ -46,25 +43,25 @@ import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.componen
     templateUrl: './pdf-viewer-thumbnails.component.html',
     styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
     host: { class: 'adf-pdf-thumbnails' },
-    imports: [PdfThumbComponent, NgClass, NgForOf],
+    imports: [PdfThumbComponent, NgClass],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly element = inject(ElementRef);
     private readonly document = inject(DOCUMENT);
 
-    @Input({ required: true }) pdfViewer: PDFViewer;
+    @Input({ required: true }) pdfViewer: any;
 
     @Output()
     close = new EventEmitter<void>();
 
     virtualHeight: number = 0;
     translateY: number = 0;
-    renderItems: PdfThumbnailPage[] = [];
+    renderItems: any[] = [];
     width: number = 91;
     currentHeight: number = 0;
 
-    private items: PdfThumbnailPage[] = [];
+    private items: any[] = [];
     private readonly margin: number = 15;
     private itemHeight: number = 114 + this.margin;
     private previouslyFocusedElement: HTMLElement | null = null;
@@ -148,10 +145,6 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    trackByFn(_: number, item: PdfThumbnailPage): number {
-        return item.id;
-    }
-
     isSelected(pageNumber: number) {
         return this.pdfViewer.currentPageNumber === pageNumber;
     }
@@ -174,7 +167,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    getPages(): PdfThumbnailPage[] {
+    getPages(): any[] {
         // eslint-disable-next-line no-underscore-dangle
         return this.pdfViewer._pages.map((page) => ({
             id: page.id,
@@ -188,7 +181,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.pdfViewer.pdfDocument.getPage(id).then((page) => this.calculateHeight(page));
     }
 
-    private calculateHeight(page: PDFPageProxy) {
+    private calculateHeight(page) {
         const viewport = page.getViewport({ scale: 1 });
         const pageRatio = viewport.width / viewport.height;
         const height = Math.floor(this.width / pageRatio);
@@ -224,7 +217,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         };
     }
 
-    private onPageChange(event: PageChangingEvent) {
+    private onPageChange(event: any) {
         const index = this.renderItems.findIndex((element) => element.id === event.pageNumber);
 
         if (index < 0) {
