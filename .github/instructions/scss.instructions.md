@@ -16,5 +16,4 @@ applyTo: "**/*.scss"
 * Make sure selected colors have right contrast (satisfy WCAG AA)
 * All interactive elements should have focus state
 * Avoid disabled outline without alternative focus indicators
-* Avoid redundant or unused selectors
 
