@@ -6,4 +6,8 @@
         height: auto;
         padding: 5px 0;
     }
+
+    &-icon {
+        flex-shrink: 0;
+    }
 }
