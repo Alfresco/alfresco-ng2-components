@@ -285,5 +285,26 @@ describe('NodeTooltipUtils', () => {
             const result = NodeTooltipUtils.getLibraryTitle(library, allEntries);
             expect(result).toBe('Library Title');
         });
+
+        it('should append id as suffix when name is present and equals title', () => {
+            const library = { id: 'lib1', name: 'Duplicate Title', title: 'Duplicate Title' };
+            const allEntries = [{ id: 'lib2', title: 'Duplicate Title' }];
+            const result = NodeTooltipUtils.getLibraryTitle(library, allEntries);
+            expect(result).toBe('Duplicate Title (lib1)');
+        });
+
+        it('should append id as suffix when name is missing', () => {
+            const library = { id: 'lib1', title: 'Duplicate Title' };
+            const allEntries = [{ id: 'lib2', title: 'Duplicate Title' }];
+            const result = NodeTooltipUtils.getLibraryTitle(library, allEntries);
+            expect(result).toBe('Duplicate Title (lib1)');
+        });
+
+        it('should fallback to id when both name and title are missing', () => {
+            const library = { id: 'lib1' };
+            const allEntries = [];
+            const result = NodeTooltipUtils.getLibraryTitle(library, allEntries);
+            expect(result).toBe('lib1');
+        });
     });
 });

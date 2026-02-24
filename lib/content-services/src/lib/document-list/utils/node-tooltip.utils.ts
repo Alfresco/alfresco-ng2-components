@@ -120,7 +120,10 @@ export class NodeTooltipUtils {
         }
 
         // If duplicate, append the ID or name in parentheses
-        const suffix = libraryName || libraryId;
+        let suffix = libraryId;
+        if (libraryName && libraryName !== libraryTitle) {
+            suffix = libraryName;
+        }
         return isDuplicate && suffix ? `${libraryTitle} (${suffix})` : libraryTitle;
     }
 
