@@ -38,7 +38,7 @@ import { delay } from 'rxjs/operators';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent } from '../../common/events/file.event';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
@@ -47,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
-    imports: [CommonModule, MatButtonModule, TranslatePipe, IconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
+    imports: [MatButtonModule, TranslatePipe, IconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
