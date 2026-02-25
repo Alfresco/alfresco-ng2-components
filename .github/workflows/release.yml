@@ -143,35 +143,6 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/npm-check-bundle
 
-  push-translation-keys-to-crowdin:
-    name: Push translations keys to Crowdin
-    if: github.ref_name == 'develop' && github.event_name != 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    needs: [setup]
-    permissions:
-      contents: read
-      packages: read
-      actions: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Push Source Files to Crowdin
-        uses: crowdin/github-action@5587c43063e52090026857d386174d2599ad323b # v2.14.1
-        with:
-          upload_sources: true
-          upload_sources_args: --delete-obsolete
-        env:
-          CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
-
-  pull-translation-keys-from-crowdin:
-    needs: push-translation-keys-to-crowdin
-    name: Run Crowdin pull pipeline for up-to-date sync
-    uses: ./.github/workflows/pull-from-crowdin.yml
-    secrets:
-      BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-      CROWDIN_TRANSLATIONS_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
-
   finalize:
     if: always()
     runs-on: ubuntu-latest
