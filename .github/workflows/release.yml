@@ -58,7 +58,6 @@ jobs:
           npm ci
           npx nx run js-api:bundle
           npx nx run cli:bundle
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   release-npm:
     needs: [setup]
@@ -84,7 +83,6 @@ jobs:
         uses: ./.github/actions/enable-dryrun
         with:
           dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Set libraries versions
         id: set-version
         run: |
