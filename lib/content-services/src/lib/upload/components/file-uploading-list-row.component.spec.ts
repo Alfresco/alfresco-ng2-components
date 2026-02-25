@@ -106,4 +106,86 @@ describe('FileUploadingListRowComponent', () => {
         const cancelButton = getCancelButton();
         expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.STOP_FILE');
     });
+
+    describe('Toggle Icon State', () => {
+        describe('onToggleMouseEnter', () => {
+            it('should set isToggled to true when not focused', () => {
+                component.toggleIconState = { isFocused: false, isToggled: false };
+
+                component.onToggleMouseEnter(component.toggleIconState);
+
+                expect(component.toggleIconState.isToggled).toBe(true);
+            });
+
+            it('should not change isToggled when already focused', () => {
+                component.toggleIconState = { isFocused: true, isToggled: false };
+
+                component.onToggleMouseEnter(component.toggleIconState);
+
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+        });
+
+        describe('onToggleMouseLeave', () => {
+            it('should set isToggled to false when not focused', () => {
+                component.toggleIconState = { isFocused: false, isToggled: true };
+
+                component.onToggleMouseLeave(component.toggleIconState);
+
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+
+            it('should not change state when focused but not toggled', () => {
+                component.toggleIconState = { isFocused: true, isToggled: false };
+
+                component.onToggleMouseLeave(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(true);
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+
+            it('should reset both isFocused and isToggled when both are true', () => {
+                component.toggleIconState = { isFocused: true, isToggled: true };
+
+                component.onToggleMouseLeave(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(false);
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+        });
+
+        describe('onToggleFocus', () => {
+            it('should set both isFocused and isToggled to true', () => {
+                component.toggleIconState = { isFocused: false, isToggled: false };
+
+                component.onToggleFocus(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(true);
+                expect(component.toggleIconState.isToggled).toBe(true);
+            });
+        });
+
+        describe('onToggleBlur', () => {
+            it('should set both isFocused and isToggled to false', () => {
+                component.toggleIconState = { isFocused: true, isToggled: true };
+
+                component.onToggleBlur(component.toggleIconState);
+
+                expect(component.toggleIconState.isFocused).toBe(false);
+                expect(component.toggleIconState.isToggled).toBe(false);
+            });
+        });
+
+        describe('Multiple toggle states', () => {
+            it('should maintain independent state for toggleIconState and toggleIconCancelState', () => {
+                component.onToggleFocus(component.toggleIconState);
+                component.onToggleMouseEnter(component.toggleIconCancelState);
+
+                expect(component.toggleIconState.isFocused).toBe(true);
+                expect(component.toggleIconState.isToggled).toBe(true);
+                expect(component.toggleIconCancelState.isFocused).toBe(false);
+                expect(component.toggleIconCancelState.isToggled).toBe(true);
+            });
+        });
+    });
 });
