@@ -117,7 +117,7 @@ export class FileUploadingListRowComponent {
         return this.file?.status === FileUploadStatus.Complete && this.isUploadVersion();
     }
 
-    getFileUploadErrorKey(errorCode: number): string {
+    getFileUploadErrorKey(errorCode?: number | null): string {
         return `FILE_UPLOAD.ERRORS.${errorCode || 'GENERIC'}`;
     }
 }
