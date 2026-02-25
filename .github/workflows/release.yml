@@ -88,6 +88,9 @@ jobs:
         run: |
           set -u;
           ./scripts/github/build/bumpversion.sh
+      - name: install dependencies
+        run: |
+          npm install
       - name: build libraries
         run: |
           npx nx run-many -t build --prod --skip-nx-cache
